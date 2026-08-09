@@ -34,6 +34,7 @@ export const resourceRoutes: Partial<Record<ResourceType, string[]>> = {
     [ResourceType.PullRequests]: ["/pull-requests/*"],
     [ResourceType.CliReview]: ["/cli-reviews/*"],
     [ResourceType.Issues]: ["/issues/*"],
+    [ResourceType.Learnings]: ["/learnings/*"],
     [ResourceType.CodeReviewSettings]: ["/settings/code-review/*"],
     [ResourceType.OrganizationSettings]: ["/organization/*"],
     [ResourceType.GitSettings]: ["/settings/git/*", "/settings/integrations/*"],

@@ -66,6 +66,32 @@ describe('ROLE_POLICIES', () => {
         expect(
             has(Role.BILLING_MANAGER, { resource: ResourceType.CliReview }),
         ).toBe(false);
+        // Learnings: Repo Admin can write assigned repos; Contributor and
+        // Billing Manager read org-wide only (never write).
+        expect(
+            has(Role.REPO_ADMIN, {
+                action: Action.Create,
+                resource: ResourceType.Learnings,
+                scope: 'repo',
+            }),
+        ).toBe(true);
+        expect(
+            has(Role.CONTRIBUTOR, {
+                action: Action.Read,
+                resource: ResourceType.Learnings,
+                scope: 'org',
+            }),
+        ).toBe(true);
+        expect(
+            has(Role.CONTRIBUTOR, { action: Action.Create, resource: ResourceType.Learnings }),
+        ).toBe(false);
+        expect(
+            has(Role.BILLING_MANAGER, {
+                action: Action.Read,
+                resource: ResourceType.Learnings,
+                scope: 'org',
+            }),
+        ).toBe(true);
     });
 
     // The policy is shared with the Next.js frontend, so it (and the enum file

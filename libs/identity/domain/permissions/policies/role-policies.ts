@@ -66,11 +66,20 @@ const repoAdmin: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.TokenUsage, scope: 'org' },
 
     { action: Action.Read, resource: ResourceType.CliReview, scope: 'org' },
+
+    // Learnings (memoria por proyecto) — read org-wide, write on assigned
+    // repos (same pattern as KodyRules: learning about a repo is part of
+    // its code-review config).
+    { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
+    { action: Action.Update, resource: ResourceType.Learnings, scope: 'repo' },
+    { action: Action.Create, resource: ResourceType.Learnings, scope: 'repo' },
+    { action: Action.Delete, resource: ResourceType.Learnings, scope: 'repo' },
 ];
 
 const billingManager: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.CodeReviewSettings, scope: 'org' },
     { action: Action.Read, resource: ResourceType.KodyRules, scope: 'org' },
+    { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
 
     { action: Action.Manage, resource: ResourceType.Billing, scope: 'org' },
 
@@ -89,6 +98,7 @@ const billingManager: PolicyRule[] = [
 const contributor: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.CodeReviewSettings, scope: 'org' },
     { action: Action.Read, resource: ResourceType.KodyRules, scope: 'org' },
+    { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
     { action: Action.Read, resource: ResourceType.Issues, scope: 'org' },
     { action: Action.Read, resource: ResourceType.IssuesSettings, scope: 'org' },
     { action: Action.Read, resource: ResourceType.CliReview, scope: 'org' },
