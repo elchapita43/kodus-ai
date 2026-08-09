@@ -40,6 +40,7 @@ import { SSOTestSessionModel } from '@libs/ee/sso/repositories/ssoTestSession.mo
 import { NotificationDeliveryModel } from '../../../../notifications/infrastructure/repositories/schemas/notification-delivery.model';
 import { UserNotificationModel } from '../../../../notifications/infrastructure/repositories/schemas/user-notification.model';
 import { RoutingRuleModel } from '../../../../notifications/infrastructure/repositories/schemas/routing-rule.model';
+import { LearningModel } from '../../../../learnings/infrastructure/adapters/repositories/schemas/learning.model';
 
 export const ENTITIES = [
     DryRunModel,
@@ -84,4 +85,5 @@ export const ENTITIES = [
     NotificationDeliveryModel,
     UserNotificationModel,
     RoutingRuleModel,
+    LearningModel,
 ];
