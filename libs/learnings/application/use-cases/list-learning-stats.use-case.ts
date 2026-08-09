@@ -2,6 +2,7 @@ import {
     ILearningsRepository,
     ListLearningsFilter,
 } from '@libs/learnings/domain/contracts/learnings.repository';
+import { LearningStatus } from '@libs/learnings/domain/interfaces/learning.interface';
 
 export interface LearningStats {
     total: number;
@@ -28,11 +29,11 @@ export class ListLearningStatsUseCase {
             this.learningsRepository.count(baseFilter),
             this.learningsRepository.count({
                 ...baseFilter,
-                status: 'active',
+                status: LearningStatus.ACTIVE,
             }),
             this.learningsRepository.count({
                 ...baseFilter,
-                status: 'superseded',
+                status: LearningStatus.SUPERSEDED,
             }),
             this.learningsRepository.find({ ...baseFilter, limit: 1000 }),
         ]);

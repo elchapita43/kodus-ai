@@ -34,6 +34,7 @@ import { IntegrationConfigModule } from '@libs/integrations/modules/config.modul
 import { IntegrationModule } from '@libs/integrations/modules/integrations.module';
 import { IssuesModule } from '@libs/issues/issues.module';
 import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { LearningsModule } from '@libs/learnings/modules/learnings.module';
 import { KodusIssuesMcpModule } from '@libs/mcp-server/kodus-issues-mcp.module';
 import { McpModule } from '@libs/mcp-server/mcp.module';
 import { OrganizationOnboardingModule } from '@libs/organization/modules/organization-onboarding.module';
@@ -66,6 +67,7 @@ import { IntegrationController } from './controllers/integration.controller';
 import { IntegrationConfigController } from './controllers/integrationConfig.controller';
 import { IssuesController } from './controllers/issues.controller';
 import { KodyRulesController } from './controllers/kodyRules.controller';
+import { LearningsController } from './controllers/learnings.controller';
 import { LicenseController } from './controllers/license.controller';
 import { OrganizationController } from './controllers/organization.controller';
 import { TrialExtensionNotifierService } from './services/trial-extension-notifier.service';
@@ -113,6 +115,7 @@ import { NotificationController } from './controllers/notification.controller';
         UserModule,
         PermissionsModule,
         KodyRulesModule,
+        LearningsModule,
         IssuesModule,
         OrganizationModule,
         TeamModule,
@@ -159,6 +162,7 @@ import { NotificationController } from './controllers/notification.controller';
         CodeBaseController,
         IssuesController,
         KodyRulesController,
+        LearningsController,
         RuleLikeController,
         OrganizationController,
         ParametersController,
