@@ -8,6 +8,7 @@ import { AutomationModule } from '@libs/automation/modules/automation.module';
 import { CockpitModule } from '@libs/cockpit/modules/cockpit.module';
 import { CodebaseModule } from '@libs/code-review/modules/codebase.module';
 import { CodeReviewFeedbackModule } from '@libs/code-review/modules/codeReviewFeedback.module';
+import { LearningsModule } from '@libs/learnings/modules/learnings.module';
 import { IncidentModule } from '@libs/core/infrastructure/incident/incident.module';
 import { ErrorRateMonitorService } from '@libs/core/infrastructure/metrics/error-rate-monitor.service';
 import { MetricsModule } from '@libs/core/infrastructure/metrics/metrics.module';
@@ -76,6 +77,7 @@ export class WorkerModule {
                     WorkflowModule.register({ type: 'worker' }),
                     CodebaseModule,
                     CodeReviewFeedbackModule,
+                    LearningsModule,
                     AutomationModule,
                     PlatformModule,
                     SandboxModule, // provides SANDBOX_LEASE_MANAGER_TOKEN for OutboxRelayService
