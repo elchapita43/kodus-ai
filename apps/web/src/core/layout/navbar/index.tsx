@@ -15,6 +15,7 @@ import { usePermission } from "@services/permissions/hooks";
 import { Action, ResourceType } from "@services/permissions/types";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+    BrainCircuit,
     GaugeIcon,
     GitPullRequestIcon,
     InfoIcon,
@@ -53,6 +54,10 @@ export const NavMenu = () => {
     const canReadCodeReviewSettings = usePermission(
         Action.Read,
         ResourceType.CodeReviewSettings,
+    );
+    const canReadLearnings = usePermission(
+        Action.Read,
+        ResourceType.Learnings,
     );
     const canReadBilling = usePermission(Action.Read, ResourceType.Billing);
     const canReadGitSettings = usePermission(
@@ -102,6 +107,13 @@ export const NavMenu = () => {
                 icon: <LibraryBig className="size-5" />,
                 href: "/library/kody-rules",
                 visible: canReadCodeReviewSettings,
+            },
+
+            {
+                label: "Learnings",
+                icon: <BrainCircuit className="size-5" />,
+                href: "/learnings",
+                visible: canReadLearnings,
             },
         ];
 

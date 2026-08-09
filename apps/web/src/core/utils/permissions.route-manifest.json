@@ -48,6 +48,22 @@
     }
   },
   {
+    "route": "/learnings",
+    "expected": {
+      "billing_manager": "allow",
+      "repo_admin": "allow",
+      "contributor": "allow"
+    }
+  },
+  {
+    "route": "/learnings/x",
+    "expected": {
+      "billing_manager": "allow",
+      "repo_admin": "allow",
+      "contributor": "allow"
+    }
+  },
+  {
     "route": "/library/kody-rules",
     "expected": {
       "billing_manager": "allow",
