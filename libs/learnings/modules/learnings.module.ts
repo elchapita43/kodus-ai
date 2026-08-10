@@ -5,11 +5,14 @@ import { CreateLearningUseCase } from '@libs/learnings/application/use-cases/cre
 import { DeleteLearningUseCase } from '@libs/learnings/application/use-cases/delete-learning.use-case';
 import { DeriveLearningsUseCase } from '@libs/learnings/application/use-cases/derive-learnings.use-case';
 import { GetLearningUseCase } from '@libs/learnings/application/use-cases/get-learning.use-case';
+import { LearnFromHumanFeedbackUseCase } from '@libs/learnings/application/use-cases/learn-from-human-feedback.use-case';
 import { ListLearningStatsUseCase } from '@libs/learnings/application/use-cases/list-learning-stats.use-case';
 import { ListLearningsUseCase } from '@libs/learnings/application/use-cases/list-learnings.use-case';
 import { SupersedeLearningUseCase } from '@libs/learnings/application/use-cases/supersede-learning.use-case';
 import { LEARNINGS_REPOSITORY_TOKEN } from '@libs/learnings/domain/contracts/learnings.repository';
 import { LearningDeriver } from '@libs/learnings/domain/interfaces/learning-deriver.interface';
+import { SUGGESTION_EMBEDDED_REPOSITORY_TOKEN } from '@libs/kodyFineTuning/domain/suggestionEmbedded/contracts/suggestionEmbedded.repository.contract';
+import { SuggestionEmbeddedModule } from '@libs/kodyFineTuning/suggestionEmbedded.module';
 
 import { LearningsDeriverConsumer } from '../infrastructure/consumers/learnings-deriver.consumer';
 import { HttpLearningDeriver } from '../infrastructure/derivers/http-learning-deriver';
@@ -19,7 +22,10 @@ import { LearningModel } from '../infrastructure/adapters/repositories/schemas/l
 export const LEARNING_DERIVER_TOKEN = Symbol.for('LearningDeriver');
 
 @Module({
-    imports: [TypeOrmModule.forFeature([LearningModel])],
+    imports: [
+        TypeOrmModule.forFeature([LearningModel]),
+        SuggestionEmbeddedModule,
+    ],
     providers: [
         {
             provide: LEARNINGS_REPOSITORY_TOKEN,
@@ -76,6 +82,15 @@ export const LEARNING_DERIVER_TOKEN = Symbol.for('LearningDeriver');
                 new DeriveLearningsUseCase(repo, deriver),
             inject: [LEARNINGS_REPOSITORY_TOKEN, LEARNING_DERIVER_TOKEN],
         },
+        {
+            provide: LearnFromHumanFeedbackUseCase,
+            useFactory: (repo, suggestionRepo) =>
+                new LearnFromHumanFeedbackUseCase(repo, suggestionRepo),
+            inject: [
+                LEARNINGS_REPOSITORY_TOKEN,
+                SUGGESTION_EMBEDDED_REPOSITORY_TOKEN,
+            ],
+        },
         LearningsDeriverConsumer,
     ],
     exports: [
@@ -88,6 +103,7 @@ export const LEARNING_DERIVER_TOKEN = Symbol.for('LearningDeriver');
         SupersedeLearningUseCase,
         DeleteLearningUseCase,
         DeriveLearningsUseCase,
+        LearnFromHumanFeedbackUseCase,
         LearningsDeriverConsumer,
     ],
 })

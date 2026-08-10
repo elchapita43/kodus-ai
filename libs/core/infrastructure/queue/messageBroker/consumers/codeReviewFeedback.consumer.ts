@@ -3,12 +3,13 @@ import {
     MessageHandlerErrorBehavior,
 } from '@golevelup/nestjs-rabbitmq';
 import { createLogger } from '@libs/core/log/logger';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Optional } from '@nestjs/common';
 import { ConsumeMessage } from 'amqplib';
 
 import { SaveCodeReviewFeedbackUseCase } from '@libs/code-review/application/use-cases/codeReviewFeedback/save-feedback.use-case';
 import { createRabbitMQErrorHandlerWithFallback } from '@libs/core/infrastructure/queue/rabbitmq-error.handler';
 import { ObservabilityService } from '@libs/core/log/observability.service';
+import { LearnFromHumanFeedbackUseCase } from '@libs/learnings/application/use-cases/learn-from-human-feedback.use-case';
 
 @Injectable()
 export class CodeReviewFeedbackConsumer {
@@ -20,6 +21,11 @@ export class CodeReviewFeedbackConsumer {
     constructor(
         private readonly saveCodeReviewFeedbackUseCase: SaveCodeReviewFeedbackUseCase,
         private readonly observability: ObservabilityService,
+        // El aprendizaje por feedback humano es un hook opcional: si el
+        // módulo de learnings no está montado, el flujo de feedback sigue
+        // intacto.
+        @Optional()
+        private readonly learnFromHumanFeedbackUseCase?: LearnFromHumanFeedbackUseCase,
     ) {}
 
     @RabbitSubscribe({
@@ -83,11 +89,59 @@ export class CodeReviewFeedbackConsumer {
                     });
 
                     try {
-                        await this.withTimeout(
-                            this.saveCodeReviewFeedbackUseCase.execute(payload),
-                            this.handlerTimeoutMs,
-                            'syncCodeReviewReactions',
-                        );
+                        const savedFeedbacks =
+                            await this.withTimeout(
+                                this.saveCodeReviewFeedbackUseCase.execute(
+                                    payload,
+                                ),
+                                this.handlerTimeoutMs,
+                                'syncCodeReviewReactions',
+                            );
+
+                        // Hook de aprendizaje: cada feedback nuevo guardado
+                        // (reacción 👍/👎 humana a una sugerencia) alimenta el
+                        // sistema de learnings. Nunca rompe el flujo — el
+                        // use-case ya traga sus propios errores.
+                        if (
+                            this.learnFromHumanFeedbackUseCase &&
+                            Array.isArray(savedFeedbacks) &&
+                            savedFeedbacks.length > 0
+                        ) {
+                            for (const feedback of savedFeedbacks) {
+                                try {
+                                    const learning =
+                                        await this.learnFromHumanFeedbackUseCase.execute(
+                                            feedback.toJson(),
+                                        );
+                                    if (learning) {
+                                        this.logger.debug({
+                                            message: `Learning derivado de feedback humano: ${learning.kind} (${learning.sourceRef})`,
+                                            context:
+                                                CodeReviewFeedbackConsumer.name,
+                                            metadata: {
+                                                learningId: learning.id,
+                                                suggestionId:
+                                                    feedback.suggestionId,
+                                                correlationId,
+                                            },
+                                        });
+                                    }
+                                } catch (hookError) {
+                                    this.logger.warn({
+                                        message:
+                                            'Learning hook failed (skipped, feedback flow intact)',
+                                        context:
+                                            CodeReviewFeedbackConsumer.name,
+                                        error:
+                                            hookError instanceof Error
+                                                ? hookError.message
+                                                : hookError,
+                                        metadata: { correlationId },
+                                    });
+                                }
+                            }
+                        }
+
                         const durationMs = Date.now() - startedAt;
                         this.logger.debug({
                             message: `Code review feedback processing for team ${payload.teamId} completed successfully.`,

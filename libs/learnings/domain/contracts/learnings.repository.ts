@@ -8,6 +8,7 @@ export interface ListLearningsFilter {
     status?: ILearning['status'];
     kind?: ILearning['kind'];
     sourceType?: ILearning['sourceType'];
+    sourceRef?: string;
     q?: string;
     page?: number;
     limit?: number;

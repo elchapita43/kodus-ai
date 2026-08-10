@@ -101,6 +101,7 @@ export class LearningsRepository implements ILearningsRepository {
         if (filter.status) where.status = filter.status;
         if (filter.kind) where.kind = filter.kind;
         if (filter.sourceType) where.sourceType = filter.sourceType;
+        if (filter.sourceRef) where.sourceRef = filter.sourceRef;
         if (filter.q) where.content = ILike(`%${filter.q}%`);
 
         return where;

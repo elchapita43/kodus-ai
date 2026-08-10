@@ -1,6 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { CODE_REVIEW_FEEDBACK_REPOSITORY_TOKEN } from '@libs/code-review/domain/codeReviewFeedback/contracts/codeReviewFeedback.repository';
 import { CODE_REVIEW_FEEDBACK_SERVICE_TOKEN } from '@libs/code-review/domain/codeReviewFeedback/contracts/codeReviewFeedback.service.contract';
 import { CodeReviewFeedbackRepository } from '@libs/code-review/infrastructure/adapters/repositories/codeReviewFeedback.repository';
@@ -20,6 +19,7 @@ import { GithubModule } from '@libs/platform/modules/github.module';
 import { GitlabModule } from '@libs/platform/modules/gitlab.module';
 import { PlatformModule } from '@libs/platform/modules/platform.module';
 import { PullRequestsModule } from './pull-requests.module';
+import { LearningsModule } from '@libs/learnings/modules/learnings.module';
 import { GetReactionsUseCase } from '../application/use-cases/codeReviewFeedback/get-reactions.use-case';
 import { SaveCodeReviewFeedbackUseCase } from '../application/use-cases/codeReviewFeedback/save-feedback.use-case';
 import { CodeReviewFeedbackConsumer } from '@libs/core/infrastructure/queue/messageBroker/consumers/codeReviewFeedback.consumer';
@@ -44,6 +44,9 @@ const UseCases = [GetReactionsUseCase, SaveCodeReviewFeedbackUseCase] as const;
         forwardRef(() => GithubModule),
         forwardRef(() => GitlabModule),
         forwardRef(() => PullRequestsModule),
+        // Hook de aprendizaje por feedback humano (learnings). forwardRef para
+        // no crear ciclos con módulos que importan codeReviewFeedback.
+        forwardRef(() => LearningsModule),
     ],
     providers: [
         ...UseCases,
