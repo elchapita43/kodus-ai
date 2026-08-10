@@ -169,6 +169,7 @@ describe('rendered prompt snapshots', () => {
 
 
 
+
             </CodeReviewAgent>"
         `);
     });
@@ -270,6 +271,7 @@ describe('rendered prompt snapshots', () => {
                 CROSS-FILE: when the bug spans files, set relevantFile/relevantLinesStart/relevantLinesEnd to the CHANGED line that TRIGGERS it (the modified call, usage, import, or signature) — NOT the unchanged file where the symptom surfaces — and explain the cross-file effect in suggestionContent.
                 NEVER emit a placeholder, guessed, "unknown", or non-diff path for relevantFile. If you cannot anchor the finding to a specific changed line present in this diff, OMIT the finding entirely.
               </Scope>
+
 
 
 
@@ -485,6 +487,7 @@ describe('rendered prompt snapshots', () => {
               <Scope>Root cause must be in lines added or modified by this PR. Trace impact through callers but anchor the finding to a changed line — for cross-file bugs anchor on the changed trigger line, never a placeholder or non-diff path; if you can't anchor it to a changed line, omit it.</Scope>
 
 
+
             </CodeReviewAgent>"
         `);
     });
@@ -577,6 +580,7 @@ describe('rendered prompt snapshots', () => {
                 Root cause must be in lines added or modified by this change.
                 relevantFile/relevantLinesStart/relevantLinesEnd must point to the changed lines.
               </Scope>
+
 
 
 

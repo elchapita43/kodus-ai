@@ -143,6 +143,7 @@ export function buildSystemPrompt(input: ReviewAgentInput, meta: PromptAgentMeta
         const categoryPrompt = meta.categoryPrompt;
         const overridesSection = formatOverrides(input, meta);
         const memoryRulesSection = formatMemoryRules(input.memoryRules);
+        const learningsSection = formatLearnings(input.learnings);
 
         const langLabel = resolveLanguageLabel(input.languageResultPrompt);
         const langSection = langLabel
@@ -244,6 +245,7 @@ ${formatCrossRepoBoundarySection(input) || ''}
 ${overridesSection}
 
 ${memoryRulesSection}
+${learningsSection}
 
 </CodeReviewAgent>`;
     }
@@ -262,6 +264,7 @@ export function buildCompactSystemPrompt(input: ReviewAgentInput, meta: PromptAg
         const categoryLabel = meta.categoryLabel;
         const overridesSection = formatOverrides(input, meta);
         const memoryRulesSection = formatMemoryRules(input.memoryRules);
+        const learningsSection = formatLearnings(input.learnings);
         const crossRepoSection = formatCrossRepoBoundarySection(input);
         const langLabel = resolveLanguageLabel(input.languageResultPrompt);
         const langLine = langLabel
@@ -275,6 +278,7 @@ export function buildCompactSystemPrompt(input: ReviewAgentInput, meta: PromptAg
   <Scope>Root cause must be in lines added or modified by this PR. Trace impact through callers but anchor the finding to a changed line — for cross-file bugs anchor on the changed trigger line, never a placeholder or non-diff path; if you can't anchor it to a changed line, omit it.</Scope>${crossRepoSection ? `\n${crossRepoSection}` : ''}
 ${overridesSection}
 ${memoryRulesSection}
+${learningsSection}
 </CodeReviewAgent>`;
     }
 
@@ -495,6 +499,7 @@ export function buildSelfContainedSystemPrompt(input: ReviewAgentInput, meta: Pr
         const categoryPrompt = meta.categoryPrompt;
         const overridesSection = formatOverrides(input, meta);
         const memoryRulesSection = formatMemoryRules(input.memoryRules);
+        const learningsSection = formatLearnings(input.learnings);
 
         const langLabel = resolveLanguageLabel(input.languageResultPrompt);
         const langSection = langLabel
@@ -550,6 +555,7 @@ export function buildSelfContainedSystemPrompt(input: ReviewAgentInput, meta: Pr
 ${overridesSection}
 
 ${memoryRulesSection}
+${learningsSection}
 
 </CodeReviewAgent>`;
     }
@@ -733,6 +739,16 @@ function formatMemoryRules(rules?: Partial<IKodyRule>[]): string {
             .join('\n');
 
         return `## Memory Rules (Team Conventions)\n${formatted}`;
+    }
+
+function formatLearnings(learnings?: string[]): string {
+        if (!learnings?.length) return '';
+
+        const formatted = learnings
+            .map((l) => `- ${l}`)
+            .join('\n');
+
+        return `## Project Learnings (validated by the team)\n${formatted}\n\nTreat these as ground truth: they are team-validated conventions, decisions and preferences for THIS repository. Align your findings and suggestions with them; flag code that contradicts them.`;
     }
 
 function formatOverrides(input: ReviewAgentInput, meta: PromptAgentMeta): string {

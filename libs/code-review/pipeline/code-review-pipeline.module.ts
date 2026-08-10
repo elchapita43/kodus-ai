@@ -41,6 +41,7 @@ import { LicenseModule } from '@libs/ee/license/license.module';
 import { PermissionValidationModule } from '@libs/ee/shared/permission-validation.module';
 import { KodyFineTuningContextModule } from '@libs/kodyFineTuning/kodyFineTuningContext.module';
 import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { LearningsModule } from '@libs/learnings/modules/learnings.module';
 import { OrganizationModule } from '@libs/organization/modules/organization.module';
 import { FeatureGateModule } from '@libs/feature-gate';
 import { OrganizationParametersModule } from '@libs/organization/modules/organizationParameters.module';
@@ -111,6 +112,10 @@ import { ReviewOrchestratorService } from '../infrastructure/agents/review-orche
         // swap for the shard judge). forwardRef: the kodyRules module reaches
         // back into code-review via CODE_BASE_CONFIG_SERVICE_TOKEN.
         forwardRef(() => KodyRulesModule),
+        // AgentReviewStage injecta el repository de learnings (memoria por
+        // proyecto) para inyectarlos al prompt de la review. forwardRef por
+        // consistencia con el resto de imports con ciclos potenciales.
+        forwardRef(() => LearningsModule),
         AstGraphModule,
         forwardRef(() => McpCoreModule),
         WorkflowCoreModule,

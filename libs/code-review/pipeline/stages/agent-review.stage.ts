@@ -69,6 +69,11 @@ import {
     ILicenseService,
     LICENSE_SERVICE_TOKEN,
 } from '@libs/ee/license/interfaces/license.interface';
+import {
+    ILearningsRepository,
+    LEARNINGS_REPOSITORY_TOKEN,
+} from '@libs/learnings/domain/contracts/learnings.repository';
+import { LearningStatus } from '@libs/learnings/domain/interfaces/learning.interface';
 import { isTeamsOrEnterpriseTierAllowed } from '@libs/ee/license/tier/teams-or-enterprise-tier-policy';
 import { PullRequestState } from '@libs/core/domain/enums/pullRequestState.enum';
 
@@ -294,6 +299,12 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
         @Optional()
         @Inject(LICENSE_SERVICE_TOKEN)
         private readonly licenseService?: ILicenseService,
+        // Learnings (memoria por proyecto): opcional para no romper specs ni
+        // flujos sin el módulo montado — si no está, la review corre sin
+        // learnings (igual que antes).
+        @Optional()
+        @Inject(LEARNINGS_REPOSITORY_TOKEN)
+        private readonly learningsRepository?: ILearningsRepository,
     ) {
         super();
     }
@@ -334,6 +345,53 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 },
             });
             return rules;
+        }
+    }
+
+    /**
+     * Learnings activos del repositorio (memoria por proyecto): convenciones,
+     * decisiones y preferencias validadas por el equipo. Se inyectan al agente
+     * de review para que la revisión respete lo aprendido. Nunca rompe la
+     * review: cualquier fallo degrada a "sin learnings".
+     */
+    private async prepareLearningsForReview(
+        context: CodeReviewPipelineContext,
+        repositoryId: string,
+    ): Promise<string[] | undefined> {
+        if (!this.learningsRepository) return undefined;
+
+        try {
+            const organizationId =
+                context.organizationAndTeamData?.organizationId;
+            if (!organizationId) return undefined;
+
+            const learnings = await this.learningsRepository.find({
+                organizationId,
+                repositoryId,
+                status: LearningStatus.ACTIVE,
+                limit: 30,
+            });
+
+            if (!learnings.length) return undefined;
+
+            return learnings.map(
+                (l) =>
+                    `[${l.kind}${l.sourceRef ? `, ${l.sourceRef}` : ''}] ${l.content}`,
+            );
+        } catch (error) {
+            this.logger.warn({
+                message:
+                    '[learnings] prepare failed — reviewing without project learnings',
+                context: AgentReviewStage.name,
+                metadata: {
+                    organizationId:
+                        context.organizationAndTeamData?.organizationId,
+                    repositoryId,
+                    error:
+                        error instanceof Error ? error.message : String(error),
+                },
+            });
+            return undefined;
         }
     }
 
@@ -631,6 +689,10 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     adaptiveProfile,
                     heavy: resolvedHeavy,
                     kodyRules: await this.prepareKodyRulesForReview(context),
+                    learnings: await this.prepareLearningsForReview(
+                        context,
+                        repositoryId,
+                    ),
                     linkedRepoAccess,
                 }),
             );

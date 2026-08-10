@@ -143,6 +143,13 @@ export interface ToolingContext {
 export interface ReviewRuleConfig {
     languageResultPrompt: string;
     memoryRules?: Partial<IKodyRule>[];
+    /**
+     * Learnings activos del repositorio (memoria por proyecto): convenciones,
+     * decisiones y preferencias que el equipo validó (feedback humano o
+     * derivación automática). Se inyectan en el prompt del agente para que la
+     * review respete lo aprendido. (Feature Learnings 2026-08.)
+     */
+    learnings?: string[];
     /** Kody rules passed through so findings tagged with ruleUuid can be cross-referenced. */
     kodyRules?: Partial<IKodyRule>[];
     v2PromptOverrides?: CodeReviewConfig['v2PromptOverrides'];

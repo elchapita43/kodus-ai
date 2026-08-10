@@ -28,6 +28,8 @@ export type OrchestratorInputComputed = Pick<
     // without the service (specs, degraded paths) fall back to the raw config
     // rules — the context itself is never mutated (it is frozen).
     kodyRules?: OrchestratorInput['kodyRules'];
+    // Learnings activos del repo (memoria por proyecto), listos para el prompt.
+    learnings?: string[];
 };
 
 /**
@@ -58,6 +60,7 @@ export function buildOrchestratorInput(
         languageResultPrompt:
             context.codeReviewConfig?.languageResultPrompt || 'en-US',
         memoryRules: context.codeReviewConfig?.kodyMemoryRules,
+        learnings: computed.learnings,
         v2PromptOverrides: context.codeReviewConfig?.v2PromptOverrides,
         generationMain:
             context.codeReviewConfig?.v2PromptOverrides?.generation?.main,
