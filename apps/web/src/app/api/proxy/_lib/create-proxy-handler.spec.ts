@@ -318,7 +318,7 @@ describe("createProxyHandler", () => {
             // The whole point of the proxy is to keep the internal
             // hostname out of the browser. If the API redirects to
             // its own internal origin, we must rewrite — otherwise
-            // the browser gets `http://kodus_api:3001/...`, which
+            // the browser gets `http://codus_api:3001/...`, which
             // doesn't resolve from the user's machine.
             fetchMock.mockResolvedValueOnce(
                 new Response(null, {

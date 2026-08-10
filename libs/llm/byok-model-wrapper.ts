@@ -8,7 +8,7 @@
  */
 import { wrapLanguageModel, type LanguageModel } from 'ai';
 
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 
 import {
     runWithBYOKLimiter,

@@ -31,7 +31,7 @@ export class SpendLimit2026060100000 implements MigrationInterface {
                 'category_workitems_type',
                 'timezone_config',
                 'review_mode_config',
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'auto_join_config',
                 'byok_config',
                 'cockpit_metrics_visibility',
@@ -52,11 +52,11 @@ export class SpendLimit2026060100000 implements MigrationInterface {
             DROP TYPE "public"."organization_parameters_configkey_enum_old"
         `);
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum"
+            ALTER TYPE "codus_workflow"."workflow_jobs_errorclassification_enum"
             RENAME TO "workflow_jobs_errorclassification_enum_old"
         `);
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_errorclassification_enum" AS ENUM(
                 'RETRYABLE',
                 'NON_RETRYABLE',
                 'CIRCUIT_OPEN',
@@ -65,11 +65,11 @@ export class SpendLimit2026060100000 implements MigrationInterface {
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "errorClassification" TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum" USING "errorClassification"::"text"::"kodus_workflow"."workflow_jobs_errorclassification_enum"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "errorClassification" TYPE "codus_workflow"."workflow_jobs_errorclassification_enum" USING "errorClassification"::"text"::"codus_workflow"."workflow_jobs_errorclassification_enum"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum_old"
+            DROP TYPE "codus_workflow"."workflow_jobs_errorclassification_enum_old"
         `);
         await queryRunner.query(`
             CREATE INDEX CONCURRENTLY IF NOT EXISTS "IDX_org_params_key_org" ON "organization_parameters" ("configKey", "organization_id")
@@ -81,7 +81,7 @@ export class SpendLimit2026060100000 implements MigrationInterface {
             DROP INDEX CONCURRENTLY IF EXISTS "public"."IDX_org_params_key_org"
         `);
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum_old" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_errorclassification_enum_old" AS ENUM(
                 'CIRCUIT_OPEN',
                 'NON_RETRYABLE',
                 'PERMANENT',
@@ -89,14 +89,14 @@ export class SpendLimit2026060100000 implements MigrationInterface {
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "errorClassification" TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum_old" USING "errorClassification"::"text"::"kodus_workflow"."workflow_jobs_errorclassification_enum_old"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "errorClassification" TYPE "codus_workflow"."workflow_jobs_errorclassification_enum_old" USING "errorClassification"::"text"::"codus_workflow"."workflow_jobs_errorclassification_enum_old"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum"
+            DROP TYPE "codus_workflow"."workflow_jobs_errorclassification_enum"
         `);
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_errorclassification_enum_old"
+            ALTER TYPE "codus_workflow"."workflow_jobs_errorclassification_enum_old"
             RENAME TO "workflow_jobs_errorclassification_enum"
         `);
         await queryRunner.query(`
@@ -109,7 +109,7 @@ export class SpendLimit2026060100000 implements MigrationInterface {
                 'code_review_preset',
                 'dry_run_limit',
                 'first_review_at',
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'license_assigned_users',
                 'license_key',
                 'review_mode_config',

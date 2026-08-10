@@ -1,12 +1,12 @@
 /**
  * @license
- * © Kodus Tech. All rights reserved.
+ * © Codus Tech. All rights reserved.
  */
 
 import { Injectable } from '@nestjs/common';
 
 import { BaseFileReviewContextPreparation } from './base-file-review.abstract';
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { ReviewModeOptions } from '@libs/core/domain/interfaces/file-review-context-preparation.interface';
 import {
     FileChange,

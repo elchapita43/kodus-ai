@@ -1,8 +1,8 @@
 import { createLogger } from '@libs/core/log/logger';
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { Output } from 'ai';
 import z from 'zod';
-import filteredLibraryKodyRules from '@libs/code-review/infrastructure/data/filtered-rules.json';
+import filteredLibraryCodyRules from '@libs/code-review/infrastructure/data/filtered-rules.json';
 import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
 
@@ -19,7 +19,7 @@ import {
 } from '@libs/core/log/langfuse';
 
 import { SUPPORTED_LANGUAGES } from '@libs/code-review/domain/contracts/SupportedLanguages';
-import { isKodyAuthoredBody } from '@libs/common/utils/kody-identifiers';
+import { isCodyAuthoredBody } from '@libs/common/utils/cody-identifiers';
 import {
     CategorizedComment,
     UncategorizedComment,
@@ -33,33 +33,33 @@ import {
     prompt_CommentIrrelevanceFilterUser,
 } from '@libs/common/utils/langchainCommon/prompts/commentAnalysis';
 import {
-    kodyRulesGeneratorDuplicateFilterSchema,
-    kodyRulesGeneratorQualityFilterSchema,
-    kodyRulesGeneratorSchema,
-    prompt_KodyRulesGeneratorDuplicateFilterSystem,
-    prompt_KodyRulesGeneratorDuplicateFilterUser,
-    prompt_KodyRulesGeneratorQualityFilterSystem,
-    prompt_KodyRulesGeneratorQualityFilterUser,
-    prompt_KodyRulesGeneratorSystem,
-    prompt_KodyRulesGeneratorUser,
-} from '@libs/common/utils/langchainCommon/prompts/kodyRulesGenerator';
+    codyRulesGeneratorDuplicateFilterSchema,
+    codyRulesGeneratorQualityFilterSchema,
+    codyRulesGeneratorSchema,
+    prompt_CodyRulesGeneratorDuplicateFilterSystem,
+    prompt_CodyRulesGeneratorDuplicateFilterUser,
+    prompt_CodyRulesGeneratorQualityFilterSystem,
+    prompt_CodyRulesGeneratorQualityFilterUser,
+    prompt_CodyRulesGeneratorSystem,
+    prompt_CodyRulesGeneratorUser,
+} from '@libs/common/utils/langchainCommon/prompts/codyRulesGenerator';
 import { DocumentationContextItem } from '@libs/core/infrastructure/config/types/general/codeReview.type';
-import { LibraryKodyRule } from '@libs/core/infrastructure/config/types/general/kodyRules.type';
+import { LibraryCodyRule } from '@libs/core/infrastructure/config/types/general/codyRules.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import { ObservabilityService } from '@libs/core/log/observability.service';
-import { KodyRuleSeverity } from '@libs/ee/kodyRules/dtos/create-kody-rule.dto';
+import { CodyRuleSeverity } from '@libs/ee/codyRules/dtos/create-cody-rule.dto';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import {
-    IKodyRule,
-    KodyRulesStatus,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRulesStatus,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 /**
- * Resolved model selection for a Kody Rules LLM call. BYOK wins when present;
+ * Resolved model selection for a Cody Rules LLM call. BYOK wins when present;
  * otherwise `modelOverride` forces a model (trial → Kimi); both undefined
- * resolves the self-hosted env model. Produced by `resolveKodyRulesModelPolicy`.
+ * resolves the self-hosted env model. Produced by `resolveCodyRulesModelPolicy`.
  */
-export interface KodyRulesModelSelection {
+export interface CodyRulesModelSelection {
     byokConfig?: BYOKConfig;
     modelOverride?: string;
 }
@@ -85,7 +85,7 @@ export class CommentAnalysisService {
      */
     private async runStructuredLLM<S extends z.ZodType>(args: {
         organizationAndTeamData: OrganizationAndTeamData;
-        modelConfig: KodyRulesModelSelection;
+        modelConfig: CodyRulesModelSelection;
         schema: S;
         system: string;
         user: string;
@@ -238,14 +238,14 @@ export class CommentAnalysisService {
         }
     }
 
-    async generateKodyRules(params: {
+    async generateCodyRules(params: {
         comments: UncategorizedComment[];
-        existingRules: IKodyRule[];
+        existingRules: ICodyRule[];
         organizationAndTeamData: OrganizationAndTeamData;
-        modelConfig?: KodyRulesModelSelection;
-        memories?: Array<Partial<IKodyRule>>;
+        modelConfig?: CodyRulesModelSelection;
+        memories?: Array<Partial<ICodyRule>>;
         documentationContext?: DocumentationContextItem[];
-    }): Promise<IKodyRule[]> {
+    }): Promise<ICodyRule[]> {
         const {
             comments,
             existingRules,
@@ -257,7 +257,7 @@ export class CommentAnalysisService {
         // Resolve the model once for every call in this generation run. The
         // use-case/cron pass the policy-resolved selection; fall back to the
         // org's BYOK when called without one (keeps existing callers working).
-        const modelConfig: KodyRulesModelSelection =
+        const modelConfig: CodyRulesModelSelection =
             params.modelConfig ?? {
                 byokConfig:
                     (await this.permissionValidationService.getBYOKConfig(
@@ -275,7 +275,7 @@ export class CommentAnalysisService {
 
         if (!filteredComments || filteredComments.length === 0) {
             this.logger.log({
-                message: 'No comments to generate Kody rules after filtering',
+                message: 'No comments to generate Cody rules after filtering',
                 context: CommentAnalysisService.name,
                 metadata: { organizationAndTeamData },
             });
@@ -285,19 +285,19 @@ export class CommentAnalysisService {
         const generatedRes = await this.runStructuredLLM({
             organizationAndTeamData,
             modelConfig,
-            schema: kodyRulesGeneratorSchema,
-            system: prompt_KodyRulesGeneratorSystem(),
-            user: prompt_KodyRulesGeneratorUser({
+            schema: codyRulesGeneratorSchema,
+            system: prompt_CodyRulesGeneratorSystem(),
+            user: prompt_CodyRulesGeneratorUser({
                 comments: filteredComments,
-                rules: filteredLibraryKodyRules,
+                rules: filteredLibraryCodyRules,
                 memories,
                 documentationContext,
             }),
-            runName: 'generateKodyRules.generate',
+            runName: 'generateCodyRules.generate',
             attrs: { commentsCount: filteredComments.length },
         });
 
-        const generated = generatedRes?.rules as Partial<IKodyRule>[];
+        const generated = generatedRes?.rules as Partial<ICodyRule>[];
 
         if (!generated || generated.length === 0) {
             this.logger.log({
@@ -316,21 +316,21 @@ export class CommentAnalysisService {
         const existingRulesAsLibrary = existingRules.map((rule) => ({
             ...rule,
             why_is_this_important:
-                (rule as Partial<LibraryKodyRule>)?.why_is_this_important || '',
-        })) as LibraryKodyRule[];
+                (rule as Partial<LibraryCodyRule>)?.why_is_this_important || '',
+        })) as LibraryCodyRule[];
 
         let deduplicatedRules = generatedWithUuids;
         if (existingRules && existingRules.length > 0) {
             const deduplicatedRulesUuidsRes = await this.runStructuredLLM({
                 organizationAndTeamData,
                 modelConfig,
-                schema: kodyRulesGeneratorDuplicateFilterSchema,
-                system: prompt_KodyRulesGeneratorDuplicateFilterSystem(),
-                user: prompt_KodyRulesGeneratorDuplicateFilterUser({
+                schema: codyRulesGeneratorDuplicateFilterSchema,
+                system: prompt_CodyRulesGeneratorDuplicateFilterSystem(),
+                user: prompt_CodyRulesGeneratorDuplicateFilterUser({
                     existingRules: existingRulesAsLibrary,
                     newRules: generatedWithUuids,
                 }),
-                runName: 'generateKodyRules.dedupe',
+                runName: 'generateCodyRules.dedupe',
                 attrs: {
                     newRulesCount: generatedWithUuids.length,
                     existingRulesCount: existingRulesAsLibrary.length,
@@ -357,12 +357,12 @@ export class CommentAnalysisService {
         const filteredRulesUuidsRes = await this.runStructuredLLM({
             organizationAndTeamData,
             modelConfig,
-            schema: kodyRulesGeneratorQualityFilterSchema,
-            system: prompt_KodyRulesGeneratorQualityFilterSystem(),
-            user: prompt_KodyRulesGeneratorQualityFilterUser({
+            schema: codyRulesGeneratorQualityFilterSchema,
+            system: prompt_CodyRulesGeneratorQualityFilterSystem(),
+            user: prompt_CodyRulesGeneratorQualityFilterUser({
                 rules: deduplicatedRules,
             }),
-            runName: 'generateKodyRules.quality',
+            runName: 'generateCodyRules.quality',
             attrs: { candidateRulesCount: deduplicatedRules.length },
         });
 
@@ -386,7 +386,7 @@ export class CommentAnalysisService {
     }
 
     private mapRuleUuidToRule(params: {
-        rules: Array<Omit<Partial<IKodyRule>, 'uuid'> & { uuid: string }>;
+        rules: Array<Omit<Partial<ICodyRule>, 'uuid'> & { uuid: string }>;
         uuids: string[];
     }) {
         const { rules, uuids } = params;
@@ -395,17 +395,17 @@ export class CommentAnalysisService {
     }
 
     private standardizeRules(params: {
-        rules: Partial<IKodyRule>[];
-    }): IKodyRule[] {
+        rules: Partial<ICodyRule>[];
+    }): ICodyRule[] {
         try {
             const { rules } = params;
 
-            const filteredKodyRulesUuids = new Set(
-                filteredLibraryKodyRules.map((rule) => rule.uuid),
+            const filteredCodyRulesUuids = new Set(
+                filteredLibraryCodyRules.map((rule) => rule.uuid),
             );
 
             const standardizedRules = rules.map((rule) => {
-                if (!filteredKodyRulesUuids.has(rule.uuid)) {
+                if (!filteredCodyRulesUuids.has(rule.uuid)) {
                     rule.uuid = '';
                 }
                 return rule;
@@ -415,10 +415,10 @@ export class CommentAnalysisService {
                 uuid: rule.uuid || '',
                 title: rule.title || '',
                 rule: rule.rule || '',
-                severity: rule.severity || KodyRuleSeverity.LOW,
+                severity: rule.severity || CodyRuleSeverity.LOW,
                 examples: rule.examples || [],
                 repositoryId: 'global',
-                status: KodyRulesStatus.PENDING,
+                status: CodyRulesStatus.PENDING,
             }));
         } catch (error) {
             this.logger.error({
@@ -434,11 +434,11 @@ export class CommentAnalysisService {
     private async filterComments(params: {
         comments: UncategorizedComment[];
         organizationAndTeamData: OrganizationAndTeamData;
-        modelConfig?: KodyRulesModelSelection;
+        modelConfig?: CodyRulesModelSelection;
     }): Promise<UncategorizedComment[]> {
         const { comments, organizationAndTeamData } = params;
 
-        const modelConfig: KodyRulesModelSelection =
+        const modelConfig: CodyRulesModelSelection =
             params.modelConfig ?? {
                 byokConfig:
                     (await this.permissionValidationService.getBYOKConfig(
@@ -544,16 +544,16 @@ export class CommentAnalysisService {
                             comment?.user?.type?.toLowerCase() !== 'bot',
                     )
                     ?.filter(
-                        // Drop comments authored by Kody itself — otherwise
-                        // the rule-generator LLM learns from Kody's own
+                        // Drop comments authored by Cody itself — otherwise
+                        // the rule-generator LLM learns from Cody's own
                         // past reviews and creates duplicate rules on
                         // subsequent onboardings (self-feedback loop).
                         // Both provider signatures are checked centrally
-                        // via `isKodyAuthoredBody` — see
-                        // `libs/common/utils/kody-identifiers.ts` for why
+                        // via `isCodyAuthoredBody` — see
+                        // `libs/common/utils/cody-identifiers.ts` for why
                         // bitbucket needs a different marker form than
                         // github / gitlab / azure / forgejo.
-                        (comment) => !isKodyAuthoredBody(comment?.body),
+                        (comment) => !isCodyAuthoredBody(comment?.body),
                     )
                     ?.filter((comment) => {
                         // Reviewer denylist (issue #1497): drop comments from

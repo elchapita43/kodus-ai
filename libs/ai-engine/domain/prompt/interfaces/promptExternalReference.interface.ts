@@ -8,7 +8,7 @@ export enum PromptSourceType {
     SEVERITY_MEDIUM = 'severity_medium',
     SEVERITY_LOW = 'severity_low',
     GENERATION_MAIN = 'generation_main',
-    KODY_RULE = 'kody_rule',
+    CODY_RULE = 'cody_rule',
 }
 
 export enum PromptProcessingStatus {
@@ -70,7 +70,7 @@ export interface IPromptExternalReference {
     readonly organizationId: string;
     readonly repositoryId: string;
     readonly directoryId?: string;
-    readonly kodyRuleId?: string;
+    readonly codyRuleId?: string;
     readonly repositoryName: string;
     promptHash: string;
     contextReferenceId?: string;

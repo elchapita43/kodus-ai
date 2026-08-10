@@ -4,7 +4,7 @@
  *
  * Seeds the local DBs with:
  *   - Two directories on an existing repo (postgres code_review_config)
- *   - Three Kody rules with the same shapes the client reported:
+ *   - Three Cody rules with the same shapes the client reported:
  *       - b207a89c  (Logging Best Practices)  — auto-sync, dirId = cf5284b4
  *       - 32dfa554  (Java/Spring arch)        — auto-sync, dirId = 314f34ff
  *       - ff8ecc7e  (Transaction mgmt)        — hand-created repo-level
@@ -17,13 +17,13 @@ import { MongoClient } from 'mongodb';
 
 const PG_URL =
     process.env.PG_URL ||
-    'postgres://kodusdev:123456@localhost:5432/kodus_db';
+    'postgres://codusdev:123456@localhost:5432/codus_db';
 const MONGO_URL =
     process.env.MONGO_URL ||
-    'mongodb://kodusdev:123456@localhost:27017/kodus_db?authSource=admin';
+    'mongodb://codusdev:123456@localhost:27017/codus_db?authSource=admin';
 
-// Use the "Kodus" org + its team, which is the one that already has
-// a code_review_config row with the kodus-extension repo wired up.
+// Use the "Codus" org + its team, which is the one that already has
+// a code_review_config row with the codus-extension repo wired up.
 const ORGANIZATION_ID = 'a4330b68-75d8-441e-bb43-7f0a8300980f';
 const TEAM_ID = '37dacb3f-99fc-4a80-862e-f8332ddf9c0a';
 const REPOSITORY_ID = '1135722979';
@@ -82,7 +82,7 @@ async function updateCodeReviewConfig() {
     } else {
         repos.push({
             id: REPOSITORY_ID,
-            name: 'kodus-extension',
+            name: 'codus-extension',
             isSelected: true,
             configs: { ideRulesSyncEnabled: false },
             directories,
@@ -100,11 +100,11 @@ async function updateCodeReviewConfig() {
     console.log('✓ Postgres: code_review_config updated with 2 directories');
 }
 
-async function seedKodyRules() {
+async function seedCodyRules() {
     const client = new MongoClient(MONGO_URL);
     await client.connect();
-    const db = client.db('kodus_db');
-    const collection = db.collection('kodyRules');
+    const db = client.db('codus_db');
+    const collection = db.collection('codyRules');
 
     const now = new Date();
     const rules = [
@@ -235,15 +235,15 @@ private val LOGGER = LoggerFactory.getLogger(...)`,
     );
 
     await client.close();
-    console.log('✓ Mongo: kodyRules seeded with 3 rules (b207a89c, 32dfa554, ff8ecc7e)');
+    console.log('✓ Mongo: codyRules seeded with 3 rules (b207a89c, 32dfa554, ff8ecc7e)');
 }
 
 async function main() {
     await updateCodeReviewConfig();
-    await seedKodyRules();
+    await seedCodyRules();
     console.log('\nOpen the app and navigate to:');
     console.log(
-        `  http://localhost:3000/settings/code-review/${REPOSITORY_ID}/kody-rules`,
+        `  http://localhost:3000/settings/code-review/${REPOSITORY_ID}/cody-rules`,
     );
     console.log('and browse each directory to see the INHERITED: DIRECTORY leak.');
 }

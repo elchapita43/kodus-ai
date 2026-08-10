@@ -34,7 +34,7 @@ export const PullRequestApprovalActive = () => {
                             </div>
 
                             <p className="text-text-secondary text-sm">
-                                When Kody completes an automated code review and
+                                When Cody completes an automated code review and
                                 finds no issues, it will automatically approve
                                 the Pull Request.
                             </p>

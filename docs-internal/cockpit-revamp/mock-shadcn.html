@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cockpit — Kodus Review (shadcn/recharts mock)</title>
+<title>Cockpit — Codus Review (shadcn/recharts mock)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <style>
@@ -249,9 +249,9 @@
             <div class="select-mock">Last 90 days</div>
             <select class="select-mock" id="repoSelect" onchange="setRepoFilter(this.value || null)" style="cursor:pointer">
                 <option value="">All repositories</option>
-                <option value="kodus-ai">kodus-ai</option>
-                <option value="kodus-web">kodus-web</option>
-                <option value="kodus-installer">kodus-installer</option>
+                <option value="codus-ai">codus-ai</option>
+                <option value="codus-web">codus-web</option>
+                <option value="codus-installer">codus-installer</option>
                 <option value="mobile-app">mobile-app</option>
                 <option value="internal-docs">internal-docs</option>
             </select>
@@ -260,7 +260,7 @@
 
     <!-- ============ TABS ============ -->
     <div class="tabs">
-        <button class="tab active" data-tab="review" onclick="switchTab('review')">Kodus Review</button>
+        <button class="tab active" data-tab="review" onclick="switchTab('review')">Codus Review</button>
         <button class="tab" data-tab="productivity" onclick="switchTab('productivity')">Productivity</button>
     </div>
 
@@ -311,7 +311,7 @@
         </div>
     </div>
 
-    <!-- ============ TAB: KODUS REVIEW ============ -->
+    <!-- ============ TAB: CODUS REVIEW ============ -->
     <div id="tab-review">
 
         <div class="section">
@@ -357,7 +357,7 @@
             <div class="section-head">
                 <div>
                     <h2>Negative feedback (👎)</h2>
-                    <div class="hint">where the team disagrees with Kodus · click to drill down</div>
+                    <div class="hint">where the team disagrees with Codus · click to drill down</div>
                 </div>
                 <div class="pills" id="feedbackPills">
                     <button class="pill active" data-feedback="category" onclick="switchFeedback('category')">By category</button>
@@ -371,7 +371,7 @@
             <div class="section-head">
                 <div>
                     <h2>Repositories — health</h2>
-                    <div class="hint">where Kodus is landing vs. being ignored · click a row to focus the cockpit on that repo</div>
+                    <div class="hint">where Codus is landing vs. being ignored · click a row to focus the cockpit on that repo</div>
                 </div>
             </div>
             <table id="reposTable">
@@ -388,14 +388,14 @@
                 <tbody></tbody>
             </table>
             <div class="legend-note">
-                <b>Weakest category</b> = lowest implementation rate in that repo — where to tune config or add a Kody Rule.
+                <b>Weakest category</b> = lowest implementation rate in that repo — where to tune config or add a Cody Rule.
             </div>
         </div>
 
         <div class="section">
             <div class="section-head">
                 <div>
-                    <h2>Kody Rules — health</h2>
+                    <h2>Cody Rules — health</h2>
                     <div class="hint">how each rule is performing · click a row to drill down</div>
                 </div>
                 <div class="filter-chips" id="ruleChips">
@@ -485,7 +485,7 @@ const mockSuggestions = {
             { sev: 'low', status: 'notimpl', title: 'Rename `data` to something more descriptive like `pullRequestPayload`.', file: 'libs/platformData/mappers/pr.mapper.ts', pr: '#1244', up: 0, down: 3 },
             { sev: 'low', status: 'notimpl', title: 'Prefer early return over nested else blocks.', file: 'apps/api/src/controllers/cockpit.controller.ts', pr: '#1240', up: 0, down: 2 },
             { sev: 'medium', status: 'impl', title: 'Extract the magic constant `86400` into `SECONDS_IN_DAY`.', file: 'libs/cockpit/services/period.helper.ts', pr: '#1233', up: 1, down: 0 },
-            { sev: 'low', status: 'notimpl', title: 'Sort imports by group (external, internal, relative).', file: 'libs/kodyRules/service.ts', pr: '#1230', up: 0, down: 4 },
+            { sev: 'low', status: 'notimpl', title: 'Sort imports by group (external, internal, relative).', file: 'libs/codyRules/service.ts', pr: '#1230', up: 0, down: 4 },
         ],
     },
     rule: {
@@ -571,9 +571,9 @@ renderRules();
 
 /* ---------------- repositories health ---------------- */
 const repos = [
-    { name: 'kodus-ai', prs: 41, sent: 142, impl: 51, downRate: 5, weakest: 'Code Style' },
-    { name: 'kodus-web', prs: 23, sent: 86, impl: 38, downRate: 9, weakest: 'Refactoring' },
-    { name: 'kodus-installer', prs: 6, sent: 22, impl: 61, downRate: 0, weakest: 'Documentation' },
+    { name: 'codus-ai', prs: 41, sent: 142, impl: 51, downRate: 5, weakest: 'Code Style' },
+    { name: 'codus-web', prs: 23, sent: 86, impl: 38, downRate: 9, weakest: 'Refactoring' },
+    { name: 'codus-installer', prs: 6, sent: 22, impl: 61, downRate: 0, weakest: 'Documentation' },
     { name: 'mobile-app', prs: 12, sent: 46, impl: 19, downRate: 17, weakest: 'Performance' },
     { name: 'internal-docs', prs: 5, sent: 12, impl: 33, downRate: 8, weakest: 'Maintainability' },
 ];

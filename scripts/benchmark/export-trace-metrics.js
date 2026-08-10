@@ -320,7 +320,7 @@ function main() {
         }
 
         const finishedStage = rows.find(
-            (row) => row.stageName === 'Kody Review Finished',
+            (row) => row.stageName === 'Cody Review Finished',
         );
 
         return {

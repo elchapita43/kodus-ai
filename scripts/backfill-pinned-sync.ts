@@ -1,11 +1,11 @@
 #!/usr/bin/env npx ts-node
 /**
- * Backfill `pinnedSync` on existing Kody Rules.
+ * Backfill `pinnedSync` on existing Cody Rules.
  *
  * Why this exists:
  *   Rules created before the `pinnedSync` flag shipped have no value
  *   for it. The orphan-rules chip in the UI uses `pinnedSync=true` as
- *   the opt-out signal ("backend keeps syncing this via @kody-sync"),
+ *   the opt-out signal ("backend keeps syncing this via @cody-sync"),
  *   so pre-existing rules show up as "orphan" until the next time
  *   their source file is re-synced. For repos with auto-sync OFF that
  *   re-sync may never happen organically. This script triggers it
@@ -13,11 +13,11 @@
  *
  * What it does:
  *   For each selected (org, team, repo) it calls
- *   `KodyRulesSyncService.syncRepositoryMain` — the same code path
+ *   `CodyRulesSyncService.syncRepositoryMain` — the same code path
  *   the "Resync rules from IDE" button uses. With the depin pass
  *   shipped alongside `pinnedSync`, that sync:
  *     • sets `pinnedSync=true` on rules whose source file currently
- *       carries `@kody-sync`;
+ *       carries `@cody-sync`;
  *     • flips it to `false` on rules whose file lost the marker;
  *     • soft-deletes (status=DELETED) rules whose file is gone from
  *       the default branch.
@@ -58,8 +58,8 @@ import { Logger, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { Client } from 'pg';
 
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
-import { KodyRulesSyncService } from '@libs/kodyRules/infrastructure/adapters/services/kodyRulesSync.service';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
+import { CodyRulesSyncService } from '@libs/codyRules/infrastructure/adapters/services/codyRulesSync.service';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 
 interface CliArgs {
@@ -128,10 +128,10 @@ function loadEnvFile(envFile?: string): void {
 
 /**
  * Standalone module — pulls in just enough of the app to resolve
- * `KodyRulesSyncService`. Avoids importing the full HTTP/queue stack.
+ * `CodyRulesSyncService`. Avoids importing the full HTTP/queue stack.
  */
 @Module({
-    imports: [KodyRulesModule],
+    imports: [CodyRulesModule],
 })
 class BackfillPinnedSyncModule {}
 
@@ -229,7 +229,7 @@ async function main() {
     let succeeded = 0;
     let failed = 0;
     try {
-        const sync = app.get(KodyRulesSyncService);
+        const sync = app.get(CodyRulesSyncService);
         for (const t of targets) {
             const organizationAndTeamData: OrganizationAndTeamData = {
                 organizationId: t.organizationId,

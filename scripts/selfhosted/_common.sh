@@ -4,9 +4,9 @@
 # Source from each script with:  . "$(dirname "$0")/_common.sh"
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-STATE_DIR="$REPO_ROOT/.kodus-dev"
+STATE_DIR="$REPO_ROOT/.codus-dev"
 SSH_KEY_DIR="$STATE_DIR/ssh-keys"
-GLOBAL_CONFIG="$HOME/.kodus-dev/config"
+GLOBAL_CONFIG="$HOME/.codus-dev/config"
 
 mkdir -p "$STATE_DIR" "$SSH_KEY_DIR"
 chmod 700 "$SSH_KEY_DIR"
@@ -17,7 +17,7 @@ chmod 700 "$SSH_KEY_DIR"
 #
 #   1. Already-exported env (highest — caller's shell wins)
 #   2. scripts/selfhosted/.env  (per-repo overrides, gitignored)
-#   3. ~/.kodus-dev/config       (global, written by setup.sh)
+#   3. ~/.codus-dev/config       (global, written by setup.sh)
 #
 # Implementation: snapshot each tracked var BEFORE loading any file. Load
 # files (lower → higher priority). Then restore snapshotted values for any
@@ -30,7 +30,7 @@ __snap_GH_DEV_TOKEN="${GH_DEV_TOKEN+__SET__}${GH_DEV_TOKEN:-}"
 __snap_API_OPEN_AI_API_KEY="${API_OPEN_AI_API_KEY+__SET__}${API_OPEN_AI_API_KEY:-}"
 __snap_API_OPENAI_FORCE_BASE_URL="${API_OPENAI_FORCE_BASE_URL+__SET__}${API_OPENAI_FORCE_BASE_URL:-}"
 __snap_API_LLM_PROVIDER_MODEL="${API_LLM_PROVIDER_MODEL+__SET__}${API_LLM_PROVIDER_MODEL:-}"
-__snap_KODUS_INSTALLER_PATH="${KODUS_INSTALLER_PATH+__SET__}${KODUS_INSTALLER_PATH:-}"
+__snap_CODUS_INSTALLER_PATH="${CODUS_INSTALLER_PATH+__SET__}${CODUS_INSTALLER_PATH:-}"
 __snap_TEST_VM_PROVIDER="${TEST_VM_PROVIDER+__SET__}${TEST_VM_PROVIDER:-}"
 __snap_IMAGE_TAG="${IMAGE_TAG+__SET__}${IMAGE_TAG:-}"
 __snap_DO_REGION="${DO_REGION+__SET__}${DO_REGION:-}"
@@ -63,7 +63,7 @@ __restore_if_set GH_DEV_TOKEN              "$__snap_GH_DEV_TOKEN"
 __restore_if_set API_OPEN_AI_API_KEY       "$__snap_API_OPEN_AI_API_KEY"
 __restore_if_set API_OPENAI_FORCE_BASE_URL "$__snap_API_OPENAI_FORCE_BASE_URL"
 __restore_if_set API_LLM_PROVIDER_MODEL    "$__snap_API_LLM_PROVIDER_MODEL"
-__restore_if_set KODUS_INSTALLER_PATH      "$__snap_KODUS_INSTALLER_PATH"
+__restore_if_set CODUS_INSTALLER_PATH      "$__snap_CODUS_INSTALLER_PATH"
 __restore_if_set TEST_VM_PROVIDER          "$__snap_TEST_VM_PROVIDER"
 __restore_if_set IMAGE_TAG                 "$__snap_IMAGE_TAG"
 __restore_if_set DO_REGION                 "$__snap_DO_REGION"
@@ -76,7 +76,7 @@ __restore_if_set HCLOUD_IMAGE              "$__snap_HCLOUD_IMAGE"
 unset __snap_DIGITALOCEAN_TOKEN __snap_HCLOUD_TOKEN __snap_SH_LICENSE_KEY \
       __snap_GH_DEV_TOKEN __snap_API_OPEN_AI_API_KEY __snap_API_OPENAI_FORCE_BASE_URL \
       __snap_API_LLM_PROVIDER_MODEL \
-      __snap_KODUS_INSTALLER_PATH __snap_TEST_VM_PROVIDER \
+      __snap_CODUS_INSTALLER_PATH __snap_TEST_VM_PROVIDER \
       __snap_IMAGE_TAG __snap_DO_REGION __snap_DO_SIZE __snap_DO_IMAGE \
       __snap_HCLOUD_LOCATION __snap_HCLOUD_SERVER_TYPE __snap_HCLOUD_IMAGE
 unset -f __load_value_from_file __restore_if_set
@@ -84,7 +84,7 @@ unset -f __load_value_from_file __restore_if_set
 # Resolve 1Password CLI references — any var whose value starts with `op://`
 # is replaced with the value of that 1Password item field, fetched via the
 # `op` CLI. Internal team can store secrets as `op://Vault/Item/field` in
-# ~/.kodus-dev/config; external contributors paste plain values. Both work
+# ~/.codus-dev/config; external contributors paste plain values. Both work
 # transparently from the rest of the scripts' perspective.
 #
 # Fails the calling script (set -e or exit 1) with a clear message if:
@@ -101,7 +101,7 @@ __resolve_op_ref() {
     if ! command -v op >/dev/null 2>&1; then
         echo "ERROR: $var is a 1Password reference ($value), but the 'op' CLI is not installed." >&2
         echo "       Install: brew install --cask 1password-cli  (or see https://developer.1password.com/docs/cli)" >&2
-        echo "       Or replace the ref with a plain value in ~/.kodus-dev/config" >&2
+        echo "       Or replace the ref with a plain value in ~/.codus-dev/config" >&2
         return 1
     fi
     local resolved

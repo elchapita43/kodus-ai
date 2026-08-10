@@ -1,16 +1,16 @@
 ---
 title: "Turn your best practices doc into review guardrails"
-description: "Convert your engineering handbook into living Kody Rules with optional MCP plugins."
+description: "Convert your engineering handbook into living Cody Rules with optional MCP plugins."
 icon: "shield-check"
 ---
 
 ## Why this guide matters
 
-Every engineering team has a “best practices” doc somewhere. The problem is that IDE suggestions don’t read it, reviewers forget the nuances, and the document slowly loses authority. This guide shows how to turn your handbook into active guardrails so Kody enforces those rules automatically and cites the relevant section whenever code drifts.
+Every engineering team has a “best practices” doc somewhere. The problem is that IDE suggestions don’t read it, reviewers forget the nuances, and the document slowly loses authority. This guide shows how to turn your handbook into active guardrails so Cody enforces those rules automatically and cites the relevant section whenever code drifts.
 
 We’ll focus on two building blocks:
 
-- [Kody Rules](/how_to_use/en/code_review/configs/kody_rules) – encode each policy bullet as deterministic file-level or PR-level checks.
+- [Cody Rules](/how_to_use/en/code_review/configs/cody_rules) – encode each policy bullet as deterministic file-level or PR-level checks.
 - [Custom plugins](/cookbook/en/custom-plugin-install) – fetch standards from remote MCP servers when the source of truth lives outside Git.
 
 Follow the flow and any repo can evolve from “handbook PDF” to “living policy pack.”
@@ -18,7 +18,7 @@ Follow the flow and any repo can evolve from “handbook PDF” to “living pol
 
 ## Pre-flight checklist
 
-- You have permission to edit **Code Review Settings → Kody Rules**.
+- You have permission to edit **Code Review Settings → Cody Rules**.
 - The policy pack lives in the repo (e.g., `docs/engineering-standards.md`). If yours sits in another path, adjust accordingly. If it lives in Notion, Confluence, or Google Docs, plan to expose it through a remote MCP endpoint.
 - You know which topics should be evaluated at the file level (controllers, configs) versus PR level (feature flags, rollout narratives, architecture).
 
@@ -28,7 +28,7 @@ Follow the flow and any repo can evolve from “handbook PDF” to “living pol
 
 ## Phase 1 – Shape a rule-friendly policy pack
 
-1. Create or reuse a markdown file such as `docs/engineering-standards.md`. The only requirement: Kody must be able to reference it via `@file:...`.
+1. Create or reuse a markdown file such as `docs/engineering-standards.md`. The only requirement: Cody must be able to reference it via `@file:...`.
 2. Organize content into short, checkable bullets:
 
 ```md
@@ -75,9 +75,9 @@ Only flag code that clearly violates those bullets. If the section is missing, s
 </Callout>
 
 
-## Phase 3 – Translate sections into Kody Rules
+## Phase 3 – Translate sections into Cody Rules
 
-Open **Code Review Settings → Kody Rules** and map each policy section to the appropriate scope.
+Open **Code Review Settings → Cody Rules** and map each policy section to the appropriate scope.
 
 | Policy section         | Rule type     | Scope example                     | Severity |
 | ---------------------- | ------------- | --------------------------------- | -------- |
@@ -117,26 +117,26 @@ Use @MCP:policy_pack.getSection({"id":"security"}) to fetch the latest restricte
 ```
 
 <Info>
-  Rules already understand variables (`fileDiff`, `pr_files_diff`, etc.), file references, and MCP invocations. See the full matrix in the [Kody Rules guide](/how_to_use/en/code_review/configs/kody_rules).
+  Rules already understand variables (`fileDiff`, `pr_files_diff`, etc.), file references, and MCP invocations. See the full matrix in the [Cody Rules guide](/how_to_use/en/code_review/configs/cody_rules).
 </Info>
 
 
 ## Phase 4 – Mirror external standards via MCP (optional)
 
-Sometimes the handbook (or part of it) must stay in Notion, Confluence, Google Docs, or another system. You can still feed it into Kody:
+Sometimes the handbook (or part of it) must stay in Notion, Confluence, Google Docs, or another system. You can still feed it into Cody:
 
 1. Build or adopt a remote MCP endpoint that exposes `listSections()` and `getSection(id)`.
 2. Install it via **Add Custom Plugin**. Follow the [custom plugin guide](/cookbook/en/custom-plugin-install) for the exact flow.
 3. Replace `@file` references with `@MCP:policy_pack.getSection({"id":"architecture"})`.
 4. Cache responses on the MCP server so multiple rules share the payload per review.
 
-Now Kody enforces the same standards regardless of where the document lives.
+Now Cody enforces the same standards regardless of where the document lives.
 
 ## Phase 5 – Test, observe, and keep it alive
 
 <AccordionGroup>
   <Accordion title="Seed a verification PR">
-    Create a throwaway PR that violates each section. Mention @kody and ensure the inline + PR-level comments cite the right bullets.
+    Create a throwaway PR that violates each section. Mention @cody and ensure the inline + PR-level comments cite the right bullets.
   </Accordion>
   <Accordion title="Tune noise and severity">
     During rollout, watch how often each rule fires. Tighten file globs, add exclusions, or adjust severity until the signal meets expectations.
@@ -150,6 +150,6 @@ Now Kody enforces the same standards regardless of where the document lives.
 
 - [ ] `docs/engineering-standards.md` (or MCP equivalent) exists with scannable, tagged bullets.
 - [ ] Every rule references the policy pack via `@file` or `@MCP`, ensuring it reads the latest text.
-- [ ] File-level and PR-level Kody Rules cover your critical sections.
+- [ ] File-level and PR-level Cody Rules cover your critical sections.
 - [ ] Optional MCP plugin mirrors off-repo standards when needed.
 - [ ] A dry-run PR confirmed the inline comments and PR summary before broad rollout.

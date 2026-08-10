@@ -1,29 +1,29 @@
 <!-- TODO: Add banner image/logo here -->
 
-<h1 align="center">Kodus CLI</h1>
+<h1 align="center">Codus CLI</h1>
 
 <p align="center">
   <strong>Catch bugs before they reach your pull request — AI code review from the terminal.</strong>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@kodus/cli"><img src="https://img.shields.io/npm/v/@kodus/cli.svg" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/@kodus/cli"><img src="https://img.shields.io/npm/dm/@kodus/cli.svg" alt="npm downloads"></a>
-  <a href="https://github.com/kodustech/cli/blob/main/LICENSE"><img src="https://img.shields.io/github/license/kodustech/cli" alt="license"></a>
-  <a href="https://github.com/kodustech/cli"><img src="https://img.shields.io/github/stars/kodustech/cli" alt="stars"></a>
+  <a href="https://www.npmjs.com/package/@codus/cli"><img src="https://img.shields.io/npm/v/@codus/cli.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@codus/cli"><img src="https://img.shields.io/npm/dm/@codus/cli.svg" alt="npm downloads"></a>
+  <a href="https://github.com/elchapita43/cli/blob/main/LICENSE"><img src="https://img.shields.io/github/license/elchapita43/cli" alt="license"></a>
+  <a href="https://github.com/elchapita43/cli"><img src="https://img.shields.io/github/stars/elchapita43/cli" alt="stars"></a>
   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="node version"></a>
 </p>
 
 <p align="center">
   <a href="https://kodus.io">Website</a> &middot;
   <a href="https://app.kodus.io">Sign Up</a> &middot;
-  <a href="https://github.com/kodustech/cli/issues">Issues</a>
+  <a href="https://github.com/elchapita43/cli/issues">Issues</a>
 </p>
 
 ---
 
 ```bash
-yarn global add @kodus/cli
+yarn global add @codus/cli
 ```
 
 ---
@@ -32,16 +32,16 @@ yarn global add @kodus/cli
 
 ```bash
 # 1. Install
-yarn global add @kodus/cli
+yarn global add @codus/cli
 
 # 2. Authenticate (or skip for trial mode — no account needed)
-kodus auth login
+codus auth login
 
 # 3. Review your code
-kodus review
+codus review
 ```
 
-That's it. Kodus analyzes your changes, finds issues, and lets you fix them interactively — or auto-fix everything at once with `kodus review --fix`.
+That's it. Codus analyzes your changes, finds issues, and lets you fix them interactively — or auto-fix everything at once with `codus review --fix`.
 
 <!-- TODO: Add demo GIF showing interactive review in action -->
 
@@ -49,29 +49,29 @@ That's it. Kodus analyzes your changes, finds issues, and lets you fix them inte
 
 ### Code Review
 
-Analyze local changes, staged files, commits, or branch diffs. Kodus finds bugs, security issues, performance problems, and style violations — then suggests fixes with real code.
+Analyze local changes, staged files, commits, or branch diffs. Codus finds bugs, security issues, performance problems, and style violations — then suggests fixes with real code.
 
 ```bash
-kodus review                    # Review working tree changes (interactive)
-kodus review --staged           # Only staged files
-kodus review --branch main      # Compare against a branch
-kodus review --fix              # Auto-apply all fixable issues
-kodus review --prompt-only      # Structured output for AI agents
+codus review                    # Review working tree changes (interactive)
+codus review --staged           # Only staged files
+codus review --branch main      # Compare against a branch
+codus review --fix              # Auto-apply all fixable issues
+codus review --prompt-only      # Structured output for AI agents
 ```
 
-Reviews are **context-aware** — Kodus reads your `.cursorrules`, `claude.md`, and `.kodus.md` so suggestions follow your team's standards. [More on review modes](#review-modes)
+Reviews are **context-aware** — Codus reads your `.cursorrules`, `claude.md`, and `.codus.md` so suggestions follow your team's standards. [More on review modes](#review-modes)
 
-### Kody Rules
+### Cody Rules
 
-Create, update, and inspect the Kody Rules that guide Kodus behavior for your team.
+Create, update, and inspect the Cody Rules that guide Codus behavior for your team.
 
 ```bash
-kodus rules create --title "Use async/await" --rule "Prefer async/await over raw promises" --repo-id global --severity high --scope file --path "**/*.ts"
-kodus rules update --uuid <uuid> --repo-id global --severity critical
-kodus rules view --repo-id global
+codus rules create --title "Use async/await" --rule "Prefer async/await over raw promises" --repo-id global --severity high --scope file --path "**/*.ts"
+codus rules update --uuid <uuid> --repo-id global --severity critical
+codus rules view --repo-id global
 ```
 
-`kodus rules update` requires `--uuid`.
+`codus rules update` requires `--uuid`.
 
 Defaults:
 
@@ -85,48 +85,48 @@ Defaults:
 Fetch AI-powered suggestions for open pull requests directly from your terminal.
 
 ```bash
-kodus pr suggestions --pr-url https://github.com/org/repo/pull/42
-kodus pr suggestions --pr-number 42 --repo-id <id>
+codus pr suggestions --pr-url https://github.com/org/repo/pull/42
+codus pr suggestions --pr-number 42 --repo-id <id>
 ```
 
 Filter by severity, export as JSON or Markdown, or pipe into an AI agent with `--prompt-only` for automated fixes.
 
 ### Business Validation (Local Diff vs Task)
 
-Run Kodus business-rules validation directly from your local diff with optional task reference.
+Run Codus business-rules validation directly from your local diff with optional task reference.
 
 ```bash
 # Working tree diff (default)
-kodus pr business-validation
+codus pr business-validation
 
 # Staged-only with explicit task reference
-kodus pr business-validation --staged --task-id KC-1441
+codus pr business-validation --staged --task-id KC-1441
 
 # Branch or files scope
-kodus pr business-validation --branch main --task-id KC-1441
-kodus pr business-validation src/service.ts src/use-case.ts --task-id KC-1441
+codus pr business-validation --branch main --task-id KC-1441
+codus pr business-validation src/service.ts src/use-case.ts --task-id KC-1441
 ```
 
 ### Decision Memory
 
 AI agents make dozens of decisions per session — architecture choices, trade-offs, why approach X was picked over Y. Without a record, that reasoning vanishes when the session ends.
 
-Kodus captures agent decisions into your repo as structured markdown. When you or another agent return to the code, the full context is there.
+Codus captures agent decisions into your repo as structured markdown. When you or another agent return to the code, the full context is there.
 
 ```bash
-kodus decisions enable           # Install hooks + initialize config
-kodus decisions status           # See what's been captured
-kodus decisions show [name]      # View PR or module memory
-kodus decisions promote          # Promote decisions to long-term memory
+codus decisions enable           # Install hooks + initialize config
+codus decisions status           # See what's been captured
+codus decisions show [name]      # View PR or module memory
+codus decisions promote          # Promote decisions to long-term memory
 ```
 
-Stored in `.kody/pr/by-sha/<head-sha>.md` — versioned with your code, readable by humans and agents. [More on decision memory](#decision-memory-1)
+Stored in `.cody/pr/by-sha/<head-sha>.md` — versioned with your code, readable by humans and agents. [More on decision memory](#decision-memory-1)
 
 ---
 
 ## Best With AI Agents
 
-Kodus is designed to work **inside AI coding agents**. While you can use it standalone, the real power comes when your agent runs reviews automatically and fixes issues in a loop — no manual intervention needed.
+Codus is designed to work **inside AI coding agents**. While you can use it standalone, the real power comes when your agent runs reviews automatically and fixes issues in a loop — no manual intervention needed.
 
 **Works with:** Claude Code, Cursor, Windsurf, GitHub Copilot, Gemini CLI, and 20+ more environments.
 
@@ -137,30 +137,30 @@ The fastest way to get started. Auto-detects your installed IDEs and sets everyt
 macOS/Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'kodus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/kodustech/cli/main/install.ps1 -OutFile $tmp; & $tmp"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'codus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/elchapita43/cli/main/install.ps1 -OutFile $tmp; & $tmp"
 ```
 
-This installs the Kodus CLI globally and deploys the review skill into every supported agent on your machine — Claude Code, Cursor, Windsurf, and others. One command, all environments.
+This installs the Codus CLI globally and deploys the review skill into every supported agent on your machine — Claude Code, Cursor, Windsurf, and others. One command, all environments.
 
 ### How It Works With Agents
 
 Once installed, your AI agent can autonomously:
 
 1. **Write code** as usual
-2. **Run `kodus review --prompt-only`** to analyze changes
+2. **Run `codus review --prompt-only`** to analyze changes
 3. **Read the structured output** and understand each issue
 4. **Fix the issues** automatically
 5. **Repeat** until the review is clean
 
 This creates a tight feedback loop: the agent writes, reviews, and fixes — all without leaving your IDE.
 
-Beyond reviews, Kodus also captures **what your agent decided and why** via [Decision Memory](#decision-memory). Every reasoning step is saved into your repo — so when you (or another agent) pick up the work later, the full context is already there. No more re-explaining what was done or losing decisions between sessions.
+Beyond reviews, Codus also captures **what your agent decided and why** via [Decision Memory](#decision-memory). Every reasoning step is saved into your repo — so when you (or another agent) pick up the work later, the full context is already there. No more re-explaining what was done or losing decisions between sessions.
 
 ### Setup: Claude Code
 
@@ -169,11 +169,11 @@ Add to your project's `CLAUDE.md`:
 ```markdown
 ## Code Review
 
-After implementing changes, run `kodus review --prompt-only` to check for issues.
+After implementing changes, run `codus review --prompt-only` to check for issues.
 If issues are found, fix them and re-run until clean.
 ```
 
-Or use the skill directly — after installing via the command above, just ask Claude Code to review your code and it will use Kodus automatically.
+Or use the skill directly — after installing via the command above, just ask Claude Code to review your code and it will use Codus automatically.
 
 ### Setup: Cursor / Windsurf
 
@@ -182,7 +182,7 @@ Add to your `.cursorrules` or equivalent:
 ```
 When writing code:
 1. Implement the feature
-2. Run: kodus review --prompt-only
+2. Run: codus review --prompt-only
 3. If issues are found, fix them automatically
 4. Repeat until review is clean
 5. Show final result
@@ -193,8 +193,8 @@ When writing code:
 Set a team key so agents and shared machines are authenticated without individual logins:
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
-kodus review --prompt-only
+export CODUS_TEAM_KEY=codus_xxxxx
+codus review --prompt-only
 ```
 
 Works with Codex, CI runners, remote dev environments, and any context where personal login isn't practical. Get your key at [app.kodus.io/organization/cli-keys](https://app.kodus.io/organization/cli-keys).
@@ -203,7 +203,7 @@ Works with Codex, CI runners, remote dev environments, and any context where per
 
 If you prefer manual control:
 
-1. Run `kodus review`
+1. Run `codus review`
 2. Navigate to a file with issues
 3. Select **"Copy fix prompt for AI agent"**
 4. Paste into Claude Code or Cursor — the AI fixes it
@@ -217,41 +217,41 @@ The copied prompt includes file path, line numbers, severity, and detailed sugge
 macOS/Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'kodus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/kodustech/cli/main/install.ps1 -OutFile $tmp; & $tmp"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'codus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/elchapita43/cli/main/install.ps1 -OutFile $tmp; & $tmp"
 ```
 
 Installs the CLI and deploys the review skill to all detected agents in one step.
 
 ### Keep everything updated
 
-`kodus update` updates the CLI package.
+`codus update` updates the CLI package.
 
 For end users, the recommended way to refresh skills and agent integrations is:
 
 macOS/Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'kodus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/kodustech/cli/main/install.ps1 -OutFile $tmp; & $tmp"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'codus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/elchapita43/cli/main/install.ps1 -OutFile $tmp; & $tmp"
 ```
 
 Fallback via CLI for common local agent roots:
 
 ```bash
-kodus skills install        # install into detected local agent roots
-kodus skills resync         # re-sync/refresh managed skills
-kodus skills uninstall      # remove managed skills from detected targets
+codus skills install        # install into detected local agent roots
+codus skills resync         # re-sync/refresh managed skills
+codus skills uninstall      # remove managed skills from detected targets
 ```
 
 If you want to inspect the script before execution:
@@ -259,15 +259,15 @@ If you want to inspect the script before execution:
 macOS/Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh -o /tmp/kodus-install.sh
-less /tmp/kodus-install.sh
-bash /tmp/kodus-install.sh
+curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh -o /tmp/codus-install.sh
+less /tmp/codus-install.sh
+bash /tmp/codus-install.sh
 ```
 
 Windows PowerShell:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest https://raw.githubusercontent.com/kodustech/cli/main/install.ps1 -OutFile install.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest https://raw.githubusercontent.com/elchapita43/cli/main/install.ps1 -OutFile install.ps1"
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
@@ -277,7 +277,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 <summary><strong>yarn</strong></summary>
 
 ```bash
-yarn global add @kodus/cli
+yarn global add @codus/cli
 ```
 
 </details>
@@ -286,7 +286,7 @@ yarn global add @kodus/cli
 <summary><strong>npx (no install)</strong></summary>
 
 ```bash
-npx @kodus/cli review
+npx @codus/cli review
 ```
 
 </details>
@@ -295,7 +295,7 @@ npx @kodus/cli review
 <summary><strong>curl</strong></summary>
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
 ```
 
 </details>
@@ -304,7 +304,7 @@ curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bas
 <summary><strong>PowerShell</strong></summary>
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'kodus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/kodustech/cli/main/install.ps1 -OutFile $tmp; & $tmp"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'codus-install.ps1'; Invoke-WebRequest https://raw.githubusercontent.com/elchapita43/cli/main/install.ps1 -OutFile $tmp; & $tmp"
 ```
 
 </details>
@@ -313,14 +313,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TE
 <summary><strong>Homebrew (coming soon)</strong></summary>
 
 ```bash
-brew install kodus/tap/kodus
+brew install codus/tap/codus
 ```
 
 </details>
 
 ## Agent Mode
 
-Kodus now supports an explicit **agent mode** for deterministic automation output.
+Codus now supports an explicit **agent mode** for deterministic automation output.
 
 ### Global flag
 
@@ -344,8 +344,8 @@ Use `--agent` on any command to return a stable JSON envelope:
 ### Command schema introspection
 
 ```bash
-kodus schema
-kodus schema --command "pr suggestions"
+codus schema
+codus schema --command "pr suggestions"
 ```
 
 ### Field selection for smaller payloads
@@ -353,8 +353,8 @@ kodus schema --command "pr suggestions"
 Available on `review` and `pr suggestions`:
 
 ```bash
-kodus review --agent --fields summary,issues.file,issues.line
-kodus pr suggestions --agent --pr-url https://github.com/org/repo/pull/42 --fields summary,issues.file
+codus review --agent --fields summary,issues.file,issues.line
+codus pr suggestions --agent --pr-url https://github.com/org/repo/pull/42 --fields summary,issues.file
 ```
 
 `--fields` requires `--agent` or `--format json`.
@@ -362,11 +362,11 @@ kodus pr suggestions --agent --pr-url https://github.com/org/repo/pull/42 --fiel
 ### Dry-run for mutable commands
 
 ```bash
-kodus hook install --dry-run
-kodus hook uninstall --dry-run
-kodus decisions enable --dry-run
-kodus decisions disable --dry-run
-kodus decisions promote --dry-run
+codus hook install --dry-run
+codus hook uninstall --dry-run
+codus decisions enable --dry-run
+codus decisions disable --dry-run
+codus decisions promote --dry-run
 ```
 
 Dry-run prints the planned actions and does not mutate local hooks/config/files.
@@ -376,7 +376,7 @@ Dry-run prints the planned actions and does not mutate local hooks/config/files.
 ### Interactive (default)
 
 ```bash
-kodus review
+codus review
 ```
 
 Navigate files with issue counts, preview fixes before applying, and copy AI-friendly prompts to paste into Claude Code or Cursor.
@@ -384,7 +384,7 @@ Navigate files with issue counts, preview fixes before applying, and copy AI-fri
 ### Auto-fix
 
 ```bash
-kodus review --fix
+codus review --fix
 ```
 
 Applies all fixable issues at once. Shows a confirmation prompt before making changes.
@@ -392,7 +392,7 @@ Applies all fixable issues at once. Shows a confirmation prompt before making ch
 ### AI Agent
 
 ```bash
-kodus review --prompt-only
+codus review --prompt-only
 ```
 
 Minimal, structured output designed for Claude Code, Cursor, and Windsurf. Perfect for autonomous generate-review-fix loops.
@@ -403,11 +403,11 @@ Minimal, structured output designed for Claude Code, Cursor, and Windsurf. Perfe
 #### Output Formats
 
 ```bash
-kodus review                           # Interactive (default)
-kodus review --format json             # JSON output
-kodus review --format markdown         # Markdown report
-kodus review --prompt-only             # AI agent output
-kodus review --format markdown -o report.md  # Save to file
+codus review                           # Interactive (default)
+codus review --format json             # JSON output
+codus review --format markdown         # Markdown report
+codus review --prompt-only             # AI agent output
+codus review --format markdown -o report.md  # Save to file
 ```
 
 #### Output Streams
@@ -418,18 +418,18 @@ kodus review --format markdown -o report.md  # Save to file
 This keeps machine-readable output clean for piping:
 
 ```bash
-kodus review --format json > review.json
-kodus review --format json --verbose 1>review.json 2>review.debug.log
+codus review --format json > review.json
+codus review --format json --verbose 1>review.json 2>review.debug.log
 ```
 
 #### Diff Targets
 
 ```bash
-kodus review                           # Working tree changes
-kodus review --staged                  # Staged files only
-kodus review --commit HEAD~1           # Specific commit
-kodus review --branch main             # Compare against branch
-kodus review src/index.ts src/utils.ts # Specific files
+codus review                           # Working tree changes
+codus review --staged                  # Staged files only
+codus review --commit HEAD~1           # Specific commit
+codus review --branch main             # Compare against branch
+codus review src/index.ts src/utils.ts # Specific files
 ```
 
 #### All Flags
@@ -457,28 +457,28 @@ Full reference for the decision capture system ([intro above](#decision-memory))
 
 ```bash
 # Enable with specific agents
-kodus decisions enable --agents claude,cursor,codex
+codus decisions enable --agents claude,cursor,codex
 
 # Custom Codex config path
-kodus decisions enable --agents codex --codex-config ~/.codex/config.toml
+codus decisions enable --agents codex --codex-config ~/.codex/config.toml
 
 # Overwrite existing config
-kodus decisions enable --force
+codus decisions enable --force
 
 # Check what's been captured on current branch
-kodus decisions status
+codus decisions status
 
 # View decisions for a PR or specific module
-kodus decisions show [name]
+codus decisions show [name]
 
 # Promote PR-level decisions to long-term module memory
-kodus decisions promote --branch feat/auth --modules auth,users
+codus decisions promote --branch feat/auth --modules auth,users
 
-# Disable hooks (preserves all captured data in .kody/)
-kodus decisions disable
+# Disable hooks (preserves all captured data in .cody/)
+codus decisions disable
 ```
 
-**How it works:** Hooks fire on agent turn-complete events and persist decisions to `.kody/pr/by-sha/<head-sha>.md`. Files are committed to your repo, versioned with your code, readable by humans and agents.
+**How it works:** Hooks fire on agent turn-complete events and persist decisions to `.cody/pr/by-sha/<head-sha>.md`. Files are committed to your repo, versioned with your code, readable by humans and agents.
 
 **Supported agents:** Claude Code, Cursor, Codex.
 
@@ -487,53 +487,53 @@ kodus decisions disable
 ### Pre-push Hook
 
 ```bash
-kodus hook install --fail-on error   # Block pushes with errors
-kodus hook status                     # Check hook status
-kodus hook uninstall                  # Remove hook
+codus hook install --fail-on error   # Block pushes with errors
+codus hook status                     # Check hook status
+codus hook uninstall                  # Remove hook
 ```
 
 ### Pipeline Usage
 
 ```bash
 # Strict rules check with JSON output
-kodus review --rules-only --format json --fail-on error
+codus review --rules-only --format json --fail-on error
 
 # Generate markdown report artifact
-kodus review --format markdown --output review-report.md
+codus review --format markdown --output review-report.md
 ```
 
 ## Authentication
 
-Kodus supports multiple auth methods depending on your setup:
+Codus supports multiple auth methods depending on your setup:
 
 ### Trial Mode (no account)
 
-Just run `kodus review`. No signup needed. You get 5 reviews/day with up to 10 files and 500 lines per file — enough to try it out. [Sign up free](https://app.kodus.io) to remove limits.
+Just run `codus review`. No signup needed. You get 5 reviews/day with up to 10 files and 500 lines per file — enough to try it out. [Sign up free](https://app.kodus.io) to remove limits.
 
 ### Personal Login
 
 For individual developers. Creates a session with automatic token refresh.
 
 ```bash
-kodus auth login           # Sign in with email/password
-kodus auth status          # Check auth status and usage
-kodus auth logout          # Sign out
+codus auth login           # Sign in with email/password
+codus auth status          # Check auth status and usage
+codus auth logout          # Sign out
 ```
 
-Credentials are stored locally in `~/.kodus/credentials.json`.
+Credentials are stored locally in `~/.codus/credentials.json`.
 
 ### Team Key
 
 For teams where not everyone needs their own account. A single shared key gives the whole team access — developers just set the key and start reviewing, no individual signup required.
 
 ```bash
-kodus auth team-key --key kodus_xxxxx
+codus auth team-key --key codus_xxxxx
 ```
 
 Or set it as an environment variable:
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
+export CODUS_TEAM_KEY=codus_xxxxx
 ```
 
 Get your team key at [app.kodus.io/organization/cli-keys](https://app.kodus.io/organization/cli-keys). Team keys have configurable device limits managed from the dashboard.
@@ -548,30 +548,30 @@ Repository configuration requires team-key auth:
 
 These commands always read and update the repository's current settings directly. There is no reset-to-default flow in the CLI.
 
-`kodus config -r` and `kodus config --remote` are shortcuts for `kodus config remote add`.
+`codus config -r` and `codus config --remote` are shortcuts for `codus config remote add`.
 
 ```bash
-kodus config -r .                       # Shortcut for: kodus config remote add .
-kodus config --remote .                 # Shortcut for: kodus config remote add .
-kodus config --remote . --json          # Add and print machine-readable result
-kodus config --remote . --no-prompt     # Add without starting setup
-kodus config remote add .               # Add the current repository explicitly
-kodus config remote show .              # Inspect current repository settings
-kodus config remote setup .             # Run guided setup again
-kodus config remote setup . --json      # Print structured setup result
-kodus config remote set . review.enabled true
-kodus config remote set . review.enabled true --json
-kodus config remote set . patterns.ignoreFiles "**/*.lock,dist/**"
-kodus config remote add-pattern . ignore-files "dist/**"
-kodus config remote add-ignore-file . "dist/**"
-kodus config remote remove-base-branch . "release/*"
-kodus config remote remove-pattern . base-branches "release/*"
-kodus config remote open . --section suggestion-control
-kodus config remote list --json
-kodus config remote list                # List repositories already configured
+codus config -r .                       # Shortcut for: codus config remote add .
+codus config --remote .                 # Shortcut for: codus config remote add .
+codus config --remote . --json          # Add and print machine-readable result
+codus config --remote . --no-prompt     # Add without starting setup
+codus config remote add .               # Add the current repository explicitly
+codus config remote show .              # Inspect current repository settings
+codus config remote setup .             # Run guided setup again
+codus config remote setup . --json      # Print structured setup result
+codus config remote set . review.enabled true
+codus config remote set . review.enabled true --json
+codus config remote set . patterns.ignoreFiles "**/*.lock,dist/**"
+codus config remote add-pattern . ignore-files "dist/**"
+codus config remote add-ignore-file . "dist/**"
+codus config remote remove-base-branch . "release/*"
+codus config remote remove-pattern . base-branches "release/*"
+codus config remote open . --section suggestion-control
+codus config remote list --json
+codus config remote list                # List repositories already configured
 ```
 
-When a repository is added from an interactive terminal, Kodus offers a guided setup for:
+When a repository is added from an interactive terminal, Codus offers a guided setup for:
 
 - automated review
 - auto approve
@@ -582,15 +582,15 @@ When a repository is added from an interactive terminal, Kodus offers a guided s
 
 Pattern fields accept glob expressions such as `**/*.lock`, `dist/**`, `release/*`, and `draft*`.
 
-Use `kodus config remote open` when you need advanced repository settings that are still web-only. The CLI opens the Kodus app and prints the repository/section path to navigate.
+Use `codus config remote open` when you need advanced repository settings that are still web-only. The CLI opens the Codus app and prints the repository/section path to navigate.
 
 Use `--json` with `show`, `set`, `open`, `add-pattern`, `remove-pattern`, and the pattern aliases when you need stable machine-readable output for scripts or AI agents.
 
 When targeting a repository that is different from your current working directory, pass `owner/repo` explicitly instead of `.`:
 
 ```bash
-kodus config -r Wellington01/kodus-extension
-kodus config remote show Wellington01/kodus-extension
+codus config -r Wellington01/codus-extension
+codus config remote show Wellington01/codus-extension
 ```
 
 #### Local API note
@@ -610,10 +610,10 @@ Repository configuration access denied: ...
 Example local commands:
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
-yarn start:local config -r Wellington01/kodus-extension --no-prompt
+export CODUS_TEAM_KEY=codus_xxxxx
+yarn start:local config -r Wellington01/codus-extension --no-prompt
 yarn start:local config remote list --json
-yarn start:local config remote show Wellington01/kodus-extension
+yarn start:local config remote show Wellington01/codus-extension
 ```
 
 ### CI/CD Token
@@ -621,42 +621,42 @@ yarn start:local config remote show Wellington01/kodus-extension
 For pipelines and automated environments. Generated from your personal login:
 
 ```bash
-kodus auth token           # Generate a CI/CD token
+codus auth token           # Generate a CI/CD token
 ```
 
 Then use it in your pipeline:
 
 ```bash
-export KODUS_TOKEN=<your-token>
-kodus review --format json --fail-on error
+export CODUS_TOKEN=<your-token>
+codus review --format json --fail-on error
 ```
 
-> **Note:** For PR-level reviews in CI/CD, we recommend using the [Kodus platform](https://app.kodus.io) GitHub/GitLab integration instead of the CLI. It's purpose-built for PR workflows with inline comments, status checks, and team dashboards.
+> **Note:** For PR-level reviews in CI/CD, we recommend using the [Codus platform](https://app.kodus.io) GitHub/GitLab integration instead of the CLI. It's purpose-built for PR workflows with inline comments, status checks, and team dashboards.
 
 <details>
 <summary><strong>Environment variables</strong></summary>
 
 | Variable         | Description                                                                    |
 | ---------------- | ------------------------------------------------------------------------------ |
-| `KODUS_API_URL`  | API endpoint (default: `https://api.kodus.io`). HTTPS only (except localhost). |
-| `KODUS_APP_URL`  | Optional Kodus app URL override for `kodus config remote open`.                |
-| `KODUS_TOKEN`    | CI/CD token for automated pipelines (generated via `kodus auth token`)         |
-| `KODUS_TEAM_KEY` | Team key for shared team access and AI coding agents                           |
+| `CODUS_API_URL`  | API endpoint (default: `https://api.kodus.io`). HTTPS only (except localhost). |
+| `CODUS_APP_URL`  | Optional Codus app URL override for `codus config remote open`.                |
+| `CODUS_TOKEN`    | CI/CD token for automated pipelines (generated via `codus auth token`)         |
+| `CODUS_TEAM_KEY` | Team key for shared team access and AI coding agents                           |
 
 </details>
 
 ## Privacy & Security
 
-Kodus sends your code diffs to the Kodus API for analysis. We take this seriously:
+Codus sends your code diffs to the Codus API for analysis. We take this seriously:
 
 - **HTTPS only** — All API communication is encrypted. Custom API URLs are validated.
 - **No training on your code** — Your code is not used to train models.
 - **Minimal data** — Only diffs and context files are sent, not your entire codebase.
-- **Credentials stored locally** — Auth tokens are kept in `~/.kodus/credentials.json` on your machine.
+- **Credentials stored locally** — Auth tokens are kept in `~/.codus/credentials.json` on your machine.
 
 ## Contributing
 
-We welcome contributions! Please see our [issues page](https://github.com/kodustech/cli/issues) to get started.
+We welcome contributions! Please see our [issues page](https://github.com/elchapita43/cli/issues) to get started.
 
 ```bash
 yarn install      # Install dependencies

@@ -60,13 +60,13 @@ describe('ForgejoChecksService', () => {
     });
 
     describe('createCheckRun', () => {
-        it('should post a pending commit status with Kodus Code Review context', async () => {
+        it('should post a pending commit status with Codus Code Review context', async () => {
             const result = await service.createCheckRun({
                 organizationAndTeamData: mockOrganizationAndTeamData,
                 repository: mockRepository,
                 headSha: 'abc123def456',
                 status: CheckStatus.IN_PROGRESS,
-                name: 'kodus-code-review',
+                name: 'codus-code-review',
                 output: {
                     title: 'Code Review In Progress',
                     summary: 'Analyzing changes...',
@@ -83,7 +83,7 @@ describe('ForgejoChecksService', () => {
                     },
                     body: expect.objectContaining({
                         state: 'pending',
-                        context: 'Kodus Code Review',
+                        context: 'Codus Code Review',
                         description: 'Code Review In Progress',
                         target_url: 'https://git.example.com/myorg/myrepo/commit/abc123def456',
                     }),
@@ -161,7 +161,7 @@ describe('ForgejoChecksService', () => {
                     path: expect.objectContaining({ sha: 'abc123def456' }),
                     body: expect.objectContaining({
                         state: 'success',
-                        context: 'Kodus Code Review',
+                        context: 'Codus Code Review',
                         description: 'Code Review Complete',
                         target_url: 'https://git.example.com/myorg/myrepo/commit/abc123def456',
                     }),

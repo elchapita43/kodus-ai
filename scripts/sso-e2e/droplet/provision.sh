@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# Provision a Kodus self-hosted droplet wired for the SSO cookie-domain
+# Provision a Codus self-hosted droplet wired for the SSO cookie-domain
 # E2E test, then run the Playwright SAML round-trip against it.
 #
 # What this script does:
 #   1. Re-uses scripts/selfhosted/provision.sh to provision the base
 #      stack (api/web/worker/webhooks/mcp/postgres/mongo/rabbit) on a
 #      DigitalOcean droplet — same path as every other E2E droplet,
-#      so secrets live in one place (~/.kodus-dev/config).
+#      so secrets live in one place (~/.codus-dev/config).
 #   2. Layers Caddy + Keycloak on top via docker/sso-e2e/droplet/compose.yml.
 #      Caddy fronts three sslip.io hostnames:
 #          api.<IP>.sslip.io  → api:3001
-#          app.<IP>.sslip.io  → kodus-web-prod:3000
+#          app.<IP>.sslip.io  → codus-web-prod:3000
 #          kc.<IP>.sslip.io   → kc-sso-e2e:8080
 #      with Let's Encrypt auto-issued certs (HTTP-01 over port 80).
 #   3. Rewrites the API_URL / API_FRONTEND_URL on the droplet to the
@@ -18,7 +18,7 @@
 #      production-shape host headers.
 #   4. Bootstraps Keycloak (realm + SAML client + test user) ON the
 #      droplet via SSH.
-#   5. Signs up a Kodus tenant + POSTs /sso-config with the IdP
+#   5. Signs up a Codus tenant + POSTs /sso-config with the IdP
 #      descriptor FROM the local Mac (uses the public API URL).
 #   6. Re-runs Keycloak bootstrap once orgId is known, so the SAML
 #      client's ACS URL is bound to the real org.
@@ -26,11 +26,11 @@
 #
 # Variables you need to have set BEFORE running (all already used by
 # the existing selfhosted scripts — nothing new):
-#   DIGITALOCEAN_TOKEN          DO API token         (via ~/.kodus-dev/config)
-#   API_OPEN_AI_API_KEY         LLM key              (via ~/.kodus-dev/config)
+#   DIGITALOCEAN_TOKEN          DO API token         (via ~/.codus-dev/config)
+#   API_OPEN_AI_API_KEY         LLM key              (via ~/.codus-dev/config)
 #   API_OPENAI_FORCE_BASE_URL   (optional, e.g. Moonshot)
 #   API_LLM_PROVIDER_MODEL      (optional)
-#   KODUS_INSTALLER_PATH        (optional; default ../kodus-installer)
+#   CODUS_INSTALLER_PATH        (optional; default ../codus-installer)
 #   SSO_E2E_DROPLET_NAME        (optional; default "sso-e2e")
 #   CADDY_ACME_EMAIL            (optional; default "sso-e2e@kodus.io")
 #   CADDY_ACME_CA               (optional; default LE production)
@@ -46,7 +46,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
 
 # Reuse the selfhosted scripts' config loader. _common.sh sources
-# ~/.kodus-dev/config and scripts/selfhosted/.env in the right order.
+# ~/.codus-dev/config and scripts/selfhosted/.env in the right order.
 # shellcheck disable=SC1091
 . "${REPO_ROOT}/scripts/selfhosted/_common.sh"
 
@@ -96,8 +96,8 @@ else
         warn "Pass --reuse to reuse it, or destroy first: pnpm run sso-e2e:droplet:destroy --name ${NAME}"
         exit 1
     fi
-    log "Provisioning base Kodus stack on a fresh droplet (~5 min)…"
-    # This droplet runs the full Kodus stack PLUS Keycloak (Quarkus/Java,
+    log "Provisioning base Codus stack on a fresh droplet (~5 min)…"
+    # This droplet runs the full Codus stack PLUS Keycloak (Quarkus/Java,
     # memory-hungry) PLUS local image builds/extracts. The default
     # s-2vcpu-4gb OOM/thrashes during the rabbitmq build + image extraction
     # and hangs the provision. Default to 8GB here (overridable via DO_SIZE).
@@ -168,7 +168,7 @@ log "  Keycloak  ${KC_BASE_URL}"
 log "Aligning .env on droplet to public hostnames"
 ssh_vm bash -s <<REMOTE_ENV
 set -euo pipefail
-cd /opt/kodus-installer
+cd /opt/codus-installer
 env_set() {
     local k=\$1 v=\$2
     if grep -qE "^\${k}=" .env; then
@@ -182,7 +182,7 @@ env_set API_FRONTEND_URL "${APP_BASE_URL}"
 env_set NEXTAUTH_URL "${APP_BASE_URL}"
 # WEB_HOSTNAME_API is the upstream the web container's /api/proxy/api/*
 # server-side handler talks to. It MUST resolve from inside the
-# kodus-web container — i.e. the Docker-internal API name, not the
+# codus-web container — i.e. the Docker-internal API name, not the
 # public sslip.io URL. NAT loopback to the droplet's own public IP
 # fails inside the container, so pointing this at the public URL
 # breaks every browser fetch routed through the proxy (e.g. the
@@ -190,12 +190,12 @@ env_set NEXTAUTH_URL "${APP_BASE_URL}"
 # in API_URL above for cookie-domain / SAML purposes — those code
 # paths read API_URL directly, not WEB_HOSTNAME_API.
 # Use the compose SERVICE name `api` (Docker DNS always resolves it on the
-# shared network) — NOT the literal `kodus-api`, which matches neither the
-# service (`api`) nor the container (`kodus_api`, GLOBAL_API_CONTAINER_NAME's
+# shared network) — NOT the literal `codus-api`, which matches neither the
+# service (`api`) nor the container (`codus_api`, GLOBAL_API_CONTAINER_NAME's
 # installer default) and so 502s every web→API server-side call.
 env_set WEB_HOSTNAME_API "api"
 env_set WEB_PORT_API "3001"
-# kodus-installer defaults API_NODE_ENV to "development" for the
+# codus-installer defaults API_NODE_ENV to "development" for the
 # self-hosted dev experience. The SSO cookie code path explicitly
 # bails out under development (returns no Domain, omits Secure)
 # so the handoff cookie ends up host-only on api.<IP>.sslip.io and
@@ -207,11 +207,11 @@ env_set API_NODE_ENV "production"
 # guard — without a license the org is "not on a supported plan" and the
 # bootstrap aborts with HTTP 403. The matrix droplets get the license via
 # selfhosted/provision.sh; this script builds its own .env, so inject it
-# here too. The var name is KODUS_LICENSE_KEY — the customer-facing name
+# here too. The var name is CODUS_LICENSE_KEY — the customer-facing name
 # SelfHostedLicenseService reads (do NOT prefix with API_). run.sh's SSO
 # precheck guarantees SH_LICENSE_KEY is non-empty here. (JWT is base64url —
 # safe for the sed '|' delimiter in env_set.)
-env_set KODUS_LICENSE_KEY "${SH_LICENSE_KEY:-}"
+env_set CODUS_LICENSE_KEY "${SH_LICENSE_KEY:-}"
 # Web container's SSR fetches go to API_BASE_URL directly. Caddy
 # terminates TLS so the cert chain is whatever ACME issued; Node trusts
 # the public LE roots out of the box. No NODE_EXTRA_CA_CERTS mount.
@@ -248,18 +248,18 @@ ssh_vm "chmod +x /opt/sso-e2e/bootstrap-keycloak.sh"
 rm -f "${TMP_CADDYFILE}"
 
 # ---------- step 4: restart api/web with new env, boot overlay ----------
-# Use an explicit project name (-p kodus-installer) so the overlay
+# Use an explicit project name (-p codus-installer) so the overlay
 # compose layers ONTO the existing base stack instead of spinning up
 # a parallel project called "opt" (which would happen if Docker derived
 # the project name from the parent of the first -f flag).
 log "Restarting api+web with new env, booting Caddy + Keycloak overlay"
 ssh_vm bash -s <<'REMOTE_BOOT'
 set -euo pipefail
-cd /opt/kodus-installer
+cd /opt/codus-installer
 
 # Recreate api + web so they pick up the new API_URL / API_FRONTEND_URL.
-# Service names in the installer compose: `api`, `kodus-web`.
-docker compose -p kodus-installer up -d --force-recreate api kodus-web
+# Service names in the installer compose: `api`, `codus-web`.
+docker compose -p codus-installer up -d --force-recreate api codus-web
 
 # Wipe + recreate Keycloak so it bootstraps fresh with the password
 # we just wrote to .env. KC_BOOTSTRAP_ADMIN_PASSWORD is only honored
@@ -271,19 +271,19 @@ docker compose -p kodus-installer up -d --force-recreate api kodus-web
 # by design — so wiping doesn't lose anything that survives a
 # provision invocation anyway.
 docker compose \
-    -p kodus-installer \
-    -f /opt/kodus-installer/docker-compose.yml \
+    -p codus-installer \
+    -f /opt/codus-installer/docker-compose.yml \
     -f /opt/sso-e2e/compose.yml \
-    --env-file /opt/kodus-installer/.env \
+    --env-file /opt/codus-installer/.env \
     rm -fsv kc-sso-e2e || true
-docker volume rm -f kodus-installer_kc-sso-e2e-data 2>/dev/null || true
+docker volume rm -f codus-installer_kc-sso-e2e-data 2>/dev/null || true
 
 # Layer the overlay. Caddy stays (no-recreate); KC comes up fresh.
 docker compose \
-    -p kodus-installer \
-    -f /opt/kodus-installer/docker-compose.yml \
+    -p codus-installer \
+    -f /opt/codus-installer/docker-compose.yml \
     -f /opt/sso-e2e/compose.yml \
-    --env-file /opt/kodus-installer/.env \
+    --env-file /opt/codus-installer/.env \
     up -d --no-recreate caddy-sso-e2e kc-sso-e2e
 REMOTE_BOOT
 
@@ -352,12 +352,12 @@ if [ ! -s "${KC_JSON_LOCAL}" ]; then
     exit 1
 fi
 
-# ---------- step 7: signup Kodus tenant + post SSO config ----------
-log "Signing up Kodus tenant + posting SSO config"
+# ---------- step 7: signup Codus tenant + post SSO config ----------
+log "Signing up Codus tenant + posting SSO config"
 ORG_ID=$(API_BASE_URL="${API_BASE_URL}" \
     KC_JSON_PATH="${KC_JSON_LOCAL}" \
     OUT_DIR="${REPO_ROOT}/.tmp" \
-    bash "${SCRIPT_DIR}/bootstrap-kodus-sso.sh")
+    bash "${SCRIPT_DIR}/bootstrap-codus-sso.sh")
 
 # ---------- step 8: bootstrap Keycloak (pass 2, real ACS) ----------
 log "Re-bootstrapping Keycloak with real orgId=${ORG_ID}"
@@ -398,7 +398,7 @@ cat <<EOF
   Org         ${ORG_ID}
   TLS chain   $( [ "${IGNORE_TLS}" = "0" ] && echo "Let's Encrypt (trusted)" || echo "Caddy internal — Playwright will ignore" )
 
-  Test user   sso-user@kodus-test.com / TestSso!2026
+  Test user   sso-user@codus-test.com / TestSso!2026
 
   Run test    pnpm run sso-e2e:droplet:run
   Destroy     pnpm run sso-e2e:droplet:destroy --name ${NAME}

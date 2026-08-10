@@ -14,7 +14,7 @@ describe('IN_APP_TEMPLATE_REGISTRY', () => {
         },
         [NotificationEvent.AUTH_FORGOT_PASSWORD]: {},
         [NotificationEvent.TEAM_MEMBER_INVITED]: {},
-        [NotificationEvent.KODY_RULES_GENERATED]: {
+        [NotificationEvent.CODY_RULES_GENERATED]: {
             organizationName: 'Acme',
         },
         [NotificationEvent.SSO_DOMAIN_VERIFICATION]: { domain: 'acme.com' },
@@ -33,7 +33,7 @@ describe('IN_APP_TEMPLATE_REGISTRY', () => {
             repoName: 'acme/api',
             prUrl: 'https://github.com/acme/api/pull/1',
             ownerContact: 'owner@acme.com',
-            authorUsername: 'kodus',
+            authorUsername: 'codus',
         },
         [NotificationEvent.IDE_RULES_SYNCED]: {
             repoName: 'acme/api',

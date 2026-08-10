@@ -7,7 +7,7 @@ import {
 import { DeliveryStatus } from '../enums/deliveryStatus.enum';
 import { ImplementationStatus } from '../enums/implementationStatus.enum';
 import { PriorityStatus } from '../enums/priorityStatus.enum';
-import { FeedbackType } from '@libs/kodyFineTuning/domain/enums/feedbackType.enum';
+import { FeedbackType } from '@libs/codyFineTuning/domain/enums/feedbackType.enum';
 import { SeverityLevel } from '@libs/common/utils/enums/severityLevel.enum';
 import { LabelType } from '@libs/common/utils/codeManagement/labels';
 
@@ -25,7 +25,7 @@ export interface SuggestionCountsBySeverity {
     // deliveryStatus === 'not_sent' — held back by the review config/priority
     // rules (severity threshold, quantity limit, safeguard, clustering…).
     filtered: number;
-    // deliveryStatus ∈ {'failed', 'failed_lines_mismatch'} — Kody tried to post
+    // deliveryStatus ∈ {'failed', 'failed_lines_mismatch'} — Cody tried to post
     // but couldn't (API error / lines no longer match the diff). A delivery
     // failure, NOT a config decision — kept separate so it isn't hidden.
     failed: number;
@@ -114,7 +114,7 @@ export interface ISuggestion {
     label: string;
     severity: string;
     rankScore?: number;
-    brokenKodyRulesIds?: string[];
+    brokenCodyRulesIds?: string[];
     clusteringInformation?: {
         type?: ClusteringType;
         relatedSuggestionsIds?: string[];
@@ -204,7 +204,7 @@ export interface ISuggestionByPR {
     oneSentenceSummary: string;
     label: LabelType;
     severity?: SeverityLevel;
-    brokenKodyRulesIds?: string[];
+    brokenCodyRulesIds?: string[];
     priorityStatus?: PriorityStatus;
     deliveryStatus: DeliveryStatus;
     comment?: {

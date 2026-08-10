@@ -112,7 +112,7 @@ describe('AzureReposController', () => {
                 query: { token: 'valid-token' },
                 body: {
                     eventType: 'ms.vss-code.git-pullrequest-comment-event',
-                    resource: { comment: { content: '@kody review' } },
+                    resource: { comment: { content: '@cody review' } },
                 },
             };
 
@@ -128,7 +128,7 @@ describe('AzureReposController', () => {
                 event: 'ms.vss-code.git-pullrequest-comment-event',
                 payload: {
                     eventType: 'ms.vss-code.git-pullrequest-comment-event',
-                    resource: { comment: { content: '@kody review' } },
+                    resource: { comment: { content: '@cody review' } },
                 },
             });
         });

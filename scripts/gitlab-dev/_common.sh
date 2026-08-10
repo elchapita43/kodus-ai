@@ -27,18 +27,18 @@ MR_URL_FILE="${TMP_DIR}/gitlab-dev-mr-url.txt"
 
 # Tunables — all overridable from the environment.
 GITLAB_URL="${GITLAB_URL:-http://gitlab.lvh.me:8929}"
-GITLAB_CONTAINER="${GITLAB_CONTAINER:-kodus-gitlab-dev}"
-USER_NAME="${USER_NAME:-kodus-dev}"
-USER_EMAIL="${USER_EMAIL:-kodus-dev@kodus.test}"
+GITLAB_CONTAINER="${GITLAB_CONTAINER:-codus-gitlab-dev}"
+USER_NAME="${USER_NAME:-codus-dev}"
+USER_EMAIL="${USER_EMAIL:-codus-dev@codus.test}"
 # GitLab's user-create API runs the password through a "common
 # password" deny-list (root is exempt because its password is set at
 # omnibus install time, not via the API). Anything looking like
-# "WordYear!" — including "KodusDev!2026" — gets rejected with
+# "WordYear!" — including "CodusDev!2026" — gets rejected with
 # "must not contain commonly used combinations of words and letters".
 # Keep this string opaque so the API accepts it; the user PAT is what
-# actually authenticates Kodus, this password is only for web login.
+# actually authenticates Codus, this password is only for web login.
 USER_PASSWORD="${USER_PASSWORD:-Pq7nVe_4xK-2zLm-9Wb-Tf3aR-Mfh8}"
-GROUP_PATH="${GROUP_PATH:-kodus-playground}"
+GROUP_PATH="${GROUP_PATH:-codus-playground}"
 PROJECT_NAME="${PROJECT_NAME:-discount-service}"
 PROJECT_PATH="${GROUP_PATH}/${PROJECT_NAME}"
 FEATURE_BRANCH="${FEATURE_BRANCH:-feat/discount-codes}"
@@ -108,8 +108,8 @@ acquire_admin_pat() {
     # it) and gracefully retry without on older instances.
     ADMIN_PAT=$(docker exec -i "${GITLAB_CONTAINER}" gitlab-rails runner - <<'RUBY' 2>/dev/null | tail -n 1
 u = User.find_by_username('root')
-u.personal_access_tokens.where(name: 'kodus-bootstrap-admin').find_each(&:revoke!)
-attrs = { name: 'kodus-bootstrap-admin', expires_at: 365.days.from_now }
+u.personal_access_tokens.where(name: 'codus-bootstrap-admin').find_each(&:revoke!)
+attrs = { name: 'codus-bootstrap-admin', expires_at: 365.days.from_now }
 begin
   t = u.personal_access_tokens.create!(
     attrs.merge(scopes: %w[api sudo admin_mode read_repository write_repository]),

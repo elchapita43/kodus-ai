@@ -2,7 +2,7 @@
  * Turns a PipelineError into one sentence a user can act on.
  *
  * Every surface that reports a failed review — the per-stage rows in the PR
- * logs UI, the "Kody Review Finished" summary, the check-run text — used to
+ * logs UI, the "Cody Review Finished" summary, the check-run text — used to
  * print `error.message` verbatim. For LLM failures that is a bare status
  * phrase ("Not Found"); for internal guards it is a paragraph of developer
  * rationale. Neither tells the user what to do, and concatenating several of

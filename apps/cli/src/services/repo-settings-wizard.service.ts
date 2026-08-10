@@ -95,10 +95,10 @@ class RepositorySettingsWizardService {
         }
 
         writeLine(
-            'Kody automatically reviews pull requests when they are opened or updated.',
+            'Cody automatically reviews pull requests when they are opened or updated.',
         );
         writeLine(
-            'When disabled, you can still trigger a review manually with @kody start-review.',
+            'When disabled, you can still trigger a review manually with @cody start-review.',
         );
         const reviewEnabled = await select<boolean>({
             message: 'Automated code review',
@@ -164,7 +164,7 @@ class RepositorySettingsWizardService {
             current.ignoredFilePatterns,
         );
 
-        writeLine('Additional base branches that Kody should review against.');
+        writeLine('Additional base branches that Cody should review against.');
         writeLine(
             `Current base branches: ${summarizePatterns(current.baseBranchPatterns)}`,
         );
@@ -177,7 +177,7 @@ class RepositorySettingsWizardService {
         });
 
         writeLine(
-            'Kody skips the review when the pull request title matches one of these patterns.',
+            'Cody skips the review when the pull request title matches one of these patterns.',
         );
         writeLine(
             `Current ignored title patterns: ${summarizePatterns(current.ignoredTitlePatterns)}`,

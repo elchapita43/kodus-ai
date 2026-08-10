@@ -1,6 +1,6 @@
 ---
 title: "Revisión de PRs para cumplimiento normativo (SOC2, HIPAA)"
-description: "Configura Kody Rules y Memorias para aplicar requisitos de registro de auditoría, manejo de datos y control de acceso."
+description: "Configura Cody Rules y Memorias para aplicar requisitos de registro de auditoría, manejo de datos y control de acceso."
 icon: "file-shield"
 ---
 
@@ -12,26 +12,26 @@ Este cookbook configura reglas que aplican los requisitos de cumplimiento en cad
 
 ## Paso 1 — Define tus Memorias de cumplimiento
 
-Empieza enseñando a Kody los principios de cumplimiento de alto nivel:
+Empieza enseñando a Cody los principios de cumplimiento de alto nivel:
 
 ```
-@kody remember: we are SOC2 compliant. All data access must be logged
+@cody remember: we are SOC2 compliant. All data access must be logged
 with who accessed what, when, and from where.
 ```
 
 ```
-@kody remember: PII (personally identifiable information) must never
+@cody remember: PII (personally identifiable information) must never
 appear in logs, error messages, or API responses. PII includes:
 name, email, phone, address, SSN, date of birth, IP address.
 ```
 
 ```
-@kody remember: all data at rest must be encrypted. Database fields
+@cody remember: all data at rest must be encrypted. Database fields
 containing PII must use application-level encryption.
 ```
 
 ```
-@kody remember: access control follows least privilege principle.
+@cody remember: access control follows least privilege principle.
 New endpoints default to authenticated + authorized, never public.
 ```
 
@@ -147,4 +147,4 @@ Instructions:
 - [ ] Las reglas están configuradas a nivel de organización para consistencia
 - [ ] Un PR de prueba verificó que las reglas se activan correctamente
 
-Para más información sobre la configuración de reglas, consulta [Kody Rules](/how_to_use/es/code_review/configs/kody_rules).
+Para más información sobre la configuración de reglas, consulta [Cody Rules](/how_to_use/es/code_review/configs/cody_rules).

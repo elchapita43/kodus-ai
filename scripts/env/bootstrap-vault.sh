@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Bootstrap the "Kodus-Dev" 1Password vault from .env.template + local .env.
+# Bootstrap the "Codus-Dev" 1Password vault from .env.template + local .env.
 #
-# Reads every op://Kodus-Dev/<NAME>/password reference in .env.template,
+# Reads every op://Codus-Dev/<NAME>/password reference in .env.template,
 # looks up the corresponding value in your .env, and creates a 1Password
 # item per ref. Idempotent: re-running skips items that already exist
 # (use --update to overwrite their `password` field instead).
@@ -29,7 +29,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 TEMPLATE="${REPO_ROOT}/.env.template"
 SOURCE="${REPO_ROOT}/.env"
-VAULT="Kodus-Dev"
+VAULT="Codus-Dev"
 DRY_RUN=0
 UPDATE=0
 
@@ -75,7 +75,7 @@ fi
 # Each line: <ITEM_NAME>=<FIELD>   (we always use 'credential' today, but
 # parsing the field future-proofs against a template that uses op://.../url
 # or op://.../password etc.)
-# Skip commented lines — the header has a literal `op://Kodus Dev/<ENV_VAR_NAME>/...`
+# Skip commented lines — the header has a literal `op://Codus Dev/<ENV_VAR_NAME>/...`
 # example we don't want to bootstrap.
 ITEMS=$(grep -v '^#' "$TEMPLATE" \
         | grep -oE "op://${VAULT}/[A-Z][A-Z0-9_]+/[A-Za-z0-9_]+" \

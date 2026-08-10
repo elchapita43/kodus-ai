@@ -3,7 +3,7 @@ import { Column, Row, Section, Text } from 'react-email';
 
 /**
  * Shared styling + formatting primitives for the actionable review reports
- * (repo digest + org report). Kept brand-aligned with the rest of the Kodus
+ * (repo digest + org report). Kept brand-aligned with the rest of the Codus
  * email system: peach (#f8b76d) + brown (#443024), status red (#fa5867) /
  * green (#42be65).
  */

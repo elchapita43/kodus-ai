@@ -30,10 +30,10 @@ function ReviewFailedEmail({
 }: ReviewFailedEmailProps) {
     return (
         <BrandLayout
-            preview={`Kody could not review your pull request in ${repoName}`}>
+            preview={`Cody could not review your pull request in ${repoName}`}>
             <Heading style={baseHeading}>Code review failed</Heading>
             <Text style={baseText}>
-                Kody could not complete the code review for your pull request
+                Cody could not complete the code review for your pull request
                 in <strong>{repoName}</strong>.
             </Text>
             <Text style={baseText}>

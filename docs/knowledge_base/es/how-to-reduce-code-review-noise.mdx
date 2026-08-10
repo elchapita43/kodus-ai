@@ -7,17 +7,17 @@ Demasiadas sugerencias de baja prioridad pueden hacer que los desarrolladores ig
 
 ## Filtros de revisión
 
-Kodus filtra qué hallazgos se publican realmente:
+Codus filtra qué hallazgos se publican realmente:
 
 - **Severidad mínima** — muestra solo sugerencias en o por encima de un umbral (por defecto: Medium)
-- **Aplicar filtros a las Kody Rules** — desactivado por defecto, para que las reglas propias de tu equipo siempre aparezcan
+- **Aplicar filtros a las Cody Rules** — desactivado por defecto, para que las reglas propias de tu equipo siempre aparezcan
 
-Configúralos en **Code Review Settings** → **Review filters**, o en `kodus-config.yml`:
+Configúralos en **Code Review Settings** → **Review filters**, o en `codus-config.yml`:
 
 ```yaml
 suggestionControl:
   severityLevelFilter: medium   # low | medium | high | critical
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 ```
 
 ## Ignorar archivos y rutas
@@ -57,6 +57,6 @@ reviewOptions:
 
 ## Cadencia de revisión
 
-Usa la **pausa automática** para evitar spam durante el desarrollo activo — Kodus pausa las revisiones cuando detecta pushes consecutivos rápidos (por defecto: 3 pushes en 15 minutos).
+Usa la **pausa automática** para evitar spam durante el desarrollo activo — Codus pausa las revisiones cuando detecta pushes consecutivos rápidos (por defecto: 3 pushes en 15 minutos).
 
 Para más detalles, consulta [Configuración General](/how_to_use/es/code_review/configs/general) y [Control de Sugerencias](/how_to_use/es/code_review/configs/suggestion_control).

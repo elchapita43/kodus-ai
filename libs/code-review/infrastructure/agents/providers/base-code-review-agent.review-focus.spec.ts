@@ -1,5 +1,5 @@
 /**
- * Verifies the `@kody review <directive>` steering text is rendered into the
+ * Verifies the `@cody review <directive>` steering text is rendered into the
  * finder prompt as a high-priority <ReviewFocus> block — on both the full and
  * compact user-prompt paths — and that it is a PRIORITY hint, not a filter
  * (issues elsewhere are still in scope). Absent directive => no block.
@@ -42,7 +42,7 @@ const makeInput = (
     organizationAndTeamData: { organizationId: 'o', teamId: 't' } as any,
     changedFiles: [{ filename: 'foo.ts', patch: '+ a\n- b\n' } as any],
     prNumber: 1,
-    repositoryFullName: 'kodus/test',
+    repositoryFullName: 'codus/test',
     languageResultPrompt: 'en-US',
     remoteCommands: {} as any, // not self-contained
     ...overrides,

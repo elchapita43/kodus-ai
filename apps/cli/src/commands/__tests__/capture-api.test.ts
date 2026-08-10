@@ -9,7 +9,7 @@ vi.mock('../../services/git.service.js', () => ({
         getCurrentBranch: vi.fn().mockResolvedValue('feat/test'),
         extractOrgRepo: vi
             .fn()
-            .mockResolvedValue({ org: 'kodustech', repo: 'cli' }),
+            .mockResolvedValue({ org: 'elchapita43', repo: 'cli' }),
     },
 }));
 
@@ -75,7 +75,7 @@ describe('capture API submission', () => {
             .calls[0];
         expect(payload.branch).toBe('feat/test');
         expect(payload.sha).toBe('abc1234');
-        expect(payload.orgRepo).toBe('kodustech/cli');
+        expect(payload.orgRepo).toBe('elchapita43/cli');
         expect(payload.agent).toBe('claude-code');
         expect(payload.event).toBe('stop');
         expect(payload.capturedAt).toBeTruthy();

@@ -57,7 +57,7 @@ export interface PreparedBranch {
 export async function prepareBranch(
     opts: OpenPROptions,
 ): Promise<PreparedBranch> {
-    const workDir = mkdtempSync(join(tmpdir(), 'kodus-e2e-'));
+    const workDir = mkdtempSync(join(tmpdir(), 'codus-e2e-'));
     log.info(`Cloning into ${workDir}`);
 
     await run('git', ['clone', '--depth=1', opts.cloneUrl, workDir], {
@@ -107,8 +107,8 @@ export async function prepareBranch(
 
     await run('git', ['add', '.'], { cwd: workDir, capture: true });
 
-    const authorName = opts.authorName ?? 'Kodus E2E';
-    const authorEmail = opts.authorEmail ?? 'e2e@kodus.test';
+    const authorName = opts.authorName ?? 'Codus E2E';
+    const authorEmail = opts.authorEmail ?? 'e2e@codus.test';
     await run(
         'git',
         [

@@ -144,7 +144,7 @@ export default function Gitlab() {
                     <DialogTitle>Gitlab repositories setup</DialogTitle>
 
                     <DialogDescription>
-                        Select the repositories you want to use Kody
+                        Select the repositories you want to use Cody
                     </DialogDescription>
                 </DialogHeader>
 

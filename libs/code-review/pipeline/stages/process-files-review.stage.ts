@@ -25,9 +25,9 @@ import {
     IFileReviewContextPreparation,
 } from '@libs/core/domain/interfaces/file-review-context-preparation.interface';
 import {
-    IKodyFineTuningContextPreparationService,
-    KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
-} from '@libs/core/domain/interfaces/kody-fine-tuning-context-preparation.interface';
+    ICodyFineTuningContextPreparationService,
+    CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
+} from '@libs/core/domain/interfaces/cody-fine-tuning-context-preparation.interface';
 import {
     AIAnalysisResult,
     AnalysisContext,
@@ -80,8 +80,8 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
         @Inject(FILE_REVIEW_CONTEXT_PREPARATION_TOKEN)
         private readonly fileReviewContextPreparation: IFileReviewContextPreparation,
 
-        @Inject(KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN)
-        private readonly kodyFineTuningContextPreparation: IKodyFineTuningContextPreparationService,
+        @Inject(CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN)
+        private readonly codyFineTuningContextPreparation: ICodyFineTuningContextPreparationService,
 
         private readonly codeAnalysisOrchestrator: CodeAnalysisOrchestrator,
 
@@ -888,16 +888,16 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
             patchWithLinesStr,
         );
 
-        const kodyFineTuningResult = await this.applyKodyFineTuningFilter(
+        const codyFineTuningResult = await this.applyCodyFineTuningFilter(
             initialFilterResult.filteredSuggestions,
             context,
         );
 
         const discardedSuggestionsByCodeDiff =
             initialFilterResult.discardedSuggestionsByCodeDiff;
-        const discardedSuggestionsByKodyFineTuning =
-            kodyFineTuningResult.discardedSuggestionsByKodyFineTuning;
-        const keepedSuggestions = kodyFineTuningResult.keepedSuggestions;
+        const discardedSuggestionsByCodyFineTuning =
+            codyFineTuningResult.discardedSuggestionsByCodyFineTuning;
+        const keepedSuggestions = codyFineTuningResult.keepedSuggestions;
 
         // Separar sugestões cross-file das demais
         const crossFileIds = new Set(
@@ -941,7 +941,7 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
         discardedSuggestionsBySafeGuard.push(
             ...safeGuardResult.allDiscardedSuggestions,
             ...discardedSuggestionsByCodeDiff,
-            ...discardedSuggestionsByKodyFineTuning,
+            ...discardedSuggestionsByCodyFineTuning,
         );
 
         const suggestionsWithSeverity =
@@ -1006,8 +1006,8 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
 
         let mergedSuggestions = [];
 
-        const kodyRulesSuggestions =
-            await this.codeAnalysisOrchestrator.executeKodyRulesAnalysis(
+        const codyRulesSuggestions =
+            await this.codeAnalysisOrchestrator.executeCodyRulesAnalysis(
                 context?.organizationAndTeamData,
                 context?.pullRequest?.number,
                 { file, patchWithLinesStr },
@@ -1017,13 +1017,13 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
                 },
             );
 
-        if (kodyRulesSuggestions?.codeSuggestions?.length > 0) {
-            mergedSuggestions.push(...kodyRulesSuggestions.codeSuggestions);
+        if (codyRulesSuggestions?.codeSuggestions?.length > 0) {
+            mergedSuggestions.push(...codyRulesSuggestions.codeSuggestions);
         }
 
         // Se tem sugestões com severidade, adiciona também
         if (
-            !kodyRulesSuggestions?.codeSuggestions?.length &&
+            !codyRulesSuggestions?.codeSuggestions?.length &&
             suggestionsWithSeverity?.length > 0
         ) {
             mergedSuggestions.push(...suggestionsWithSeverity);
@@ -1142,15 +1142,15 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
         };
     }
 
-    private async applyKodyFineTuningFilter(
+    private async applyCodyFineTuningFilter(
         filteredSuggestions: any[],
         context: AnalysisContext,
     ): Promise<{
         keepedSuggestions: Partial<CodeSuggestion>[];
-        discardedSuggestionsByKodyFineTuning: Partial<CodeSuggestion>[];
+        discardedSuggestionsByCodyFineTuning: Partial<CodeSuggestion>[];
     }> {
-        const getDataPipelineKodyFineTunning =
-            await this.kodyFineTuningContextPreparation.prepareKodyFineTuningContext(
+        const getDataPipelineCodyFineTunning =
+            await this.codyFineTuningContextPreparation.prepareCodyFineTuningContext(
                 context?.organizationAndTeamData.organizationId,
                 context?.pullRequest?.number,
                 {
@@ -1158,26 +1158,26 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
                     full_name: context?.pullRequest?.repository?.fullName || '',
                 },
                 filteredSuggestions,
-                context?.codeReviewConfig?.kodyFineTuningConfig?.enabled,
+                context?.codeReviewConfig?.codyFineTuningConfig?.enabled,
                 context?.clusterizedSuggestions,
             );
 
         const keepedSuggestions: Partial<CodeSuggestion>[] =
-            getDataPipelineKodyFineTunning?.keepedSuggestions;
+            getDataPipelineCodyFineTunning?.keepedSuggestions;
 
         const discardedSuggestions: Partial<CodeSuggestion>[] =
-            getDataPipelineKodyFineTunning?.discardedSuggestions;
+            getDataPipelineCodyFineTunning?.discardedSuggestions;
 
-        const discardedSuggestionsByKodyFineTuning = discardedSuggestions.map(
+        const discardedSuggestionsByCodyFineTuning = discardedSuggestions.map(
             (suggestion) => ({
                 ...suggestion,
-                priorityStatus: PriorityStatus.DISCARDED_BY_KODY_FINE_TUNING,
+                priorityStatus: PriorityStatus.DISCARDED_BY_CODY_FINE_TUNING,
             }),
         );
 
         return {
             keepedSuggestions,
-            discardedSuggestionsByKodyFineTuning,
+            discardedSuggestionsByCodyFineTuning,
         };
     }
 
@@ -1232,7 +1232,7 @@ export class ProcessFilesReview extends BasePipelineStage<CodeReviewPipelineCont
                 context?.codeReviewConfig?.byokConfig,
                 crossFileSnippets,
                 context?.remoteCommands,
-                context?.codeReviewConfig?.kodyMemoryRules,
+                context?.codeReviewConfig?.codyMemoryRules,
                 context?.externalPromptContext?.generation?.main?.references,
                 context?.externalPromptContext?.generation?.main?.error,
                 context?.getFreshCloneParams,

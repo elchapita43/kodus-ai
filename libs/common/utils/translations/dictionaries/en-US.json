@@ -1,18 +1,18 @@
 {
     "reviewComment": {
-        "talkToKody": "Talk to Kody by mentioning @kody",
-        "feedback": "Was this suggestion helpful? React with 👍 or 👎 to help Kody learn from this interaction."
+        "talkToCody": "Talk to Cody by mentioning @cody",
+        "feedback": "Was this suggestion helpful? React with 👍 or 👎 to help Cody learn from this interaction."
     },
     "pullRequestFinishSummaryMarkdown": {
         "withComments": "## Code Review Completed! 🔥\n\nThe code review was successfully completed based on your current configurations.\n\n",
-        "withoutComments": "# Kody Review Complete\n**Great news!** 🎉\nNo issues were found that match your current review configurations.\n\nKeep up the excellent work! 🚀",
-        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@kody review` on this PR to re-run the review.\n\n",
-        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@kody review` on this PR to retry once the issue is resolved.\n"
+        "withoutComments": "# Cody Review Complete\n**Great news!** 🎉\nNo issues were found that match your current review configurations.\n\nKeep up the excellent work! 🚀",
+        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@cody review` on this PR to re-run the review.\n\n",
+        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@cody review` on this PR to retry once the issue is resolved.\n"
     },
     "pullRequestSummaryMarkdown": {
-        "title": "PR Summary (Comment created by [Kody](https://kodus.io) 🤖)",
+        "title": "PR Summary (Comment created by [Cody](https://kodus.io) 🤖)",
         "codeReviewStarted": "Code Review Started! 🚀",
-        "description": "✋ Hi, team! I'm already looking at the changed files and starting the review to ensure everything is in order. If you need more details, I'm here! [Kody](https://kodus.io)",
+        "description": "✋ Hi, team! I'm already looking at the changed files and starting the review to ensure everything is in order. If you need more details, I'm here! [Cody](https://kodus.io)",
         "changedFiles": "📂 Changed Files",
         "filesTable": [
             "File",
@@ -28,15 +28,15 @@
         "totalChanges": "Total Changes"
     },
     "configReviewMarkdown": {
-        "title": "Kody Guide: Usage and Configuration",
-        "interactingTitle": "Interacting with Kody",
+        "title": "Cody Guide: Usage and Configuration",
+        "interactingTitle": "Interacting with Cody",
         "requestReview": "Request a Review",
-        "requestReviewDesc": "Ask Kody to review your PR manually by adding a comment with the `@kody start-review` command at the root of your PR.",
+        "requestReviewDesc": "Ask Cody to review your PR manually by adding a comment with the `@cody start-review` command at the root of your PR.",
         "validateBusinessLogic": "Validate Business Logic",
-        "validateBusinessLogicDesc": "Ask Kody to validate your code against business rules by adding a comment with the `@kody -v business-logic` command.",
+        "validateBusinessLogicDesc": "Ask Cody to validate your code against business rules by adding a comment with the `@cody -v business-logic` command.",
         "provideFeedback": "Provide Feedback",
-        "provideFeedbackDesc": "Help Kody learn and improve by reacting to its comments with a 👍 for helpful suggestions or a 👎 if improvements are needed.",
-        "configurationTitle": "Current Kody Configuration",
+        "provideFeedbackDesc": "Help Cody learn and improve by reacting to its comments with a 👍 for helpful suggestions or a 👎 if improvements are needed.",
+        "configurationTitle": "Current Cody Configuration",
         "reviewOptionsTitle": "Review Options",
         "reviewOptionsDesc": "The following review options are enabled or disabled:",
         "tableOptions": "Options",
@@ -98,10 +98,10 @@
     },
     "reviewCadenceInfo": {
         "automaticTitle": "Automatic Review",
-        "automaticDesc": "Kody reviews this PR automatically on every push.",
+        "automaticDesc": "Cody reviews this PR automatically on every push.",
         "autoPauseTitle": "Auto-Pause Mode",
-        "autoPauseDesc": "Kody reviews automatically but pauses after rapid changes ({pushes}+ pushes in {timeWindow} minutes). Use @kody start-review to continue.",
+        "autoPauseDesc": "Cody reviews automatically but pauses after rapid changes ({pushes}+ pushes in {timeWindow} minutes). Use @cody start-review to continue.",
         "manualTitle": "Manual Review",
-        "manualDesc": "Kody reviews the first push automatically, then only when you request with @kody start-review."
+        "manualDesc": "Cody reviews the first push automatically, then only when you request with @cody start-review."
     }
 }

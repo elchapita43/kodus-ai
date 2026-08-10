@@ -3,7 +3,7 @@ export const DOCUMENTATION_SEARCH_EXA_SERVICE_TOKEN = Symbol.for(
 );
 
 import { createLogger } from '@libs/core/log/logger';
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { DocumentationSearchCacheService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-cache.service';
 import {
     DocumentationItem,

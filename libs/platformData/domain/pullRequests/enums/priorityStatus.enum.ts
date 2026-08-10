@@ -7,5 +7,5 @@ export enum PriorityStatus {
     DISCARDED_BY_CLUSTERING = 'discarded-by-clustering',
     DISCARDED_BY_SAFEGUARD = 'discarded-by-safeguard',
     DISCARDED_BY_CODE_DIFF = 'discarded-by-code-diff',
-    DISCARDED_BY_KODY_FINE_TUNING = 'discarded-by-kody-fine-tuning',
+    DISCARDED_BY_CODY_FINE_TUNING = 'discarded-by-cody-fine-tuning',
 }

@@ -11,7 +11,7 @@
 #   4. (repeat 2-3 as needed)
 #   5. pnpm run selfhosted:destroy                # when done
 #
-# Images are pushed to `ghcr.io/<your-gh-user>/kodus-ai-{api,worker,webhook,
+# Images are pushed to `ghcr.io/<your-gh-user>/codus-ai-{api,worker,webhook,
 # web,mcp-manager}:dev-<instance-name>` so each dev has their own namespace
 # and there's no conflict with org-published images.
 #
@@ -141,18 +141,18 @@ ALL_SERVICES=(api worker webhooks web mcp-manager)
 
 image_name_for() {
     case "$1" in
-        api)         echo "kodus-ai-api" ;;
-        worker)      echo "kodus-ai-worker" ;;
-        webhooks)    echo "kodus-ai-webhook" ;;
-        web)         echo "kodus-ai-web" ;;
-        mcp-manager) echo "kodus-mcp-manager" ;;
+        api)         echo "codus-ai-api" ;;
+        worker)      echo "codus-ai-worker" ;;
+        webhooks)    echo "codus-ai-webhook" ;;
+        web)         echo "codus-ai-web" ;;
+        mcp-manager) echo "codus-mcp-manager" ;;
     esac
 }
 
 # Map our internal service key (matches docker-bake.hcl target names) to the
 # service name used in the installer's docker-compose.yml. They diverge for
-# `web` (installer calls it `kodus-web`) and `mcp-manager` (installer calls it
-# `kodus-mcp-manager`). Using the wrong name in the override creates a parallel
+# `web` (installer calls it `codus-web`) and `mcp-manager` (installer calls it
+# `codus-mcp-manager`). Using the wrong name in the override creates a parallel
 # service instead of overriding the existing one — so the old :latest image
 # keeps the published port, and the user's branch code runs unreachable on
 # a duplicate container.
@@ -161,8 +161,8 @@ compose_service_for() {
         api)         echo "api" ;;
         worker)      echo "worker" ;;
         webhooks)    echo "webhooks" ;;
-        web)         echo "kodus-web" ;;
-        mcp-manager) echo "kodus-mcp-manager" ;;
+        web)         echo "codus-web" ;;
+        mcp-manager) echo "codus-mcp-manager" ;;
     esac
 }
 
@@ -191,9 +191,9 @@ if [ "$SKIP_BUILD" != "1" ]; then
     # 15 GB is enough to keep recent layers warm for fast incremental builds,
     # but prevents the 25-30 GB blowups we hit otherwise. `--filter
     # unused-for=168h` keeps anything touched in the last week.
-    # Override with KODUS_BUILDX_KEEP_STORAGE=<value> if you have room to
+    # Override with CODUS_BUILDX_KEEP_STORAGE=<value> if you have room to
     # spare or want a tighter cap.
-    BUILDX_KEEP_STORAGE="${KODUS_BUILDX_KEEP_STORAGE:-15GB}"
+    BUILDX_KEEP_STORAGE="${CODUS_BUILDX_KEEP_STORAGE:-15GB}"
     log "Pruning BuildKit cache to ${BUILDX_KEEP_STORAGE} (keeps recently-used layers)..."
     docker buildx prune \
         --keep-storage="$BUILDX_KEEP_STORAGE" \
@@ -218,9 +218,9 @@ if [ "$SKIP_BUILD" != "1" ]; then
     # build arm64 unless told otherwise — which then fails at pull on the
     # droplet with "no matching manifest for linux/amd64". QEMU emulates
     # amd64 on the Mac (~2x slower build but works everywhere).
-    # Override with KODUS_DEPLOY_PLATFORM=linux/arm64 if you ever provision
+    # Override with CODUS_DEPLOY_PLATFORM=linux/arm64 if you ever provision
     # an ARM droplet (Ampere on Hetzner, AWS Graviton, etc.).
-    DEPLOY_PLATFORM="${KODUS_DEPLOY_PLATFORM:-linux/amd64}"
+    DEPLOY_PLATFORM="${CODUS_DEPLOY_PLATFORM:-linux/amd64}"
     log "Building (${#BAKE_TARGETS[@]} service$([ ${#BAKE_TARGETS[@]} -gt 1 ] && echo s), platform $DEPLOY_PLATFORM)..."
     docker buildx bake -f docker-bake.hcl \
         --set "base.args.API_CLOUD_MODE=false" \
@@ -245,7 +245,7 @@ for svc in "${ALL_SERVICES[@]}"; do
     image: ${REGISTRY}/${image_name}:${DEV_TAG}"
 done
 
-ssh_to "$NAME" "cat > /opt/kodus-installer/docker-compose.override.yml" <<EOF
+ssh_to "$NAME" "cat > /opt/codus-installer/docker-compose.override.yml" <<EOF
 $OVERRIDE_YML
 EOF
 ok "Override written"
@@ -258,16 +258,16 @@ ok "Override written"
 # runs, so install.sh's docker compose up sees the override and pulls
 # from ghcr.io/<gh-user>/*:dev-<name> instead of the org's stale or
 # nonexistent :latest tags.
-KODUS_DEV_DIR="${HOME}/.kodus-dev"
-mkdir -p "$KODUS_DEV_DIR"
-cat > "${KODUS_DEV_DIR}/last-deploy.override.yml" <<EOF
+CODUS_DEV_DIR="${HOME}/.codus-dev"
+mkdir -p "$CODUS_DEV_DIR"
+cat > "${CODUS_DEV_DIR}/last-deploy.override.yml" <<EOF
 $OVERRIDE_YML
 EOF
-ok "Cached override at ~/.kodus-dev/last-deploy.override.yml (for sso-e2e + future droplets)"
+ok "Cached override at ~/.codus-dev/last-deploy.override.yml (for sso-e2e + future droplets)"
 
 # ---------- pull + restart on droplet ----------
 # Translate our internal service keys → compose service names so we don't
-# accidentally `pull web` (no such service) instead of `pull kodus-web`.
+# accidentally `pull web` (no such service) instead of `pull codus-web`.
 COMPOSE_SERVICES_TO_REBUILD=()
 for svc in "${SERVICES_TO_REBUILD[@]}"; do
     COMPOSE_SERVICES_TO_REBUILD+=("$(compose_service_for "$svc")")
@@ -277,7 +277,7 @@ log "Logging in to GHCR on droplet + pulling new images..."
 GH_TOKEN_FOR_DROPLET=$(gh auth token)
 ssh_to "$NAME" bash <<REMOTE
 set -e
-cd /opt/kodus-installer
+cd /opt/codus-installer
 echo "$GH_TOKEN_FOR_DROPLET" | docker login ghcr.io -u "$GH_USER" --password-stdin >/dev/null
 docker compose pull ${COMPOSE_SERVICES_TO_REBUILD[@]}
 # --remove-orphans cleans up any leftover services that came from a previous

@@ -5,7 +5,7 @@ import { CoreDocument } from '@libs/core/infrastructure/repositories/model/mongo
 import {
     IContributingSuggestion,
     IRepositoryToIssues,
-} from '@libs/issues/domain/interfaces/kodyIssuesManagement.interface';
+} from '@libs/issues/domain/interfaces/codyIssuesManagement.interface';
 import { SeverityLevel } from '@libs/common/utils/enums/severityLevel.enum';
 import { LabelType } from '@libs/common/utils/codeManagement/labels';
 

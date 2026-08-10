@@ -1,10 +1,10 @@
 import 'dotenv/config';
 import { Template, defaultBuildLogger } from 'e2b';
-import { kodusTemplate } from './template';
+import { codusTemplate } from './template';
 
 async function main() {
-    const template = await Template.build(kodusTemplate, {
-        alias: 'kodus-sandbox-graph',
+    const template = await Template.build(codusTemplate, {
+        alias: 'codus-sandbox-graph',
         cpuCount: 2,
         memoryMB: 2560,
         onBuildLogs: defaultBuildLogger(),

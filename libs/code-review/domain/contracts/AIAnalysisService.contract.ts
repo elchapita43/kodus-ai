@@ -1,4 +1,4 @@
-import { BYOKConfig, LLMModelProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, LLMModelProvider } from '@codus/codus-common/llm';
 
 import { CreateSandboxParams } from '@libs/sandbox/domain/contracts/sandbox.provider';
 import {
@@ -15,7 +15,7 @@ import {
     ReviewModeResponse,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 export interface IAIAnalysisService {
     analyzeCodeWithAI(
@@ -52,7 +52,7 @@ export interface IAIAnalysisService {
         byokConfig: BYOKConfig,
         crossFileSnippets?: CrossFileContextSnippet[],
         remoteCommands?: RemoteCommands,
-        memories?: Array<Partial<IKodyRule>>,
+        memories?: Array<Partial<ICodyRule>>,
         externalReferences?: unknown[],
         externalReferenceErrors?: unknown[] | string,
         getFreshCloneParams?: () => Promise<CreateSandboxParams>,

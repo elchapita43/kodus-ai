@@ -40,7 +40,7 @@ export class GithubController {
     // already listed in JwtAuthGuard.excludePaths (jwt-auth.guard.ts) for the
     // same reason; @Public() makes that decision explicit at the handler.
     // The response only exposes the GitHub-side install status and the GitHub
-    // org login bound to the installId — no Kodus-side data, no tokens.
+    // org login bound to the installId — no Codus-side data, no tokens.
     @Public()
     @Get('/integration')
     @ApiOperation({
@@ -64,7 +64,7 @@ export class GithubController {
     @ApiOperation({
         summary: 'Get the GitHub organization/account name for the current org',
         description:
-            'Returns the GitHub account login (org or user) linked to the authenticated Kodus organization.',
+            'Returns the GitHub account login (org or user) linked to the authenticated Codus organization.',
     })
     @ApiOkResponse({ type: ApiStringResponseDto })
     public getOrganizationName() {

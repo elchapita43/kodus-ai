@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from "react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -105,7 +105,7 @@ export const NavMenu = () => {
             {
                 label: "Library",
                 icon: <LibraryBig className="size-5" />,
-                href: "/library/kody-rules",
+                href: "/library/cody-rules",
                 visible: canReadCodeReviewSettings,
             },
 
@@ -183,7 +183,7 @@ export const NavMenu = () => {
     return (
         <div className="border-primary-dark bg-card-lv1 z-50 flex h-16 shrink-0 gap-4 border-b-2 px-6">
             <NextLink href="/" className="flex items-center">
-                <SvgKodus className="h-8 max-w-max" />
+                <SvgCodus className="h-8 max-w-max" />
             </NextLink>
 
             {/* min-w-0 lets this flex child shrink below the nav's intrinsic

@@ -10,10 +10,10 @@ import { PARAMETERS_SERVICE_TOKEN } from '@libs/organization/domain/parameters/c
 
 import { DeleteIntegrationUseCase } from './delete-integration.use-case';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
-import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
+import { CodyRulesStatus } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { CreateOrUpdateParametersUseCase } from '@libs/organization/application/use-cases/parameters/create-or-update-use-case';
 
 @Injectable()
@@ -28,8 +28,8 @@ export class DeleteIntegrationAndRepositoriesUseCase {
         private readonly createOrUpdateParametersUseCase: CreateOrUpdateParametersUseCase,
         @Inject(PULL_REQUEST_MESSAGES_SERVICE_TOKEN)
         private readonly pullRequestMessagesService: IPullRequestMessagesService,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
     ) {}
 
     async execute(params: {
@@ -103,11 +103,11 @@ export class DeleteIntegrationAndRepositoriesUseCase {
                 },
             });
 
-            // 5. Inativar Kody rules associadas aos repositórios
-            await this.inactivateKodyRules(organizationId, repositoriesIds);
+            // 5. Inativar Cody rules associadas aos repositórios
+            await this.inactivateCodyRules(organizationId, repositoriesIds);
 
             this.logger.log({
-                message: 'Kody rules inactivated successfully',
+                message: 'Cody rules inactivated successfully',
                 context: DeleteIntegrationAndRepositoriesUseCase.name,
                 metadata: {
                     organizationId,
@@ -291,7 +291,7 @@ export class DeleteIntegrationAndRepositoriesUseCase {
         }
     }
 
-    private async inactivateKodyRules(
+    private async inactivateCodyRules(
         organizationId: string,
         repositoriesIds: string[],
     ): Promise<void> {
@@ -300,15 +300,15 @@ export class DeleteIntegrationAndRepositoriesUseCase {
                 async (repositoryId) => {
                     try {
                         const result =
-                            await this.kodyRulesService.updateRulesStatusByFilter(
+                            await this.codyRulesService.updateRulesStatusByFilter(
                                 organizationId,
                                 repositoryId,
                                 undefined,
-                                KodyRulesStatus.DELETED,
+                                CodyRulesStatus.DELETED,
                             );
 
                         this.logger.log({
-                            message: 'Kody rules inactivation attempt',
+                            message: 'Cody rules inactivation attempt',
                             context:
                                 DeleteIntegrationAndRepositoriesUseCase.name,
                             metadata: {
@@ -322,7 +322,7 @@ export class DeleteIntegrationAndRepositoriesUseCase {
                     } catch (error) {
                         this.logger.error({
                             message:
-                                'Error inactivating Kody rules for repository',
+                                'Error inactivating Cody rules for repository',
                             context:
                                 DeleteIntegrationAndRepositoriesUseCase.name,
                             error: error,
@@ -340,7 +340,7 @@ export class DeleteIntegrationAndRepositoriesUseCase {
             await Promise.all(inactivationPromises);
         } catch (error) {
             this.logger.error({
-                message: 'Error inactivating Kody rules',
+                message: 'Error inactivating Cody rules',
                 context: DeleteIntegrationAndRepositoriesUseCase.name,
                 error: error,
                 metadata: {

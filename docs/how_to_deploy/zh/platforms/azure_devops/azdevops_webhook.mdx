@@ -1,10 +1,10 @@
 ---
 title: 创建 Webhook
-description: "当 Kody 未能替你创建 service hook 时,手动注册 Azure Repos webhook 的步骤,包括 URL 所需的签名令牌。"
+description: "当 Cody 未能替你创建 service hook 时,手动注册 Azure Repos webhook 的步骤,包括 URL 所需的签名令牌。"
 icon: webhook
 ---
 
-当您连接 Azure DevOps 项目时,Kody 通常会自动创建 webhook。本页面介绍**手动设置**路径 — 当自动注册没有发生时使用,通常在自托管安装或 Kody 无法代表您创建服务钩子的 Azure 项目中。
+当您连接 Azure DevOps 项目时,Cody 通常会自动创建 webhook。本页面介绍**手动设置**路径 — 当自动注册没有发生时使用,通常在自托管安装或 Cody 无法代表您创建服务钩子的 Azure 项目中。
 
 <Note>
   Webhook URL 必须能到达 Webhooks 服务(端口 3332)。仅当您的反向代理将 `/.../webhook` 路径转发到 Webhooks 服务时,才能使用 API 域名。
@@ -12,7 +12,7 @@ icon: webhook
 
 ## Azure Repos webhook URL 需要签名令牌
 
-与 GitHub、GitLab、Bitbucket 和 Forgejo 不同,Azure Repos webhook 请求**必须包含加密的 `token` 查询参数**。Kodus 对每个到达的请求验证此令牌,没有令牌的调用会被 `403 Unauthorized` 拒绝。该令牌由您在自托管设置中已配置的两个环境变量派生:
+与 GitHub、GitLab、Bitbucket 和 Forgejo 不同,Azure Repos webhook 请求**必须包含加密的 `token` 查询参数**。Codus 对每个到达的请求验证此令牌,没有令牌的调用会被 `403 Unauthorized` 拒绝。该令牌由您在自托管设置中已配置的两个环境变量派生:
 
 - `CODE_MANAGEMENT_SECRET` — 32 字节的加密密钥(十六进制编码)。
 - `CODE_MANAGEMENT_WEBHOOK_TOKEN` — 密钥加密的明文。
@@ -20,20 +20,20 @@ icon: webhook
 所以 Azure webhook URL 形式如下:
 
 ```
-https://kodus-api.yourdomain.com/azure-repos/webhook?token=<generated>
+https://codus-api.yourdomain.com/azure-repos/webhook?token=<generated>
 ```
 
 `<generated>` 值由使用 AES-256-CBC 将 `CODE_MANAGEMENT_WEBHOOK_TOKEN` 用 `CODE_MANAGEMENT_SECRET` 加密产生,格式为 `<ivHex>:<cipherHex>`。
 
 <Note>
-  当 Kody 通过 UI 驱动的集成流程为您创建 webhook 时,会自动生成此令牌。仅当您在 Azure DevOps 中手动注册 webhook 时,才需要手动生成。
+  当 Cody 通过 UI 驱动的集成流程为您创建 webhook 时,会自动生成此令牌。仅当您在 Azure DevOps 中手动注册 webhook 时,才需要手动生成。
 </Note>
 
 ## 生成 webhook 令牌
 
-选择适合您环境的选项。两个选项都使用您的 Kodus 堆栈已配置的环境变量 — 您**不需要**克隆代码库。
+选择适合您环境的选项。两个选项都使用您的 Codus 堆栈已配置的环境变量 — 您**不需要**克隆代码库。
 
-### 选项 A — 在运行中的 Kodus 容器内(推荐)
+### 选项 A — 在运行中的 Codus 容器内(推荐)
 
 对已运行的 `api` 容器执行。环境变量已经在作用域内:
 
@@ -57,7 +57,7 @@ console.log(iv.toString('hex') + ':' + e);
 
 ### 选项 B — 本地使用 Node(无 Docker)
 
-如果您的 Kodus 堆栈未运行,或您想在另一台机器上生成令牌,导出两个环境变量后运行:
+如果您的 Codus 堆栈未运行,或您想在另一台机器上生成令牌,导出两个环境变量后运行:
 
 ```bash
 export CODE_MANAGEMENT_SECRET="<与您的 .env 相同的值>"
@@ -75,7 +75,7 @@ console.log(iv.toString('hex') + ':' + e);
 ```
 
 <Warning>
-  两个环境变量的值必须与您的 Kodus API 容器正在使用的**完全一致**。密钥不匹配会产生看起来有效但 Kodus 会以 `403 Unauthorized` 拒绝的令牌。
+  两个环境变量的值必须与您的 Codus API 容器正在使用的**完全一致**。密钥不匹配会产生看起来有效但 Codus 会以 `403 Unauthorized` 拒绝的令牌。
 </Warning>
 
 <Tip>
@@ -92,10 +92,10 @@ console.log(iv.toString('hex') + ':' + e);
 
    - **服务:** **Web Hooks**
    - **在此类型的事件上触发:** 选择一个受支持的事件(见下文)
-   - **URL:** 您的 Kodus Azure Repos webhook URL,附加令牌:
+   - **URL:** 您的 Codus Azure Repos webhook URL,附加令牌:
 
      ```
-     https://kodus-api.yourdomain.com/azure-repos/webhook?token=<generated>
+     https://codus-api.yourdomain.com/azure-repos/webhook?token=<generated>
      ```
 
    - **过滤器**(可选):如果需要,按仓库或分支过滤。
@@ -103,7 +103,7 @@ console.log(iv.toString('hex') + ':' + e);
 
 6. 单击**完成**。
 
-每个事件类型需要创建一个订阅。Kodus 当前响应:
+每个事件类型需要创建一个订阅。Codus 当前响应:
 
 - `git.pullrequest.created` — 拉取请求已创建
 - `git.pullrequest.updated` — 拉取请求已更新
@@ -117,7 +117,7 @@ console.log(iv.toString('hex') + ':' + e);
 ## 故障排查
 
 <AccordionGroup>
-  <Accordion title="Azure 发送了 webhook 但 Kodus 返回 403">
+  <Accordion title="Azure 发送了 webhook 但 Codus 返回 403">
     `?token=` 值缺失、被截断,或者用与运行中 API 使用的不同的 `CODE_MANAGEMENT_SECRET` / `CODE_MANAGEMENT_WEBHOOK_TOKEN` 生成。使用**选项 A** 重新生成令牌(保证使用容器实际使用的环境变量产生),并在 Azure 中更新订阅 URL。
   </Accordion>
 

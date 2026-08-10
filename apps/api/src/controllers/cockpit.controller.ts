@@ -23,7 +23,7 @@ import {
     CockpitValidationService,
     SuggestionsExplorerQuery,
 } from '@libs/cockpit';
-import { GetKodyRulesHealthUseCase } from '@libs/cockpit/application/use-cases/get-kody-rules-health.use-case';
+import { GetCodyRulesHealthUseCase } from '@libs/cockpit/application/use-cases/get-cody-rules-health.use-case';
 import { CockpitTierGuard } from '@libs/cockpit/infrastructure/guards/cockpit-tier.guard';
 import { Public } from '@libs/identity/infrastructure/adapters/services/auth/public.decorator';
 import {
@@ -42,7 +42,7 @@ const canReadCockpit = checkPermissions({
 });
 
 /**
- * Path shape matches the legacy `kodus-service-analytics` Express routes:
+ * Path shape matches the legacy `codus-service-analytics` Express routes:
  *
  *   /code-health/*     → CockpitCodeHealthController
  *   /productivity/*    → CockpitProductivityController
@@ -184,8 +184,8 @@ export class CockpitCodeHealthController {
 }
 
 // -------------------------------------------------------------------------
-// /review-analytics/*  — "Kodus Review" tab of the cockpit revamp:
-// metrics about Kodus's own review effectiveness (implementation rate
+// /review-analytics/*  — "Codus Review" tab of the cockpit revamp:
+// metrics about Codus's own review effectiveness (implementation rate
 // breakdowns, ignored criticals, repository health, suggestions explorer).
 // -------------------------------------------------------------------------
 
@@ -198,7 +198,7 @@ export class CockpitReviewAnalyticsController {
     constructor(
         @Inject(COCKPIT_REVIEW_ANALYTICS_SERVICE_TOKEN)
         private readonly reviewAnalytics: ICockpitReviewAnalyticsService,
-        private readonly kodyRulesHealth: GetKodyRulesHealthUseCase,
+        private readonly codyRulesHealth: GetCodyRulesHealthUseCase,
     ) {}
 
     @Get('/charts/implementation-rate-weekly')
@@ -286,14 +286,14 @@ export class CockpitReviewAnalyticsController {
         return this.reviewAnalytics.getRepositoriesHealth(q);
     }
 
-    @Get('/tables/kody-rules-health')
+    @Get('/tables/cody-rules-health')
     @ApiOperation({
         summary:
             'Per-rule health: triggers, implementation rate and state (healthy/ignored/stale)',
     })
-    kodyRulesHealthTable(@Query() q: CockpitRangeQuery) {
+    codyRulesHealthTable(@Query() q: CockpitRangeQuery) {
         requireRange(q);
-        return this.kodyRulesHealth.execute(q);
+        return this.codyRulesHealth.execute(q);
     }
 
     @Get('/suggestions')

@@ -8,9 +8,9 @@
 set -euo pipefail
 
 REQUIRED_CONTAINERS=(
-  "kodus_api"
-  "kodus_worker"
-  "kodus_webhooks"
+  "codus_api"
+  "codus_worker"
+  "codus_webhooks"
   "mongodb"
   "db_postgres"
   "rabbitmq"

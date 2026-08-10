@@ -1,30 +1,30 @@
 ---
 title: "Como corrigir problemas de webhook com GitHub ou GitLab"
-description: "Diagnostique e resolva problemas de conectividade de webhook entre seu provedor Git e o Kodus."
+description: "Diagnostique e resolva problemas de conectividade de webhook entre seu provedor Git e o Codus."
 ---
 
-Webhooks são a forma como o Kodus sabe quando um PR é aberto ou atualizado. Se não estiverem funcionando, as revisões não serão acionadas.
+Webhooks são a forma como o Codus sabe quando um PR é aberto ou atualizado. Se não estiverem funcionando, as revisões não serão acionadas.
 
 ## Diagnosticando o problema
 
 ### GitHub
 
 1. Vá nas **Configurações** do seu repositório → **Webhooks**
-2. Encontre o webhook do Kodus
+2. Encontre o webhook do Codus
 3. Clique nele e verifique as **Entregas Recentes**
 4. Procure por entregas com falha (códigos de status não 2xx)
 
 ### GitLab
 
 1. Vá nas **Configurações** do seu projeto → **Webhooks**
-2. Encontre o webhook do Kodus
+2. Encontre o webhook do Codus
 3. Verifique o histórico de entregas em busca de erros
 
 ## Correções comuns
 
 ### URL do webhook incorreta ou desatualizada
 
-Se você alterou a URL de implantação do Kodus, atualize a URL do webhook nas configurações do seu provedor Git.
+Se você alterou a URL de implantação do Codus, atualize a URL do webhook nas configurações do seu provedor Git.
 
 ### Problemas com certificado SSL
 
@@ -32,11 +32,11 @@ Se você está hospedando por conta própria, certifique-se de que seu certifica
 
 ### Bloqueio por firewall
 
-Se o Kodus está atrás de um firewall, certifique-se de que as faixas de IP do seu provedor Git podem alcançar o endpoint do webhook.
+Se o Codus está atrás de um firewall, certifique-se de que as faixas de IP do seu provedor Git podem alcançar o endpoint do webhook.
 
 ### Webhook foi excluído
 
-Registre novamente o webhook percorrendo o fluxo de configuração do Kodus novamente, ou adicione manualmente a URL do webhook.
+Registre novamente o webhook percorrendo o fluxo de configuração do Codus novamente, ou adicione manualmente a URL do webhook.
 
 ## Testando
 

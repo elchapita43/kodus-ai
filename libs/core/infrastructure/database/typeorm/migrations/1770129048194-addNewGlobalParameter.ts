@@ -13,7 +13,7 @@ export class AddNewGlobalParameter1770129048194 implements MigrationInterface {
         `);
         await queryRunner.query(`
             CREATE TYPE "public"."global_parameters_configkey_enum" AS ENUM(
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'code_review_max_files',
                 'ignore_paths_global'
             )
@@ -30,7 +30,7 @@ export class AddNewGlobalParameter1770129048194 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             CREATE TYPE "public"."global_parameters_configkey_enum_old" AS ENUM(
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'code_review_max_files'
             )
         `);

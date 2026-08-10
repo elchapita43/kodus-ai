@@ -1,13 +1,13 @@
 /**
- * Este script faz um trigger real de um Code Review na API da Kodus
+ * Este script faz um trigger real de um Code Review na API da Codus
  * usando um PR recém criado e acompanha os logs do RabbitMQ/Worker
  * para vermos exatamente as chamadas de tools do Agente.
  */
 import fs from 'fs/promises';
 import { execSync, spawn } from 'child_process';
 
-const KODUS_API = 'http://localhost:3000';
-const KODUS_TEAM_KEY = process.env.KODUS_TEAM_KEY || 'kodus_live_83b1dc321528b12232bfb5f45811776'; 
+const CODUS_API = 'http://localhost:3000';
+const CODUS_TEAM_KEY = process.env.CODUS_TEAM_KEY || 'codus_live_83b1dc321528b12232bfb5f45811776'; 
 // Substitua pela sua CLI key local ou de dev se a de cima falhar
 
 async function main() {
@@ -43,15 +43,15 @@ async function main() {
     const prNumber = openPrs[0].number;
     console.log(`✅ PR Encontrado: #${prNumber}`);
 
-    console.log("\n🚀 Disparando Code Review manual via Kodus API...");
+    console.log("\n🚀 Disparando Code Review manual via Codus API...");
     
     // Disparar o webhook manual ou endpoint de CLI Review
     try {
-        const response = await fetch(`${KODUS_API}/v1/reviews/trigger`, {
+        const response = await fetch(`${CODUS_API}/v1/reviews/trigger`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-team-key': KODUS_TEAM_KEY
+                'x-team-key': CODUS_TEAM_KEY
             },
             body: JSON.stringify({
                 repository: repoFullName,
@@ -70,7 +70,7 @@ async function main() {
         const data = await response.json();
         console.log(`✅ Review enfileirado com sucesso! Job ID: ${data.jobId || 'N/A'}`);
     } catch (e) {
-        console.error("❌ Erro de conexão com a API da Kodus:", e.message);
+        console.error("❌ Erro de conexão com a API da Codus:", e.message);
         console.log("⚠️  A API local (http://localhost:3000) parece estar offline. Certifique-se de que o NestJS está rodando.");
         process.exit(1);
     }
@@ -80,7 +80,7 @@ async function main() {
     
     // Usar docker logs para seguir o worker (assumindo que roda via pnpm run docker:start ou similar)
     // Filtramos apenas logs relevantes de AgentLoop, Tool Calls e Sandbox
-    const logProcess = spawn('docker', ['logs', '-f', 'kodus-worker-1'], { shell: true });
+    const logProcess = spawn('docker', ['logs', '-f', 'codus-worker-1'], { shell: true });
     
     // Alternativa: se você roda localmente fora do docker, podemos fazer um tail no arquivo de log
     // const logProcess = spawn('tail', ['-f', 'logs/worker.log']);

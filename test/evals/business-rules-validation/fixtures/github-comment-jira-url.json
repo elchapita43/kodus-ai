@@ -4,7 +4,7 @@
     "pullRequestNumber": 132,
     "prBody": "Refines type-safety in the extension command flow.",
     "prDiff": "diff --git a/src/commands/prCommentCommands.ts b/src/commands/prCommentCommands.ts\nindex 123..456 100644\n--- a/src/commands/prCommentCommands.ts\n+++ b/src/commands/prCommentCommands.ts\n@@ -159,7 +167,7 @@\n-    changeGroups.forEach((change: any) => {\n+    changeGroups.forEach((change: GitChangeLike) => {\n@@ -188,7 +196,7 @@\n-function getStatusLabel(status: any): string {\n+function getStatusLabel(status: string | number | undefined): string {\n",
-    "userQuestion": "@kody -v business-logic https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441",
+    "userQuestion": "@cody -v business-logic https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441",
     "taskContext": {
       "id": "KC-1441",
       "title": "Replace any-based git change parsing with typed handling",

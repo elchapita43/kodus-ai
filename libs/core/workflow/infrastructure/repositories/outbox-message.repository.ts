@@ -88,7 +88,7 @@ export class OutboxMessageRepository implements IOutboxMessageRepository {
         lockedBy: string,
     ): Promise<OutboxMessageModel[]> {
         const query = `
-            UPDATE "kodus_workflow"."outbox_messages"
+            UPDATE "codus_workflow"."outbox_messages"
             SET
                 status = $1,
                 "lockedAt" = NOW(),
@@ -97,7 +97,7 @@ export class OutboxMessageRepository implements IOutboxMessageRepository {
                 "lastError" = NULL
             WHERE uuid IN (
                 SELECT uuid
-                FROM "kodus_workflow"."outbox_messages"
+                FROM "codus_workflow"."outbox_messages"
                 WHERE status = $3 AND ("nextAttemptAt" IS NULL OR "nextAttemptAt" <= NOW())
                 ORDER BY "createdAt" ASC
                 LIMIT $4

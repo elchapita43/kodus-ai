@@ -9,7 +9,7 @@ describe('repo config formatter', () => {
     it('formats repository settings for terminal display', () => {
         const lines = formatRepositorySettings({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -46,7 +46,7 @@ describe('repo config formatter', () => {
         });
 
         const output = lines.join('\n');
-        expect(output).toContain('Repository settings: kodustech/cli');
+        expect(output).toContain('Repository settings: elchapita43/cli');
         expect(output).toContain('Status');
         expect(output).toContain('Patterns');
         expect(output).toContain('Automated review: enabled');
@@ -64,7 +64,7 @@ describe('repo config formatter', () => {
 
     it('formats repository setup preview for terminal display', () => {
         const lines = formatRepositorySetupPreview(
-            'kodustech/cli',
+            'elchapita43/cli',
             {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -84,7 +84,7 @@ describe('repo config formatter', () => {
         );
 
         const output = lines.join('\n');
-        expect(output).toContain('Review repository settings: kodustech/cli');
+        expect(output).toContain('Review repository settings: elchapita43/cli');
         expect(output).toContain(
             'Changed values are highlighted before you apply.',
         );

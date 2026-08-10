@@ -151,7 +151,7 @@ export class ValidateNewCommitsStage extends BasePipelineStage<CodeReviewPipelin
                 // (rebase or force-push rewrote history). Falling back to a
                 // full review is the only safe option — using compare(orphan, head)
                 // would return diff lines that came from the target branch via
-                // rebase, and Kody would comment on code the author never wrote.
+                // rebase, and Cody would comment on code the author never wrote.
                 forceFullRerun = true;
                 if (lastExecutionResult) {
                     lastExecutionResult.lastAnalyzedCommit = undefined;
@@ -254,7 +254,7 @@ export class ValidateNewCommitsStage extends BasePipelineStage<CodeReviewPipelin
         context: CodeReviewPipelineContext,
         lastExecutionId: string,
     ): Promise<boolean> {
-        // `@kody review --force` (origin = 'command-force') always forces a
+        // `@cody review --force` (origin = 'command-force') always forces a
         // full re-review regardless of the previous execution's status. This
         // is the whole point of the flag — let customers re-run a successful
         // (or apparently successful but empty) review after fixing whatever
@@ -276,7 +276,7 @@ export class ValidateNewCommitsStage extends BasePipelineStage<CodeReviewPipelin
             return true;
         }
 
-        // Plain `@kody review` (origin = 'command') only forces a full re-run
+        // Plain `@cody review` (origin = 'command') only forces a full re-run
         // when the previous execution failed at a rerun-eligible stage —
         // preserves the incremental-review behavior for the common case.
         if (context.origin !== 'command') {
@@ -313,8 +313,8 @@ export class ValidateNewCommitsStage extends BasePipelineStage<CodeReviewPipelin
         allCommits: Commit[],
         lastAnalyzedCommitSha?: string,
     ): IStageValidationResult {
-        // 1. Force Re-review (Manual). Both 'command' (plain @kody review)
-        //    and 'command-force' (@kody review --force) bypass the
+        // 1. Force Re-review (Manual). Both 'command' (plain @cody review)
+        //    and 'command-force' (@cody review --force) bypass the
         //    no-new-commits guard — the latter is what lets customers
         //    re-run a review after fixing whatever broke the previous one.
         if (context.origin?.startsWith('command')) {

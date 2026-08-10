@@ -1,6 +1,6 @@
 ---
 title: "概要"
-description: "Kody Issues 機能で未実装の提案を追跡・管理します。"
+description: "Cody Issues 機能で未実装の提案を追跡・管理します。"
 ---
 
 ## クイック概要
@@ -12,10 +12,10 @@ description: "Kody Issues 機能で未実装の提案を追跡・管理します
 
 ## 概要
 
-**Kody Issues** 機能は、プルリクエスト（PR）で**実装されなかった** Kody が生成したすべての提案を自動的に追跡します。ソナーのように機能し、重要なフィードバックを見逃さないために保留中の改善のライブリストを提供します。
+**Cody Issues** 機能は、プルリクエスト（PR）で**実装されなかった** Cody が生成したすべての提案を自動的に追跡します。ソナーのように機能し、重要なフィードバックを見逃さないために保留中の改善のライブリストを提供します。
 
-<Frame caption="フィルターとステータス管理を持つ追跡された提案を表示する Kody Issues ダッシュボード">
-  <img src="/images/issues.png" alt="Kody Issues ダッシュボード" />
+<Frame caption="フィルターとステータス管理を持つ追跡された提案を表示する Cody Issues ダッシュボード">
+  <img src="/images/issues.png" alt="Cody Issues ダッシュボード" />
 </Frame>
 
 ## 主なメリット
@@ -44,17 +44,17 @@ description: "Kody Issues 機能で未実装の提案を追跡・管理します
 </Note>
 
 <Warning>
-  **PR** タイプの Kody ルールは Issue を生成しません。ファイルレベルおよびコード固有の提案のみが追跡可能な Issue を作成します。
+  **PR** タイプの Cody ルールは Issue を生成しません。ファイルレベルおよびコード固有の提案のみが追跡可能な Issue を作成します。
 </Warning>
 
-- PR が**クローズ**されると、Kody はその PR で行われた**適用されなかった**すべての提案をコンパイル
-- 未実装の提案ごとに、Kody はリポジトリにリンクされた **Issue** を自動的に作成
+- PR が**クローズ**されると、Cody はその PR で行われた**適用されなかった**すべての提案をコンパイル
+- 未実装の提案ごとに、Cody はリポジトリにリンクされた **Issue** を自動的に作成
 - 各 Issue には元の提案のコンテキスト、ファイルの場所、重要度レベルが含まれる
 
 ### 2. 自動解決
 
-- 開発者が**後続の PR** で提案された変更を実装した場合、Kody は関連する Issue を**解決済み**としてマーク
-- Kody はコード分析を使用して実装された変更を既存の Issue にインテリジェントにマッチング
+- 開発者が**後続の PR** で提案された変更を実装した場合、Cody は関連する Issue を**解決済み**としてマーク
+- Cody はコード分析を使用して実装された変更を既存の Issue にインテリジェントにマッチング
 - 解決は手動介入なしに自動的に行われる
 
 ### 3. 手動管理
@@ -115,17 +115,17 @@ description: "Kody Issues 機能で未実装の提案を追跡・管理します
 
 <CardGroup cols={2}>
   <Card
-    title="Kody Rules セットアップ"
+    title="Cody Rules セットアップ"
     icon="user-police"
-    href="/how_to_use/ja/code_review/configs/kody_rules"
+    href="/how_to_use/ja/code_review/configs/cody_rules"
   >
     Issue としてトラッキングされるカスタムルールを設定
   </Card>
   <Card
     title="チーム学習"
     icon="graduation-cap"
-    href="/how_to_use/ja/code_review/learning/kody_learning"
+    href="/how_to_use/ja/code_review/learning/cody_learning"
   >
-    Kody がチームのフィードバックに基づいて提案を改善する方法を学ぶ
+    Cody がチームのフィードバックに基づいて提案を改善する方法を学ぶ
   </Card>
 </CardGroup>

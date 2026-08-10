@@ -36,7 +36,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
 
     it('falls back to team key on 401 from personal token', async () => {
         mocks.getValidToken.mockResolvedValue('personal-token');
-        mocks.loadConfig.mockResolvedValue({ teamKey: 'kodus_team_key' });
+        mocks.loadConfig.mockResolvedValue({ teamKey: 'codus_team_key' });
         mocks.getPullRequestSuggestions
             .mockRejectedValueOnce(new ApiError(401, 'Unauthorized'))
             .mockResolvedValueOnce({ summary: 'ok', issues: [] });
@@ -55,7 +55,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
         );
         expect(mocks.getPullRequestSuggestions).toHaveBeenNthCalledWith(
             2,
-            'kodus_team_key',
+            'codus_team_key',
             expect.objectContaining({
                 prUrl: 'https://github.com/org/repo/pull/1',
             }),
@@ -67,7 +67,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
         const originalError = new ApiError(401, 'Primary auth failed');
         const fallbackError = new ApiError(401, 'Fallback failed');
         mocks.getValidToken.mockResolvedValue('personal-token');
-        mocks.loadConfig.mockResolvedValue({ teamKey: 'kodus_team_key' });
+        mocks.loadConfig.mockResolvedValue({ teamKey: 'codus_team_key' });
         mocks.getPullRequestSuggestions
             .mockRejectedValueOnce(originalError)
             .mockRejectedValueOnce(fallbackError);
@@ -101,13 +101,13 @@ describe('ReviewService triggerBusinessValidation auth fallback', () => {
     it('falls back to team key on 401 from personal token', async () => {
         const localDiff = 'diff --git a/src/a.ts b/src/a.ts\n+const x = 1;';
         mocks.getValidToken.mockResolvedValue('personal-token');
-        mocks.loadConfig.mockResolvedValue({ teamKey: 'kodus_team_key' });
+        mocks.loadConfig.mockResolvedValue({ teamKey: 'codus_team_key' });
         mocks.triggerBusinessValidation
             .mockRejectedValueOnce(new ApiError(401, 'Unauthorized'))
             .mockResolvedValueOnce({
                 accepted: true,
                 mode: 'local_diff',
-                command: 'kodus pr business-validation --task-id KD-1234',
+                command: 'codus pr business-validation --task-id KD-1234',
                 repositoryName: 'org/repo',
                 taskReference: 'KD-1234',
                 result: 'ok',
@@ -129,7 +129,7 @@ describe('ReviewService triggerBusinessValidation auth fallback', () => {
         );
         expect(mocks.triggerBusinessValidation).toHaveBeenNthCalledWith(
             2,
-            'kodus_team_key',
+            'codus_team_key',
             expect.objectContaining({
                 diff: localDiff,
                 taskId: 'KD-1234',
@@ -140,11 +140,11 @@ describe('ReviewService triggerBusinessValidation auth fallback', () => {
 
     it('forwards local diff payload when running without PR context', async () => {
         const localDiff = 'diff --git a/src/a.ts b/src/a.ts\n+const x = 1;';
-        mocks.getValidToken.mockResolvedValue('kodus_team_key');
+        mocks.getValidToken.mockResolvedValue('codus_team_key');
         mocks.triggerBusinessValidation.mockResolvedValue({
             accepted: true,
             mode: 'local_diff',
-            command: 'kodus pr business-validation --task-id KD-1234',
+            command: 'codus pr business-validation --task-id KD-1234',
             repositoryName: 'org/repo',
             taskReference: 'KD-1234',
             result: 'ok',
@@ -157,7 +157,7 @@ describe('ReviewService triggerBusinessValidation auth fallback', () => {
 
         expect(mocks.triggerBusinessValidation).toHaveBeenCalledTimes(1);
         expect(mocks.triggerBusinessValidation).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
             expect.objectContaining({
                 diff: localDiff,
                 taskId: 'KD-1234',

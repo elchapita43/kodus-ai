@@ -5,7 +5,7 @@ export class AxiosAzureReposService {
 
     constructor({ tenantId = '', organization = '' }) {
         this.axiosInstance = axios.create({
-            baseURL: process.env.KODUS_SERVICE_AZURE_REPOS,
+            baseURL: process.env.CODUS_SERVICE_AZURE_REPOS,
             headers: {
                 'Content-Type': 'application/json',
                 'x-tenant-id': tenantId,

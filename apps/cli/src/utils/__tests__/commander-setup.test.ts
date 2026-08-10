@@ -15,7 +15,7 @@ describe('commander setup', () => {
 
         await expect(
             program.parseAsync(
-                ['node', 'kodus', 'config', '-r', 'Wellington01/kodus-extension', 'setup'],
+                ['node', 'codus', 'config', '-r', 'Wellington01/codus-extension', 'setup'],
                 { from: 'node' },
             ),
         ).rejects.toMatchObject({

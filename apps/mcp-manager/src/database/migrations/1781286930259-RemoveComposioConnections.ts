@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 /**
  * Composio is fully decommissioned. Drop any remaining Composio-provider MCP
- * connections — orgs re-connect those toolkits through the native (kodusmcp)
+ * connections — orgs re-connect those toolkits through the native (codusmcp)
  * integrations. Irreversible (the rows pointed at the retired Composio dev
  * project), so `down` is a no-op.
  */

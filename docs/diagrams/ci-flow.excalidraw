@@ -1,7 +1,7 @@
 {
  "type": "excalidraw",
  "version": 2,
- "source": "kodus-ci-flow",
+ "source": "codus-ci-flow",
  "elements": [
   {
    "id": "lm66n6ozs0",
@@ -29,14 +29,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "Kodus \u2014 Fluxo CI/CD completo: Release (Cloud + Self-hosted RC) + Benchmark de modelos",
+   "text": "Codus \u2014 Fluxo CI/CD completo: Release (Cloud + Self-hosted RC) + Benchmark de modelos",
    "fontSize": 20,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 20,
    "containerId": null,
-   "originalText": "Kodus \u2014 Fluxo CI/CD completo: Release (Cloud + Self-hosted RC) + Benchmark de modelos",
+   "originalText": "Codus \u2014 Fluxo CI/CD completo: Release (Cloud + Self-hosted RC) + Benchmark de modelos",
    "lineHeight": 1.25
   },
   {
@@ -457,14 +457,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "\u26d4 e2e-cloud MATRIX (6 c\u00e9lulas provider\u00d7licen\u00e7a)\ncen\u00e1rios: code-review-basic, kody-rules,\nlicense-attribution  \u00b7  tenants FIXOS",
+   "text": "\u26d4 e2e-cloud MATRIX (6 c\u00e9lulas provider\u00d7licen\u00e7a)\ncen\u00e1rios: code-review-basic, cody-rules,\nlicense-attribution  \u00b7  tenants FIXOS",
    "fontSize": 11.5,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 11,
    "containerId": null,
-   "originalText": "\u26d4 e2e-cloud MATRIX (6 c\u00e9lulas provider\u00d7licen\u00e7a)\ncen\u00e1rios: code-review-basic, kody-rules,\nlicense-attribution  \u00b7  tenants FIXOS",
+   "originalText": "\u26d4 e2e-cloud MATRIX (6 c\u00e9lulas provider\u00d7licen\u00e7a)\ncen\u00e1rios: code-review-basic, cody-rules,\nlicense-attribution  \u00b7  tenants FIXOS",
    "lineHeight": 1.25
   },
   {

@@ -18,9 +18,9 @@ import {
 import { CodeSuggestion } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { ISuggestionByPR } from '@libs/platformData/domain/pullRequests/interfaces/pullRequests.interface';
 import {
-    KODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
-    KodyRulesPrLevelAnalysisService,
-} from '@libs/ee/codeBase/kodyRulesPrLevelAnalysis.service';
+    CODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
+    CodyRulesPrLevelAnalysisService,
+} from '@libs/ee/codeBase/codyRulesPrLevelAnalysis.service';
 import { CodeReviewPipelineContext } from '../context/code-review-pipeline.context';
 
 @Injectable()
@@ -40,8 +40,8 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
     private static readonly BUSINESS_LOGIC_TIMEOUT_MS = 300_000;
 
     constructor(
-        @Inject(KODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN)
-        private readonly kodyRulesPrLevelAnalysisService: KodyRulesPrLevelAnalysisService,
+        @Inject(CODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN)
+        private readonly codyRulesPrLevelAnalysisService: CodyRulesPrLevelAnalysisService,
 
         @Inject(CROSS_FILE_ANALYSIS_SERVICE_TOKEN)
         private readonly crossFileAnalysisService: CrossFileAnalysisService,
@@ -86,7 +86,7 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
         }
 
         // Business logic validation does not require changedFiles — run it regardless.
-        // File-level analyses (kody rules, cross-file) are skipped when no files changed.
+        // File-level analyses (cody rules, cross-file) are skipped when no files changed.
         const businessLogicPromise = this.runBusinessLogicValidation(context);
 
         if (!context?.changedFiles?.length) {
@@ -137,21 +137,21 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
             );
         }
 
-        const [kodyRulesSettled, crossFileSettled, businessLogicSettled] =
+        const [codyRulesSettled, crossFileSettled, businessLogicSettled] =
             await Promise.allSettled([
-                this.runKodyRulesAnalysis(context),
+                this.runCodyRulesAnalysis(context),
                 this.runCrossFileAnalysis(context),
                 businessLogicPromise,
             ]);
 
-        const kodyRulesResult =
-            kodyRulesSettled.status === 'fulfilled'
-                ? kodyRulesSettled.value
+        const codyRulesResult =
+            codyRulesSettled.status === 'fulfilled'
+                ? codyRulesSettled.value
                 : {
                       suggestions: [],
                       error: this.settledError(
-                          kodyRulesSettled,
-                          'KodyRulesAnalysis',
+                          codyRulesSettled,
+                          'CodyRulesAnalysis',
                           context,
                       ),
                   };
@@ -190,12 +190,12 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
         }
 
         return this.updateContext(businessLogicContext ?? context, (draft) => {
-            // Kody Rules Results
-            if (kodyRulesResult?.suggestions?.length > 0) {
+            // Cody Rules Results
+            if (codyRulesResult?.suggestions?.length > 0) {
                 if (!draft.validSuggestionsByPR) {
                     draft.validSuggestionsByPR = [];
                 }
-                draft.validSuggestionsByPR.push(...kodyRulesResult.suggestions);
+                draft.validSuggestionsByPR.push(...codyRulesResult.suggestions);
             }
 
             // Cross File Results
@@ -212,8 +212,8 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
             }
 
             // Aggregate Errors
-            if (kodyRulesResult?.error) {
-                draft.errors.push(kodyRulesResult.error);
+            if (codyRulesResult?.error) {
+                draft.errors.push(codyRulesResult.error);
             }
 
             if (crossFileResult?.error) {
@@ -226,10 +226,10 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
         });
     }
 
-    private async runKodyRulesAnalysis(
+    private async runCodyRulesAnalysis(
         _context: CodeReviewPipelineContext,
     ): Promise<{ suggestions: ISuggestionByPR[]; error?: PipelineError }> {
-        // Kody Rules (file + PR level) are handled by the KodyRulesAgent
+        // Cody Rules (file + PR level) are handled by the CodyRulesAgent
         // in the AgentReviewStage. No longer needed here.
         return { suggestions: [] };
     }
@@ -341,7 +341,7 @@ export class ProcessFilesPrLevelReviewStage extends BasePipelineStage<CodeReview
 
         try {
             const prepareContext = {
-                userQuestion: '@kody -v business-logic',
+                userQuestion: '@cody -v business-logic',
                 pullRequest: {
                     pullRequestNumber: context.pullRequest.number,
                     headRef: context.pullRequest?.head?.ref,

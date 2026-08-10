@@ -143,7 +143,7 @@ class TerminalFormatter {
                 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
             ),
         );
-        lines.push(chalk.bold.cyan('  Kodus Code Review Results'));
+        lines.push(chalk.bold.cyan('  Codus Code Review Results'));
         lines.push(
             chalk.bold.cyan(
                 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',

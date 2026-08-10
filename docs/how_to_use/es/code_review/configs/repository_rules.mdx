@@ -1,6 +1,6 @@
 ---
 title: "Reglas del Repositorio"
-description: "Crea Kody Rules personalizadas directamente en tu repositorio usando archivos markdown con plantillas estructuradas."
+description: "Crea Cody Rules personalizadas directamente en tu repositorio usando archivos markdown con plantillas estructuradas."
 ---
 
 <Info>
@@ -8,18 +8,18 @@ Las Reglas del Repositorio usan el mismo mecanismo de sincronización automátic
 </Info>
 
 ## Cómo Usar
-Puedes crear Kody Rules personalizadas directamente en tu repositorio colocando archivos markdown estructurados en directorios específicos. Esto te permite versionar tus reglas junto con tu código y compartirlas con tu equipo.
+Puedes crear Cody Rules personalizadas directamente en tu repositorio colocando archivos markdown estructurados en directorios específicos. Esto te permite versionar tus reglas junto con tu código y compartirlas con tu equipo.
 
 ### Sincronización
 - **Detección Automática**: Las reglas del repositorio se detectan y sincronizan automáticamente cuando están habilitadas
-- **Sincronización Manual**: Agrega `@kody-sync` a cualquier archivo de regla para sincronizarlo individualmente (funciona incluso con la sincronización automática deshabilitada)
-- **Aplicación Web**: Las reglas sincronizadas aparecen en el panel de tu aplicación web de Kodus
+- **Sincronización Manual**: Agrega `@cody-sync` a cualquier archivo de regla para sincronizarlo individualmente (funciona incluso con la sincronización automática deshabilitada)
+- **Aplicación Web**: Las reglas sincronizadas aparecen en el panel de tu aplicación web de Codus
 - **Actualizaciones en Tiempo Real**: Los cambios en los archivos de reglas se sincronizan cuando se cierran los Pull Requests
 
 ## Ubicación de los Archivos
 
 Coloca tus archivos de reglas en uno de estos directorios:
-- `.kody/rules/**/*.md`
+- `.cody/rules/**/*.md`
 - `rules/**/*.md`
 
 ## Plantilla de Regla
@@ -159,14 +159,14 @@ Para usar las Reglas del Repositorio, tienes dos opciones:
 
 ### Opción 1: Habilitar Sincronización Automática (Recomendado)
 1. **Habilitar Detección de Archivos de Reglas**: Activa "Auto-sincronizar reglas del repositorio" en la configuración
-2. **Crear archivos de reglas**: Coloca archivos `.md` en los directorios `.kody/rules/**` o `rules/**`
+2. **Crear archivos de reglas**: Coloca archivos `.md` en los directorios `.cody/rules/**` o `rules/**`
 3. **Sincronización automática**: Todos los archivos de reglas se sincronizan cuando se cierran los PRs
 
 ### Opción 2: Sincronización Manual (Selectiva)
-1. **Crear archivos de reglas**: Coloca archivos `.md` en los directorios `.kody/rules/**` o `rules/**`
-2. **Agregar marcador de sincronización**: Incluye `@kody-sync` en cualquier parte del archivo de regla
+1. **Crear archivos de reglas**: Coloca archivos `.md` en los directorios `.cody/rules/**` o `rules/**`
+2. **Agregar marcador de sincronización**: Incluye `@cody-sync` en cualquier parte del archivo de regla
 3. **Hacer commit de los cambios**: Solo los archivos marcados se sincronizarán (el interruptor de sincronización automática permanece desactivado)
 
 <Tip>
-Las Reglas del Repositorio usan el mismo mecanismo de sincronización que [Detección de Archivos de Reglas](/how_to_use/es/code_review/configs/rules_file_detection). Usa la sincronización manual (`@kody-sync`) para sincronizar selectivamente reglas específicas sin habilitar la sincronización automática.
+Las Reglas del Repositorio usan el mismo mecanismo de sincronización que [Detección de Archivos de Reglas](/how_to_use/es/code_review/configs/rules_file_detection). Usa la sincronización manual (`@cody-sync`) para sincronizar selectivamente reglas específicas sin habilitar la sincronización automática.
 </Tip>

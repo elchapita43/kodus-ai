@@ -1,6 +1,6 @@
-# Contributing to Kodus
+# Contributing to Codus
 
-Thank you for your interest in contributing to Kodus! This document provides guidelines and instructions for contributing to our project.
+Thank you for your interest in contributing to Codus! This document provides guidelines and instructions for contributing to our project.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -25,8 +25,8 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/kodustech/kodus-ai.git
-cd kodus-ai
+git clone https://github.com/elchapita43/codus-ai.git
+cd codus-ai
 ```
 
 ### 2. Install Dependencies
@@ -36,13 +36,13 @@ pnpm install
 
 ### 3. Configure Environment Variables
 
-**Kodus engineers (1Password):**
+**Codus engineers (1Password):**
 
 ```bash
 pnpm run env:pull
 ```
 
-Pulls secrets from the `Kodus Dev` 1Password vault into a fresh `.env`.
+Pulls secrets from the `Codus Dev` 1Password vault into a fresh `.env`.
 First-time setup (install `op` CLI, get vault access) is in
 [`scripts/env/README.md`](./scripts/env/README.md#pulling-values-from-1password).
 
@@ -56,7 +56,7 @@ Then fill in required values by hand — comments in `.env.example` say which ar
 
 ### 4. Set Up Docker Networks
 ```bash
-docker network create kodus-backend-services
+docker network create codus-backend-services
 docker network create shared-network
 ```
 
@@ -177,4 +177,4 @@ If you need help or have questions:
 - Open an issue
 - Join our community chat
 
-Thank you for contributing to Kodus! 
+Thank you for contributing to Codus! 

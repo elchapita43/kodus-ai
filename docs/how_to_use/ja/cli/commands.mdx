@@ -1,6 +1,6 @@
 ---
 title: "コマンドリファレンス"
-description: "Kodus CLI のすべてのコマンド、フラグ、オプションの完全なリファレンス。"
+description: "Codus CLI のすべてのコマンド、フラグ、オプションの完全なリファレンス。"
 ---
 
 ## グローバルフラグ
@@ -17,20 +17,20 @@ description: "Kodus CLI のすべてのコマンド、フラグ、オプショ�
 
 ---
 
-## `kodus review`
+## `codus review`
 
 コード品質の問題、バグ、セキュリティの脆弱性、スタイル違反について変更されたファイルを分析します。
 
 ### 使用方法
 
 ```bash
-kodus review                          # 作業ツリーの変更をレビュー（インタラクティブ）
-kodus review [files...]               # 特定のファイルをレビュー
-kodus review --staged                 # ステージングされたファイルのみをレビュー
-kodus review --branch main            # ブランチに対して比較
-kodus review --commit abc123          # 特定のコミットを分析
-kodus review --fix                    # 修正可能な問題を全て自動適用
-kodus review --prompt-only            # AI エージェント向けに最適化された出力
+codus review                          # 作業ツリーの変更をレビュー（インタラクティブ）
+codus review [files...]               # 特定のファイルをレビュー
+codus review --staged                 # ステージングされたファイルのみをレビュー
+codus review --branch main            # ブランチに対して比較
+codus review --commit abc123          # 特定のコミットを分析
+codus review --fix                    # 修正可能な問題を全て自動適用
+codus review --prompt-only            # AI エージェント向けに最適化された出力
 ```
 
 ### フラグ
@@ -50,7 +50,7 @@ kodus review --prompt-only            # AI エージェント向けに最適化�
 | `--fail-on <severity>` | —      | 問題が重要度に達した場合に終了コード1で終了                 |
 | `--context <file>`     | —      | レビューに含めるカスタムコンテキストファイル                |
 | `--fields <csv>`       | —      | レスポンスフィールドを選択（JSON/エージェントモード）、例: `summary,issues.file` |
-| `--github-pat <token>` | —      | プライベートリポジトリのクローンに使う GitHub トークン（`read:repo`）。トライアルユーザーのみ。`KODUS_GITHUB_PAT` でも設定可能。メモリ上のみで保持され、永続化されません。 |
+| `--github-pat <token>` | —      | プライベートリポジトリのクローンに使う GitHub トークン（`read:repo`）。トライアルユーザーのみ。`CODUS_GITHUB_PAT` でも設定可能。メモリ上のみで保持され、永続化されません。 |
 | `--no-hunk`            | —      | hunk ビューアーをスキップし、従来のインタラクティブリストを使用（インタラクティブセッションのみ） |
 
 <Warning>
@@ -68,7 +68,7 @@ kodus review --prompt-only            # AI エージェント向けに最適化�
     問題数を持つファイルをナビゲートし、提案された修正をプレビューして、1つずつ適用します。
 
     ```bash
-    kodus review
+    codus review
     ```
 
   </Tab>
@@ -76,7 +76,7 @@ kodus review --prompt-only            # AI エージェント向けに最適化�
     確認プロンプトとともに修正可能な問題を一度に全て適用します。
 
     ```bash
-    kodus review --fix
+    codus review --fix
     ```
 
   </Tab>
@@ -84,7 +84,7 @@ kodus review --prompt-only            # AI エージェント向けに最適化�
     Claude Code、Cursor、または Windsurf 向けに設計された最小限の構造化出力。自律的なレビュー・修正ループを実現します。
 
     ```bash
-    kodus review --prompt-only
+    codus review --prompt-only
     ```
 
   </Tab>
@@ -92,17 +92,17 @@ kodus review --prompt-only            # AI エージェント向けに最適化�
 
 ---
 
-## `kodus pr suggestions`
+## `codus pr suggestions`
 
 オープンなプルリクエストの AI 駆動の提案を取得します。
 
 ### 使用方法
 
 ```bash
-kodus pr suggestions --pr-url https://github.com/org/repo/pull/42
-kodus pr suggestions --pr-number 42 --repo-id <id>
-kodus pr suggestions --pr-number 42 --repo-id <id> --severity error,warning
-kodus pr suggestions --pr-number 42 --repo-id <id> --format json
+codus pr suggestions --pr-url https://github.com/org/repo/pull/42
+codus pr suggestions --pr-number 42 --repo-id <id>
+codus pr suggestions --pr-number 42 --repo-id <id> --severity error,warning
+codus pr suggestions --pr-number 42 --repo-id <id> --format json
 ```
 
 ### フラグ
@@ -118,18 +118,18 @@ kodus pr suggestions --pr-number 42 --repo-id <id> --format json
 
 ---
 
-## `kodus pr business-validation`
+## `codus pr business-validation`
 
 ローカルの差分をタスクのビジネスルール/受け入れ基準に対して検証します。マージ前に実装がタスクの意図と一致していることを確認するのに役立ちます。
 
 ### 使用方法
 
 ```bash
-kodus pr business-validation --task-url https://linear.app/team/issue/KC-1441
-kodus pr business-validation --task-id KC-1441 --staged
-kodus pr business-validation --task-id KC-1441 --branch main
-kodus pr business-validation --task-id KC-1441 --commit abc123
-kodus pr business-validation --task-id KC-1441 --dry-run
+codus pr business-validation --task-url https://linear.app/team/issue/KC-1441
+codus pr business-validation --task-id KC-1441 --staged
+codus pr business-validation --task-id KC-1441 --branch main
+codus pr business-validation --task-id KC-1441 --commit abc123
+codus pr business-validation --task-id KC-1441 --dry-run
 ```
 
 ### フラグ
@@ -145,15 +145,15 @@ kodus pr business-validation --task-id KC-1441 --dry-run
 
 ---
 
-## `kodus auth`
+## `codus auth`
 
-Kodus API との認証を管理します。
+Codus API との認証を管理します。
 
 ### `auth login`
 
 ```bash
-kodus auth login                              # インタラクティブなログイン
-kodus auth login -e user@mail.com -p password # 非インタラクティブ
+codus auth login                              # インタラクティブなログイン
+codus auth login -e user@mail.com -p password # 非インタラクティブ
 ```
 
 | フラグ                  | 短縮形 | 説明             |
@@ -164,7 +164,7 @@ kodus auth login -e user@mail.com -p password # 非インタラクティブ
 ### `auth logout`
 
 ```bash
-kodus auth logout
+codus auth logout
 ```
 
 ローカル認証（ログインとチームキー）を削除します。
@@ -172,7 +172,7 @@ kodus auth logout
 ### `auth status`
 
 ```bash
-kodus auth status
+codus auth status
 ```
 
 認証モード、メール、トークンの有効性、組織、トライアルステータス、使用制限を表示します。
@@ -180,15 +180,15 @@ kodus auth status
 ### `auth team-key`
 
 ```bash
-kodus auth team-key --key kodus_xxxxx
+codus auth team-key --key codus_xxxxx
 ```
 
-共有チーム APIキーを使用して認証します。`KODUS_TEAM_KEY` 環境変数でも設定できます。
+共有チーム APIキーを使用して認証します。`CODUS_TEAM_KEY` 環境変数でも設定できます。
 
 ### `auth team-status`
 
 ```bash
-kodus auth team-status
+codus auth team-status
 ```
 
 チーム認証の詳細（組織名とチーム名）を表示します。
@@ -196,24 +196,24 @@ kodus auth team-status
 ### `auth token`
 
 ```bash
-kodus auth token
+codus auth token
 ```
 
-自動化されたパイプラインで使用するための CI/CD トークンを生成します。`KODUS_TOKEN` 環境変数と組み合わせて使用します。
+自動化されたパイプラインで使用するための CI/CD トークンを生成します。`CODUS_TOKEN` 環境変数と組み合わせて使用します。
 
 ---
 
-## `kodus hook`
+## `codus hook`
 
 プッシュ前の自動コードレビューのための pre-push Git フックを管理します。
 
 ### `hook install`
 
 ```bash
-kodus hook install                    # デフォルト: critical で失敗、高速モード有効
-kodus hook install --fail-on error    # エラー重要度でプッシュをブロック
-kodus hook install --no-fast          # 高速モードを無効化
-kodus hook install --force            # 既存のフックを上書き
+codus hook install                    # デフォルト: critical で失敗、高速モード有効
+codus hook install --fail-on error    # エラー重要度でプッシュをブロック
+codus hook install --no-fast          # 高速モードを無効化
+codus hook install --force            # 既存のフックを上書き
 ```
 
 | フラグ                 | デフォルト  | 説明                                          |
@@ -225,15 +225,15 @@ kodus hook install --force            # 既存のフックを上書き
 ### `hook uninstall`
 
 ```bash
-kodus hook uninstall
+codus hook uninstall
 ```
 
-Kodus によってインストールされた pre-push フックを削除します。
+Codus によってインストールされた pre-push フックを削除します。
 
 ### `hook status`
 
 ```bash
-kodus hook status
+codus hook status
 ```
 
 フックのステータス、fail-on 重要度、高速モード設定、パスを表示します。
@@ -241,23 +241,23 @@ kodus hook status
 ### フックのスキップ
 
 ```bash
-KODUS_SKIP_HOOK=1 git push
+CODUS_SKIP_HOOK=1 git push
 ```
 
 ---
 
-## `kodus config centralized`
+## `codus config centralized`
 
 CLI から集中管理設定を管理します。
 
 ### 使用方法
 
 ```bash
-kodus config centralized status
-kodus config centralized init [owner/repo] --sync-option <pr|manual>
-kodus config centralized sync
-kodus config centralized disable
-kodus config centralized download --out ./centralized-config.zip
+codus config centralized status
+codus config centralized init [owner/repo] --sync-option <pr|manual>
+codus config centralized sync
+codus config centralized disable
+codus config centralized download --out ./centralized-config.zip
 ```
 
 ### サブコマンド
@@ -282,37 +282,37 @@ kodus config centralized download --out ./centralized-config.zip
 
 ---
 
-## `kodus config repo`
+## `codus config repo`
 
-Kodus に保存されたリポジトリ設定を確認・更新します。チームキー認証が必要です。現在のリポジトリを対象にするには `.` を使用します。
+Codus に保存されたリポジトリ設定を確認・更新します。チームキー認証が必要です。現在のリポジトリを対象にするには `.` を使用します。
 
-<Note>`kodus config repo` と `kodus config remote` は同じコマンドグループのエイリアスです。</Note>
+<Note>`codus config repo` と `codus config remote` は同じコマンドグループのエイリアスです。</Note>
 
 ### 使用方法
 
 ```bash
-kodus config repo add                                   # 現在のリポジトリを Kodus に追加
-kodus config repo add owner/repo                        # 特定のリポジトリを追加
-kodus config repo list                                  # 設定されたリポジトリを一覧表示
-kodus config repo show                                  # 現在のリポジトリ設定を表示
-kodus config repo setup                                 # ガイド付きセットアップウィザード
-kodus config repo set . reviewEnabled true              # 設定を直接設定
-kodus config repo open                                  # Kodus ダッシュボードを開く
-kodus config repo add-ignore-file . "**/*.generated.ts"
-kodus config repo add-base-branch . "release/*"
-kodus config repo add-ignore-title . "^WIP:"
+codus config repo add                                   # 現在のリポジトリを Codus に追加
+codus config repo add owner/repo                        # 特定のリポジトリを追加
+codus config repo list                                  # 設定されたリポジトリを一覧表示
+codus config repo show                                  # 現在のリポジトリ設定を表示
+codus config repo setup                                 # ガイド付きセットアップウィザード
+codus config repo set . reviewEnabled true              # 設定を直接設定
+codus config repo open                                  # Codus ダッシュボードを開く
+codus config repo add-ignore-file . "**/*.generated.ts"
+codus config repo add-base-branch . "release/*"
+codus config repo add-ignore-title . "^WIP:"
 ```
 
 ### サブコマンド
 
 | サブコマンド                                       | 説明                                                                        |
 | -------------------------------------------------- | --------------------------------------------------------------------------- |
-| `add [repository]`                                 | Kodus にリポジトリを追加（ショートカット: `kodus config -r [repository]`）  |
-| `list`                                             | Kodus で設定されたリポジトリを一覧表示                                      |
+| `add [repository]`                                 | Codus にリポジトリを追加（ショートカット: `codus config -r [repository]`）  |
+| `list`                                             | Codus で設定されたリポジトリを一覧表示                                      |
 | `show [repository]`                                | リポジトリ設定を表示                                                        |
 | `setup [repository]`                               | ガイド付きリポジトリセットアップウィザードを実行                            |
 | `set [repository] <key> <value>`                   | リポジトリ設定を直接設定                                                    |
-| `open [repository]`                                | 高度な設定のための Kodus ダッシュボードを開く                               |
+| `open [repository]`                                | 高度な設定のための Codus ダッシュボードを開く                               |
 | `add-pattern [repository] <field> <pattern>`       | リストフィールドにパターンを追加（`ignore-files`、`base-branches`、`ignore-titles`）|
 | `remove-pattern [repository] <field> <pattern>`    | リストフィールドからパターンを削除                                          |
 | `add-ignore-file [repository] <pattern>`           | ショートカット: 無視ファイルパターンにパターンを追加                        |
@@ -330,27 +330,27 @@ kodus config repo add-ignore-title . "^WIP:"
 
 ---
 
-## `kodus rules`
+## `codus rules`
 
-Kody Rules を作成、更新、表示します — Kodus がレビュー中に適用する構造化ルール。
+Cody Rules を作成、更新、表示します — Codus がレビュー中に適用する構造化ルール。
 
 ### 使用方法
 
 ```bash
-kodus rules view                                         # チームの全ルールを表示
-kodus rules view --repo-id <id>                          # リポジトリでフィルタリング
-kodus rules view --uuid <rule-uuid>                      # 単一のルールを取得
-kodus rules create --title "No console.log" --rule "Avoid leaving console.log in committed code" --severity high
-kodus rules update --uuid <rule-uuid> --severity critical
+codus rules view                                         # チームの全ルールを表示
+codus rules view --repo-id <id>                          # リポジトリでフィルタリング
+codus rules view --uuid <rule-uuid>                      # 単一のルールを取得
+codus rules create --title "No console.log" --rule "Avoid leaving console.log in committed code" --severity high
+codus rules update --uuid <rule-uuid> --severity critical
 ```
 
 ### サブコマンド
 
 | サブコマンド | 説明                       |
 | ----------- | -------------------------- |
-| `create`    | 新しい Kody Rule を作成    |
+| `create`    | 新しい Cody Rule を作成    |
 | `update`    | 既存のルールを更新         |
-| `view`      | Kody Rules を表示          |
+| `view`      | Cody Rules を表示          |
 
 ### `rules create` フラグ
 
@@ -387,18 +387,18 @@ kodus rules update --uuid <rule-uuid> --severity critical
 
 ---
 
-## `kodus skills`
+## `codus skills`
 
 CLI にバンドルされたエージェントスキル（Claude Code、Cursor、Codex）を確認してインストールします。
 
 ### 使用方法
 
 ```bash
-kodus skills list                                        # バンドルされたスキルを一覧表示
-kodus skills install                                     # 検出されたエージェントルートにインストール
-kodus skills install --dry-run                           # 変更をプレビュー
-kodus skills resync                                      # バンドルされたスキルを再同期
-kodus skills uninstall                                   # バンドルされたスキルを削除
+codus skills list                                        # バンドルされたスキルを一覧表示
+codus skills install                                     # 検出されたエージェントルートにインストール
+codus skills install --dry-run                           # 変更をプレビュー
+codus skills resync                                      # バンドルされたスキルを再同期
+codus skills uninstall                                   # バンドルされたスキルを削除
 ```
 
 ### サブコマンド
@@ -417,59 +417,59 @@ kodus skills uninstall                                   # バンドルされた
 | ----------- | ------------------------------------ | ---------------------------------------------- |
 | `--dry-run` | `install`、`sync`、`resync`、`uninstall` | ファイルを書き込まずに計画された変更を表示   |
 
-<Tip>完全なマルチエージェントブートストラップには、プラットフォームインストーラー（`curl -fsSL https://review-skill.com/install | bash`）を使用してください。`kodus skills` はローカルの再同期とクリーンアップをカバーします。</Tip>
+<Tip>完全なマルチエージェントブートストラップには、プラットフォームインストーラー（`curl -fsSL https://review-skill.com/install | bash`）を使用してください。`codus skills` はローカルの再同期とクリーンアップをカバーします。</Tip>
 
 ---
 
-## `kodus status`
+## `codus status`
 
-認証モード、組織、リポジトリ、フック、決定、バンドルされたスキル、CLI バージョンなど、統合された Kodus ステータスを表示します。
+認証モード、組織、リポジトリ、フック、決定、バンドルされたスキル、CLI バージョンなど、統合された Codus ステータスを表示します。
 
 ```bash
-kodus status
+codus status
 ```
 
 何か問題が発生した場合や新しいマシンをオンボーディングする際の最初の診断として便利です。
 
 ---
 
-## `kodus diff`
+## `codus diff`
 
 現在の変更セットを Hunk のターミナル diff ビューアーで開きます。
 
 ```bash
-kodus diff
+codus diff
 ```
 
 `hunk diff` の薄いラッパーです。渡した引数はすべてそのまま転送されるため、Hunk がサポートする
 フラグはここでも使えます。
 
 <Note>
-  `kodus review` を実行する前に変更セットをざっと確認するのに便利です。同じビューアーが
-  インタラクティブなレビュー体験を支えています。従来のリストがよい場合は `kodus review` に
+  `codus review` を実行する前に変更セットをざっと確認するのに便利です。同じビューアーが
+  インタラクティブなレビュー体験を支えています。従来のリストがよい場合は `codus review` に
   `--no-hunk` を渡してください。
 </Note>
 
 ---
 
-## `kodus update`
+## `codus update`
 
-npm から Kodus CLI を最新バージョンに更新します。
+npm から Codus CLI を最新バージョンに更新します。
 
 ```bash
-kodus update
+codus update
 ```
 
 パッケージマネージャー（`npm`、`yarn`、`pnpm`、`bun`）に対して正しいグローバルインストールコマンドを解決して実行します。インストーラースクリプトが使用されていた場合、CLI は再実行コマンドを案内します。
 
 ---
 
-## `kodus subscribe`
+## `codus subscribe`
 
-ブラウザで Kodus の価格/アップグレードページを開きます。
+ブラウザで Codus の価格/アップグレードページを開きます。
 
 ```bash
-kodus subscribe
+codus subscribe
 ```
 
 ---
@@ -497,4 +497,4 @@ kodus subscribe
 | `complexity`             | コードの複雑性の問題                   |
 | `maintainability`        | 保守性の懸念                           |
 | `style`                  | コードスタイルの問題                   |
-| `documentation`          | ドキュメントの不足（`kodus pr suggestions` の `--category` で指定可能） |
+| `documentation`          | ドキュメントの不足（`codus pr suggestions` の `--category` で指定可能） |

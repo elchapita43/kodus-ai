@@ -40,7 +40,7 @@ test("conditionalGet: polls send If-None-Match and 304s serve the cached body (f
     const savedEnv = new Map(MUTATED.map((k) => [k, process.env[k]]));
     const originalFetch = global.fetch;
     process.env.GH_TEST_TOKEN = "fake";
-    process.env.GH_TEST_REPO = "kodustech/qa-fixture";
+    process.env.GH_TEST_REPO = "elchapita43/qa-fixture";
     // Fast poll so three iterations fit in the window.
     process.env.E2E_POLL_INTERVAL_OVERRIDE_SEC = "0.1";
     process.env.E2E_POLL_TIMEOUT_OVERRIDE_SEC = "0.5";
@@ -53,13 +53,13 @@ test("conditionalGet: polls send If-None-Match and 304s serve the cached body (f
     };
     try {
         const provider = new GitHubProvider({ target: "self-hosted" });
-        // No kody comment ever arrives → poll runs to timeout and throws.
+        // No cody comment ever arrives → poll runs to timeout and throws.
         await assert.rejects(
             provider.waitForPipelineStart(
                 { number: 7 },
                 { sinceIso: new Date(0).toISOString(), timeoutSec: 0.5 },
             ),
-            /No kody-codereview status comment/,
+            /No cody-codereview status comment/,
         );
         assert.ok(calls >= 2, `expected ≥2 polls, got ${calls}`);
         assert.equal(seen[0], undefined, "first poll must be unconditional");
@@ -80,11 +80,11 @@ test("conditionalGet: polls send If-None-Match and 304s serve the cached body (f
 test("authToken: the integration credential stays the durable PAT even when the harness runs on an App token", async () => {
     // The runner may hand the provider a ~1h GitHub App installation token
     // for harness-side quota. That token must NEVER become the credential
-    // Kodus stores on the integration — the product would be left with an
+    // Codus stores on the integration — the product would be left with an
     // expired secret mid-run.
     const saved = process.env.GH_TEST_TOKEN;
     process.env.GH_TEST_TOKEN = "ghp_durable_pat";
-    process.env.GH_TEST_REPO = "kodustech/qa-fixture";
+    process.env.GH_TEST_REPO = "elchapita43/qa-fixture";
     try {
         const provider = new GitHubProvider({
             target: "self-hosted",

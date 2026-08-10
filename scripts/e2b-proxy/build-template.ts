@@ -6,7 +6,7 @@ async function build() {
     const serverHost = process.env.PROXY_SERVER_HOST;
     const serverPassword = process.env.PROXY_SERVER_PASSWORD;
     const e2bApiKey = process.env.API_E2B_KEY;
-    const templateAlias = process.env.API_E2B_TEMPLATE_ID || 'kodus-proxy-template';
+    const templateAlias = process.env.API_E2B_TEMPLATE_ID || 'codus-proxy-template';
 
     if (!serverHost || !serverPassword || !e2bApiKey) {
         console.error('❌ Missing required env vars: PROXY_SERVER_HOST, PROXY_SERVER_PASSWORD, API_E2B_KEY');

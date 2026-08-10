@@ -21,7 +21,7 @@ This plan implements its **Estado desejado** and **Plano de migração** section
 | Doc | Status | Source |
 |---|---|---|
 | **Q1** Where does CI pass `RELEASE_VERSION`? | ✅ Already passed in 4 workflows + bake var | `web-build-push-production.yml:116`, `selfhosted-build-push.yml:163`, `prod-build-push-and-pr-green.yml:152`, `qa-build-push-and-pr-green.yml:127`, `docker-bake.hcl:5,37,66`, `Dockerfile.web:8-9` |
-| **Q2** Self-hosted publishes via GHCR or local build? | ✅ GHCR — `ghcr.io/kodustech/kodus-ai-web` | `selfhosted-build-push.yml:158` |
+| **Q2** Self-hosted publishes via GHCR or local build? | ✅ GHCR — `ghcr.io/elchapita43/codus-ai-web` | `selfhosted-build-push.yml:158` |
 | **Q3** Are internal-hostname helpers imported from client components? | 🔎 Resolved by **Task 0a** below | — |
 | **Q4** Full classification of `process.env.*` in `apps/web/src` | 🔎 Resolved by **Task 0b** below | 26 files / 62 occurrences known |
 
@@ -68,7 +68,7 @@ Default in this plan: **Granular**. To group, the user just stays on the same br
 | `docker-bake.hcl` | Modify (Task 9) | Update `target "web"` to point at `Dockerfile.web` (or remove if redundant) |
 | `.github/workflows/selfhosted-build-push.yml` | Modify (Task 10) | Remove any reference to `Dockerfile.web.selfhosted`, point to unified image |
 | `.github/workflows/web-qa-deploy.yml` | Modify (Task 10) | Drop the trigger path on `Dockerfile.web.selfhosted` |
-| `README.md` and/or `README_DEPLOY.md` | Modify (Task 9) | Self-hosted instructions point to `ghcr.io/kodustech/kodus-ai-web:<version>` instead of building local |
+| `README.md` and/or `README_DEPLOY.md` | Modify (Task 9) | Self-hosted instructions point to `ghcr.io/elchapita43/codus-ai-web:<version>` instead of building local |
 
 ---
 
@@ -95,7 +95,7 @@ These resolve the design doc's open questions (Q3, Q4) before any code changes t
 Run for each helper:
 
 ```bash
-cd /Users/wellingtonsantana/Documents/kodus-git/kodus-ai
+cd /Users/wellingtonsantana/Documents/codus-git/codus-ai
 
 grep -rnE "from ['\"].*core/utils/helpers['\"]" apps/web/src --include="*.ts" --include="*.tsx"
 grep -rnE "from ['\"].*features/ee/subscription/_services/billing/utils['\"]" apps/web/src --include="*.ts" --include="*.tsx"
@@ -167,7 +167,7 @@ git push -u origin chore/audit-internal-hostname-client-usage
 - [ ] **Step 1: Generate raw list**
 
 ```bash
-cd /Users/wellingtonsantana/Documents/kodus-git/kodus-ai
+cd /Users/wellingtonsantana/Documents/codus-git/codus-ai
 grep -rnE "process\.env\." apps/web/src --include="*.ts" --include="*.tsx" \
   | grep -v ".spec." \
   | sort -u > /tmp/web-process-env.txt
@@ -508,7 +508,7 @@ git push -u origin fix/web-pin-build-id
 - [ ] **Step 1: Find every consumer of GitlabConnection**
 
 ```bash
-cd /Users/wellingtonsantana/Documents/kodus-git/kodus-ai
+cd /Users/wellingtonsantana/Documents/codus-git/codus-ai
 grep -rnE "GitlabConnection|new GitlabConnection" apps/web/src --include="*.ts" --include="*.tsx"
 ```
 
@@ -900,7 +900,7 @@ git push -u origin refactor/web-runtime-config-wave3-install
 
 > **Heads-up from Task 0b audit** (`docs/superpowers/plans/audits/2026-04-22-process-env-classification.md`):
 >
-> - **Discrepancy #2 (revised 2026-04-22)** — `WEB_TERMS_AND_CONDITIONS` has **zero current consumers** in `apps/web/src`, but it is **end-to-end populated infra**: SSM (`/prod/kodus-web/WEB_TERMS_AND_CONDITIONS`, `/qa/kodus-web/WEB_TERMS_AND_CONDITIONS`) → CI workflows (`web-build-push-production.yml:74`, `web-qa-deploy.yml:63`) → `.env`, with a real Notion URL in dev. Treat as **orphan env with real value waiting for a consumer**, not dead env. Task 1 keeps `termsAndConditions` in `publicConfig` and the layout publishes the value. Task 6 still migrates by removing the entry from `next.config.js` `env:` block (along with `RELEASE_VERSION` and `WEB_RULE_FILES_DOCS`). When a future Terms page is built, the consumer reads `useConfig().termsAndConditions` with no infra changes required.
+> - **Discrepancy #2 (revised 2026-04-22)** — `WEB_TERMS_AND_CONDITIONS` has **zero current consumers** in `apps/web/src`, but it is **end-to-end populated infra**: SSM (`/prod/codus-web/WEB_TERMS_AND_CONDITIONS`, `/qa/codus-web/WEB_TERMS_AND_CONDITIONS`) → CI workflows (`web-build-push-production.yml:74`, `web-qa-deploy.yml:63`) → `.env`, with a real Notion URL in dev. Treat as **orphan env with real value waiting for a consumer**, not dead env. Task 1 keeps `termsAndConditions` in `publicConfig` and the layout publishes the value. Task 6 still migrates by removing the entry from `next.config.js` `env:` block (along with `RELEASE_VERSION` and `WEB_RULE_FILES_DOCS`). When a future Terms page is built, the consumer reads `useConfig().termsAndConditions` with no infra changes required.
 
 - [ ] **Step 1: Find consumers from Task 0b's audit report**
 
@@ -1006,7 +1006,7 @@ git push -u origin refactor/web-runtime-config-wave4-misc
 Re-run the grep in case anything changed since Task 0a:
 
 ```bash
-cd /Users/wellingtonsantana/Documents/kodus-git/kodus-ai
+cd /Users/wellingtonsantana/Documents/codus-git/codus-ai
 grep -rnE "from ['\"][^'\"]*core/utils/helpers['\"]" apps/web/src --include="*.tsx" | xargs -I{} sh -c 'F=$(echo {} | cut -d: -f1); echo "$(head -1 \"$F\") | $F"'
 ```
 
@@ -1348,12 +1348,12 @@ Remove the last line.
 
 - [ ] **Step 4: Update self-hosted docs**
 
-In `README.md` and/or `README_DEPLOY.md`, find any mention of building `Dockerfile.web.selfhosted` locally. Replace with instructions to pull `ghcr.io/kodustech/kodus-ai-web:<version>`. Confirm the tag scheme matches what `selfhosted-build-push.yml` actually publishes.
+In `README.md` and/or `README_DEPLOY.md`, find any mention of building `Dockerfile.web.selfhosted` locally. Replace with instructions to pull `ghcr.io/elchapita43/codus-ai-web:<version>`. Confirm the tag scheme matches what `selfhosted-build-push.yml` actually publishes.
 
 - [ ] **Step 5: Validate the new bake target**
 
 ```bash
-cd /Users/wellingtonsantana/Documents/kodus-git/kodus-ai
+cd /Users/wellingtonsantana/Documents/codus-git/codus-ai
 RELEASE_VERSION=test docker buildx bake web 2>&1 | tail -10
 ```
 
@@ -1376,7 +1376,7 @@ git commit -m "chore(web): retire Dockerfile.web.selfhosted
 The runtime config refactor removes the only reason this Dockerfile
 existed (build at startup so per-customer envs could be inlined). All
 deployments now use Dockerfile.web. Self-hosted operators pull
-ghcr.io/kodustech/kodus-ai-web:<version> from GHCR; no local build
+ghcr.io/elchapita43/codus-ai-web:<version> from GHCR; no local build
 required."
 ```
 
@@ -1400,7 +1400,7 @@ git push -u origin chore/web-retire-selfhosted-dockerfile
 
 **Depends on:** Task 9
 
-**Acceptance:** The next tagged self-hosted release builds and publishes a single `kodus-ai-web` image to GHCR using `Dockerfile.web` (no longer the deleted `Dockerfile.web.selfhosted`). All four containers (api, worker, webhook, web) come out of one workflow run.
+**Acceptance:** The next tagged self-hosted release builds and publishes a single `codus-ai-web` image to GHCR using `Dockerfile.web` (no longer the deleted `Dockerfile.web.selfhosted`). All four containers (api, worker, webhook, web) come out of one workflow run.
 
 - [ ] **Step 1: Audit `selfhosted-build-push.yml`**
 
@@ -1444,7 +1444,7 @@ git add -u .github/workflows/selfhosted-build-push.yml docker-bake.hcl
 git commit -m "chore(ci): publish self-hosted web from unified Dockerfile.web
 
 Removes the divergent build target — selfhosted-build-push.yml now
-produces ghcr.io/kodustech/kodus-ai-web:<version> from Dockerfile.web,
+produces ghcr.io/elchapita43/codus-ai-web:<version> from Dockerfile.web,
 the same artifact pipeline cloud uses. End of the runtime-config
 migration started in 2026-04-15-web-runtime-config-design.md."
 ```
@@ -1465,7 +1465,7 @@ After all 10 tasks merge:
 
 | Criterion | Verification |
 |---|---|
-| Multi-replica self-hosted serves static assets without 404 | Deploy 3 replicas of `ghcr.io/kodustech/kodus-ai-web:<version>` behind round-robin LB, request `/_next/static/chunks/<any>.js` 50× — all 200 |
+| Multi-replica self-hosted serves static assets without 404 | Deploy 3 replicas of `ghcr.io/elchapita43/codus-ai-web:<version>` behind round-robin LB, request `/_next/static/chunks/<any>.js` 50× — all 200 |
 | `BUILD_ID` stable across replicas | All replicas serve the same `<script src="/_next/static/<BUILD_ID>/...">` in their HTML |
 | Self-hosted operators can change envs without rebuild | Set new `WEB_GITHUB_INSTALL_URL` in container env, restart container (~2 s), refresh integrations page → see new URL |
 | Internal hostnames not in client bundle | `grep -r "WEB_HOSTNAME_" .next/static` returns nothing |

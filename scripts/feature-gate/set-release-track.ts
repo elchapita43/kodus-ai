@@ -4,9 +4,9 @@
  * style flags later if needed) and mirrors the new value to the PostHog
  * `organization` group property in the same shot.
  *
- * Run by Kodus staff for the few customers that should diverge from the
+ * Run by Codus staff for the few customers that should diverge from the
  * default `beta` track — primarily `stable` for stability-pinned customers
- * (e.g. enterprise) and `internal` for the Kodus dogfood org.
+ * (e.g. enterprise) and `internal` for the Codus dogfood org.
  *
  * Usage:
  *   npx ts-node scripts/feature-gate/set-release-track.ts \

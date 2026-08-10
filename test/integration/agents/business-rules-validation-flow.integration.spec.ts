@@ -21,7 +21,7 @@ function createMockToolCaller(params: {
 
     return {
         callTool: async (toolName: string) => {
-            if (toolName === 'KODUS_GET_PULL_REQUEST') {
+            if (toolName === 'CODUS_GET_PULL_REQUEST') {
                 return {
                     result: {
                         data: {
@@ -31,7 +31,7 @@ function createMockToolCaller(params: {
                 };
             }
 
-            if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+            if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                 return {
                     result: {
                         data: params.prDiff,
@@ -58,8 +58,8 @@ function createMockToolCaller(params: {
             return { result: {} };
         },
         getRegisteredTools: () => [
-            { name: 'KODUS_GET_PULL_REQUEST' },
-            { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+            { name: 'CODUS_GET_PULL_REQUEST' },
+            { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
             { name: taskContextToolName },
         ],
         getToolsForLLM: () => [
@@ -86,13 +86,13 @@ function createCapabilityRuntime(
     return {
         capabilities: ['pr.metadata.read', 'pr.diff.read', 'task.context.read'],
         allowedTools: [
-            'KODUS_GET_PULL_REQUEST',
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             taskContextToolName,
         ],
         capabilityToolMap: {
-            'pr.metadata.read': ['KODUS_GET_PULL_REQUEST'],
-            'pr.diff.read': ['KODUS_GET_PULL_REQUEST_DIFF'],
+            'pr.metadata.read': ['CODUS_GET_PULL_REQUEST'],
+            'pr.diff.read': ['CODUS_GET_PULL_REQUEST_DIFF'],
             'task.context.read': [taskContextToolName],
         },
         fetcherPolicy: {
@@ -242,10 +242,10 @@ describe('BusinessRulesValidation flow integration', () => {
             organizationAndTeamData,
             prepareContext: {
                 userQuestion:
-                    '@kody -v business-logic https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                    '@cody -v business-logic https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
                 repository: {
                     id: 'repo-1',
-                    name: 'kodus-extension',
+                    name: 'codus-extension',
                 },
                 pullRequest: {
                     pullRequestNumber: 132,
@@ -264,11 +264,11 @@ describe('BusinessRulesValidation flow integration', () => {
                 prDiff: '',
                 task: {
                     id: 'KC-1441',
-                    title: 'Kody rules por time',
+                    title: 'Cody rules por time',
                     description:
-                        'Atualmente as kodyRules são cadastradas somente com organizationId. Billing e licença precisam respeitar o time correto.',
+                        'Atualmente as codyRules são cadastradas somente com organizationId. Billing e licença precisam respeitar o time correto.',
                     acceptanceCriteria: [
-                        'Kody rules must be scoped by team, not only organization',
+                        'Cody rules must be scoped by team, not only organization',
                         'Billing resolution must use the correct team context',
                     ],
                 },
@@ -288,10 +288,10 @@ describe('BusinessRulesValidation flow integration', () => {
         const result = await useCase.execute({
             organizationAndTeamData,
             prepareContext: {
-                userQuestion: '@kody -v business-logic KC-1441',
+                userQuestion: '@cody -v business-logic KC-1441',
                 repository: {
                     id: 'repo-1',
-                    name: 'kodus-extension',
+                    name: 'codus-extension',
                 },
                 pullRequest: {
                     pullRequestNumber: 132,

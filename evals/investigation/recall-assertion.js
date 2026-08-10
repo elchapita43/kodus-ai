@@ -88,7 +88,7 @@ module.exports = async (output, context) => {
         return {
             pass: false,
             score: 0,
-            reason: 'No ANTHROPIC_API_KEY (judge) — set it in env or ~/.kodus-dev/config.',
+            reason: 'No ANTHROPIC_API_KEY (judge) — set it in env or ~/.codus-dev/config.',
         };
     }
 

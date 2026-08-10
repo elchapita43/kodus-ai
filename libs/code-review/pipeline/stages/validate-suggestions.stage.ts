@@ -182,7 +182,7 @@ export class ValidateSuggestionsStage extends BasePipelineStage<CodeReviewPipeli
         orgData: OrganizationAndTeamData,
         prNumber: number,
     ): Promise<Set<string>> {
-        // Step 1: Syntax validation via kodus-graph parse in a dedicated sandbox
+        // Step 1: Syntax validation via codus-graph parse in a dedicated sandbox
         const syntaxValidIds =
             await this.sandboxSyntaxValidator.validateFiles(candidates);
 

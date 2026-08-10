@@ -1,16 +1,16 @@
 ---
 title: "业务逻辑验证"
-description: "使用 @kody -v business-logic 将您的拉取请求与业务规则或规范进行比较。"
+description: "使用 @cody -v business-logic 将您的拉取请求与业务规则或规范进行比较。"
 ---
 
 ## 概述
 
-业务逻辑验证让您确认拉取请求是否实现了规范、文档或工单中描述的预期行为。Kody 分析 PR 差异，引入引用的业务上下文，并在合并之前标记不匹配。
+业务逻辑验证让您确认拉取请求是否实现了规范、文档或工单中描述的预期行为。Cody 分析 PR 差异，引入引用的业务上下文，并在合并之前标记不匹配。
 
 <img src="https://kodus.io/wp-content/uploads/2025/10/business-logic.gif" alt="使用业务逻辑验证的示例" />
 
 ## 前提条件
-- 如果您希望 Kody **自动获取任务上下文**（来自 Jira、Linear、Notion、ClickUp 等工具），需要在工作区的[插件](/how_to_use/zh/code_review/plugins)页面中连接相应的插件。
+- 如果您希望 Cody **自动获取任务上下文**（来自 Jira、Linear、Notion、ClickUp 等工具），需要在工作区的[插件](/how_to_use/zh/code_review/plugins)页面中连接相应的插件。
 - 您共享的任何链接（Jira、Slack、Google Docs 等）必须可通过工作区中安装的插件访问。
 - 您始终可以**内联提供规范**而无需任何插件 — 只需在 PR 评论中直接粘贴需求即可。
 
@@ -18,7 +18,7 @@ description: "使用 @kody -v business-logic 将您的拉取请求与业务规�
 
 业务逻辑验证**默认启用**。您可以通过两种方式控制它：
 
-**通过 `kodus-config.yml`：**
+**通过 `codus-config.yml`：**
 
 ```yaml
 reviewOptions:
@@ -29,31 +29,31 @@ reviewOptions:
 
 前往**代码审查设置** → **代码库** → **通用** → **分析类型**，然后切换**业务逻辑**。
 
-启用后，Kody 在每次 PR 审查时自动运行业务逻辑验证，同时也支持按需命令。
+启用后，Cody 在每次 PR 审查时自动运行业务逻辑验证，同时也支持按需命令。
 
 ## 按需运行
 
 您也可以随时手动触发验证：
 
 1. 打开主 PR 评论框（在内联代码建议之外）。
-2. 提及 Kody 并添加验证命令：`@kody -v business-logic ...`。
-3. 内联提供规范内容或粘贴 Kody 可以通过可用插件获取的链接。
-4. 提交评论并在同一线程中等待 Kody 的响应。
+2. 提及 Cody 并添加验证命令：`@cody -v business-logic ...`。
+3. 内联提供规范内容或粘贴 Cody 可以通过可用插件获取的链接。
+4. 提交评论并在同一线程中等待 Cody 的响应。
 
 该命令仅从主对话框触发；内联建议内的回复将被忽略。
 
-您可以随时重新运行验证——只需在新评论中再次发布命令即可。后续操作必须是新命令；不支持直接在 Git UI 中回复 Kody 的消息。
+您可以随时重新运行验证——只需在新评论中再次发布命令即可。后续操作必须是新命令；不支持直接在 Git UI 中回复 Cody 的消息。
 
 ### 示例
 
-- Jira 工单：`@kody -v business-logic https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1292`
-- Linear 问题：`@kody -v business-logic https://linear.app/your-team/issue/TEAM-123`
-- Notion 页面：`@kody -v business-logic https://www.notion.so/your-workspace/Feature-Spec-abc123`
-- Google 文档：`@kody -v business-logic https://docs.google.com/document/d/1234567890/edit`
-- Slack 对话：`@kody -v business-logic https://kodustech.slack.com/archives/C070E5E97DE/p1727814000000000`
-- 内联规范片段：`@kody -v business-logic 规则 XYZ — 超过 $500 的订单必须发放返现积分。`
+- Jira 工单：`@cody -v business-logic https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1292`
+- Linear 问题：`@cody -v business-logic https://linear.app/your-team/issue/TEAM-123`
+- Notion 页面：`@cody -v business-logic https://www.notion.so/your-workspace/Feature-Spec-abc123`
+- Google 文档：`@cody -v business-logic https://docs.google.com/document/d/1234567890/edit`
+- Slack 对话：`@cody -v business-logic https://elchapita43.slack.com/archives/C070E5E97DE/p1727814000000000`
+- 内联规范片段：`@cody -v business-logic 规则 XYZ — 超过 $500 的订单必须发放返现积分。`
 
-## Kody 做什么
+## Cody 做什么
 
 1. **获取 PR 差异**和拉取请求元数据。
 2. **检索任务上下文** — 从链接的任务管理工具（Jira、Linear 等）或您提供的内联文本。
@@ -61,11 +61,11 @@ reviewOptions:
 4. **将实现与需求进行比较** — 检查 PR 差异中的每个验收标准。
 5. **报告发现**，包含严重性级别和需求追溯。
 
-如果 Kody 无法访问资源或缺少权限，它会指出这一点，以便您可以调整访问权限或以其他方式提供信息。
+如果 Cody 无法访问资源或缺少权限，它会指出这一点，以便您可以调整访问权限或以其他方式提供信息。
 
 ## 任务上下文质量
 
-Kody 在分析之前自动分类任务上下文的质量，这影响验证的深度：
+Cody 在分析之前自动分类任务上下文的质量，这影响验证的深度：
 
 | 质量 | 描述 | 分析行为 |
 |------|------|----------|
@@ -92,19 +92,19 @@ Kody 在分析之前自动分类任务上下文的质量，这影响验证的深
 - **代码中缺失的** — PR 差异中缺失或错误的内容
 - **建议操作** — 具体的实现操作
 
-Kody 不会发明需求。如果一个发现无法追溯到任务中的特定句子，则不会报告。
+Cody 不会发明需求。如果一个发现无法追溯到任务中的特定句子，则不会报告。
 
 ### 范围不匹配检测
 
-如果 PR 差异似乎在与任务本身不同的领域工作，Kody 会检测到这是一个**范围不匹配**，并将其作为首要发现报告，而不是产生误导性的差距分析。
+如果 PR 差异似乎在与任务本身不同的领域工作，Cody 会检测到这是一个**范围不匹配**，并将其作为首要发现报告，而不是产生误导性的差距分析。
 
 ### 输出示例
 
 ```markdown
 ## Business Rules Validation
 
-**Task:** KC-1441 - Team-scoped Kody rules
-**Task Link:** https://kodustech.atlassian.net/browse/KC-1441
+**Task:** KC-1441 - Team-scoped Cody rules
+**Task Link:** https://elchapita43.atlassian.net/browse/KC-1441
 **Status:** Issues Found
 **Confidence:** high
 
@@ -130,7 +130,7 @@ scoped to team.
 - AC #2: "Multi-workspace billing path" — Implemented in `billing.service.ts:118`
 
 ---
-*Analysis performed by Kodus AI Business Rules Validator*
+*Analysis performed by Codus AI Business Rules Validator*
 ```
 
 ## 提示

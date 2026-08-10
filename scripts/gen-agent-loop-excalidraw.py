@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate an Excalidraw diagram of the Kodus AGENT REVIEW LOOP (the harness)."""
+"""Generate an Excalidraw diagram of the Codus AGENT REVIEW LOOP (the harness)."""
 import json, os
 
 elements = []
@@ -109,19 +109,19 @@ OUT    = "#96f2d7"
 WRAP   = "#f1f3f5"
 NOTE   = "#fff3bf"
 
-ftext("title", 360, -150, "Kodus — Agent Review Harness (o loop)", 30)
+ftext("title", 360, -150, "Codus — Agent Review Harness (o loop)", 30)
 ftext("sub", 360, -110, "runAgentLoop = AI SDK generateText multi-step · stopWhen [hasToolCall(submitResult) | stepCountIs(maxSteps)]", 14, "#495057", w=900)
 
 # ============ ORCHESTRATOR FAN-OUT (top) ============
 box("orch", 360, -40, 360, 64,
     "ReviewOrchestratorService\nfan-out paralelo (Promise.allSettled)", ORCH, fs=14)
-# DEFAULT path: single Generalist (+ Kody Rules)
+# DEFAULT path: single Generalist (+ Cody Rules)
 box("a_gen", 300, 70, 260, 52,
     "Generalist  ← DEFAULT (normal/fast)\nrequestedCategories = bug/sec/perf", AGENT,
     stroke="#5f3dc4", fs=12, sw=3)
-box("a_kody",600, 70, 180, 52, "📏 Kody Rules\n(se houver regra ativa)", AGENT, fs=12)
+box("a_cody",600, 70, 180, 52, "📏 Cody Rules\n(se houver regra ativa)", AGENT, fs=12)
 arrow("o_gen", "orch", "b", "a_gen", "t", color="#1971c2", sw=3)
-arrow("o_kody", "orch", "b", "a_kody", "t", color="#1971c2")
+arrow("o_cody", "orch", "b", "a_cody", "t", color="#1971c2")
 # DEEP-only trio (opt-in)
 box("a_deep", 60, 70, 200, 52,
     "🐞Bug · 🔒Security · ⚡Perf\nSÓ em reviewMode='deep'", AGENT,
@@ -219,7 +219,7 @@ for i, (eid, label, fill) in enumerate(legend):
     box(eid, lx + (i % 3) * 200, ly + (i // 3) * 34, 190, 26, label, fill, fs=12)
 
 out = {
-    "type": "excalidraw", "version": 2, "source": "kodus-agent-loop-gen",
+    "type": "excalidraw", "version": 2, "source": "codus-agent-loop-gen",
     "elements": elements,
     "appState": {"gridSize": None, "viewBackgroundColor": "#ffffff"},
     "files": {},

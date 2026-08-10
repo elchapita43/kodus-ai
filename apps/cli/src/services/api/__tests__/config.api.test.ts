@@ -13,13 +13,13 @@ describe('RealConfigApi', () => {
         });
 
         const api = new RealConfigApi(requestWithRetry);
-        await api.getRepositorySettings('kodus_team_key', 'repo-1');
+        await api.getRepositorySettings('codus_team_key', 'repo-1');
 
         expect(requestWithRetry).toHaveBeenCalledWith(
             '/cli/config/repositories/repo-1/settings',
             {
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
             },
         );

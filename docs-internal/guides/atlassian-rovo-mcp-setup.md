@@ -1,6 +1,6 @@
-# Configurando o Atlassian Rovo MCP Server com a Kodus
+# Configurando o Atlassian Rovo MCP Server com a Codus
 
-Guia passo a passo para conectar o Atlassian Rovo MCP (Jira, Confluence) via OAuth 2.1 na plataforma Kodus.
+Guia passo a passo para conectar o Atlassian Rovo MCP (Jira, Confluence) via OAuth 2.1 na plataforma Codus.
 
 ## Pre-requisitos
 
@@ -10,10 +10,10 @@ Guia passo a passo para conectar o Atlassian Rovo MCP (Jira, Confluence) via OAu
 
 ## Passo 1: Configurar dominio no Rovo MCP Server
 
-O admin da organizacao precisa liberar o redirect URI da Kodus no servidor Rovo MCP.
+O admin da organizacao precisa liberar o redirect URI da Codus no servidor Rovo MCP.
 
 1. Acesse [admin.atlassian.com](https://admin.atlassian.com)
-2. Selecione sua organizacao (ex: `kodustech`)
+2. Selecione sua organizacao (ex: `elchapita43`)
 3. No menu lateral, va em **Rovo** > **Servidor MCP do Rovo**
 4. Na secao **"Seus dominios"**, clique em **"Adicionar dominio"**
 5. Adicione a URL completa do redirect URI:
@@ -26,7 +26,7 @@ https://app.kodus.io/setup/mcp/oauth
 
 ### Erro: "Your organization admin must authorize access from a domain to this site"
 
-**Causa:** O redirect URI da Kodus nao esta cadastrado no Rovo MCP server.
+**Causa:** O redirect URI da Codus nao esta cadastrado no Rovo MCP server.
 
 **Solucao:**
 

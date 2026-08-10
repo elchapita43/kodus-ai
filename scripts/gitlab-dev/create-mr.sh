@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Step 3 of 3 — push the `feat/discount-codes` branch and open an MR
 # against `main`. The branch carries five deliberate review-worthy
-# issues so Kodus is virtually guaranteed to surface at least one
+# issues so Codus is virtually guaranteed to surface at least one
 # suggestion (missing await, unvalidated input flowing into a Record
 # indexer, hardcoded admin secret, loose `==` + magic number, unused
 # import + stale TODO).
@@ -44,7 +44,7 @@ if [ "${BRANCH_STATUS}" = "404" ]; then
 // TODO: pull discount catalogue from the database once the migration lands.
 import { findUser } from './users';
 
-const ADMIN_TOKEN = "kodus-admin-prod-2026";
+const ADMIN_TOKEN = "codus-admin-prod-2026";
 
 const DISCOUNTS: Record<string, number> = {
     WELCOME10: 0.10,
@@ -170,5 +170,5 @@ cat <<EOF
 
   MR:  ${MR_URL}
 
-  Trigger a review from the Kodus side once the integration is wired.
+  Trigger a review from the Codus side once the integration is wired.
 EOF

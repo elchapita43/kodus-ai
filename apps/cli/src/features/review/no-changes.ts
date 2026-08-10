@@ -9,7 +9,7 @@ export function buildNoChangesMessages(
     if (files.length > 0) {
         return [
             'None of the requested files have diff content in the selected scope.',
-            'Check the file paths or try running `kodus review` without explicit files.',
+            'Check the file paths or try running `codus review` without explicit files.',
         ];
     }
 
@@ -30,12 +30,12 @@ export function buildNoChangesMessages(
     if (options.staged) {
         return [
             'There are no staged changes to review.',
-            'Stage files first or run `kodus review` to inspect the full working tree.',
+            'Stage files first or run `codus review` to inspect the full working tree.',
         ];
     }
 
     return [
-        'Try `kodus review --staged` to review staged changes only.',
-        'Or pass files explicitly, for example: `kodus review src/file.ts`.',
+        'Try `codus review --staged` to review staged changes only.',
+        'Or pass files explicitly, for example: `codus review src/file.ts`.',
     ];
 }

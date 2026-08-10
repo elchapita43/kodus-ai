@@ -44,8 +44,8 @@
 **Files:**
 - Modify: `docker-compose.dev.yml`
 
-1. Set internal MCP URL for app containers to Docker service host (`kodus_api`) instead of loopback semantics.
-2. Ensure variable is available for `kodus-api`, `worker`, and `webhooks` via shared template.
+1. Set internal MCP URL for app containers to Docker service host (`codus_api`) instead of loopback semantics.
+2. Ensure variable is available for `codus-api`, `worker`, and `webhooks` via shared template.
 
 ### Task 5: Verification
 

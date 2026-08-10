@@ -22,7 +22,7 @@ describe('EMAIL_TEMPLATE_REGISTRY', () => {
             inviterEmail: 'jane@acme.com',
             inviteLink: 'https://example.com/i/x',
         },
-        [NotificationEvent.KODY_RULES_GENERATED]: {
+        [NotificationEvent.CODY_RULES_GENERATED]: {
             rules: ['rule-a', 'rule-b'],
             organizationName: 'Acme',
         },
@@ -122,7 +122,7 @@ describe('EMAIL_TEMPLATE_REGISTRY', () => {
             prUrl: 'https://github.com/acme/api/pull/1',
             repoName: 'acme/api',
             ownerContact: 'owner@acme.com',
-            authorUsername: 'kodus',
+            authorUsername: 'codus',
         },
         [NotificationEvent.IDE_RULES_SYNCED]: {
             repoName: 'acme/api',

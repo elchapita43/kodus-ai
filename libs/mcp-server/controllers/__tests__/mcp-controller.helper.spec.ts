@@ -55,7 +55,7 @@ describe('mcp-controller.helper', () => {
             id: 7,
             method: 'tools/call',
             params: {
-                name: 'KODUS_LIST_REPOSITORIES',
+                name: 'CODUS_LIST_REPOSITORIES',
                 arguments: {
                     organizationId: 'org-1',
                     teamId: 'team-1',
@@ -77,7 +77,7 @@ describe('mcp-controller.helper', () => {
             expect.objectContaining({
                 metadata: expect.objectContaining({
                     jsonrpcMethod: 'tools/call',
-                    toolName: 'KODUS_LIST_REPOSITORIES',
+                    toolName: 'CODUS_LIST_REPOSITORIES',
                     organizationId: 'org-1',
                     teamId: 'team-1',
                 }),

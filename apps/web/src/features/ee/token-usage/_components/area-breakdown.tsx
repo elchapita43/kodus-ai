@@ -34,11 +34,11 @@ const AREA_META: Record<
         description:
             "The main review agents that read the diff and find issues — usually the bulk of every review.",
     },
-    kody_rules: {
-        label: "Kody Rules",
+    cody_rules: {
+        label: "Cody Rules",
         color: CHART_COLORS.primary,
         description:
-            "Checking the diff against your Kody Rules and generating rule-based findings.",
+            "Checking the diff against your Cody Rules and generating rule-based findings.",
     },
     cross_file: {
         label: "Cross-file context",
@@ -60,7 +60,7 @@ const AREA_META: Record<
     conversation: {
         label: "Conversation",
         color: CHART_COLORS.danger,
-        description: "Answering your @kody replies in review threads.",
+        description: "Answering your @cody replies in review threads.",
     },
     system: {
         label: "System analysis",

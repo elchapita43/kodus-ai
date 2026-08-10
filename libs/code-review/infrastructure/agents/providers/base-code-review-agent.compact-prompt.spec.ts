@@ -47,7 +47,7 @@ const makeInput = (
     organizationAndTeamData: { organizationId: 'o', teamId: 't' } as any,
     changedFiles: [{ filename: 'foo.ts', patch: '+ a\n- b\n' } as any],
     prNumber: 1,
-    repositoryFullName: 'kodus/test',
+    repositoryFullName: 'codus/test',
     languageResultPrompt: 'en-US',
     remoteCommands: {} as any, // not self-contained
     ...overrides,

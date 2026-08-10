@@ -13,7 +13,7 @@ import {
     CockpitRangeQuery,
     IgnoredCriticalsHighlight,
     ImplementationRateByCategoryRow,
-    KodyRuleUsageRow,
+    CodyRuleUsageRow,
     NegativeFeedbackByCategoryRow,
     NegativeFeedbackWeeklyRow,
     NegativeVoteRateHighlight,
@@ -32,7 +32,7 @@ import {
 } from '../../domain/types';
 
 /**
- * "Kodus Review" tab of the cockpit revamp — metrics about Kodus itself
+ * "Codus Review" tab of the cockpit revamp — metrics about Codus itself
  * (is the team acting on what we say?) rather than generic productivity.
  *
  * Conventions shared with `CockpitCodeHealthService`:
@@ -186,20 +186,20 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
         const params: unknown[] = [];
         const scope = this.closedPrScope(q, params);
 
-        // A suggestion is rule-driven when it enforces a Kody Rule (or is
+        // A suggestion is rule-driven when it enforces a Cody Rule (or is
         // labelled as such). Its severity is user-defined on the rule, not a
-        // Kodus risk call — so the chart exposes both the full population and
-        // a Kodus-native one (toggled client-side) to keep the calibration
+        // Codus risk call — so the chart exposes both the full population and
+        // a Codus-native one (toggled client-side) to keep the calibration
         // read honest.
-        const IS_KODY_RULE = `(s."brokenKodyRulesIds" IS NOT NULL OR lower(s."label") = 'kody_rules')`;
+        const IS_CODY_RULE = `(s."brokenCodyRulesIds" IS NOT NULL OR lower(s."label") = 'cody_rules')`;
 
         const rows = (await this.ds.query(
             `SELECT
                 COALESCE(lower(s."severity"), 'unknown') AS severity,
                 COUNT(*)::int AS sent,
                 COUNT(*) FILTER (WHERE s."suggestionImplementationStatus" ${IMPLEMENTED})::int AS implemented,
-                COUNT(*) FILTER (WHERE NOT ${IS_KODY_RULE})::int AS native_sent,
-                COUNT(*) FILTER (WHERE NOT ${IS_KODY_RULE} AND s."suggestionImplementationStatus" ${IMPLEMENTED})::int AS native_implemented
+                COUNT(*) FILTER (WHERE NOT ${IS_CODY_RULE})::int AS native_sent,
+                COUNT(*) FILTER (WHERE NOT ${IS_CODY_RULE} AND s."suggestionImplementationStatus" ${IMPLEMENTED})::int AS native_implemented
              ${scope}
              GROUP BY severity
              ORDER BY CASE COALESCE(lower(s."severity"), 'unknown')
@@ -404,7 +404,7 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
 
     /**
      * Shared FROM/WHERE for feedback aggregations. Scopes reactions to the
-     * SAME universe as every other chart — suggestions Kodus delivered on
+     * SAME universe as every other chart — suggestions Codus delivered on
      * PRs closed in the window — by joining feedback → suggestion → PR.
      *
      * This is deliberate: scoping by the reaction's own timestamp instead
@@ -740,12 +740,12 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
     }
 
     /**
-     * Per-rule usage from `suggestions_mv.brokenKodyRulesIds` (one
+     * Per-rule usage from `suggestions_mv.brokenCodyRulesIds` (one
      * suggestion may enforce several rules — it counts once per rule).
      * Rule metadata (title, status, zero-trigger rules) lives in Mongo;
-     * `GetKodyRulesHealthUseCase` does the merge.
+     * `GetCodyRulesHealthUseCase` does the merge.
      */
-    async getKodyRulesUsage(q: CockpitRangeQuery): Promise<KodyRuleUsageRow[]> {
+    async getCodyRulesUsage(q: CockpitRangeQuery): Promise<CodyRuleUsageRow[]> {
         const params: unknown[] = [];
         const scope = this.closedPrScope(q, params);
 
@@ -754,9 +754,9 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
                 SELECT s."suggestion_id",
                        s."suggestionImplementationStatus",
                        s."suggestionCreatedAt",
-                       s."brokenKodyRulesIds"
+                       s."brokenCodyRulesIds"
                 ${scope}
-                    AND s."brokenKodyRulesIds" IS NOT NULL
+                    AND s."brokenCodyRulesIds" IS NOT NULL
             )
             SELECT
                 rule_id,
@@ -768,7 +768,7 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
               FROM scoped sc
               LEFT JOIN "analytics"."suggestion_feedback" f
                      ON f."suggestion_id" = sc."suggestion_id"
-             CROSS JOIN LATERAL unnest(sc."brokenKodyRulesIds") AS rule_id
+             CROSS JOIN LATERAL unnest(sc."brokenCodyRulesIds") AS rule_id
              GROUP BY rule_id
              ORDER BY triggers DESC`,
             params,
@@ -793,11 +793,11 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
     }
 
     /**
-     * Review quality split into rule-driven vs Kodus-native suggestions in a
+     * Review quality split into rule-driven vs Codus-native suggestions in a
      * single pass. Same closed-PR universe and IMPLEMENTED definition as every
      * other chart; feedback is LEFT-joined (one row per suggestion, so no
-     * fan-out). `IS_KODY_RULE` matches the severity chart's predicate — a
-     * suggestion is rule-driven when it enforces a Kody Rule (or is labelled
+     * fan-out). `IS_CODY_RULE` matches the severity chart's predicate — a
+     * suggestion is rule-driven when it enforces a Cody Rule (or is labelled
      * as such) — so the report's group split is honest about origin rather
      * than approximating from `label` alone.
      */
@@ -806,11 +806,11 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
     ): Promise<ReviewQualityByRuleGroupRow[]> {
         const params: unknown[] = [];
         const where = this.closedPrWhere(q, params);
-        const IS_KODY_RULE = `(s."brokenKodyRulesIds" IS NOT NULL OR lower(s."label") = 'kody_rules')`;
+        const IS_CODY_RULE = `(s."brokenCodyRulesIds" IS NOT NULL OR lower(s."label") = 'cody_rules')`;
 
         const rows = (await this.ds.query(
             `SELECT
-                CASE WHEN ${IS_KODY_RULE} THEN 'kody_rules' ELSE 'general' END AS grp,
+                CASE WHEN ${IS_CODY_RULE} THEN 'cody_rules' ELSE 'general' END AS grp,
                 COUNT(*)::int AS sent,
                 COUNT(*) FILTER (WHERE s."suggestionImplementationStatus" ${IMPLEMENTED})::int AS implemented,
                 COALESCE(SUM(f."thumbs_up"), 0)::int AS thumbs_up,
@@ -823,7 +823,7 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
              GROUP BY grp`,
             params,
         )) as Array<{
-            grp: 'kody_rules' | 'general';
+            grp: 'cody_rules' | 'general';
             sent: number;
             implemented: number;
             thumbs_up: number;
@@ -882,7 +882,7 @@ export class CockpitReviewAnalyticsService implements ICockpitReviewAnalyticsSer
         if (q.ruleId) {
             params.push(q.ruleId);
             filters.push(
-                `AND s."brokenKodyRulesIds" @> ARRAY[$${params.length}]::text[]`,
+                `AND s."brokenCodyRulesIds" @> ARRAY[$${params.length}]::text[]`,
             );
         }
         if (q.implementationStatus) {

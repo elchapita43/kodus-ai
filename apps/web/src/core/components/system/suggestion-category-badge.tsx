@@ -20,7 +20,7 @@ export const categoryClassnames = {
     bug: "bg-warning/10 text-warning ring-warning/64 [--button-foreground:var(--color-warning)]",
     performance:
         "bg-alert/10 text-alert ring-alert/64 [--button-foreground:var(--color-alert)]",
-    kody_rules:
+    cody_rules:
         "bg-info/10 text-info ring-info/64 [--button-foreground:var(--color-info)]",
     cross_file:
         "bg-info/10 text-info ring-info/64 [--button-foreground:var(--color-info)]",
@@ -33,7 +33,7 @@ const categoryIcons: Record<IssueCategory, LucideIcon> = {
     security: Shield,
     bug: Bug,
     performance: Zap,
-    kody_rules: Target,
+    cody_rules: Target,
     breaking_changes: AlertTriangle,
     cross_file: Network,
     default: Tag,
@@ -43,7 +43,7 @@ const categoryDisplayNames: Record<IssueCategory, string> = {
     security: "Security",
     bug: "Bug",
     performance: "Performance",
-    kody_rules: "Kody Rule",
+    cody_rules: "Cody Rule",
     breaking_changes: "Breaking Change",
     cross_file: "Cross-File",
     default: "Suggestion",

@@ -18,8 +18,8 @@ import { AgentSessionModel } from './schemas/agent-session.model';
 export const CONVERSATION_STORE_TOKEN = Symbol('ConversationStore');
 
 /** Legacy flow tenant for agent conversations — kept so existing
- *  `kodus-agent-sessions` queries by tenant still match. */
-const DEFAULT_TENANT = 'kodus-agent-conversation';
+ *  `codus-agent-sessions` queries by tenant still match. */
+const DEFAULT_TENANT = 'codus-agent-conversation';
 
 /** Per-thread message cap. Bounds document growth while keeping a useful tail
  *  of context; the store keeps the most recent `MAX_MESSAGES` turns. */
@@ -27,7 +27,7 @@ const MAX_MESSAGES = 100;
 
 /**
  * Mongo-backed {@link ConversationStore}, writing the recognizable legacy
- * `kodus-agent-sessions` document (see {@link AgentSessionModel}). Reuses the
+ * `codus-agent-sessions` document (see {@link AgentSessionModel}). Reuses the
  * app's existing Mongoose connection via `@InjectModel` — no second client.
  *
  * Best-effort: persistence failures are logged and swallowed so a Mongo blip

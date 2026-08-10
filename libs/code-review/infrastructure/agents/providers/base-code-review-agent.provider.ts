@@ -4,7 +4,7 @@ import {
     classifyLLMError,
     getClassification,
 } from '@libs/llm/error-classifier';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { Injectable, Optional } from '@nestjs/common';
 import { DocumentationSearchExaService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-exa.service';
 import { ByokErrorCounter } from '@libs/notifications/application/byok-error-counter.service';
@@ -102,7 +102,7 @@ export abstract class BaseCodeReviewAgentProvider {
     /**
      * Return the category-specific chunk that gets embedded in the system
      * prompt. Receives `input` so subclasses can include per-request data
-     * (e.g. the kody-rules agent renders the current team rules) without
+     * (e.g. the cody-rules agent renders the current team rules) without
      * stashing it on instance state — keeping the provider safe to share
      * across concurrent reviews.
      */
@@ -571,7 +571,7 @@ export abstract class BaseCodeReviewAgentProvider {
                     maxSteps: input.maxSteps,
                     // Heavy-pass gating: forwarded explicitly because loopParams
                     // is built field-by-field. Without this line, callers like
-                    // KodyRulesAgentProvider that opt out of synthesis-rescue
+                    // CodyRulesAgentProvider that opt out of synthesis-rescue
                     // would have their preference silently dropped here.
                     skipHeavyPasses: input.skipHeavyPasses,
                     skipSynthesisRescue: input.skipSynthesisRescue,
@@ -732,12 +732,12 @@ export abstract class BaseCodeReviewAgentProvider {
             });
 
             // Map raw agent findings → CodeSuggestion (path validation,
-            // kody-rule UUID recovery, label/severity). Extracted to FindingMapper.
+            // cody-rule UUID recovery, label/severity). Extracted to FindingMapper.
             const mapped = mapAgentFindings(agentResult, {
                 changedFiles: input.changedFiles,
-                kodyRules: input.kodyRules,
+                codyRules: input.codyRules,
                 prNumber: input.prNumber,
-                isKodyRules: this.getCategoryLabel() === 'kody_rules',
+                isCodyRules: this.getCategoryLabel() === 'cody_rules',
                 identityName: this.getIdentity().name,
                 labelPolicy: {
                     categoryLabel: this.getCategoryLabel(),
@@ -913,7 +913,7 @@ export abstract class BaseCodeReviewAgentProvider {
         return buildSystemPromptFor(input, this.promptMeta(input));
     }
 
-    /** Protected so KodyRulesAgentProvider can override the user prompt. */
+    /** Protected so CodyRulesAgentProvider can override the user prompt. */
     protected buildUserPrompt(input: ReviewAgentInput): string {
         return buildUserPromptFor(input, this.promptMeta(input));
     }

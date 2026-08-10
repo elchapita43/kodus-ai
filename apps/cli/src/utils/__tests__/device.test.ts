@@ -39,7 +39,7 @@ describe('device util', () => {
 
     it('creates and persists a new device id', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
         const { getDeviceIdentity } = await importDeviceModule(home);
@@ -50,7 +50,7 @@ describe('device util', () => {
 
         const stored = JSON.parse(
             await fs.readFile(
-                path.join(home, '.kodus', 'device.json'),
+                path.join(home, '.codus', 'device.json'),
                 'utf-8',
             ),
         ) as { deviceId: string; createdAt: string; deviceToken?: string };
@@ -62,10 +62,10 @@ describe('device util', () => {
 
     it('reuses existing stored device id', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
-        const deviceFile = path.join(home, '.kodus', 'device.json');
+        const deviceFile = path.join(home, '.codus', 'device.json');
         await fs.mkdir(path.dirname(deviceFile), { recursive: true });
         await fs.writeFile(
             deviceFile,
@@ -83,10 +83,10 @@ describe('device util', () => {
 
     it('recovers from malformed device file by generating a new id', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
-        const deviceFile = path.join(home, '.kodus', 'device.json');
+        const deviceFile = path.join(home, '.codus', 'device.json');
         await fs.mkdir(path.dirname(deviceFile), { recursive: true });
         await fs.writeFile(deviceFile, '{ malformed-json ', 'utf-8');
 
@@ -102,10 +102,10 @@ describe('device util', () => {
 
     it('regenerates id when stored device id is not a valid UUID', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
-        const deviceFile = path.join(home, '.kodus', 'device.json');
+        const deviceFile = path.join(home, '.codus', 'device.json');
         await fs.mkdir(path.dirname(deviceFile), { recursive: true });
         await fs.writeFile(
             deviceFile,
@@ -124,7 +124,7 @@ describe('device util', () => {
 
     it('persists and reuses device token', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
         const { getDeviceIdentity, updateDeviceToken } =
@@ -141,7 +141,7 @@ describe('device util', () => {
 
         const stored = JSON.parse(
             await fs.readFile(
-                path.join(home, '.kodus', 'device.json'),
+                path.join(home, '.codus', 'device.json'),
                 'utf-8',
             ),
         ) as {
@@ -156,7 +156,7 @@ describe('device util', () => {
 
     it('ignores empty device token updates', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-device-test-'),
+            path.join(os.tmpdir(), 'codus-device-test-'),
         );
         tempDirs.push(home);
         const { getDeviceIdentity, updateDeviceToken } =
@@ -167,7 +167,7 @@ describe('device util', () => {
 
         const stored = JSON.parse(
             await fs.readFile(
-                path.join(home, '.kodus', 'device.json'),
+                path.join(home, '.codus', 'device.json'),
                 'utf-8',
             ),
         ) as { deviceToken?: string };

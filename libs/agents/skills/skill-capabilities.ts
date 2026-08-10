@@ -21,11 +21,11 @@ export const SKILL_CAPABILITY_REGISTRY: Record<
 > = {
     'pr.diff.read': {
         mode: 'fixed_tools',
-        tools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+        tools: ['CODUS_GET_PULL_REQUEST_DIFF'],
     },
     'pr.metadata.read': {
         mode: 'fixed_tools',
-        tools: ['KODUS_GET_PULL_REQUEST'],
+        tools: ['CODUS_GET_PULL_REQUEST'],
     },
     // External providers vary by MCP integration and are resolved at runtime.
     'task.context.read': {

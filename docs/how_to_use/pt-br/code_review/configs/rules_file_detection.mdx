@@ -1,9 +1,9 @@
 ---
 title: "Detecção de Arquivos de Regras"
-description: "Detecte e importe automaticamente seus arquivos de regras existentes de ferramentas populares de codificação com IA para aprimorar as capacidades de code review de Kody com os padrões de codificação estabelecidos pela sua equipe."
+description: "Detecte e importe automaticamente seus arquivos de regras existentes de ferramentas populares de codificação com IA para aprimorar as capacidades de code review de Cody com os padrões de codificação estabelecidos pela sua equipe."
 ---
 
-Kodus pode sincronizar e importar automaticamente seus arquivos de regras da IDE existentes para aprimorar o code review de Kody com os padrões e preferências de codificação estabelecidos pela sua equipe.
+Codus pode sincronizar e importar automaticamente seus arquivos de regras da IDE existentes para aprimorar o code review de Cody com os padrões e preferências de codificação estabelecidos pela sua equipe.
 
 <Frame caption="Habilite Sincronizar automaticamente regras do repositório nas suas configurações">
   <img src="/images/sync-rules.png" />
@@ -11,11 +11,11 @@ Kodus pode sincronizar e importar automaticamente seus arquivos de regras da IDE
 
 ## O Que é Detecção de Arquivos de Regras?
 
-A Detecção de Arquivos de Regras detecta e importa automaticamente arquivos de configuração de ferramentas e assistentes de codificação com IA populares no seu repositório. Isso garante que Kody entenda e respeite seus padrões de codificação existentes sem necessidade de configuração manual.
+A Detecção de Arquivos de Regras detecta e importa automaticamente arquivos de configuração de ferramentas e assistentes de codificação com IA populares no seu repositório. Isso garante que Cody entenda e respeite seus padrões de codificação existentes sem necessidade de configuração manual.
 
 ## Arquivos de Regras Suportados
 
-Kodus detecta e importa automaticamente os seguintes padrões de arquivos de regras:
+Codus detecta e importa automaticamente os seguintes padrões de arquivos de regras:
 
 ### Cursor
 - `.cursorrules` - Arquivo principal de regras do Cursor (legado)
@@ -48,7 +48,7 @@ Kodus detecta e importa automaticamente os seguintes padrões de arquivos de reg
 
 ### Regras Genéricas/Internas
 - `.rules/**/*` - Diretório de regras genéricas
-- `.kody/rules/**` e `rules/**/*.md` - Regras específicas do Kody (veja [Regras de Repositório](/how_to_use/pt-br/code_review/configs/repository_rules) — importadas verbatim, sem reescrita por LLM)
+- `.cody/rules/**` e `rules/**/*.md` - Regras específicas do Cody (veja [Regras de Repositório](/how_to_use/pt-br/code_review/configs/repository_rules) — importadas verbatim, sem reescrita por LLM)
 - `docs/coding-standards/**/*` - Padrões de codificação baseados em documentação
 
 ### Detalhes da detecção
@@ -63,54 +63,54 @@ Kodus detecta e importa automaticamente os seguintes padrões de arquivos de reg
 ### Configuração Inicial
 1. **Habilitar Sincronização Automática**: Alterne a opção "Sincronizar automaticamente regras do repositório" nas suas configurações
 2. **Modal de Primeira Sincronização**: Um modal aparecerá perguntando se você deseja sincronizar pela primeira vez
-3. **Varredura do Repositório**: Quando você confirmar, Kodus varre todo o seu repositório em busca de arquivos de regras suportados
-4. **Geração de Regras**: Um LLM processa os arquivos encontrados e cria automaticamente as Kody Rules correspondentes. Exceção: arquivos de template `.kody/rules/**` e `rules/**/*.md` são importados **verbatim** — sem conversão por LLM — preservando instruções, exemplos e identificadores exatamente como escritos. Se um desses arquivos não seguir o template (frontmatter ausente/inválido, ou sem `title`), ele volta para o caminho do LLM.
+3. **Varredura do Repositório**: Quando você confirmar, Codus varre todo o seu repositório em busca de arquivos de regras suportados
+4. **Geração de Regras**: Um LLM processa os arquivos encontrados e cria automaticamente as Cody Rules correspondentes. Exceção: arquivos de template `.cody/rules/**` e `rules/**/*.md` são importados **verbatim** — sem conversão por LLM — preservando instruções, exemplos e identificadores exatamente como escritos. Se um desses arquivos não seguir o template (frontmatter ausente/inválido, ou sem `title`), ele volta para o caminho do LLM.
 
-Cada arquivo importado produz **uma Kody Rule**. Se um arquivo contém várias diretrizes distintas, o LLM as mescla em uma única regra abrangente — divida a orientação em múltiplos arquivos quando quiser regras gerenciáveis de forma independente.
+Cada arquivo importado produz **uma Cody Rule**. Se um arquivo contém várias diretrizes distintas, o LLM as mescla em uma única regra abrangente — divida a orientação em múltiplos arquivos quando quiser regras gerenciáveis de forma independente.
 
 ### Sincronização Contínua
 - **Atualizações Automáticas**: A sincronização acontece automaticamente quando um Pull Request é fechado
 - **Alterações de Arquivo Detectadas**:
-  - **Novos arquivos de regras** → Cria novas Kody Rules
-  - **Arquivos de regras modificados** → Atualiza Kody Rules existentes
-  - **Arquivos de regras excluídos** → Remove as Kody Rules correspondentes
+  - **Novos arquivos de regras** → Cria novas Cody Rules
+  - **Arquivos de regras modificados** → Atualiza Cody Rules existentes
+  - **Arquivos de regras excluídos** → Remove as Cody Rules correspondentes
 
 ### Sincronização Manual (Toggle Desabilitado)
 
 Você pode sincronizar arquivos de regras individuais sem habilitar a sincronização automática:
 
-1. Adicione `@kody-sync` em qualquer lugar no seu arquivo de regra
+1. Adicione `@cody-sync` em qualquer lugar no seu arquivo de regra
 2. Faça commit da alteração
-3. Kody sincronizará apenas aquele arquivo específico
+3. Cody sincronizará apenas aquele arquivo específico
 
 Isso permite sincronizar regras seletivamente sem habilitar a sincronização automática para todos os arquivos.
 
-### Excluindo um arquivo (`@kody-ignore`)
+### Excluindo um arquivo (`@cody-ignore`)
 
-Para manter um arquivo de regra/orientação no repositório mas impedir que o Kody o transforme em Kody Rules, adicione `@kody-ignore` em qualquer lugar do arquivo:
+Para manter um arquivo de regra/orientação no repositório mas impedir que o Cody o transforme em Cody Rules, adicione `@cody-ignore` em qualquer lugar do arquivo:
 
-1. Adicione `@kody-ignore` em qualquer parte do arquivo de regra (sem distinção de maiúsculas)
+1. Adicione `@cody-ignore` em qualquer parte do arquivo de regra (sem distinção de maiúsculas)
 2. Faça commit da mudança
 
-Na próxima sincronização o Kody vai **pular** aquele arquivo **e remover as Kody Rules criadas a partir dele**. As regras voltam automaticamente se você remover depois o marcador `@kody-ignore` (ou adicionar `@kody-sync`). Use isso para manter documentos de estilo da casa, como um `CLAUDE.md` ou `AGENTS.md`, sem que virem regras aplicadas na revisão.
+Na próxima sincronização o Cody vai **pular** aquele arquivo **e remover as Cody Rules criadas a partir dele**. As regras voltam automaticamente se você remover depois o marcador `@cody-ignore` (ou adicionar `@cody-sync`). Use isso para manter documentos de estilo da casa, como um `CLAUDE.md` ou `AGENTS.md`, sem que virem regras aplicadas na revisão.
 
 <Warning>
-Se você editar manualmente uma Kody Rule que foi criada a partir de um arquivo de regra da IDE, suas alterações serão sobrescritas na próxima vez que o arquivo correspondente for modificado e sincronizado.
+Se você editar manualmente uma Cody Rule que foi criada a partir de um arquivo de regra da IDE, suas alterações serão sobrescritas na próxima vez que o arquivo correspondente for modificado e sincronizado.
 </Warning>
 
 ## Verificando sincronização e avaliação de regras (self-hosted)
 
 Em deployments self-hosted, os logs da API carregam marcadores grep-áveis para debug:
 
-- `[kody-rules-sync]` — sumário por execução de sync: quais arquivos foram importados, pulados (com o motivo) ou removidos.
-- `[kody-rules-eval]` — trace de avaliação por arquivo durante um review: exatamente quais regras (uuid + título) foram selecionadas para o prompt de cada arquivo revisado.
+- `[cody-rules-sync]` — sumário por execução de sync: quais arquivos foram importados, pulados (com o motivo) ou removidos.
+- `[cody-rules-eval]` — trace de avaliação por arquivo durante um review: exatamente quais regras (uuid + título) foram selecionadas para o prompt de cada arquivo revisado.
 
 ```bash
-docker logs kodus_api 2>&1 | grep "kody-rules-sync"
-docker logs kodus_api 2>&1 | grep "kody-rules-eval"
+docker logs codus_api 2>&1 | grep "cody-rules-sync"
+docker logs codus_api 2>&1 | grep "cody-rules-eval"
 ```
 
-Se uma regra aparece como ativa na UI mas nunca aparece em `[kody-rules-eval]` para os arquivos esperados, verifique o glob do campo **Path** — uma regra só roda em arquivos que casam com o path.
+Se uma regra aparece como ativa na UI mas nunca aparece em `[cody-rules-eval]` para os arquivos esperados, verifique o glob do campo **Path** — uma regra só roda em arquivos que casam com o path.
 
 ## Limites de regras
 

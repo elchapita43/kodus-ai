@@ -20,7 +20,7 @@ import { AIEngineModule } from '@libs/ai-engine/modules/ai-engine.module'; // Ad
 import { CentralizedConfigModule } from '@libs/centralized-config/modules/centralized-config.module';
 import { PullRequestMessagesModule } from '@libs/code-review/modules/pullRequestMessages.module';
 import { PermissionValidationModule } from '@libs/ee/shared/permission-validation.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 
 @Module({
     imports: [
@@ -32,7 +32,7 @@ import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
         forwardRef(() => AIEngineModule),
         forwardRef(() => CentralizedConfigModule),
         forwardRef(() => PullRequestMessagesModule),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => PermissionValidationModule),
         // Cross-repo context (#1576): the code-review parameter use-case gates
         // linkedRepositories saves by plan via LICENSE_SERVICE_TOKEN.

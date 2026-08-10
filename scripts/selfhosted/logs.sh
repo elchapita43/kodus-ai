@@ -42,7 +42,7 @@ SERVICES="${SERVICES_ARR[*]:-}"
 NAME=$(normalize_name "$NAME_RAW")
 state_exists "$NAME" || { err "No instance named '$NAME'."; exit 1; }
 
-CMD="cd /opt/kodus-installer && docker compose logs --tail $TAIL --no-color -f $SERVICES"
+CMD="cd /opt/codus-installer && docker compose logs --tail $TAIL --no-color -f $SERVICES"
 log "Tailing logs from '$NAME' (Ctrl-C to stop). Services: ${SERVICES:-all}"
 # Note: ssh_to is a function in _common.sh, not an external command — `exec`
 # would fail with "not found". Just call it.

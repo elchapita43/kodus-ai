@@ -87,7 +87,7 @@ export function formatMemoriesSection(
         return '';
     }
 
-    return `## Memories\n\nAdditional context from past learnings in Kody Rules format.\n\n${formattedMemories.join('\n\n')}`;
+    return `## Memories\n\nAdditional context from past learnings in Cody Rules format.\n\n${formattedMemories.join('\n\n')}`;
 }
 
 export const prompt_codeReviewSafeguard_system = (params: {
@@ -294,7 +294,7 @@ You have the following context:
 1. **FileContentContext** – The entire file's code (for full reference).
 2. **CodeDiffContext** – The code diff from the Pull Request, showing what is changing.
 3. **SuggestionsContext** – A list of AI-generated code suggestions to evaluate.
-4. **MemoriesContext** (if provided) – High-priority historical rules in Kody Rules format.
+4. **MemoriesContext** (if provided) – High-priority historical rules in Cody Rules format.
 
 **Important**: Only start the review after receiving all required contexts (FileContentContext, CodeDiffContext, SuggestionsContext, and MemoriesContext when provided). Once all are received, proceed with the analysis.
 

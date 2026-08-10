@@ -3,7 +3,7 @@ import { extractJsonFromResponse } from '@libs/common/utils/prompt-parser.utils'
 // LLM output boundary: pins the parser against real-world model output
 // shapes (prose preambles, code fences, non-array JSON, garbage) so a
 // format drift degrades to null instead of crashing or mis-parsing —
-// the same family as the '@kody conversation "Missing reasoning field"'
+// the same family as the '@cody conversation "Missing reasoning field"'
 // incident (prose preamble mangled by whole-text repair).
 describe('extractJsonFromResponse', () => {
     it('parses a plain JSON array', () => {

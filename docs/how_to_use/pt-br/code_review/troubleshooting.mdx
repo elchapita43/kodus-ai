@@ -1,9 +1,9 @@
 ---
 title: "Solução de Problemas"
-description: "Solução de problemas do Code Review com Kody"
+description: "Solução de problemas do Code Review com Cody"
 ---
 
-## Code Review com Kody Não Está Funcionando? Passos para Corrigir Problemas Comuns
+## Code Review com Cody Não Está Funcionando? Passos para Corrigir Problemas Comuns
 
 ### Problemas com Token
 
@@ -31,16 +31,16 @@ Se você está conectado via token, verifique os seguintes pontos:
 
 ### Problemas de Configuração
 
-- **Revisões Automatizadas**: Certifique-se de que as revisões automatizadas estão habilitadas nas suas [Configurações Globais](https://app.kodus.io/settings/code-review/global/general). Se desabilitadas, inicie as revisões manualmente com `@kody start-review`.
-- **Tipos de Revisão**: Certifique-se de que pelo menos um tipo de revisão está selecionado para que Kody forneça sugestões. [Configurar tipos de revisão](https://app.kodus.io/settings/code-review/global/general).
-- **Revisões de Branch**: Por padrão, Kody revisa PRs mesclados na branch padrão. Para incluir branches adicionais, [atualize sua configuração](https://app.kodus.io/settings/code-review/global/general).
+- **Revisões Automatizadas**: Certifique-se de que as revisões automatizadas estão habilitadas nas suas [Configurações Globais](https://app.kodus.io/settings/code-review/global/general). Se desabilitadas, inicie as revisões manualmente com `@cody start-review`.
+- **Tipos de Revisão**: Certifique-se de que pelo menos um tipo de revisão está selecionado para que Cody forneça sugestões. [Configurar tipos de revisão](https://app.kodus.io/settings/code-review/global/general).
+- **Revisões de Branch**: Por padrão, Cody revisa PRs mesclados na branch padrão. Para incluir branches adicionais, [atualize sua configuração](https://app.kodus.io/settings/code-review/global/general).
 - **PRs Grandes**: Esteja ciente de que PRs com um alto número de alterações podem demorar mais para serem processados.
 
 ---
 
 ### Configurações Globais vs. de Repositório
 
-Kody usa um sistema de configuração hierárquico. Veja como funciona:
+Cody usa um sistema de configuração hierárquico. Veja como funciona:
 
 - **Configurações Globais**: Aplicadas a todos os repositórios por padrão.
 - **Configurações Específicas de Repositório**: Se configuradas, sobrescrevem as configurações globais para aquele repositório específico.
@@ -58,18 +58,18 @@ Kody usa um sistema de configuração hierárquico. Veja como funciona:
 #### Sintomas Comuns
 
 - Revisões automatizadas não são acionadas para um repositório.
-- Kody aplica configurações ou sugestões inesperadas.
+- Cody aplica configurações ou sugestões inesperadas.
 - As configurações globais não se refletem em repositórios específicos.
 
 
-## Sem Resposta ou Sem Comentários de Kody
+## Sem Resposta ou Sem Comentários de Cody
 
 Siga este checklist rápido:
 
-1. O PR contém alterações de código revisáveis (não apenas docs ou imagens)? Kody pode pular se não houver nada relevante para analisar.
+1. O PR contém alterações de código revisáveis (não apenas docs ou imagens)? Cody pode pular se não houver nada relevante para analisar.
 2. A branch está no escopo? Por padrão, apenas PRs destinados à branch padrão são revisados, a menos que branches base adicionais sejam configuradas.
-3. **PRs Grandes:** Kody revisa PRs com até 200 **arquivos revisáveis** (após aplicar padrões de ignore). Exemplo: PR com 250 arquivos totais, mas 60 são arquivos `.lock` → Kody revisa os 190 arquivos restantes ✅
-4. Modo: Se as revisões automatizadas estiverem desabilitadas, acione manualmente com `@kody start-review`.
+3. **PRs Grandes:** Cody revisa PRs com até 200 **arquivos revisáveis** (após aplicar padrões de ignore). Exemplo: PR com 250 arquivos totais, mas 60 são arquivos `.lock` → Cody revisa os 190 arquivos restantes ✅
+4. Modo: Se as revisões automatizadas estiverem desabilitadas, acione manualmente com `@cody start-review`.
 5. Cadência de push: Se estiver usando auto-pause, aguarde o período de resfriamento ou solicite uma revisão manual.
 6. Sobrescritas de repositório: Configurações específicas do repositório podem sobrescrever as globais. Limpe ou alinhe conforme necessário.
 

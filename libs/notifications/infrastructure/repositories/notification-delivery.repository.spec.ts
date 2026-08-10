@@ -107,12 +107,12 @@ describe('NotificationDeliveryRepository', () => {
             typeOrmRepo.query.mockResolvedValueOnce([
                 {
                     uuid: 'd-1',
-                    event: 'kody_rules.generated',
+                    event: 'cody_rules.generated',
                     criticality: 'informational',
                     channel: 'email',
                     title: 'T',
                     body: 'B',
-                    category: 'kody_rules',
+                    category: 'cody_rules',
                     recipientEmail: 'a@b.com',
                     recipientRole: 'owner',
                     deliveryStatus: 'pending',
@@ -150,12 +150,12 @@ describe('NotificationDeliveryRepository', () => {
         it('persists recipientRole alongside other fields', async () => {
             await repo.create({
                 organization: { uuid: 'org-1' } as any,
-                event: 'kody_rules.generated',
+                event: 'cody_rules.generated',
                 criticality: Criticality.INFORMATIONAL,
                 channel: NotificationChannel.IN_APP,
                 title: 'T',
                 body: 'B',
-                category: 'kody_rules',
+                category: 'cody_rules',
                 recipientEmail: 'a@b.com',
                 recipientRole: 'contributor',
                 recipientUser: { uuid: 'user-1' } as any,

@@ -1,6 +1,6 @@
 # RabbitMQ Workflow Queues Runbook
 
-This runbook covers Kodus workflow queues, delayed retries, DLQ routing, and
+This runbook covers Codus workflow queues, delayed retries, DLQ routing, and
 stuck `unacked` diagnostics.
 
 ## Expected Flow
@@ -63,20 +63,20 @@ zero and worker logs show processing errors or no progress.
 Use the RabbitMQ management UI or `rabbitmqctl` from a RabbitMQ node/container.
 
 ```bash
-rabbitmqctl list_queues -p kodus-ai name messages_ready messages_unacknowledged messages consumers state arguments
+rabbitmqctl list_queues -p codus-ai name messages_ready messages_unacknowledged messages consumers state arguments
 ```
 
 Check delayed retry/DLQ topology:
 
 ```bash
-rabbitmqctl list_exchanges -p kodus-ai name type durable arguments
-rabbitmqctl list_bindings -p kodus-ai source_name destination_name routing_key
+rabbitmqctl list_exchanges -p codus-ai name type durable arguments
+rabbitmqctl list_bindings -p codus-ai source_name destination_name routing_key
 ```
 
 Check consumers:
 
 ```bash
-rabbitmqctl list_consumers -p kodus-ai queue_name consumer_tag channel_pid ack_required prefetch_count active
+rabbitmqctl list_consumers -p codus-ai queue_name consumer_tag channel_pid ack_required prefetch_count active
 ```
 
 ## Diagnosis Guide
@@ -91,7 +91,7 @@ If a queue has high `messages_unacknowledged`:
 
 ```sql
 SELECT "consumerId", status, count(*), min("lockedAt"), max("lockedAt")
-FROM kodus_workflow.inbox_messages
+FROM codus_workflow.inbox_messages
 WHERE status IN ('PROCESSING', 'READY')
 GROUP BY "consumerId", status
 ORDER BY count(*) DESC;
@@ -101,7 +101,7 @@ ORDER BY count(*) DESC;
 
 ```sql
 SELECT "messageId", "consumerId", job_id, status, "lockedBy", "lockedAt", attempts, "lastError"
-FROM kodus_workflow.inbox_messages
+FROM codus_workflow.inbox_messages
 WHERE status = 'PROCESSING'
 ORDER BY "lockedAt" ASC
 LIMIT 50;
@@ -110,7 +110,7 @@ LIMIT 50;
 5. Check DLQ depth and recent failures:
 
 ```bash
-rabbitmqctl list_queues -p kodus-ai name messages_ready messages_unacknowledged | grep -E 'dlq|failed'
+rabbitmqctl list_queues -p codus-ai name messages_ready messages_unacknowledged | grep -E 'dlq|failed'
 ```
 
 ## Production Queue Arguments
@@ -125,12 +125,12 @@ during a controlled maintenance window.
 Recommended policies for AST queues:
 
 ```bash
-rabbitmqctl set_policy -p kodus-ai ast-graph-build \
+rabbitmqctl set_policy -p codus-ai ast-graph-build \
   '^workflow\.jobs\.ast_graph_build\.queue$' \
   '{"single-active-consumer":true,"consumer-timeout":1500000}' \
   --apply-to queues
 
-rabbitmqctl set_policy -p kodus-ai ast-graph-incremental \
+rabbitmqctl set_policy -p codus-ai ast-graph-incremental \
   '^workflow\.jobs\.ast_graph_incremental\.queue$' \
   '{"single-active-consumer":true,"consumer-timeout":900000}' \
   --apply-to queues
@@ -139,7 +139,7 @@ rabbitmqctl set_policy -p kodus-ai ast-graph-incremental \
 Validate policy application:
 
 ```bash
-rabbitmqctl list_queues -p kodus-ai name policy arguments
+rabbitmqctl list_queues -p codus-ai name policy arguments
 ```
 
 ## Recovery

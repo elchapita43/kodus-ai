@@ -1,10 +1,10 @@
 export type TabValue = keyof typeof tabs;
 
-// "Kodus Review" replaced the old "Code health" tab — its two charts
+// "Codus Review" replaced the old "Code health" tab — its two charts
 // (suggestions by category/repository) were absorbed as implementation-rate
 // versions inside the review tab.
 export const tabs = {
-    "kodus-review": "Kodus Review",
+    "codus-review": "Codus Review",
     "productivity": "Productivity",
 } satisfies Record<string, string>;
 
@@ -18,7 +18,7 @@ export const COCKPIT_PARAM = {
     tab: "tab",
 } as const;
 
-// In-card filter state for the Kodus Review tab. These operate on
+// In-card filter state for the Codus Review tab. These operate on
 // already-loaded data (no server refetch), so they're synced to the URL
 // shallowly via `useShallowParam` — purely to make the view shareable.
 export const COCKPIT_REVIEW_PARAM = {

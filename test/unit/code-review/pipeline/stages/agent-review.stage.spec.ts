@@ -397,26 +397,26 @@ describe('AgentReviewStage', () => {
         });
     });
 
-    describe('kody rules severity', () => {
-        it('should use severity from the Kody Rule, not from the LLM or classifier', async () => {
+    describe('cody rules severity', () => {
+        it('should use severity from the Cody Rule, not from the LLM or classifier', async () => {
             // Orchestrator returns a finding with ruleUuid and a LOW severity
             // (whatever the LLM decided). The stage should override it with
-            // the severity from the matched Kody Rule (HIGH).
+            // the severity from the matched Cody Rule (HIGH).
             mockOrchestrator.execute.mockResolvedValue({
                 suggestions: [
                     {
                         relevantFile: 'src/auth.ts',
                         suggestionContent: 'Violates rule: must use strict null checks',
-                        label: 'kody_rules',
+                        label: 'cody_rules',
                         severity: 'low', // LLM's opinion — should be ignored
-                        brokenKodyRulesIds: ['rule-uuid-123'],
+                        brokenCodyRulesIds: ['rule-uuid-123'],
                         relevantLinesStart: 10,
                         relevantLinesEnd: 15,
                     },
                 ],
                 agentResults: [
                     {
-                        agentName: 'kody-rules-agent',
+                        agentName: 'cody-rules-agent',
                         suggestions: [{}],
                         turnsUsed: 3,
                         durationMs: 1000,
@@ -447,7 +447,7 @@ describe('AgentReviewStage', () => {
                 codeReviewConfig: {
                     codeReviewVersion: CodeReviewVersion.V3_AGENT,
                     reviewOptions: { bug: true, security: true, performance: true },
-                    kodyRules: [
+                    codyRules: [
                         {
                             uuid: 'rule-uuid-123',
                             title: 'Strict null checks',
@@ -465,7 +465,7 @@ describe('AgentReviewStage', () => {
             const suggestion =
                 result.fileAnalysisResults[0].validSuggestionsToAnalyze[0];
             expect(suggestion.severity).toBe('high');
-            expect(suggestion.brokenKodyRulesIds).toEqual(['rule-uuid-123']);
+            expect(suggestion.brokenCodyRulesIds).toEqual(['rule-uuid-123']);
         });
     });
 
@@ -634,15 +634,15 @@ describe('AgentReviewStage', () => {
             expect(result.errors[0].metadata.finishReason).toBe('timeout');
         });
 
-        it('ignores a truncated kody-rules agent — auxiliary, not review-gating', async () => {
+        it('ignores a truncated cody-rules agent — auxiliary, not review-gating', async () => {
             mockOrchestrator.execute.mockResolvedValue({
                 suggestions: [],
                 agentResults: [],
                 failures: [],
                 incomplete: [
                     {
-                        agentName: 'kody-rules',
-                        category: 'kody_rules',
+                        agentName: 'cody-rules',
+                        category: 'cody_rules',
                         finishReason: 'max-steps',
                         suggestionsFound: 0,
                         durationMs: 1000,

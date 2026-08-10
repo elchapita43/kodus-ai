@@ -3,7 +3,7 @@
  *
  * Phase 2 of the provider decomposition. Pulls the "what the agent emitted →
  * what the pipeline consumes" translation out of BaseCodeReviewAgentProvider:
- * path validation/canonicalization, kody-rules UUID recovery, label/severity
+ * path validation/canonicalization, cody-rules UUID recovery, label/severity
  * resolution. No NestJS, no LLM — a logger is injected so it stays unit-testable.
  */
 import {
@@ -11,16 +11,16 @@ import {
     FileChange,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import {
-    IKodyRule,
-    resolveKodyRuleSeverityLevel,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    resolveCodyRuleSeverityLevel,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 import { normalizeRepoPath } from '@libs/code-review/infrastructure/agents/engine/coverage-ledger';
 
 // ── Bounded Levenshtein + UUID recovery ──────────────────────────────────────
 
 // Bounded Levenshtein distance — returns early once it exceeds `max`.
-// Used to recover a kody_rules ruleUuid the LLM corrupted while echoing
+// Used to recover a cody_rules ruleUuid the LLM corrupted while echoing
 // it (LLMs occasionally drop/transpose a character in a 36-char UUID).
 function boundedEditDistance(a: string, b: string, max: number): number {
     if (Math.abs(a.length - b.length) > max) {
@@ -77,7 +77,7 @@ export function recoverRuleUuid(
 // ── Label resolution ─────────────────────────────────────────────────────────
 
 export interface LabelPolicy {
-    /** The agent's fixed category (bug/security/performance/kody_rules/generalist). */
+    /** The agent's fixed category (bug/security/performance/cody_rules/generalist). */
     categoryLabel: string;
     /** Labels this run may emit (for mixed/generalist reviewers). */
     allowedLabels: Array<'bug' | 'security' | 'performance'>;
@@ -136,9 +136,9 @@ export interface MappableAgentResult {
 
 export interface FindingMapperContext {
     changedFiles: FileChange[];
-    kodyRules?: Partial<IKodyRule>[];
+    codyRules?: Partial<ICodyRule>[];
     prNumber: number;
-    isKodyRules: boolean;
+    isCodyRules: boolean;
     /** Name used in warning logs (the agent identity). */
     identityName: string;
     labelPolicy: LabelPolicy;
@@ -156,9 +156,9 @@ export interface MappedFindings {
 /**
  * Translate raw agent findings into pipeline `CodeSuggestion`s:
  *  - drop suggestions whose `relevantFile` isn't in the PR (post-normalization)
- *  - kody-rules: require a known `ruleUuid` (with edit-distance recovery)
+ *  - cody-rules: require a known `ruleUuid` (with edit-distance recovery)
  *  - canonicalize the path back to the provider's original filename
- *  - resolve label + severity (kody-rule severity overrides the LLM's)
+ *  - resolve label + severity (cody-rule severity overrides the LLM's)
  */
 export function mapAgentFindings(
     agentResult: MappableAgentResult,
@@ -173,8 +173,8 @@ export function mapAgentFindings(
             f.filename,
         ]),
     );
-    const kodyRulesByUuid = new Map(
-        (ctx.kodyRules || []).filter((r) => r.uuid).map((r) => [r.uuid!, r]),
+    const codyRulesByUuid = new Map(
+        (ctx.codyRules || []).filter((r) => r.uuid).map((r) => [r.uuid!, r]),
     );
     const warn = (message: string, metadata: Record<string, unknown>) =>
         ctx.logger?.warn({ message, context: ctx.identityName, metadata });
@@ -185,7 +185,7 @@ export function mapAgentFindings(
                 return false;
             }
 
-            if (ctx.isKodyRules) {
+            if (ctx.isCodyRules) {
                 const ruleUuid =
                     typeof s.ruleUuid === 'string' ? s.ruleUuid.trim() : '';
 
@@ -196,16 +196,16 @@ export function mapAgentFindings(
                     // selected rule were found and then discarded here, so
                     // the customer saw "rule never fires" even after the
                     // path-matching fix).
-                    if (kodyRulesByUuid.size === 1) {
-                        const only = [...kodyRulesByUuid.keys()][0];
+                    if (codyRulesByUuid.size === 1) {
+                        const only = [...codyRulesByUuid.keys()][0];
                         warn(
-                            `[AGENT] kody_rules suggestion missing ruleUuid — attributing to the single selected rule ${only}`,
+                            `[AGENT] cody_rules suggestion missing ruleUuid — attributing to the single selected rule ${only}`,
                             { prNumber: ctx.prNumber },
                         );
                         s.ruleUuid = only;
                     } else {
                         warn(
-                            `[AGENT] Dropping kody_rules suggestion without ruleUuid (${kodyRulesByUuid.size} candidate rules, ambiguous): "${(s.oneSentenceSummary || s.suggestionContent).slice(0, 140)}"`,
+                            `[AGENT] Dropping cody_rules suggestion without ruleUuid (${codyRulesByUuid.size} candidate rules, ambiguous): "${(s.oneSentenceSummary || s.suggestionContent).slice(0, 140)}"`,
                             { prNumber: ctx.prNumber },
                         );
                         return false;
@@ -214,40 +214,40 @@ export function mapAgentFindings(
                 const resolvedRuleUuid =
                     typeof s.ruleUuid === 'string' ? s.ruleUuid.trim() : '';
 
-                if (!kodyRulesByUuid.has(resolvedRuleUuid)) {
+                if (!codyRulesByUuid.has(resolvedRuleUuid)) {
                     const recovered = recoverRuleUuid(
                         resolvedRuleUuid,
-                        kodyRulesByUuid.keys(),
+                        codyRulesByUuid.keys(),
                     );
 
                     if (recovered) {
                         warn(
-                            `[AGENT] Recovered corrupted kody_rules ruleUuid=${resolvedRuleUuid} → ${recovered} (LLM UUID echo drift)`,
+                            `[AGENT] Recovered corrupted cody_rules ruleUuid=${resolvedRuleUuid} → ${recovered} (LLM UUID echo drift)`,
                             { prNumber: ctx.prNumber },
                         );
                         s.ruleUuid = recovered;
                     } else {
                         warn(
-                            `[AGENT] Dropping kody_rules suggestion with unknown ruleUuid=${resolvedRuleUuid}: "${(s.oneSentenceSummary || s.suggestionContent).slice(0, 140)}"`,
+                            `[AGENT] Dropping cody_rules suggestion with unknown ruleUuid=${resolvedRuleUuid}: "${(s.oneSentenceSummary || s.suggestionContent).slice(0, 140)}"`,
                             {
                                 prNumber: ctx.prNumber,
                                 ruleUuid: resolvedRuleUuid,
-                                knownRuleCount: kodyRulesByUuid.size,
+                                knownRuleCount: codyRulesByUuid.size,
                             },
                         );
                         return false;
                     }
                 }
-                // PR-level kody_rules omit relevantFile by design.
-                const kodyRulePathMatch =
+                // PR-level cody_rules omit relevantFile by design.
+                const codyRulePathMatch =
                     !s.relevantFile ||
                     validFilesByNormalized.has(
                         normalizeRepoPath(s.relevantFile),
                     );
 
-                if (!kodyRulePathMatch) {
+                if (!codyRulePathMatch) {
                     warn(
-                        `@@PATH_MISMATCH@@ Dropping kody_rules suggestion — relevantFile not in changedFiles after normalization`,
+                        `@@PATH_MISMATCH@@ Dropping cody_rules suggestion — relevantFile not in changedFiles after normalization`,
                         {
                             prNumber: ctx.prNumber,
                             relevantFile: s.relevantFile,
@@ -263,7 +263,7 @@ export function mapAgentFindings(
                         },
                     );
                 }
-                return kodyRulePathMatch;
+                return codyRulePathMatch;
             }
 
             const pathMatch =
@@ -295,7 +295,7 @@ export function mapAgentFindings(
 
     const suggestions = rawSuggestions.map((s) => {
         const matchedRule = s.ruleUuid
-            ? kodyRulesByUuid.get(s.ruleUuid)
+            ? codyRulesByUuid.get(s.ruleUuid)
             : undefined;
 
         // Replace the LLM-emitted relevantFile with the provider's original
@@ -316,10 +316,10 @@ export function mapAgentFindings(
             relevantLinesEnd: s.relevantLinesEnd,
             label: resolveSuggestionLabel(s, ctx.labelPolicy),
             severity: matchedRule
-                ? resolveKodyRuleSeverityLevel(matchedRule)
+                ? resolveCodyRuleSeverityLevel(matchedRule)
                 : s.severity || 'medium',
             llmPrompt: s.suggestionContent,
-            ...(s.ruleUuid && { brokenKodyRulesIds: [s.ruleUuid] }),
+            ...(s.ruleUuid && { brokenCodyRulesIds: [s.ruleUuid] }),
         } as Partial<CodeSuggestion>;
     });
 

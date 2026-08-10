@@ -1,6 +1,6 @@
 ---
 title: "Pipeline de revisão com foco em segurança"
-description: "Configure Kody Rules focadas no OWASP top 10, detecção de segredos e padrões de codificação segura."
+description: "Configure Cody Rules focadas no OWASP top 10, detecção de segredos e padrões de codificação segura."
 icon: "shield-halved"
 ---
 
@@ -19,7 +19,7 @@ reviewOptions:
   security: true
 ```
 
-Isso fornece as verificações de segurança integradas do Kodus. As regras abaixo adicionam as políticas de segurança específicas do seu time por cima.
+Isso fornece as verificações de segurança integradas do Codus. As regras abaixo adicionam as políticas de segurança específicas do seu time por cima.
 
 ## Passo 2 — Crie regras focadas no OWASP
 
@@ -93,17 +93,17 @@ Instructions:
 Crie convenções persistentes que se aplicam em todo lugar:
 
 ```
-@kody remember: all user input must be validated and sanitized
+@cody remember: all user input must be validated and sanitized
 before use. Never trust client-side data.
 ```
 
 ```
-@kody remember: all API endpoints that handle sensitive data
+@cody remember: all API endpoints that handle sensitive data
 must use HTTPS only and include rate limiting.
 ```
 
 ```
-@kody remember: error messages must never expose stack traces,
+@cody remember: error messages must never expose stack traces,
 internal paths, or database details to the client.
 ```
 
@@ -111,7 +111,7 @@ internal paths, or database details to the client.
 
 Para regras de segurança, você quer que descobertas críticas bloqueiem:
 
-1. Habilite **Solicitar Alterações** nas configurações de fluxo de trabalho de PR para que o Kody solicite mudanças quando problemas críticos forem encontrados
+1. Habilite **Solicitar Alterações** nas configurações de fluxo de trabalho de PR para que o Cody solicite mudanças quando problemas críticos forem encontrados
 2. Defina as regras de segurança com severidade **Crítica** para que sempre apareçam acima de qualquer filtro de severidade
 3. NÃO defina um limite baixo em `maxSuggestions` — descobertas de segurança nunca devem ser suprimidas
 
@@ -141,4 +141,4 @@ Instructions:
 - [ ] Solicitar Alterações habilitado para descobertas críticas
 - [ ] Um PR de teste confirmou que as regras disparam corretamente
 
-Para mais informações sobre configuração de regras, consulte [Kody Rules](/how_to_use/pt-br/code_review/configs/kody_rules).
+Para mais informações sobre configuração de regras, consulte [Cody Rules](/how_to_use/pt-br/code_review/configs/cody_rules).

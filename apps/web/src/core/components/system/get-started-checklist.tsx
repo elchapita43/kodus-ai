@@ -26,9 +26,9 @@ import type { PublicConfig } from "@config/publicConfig";
 function buildTasks(cfg: PublicConfig) {
     return [
         {
-            label: "Create a Kody Rule",
-            key: "get-started/create-kody-rule",
-            href: "/settings/code-review/global/kody-rules",
+            label: "Create a Cody Rule",
+            key: "get-started/create-cody-rule",
+            href: "/settings/code-review/global/cody-rules",
         },
         {
             label: "Adjust your workspace settings",
@@ -46,7 +46,7 @@ function buildTasks(cfg: PublicConfig) {
             href: cfg.supportDocsUrl as `https://${string}`,
         },
         {
-            label: "Invite a teammate to Kodus",
+            label: "Invite a teammate to Codus",
             key: "get-started/invite-teammate",
             href: "/settings/subscription?tab=admins",
         },
@@ -119,7 +119,7 @@ export const GetStartedChecklist = () => {
                         className="group h-full overflow-visible text-black"
                         leftIcon={
                             <div className="-mr-2 -mb-0.5 -ml-3 size-11">
-                                <Image src="/assets/images/kody/look-right.png" />
+                                <Image src="/assets/images/cody/look-right.png" />
                             </div>
                         }
                         rightIcon={
@@ -150,7 +150,7 @@ export const GetStartedChecklist = () => {
                         </div>
 
                         <div className="absolute -right-1 -bottom-3 size-14">
-                            <Image src="/assets/images/kody/look-left-with-paws.png" />
+                            <Image src="/assets/images/cody/look-left-with-paws.png" />
                         </div>
                     </div>
 

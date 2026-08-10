@@ -83,7 +83,7 @@ function nearestHunkDistance(line, ranges) {
     return best;
 }
 
-// ── replay (same semantics as the kody-rules / investigation harness) ──
+// ── replay (same semantics as the cody-rules / investigation harness) ──
 function normalizePath(v) { return String(v || '').replace(/^\/+/, '').replace(/\\/g, '/').replace(/\/+/g, '/'); }
 function fixtureMatches(match, actual) {
     return Object.entries(match || {}).every(([k, exp]) => {

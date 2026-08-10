@@ -44,14 +44,14 @@ tokens, so all input is priced at the cache-miss rate. DeepSeek bills cache hits
 $0.0028/1M (50× less) and an agent loop repeats most of its prefix across steps.
 
 These figures cover the **finder agent only** — not the full production pipeline
-(verify/critic, kody rules, summary, cross-file context). Absolute cost per PR in
+(verify/critic, cody rules, summary, cross-file context). Absolute cost per PR in
 production is a multiple of this; the ratio should hold, since every stage runs on the
 same BYOK model.
 
 ## Caveats
 
 1. **The judge was a human-in-the-loop LLM rater (Claude Opus 5 in a Claude Code session),
-   not the automated judge.** The Anthropic API key in `.env` and `~/.kodus-dev/config` was
+   not the automated judge.** The Anthropic API key in `.env` and `~/.codus-dev/config` was
    invalid (HTTP 401) on the day of the run, so `recall-judge.js` could not run. The same
    `JUDGE_PROMPT` was applied by hand and fed back into the repo's own
    `recall-assertion.js` (only `matchComment` was swapped), so recall/precision/F1/
@@ -80,7 +80,7 @@ default should wait for the repeat runs described in caveat 2.
 
 ```bash
 cd evals/investigation
-export BYOK_DEEPSEEK_API_KEY=...   # see below — NOT read from ~/.kodus-dev/config
+export BYOK_DEEPSEEK_API_KEY=...   # see below — NOT read from ~/.codus-dev/config
 env -u ANTHROPIC_API_KEY -u BYOK_ANTHROPIC_API_KEY \
   PROMPTFOO_DISABLE_TEMPLATING=1 RECALL_ALL=1 \
   promptfoo eval -c promptfoo-recall-deepseek.yaml --no-cache
@@ -89,7 +89,7 @@ env -u ANTHROPIC_API_KEY -u BYOK_ANTHROPIC_API_KEY \
 `BYOK_DEEPSEEK_API_KEY` must be **exported in the shell or present in `.env.local` / `.env`**.
 The finder reads its key from the environment: `agent-provider.js` dotenv-loads only
 `.env` and `.env.local` and then reads `process.env[apiKeyEnv]`, so a key that lives only
-in `~/.kodus-dev/config` fails immediately with
+in `~/.codus-dev/config` fails immediately with
 `Missing API key for openai-compatible in BYOK_DEEPSEEK_API_KEY`. That file is consulted
 only by the judge path (`recall-judge.js`), for the Anthropic key.
 

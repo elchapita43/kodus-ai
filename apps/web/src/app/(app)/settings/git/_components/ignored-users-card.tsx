@@ -185,7 +185,7 @@ export const IgnoredUsersCard = ({
     return (
         <div className="mt-5 flex flex-col gap-4">
             <h2 className="text-md font-bold">
-                Choose which PR authors Kody reviews in enabled repositories.
+                Choose which PR authors Cody reviews in enabled repositories.
             </h2>
             <div className="space-y-4 pt-0">
                 <div className="grid gap-3 md:grid-cols-2">
@@ -194,13 +194,13 @@ export const IgnoredUsersCard = ({
                             value: "ignore",
                             title: "Exclude PR authors",
                             description:
-                                "Kody won’t review PRs opened by these authors.",
+                                "Cody won’t review PRs opened by these authors.",
                         },
                         {
                             value: "allow",
                             title: "Only these PR authors",
                             description:
-                                "Kody will review PRs opened by these authors only.",
+                                "Cody will review PRs opened by these authors only.",
                         },
                     ].map((option) => {
                         const isActive = mode === option.value;

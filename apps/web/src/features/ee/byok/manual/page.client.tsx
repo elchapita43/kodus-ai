@@ -57,7 +57,7 @@ const confirmEnvOverride = (): Promise<boolean> =>
             <ConfirmModal
                 open
                 title="Override env-based LLM configuration?"
-                description="This will replace the LLM provider currently configured in your .env. Kodus will use the key and model you just entered instead."
+                description="This will replace the LLM provider currently configured in your .env. Codus will use the key and model you just entered instead."
                 confirmText="Override env config"
                 variant="primary-dark"
                 onConfirm={() => {
@@ -213,7 +213,7 @@ export function ByokManualPageClient({
                 ok: false,
                 code: "unknown",
                 latencyMs: 0,
-                message: "Couldn't reach Kodus. Try again in a moment.",
+                message: "Couldn't reach Codus. Try again in a moment.",
             };
             setTestState({ status: "error", result });
             return result;
@@ -349,7 +349,7 @@ export function ByokManualPageClient({
                     <Alert variant="info">
                         <InfoIcon />
                         <AlertDescription className="text-pretty">
-                            Kodus is currently using an LLM from environment
+                            Codus is currently using an LLM from environment
                             variables. Saving here will override it.
                         </AlertDescription>
                     </Alert>

@@ -76,7 +76,7 @@ const VertexFields = () => {
                 </AlertTitle>
                 <AlertDescription className="text-pretty">
                     Paste the contents of your service account JSON file
-                    directly (base64-encoded also works). Kodus extracts{" "}
+                    directly (base64-encoded also works). Codus extracts{" "}
                     <code className="bg-card-lv2 rounded px-1 py-0.5 font-mono text-[11px]">
                         project_id
                     </code>{" "}

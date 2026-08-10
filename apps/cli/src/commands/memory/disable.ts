@@ -49,7 +49,7 @@ export async function disableAction(
                 removeClaudeCompatibleHooks: true,
                 removeCodexNotify: true,
                 removePostMergeHookBlock: true,
-                preserveKodyData: true,
+                preserveCodyData: true,
                 codexConfigPath: resolveCodexConfigPath(),
             };
 

@@ -25,7 +25,7 @@ function cfg(key) {
     let v = process.env[key];
     if (v) return v;
     try {
-        for (const line of fs.readFileSync(path.join(os.homedir(), '.kodus-dev', 'config'), 'utf8').split('\n')) {
+        for (const line of fs.readFileSync(path.join(os.homedir(), '.codus-dev', 'config'), 'utf8').split('\n')) {
             const m = line.match(new RegExp(`^\\s*${key}\\s*=\\s*(.*)`));
             if (m) return m[1].replace(/\s+#.*$/, '').trim().replace(/^["']|["']$/g, '');
         }
@@ -159,7 +159,7 @@ async function main() {
 
     const prs = JSON.parse(fs.readFileSync(BENCHMARK, 'utf8')).prs;
     const list = await lf(
-        `/api/public/traces?environment=${env}&name=kodus-generalist-review-agent&limit=100&fromTimestamp=${from}&toTimestamp=${to}`,
+        `/api/public/traces?environment=${env}&name=codus-generalist-review-agent&limit=100&fromTimestamp=${from}&toTimestamp=${to}`,
     );
     console.log(`benchmark PRs: ${prs.length} · finder traces (${env}): ${list.meta.totalItems}`);
 

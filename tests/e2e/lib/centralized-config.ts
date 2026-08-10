@@ -1,6 +1,6 @@
 import { ensureOk, http } from "./http.js";
 import { logger } from "./log.js";
-import type { KodusSession, ProviderRepoRef, TargetContext } from "./types.js";
+import type { CodusSession, ProviderRepoRef, TargetContext } from "./types.js";
 
 const log = logger("centralized-config");
 
@@ -49,11 +49,11 @@ export async function httpRetryTransient<T = unknown>(
 
 // Mint a team CLI key with the config:repo:manage capability. The signup user
 // is OWNER of their org, which is exactly the role POST /teams/:teamId/cli-keys
-// requires (PolicyGuard checkRole OWNER). Returns the raw `kodus_…` secret —
+// requires (PolicyGuard checkRole OWNER). Returns the raw `codus_…` secret —
 // shown only once by the API, so the caller keeps it for the run.
 export async function mintTeamKey(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     name: string,
 ): Promise<string> {
     const resp = await httpRetryTransient<{ key?: string }>(
@@ -70,11 +70,11 @@ export async function mintTeamKey(
     );
     ensureOk(resp, "centralized:mintTeamKey");
     const key = unwrap<{ key?: string }>(resp.body).key;
-    if (!key || !key.startsWith("kodus_")) {
+    if (!key || !key.startsWith("codus_")) {
         // Deliberately do NOT echo the response body here — on the happy
         // path it contains the freshly minted secret.
         throw new Error(
-            `mintTeamKey: HTTP ${resp.status} response did not include a kodus_ key`,
+            `mintTeamKey: HTTP ${resp.status} response did not include a codus_ key`,
         );
     }
     return key;
@@ -85,7 +85,7 @@ export async function mintTeamKey(
 // key id (uuid) is resolved by listing the team's keys and matching by name.
 export async function revokeTeamKeyByName(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     name: string,
 ): Promise<void> {
     try {
@@ -122,7 +122,7 @@ export async function revokeTeamKeyByName(
 // throwaway org whose only purpose is this test.
 export async function selectRepoByFullName(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     fullName: string,
 ): Promise<ProviderRepoRef> {
     const listResp = await http<{
@@ -242,7 +242,7 @@ export async function disable(
 }
 
 // Recursively search any JSON node for a string value that contains `needle`.
-// Used to assert "the sentinel from kodus-config.yml landed in the synced
+// Used to assert "the sentinel from codus-config.yml landed in the synced
 // code_review_config parameter" without hard-coding the param's nested shape
 // (which differs across global/repo/directory scopes).
 export function deepIncludesString(node: unknown, needle: string): boolean {

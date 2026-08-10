@@ -29,17 +29,17 @@ const createSettingsSchema = () =>
         cockpitMetricsVisibility: z.object({
             tabs: z
                 .object({
-                    kodusReview: z.boolean(),
+                    codusReview: z.boolean(),
                     productivity: z.boolean(),
                 })
-                .refine((t) => t.kodusReview || t.productivity, {
+                .refine((t) => t.codusReview || t.productivity, {
                     message: "At least one tab must stay enabled",
                     path: ["productivity"],
                 }),
             summary: z.object({
                 deployFrequency: z.boolean(),
                 prCycleTime: z.boolean(),
-                kodySuggestions: z.boolean(),
+                codySuggestions: z.boolean(),
                 bugRatio: z.boolean(),
                 prSize: z.boolean(),
             }),
@@ -252,14 +252,14 @@ export const CockpitOrganizationSettingsPage = (props: {
                             them. At least one tab must stay enabled.
                         </p>
 
-                        {/* Kodus Review tab — no per-metric configuration */}
+                        {/* Codus Review tab — no per-metric configuration */}
                         <Card color="lv1" className="w-full">
                             <CardHeader>
                                 <TabToggle
                                     control={control}
-                                    name="cockpitMetricsVisibility.tabs.kodusReview"
-                                    title="Kodus Review"
-                                    description="Implementation rate, severity calibration, negative feedback and Kody Rule health."
+                                    name="cockpitMetricsVisibility.tabs.codusReview"
+                                    title="Codus Review"
+                                    description="Implementation rate, severity calibration, negative feedback and Cody Rule health."
                                 />
                             </CardHeader>
                         </Card>

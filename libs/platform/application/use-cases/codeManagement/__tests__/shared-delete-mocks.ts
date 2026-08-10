@@ -94,7 +94,7 @@ export function createMockPullRequestMessagesService() {
     };
 }
 
-export function createMockKodyRulesService() {
+export function createMockCodyRulesService() {
     return {
         updateRulesStatusByFilter: jest.fn().mockResolvedValue({}),
         find: jest.fn(),

@@ -48,7 +48,7 @@ async function main() {
         // 3. Generate CLI key
         console.log('=== Generating CLI Key ===');
         const rawKey = crypto.randomBytes(32).toString('base64url');
-        const fullKey = `kodus_${rawKey}`;
+        const fullKey = `codus_${rawKey}`;
         const keyPrefix = crypto.createHash('sha256').update(rawKey).digest('hex').substring(0, 8);
         const keyHash = await bcrypt.hash(rawKey, 10);
 

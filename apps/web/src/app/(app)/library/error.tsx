@@ -26,7 +26,7 @@ export default function LibraryError({
                     Failed to load library
                 </h2>
                 <p className="text-text-secondary max-w-md text-sm">
-                    We couldn't load the Kody Rules library. Please try again.
+                    We couldn't load the Cody Rules library. Please try again.
                 </p>
             </div>
 

@@ -2,13 +2,13 @@
   {
     "pr_title": "Enhanced Pagination Performance for High-Volume Audit Logs",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/179",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Optimize spans buffer insertion with eviction during insert",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/180",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The code incorrectly assumes that Django QuerySets support negative indexing for slicing, similar to Python lists. This is not the case; attempting to use a negative index in a queryset slice will raise an `AssertionError`. This affects both `DateTimePaginator` and `OptimizedCursorPaginator`, and will cause a server error (HTTP 500) whenever a",
@@ -23,13 +23,13 @@
   {
     "pr_title": "feat(upsampling) - Support upsampled error count with performance optimizations",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/181",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "GitHub OAuth Security Enhancement",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/182",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Violates rule 'Follow error handling conventions': The exception during the token exchange with GitHub is silently swallowed. This hides the root cause of potential failures (e.g., network errors, API changes, decoding issues). The original exception should be logged or wrapped to pre",
@@ -40,7 +40,7 @@
   {
     "pr_title": "Replays Self-Serve Bulk Delete System",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/183",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The current implementation for validating browser reports stops and returns an error upon encountering the first invalid report in a batch. According to the Browser Reporting API specification, a 4xx response instructs the browser not to resend the batch. This can lead to the loss of all other valid reports that were included in the same reques",
@@ -55,7 +55,7 @@
   {
     "pr_title": "Span Buffer Multiprocess Enhancement with Health Monitoring",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/184",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `join` method's shutdown logic can hang if a child process is unresponsive. The loop `while process.is_alive()...` waits for the process to exit naturally before attempting to terminate it. If the process is stuck, this can block shutdown until the overall timeout is reached. Instead, `process.join()` should be called with a calculated time",
@@ -70,13 +70,13 @@
   {
     "pr_title": "feat(ecosystem): Implement cross-system issue synchronization",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/185",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "ref(crons): Reorganize incident creation / issue occurrence logic",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/186",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The loop iterates through every check-in that contributed to the monitor failure and creates a separate issue occurrence for each one. This is redundant and can lead to multiple alerts for a single incident. A single occurrence should be generated for the monitor failure event, using the check-in that triggered the state change.  ```python",
@@ -87,13 +87,13 @@
   {
     "pr_title": "feat(uptime): Add ability to use queues to manage parallelism",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/187",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "feat(workflow_engine): Add in hook for producing occurrences from the stateful detector",
     "pr_url": "https://github.com/ai-code-review-benchmark/sentry/pull/188",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "In `test_state_results_multi_group`, the test data packet for `group_2` has a value of `10`. However, when building the expected `occurrence_2` for assertion, the value `6` is used. This is likely a copy-paste error from `group_1`.  Currently, this doesn't cause a test failure because `build_mock_occurrence_and_event` doesn't use the `value` pa",
@@ -104,7 +104,7 @@
   {
     "pr_title": "Anonymous: Add configurable device limit",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/621",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `UPDATE` query in `updateDevice` includes a check on `updated_at`. This prevents 'reviving' a device for a user who has been inactive for more than 30 days when the device limit is met. If a user has an existing `device_id`, they should always be able to update their record, regardless of when they were last seen. The check for the number o",
@@ -119,13 +119,13 @@
   {
     "pr_title": "AuthZService: improve authz caching",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/622",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Plugins: Chore: Renamed instrumentation middleware to metrics middleware",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/623",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The refactoring has removed the logic that adds the `traceID` to plugin request logs. This information is valuable for tracing and debugging. The `traceID` should be added to the context along with the other contextual attributes in the `instrumentContext` function.  To fix this, import the `tracing` package and add the `traceID` to the context",
@@ -136,7 +136,7 @@
   {
     "pr_title": "Advanced Query Processing Architecture",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/624",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The filtering for an empty `expr` should occur *after* template variables have been applied. This ensures that if a template variable resolves to an empty string, the query is correctly filtered out before being processed further.  ```typescript   const queries = request.targets     .filter((query) => !query.hide)     .map((query) => datasource",
@@ -151,13 +151,13 @@
   {
     "pr_title": "Notification Rule Processing Engine",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/625",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Dual Storage Architecture",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/626",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The current implementation spawns a new goroutine for every legacy write operation (`Create`, `Update`, `Delete`). Under high write load, this unbounded creation of goroutines can lead to excessive memory consumption, CPU scheduler contention, and potential resource exhaustion, threatening server stability. To fix this, the legacy writes should",
@@ -176,7 +176,7 @@
   {
     "pr_title": "Database Performance Optimizations",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/627",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The logic to construct the SQL query for SQLite when the batch size is large is flawed. It adds a trailing comma to the list of IDs in the `IN` clause, which will result in a SQL syntax error. The `values` string should be constructed without the trailing comma.  ```go if len(ids) > 1 { \tvar builder strings.Builder \tbuilder.WriteString(fmt.Spri",
@@ -187,13 +187,13 @@
   {
     "pr_title": "Frontend Asset Optimization",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/548",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Advanced SQL Analytics Framework",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/628",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The current implementation of `enableSqlExpressions` incorrectly negates the feature flag check and has a logical structure that causes it to always return `false`. This completely disables the SQL expression functionality. The function should directly return the value of the feature flag check.  ```go func enableSqlExpressions(h *ExpressionQue",
@@ -204,7 +204,7 @@
   {
     "pr_title": "Unified Storage Performance Optimizations",
     "pr_url": "https://github.com/ai-code-review-benchmark/grafana-codex/pull/629",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The lock within `BuildIndex` was moved to only protect the final cache write. However, this re-introduces a race condition where multiple concurrent callers can trigger the expensive index-building process for the same resource. This leads to redundant CPU and I/O work. The lock should be acquired at the beginning of the function to ensure that",
@@ -215,7 +215,7 @@
   {
     "pr_title": "FEATURE: automatically downsize large images",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/261",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `OptimizedImage.downsize` method is being called with `\"80%\"`, which is being passed as a geometry/dimension argument to `convert`, not as a quality setting. This will result in unexpected resizing behavior (e.g., to 80% of original dimensions) rather than reducing file size by adjusting quality.  To correctly reduce the file size, you shou",
@@ -230,25 +230,25 @@
   {
     "pr_title": "FEATURE: per-topic unsubscribe option in emails",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/262",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add comprehensive email validation for blocked users",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/263",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Enhance embed URL handling and validation system",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/264",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Optimize header layout performance with flexbox mixins",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/265",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `-webkit-box-ordinal-group` and `-moz-box-ordinal-group` properties from the 2009 Flexbox specification do not support values less than 1. The modern `order` property allows any integer. This mixin should account for that difference to avoid generating invalid CSS for older browsers when a value like `0` is passed. The fix ensures that any",
@@ -259,13 +259,13 @@
   {
     "pr_title": "UX: show complete URL path if website domain is same as instance domain",
     "pr_url": "",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "scale-color $lightness must use $secondary for dark themes",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/266",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The lightness values for the light and dark themes appear to have been swapped. The original code used `scale-color($primary, $lightness: 30%)` for the light theme. The new code changes this to `70%` for the light theme and `30%` for the dark theme. This will unintentionally make the link text much lighter in the light theme, likely causing con",
@@ -292,7 +292,7 @@
   {
     "pr_title": "FIX: proper handling of group memberships",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/267",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The calculation for `totalPages` is incorrect. It fails when the number of members (`user_count`) is a non-zero multiple of the page size (`limit`). For example, with 50 members and a limit of 50, the current logic calculates 2 pages instead of 1. This allows the user to navigate to a final, empty page.  Using `Math.ceil()` for the division wil",
@@ -307,13 +307,13 @@
   {
     "pr_title": "FEATURE: Localization fallbacks (server-side)",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/268",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "FEATURE: Can edit category/host relationships for embedding",
     "pr_url": "https://github.com/ai-code-review-benchmark/discourse-cursor/pull/269",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `category` property on the `host` model is being set using `this.get('categoryId')`, which is the value from the component's state *before* the save operation. If a user deselects a category, `this.get('categoryId')` will be `null`. The server, however, correctly defaults a blank `category_id` to the `uncategorized_category_id`. The model r",
@@ -328,7 +328,7 @@
   {
     "pr_title": "Async import of the appStore packages",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/210",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Violates rule 'Follow error handling conventions': The dynamic import `await appStore[...]` can reject if the module is not found or contains an error during initialization. This promise rejection is not handled within the `getCalendar` function, which will cause an unhandled promise",
@@ -343,7 +343,7 @@
   {
     "pr_title": "feat: 2fa backup codes",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/211",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "When a user has exhausted all backup codes, the database contains an array of `null`s. The current logic incorrectly returns an \"IncorrectBackupCode\" error. A check should be added after decryption to verify if any valid codes remain, and return a `MissingBackupCodes` error if not. This mirrors the issue in the login flow.  ```typescript     co",
@@ -358,7 +358,7 @@
   {
     "pr_title": "fix: handle collective multiple host on destinationCalendar",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/212",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "When `externalCalendarId` is not provided, the logic to find a calendar to update is flawed. The condition `cal.externalId === externalCalendarId` will evaluate to `cal.externalId === null` (or undefined), which is unlikely to find a match. This breaks the fallback behavior of updating the event on a default or primary calendar.  The logic shou",
@@ -377,13 +377,13 @@
   {
     "pr_title": "feat: convert InsightsBookingService to use Prisma.sql raw queries",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/213",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Comprehensive workflow reminder management for booking lifecycle events",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/214",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "When fetching organization-level workflows with a team filter (`input.teamId`), the query also includes workflows from any other team the current user is a member of. This leads to irrelevant workflows being displayed, which can be confusing for the user.  The query for `activeOnTeams` should be more restrictive when a `teamId` is provided. The",
@@ -398,7 +398,7 @@
   {
     "pr_title": "Advanced date override handling and timezone compatibility improvements",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/215",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Using `Date.prototype.toString()` for date-time calculations is unreliable because its output format is implementation-dependent. This can lead to parsing errors or incorrect timezone offset calculations if the code runs in an environment that produces an unexpected string format. Pass the `Date` object directly to `dayjs` for robust and unambi",
@@ -417,13 +417,13 @@
   {
     "pr_title": "OAuth credential sync and app integration enhancements",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/216",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "SMS workflow reminder retry count tracking",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/217",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Violates rule 'Follow error handling conventions': The error in the `catch` block is logged to the console but not re-thrown. This swallows the error, preventing it from propagating and being handled properly. The error should be re-thrown or wrapped in a custom error to ensure the fa",
@@ -434,7 +434,7 @@
   {
     "pr_title": "Add guest management functionality to existing bookings",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/218",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Violates rule 'Follow error handling conventions': The error in the `try...catch` block is silently swallowed. Only a generic message is logged to the console, and the original error information is lost. The function then continues to return a success message, even though sending emai",
@@ -445,7 +445,7 @@
   {
     "pr_title": "feat: add calendar cache status and actions (#22532)",
     "pr_url": "https://github.com/ai-code-review-benchmark/cal.com/pull/219",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The logic to determine `isLoadingSelectedDateSlots` is flawed. If a date is selected, but the data for it is not yet present in either `selectedDateSlots` or `monthSlots`, the function incorrectly returns `false`. It should return the actual loading state from the query, `_isLoadingSelectedDateSlots`, to ensure the UI shows a loading state whil",
@@ -460,7 +460,7 @@
   {
     "pr_title": "Fixing Re-authentication with passkeys",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/183",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The string comparison `webauthnAuth.getCredentialType().equals(...)` is not null-safe. If `getCredentialType()` were to return `null`, this would cause a `NullPointerException`. This check is part of security logic that determines whether to bypass password authentication. For robustness and security, string literals or other known non-null obj",
@@ -471,55 +471,55 @@
   {
     "pr_title": "Add caching support for IdentityProviderStorageProvider.getForLogin operations",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/184",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add AuthzClientCryptoProvider for authorization client cryptographic operations",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/185",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add rolling-updates feature flag and compatibility framework",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/186",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add Client resource type and scopes to authorization schema",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/187",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add Groups resource type and scopes to authorization schema",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/188",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add HTML sanitizer for translated message resources",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/189",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Implement access token context encoding framework",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/190",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Implement recovery key support for user storage providers",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/191",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Fix concurrent group access to prevent NullPointerException",
     "pr_url": "https://github.com/ai-code-review-benchmark/keycloak/pull/192",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   }
 ]

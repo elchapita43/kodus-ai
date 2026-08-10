@@ -1,13 +1,13 @@
 ---
 title: "Pricing Deep Dive"
-description: "How Kodus pricing works — Community, Teams, and Enterprise, what the free trial includes, and why reviews are unlimited on every plan."
+description: "How Codus pricing works — Community, Teams, and Enterprise, what the free trial includes, and why reviews are unlimited on every plan."
 ---
 
 Everything you need to choose the right plan. For live pricing, see [kodus.io/pricing](https://kodus.io/pricing).
 
 <Note>
   **Reviews are unlimited on every plan** — they run on your own AI key (BYOK).
-  Plans differ by **features**, not by how many PRs Kody can review. Every plan
+  Plans differ by **features**, not by how many PRs Cody can review. Every plan
   includes unlimited users and unlimited pull requests, with no per-seat minimum.
 </Note>
 
@@ -37,17 +37,17 @@ A Teams trial runs on **two separate, independent clocks** — the 14 days gover
 
 <CardGroup cols={2}>
   <Card title="14 days of Team features" icon="calendar">
-    Cockpit, unlimited Kody Rules and plugins, priority queue, and more.
+    Cockpit, unlimited Cody Rules and plugins, priority queue, and more.
   </Card>
   <Card title="Your first 5 PR reviews on us" icon="gift">
-    We cover the AI tokens, so you can try Kody with **zero setup — no API key
+    We cover the AI tokens, so you can try Cody with **zero setup — no API key
     needed.** (Earn a few more by completing onboarding steps.)
   </Card>
 </CardGroup>
 
-**To keep reviewing past the 5 trial reviews — or to go unlimited right away — [connect your AI key](/how_to_use/en/byok).** Reviews then run on your key: unlimited, on any plan, even after the 14 days end. Trial reviews run on a model Kodus picks for you; with your own key you can run frontier models for the best quality.
+**To keep reviewing past the 5 trial reviews — or to go unlimited right away — [connect your AI key](/how_to_use/en/byok).** Reviews then run on your key: unlimited, on any plan, even after the 14 days end. Trial reviews run on a model Codus picks for you; with your own key you can run frontier models for the best quality.
 
-If trial reviews run out before you connect a key, Kody pauses reviews and posts a comment with a one-click link to add your key.
+If trial reviews run out before you connect a key, Cody pauses reviews and posts a comment with a one-click link to add your key.
 
 ## What's included
 
@@ -57,12 +57,12 @@ If trial reviews run out before you connect a key, Kody pauses reviews and posts
 | **Deployment** | Self-hosted or cloud | Cloud | Self-hosted or cloud |
 | **Code reviews** | Unlimited | Unlimited | Unlimited |
 | **Users** | Unlimited | Unlimited | Unlimited |
-| **Kody Rules** | Up to 10 | Unlimited | Unlimited |
+| **Cody Rules** | Up to 10 | Unlimited | Unlimited |
 | **Plugins / MCPs** | Up to 3 | Unlimited | Unlimited |
 | **Quality Radar issues** | Unlimited | Unlimited | Unlimited |
-| **Kody Learnings & Memory** | ✓ | ✓ | ✓ |
+| **Cody Learnings & Memory** | ✓ | ✓ | ✓ |
 | **Priority queue** | — | ✓ | ✓ |
-| **Kodus Cockpit (metrics)** | — | ✓ | ✓ |
+| **Codus Cockpit (metrics)** | — | ✓ | ✓ |
 | **SSO / SAML** | — | — | ✓ |
 | **RBAC + audit logs** | — | — | ✓ |
 | **SOC 2 compliant** | — | — | ✓ |
@@ -84,9 +84,9 @@ If trial reviews run out before you connect a key, Kody pauses reviews and posts
 
 ## BYOK: the default across all plans
 
-Kodus does **not** sell LLM tokens by default. Community, Teams, and Enterprise all run on **Bring Your Own Key** — you connect your own provider (OpenAI, Anthropic, Gemini, or any OpenAI-compatible), and tokens are billed directly by that provider. Kodus never marks up tokens.
+Codus does **not** sell LLM tokens by default. Community, Teams, and Enterprise all run on **Bring Your Own Key** — you connect your own provider (OpenAI, Anthropic, Gemini, or any OpenAI-compatible), and tokens are billed directly by that provider. Codus never marks up tokens.
 
-| Plan | What you pay Kodus | Tokens |
+| Plan | What you pay Codus | Tokens |
 | --- | --- | --- |
 | **Community** | $0 | You pay your provider (BYOK) |
 | **Teams** | $10/active dev/mo | You pay your provider (BYOK) |
@@ -96,18 +96,18 @@ See the [BYOK overview](/how_to_use/en/byok) for supported providers and setup.
 
 ## Teams pricing — $10/active dev/month
 
-In addition to your provider's token cost (no Kodus markup).
+In addition to your provider's token cost (no Codus markup).
 
 <CardGroup cols={2}>
   <Card title="What the $10/dev covers" icon="box">
     - Managed cloud hosting + automatic updates
-    - Priority queue for Kody Agents
-    - Kodus Cockpit (engineering metrics)
-    - Unlimited Kody Rules & plugins/MCPs
+    - Priority queue for Cody Agents
+    - Codus Cockpit (engineering metrics)
+    - Unlimited Cody Rules & plugins/MCPs
     - Email + Discord support
   </Card>
   <Card title="What tokens cover" icon="coins">
-    - Every LLM call Kody makes during a review
+    - Every LLM call Cody makes during a review
     - Billed by your provider; switch anytime
     - You pick the model — cost-effective (Gemini Flash, GPT-5-mini) or frontier (Claude 4.5 Sonnet, GPT-5)
   </Card>
@@ -117,9 +117,9 @@ In addition to your provider's token cost (no Kodus markup).
 
 ## Enterprise pricing
 
-Custom-priced via contract. Like every plan, Enterprise is **BYOK** — Kodus bills only the per-seat fee and you pay your LLM provider directly.
+Custom-priced via contract. Like every plan, Enterprise is **BYOK** — Codus bills only the per-seat fee and you pay your LLM provider directly.
 
-Enterprise adds SSO / SAML, RBAC with audit logs and analytics, a dedicated instance, custom SLAs, up to **5 hours/month** of dedicated support, and a private Discord channel. Kodus is **SOC 2 compliant**.
+Enterprise adds SSO / SAML, RBAC with audit logs and analytics, a dedicated instance, custom SLAs, up to **5 hours/month** of dedicated support, and a private Discord channel. Codus is **SOC 2 compliant**.
 
 [Contact sales](https://kodus.io/pricing) for a quote tailored to your organization.
 
@@ -127,9 +127,9 @@ Enterprise adds SSO / SAML, RBAC with audit logs and analytics, a dedicated inst
 
 No PR limit on any plan. The only hard limit: we don't review PRs with more than **200 changed files**. Git-provider-side rate limits may also apply.
 
-## Kody Pilot Program
+## Cody Pilot Program
 
-We subsidize Kodus with **30–100% discounts** for teams that move the industry forward or couldn't otherwise afford it:
+We subsidize Codus with **30–100% discounts** for teams that move the industry forward or couldn't otherwise afford it:
 
 - Early-stage startups
 - Open-source projects with active development

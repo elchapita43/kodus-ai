@@ -6,7 +6,7 @@ export class LoggerWrapperService implements LoggerService {
     private logger;
 
     constructor() {
-        this.logger = createLogger('KodusApp');
+        this.logger = createLogger('CodusApp');
     }
 
     log(message: any, ...optionalParams: any[]) {

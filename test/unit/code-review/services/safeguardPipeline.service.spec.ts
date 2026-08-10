@@ -16,7 +16,7 @@ jest.mock('@libs/core/log/logger', () => {
 import { DocumentationSearchExaService } from '@/code-review/infrastructure/adapters/services/documentation-search-exa.service';
 import { SafeguardPipelineService } from '@/code-review/infrastructure/adapters/services/safeguardPipeline.service';
 import { ObservabilityService } from '@/core/log/observability.service';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { ISandboxProvider } from '@libs/sandbox/domain/contracts/sandbox.provider';
 // __mockLogger is provided by the jest.mock factory above; pull it via
 // requireMock so tsc doesn't flag it as a missing export on the real module.

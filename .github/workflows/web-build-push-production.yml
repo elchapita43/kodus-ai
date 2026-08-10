@@ -57,50 +57,50 @@ jobs:
               run: |
                   [ -f .env ] && rm .env
 
-                  echo WEB_NODE_ENV=$(aws ssm get-parameter --name /prod/kodus-web/WEB_NODE_ENV --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_NODE_ENV=$(aws ssm get-parameter --name /prod/codus-web/WEB_NODE_ENV --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_HOSTNAME_API=$(aws ssm get-parameter --name /prod/kodus-web/WEB_HOSTNAME_API --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_HOSTNAME_API=$(aws ssm get-parameter --name /prod/codus-web/WEB_HOSTNAME_API --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_HOSTNAME_BILLING=$(aws ssm get-parameter --name /prod/kodus-web/WEB_HOSTNAME_BILLING --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_HOSTNAME_BILLING=$(aws ssm get-parameter --name /prod/codus-web/WEB_HOSTNAME_BILLING --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_NEXTAUTH_SECRET=$(aws ssm get-parameter --name /prod/kodus-web/WEB_NEXTAUTH_SECRET --query 'Parameter.Value' --output text) >> .env
-                  echo NEXTAUTH_URL=$(aws ssm get-parameter --name /prod/kodus-web/NEXTAUTH_URL --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_NEXTAUTH_SECRET=$(aws ssm get-parameter --name /prod/codus-web/WEB_NEXTAUTH_SECRET --query 'Parameter.Value' --output text) >> .env
+                  echo NEXTAUTH_URL=$(aws ssm get-parameter --name /prod/codus-web/NEXTAUTH_URL --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_GITHUB_INSTALL_URL=$(aws ssm get-parameter --name /prod/kodus-web/WEB_GITHUB_INSTALL_URL --query 'Parameter.Value' --output text) >> .env
-                  echo GITHUB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/kodus-web/GITHUB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_GITHUB_INSTALL_URL=$(aws ssm get-parameter --name /prod/codus-web/WEB_GITHUB_INSTALL_URL --query 'Parameter.Value' --output text) >> .env
+                  echo GITHUB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/codus-web/GITHUB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
 
-                  echo GLOBAL_GITLAB_CLIENT_ID=$(aws ssm get-parameter --name /prod/kodus-web/GLOBAL_GITLAB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
-                  echo GLOBAL_GITLAB_REDIRECT_URL=$(aws ssm get-parameter --name /prod/kodus-web/GLOBAL_GITLAB_REDIRECT_URL --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_GITLAB_SCOPES=$(aws ssm get-parameter --name /prod/kodus-web/WEB_GITLAB_SCOPES --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_GITLAB_OAUTH_URL=$(aws ssm get-parameter --name /prod/kodus-web/WEB_GITLAB_OAUTH_URL --query 'Parameter.Value' --output text) >> .env
+                  echo GLOBAL_GITLAB_CLIENT_ID=$(aws ssm get-parameter --name /prod/codus-web/GLOBAL_GITLAB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
+                  echo GLOBAL_GITLAB_REDIRECT_URL=$(aws ssm get-parameter --name /prod/codus-web/GLOBAL_GITLAB_REDIRECT_URL --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_GITLAB_SCOPES=$(aws ssm get-parameter --name /prod/codus-web/WEB_GITLAB_SCOPES --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_GITLAB_OAUTH_URL=$(aws ssm get-parameter --name /prod/codus-web/WEB_GITLAB_OAUTH_URL --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_TERMS_AND_CONDITIONS=$(aws ssm get-parameter --name /prod/kodus-web/WEB_TERMS_AND_CONDITIONS --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_TERMS_AND_CONDITIONS=$(aws ssm get-parameter --name /prod/codus-web/WEB_TERMS_AND_CONDITIONS --query 'Parameter.Value' --output text) >> .env
 
-                  echo AZURE_REPOS_HOSTNAME=$(aws ssm get-parameter --name /prod/kodus-web/AZURE_REPOS_HOSTNAME --query 'Parameter.Value' --output text) >> .env
+                  echo AZURE_REPOS_HOSTNAME=$(aws ssm get-parameter --name /prod/codus-web/AZURE_REPOS_HOSTNAME --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_OAUTH_GITLAB_CLIENT_ID=$(aws ssm get-parameter --name /prod/kodus-web/WEB_OAUTH_GITLAB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_OAUTH_GITLAB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/kodus-web/WEB_OAUTH_GITLAB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_OAUTH_GITLAB_CLIENT_ID=$(aws ssm get-parameter --name /prod/codus-web/WEB_OAUTH_GITLAB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_OAUTH_GITLAB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/codus-web/WEB_OAUTH_GITLAB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_OAUTH_GITHUB_CLIENT_ID=$(aws ssm get-parameter --name /prod/kodus-web/WEB_OAUTH_GITHUB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_OAUTH_GITHUB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/kodus-web/WEB_OAUTH_GITHUB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_OAUTH_GITHUB_CLIENT_ID=$(aws ssm get-parameter --name /prod/codus-web/WEB_OAUTH_GITHUB_CLIENT_ID --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_OAUTH_GITHUB_CLIENT_SECRET=$(aws ssm get-parameter --name /prod/codus-web/WEB_OAUTH_GITHUB_CLIENT_SECRET --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_ANALYTICS_HOSTNAME=$(aws ssm get-parameter --name /prod/kodus-web/WEB_ANALYTICS_HOSTNAME --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_ANALYTICS_SECRET=$(aws ssm get-parameter --name /prod/kodus-web/WEB_ANALYTICS_SECRET --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_ANALYTICS_HOSTNAME=$(aws ssm get-parameter --name /prod/codus-web/WEB_ANALYTICS_HOSTNAME --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_ANALYTICS_SECRET=$(aws ssm get-parameter --name /prod/codus-web/WEB_ANALYTICS_SECRET --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_SUPPORT_DOCS_URL=$(aws ssm get-parameter --name /prod/kodus-web/WEB_SUPPORT_DOCS_URL --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_SUPPORT_DISCORD_INVITE_URL=$(aws ssm get-parameter --name /prod/kodus-web/WEB_SUPPORT_DISCORD_INVITE_URL --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_SUPPORT_TALK_TO_FOUNDER_URL=$(aws ssm get-parameter --name /prod/kodus-web/WEB_SUPPORT_TALK_TO_FOUNDER_URL --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_SUPPORT_DOCS_URL=$(aws ssm get-parameter --name /prod/codus-web/WEB_SUPPORT_DOCS_URL --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_SUPPORT_DISCORD_INVITE_URL=$(aws ssm get-parameter --name /prod/codus-web/WEB_SUPPORT_DISCORD_INVITE_URL --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_SUPPORT_TALK_TO_FOUNDER_URL=$(aws ssm get-parameter --name /prod/codus-web/WEB_SUPPORT_TALK_TO_FOUNDER_URL --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_TOKEN_DOCS_GITHUB=$(aws ssm get-parameter --name /prod/kodus-web/WEB_TOKEN_DOCS_GITHUB --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_TOKEN_DOCS_GITLAB=$(aws ssm get-parameter --name /prod/kodus-web/WEB_TOKEN_DOCS_GITLAB --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_TOKEN_DOCS_BITBUCKET=$(aws ssm get-parameter --name /prod/kodus-web/WEB_TOKEN_DOCS_BITBUCKET --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_TOKEN_DOCS_AZUREREPOS=$(aws ssm get-parameter --name /prod/kodus-web/WEB_TOKEN_DOCS_AZUREREPOS --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_TOKEN_DOCS_GITHUB=$(aws ssm get-parameter --name /prod/codus-web/WEB_TOKEN_DOCS_GITHUB --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_TOKEN_DOCS_GITLAB=$(aws ssm get-parameter --name /prod/codus-web/WEB_TOKEN_DOCS_GITLAB --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_TOKEN_DOCS_BITBUCKET=$(aws ssm get-parameter --name /prod/codus-web/WEB_TOKEN_DOCS_BITBUCKET --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_TOKEN_DOCS_AZUREREPOS=$(aws ssm get-parameter --name /prod/codus-web/WEB_TOKEN_DOCS_AZUREREPOS --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_POSTHOG_KEY=$(aws ssm get-parameter --name /prod/kodus-web/WEB_POSTHOG_KEY --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_POSTHOG_KEY=$(aws ssm get-parameter --name /prod/codus-web/WEB_POSTHOG_KEY --query 'Parameter.Value' --output text) >> .env
 
-                  echo WEB_HOSTNAME_MCP_MANAGER=$(aws ssm get-parameter --name /prod/kodus-web/WEB_HOSTNAME_MCP_MANAGER --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_HOSTNAME_HELPDESK=$(aws ssm get-parameter --name /prod/kodus-web/WEB_HOSTNAME_HELPDESK --query 'Parameter.Value' --output text) >> .env
-                  echo WEB_RULE_FILES_DOCS=$(aws ssm get-parameter --name /prod/kodus-web/WEB_RULE_FILES_DOCS --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_HOSTNAME_MCP_MANAGER=$(aws ssm get-parameter --name /prod/codus-web/WEB_HOSTNAME_MCP_MANAGER --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_HOSTNAME_HELPDESK=$(aws ssm get-parameter --name /prod/codus-web/WEB_HOSTNAME_HELPDESK --query 'Parameter.Value' --output text) >> .env
+                  echo WEB_RULE_FILES_DOCS=$(aws ssm get-parameter --name /prod/codus-web/WEB_RULE_FILES_DOCS --query 'Parameter.Value' --output text) >> .env
 
             - name: Login to Amazon ECR
               id: login-ecr
@@ -112,7 +112,7 @@ jobs:
             - name: Build and Push Docker Image
               env:
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                  ECR_REPOSITORY: kodus-web-prod
+                  ECR_REPOSITORY: codus-web-prod
                   IMAGE_TAG_SHA: ${{ github.sha }}
                   IMAGE_TAG_VERSION: ${{ env.RELEASE_VERSION }}
               run: |
@@ -130,10 +130,10 @@ jobs:
             # ---- CVE scan -----------------------------------------------------
             # See selfhosted-build-push.yml for flag rationale. Advisory-only
             # (`exit-code: 0`) until backlog triage — flip to `1` to block.
-            - name: Trivy scan — kodus-web
+            - name: Trivy scan — codus-web
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ${{ steps.login-ecr.outputs.registry }}/kodus-web-prod:${{
+                  image-ref: ${{ steps.login-ecr.outputs.registry }}/codus-web-prod:${{
                       env.RELEASE_VERSION }}
                   format: "sarif"
                   output: "trivy-web.sarif"
@@ -160,7 +160,7 @@ jobs:
               with:
                   webhook: ${{ secrets.DISCORD_WEBHOOK_INTERNAL || secrets.DISCORD_WEBHOOK }}
                   status: ${{ job.status }}
-                  title: "Build and Push: kodus-web (Cloud Prod)"
+                  title: "Build and Push: codus-web (Cloud Prod)"
                   description: |
                       Image: `${{ env.RELEASE_VERSION }}`
                       SHA: `${{ github.sha }}`

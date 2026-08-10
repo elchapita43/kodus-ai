@@ -67,7 +67,7 @@ export async function statusAction(): Promise<void> {
                 cliInfo(`${chalk.dim('Token:')}  ${chalk.red('Expired')}`);
                 cliInfo(
                     chalk.yellow(
-                        '\nYour session has expired. Run `kodus auth login` to refresh.',
+                        '\nYour session has expired. Run `codus auth login` to refresh.',
                     ),
                 );
                 return;
@@ -104,7 +104,7 @@ export async function statusAction(): Promise<void> {
 
             cliInfo(
                 chalk.dim('\nSign up to remove limits: ') +
-                    chalk.cyan('kodus auth login'),
+                    chalk.cyan('codus auth login'),
             );
         }
     } catch (error) {

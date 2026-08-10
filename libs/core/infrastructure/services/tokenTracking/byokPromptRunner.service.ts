@@ -3,7 +3,7 @@ import {
     LLMModelProvider,
     PromptBuilder,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { decrypt } from '@libs/common/utils/crypto';
 import { Injectable } from '@nestjs/common';
 

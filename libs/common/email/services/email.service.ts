@@ -15,7 +15,7 @@ import ForgotPasswordEmail, {
     forgotPasswordEmailMeta,
 } from '../templates/forgot-password';
 import InviteEmail, { inviteEmailMeta } from '../templates/invite';
-import KodyRulesEmail, { kodyRulesEmailMeta } from '../templates/kody-rules';
+import CodyRulesEmail, { codyRulesEmailMeta } from '../templates/cody-rules';
 import { ResendClientProvider } from './resend.client';
 
 type SendInput = {
@@ -129,16 +129,16 @@ export class EmailService {
         }
     }
 
-    async sendKodyRulesNotification(
+    async sendCodyRulesNotification(
         users: Array<{ email: string; name: string }>,
         rules: string[],
         organizationName: string,
         logger?: SimpleLogger,
     ) {
         const webUrl = this.getRequiredString(REQUIRED_ENV);
-        const rulesLink = `${webUrl}/library/kody-rules`;
+        const rulesLink = `${webUrl}/library/cody-rules`;
         const limitedRules = rules.slice(0, 3);
-        const meta = kodyRulesEmailMeta({ organizationName });
+        const meta = codyRulesEmailMeta({ organizationName });
         const rulesCount = rules.length;
 
         const results = await Promise.allSettled(
@@ -146,7 +146,7 @@ export class EmailService {
                 this.send({
                     ...meta,
                     to: user.email,
-                    react: KodyRulesEmail({
+                    react: CodyRulesEmail({
                         userName: user.name,
                         organizationName,
                         rules: limitedRules,
@@ -161,7 +161,7 @@ export class EmailService {
         if (failures.length > 0) {
             this.logFailure(
                 logger,
-                `sendKodyRulesNotification: ${failures.length} of ${users.length} failed for ${organizationName}`,
+                `sendCodyRulesNotification: ${failures.length} of ${users.length} failed for ${organizationName}`,
                 (failures[0] as PromiseRejectedResult).reason,
                 {
                     organizationName,

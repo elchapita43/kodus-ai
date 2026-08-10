@@ -7,7 +7,7 @@ import {
 } from '@libs/code-review/domain/pullRequestMessages/contracts/pullRequestMessages.service.contract';
 import { PullRequestMessagesEntity } from '@libs/code-review/domain/pullRequestMessages/entities/pullRequestMessages.entity';
 import { deepDifference, deepMerge } from '@libs/common/utils/deep';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import {
     FormattedConfigLevel,
     IFormattedConfigProperty,
@@ -17,7 +17,7 @@ import { DeepPartial } from 'typeorm';
 import { FormattedCustomMessagesConfig } from './find-by-repo-or-directory.use-case';
 
 type CustomMessagesConfig = ReturnType<
-    typeof getDefaultKodusConfigFile
+    typeof getDefaultCodusConfigFile
 >['customMessages'];
 
 @Injectable()
@@ -42,7 +42,7 @@ export class FindOverrideCountsByRepositoryPullRequestMessagesUseCase {
             }
 
             const { customMessages: defaultConfig } =
-                getDefaultKodusConfigFile();
+                getDefaultCodusConfigFile();
 
             const globalEntity = await this.pullRequestMessagesService.findOne({
                 organizationId,

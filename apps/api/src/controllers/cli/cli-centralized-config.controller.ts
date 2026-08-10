@@ -95,7 +95,7 @@ export class CliCentralizedConfigController {
                                 id: { type: 'string', example: '123' },
                                 name: {
                                     type: 'string',
-                                    example: 'kodus-config',
+                                    example: 'codus-config',
                                 },
                             },
                         },
@@ -306,7 +306,7 @@ export class CliCentralizedConfigController {
     @ApiOperation({
         summary: 'Download centralized config ZIP',
         description:
-            'Downloads a ZIP containing global/repository/directory kodus-config.yml files for centralized config setup.',
+            'Downloads a ZIP containing global/repository/directory codus-config.yml files for centralized config setup.',
     })
     @ApiHeader({
         name: 'x-team-key',
@@ -367,7 +367,7 @@ export class CliCentralizedConfigController {
         const bearerToken = authHeader?.replace(/^Bearer\s+/i, '');
         const resolvedTeamKey = teamKey || bearerToken;
 
-        if (!resolvedTeamKey || !resolvedTeamKey.startsWith('kodus_')) {
+        if (!resolvedTeamKey || !resolvedTeamKey.startsWith('codus_')) {
             throw new UnauthorizedException('Team API key required');
         }
 
@@ -450,7 +450,7 @@ export class CliCentralizedConfigController {
 
         if (!repository) {
             throw new BadRequestException(
-                'Repository must be selected in Kodus before enabling centralized config',
+                'Repository must be selected in Codus before enabling centralized config',
             );
         }
 
@@ -462,8 +462,8 @@ export class CliCentralizedConfigController {
         teamId: string;
     }): Partial<IUser> {
         return {
-            uuid: 'kody',
-            email: 'kody@kodus.io',
+            uuid: 'cody',
+            email: 'cody@kodus.io',
             organization: {
                 uuid: context.organizationId,
             },

@@ -5,7 +5,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
  * features (by lifecycle stage) the org can see in cloud:
  *   - `stable` -> only general-availability features
  *   - `beta`   -> beta + general-availability (default for new orgs)
- *   - `alpha`  -> alpha + beta + ga (design partners and Kodus internal)
+ *   - `alpha`  -> alpha + beta + ga (design partners and Codus internal)
  *
  * Default is `beta` so existing orgs keep seeing the same features they had
  * access to before this migration. Customers explicitly pinned to `stable`

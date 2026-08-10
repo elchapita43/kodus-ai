@@ -51,7 +51,7 @@ import {
 } from '@libs/platform/domain/platformIntegrations/types/codeManagement/pullRequests.type';
 
 import { createLogger } from '@libs/core/log/logger';
-import { hasKodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
+import { hasCodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 import { getCodeReviewBadge } from '@libs/common/utils/codeManagement/codeReviewBadge';
 import { getLabelShield } from '@libs/common/utils/codeManagement/labels';
 import { getSeverityLevelShield } from '@libs/common/utils/codeManagement/severityLevel';
@@ -317,7 +317,7 @@ export class AzureReposService implements Omit<
                 authDetails?.authMode === AuthMode.TOKEN && author?.name
                     ? {
                           name: author.name,
-                          email: author.email || 'kody@kodus.io',
+                          email: author.email || 'cody@kodus.io',
                       }
                     : undefined;
 
@@ -464,7 +464,7 @@ export class AzureReposService implements Omit<
             author: author?.name
                 ? {
                       name: author.name,
-                      email: author.email || 'kody@kodus.io',
+                      email: author.email || 'cody@kodus.io',
                   }
                 : undefined,
             changes: [
@@ -2082,7 +2082,7 @@ export class AzureReposService implements Omit<
                         },
                     })),
                 )
-                .filter((comment) => !hasKodyMarker(comment.body))
+                .filter((comment) => !hasCodyMarker(comment.body))
                 .sort(
                     (a, b) =>
                         new Date(b.createdAt).getTime() -
@@ -2356,7 +2356,7 @@ export class AzureReposService implements Omit<
                 }
             }
 
-            this.mcpManagerService?.createKodusMCPIntegration(
+            this.mcpManagerService?.createCodusMCPIntegration(
                 params.organizationAndTeamData.organizationId,
             );
 
@@ -4218,9 +4218,9 @@ ${copyPrompt}
             actionStatement,
             codeBlock,
             copyPrompt,
-            this.formatSub(translations.talkToKody),
+            this.formatSub(translations.talkToCody),
             this.formatSub(translations.feedback) +
-                '<!-- kody-codereview -->&#8203;\n&#8203;',
+                '<!-- cody-codereview -->&#8203;\n&#8203;',
             thumbsUpBlock,
             thumbsDownBlock,
         ]
@@ -4481,7 +4481,7 @@ ${copyPrompt}
                 TranslationsCategory.ReviewComment,
             );
 
-            commentBody += this.formatSub(translations.talkToKody) + '\n';
+            commentBody += this.formatSub(translations.talkToCody) + '\n';
             commentBody += this.formatSub(translations.feedback) + '\n\n';
 
             const thumbsUpBlock = `\`\`\`\n👍\n\`\`\`\n`;

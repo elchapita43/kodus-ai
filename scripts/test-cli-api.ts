@@ -131,7 +131,7 @@ async function testInvalidKey() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Team-Key': 'kodus_invalid_key_12345',
+                'X-Team-Key': 'codus_invalid_key_12345',
             },
             body: JSON.stringify({
                 diff: 'some diff',

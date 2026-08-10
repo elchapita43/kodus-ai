@@ -7,10 +7,10 @@ import {
     REPOSITORY_SERVICE_TOKEN,
 } from '@libs/code-review/domain/contracts/RepositoryService.contract';
 import { AstGraphRepository } from '../../repositories/astGraph.repository';
-import { KodusGraphCli, KODUS_GRAPH_TIMEOUTS } from './kodus-graph-cli';
+import { CodusGraphCli, CODUS_GRAPH_TIMEOUTS } from './codus-graph-cli';
 import { shSingleQuote } from '../shell-quote';
 
-const GRAPH_DIR = '.kodus-graph';
+const GRAPH_DIR = '.codus-graph';
 const GRAPH_PATH = `${GRAPH_DIR}/graph.json`;
 const CONTEXT_OUTPUT_PATH = `${GRAPH_DIR}/context.xml`;
 const BASE_GRAPH_PATH = `${GRAPH_DIR}/base-graph.json`;
@@ -31,12 +31,12 @@ export class GraphContextService {
         private readonly astGraphRepo: AstGraphRepository,
         @Inject(REPOSITORY_SERVICE_TOKEN)
         private readonly repositoryService: IRepositoryService,
-        private readonly cli: KodusGraphCli,
+        private readonly cli: CodusGraphCli,
     ) {}
 
     /**
      * Generate context using DB graph as baseline.
-     * Parses only changed files, exports base subgraph from DB, runs kodus-graph context.
+     * Parses only changed files, exports base subgraph from DB, runs codus-graph context.
      */
     async generateContext(
         sandbox: SandboxInstance,
@@ -45,7 +45,7 @@ export class GraphContextService {
     ): Promise<string> {
         if (!sandbox?.run) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] generateContext: sandbox has no run method, skipping`,
+                message: `[CODUS-GRAPH] generateContext: sandbox has no run method, skipping`,
                 context: GraphContextService.name,
                 metadata: { repoId },
             });
@@ -55,7 +55,7 @@ export class GraphContextService {
         const filePaths = extractFilePaths(changedFiles);
         if (filePaths.length === 0) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] generateContext: no file paths extracted from ${changedFiles?.length} files`,
+                message: `[CODUS-GRAPH] generateContext: no file paths extracted from ${changedFiles?.length} files`,
                 context: GraphContextService.name,
             });
             return '';
@@ -63,14 +63,14 @@ export class GraphContextService {
 
         try {
             this.logger.log({
-                message: `[KODUS-GRAPH] Step 1/4: Installing kodus-graph...`,
+                message: `[CODUS-GRAPH] Step 1/4: Installing codus-graph...`,
                 context: GraphContextService.name,
                 metadata: { repoId, fileCount: filePaths.length },
             });
             await this.cli.install(sandbox);
 
             this.logger.log({
-                message: `[KODUS-GRAPH] Step 2/4: Parsing ${filePaths.length} changed files...`,
+                message: `[CODUS-GRAPH] Step 2/4: Parsing ${filePaths.length} changed files...`,
                 context: GraphContextService.name,
                 metadata: { files: filePaths },
             });
@@ -79,13 +79,13 @@ export class GraphContextService {
             });
 
             this.logger.log({
-                message: `[KODUS-GRAPH] Step 3/4: Exporting subgraph from DB for repo ${repoId}...`,
+                message: `[CODUS-GRAPH] Step 3/4: Exporting subgraph from DB for repo ${repoId}...`,
                 context: GraphContextService.name,
             });
             const repo = await this.repositoryService.findById(repoId);
             if (!repo) {
                 this.logger.warn({
-                    message: `[KODUS-GRAPH] Step 3/4: repo not found by UUID ${repoId}, falling back to legacy`,
+                    message: `[CODUS-GRAPH] Step 3/4: repo not found by UUID ${repoId}, falling back to legacy`,
                     context: GraphContextService.name,
                 });
                 return this.generateContextLegacy(sandbox, changedFiles);
@@ -102,7 +102,7 @@ export class GraphContextService {
                 changedFiles,
             );
             this.logger.log({
-                message: `[KODUS-GRAPH] Step 4/4: Generating prompt context with base graph...`,
+                message: `[CODUS-GRAPH] Step 4/4: Generating prompt context with base graph...`,
                 context: GraphContextService.name,
                 metadata: { hasDiff: !!diffPath },
             });
@@ -112,7 +112,7 @@ export class GraphContextService {
             });
 
             this.logger.log({
-                message: `[KODUS-GRAPH] Context generated with DB baseline: ${prompt.length} chars`,
+                message: `[CODUS-GRAPH] Context generated with DB baseline: ${prompt.length} chars`,
                 context: GraphContextService.name,
                 metadata: {
                     changedFiles: filePaths.length,
@@ -124,7 +124,7 @@ export class GraphContextService {
             return prompt;
         } catch (error) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] Failed with DB baseline, falling back to legacy`,
+                message: `[CODUS-GRAPH] Failed with DB baseline, falling back to legacy`,
                 context: GraphContextService.name,
                 error,
                 metadata: { repoId, fileCount: filePaths.length },
@@ -162,7 +162,7 @@ export class GraphContextService {
             const edges = json?.edges ?? [];
 
             this.logger.log({
-                message: `[KODUS-GRAPH] Graph JSON extracted: ${nodes.length} nodes, ${edges.length} edges`,
+                message: `[CODUS-GRAPH] Graph JSON extracted: ${nodes.length} nodes, ${edges.length} edges`,
                 context: GraphContextService.name,
                 metadata: {
                     fileCount: filePaths.length,
@@ -174,7 +174,7 @@ export class GraphContextService {
             return nodes.length > 0 ? { nodes, edges } : null;
         } catch (error) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] Failed to parse graph JSON, skipping`,
+                message: `[CODUS-GRAPH] Failed to parse graph JSON, skipping`,
                 context: GraphContextService.name,
                 error,
                 metadata: { fileCount: filePaths.length },
@@ -194,13 +194,13 @@ export class GraphContextService {
         baseBranch?: string,
     ): Promise<string> {
         this.logger.log({
-            message: `[KODUS-GRAPH] generateContextLegacy called: changedFiles=${changedFiles?.length}, baseBranch=${baseBranch || 'none'}, sandboxType=${sandbox?.type}`,
+            message: `[CODUS-GRAPH] generateContextLegacy called: changedFiles=${changedFiles?.length}, baseBranch=${baseBranch || 'none'}, sandboxType=${sandbox?.type}`,
             context: GraphContextService.name,
         });
 
         if (!sandbox?.run) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] No sandbox available, skipping`,
+                message: `[CODUS-GRAPH] No sandbox available, skipping`,
                 context: GraphContextService.name,
             });
             return '';
@@ -210,7 +210,7 @@ export class GraphContextService {
 
         if (filePaths.length === 0) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] No file paths extracted from ${changedFiles?.length} changed files, skipping`,
+                message: `[CODUS-GRAPH] No file paths extracted from ${changedFiles?.length} changed files, skipping`,
                 context: GraphContextService.name,
             });
             return '';
@@ -239,7 +239,7 @@ export class GraphContextService {
             });
 
             this.logger.log({
-                message: `[KODUS-GRAPH] Context generated: ${prompt.length} chars for ${filePaths.length} changed files (baseGraph=${baseGraphPath ? 'yes' : 'no'})`,
+                message: `[CODUS-GRAPH] Context generated: ${prompt.length} chars for ${filePaths.length} changed files (baseGraph=${baseGraphPath ? 'yes' : 'no'})`,
                 context: GraphContextService.name,
                 metadata: {
                     changedFiles: filePaths.length,
@@ -253,7 +253,7 @@ export class GraphContextService {
             return prompt;
         } catch (error) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] Failed to generate context, proceeding without it`,
+                message: `[CODUS-GRAPH] Failed to generate context, proceeding without it`,
                 context: GraphContextService.name,
                 error,
             });
@@ -264,7 +264,7 @@ export class GraphContextService {
     /**
      * Build a baseline graph from the base branch using git history.
      * Uses `git show origin/<baseBranch>:<file>` (read-only) to get old versions
-     * of changed files, parses them with kodus-graph. Returns undefined on any failure.
+     * of changed files, parses them with codus-graph. Returns undefined on any failure.
      */
     private async buildBaseGraphFromGit(
         sandbox: SandboxInstance,
@@ -279,7 +279,7 @@ export class GraphContextService {
         // review fits easily in [A-Za-z0-9._/@+-].
         if (!/^[A-Za-z0-9._\-/@+]+$/.test(baseBranch)) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] buildBaseGraphFromGit: baseBranch contains unsupported characters, skipping`,
+                message: `[CODUS-GRAPH] buildBaseGraphFromGit: baseBranch contains unsupported characters, skipping`,
                 context: GraphContextService.name,
                 metadata: { baseBranch },
             });
@@ -319,7 +319,7 @@ export class GraphContextService {
 
             if (extractResult.exitCode !== 0) {
                 this.logger.warn({
-                    message: `[KODUS-GRAPH] buildBaseGraphFromGit: extract failed (exit=${extractResult.exitCode})`,
+                    message: `[CODUS-GRAPH] buildBaseGraphFromGit: extract failed (exit=${extractResult.exitCode})`,
                     context: GraphContextService.name,
                     metadata: {
                         stderr: (extractResult.stderr || '').slice(0, 300),
@@ -335,7 +335,7 @@ export class GraphContextService {
 
             if (extractedFiles.length === 0) {
                 this.logger.log({
-                    message: `[KODUS-GRAPH] buildBaseGraphFromGit: no old files found on origin/${baseBranch} (all ${filePaths.length} files are new)`,
+                    message: `[CODUS-GRAPH] buildBaseGraphFromGit: no old files found on origin/${baseBranch} (all ${filePaths.length} files are new)`,
                     context: GraphContextService.name,
                 });
                 return undefined;
@@ -344,11 +344,11 @@ export class GraphContextService {
             await this.cli.parseFiles(sandbox, extractedFiles, {
                 outPath: BASE_GRAPH_PATH,
                 repoDir: BASE_FILES_DIR,
-                timeoutMs: KODUS_GRAPH_TIMEOUTS.parseFiles,
+                timeoutMs: CODUS_GRAPH_TIMEOUTS.parseFiles,
             });
 
             this.logger.log({
-                message: `[KODUS-GRAPH] buildBaseGraphFromGit: base graph built from ${extractedFiles.length}/${filePaths.length} files on origin/${baseBranch}`,
+                message: `[CODUS-GRAPH] buildBaseGraphFromGit: base graph built from ${extractedFiles.length}/${filePaths.length} files on origin/${baseBranch}`,
                 context: GraphContextService.name,
                 metadata: {
                     baseBranch,
@@ -360,7 +360,7 @@ export class GraphContextService {
             return BASE_GRAPH_PATH;
         } catch (error) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] buildBaseGraphFromGit: unexpected error, proceeding without base graph`,
+                message: `[CODUS-GRAPH] buildBaseGraphFromGit: unexpected error, proceeding without base graph`,
                 context: GraphContextService.name,
                 error,
             });
@@ -384,7 +384,7 @@ export class GraphContextService {
         const baseGraphPath = `${sandbox.repoDir}/${BASE_GRAPH_PATH}`;
 
         this.logger.log({
-            message: `[KODUS-GRAPH] Step 3/4: Subgraph exported: ${jsonStr.length} chars, writing to sandbox at ${baseGraphPath}`,
+            message: `[CODUS-GRAPH] Step 3/4: Subgraph exported: ${jsonStr.length} chars, writing to sandbox at ${baseGraphPath}`,
             context: GraphContextService.name,
             metadata: {
                 repoId,
@@ -399,7 +399,7 @@ export class GraphContextService {
 
     /**
      * Build a unified diff from changedFiles patches and write it to the sandbox.
-     * Used so kodus-graph can filter changed functions by actual diff lines.
+     * Used so codus-graph can filter changed functions by actual diff lines.
      */
     private async writeDiffToSandbox(
         sandbox: SandboxInstance,
@@ -437,7 +437,7 @@ export class GraphContextService {
         }
         if (patches.length === 0) {
             this.logger.warn({
-                message: `[KODUS-GRAPH] No patches found in changedFiles, skipping diff write`,
+                message: `[CODUS-GRAPH] No patches found in changedFiles, skipping diff write`,
                 context: GraphContextService.name,
             });
             return undefined;
@@ -449,7 +449,7 @@ export class GraphContextService {
         });
         await sandbox.writeFile(diffPath, diffContent);
         this.logger.log({
-            message: `[KODUS-GRAPH] Diff written to sandbox: ${diffContent.length} chars, ${patches.length} files`,
+            message: `[CODUS-GRAPH] Diff written to sandbox: ${diffContent.length} chars, ${patches.length} files`,
             context: GraphContextService.name,
             metadata: {
                 diffChars: diffContent.length,
@@ -477,7 +477,7 @@ export class GraphContextService {
             );
         } catch {
             this.logger.warn({
-                message: `[KODUS-GRAPH] prompt file is empty (context command succeeded but produced no output)`,
+                message: `[CODUS-GRAPH] prompt file is empty (context command succeeded but produced no output)`,
                 context: GraphContextService.name,
             });
             return '';

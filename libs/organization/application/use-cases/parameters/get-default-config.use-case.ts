@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { createLogger } from '@libs/core/log/logger';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 
 @Injectable()
 export class GetDefaultConfigUseCase {
@@ -11,10 +11,10 @@ export class GetDefaultConfigUseCase {
 
     async execute() {
         try {
-            return getDefaultKodusConfigFile();
+            return getDefaultCodusConfigFile();
         } catch (error) {
             this.logger.error({
-                message: 'Error getting default Kodus config file',
+                message: 'Error getting default Codus config file',
                 context: GetDefaultConfigUseCase.name,
                 metadata: { error },
             });

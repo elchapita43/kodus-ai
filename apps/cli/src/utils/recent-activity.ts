@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-const KODUS_DIR = path.join(os.homedir(), '.kodus');
-const RECENT_ACTIVITY_FILE = path.join(KODUS_DIR, 'recent-activity.json');
+const CODUS_DIR = path.join(os.homedir(), '.codus');
+const RECENT_ACTIVITY_FILE = path.join(CODUS_DIR, 'recent-activity.json');
 const MAX_ENTRIES = 10;
 
 const SENSITIVE_FLAGS = new Set([
@@ -30,7 +30,7 @@ function isJsonParseError(error: unknown): boolean {
 
 async function ensureConfigDir(): Promise<void> {
     try {
-        await fs.mkdir(KODUS_DIR, { recursive: true, mode: 0o700 });
+        await fs.mkdir(CODUS_DIR, { recursive: true, mode: 0o700 });
     } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
             throw error;
@@ -127,8 +127,8 @@ export async function recordRecentActivity(rawArgs: string[]): Promise<void> {
     }
 
     const args = sanitizeArgs(rawArgs);
-    const command = `kodus ${args.join(' ').trim()}`.trim();
-    if (!command || command === 'kodus') {
+    const command = `codus ${args.join(' ').trim()}`.trim();
+    if (!command || command === 'codus') {
         return;
     }
 

@@ -151,20 +151,20 @@ describe('GithubService', () => {
             octokitMock as any,
         );
         jest.spyOn(service as any, 'getCorrectOwner').mockResolvedValue(
-            'kodustech',
+            'elchapita43',
         );
 
         const result = await service.uploadFiles({
             organizationAndTeamData,
             repository: {
                 id: 'repo-1',
-                name: 'kodus',
+                name: 'codus',
             },
             branchName: 'main',
             baseBranch: 'main',
             files: [
                 {
-                    path: '.kody-rules/review/no-debug.yml',
+                    path: '.cody-rules/review/no-debug.yml',
                     operation: 'delete',
                 },
             ],
@@ -175,11 +175,11 @@ describe('GithubService', () => {
         expect(octokitMock.rest.git.createBlob).not.toHaveBeenCalled();
         expect(octokitMock.rest.git.createTree).toHaveBeenCalledWith(
             expect.objectContaining({
-                owner: 'kodustech',
-                repo: 'kodus',
+                owner: 'elchapita43',
+                repo: 'codus',
                 tree: [
                     {
-                        path: '.kody-rules/review/no-debug.yml',
+                        path: '.cody-rules/review/no-debug.yml',
                         mode: '100644',
                         type: 'blob',
                         sha: null,

@@ -24,8 +24,8 @@ __new hunk__
 __new hunk__
 10  import { FormControl } from "@components/ui/form-control";
 11  import { Heading } from "@components/ui/heading";
-12 -import { SvgKody } from "@components/ui/icons/SvgKody";
-13 +import { SvgKody, SvgLogo } from "@components/ui/icons";
+12 -import { SvgCody } from "@components/ui/icons/SvgCody";
+13 +import { SvgCody, SvgLogo } from "@components/ui/icons";
 14  import { Page } from "@components/ui/page";
 15  import { Popover } from "@components/ui/popover";
 16  import { useToast } from "@components/ui/toast";
@@ -298,8 +298,8 @@ __new hunk__
 __new hunk__
 10  import { FormControl } from "@components/ui/form-control";
 11  import { Heading } from "@components/ui/heading";
-12 -import { SvgKody } from "@components/ui/icons/SvgKody";
-13 +import { SvgKody, SvgLogo } from "@components/ui/icons";
+12 -import { SvgCody } from "@components/ui/icons/SvgCody";
+13 +import { SvgCody, SvgLogo } from "@components/ui/icons";
 14  import { Page } from "@components/ui/page";
 15  import { Popover } from "@components/ui/popover";
 16  import { useToast } from "@components/ui/toast";

@@ -24,7 +24,7 @@ import { CodeReviewPipelineContext } from '../context/code-review-pipeline.conte
  * a concrete reason (no ticket link, feature off, unchanged description).
  *
  * In the legacy EE engine this is still done inside
- * ProcessFilesPrLevelReviewStage alongside kody rules and cross-file
+ * ProcessFilesPrLevelReviewStage alongside cody rules and cross-file
  * analysis. Once the EE engine is retired this can become the sole owner.
  */
 @Injectable()
@@ -52,9 +52,9 @@ export class BusinessLogicValidationStage extends BasePipelineStage<CodeReviewPi
      *  detectors use. Display names drift ("Git Issues" vs the 'githubissues'
      *  hint), so map by the stable integrationId. */
     private static readonly MANAGED_TASK_MCP_HINT: Record<string, string> = {
-        // Kodus's built-in "Git Issues" MCP (provider-agnostic issue tracker for
+        // Codus's built-in "Git Issues" MCP (provider-agnostic issue tracker for
         // the connected git provider) — NOT "GitHub Issues". Resolves `#N` refs.
-        'kodus-issues-default': 'gitissues',
+        'codus-issues-default': 'gitissues',
         'linear-default': 'linear',
         'atlassian-rovo-default': 'atlassianrovo',
         'notion-default': 'notion',
@@ -158,7 +158,7 @@ export class BusinessLogicValidationStage extends BasePipelineStage<CodeReviewPi
 
         try {
             const prepareContext = {
-                userQuestion: '@kody -v business-logic',
+                userQuestion: '@cody -v business-logic',
                 pullRequest: {
                     pullRequestNumber: context.pullRequest.number,
                     headRef: context.pullRequest?.head?.ref,
@@ -516,9 +516,9 @@ export class BusinessLogicValidationStage extends BasePipelineStage<CodeReviewPi
                     'task-management'
                 ) {
                     // Normalize the managed integration to its CANONICAL hint
-                    // (kodus-issues → 'githubissues') so downstream signal
+                    // (codus-issues → 'githubissues') so downstream signal
                     // detection (ticket key / URL) can match it. Falling back to
-                    // the raw id (e.g. 'kodus-issues-default') would never match
+                    // the raw id (e.g. 'codus-issues-default') would never match
                     // TICKET_KEY_MCPS / MCP_URL_PATTERNS.
                     const canonical =
                         BusinessLogicValidationStage.MANAGED_TASK_MCP_HINT[
@@ -640,7 +640,7 @@ export class BusinessLogicValidationStage extends BasePipelineStage<CodeReviewPi
         }
 
         // Git-issue-style references (e.g. "#256", "Closes #256") when a git
-        // issues task MCP is connected (Kodus "Git Issues" → 'gitissues', or a
+        // issues task MCP is connected (Codus "Git Issues" → 'gitissues', or a
         // GitHub Issues MCP → 'githubissues'). The Jira-style TICKET_KEY_PATTERN
         // (`ABC-123`) never matches `#N`, so handle it explicitly.
         if (
@@ -677,7 +677,7 @@ export class BusinessLogicValidationStage extends BasePipelineStage<CodeReviewPi
         // TICKET_KEY_PATTERN (`ABC-123`) never matches `#N`, so the agent never
         // received the issue number as a structured signal — it fell back to
         // listing issues (which returns PRs) and couldn't resolve the task. With
-        // `#256` in the signals, the agent fetches it directly via KODUS_GET_ISSUE.
+        // `#256` in the signals, the agent fetches it directly via CODUS_GET_ISSUE.
         const issueRefs = text.match(/(?:^|[\s(])#(\d+)\b/g) ?? [];
         for (const ref of issueRefs) {
             const num = ref.match(/\d+/)?.[0];

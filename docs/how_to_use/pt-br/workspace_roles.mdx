@@ -1,26 +1,26 @@
 ---
 title: "Funções do Workspace"
-description: "Saiba mais sobre o controle de acesso baseado em funções (RBAC) nos workspaces do Kodus, incluindo as diferentes funções de usuário e suas permissões."
+description: "Saiba mais sobre o controle de acesso baseado em funções (RBAC) nos workspaces do Codus, incluindo as diferentes funções de usuário e suas permissões."
 ---
 
 <Note>
 **Membros do Workspace vs. Licenças de PR**: São completamente separados e não se afetam.
 
-- **Membros do Workspace**: Admins que configuram as configurações do Kodus (ilimitado)
-- **Licenças de PR**: Desenvolvedores da sua organização Git que recebem revisões do Kody (baseado no seu plano)
+- **Membros do Workspace**: Admins que configuram as configurações do Codus (ilimitado)
+- **Licenças de PR**: Desenvolvedores da sua organização Git que recebem revisões do Cody (baseado no seu plano)
 </Note>
 
 ## Entendendo as Licenças de PR
 
 As licenças de PR são detectadas automaticamente a partir dos seus repositórios Git com base nos desenvolvedores que abriram PRs nos últimos meses.
 
-**Por que um desenvolvedor não está aparecendo?** Se um desenvolvedor não está aparecendo na sua contagem de licenças de PR, significa que o Kody não está instalado em um repositório onde esse desenvolvedor abriu PRs.
+**Por que um desenvolvedor não está aparecendo?** Se um desenvolvedor não está aparecendo na sua contagem de licenças de PR, significa que o Cody não está instalado em um repositório onde esse desenvolvedor abriu PRs.
 
 **Exemplo:** Você pode ter 1 admin de workspace gerenciando as configurações, enquanto 20 desenvolvedores recebem revisões automatizadas. Todos os planos incluem PRs ilimitados — seu plano apenas determina quais desenvolvedores têm acesso a revisões.
 
 ## Visão Geral
 
-Os workspaces do Kodus suportam **Controle de Acesso Baseado em Funções (RBAC)**, permitindo gerenciar permissões de usuário e níveis de acesso dentro da sua organização. Cada membro do workspace pode receber uma das quatro funções distintas, cada uma com permissões e capacidades específicas.
+Os workspaces do Codus suportam **Controle de Acesso Baseado em Funções (RBAC)**, permitindo gerenciar permissões de usuário e níveis de acesso dentro da sua organização. Cada membro do workspace pode receber uma das quatro funções distintas, cada uma com permissões e capacidades específicas.
 
 ## Funções Disponíveis
 
@@ -38,11 +38,11 @@ Cada função fornece diferentes níveis de acesso e capacidades dentro do works
 
 ### Repository Admin (Admin de Repositório)
 
-**Acesso de gerenciamento de repositório**. Vê todas as configurações, pull requests, issues, cockpit e plugins de toda a organização (somente visualização) e pode editar configurações de revisão de código e Kody Rules para os repositórios atribuídos a ele.
+**Acesso de gerenciamento de repositório**. Vê todas as configurações, pull requests, issues, cockpit e plugins de toda a organização (somente visualização) e pode editar configurações de revisão de código e Cody Rules para os repositórios atribuídos a ele.
 
 ### Contributor (Colaborador)
 
-**Acesso somente de visualização** a toda a organização. Os Contributors podem visualizar configurações, Kody Rules, pull requests e issues em todos os repositórios — sem necessidade de atribuição a repositórios — mas não podem editar nada. Cockpit, uso de tokens, faturamento e gerenciamento de usuários permanecem exclusivos de administradores.
+**Acesso somente de visualização** a toda a organização. Os Contributors podem visualizar configurações, Cody Rules, pull requests e issues em todos os repositórios — sem necessidade de atribuição a repositórios — mas não podem editar nada. Cockpit, uso de tokens, faturamento e gerenciamento de usuários permanecem exclusivos de administradores.
 
 ## Matriz de Permissões por Função
 
@@ -130,7 +130,7 @@ Habilite o auto-join para permitir que usuários com domínios de e-mail corresp
 
   <Accordion title="Um desenvolvedor não está aparecendo nas licenças de PR">
     **Soluções:**
-    - Verifique se o Kody está instalado nos repositórios onde este desenvolvedor abre PRs
+    - Verifique se o Cody está instalado nos repositórios onde este desenvolvedor abre PRs
     - Verifique se o desenvolvedor abriu PRs nos últimos meses
     - Lembre-se: as licenças de PR vêm da atividade Git, não dos membros do workspace
     - Certifique-se de que o webhook do repositório está configurado corretamente

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKProvider } from '@codus/codus-common/llm';
 
 export interface ProviderInfo {
     id: string;

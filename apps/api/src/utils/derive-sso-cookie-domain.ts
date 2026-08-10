@@ -17,10 +17,10 @@
  *
  * Examples:
  *   apiHost=api.kodus.io,            frontendHost=app.kodus.io           → ".kodus.io"
- *   apiHost=kodus-api-dev.web.scorpion.co, frontendHost=kodus-dev.web.scorpion.co → ".web.scorpion.co"
+ *   apiHost=codus-api-dev.web.scorpion.co, frontendHost=codus-dev.web.scorpion.co → ".web.scorpion.co"
  *   apiHost=kodus.io,                frontendHost=kodus.io               → ".kodus.io"
  *   apiHost=192.168.1.10,            frontendHost=192.168.1.10           → undefined (numeric)
- *   apiHost=kodus.co.uk,             frontendHost=another.co.uk          → undefined (only ".co.uk" common)
+ *   apiHost=codus.co.uk,             frontendHost=another.co.uk          → undefined (only ".co.uk" common)
  *   apiHost=api.foo.com,             frontendHost=app.bar.com            → undefined (no common parent)
  */
 export function deriveSsoCookieDomain(params: {

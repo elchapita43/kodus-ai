@@ -5,7 +5,7 @@ import { SeverityLevel } from '@libs/common/utils/enums/severityLevel.enum';
 import {
     IContributingSuggestion,
     IRepositoryToIssues,
-} from '@libs/issues/domain/interfaces/kodyIssuesManagement.interface';
+} from '@libs/issues/domain/interfaces/codyIssuesManagement.interface';
 
 import { IIssue } from '../interfaces/issues.interface';
 

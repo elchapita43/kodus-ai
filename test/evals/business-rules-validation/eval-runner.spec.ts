@@ -82,14 +82,14 @@ function createMockToolCaller(fixture: EvalFixture): ToolCaller {
         fixture.input.taskContextToolName ?? 'getJiraIssue';
 
     const registeredTools = [
-        { name: 'KODUS_GET_PULL_REQUEST' },
-        { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+        { name: 'CODUS_GET_PULL_REQUEST' },
+        { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
         ...(hasStructuredTaskContext ? [{ name: taskContextToolName }] : []),
     ];
 
     return {
         callTool: async (toolName: string) => {
-            if (toolName === 'KODUS_GET_PULL_REQUEST') {
+            if (toolName === 'CODUS_GET_PULL_REQUEST') {
                 return {
                     result: {
                         data: {
@@ -99,7 +99,7 @@ function createMockToolCaller(fixture: EvalFixture): ToolCaller {
                 };
             }
 
-            if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+            if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                 return {
                     result: {
                         data: fixture.input.prDiff,
@@ -153,13 +153,13 @@ function createCapabilityRuntime(
     return {
         capabilities: ['pr.metadata.read', 'pr.diff.read', 'task.context.read'],
         allowedTools: [
-            'KODUS_GET_PULL_REQUEST',
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             taskContextToolName,
         ],
         capabilityToolMap: {
-            'pr.metadata.read': ['KODUS_GET_PULL_REQUEST'],
-            'pr.diff.read': ['KODUS_GET_PULL_REQUEST_DIFF'],
+            'pr.metadata.read': ['CODUS_GET_PULL_REQUEST'],
+            'pr.diff.read': ['CODUS_GET_PULL_REQUEST_DIFF'],
             'task.context.read': [taskContextToolName],
         },
         fetcherPolicy: {
@@ -215,8 +215,8 @@ describe('business-rules-validation eval runner', () => {
                     (typeof fixture.input.taskContext === 'object' &&
                     fixture.input.taskContext !== null &&
                     fixture.input.taskContext.id
-                        ? `@kody -v business-logic ${fixture.input.taskContext.id}`
-                        : '@kody -v business-logic'),
+                        ? `@cody -v business-logic ${fixture.input.taskContext.id}`
+                        : '@cody -v business-logic'),
                 pullRequestDescription: '',
                 taskContext:
                     typeof fixture.input.taskContext === 'string'

@@ -12,25 +12,25 @@ describe('BeaconHttpProvider', () => {
 
     describe('isDisabled', () => {
         it.each(['1', 'true', 'TRUE', 'yes', 'YES', 'on', 'On'])(
-            'returns true for KODUS_TELEMETRY_DISABLED=%s',
+            'returns true for CODUS_TELEMETRY_DISABLED=%s',
             (value) => {
-                process.env.KODUS_TELEMETRY_DISABLED = value;
+                process.env.CODUS_TELEMETRY_DISABLED = value;
 
                 expect(new BeaconHttpProvider().isDisabled()).toBe(true);
             },
         );
 
         it.each(['', '0', 'false', 'no', 'off', 'maybe'])(
-            'returns false for KODUS_TELEMETRY_DISABLED=%s',
+            'returns false for CODUS_TELEMETRY_DISABLED=%s',
             (value) => {
-                process.env.KODUS_TELEMETRY_DISABLED = value;
+                process.env.CODUS_TELEMETRY_DISABLED = value;
 
                 expect(new BeaconHttpProvider().isDisabled()).toBe(false);
             },
         );
 
         it('returns false when the var is not set', () => {
-            delete process.env.KODUS_TELEMETRY_DISABLED;
+            delete process.env.CODUS_TELEMETRY_DISABLED;
 
             expect(new BeaconHttpProvider().isDisabled()).toBe(false);
         });
@@ -51,14 +51,14 @@ describe('BeaconHttpProvider', () => {
                     method: 'POST',
                     headers: expect.objectContaining({
                         'Content-Type': 'application/json',
-                        'User-Agent': 'kodus-self-hosted/1.0.0',
+                        'User-Agent': 'codus-self-hosted/1.0.0',
                     }),
                 }),
             );
         });
 
-        it('uses KODUS_TELEMETRY_ENDPOINT when set', async () => {
-            process.env.KODUS_TELEMETRY_ENDPOINT =
+        it('uses CODUS_TELEMETRY_ENDPOINT when set', async () => {
+            process.env.CODUS_TELEMETRY_ENDPOINT =
                 'http://127.0.0.1:43111/test-heartbeat';
             global.fetch = jest
                 .fn()

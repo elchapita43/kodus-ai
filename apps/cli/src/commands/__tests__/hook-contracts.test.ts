@@ -19,7 +19,7 @@ let tmpDir: string;
 
 beforeEach(async () => {
     tmpDir = await fs.mkdtemp(
-        path.join(os.tmpdir(), 'kodus-hook-contracts-'),
+        path.join(os.tmpdir(), 'codus-hook-contracts-'),
     );
 });
 
@@ -200,7 +200,7 @@ describe('Claude Code hook contract', () => {
         }
     });
 
-    it('all commands start with "kodus decisions hooks claude-code"', async () => {
+    it('all commands start with "codus decisions hooks claude-code"', async () => {
         await installSessionHooks(tmpDir, 'claude-code');
         const raw = await fs.readFile(claudeSettingsPath(), 'utf-8');
         const settings = JSON.parse(raw);
@@ -211,7 +211,7 @@ describe('Claude Code hook contract', () => {
                 for (const hookEntry of matcher.hooks) {
                     expect(
                         hookEntry.command.startsWith(
-                            'kodus decisions hooks claude-code',
+                            'codus decisions hooks claude-code',
                         ),
                         `Command in "${eventKey}" does not start with expected prefix: "${hookEntry.command}"`,
                     ).toBe(true);
@@ -313,7 +313,7 @@ describe('Cursor hook contract', () => {
         }
     });
 
-    it('all commands start with "kodus decisions hooks cursor"', async () => {
+    it('all commands start with "codus decisions hooks cursor"', async () => {
         await installCursorSessionHooks(tmpDir);
         const raw = await fs.readFile(cursorHooksPath(), 'utf-8');
         const config = JSON.parse(raw);
@@ -322,7 +322,7 @@ describe('Cursor hook contract', () => {
         for (const [eventKey, entries] of Object.entries(hooks)) {
             for (const entry of entries as any[]) {
                 expect(
-                    entry.command.startsWith('kodus decisions hooks cursor'),
+                    entry.command.startsWith('codus decisions hooks cursor'),
                     `Command in "${eventKey}" does not start with expected prefix: "${entry.command}"`,
                 ).toBe(true);
             }
@@ -376,14 +376,14 @@ describe('Codex hook contract', () => {
         }
     });
 
-    it('all commands start with "kodus decisions hooks codex"', async () => {
+    it('all commands start with "codus decisions hooks codex"', async () => {
         await installCodexSessionHooks(codexConfigPath());
         const content = await fs.readFile(codexConfigPath(), 'utf-8');
         const blocks = parseTomlHookBlocks(content);
 
         for (const block of blocks) {
             expect(
-                block.command.startsWith('kodus decisions hooks codex'),
+                block.command.startsWith('codus decisions hooks codex'),
                 `Command does not start with expected prefix: "${block.command}"`,
             ).toBe(true);
         }
@@ -460,7 +460,7 @@ describe('Cross-platform hook contracts', () => {
         }
     });
 
-    it('all hook commands reference the kodus binary', async () => {
+    it('all hook commands reference the codus binary', async () => {
         await installSessionHooks(tmpDir, 'claude-code');
         await installCursorSessionHooks(tmpDir);
         await installCodexSessionHooks(codexConfigPath());
@@ -499,8 +499,8 @@ describe('Cross-platform hook contracts', () => {
 
         for (const cmd of commands) {
             expect(
-                cmd.startsWith('kodus '),
-                `Command does not reference kodus binary: "${cmd}"`,
+                cmd.startsWith('codus '),
+                `Command does not reference codus binary: "${cmd}"`,
             ).toBe(true);
         }
     });
@@ -512,11 +512,11 @@ describe('Cross-platform hook contracts', () => {
         const raw = await fs.readFile(claudeSettingsPath(), 'utf-8');
         const settings = JSON.parse(raw);
 
-        // No hooks key should remain (all were kodus entries)
+        // No hooks key should remain (all were codus entries)
         expect(settings.hooks).toBeUndefined();
 
-        // No kodus references anywhere in the file
-        expect(raw).not.toContain('kodus decisions hooks');
+        // No codus references anywhere in the file
+        expect(raw).not.toContain('codus decisions hooks');
     });
 
     it('Cursor: install then remove leaves config clean', async () => {
@@ -529,8 +529,8 @@ describe('Cross-platform hook contracts', () => {
         // hooks should be empty
         expect(Object.keys(config.hooks)).toHaveLength(0);
 
-        // No kodus references anywhere in the file
-        expect(raw).not.toContain('kodus decisions hooks');
+        // No codus references anywhere in the file
+        expect(raw).not.toContain('codus decisions hooks');
     });
 
     it('Codex: install then remove leaves config clean', async () => {
@@ -539,10 +539,10 @@ describe('Cross-platform hook contracts', () => {
 
         const content = await fs.readFile(codexConfigPath(), 'utf-8');
 
-        // No kodus references
-        expect(content).not.toContain('kodus decisions hooks');
+        // No codus references
+        expect(content).not.toContain('codus decisions hooks');
 
-        // No leftover [[hooks]] blocks (only kodus block was present)
+        // No leftover [[hooks]] blocks (only codus block was present)
         expect(content).not.toContain('[[hooks]]');
     });
 });

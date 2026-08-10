@@ -16,7 +16,7 @@ import { INTEGRATION_SERVICE_TOKEN } from '@/integrations/domain/integrations/co
 import { AUTH_INTEGRATION_SERVICE_TOKEN } from '@/integrations/domain/authIntegrations/contracts/auth-integration.service.contracts';
 import { MCPManagerService } from '@/mcp-server/services/mcp-manager.service';
 import { LLM_ANALYSIS_SERVICE_TOKEN } from '@/code-review/infrastructure/adapters/services/llmAnalysis.service';
-import { KODY_RULES_ANALYSIS_SERVICE_TOKEN } from '@/ee/codeBase/kodyRulesAnalysis.service';
+import { CODY_RULES_ANALYSIS_SERVICE_TOKEN } from '@/ee/codeBase/codyRulesAnalysis.service';
 import { CodeManagementService } from '@/platform/infrastructure/adapters/services/codeManagement.service';
 import { WebhookContextService } from '@/platform/application/services/webhook-context.service';
 import { PlatformType } from '@/shared/domain/enums/platform-type.enum';
@@ -88,7 +88,7 @@ describe('PR Persistence Integration Test', () => {
         }),
     };
     const mockAuthIntegrationService = { update: jest.fn() };
-    const mockMCPManagerService = { createKodusMCPIntegration: jest.fn() };
+    const mockMCPManagerService = { createCodusMCPIntegration: jest.fn() };
     const mockGithubService = {
         getPullRequest: jest.fn().mockResolvedValue({
             number: 123,
@@ -102,7 +102,7 @@ describe('PR Persistence Integration Test', () => {
         createReviewComment: jest.fn(),
     };
     const mockLLMAnalysisService = { analyzeCodeWithAI: jest.fn() };
-    const mockKodyRulesAnalysisService = { analyzeCodeWithAI: jest.fn() };
+    const mockCodyRulesAnalysisService = { analyzeCodeWithAI: jest.fn() };
     const mockWebhookContextService = { getContext: jest.fn() };
 
     beforeAll(async () => {
@@ -160,8 +160,8 @@ describe('PR Persistence Integration Test', () => {
                     useValue: mockLLMAnalysisService,
                 },
                 {
-                    provide: KODY_RULES_ANALYSIS_SERVICE_TOKEN,
-                    useValue: mockKodyRulesAnalysisService,
+                    provide: CODY_RULES_ANALYSIS_SERVICE_TOKEN,
+                    useValue: mockCodyRulesAnalysisService,
                 },
                 {
                     provide: WebhookContextService,

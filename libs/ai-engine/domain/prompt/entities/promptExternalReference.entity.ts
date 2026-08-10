@@ -13,7 +13,7 @@ export class PromptExternalReferenceEntity implements IPromptExternalReference {
     private readonly _organizationId: string;
     private readonly _repositoryId: string;
     private readonly _directoryId?: string;
-    private readonly _kodyRuleId?: string;
+    private readonly _codyRuleId?: string;
     private readonly _repositoryName: string;
     private readonly _promptHash: string;
     private readonly _contextReferenceId?: string;
@@ -32,7 +32,7 @@ export class PromptExternalReferenceEntity implements IPromptExternalReference {
         this._organizationId = data.organizationId;
         this._repositoryId = data.repositoryId;
         this._directoryId = data.directoryId;
-        this._kodyRuleId = data.kodyRuleId;
+        this._codyRuleId = data.codyRuleId;
         this._repositoryName = data.repositoryName;
         this._promptHash = data.promptHash;
         this._contextReferenceId = data.contextReferenceId;
@@ -75,8 +75,8 @@ export class PromptExternalReferenceEntity implements IPromptExternalReference {
         return this._directoryId;
     }
 
-    get kodyRuleId(): string | undefined {
-        return this._kodyRuleId;
+    get codyRuleId(): string | undefined {
+        return this._codyRuleId;
     }
 
     get repositoryName(): string {
@@ -127,7 +127,7 @@ export class PromptExternalReferenceEntity implements IPromptExternalReference {
             organizationId: this._organizationId,
             repositoryId: this._repositoryId,
             directoryId: this._directoryId,
-            kodyRuleId: this._kodyRuleId,
+            codyRuleId: this._codyRuleId,
             repositoryName: this._repositoryName,
             promptHash: this._promptHash,
             contextReferenceId: this._contextReferenceId,

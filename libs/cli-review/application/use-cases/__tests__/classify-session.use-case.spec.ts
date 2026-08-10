@@ -1,7 +1,7 @@
 import { ClassifySessionUseCase } from '../classify-session.use-case';
 import { SessionEventRepository } from '@libs/cli-review/infrastructure/repositories/session-event.repository';
 import { SessionEventModel } from '@libs/cli-review/infrastructure/repositories/schemas/session-event.model';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 
 function makeEvent(overrides: Partial<SessionEventModel>): SessionEventModel {
     return {

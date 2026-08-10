@@ -23,7 +23,7 @@ import {
     HoverCardTrigger,
 } from "@components/ui/hover-card";
 import { Input } from "@components/ui/input";
-import { KodyReviewPreview } from "@components/ui/kody-review-preview";
+import { CodyReviewPreview } from "@components/ui/cody-review-preview";
 import { Label } from "@components/ui/label";
 import { magicModal } from "@components/ui/magic-modal";
 import {
@@ -45,21 +45,21 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@components/ui/tooltip";
-import { KODY_RULES_PATHS } from "@services/kodyRules";
+import { CODY_RULES_PATHS } from "@services/codyRules";
 import {
-    createOrUpdateKodyRule,
-    getRecommendedKodyRules,
-} from "@services/kodyRules/fetch";
+    createOrUpdateCodyRule,
+    getRecommendedCodyRules,
+} from "@services/codyRules/fetch";
 import {
-    KodyRuleInheritanceOrigin,
-    KodyRulesOrigin,
-    KodyRulesStatus,
-    KodyRulesType,
-    KodyRuleWithInheritanceDetails,
-    resolveKodyRuleDisplaySeverity,
-    type KodyRule,
+    CodyRuleInheritanceOrigin,
+    CodyRulesOrigin,
+    CodyRulesStatus,
+    CodyRulesType,
+    CodyRuleWithInheritanceDetails,
+    resolveCodyRuleDisplaySeverity,
+    type CodyRule,
     type LibraryRule,
-} from "@services/kodyRules/types";
+} from "@services/codyRules/types";
 import { isCentralizedPrResponse } from "@services/parameters/types";
 import {
     CheckIcon,
@@ -87,7 +87,7 @@ import { getCentralizedPrToastPayload } from "../_utils/centralized-pr-feedback"
 import { ExternalReferencesDisplay } from "../[repositoryId]/pr-summary/_components/external-references-display";
 
 const severityOptions: {
-    value: KodyRule["severity"];
+    value: CodyRule["severity"];
     label: string;
     description: string;
     textColor: string;
@@ -129,7 +129,7 @@ const severitySliderOptions = {
     medium: { label: "Medium", value: 1 },
     high: { label: "High", value: 2 },
     critical: { label: "Critical", value: 3 },
-} satisfies Record<KodyRule["severity"], { label: string; value: number }>;
+} satisfies Record<CodyRule["severity"], { label: string; value: number }>;
 
 const executionModeOptions = [
     {
@@ -225,7 +225,7 @@ function RuleSuggestions({
     useEffect(() => {
         const fetchSuggestions = async () => {
             try {
-                const rules = await getRecommendedKodyRules({ limit: 6 });
+                const rules = await getRecommendedCodyRules({ limit: 6 });
                 setRecommendedRules(rules || []);
             } catch (error) {
                 console.error("Failed to fetch recommended rules:", error);
@@ -320,18 +320,18 @@ function RuleSuggestions({
 }
 
 
-export const KodyRuleAddOrUpdateItemModal = ({
+export const CodyRuleAddOrUpdateItemModal = ({
     repositoryId,
     directory,
     rule,
-    ruleType = KodyRulesType.STANDARD,
+    ruleType = CodyRulesType.STANDARD,
     onClose,
     canEdit,
 }: {
-    rule?: KodyRuleWithInheritanceDetails;
+    rule?: CodyRuleWithInheritanceDetails;
     directory?: FormattedDirectoryCodeReviewConfig;
     repositoryId: string;
-    ruleType?: KodyRulesType;
+    ruleType?: CodyRulesType;
     onClose?: () => void;
     canEdit: boolean;
 }) => {
@@ -343,8 +343,8 @@ export const KodyRuleAddOrUpdateItemModal = ({
 
     const isInherited = !!rule?.inherited;
     const entityLabel =
-        (rule?.type ?? ruleType) === KodyRulesType.MEMORY ? "Memory" : "Rule";
-    const isMemory = (rule?.type ?? ruleType) === KodyRulesType.MEMORY;
+        (rule?.type ?? ruleType) === CodyRulesType.MEMORY ? "Memory" : "Rule";
+    const isMemory = (rule?.type ?? ruleType) === CodyRulesType.MEMORY;
 
     const isExcluded = !!rule?.inheritance?.exclude?.find(
         (id) => id === directory?.id || id === repositoryId,
@@ -356,7 +356,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
     const editorRef = React.useRef<RichTextEditorWithMentionsRef>(null);
 
     const form = useForm<
-        Omit<KodyRule, "examples" | "inheritance"> & {
+        Omit<CodyRule, "examples" | "inheritance"> & {
             badExample: string;
             goodExample: string;
             inheritable: boolean;
@@ -373,7 +373,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                     : rule?.path ?? "",
             rule: rule?.rule ?? "",
             title: rule?.title ?? "",
-            severity: rule ? resolveKodyRuleDisplaySeverity(rule) : "high",
+            severity: rule ? resolveCodyRuleDisplaySeverity(rule) : "high",
             scope: initialScope,
             badExample:
                 rule?.examples?.find(({ isCorrect }) => !isCorrect)?.snippet ??
@@ -381,8 +381,8 @@ export const KodyRuleAddOrUpdateItemModal = ({
             goodExample:
                 rule?.examples?.find(({ isCorrect }) => isCorrect)?.snippet ??
                 "",
-            origin: rule?.origin ?? KodyRulesOrigin.MANUAL,
-            status: rule?.status ?? KodyRulesStatus.ACTIVE,
+            origin: rule?.origin ?? CodyRulesOrigin.MANUAL,
+            status: rule?.status ?? CodyRulesStatus.ACTIVE,
             type: rule?.type ?? ruleType,
             inheritable: rule?.inheritance?.inheritable ?? true,
         },
@@ -408,7 +408,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                 newPath = config.path;
             }
 
-            const mutationResult = await createOrUpdateKodyRule(
+            const mutationResult = await createOrUpdateCodyRule(
                 {
                     path: newPath,
                     rule: config.rule,
@@ -417,8 +417,8 @@ export const KodyRuleAddOrUpdateItemModal = ({
                     scope: isMemory ? "file" : config.scope,
                     uuid: rule?.uuid,
                     examples: examples,
-                    origin: config.origin ?? KodyRulesOrigin.MANUAL,
-                    status: config.status ?? KodyRulesStatus.ACTIVE,
+                    origin: config.origin ?? CodyRulesOrigin.MANUAL,
+                    status: config.status ?? CodyRulesStatus.ACTIVE,
                     type: config.type ?? ruleType,
                     centralizedConfig: rule?.centralizedConfig,
                     inheritance: {
@@ -488,7 +488,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
         }
 
         try {
-            const mutationResult = await createOrUpdateKodyRule(
+            const mutationResult = await createOrUpdateCodyRule(
                 {
                     path: rule?.path,
                     rule: rule?.rule,
@@ -497,8 +497,8 @@ export const KodyRuleAddOrUpdateItemModal = ({
                     scope: rule?.scope,
                     uuid: rule?.uuid,
                     examples: rule?.examples,
-                    origin: rule?.origin ?? KodyRulesOrigin.MANUAL,
-                    status: rule?.status ?? KodyRulesStatus.ACTIVE,
+                    origin: rule?.origin ?? CodyRulesOrigin.MANUAL,
+                    status: rule?.status ?? CodyRulesStatus.ACTIVE,
                     type: rule?.type ?? ruleType,
                     centralizedConfig: rule?.centralizedConfig,
                     inheritance: {
@@ -509,7 +509,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                         }),
                         exclude: excludeList,
                     },
-                } as KodyRule,
+                } as CodyRule,
                 rule?.repositoryId,
                 rule?.directoryId,
                 teamId,
@@ -529,9 +529,9 @@ export const KodyRuleAddOrUpdateItemModal = ({
             queryClient.invalidateQueries({
                 predicate: (query) =>
                     query.queryKey[0] ===
-                        KODY_RULES_PATHS.FIND_BY_ORGANIZATION_ID_AND_FILTER ||
+                        CODY_RULES_PATHS.FIND_BY_ORGANIZATION_ID_AND_FILTER ||
                     query.queryKey[0] ===
-                        KODY_RULES_PATHS.GET_INHERITED_RULES,
+                        CODY_RULES_PATHS.GET_INHERITED_RULES,
             });
 
             const toastData = {
@@ -582,7 +582,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                     <div className="flex items-center justify-between">
                         <DialogTitle>{title}</DialogTitle>
                         <a
-                            href="https://docs.kodus.io/how_to_use/en/code_review/configs/kody_rules"
+                            href="https://docs.kodus.io/how_to_use/en/code_review/configs/cody_rules"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-text-secondary hover:text-primary-light flex items-center gap-1 text-xs transition-colors">
@@ -602,14 +602,14 @@ export const KodyRuleAddOrUpdateItemModal = ({
                         </div>
                         <p className="text-text-secondary text-sm">
                             {rule.inherited ===
-                                KodyRuleInheritanceOrigin.GLOBAL &&
-                                `This ${entityLabel.toLowerCase()} is inherited from the Global configuration. To edit it, you must go to the global Kody Rules settings.`}
+                                CodyRuleInheritanceOrigin.GLOBAL &&
+                                `This ${entityLabel.toLowerCase()} is inherited from the Global configuration. To edit it, you must go to the global Cody Rules settings.`}
                             {rule.inherited ===
-                                KodyRuleInheritanceOrigin.REPOSITORY &&
-                                `This ${entityLabel.toLowerCase()} is inherited from the Repository configuration. To edit it, you must go to the repository Kody Rules settings.`}
+                                CodyRuleInheritanceOrigin.REPOSITORY &&
+                                `This ${entityLabel.toLowerCase()} is inherited from the Repository configuration. To edit it, you must go to the repository Cody Rules settings.`}
                             {rule.inherited ===
-                                KodyRuleInheritanceOrigin.DIRECTORY &&
-                                `This ${entityLabel.toLowerCase()} is inherited from another Directory configuration. This is likely due to how the ${entityLabel.toLowerCase()}'s path is defined. To edit it, you must go to the Kody Rules settings for the directory where it was created.`}
+                                CodyRuleInheritanceOrigin.DIRECTORY &&
+                                `This ${entityLabel.toLowerCase()} is inherited from another Directory configuration. This is likely due to how the ${entityLabel.toLowerCase()}'s path is defined. To edit it, you must go to the Cody Rules settings for the directory where it was created.`}
                         </p>
                         <Separator />
                         <div className="flex items-center justify-between">
@@ -707,7 +707,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                                                                 Execution mode
                                                             </h4>
                                                             <p className="text-text-secondary text-xs">
-                                                                Choose how Kody
+                                                                Choose how Cody
                                                                 analyzes your
                                                                 code and where
                                                                 comments appear.
@@ -737,7 +737,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                                                                     checks.
                                                                 </p>
                                                                 <div className="pl-6">
-                                                                    <KodyReviewPreview
+                                                                    <CodyReviewPreview
                                                                         mode="inline"
                                                                         comment="Consider adding error handling here."
                                                                         codeLine={{
@@ -770,7 +770,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                                                                     reviews.
                                                                 </p>
                                                                 <div className="pl-6">
-                                                                    <KodyReviewPreview
+                                                                    <CodyReviewPreview
                                                                         mode="pr-comment"
                                                                         comment="PR description is missing required sections: 'Testing' and 'Breaking Changes'."
                                                                     />
@@ -1053,7 +1053,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                                 </FormControl.Label>
 
                                 <FormControl.Helper>
-                                    Readonly. This Kody {entityLabel} was
+                                    Readonly. This Cody {entityLabel} was
                                     created based on this file.
                                 </FormControl.Helper>
                             </FormControl.Root>
@@ -1087,7 +1087,7 @@ export const KodyRuleAddOrUpdateItemModal = ({
                                                 align="start"
                                                 className="flex max-w-prose flex-col gap-1 text-xs">
                                                 <p>
-                                                    Describe what Kody should
+                                                    Describe what Cody should
                                                     focus on during the review.
                                                 </p>
                                                 <p>

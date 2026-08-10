@@ -1,6 +1,6 @@
 ---
 title: "AI Agents"
-description: "Integrate the Kodus CLI with AI coding agents for autonomous review-fix loops."
+description: "Integrate the Codus CLI with AI coding agents for autonomous review-fix loops."
 ---
 
 The CLI ships with a minimal, structured output mode (`--prompt-only`) designed for AI coding agents to parse and act on. Combined with a team key, it enables autonomous review-fix loops — the agent reviews, applies fixes, re-reviews, and commits, all without human input in the critical path.
@@ -12,21 +12,21 @@ The CLI ships with a minimal, structured output mode (`--prompt-only`) designed 
 - **Codex** — native skill.
 - **Windsurf** — via `--prompt-only` output.
 
-For any other agent that can run shell commands and parse structured text, `kodus review --prompt-only` works out of the box.
+For any other agent that can run shell commands and parse structured text, `codus review --prompt-only` works out of the box.
 
 ## Quickest setup
 
 Install the CLI plus all agent skills in one shot:
 
 ```bash
-curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
+curl -fsSL https://review-skill.com/install | bash -s -- --team-key codus_xxxxx
 ```
 
 This:
 
-1. Installs the `@kodus/cli` binary globally.
-2. Configures the team key in `~/.kodus/config.json`.
-3. Deploys Kodus skills to every detected agent (Claude Code, Cursor, Codex, Windsurf).
+1. Installs the `@codus/cli` binary globally.
+2. Configures the team key in `~/.codus/config.json`.
+3. Deploys Codus skills to every detected agent (Claude Code, Cursor, Codex, Windsurf).
 
 No individual logins. No interactive prompts. Ready for agent loops immediately.
 
@@ -35,7 +35,7 @@ No individual logins. No interactive prompts. Ready for agent loops immediately.
 <Steps>
   <Step title="Agent runs review">
     ```bash
-    kodus review --prompt-only
+    codus review --prompt-only
     ```
 
     The CLI returns structured issues with file paths, line numbers, severities, and suggested fixes — in a compact text format designed for an LLM to consume.
@@ -45,13 +45,13 @@ No individual logins. No interactive prompts. Ready for agent loops immediately.
   </Step>
   <Step title="Agent re-runs review">
     ```bash
-    kodus review --prompt-only --fail-on error
+    codus review --prompt-only --fail-on error
     ```
 
     With `--fail-on error`, the loop exits non-zero while there are still error-or-worse issues. The agent keeps looping; when the review comes back clean, the process exits 0 and the agent moves on.
   </Step>
   <Step title="Agent commits and pushes">
-    Once the review is clean, the agent commits and pushes. Optionally, install the pre-push hook (`kodus hook install`) for an additional safety net on manual pushes.
+    Once the review is clean, the agent commits and pushes. Optionally, install the pre-push hook (`codus hook install`) for an additional safety net on manual pushes.
   </Step>
 </Steps>
 
@@ -60,8 +60,8 @@ No individual logins. No interactive prompts. Ready for agent loops immediately.
 Team keys are strongly recommended for agents — no individual signup, no interactive login, easy rotation, per-device tracking.
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
-kodus review --prompt-only
+export CODUS_TEAM_KEY=codus_xxxxx
+codus review --prompt-only
 ```
 
 Generate a key at <a href="https://app.kodus.io/organization/cli-keys" target="_blank">app.kodus.io/organization/cli-keys</a> and distribute the install command shown there to your team.
@@ -82,13 +82,13 @@ Generate a key at <a href="https://app.kodus.io/organization/cli-keys" target="_
 
 ```bash
 # In a Claude Code session, the agent can run:
-kodus review --prompt-only --fail-on error    # general review
-kodus pr business-validation --task-id KC-1441 --dry-run   # check against task
-kodus review --prompt-only --fix               # auto-apply fixable issues
+codus review --prompt-only --fail-on error    # general review
+codus pr business-validation --task-id KC-1441 --dry-run   # check against task
+codus review --prompt-only --fix               # auto-apply fixable issues
 git commit -am "fix: KC-1441 address review findings"
 ```
 
-With the skill installer, Claude Code's Kodus skill knows when to invoke each of these — no prompt engineering required on your side.
+With the skill installer, Claude Code's Codus skill knows when to invoke each of these — no prompt engineering required on your side.
 
 ## Related
 

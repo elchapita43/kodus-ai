@@ -58,21 +58,21 @@ jobs:
                   cat <<'EOF' > .env
                   API_NODE_ENV=test
                   API_DATABASE_ENV=test
-                  API_PG_DB_USERNAME=kodusdev
+                  API_PG_DB_USERNAME=codusdev
                   API_PG_DB_PASSWORD=123456
-                  API_PG_DB_DATABASE=kodus_db
+                  API_PG_DB_DATABASE=codus_db
                   API_PG_DB_HOST=db_postgres
                   API_PG_DB_PORT=5432
-                  API_MG_DB_USERNAME=kodusdev
+                  API_MG_DB_USERNAME=codusdev
                   API_MG_DB_PASSWORD=123456
-                  API_MG_DB_DATABASE=kodus_db
+                  API_MG_DB_DATABASE=codus_db
                   API_MG_DB_HOST=db_mongodb
                   API_MG_DB_PORT=27017
                   API_CRYPTO_KEY=0000000000000000000000000000000000000000000000000000000000000000
                   EOF
 
             - name: Create network
-              run: docker network create kodus-backend-services-test || true
+              run: docker network create codus-backend-services-test || true
 
             - name: Docker Compose Action UP
               uses: hoverkraft-tech/compose-action@v2.6.0

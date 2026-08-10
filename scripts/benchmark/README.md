@@ -1,6 +1,6 @@
 # Code Review Benchmark
 
-Evaluates Kodus code review quality against golden comments from the [withmartian/code-review-benchmark](https://github.com/withmartian/code-review-benchmark).
+Evaluates Codus code review quality against golden comments from the [withmartian/code-review-benchmark](https://github.com/withmartian/code-review-benchmark).
 
 ## Dataset
 
@@ -12,9 +12,9 @@ Evaluates Kodus code review quality against golden comments from the [withmartia
 ## Pipeline
 
 ```
-1. Fork repos          → fork-benchmark-repos.sh (in kodus-ai)
+1. Fork repos          → fork-benchmark-repos.sh (in codus-ai)
 2. Create PRs          → create-test-prs.mjs with prs-benchmark.json
-3. Kodus reviews       → automatic via GitHub integration
+3. Codus reviews       → automatic via GitHub integration
 4. Extract issues      → npx tsx scripts/benchmark/extract.ts
 5. Judge results       → npx tsx scripts/benchmark/judge.ts
 6. View in agent       → Growth Agent getBenchmarkResults tool
@@ -47,7 +47,7 @@ Checks that the benchmark-critical containers exist and are `running`/`healthy`.
 ### wait-for-run.js — Know when the run is done
 
 The run is considered finished when every mapped `prNumber` in `runs/<name>.json` reaches:
-- `code_review_execution.stage_name = 'Kody Review Finished'`
+- `code_review_execution.stage_name = 'Cody Review Finished'`
 - `code_review_execution.status = 'success'`
 
 ```bash
@@ -75,12 +75,12 @@ node scripts/benchmark/export-trace-metrics.js gemini-control-r01
 Pulls review comments from GitHub PRs and normalizes them into atomic issues using an LLM.
 
 ```bash
-npx tsx scripts/benchmark/extract.ts --owner ai-code-review-benchmark --tool kodus
+npx tsx scripts/benchmark/extract.ts --owner ai-code-review-benchmark --tool codus
 ```
 
 Options:
 - `--owner <org>` — GitHub org with the forked repos (required)
-- `--tool <name>` — Label for the review tool (default: "kodus")
+- `--tool <name>` — Label for the review tool (default: "codus")
 - `--output <path>` — Output path (default: candidates.json)
 - `--github-token <tok>` — GitHub token (or set GITHUB_TOKEN)
 
@@ -89,12 +89,12 @@ Options:
 Compares extracted issues against golden comments using an LLM judge.
 
 ```bash
-npx tsx scripts/benchmark/judge.ts --candidates candidates.json --tool kodus
+npx tsx scripts/benchmark/judge.ts --candidates candidates.json --tool codus
 ```
 
 Options:
 - `--candidates <path>` — Path to candidates.json (required)
-- `--tool <name>` — Tool label (default: "kodus")
+- `--tool <name>` — Tool label (default: "codus")
 - `--output <path>` — Output path (default: results/evaluations.json)
 
 ## Output
@@ -107,6 +107,6 @@ Results are written to `results/evaluations.json` with:
 
 ## PR Format Compatibility
 
-`prs-benchmark.json` is compatible with the pr-creator in `kodus-ai/scripts/pr-creator/`. The pr-creator reads `repo`, `head`, `base`, and `title` fields — the extra `source_url` and `golden_comments` fields are ignored.
+`prs-benchmark.json` is compatible with the pr-creator in `codus-ai/scripts/pr-creator/`. The pr-creator reads `repo`, `head`, `base`, and `title` fields — the extra `source_url` and `golden_comments` fields are ignored.
 
 **Note:** PRs with branch names starting with `benchmark-` need their branches created in the forked repos before the pr-creator can use them. The 20 original PRs (from prs-example.json) have existing branches.

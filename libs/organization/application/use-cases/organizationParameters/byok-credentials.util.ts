@@ -39,7 +39,7 @@ function safeDecrypt(value?: string): string | undefined {
  * Resolve the org's OWN stored credentials for `provider` (matching either the
  * main or fallback BYOK slot), decrypting the sensitive fields. Returns null
  * when there's no org context or no slot uses that provider — callers then fall
- * back to Kodus env keys (the setup wizard, before anything is saved).
+ * back to Codus env keys (the setup wizard, before anything is saved).
  *
  * Only `apiKey` and the Bedrock auth fields (bearer token, access key id,
  * secret access key, session token) are stored encrypted (see `encryptSlot` in

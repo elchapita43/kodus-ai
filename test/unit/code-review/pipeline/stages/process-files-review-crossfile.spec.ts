@@ -3,7 +3,7 @@ import { ProcessFilesReview } from '@libs/code-review/pipeline/stages/process-fi
 import { SUGGESTION_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/SuggestionService.contract';
 import { PULL_REQUESTS_SERVICE_TOKEN } from '@libs/platformData/domain/pullRequests/contracts/pullRequests.service.contracts';
 import { FILE_REVIEW_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/file-review-context-preparation.interface';
-import { KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/kody-fine-tuning-context-preparation.interface';
+import { CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/cody-fine-tuning-context-preparation.interface';
 import { CodeAnalysisOrchestrator } from '@libs/ee/codeBase/codeAnalysisOrchestrator.service';
 import { GraphContentFormatter } from '@libs/code-review/infrastructure/adapters/services/graphContentFormatter.service';
 import { CrossFileContextSnippet } from '@libs/code-review/infrastructure/adapters/services/collectCrossFileContexts.service';
@@ -56,16 +56,16 @@ describe('ProcessFilesReview — Cross-File Filtering', () => {
                     },
                 },
                 {
-                    provide: KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
+                    provide: CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
                     useValue: {
-                        prepareKodyFineTuningContext: jest.fn(),
+                        prepareCodyFineTuningContext: jest.fn(),
                     },
                 },
                 {
                     provide: CodeAnalysisOrchestrator,
                     useValue: {
                         executeStandardAnalysis: jest.fn(),
-                        executeKodyRulesAnalysis: jest.fn(),
+                        executeCodyRulesAnalysis: jest.fn(),
                     },
                 },
                 {

@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { PrInfo } from "@/lib/api";
 
-const KODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
+const CODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
 
 export function DescriptionTab({ pr }: { pr: PrInfo }) {
     const hasAnalysis = !!pr.aiAnalysis?.trim();
@@ -20,7 +20,7 @@ export function DescriptionTab({ pr }: { pr: PrInfo }) {
                     <header className="flex items-center gap-2.5 px-5 py-3 border-b border-[var(--border)]/60">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                            src={KODY_AVATAR_URL}
+                            src={CODY_AVATAR_URL}
                             alt=""
                             width={22}
                             height={22}
@@ -28,7 +28,7 @@ export function DescriptionTab({ pr }: { pr: PrInfo }) {
                         />
                         <div className="min-w-0">
                             <p className="text-sm text-[var(--text)] font-medium">
-                                Kody's analysis
+                                Cody's analysis
                             </p>
                             <p className="text-[11px] text-[var(--text-dim)]">
                                 Generated when this PR was submitted ·

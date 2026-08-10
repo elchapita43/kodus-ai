@@ -11,7 +11,7 @@ variable "API_CLOUD_MODE" {
 }
 
 variable "CACHE_SCOPE" {
-  default = "kodus-ai-arm64"
+  default = "codus-ai-arm64"
 }
 
 # Build-cache backend. Defaults to GitHub Actions cache (`type=gha`) so
@@ -30,27 +30,27 @@ variable "CACHE_REF" {
 }
 
 variable "API_TAGS" {
-  default = "kodus-ai-api:local"
+  default = "codus-ai-api:local"
 }
 
 variable "WEBHOOKS_TAGS" {
-  default = "kodus-ai-webhook:local"
+  default = "codus-ai-webhook:local"
 }
 
 variable "WORKER_TAGS" {
-  default = "kodus-ai-worker:local"
+  default = "codus-ai-worker:local"
 }
 
 variable "WEB_TAGS" {
-  default = "kodus-ai-web:local"
+  default = "codus-ai-web:local"
 }
 
 variable "MCP_MANAGER_TAGS" {
-  default = "kodus-mcp-manager:local"
+  default = "codus-mcp-manager:local"
 }
 
 variable "RABBITMQ_TAGS" {
-  default = "kodus-rabbitmq:local"
+  default = "codus-rabbitmq:local"
 }
 
 target "base" {
@@ -115,10 +115,10 @@ target "web" {
 
 target "rabbitmq" {
   # Custom RabbitMQ image bundling the rabbitmq_delayed_message_exchange
-  # plugin that Kodus needs for workflow delayed retries. Published by
+  # plugin that Codus needs for workflow delayed retries. Published by
   # .github/workflows/rabbitmq-build-push.yml on its own cadence
   # (changes to docker/rabbitMQ/** or manual dispatch) — this image
-  # tracks the RabbitMQ + plugin version, not the Kodus release
+  # tracks the RabbitMQ + plugin version, not the Codus release
   # version, so it's intentionally NOT in the default group below.
   context = "./docker/rabbitMQ"
   dockerfile = "Dockerfile"

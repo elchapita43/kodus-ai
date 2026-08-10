@@ -3,6 +3,12 @@
 # pnpm 11 no longer reads (only auth/registry stay in .npmrc) — moved here.
 nodeLinker: hoisted
 
+# Workspace members (apps + the published common package). libs/* are pure
+# tsconfig-path projects (no package.json) and are not npm workspace members.
+packages:
+  - apps/*
+  - packages/*
+
 # The dev container's entrypoint runs `pnpm install --frozen-lockfile` with no
 # TTY; when the node_modules layout must be recreated pnpm otherwise aborts
 # (ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY). Allow the purge unattended.
@@ -17,6 +23,7 @@ allowBuilds:
   '@sentry/node-cpu-profiler': false
   '@swc/core': false
   '@vscode/ripgrep': false
+  bun: set this to true or false
   esbuild: false
   protobufjs: false
   sharp: false

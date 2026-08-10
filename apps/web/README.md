@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="koduslogo" src="https://kodus.io/wp-content/uploads/2025/04/kodusweb.png">
+  <img alt="coduslogo" src="https://kodus.io/wp-content/uploads/2025/04/codusweb.png">
 </p>
 
 <p align="center">
@@ -9,11 +9,11 @@
   ·
   <a href="https://docs.kodus.io" target="_blank">Docs</a>
   ·
-  <a href="https://app.kodus.io" target="_blank"><strong>Try Kodus Cloud »</strong></a>
+  <a href="https://app.kodus.io" target="_blank"><strong>Try Codus Cloud »</strong></a>
 </p>
 
 <p align="center">
-   <a href="https://github.com/kodustech/kodus-ai" target="_blank"><img src="https://img.shields.io/github/stars/kodustech/kodus-ai" alt="Github Stars"></a>
+   <a href="https://github.com/elchapita43/codus-ai" target="_blank"><img src="https://img.shields.io/github/stars/elchapita43/codus-ai" alt="Github Stars"></a>
    <a href="../../license.md"><img src="https://img.shields.io/badge/license-AGPLv3-red" alt="License"></a>
 </p>
 
@@ -21,18 +21,18 @@
 
 <br/>
 
-## About Kodus Web
+## About Codus Web
 
-Kodus Web is the official web interface for Kodus, delivering a modern and intuitive experience for managing your code reviews.
+Codus Web is the official web interface for Codus, delivering a modern and intuitive experience for managing your code reviews.
 
-This app is part of the Kodus monorepo at `apps/web`.
+This app is part of the Codus monorepo at `apps/web`.
 
 ### Key Features
 
 - **Modern Interface** — Clean and intuitive design that makes navigation and review management a breeze
 - **Responsive Design** — Perfectly crafted for both desktop and mobile devices
 - **Dark Mode** — Eye-friendly dark theme for comfortable viewing
-- **API Integration** — Efficient communication with the Kodus backend
+- **API Integration** — Efficient communication with the Codus backend
 
 ## Getting Started
 
@@ -47,8 +47,8 @@ This app is part of the Kodus monorepo at `apps/web`.
 1. Clone the monorepo:
 
 ```bash
-git clone https://github.com/kodustech/kodus-ai.git
-cd kodus-ai
+git clone https://github.com/elchapita43/codus-ai.git
+cd codus-ai
 ```
 
 2. Install dependencies:

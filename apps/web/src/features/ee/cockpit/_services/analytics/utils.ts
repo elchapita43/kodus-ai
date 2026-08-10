@@ -74,7 +74,7 @@ export const analyticsFetch = async <Data>(
         // New path: route through apps/api (Postgres analytics warehouse).
         // `authorizedFetch` injects the JWT (cookie or session), and
         // unwraps the apps/api `{ data, statusCode, type }` envelope so
-        // the return shape matches the legacy `kodus-service-analytics`
+        // the return shape matches the legacy `codus-service-analytics`
         // payload — consumers stay untouched.
         const finalUrl = pathToApiUrl(url);
         try {
@@ -93,7 +93,7 @@ export const analyticsFetch = async <Data>(
         }
     }
 
-    // Legacy path — kodus-service-analytics on BigQuery. Kept verbatim
+    // Legacy path — codus-service-analytics on BigQuery. Kept verbatim
     // for the rollout window; will be removed once the PostHog flag
     // hits 100% and the legacy stack is decommissioned.
     if (!process.env.WEB_ANALYTICS_SECRET) {
@@ -110,7 +110,7 @@ export const analyticsFetch = async <Data>(
     if (isServerSide && hostName === 'localhost') {
         hostName =
             process.env.GLOBAL_ANALYTICS_CONTAINER_NAME ||
-            'kodus-analytics-service';
+            'codus-analytics-service';
     }
 
     // Analytics service is intra-network — http + port, no heuristics.

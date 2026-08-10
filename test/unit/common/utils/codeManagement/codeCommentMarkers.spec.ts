@@ -1,51 +1,51 @@
 import {
-    hasKodyMarker,
+    hasCodyMarker,
     hasReviewMarker,
     isForceReviewCommand,
     isHeavyReviewCommand,
-    isKodyMentionNonReview,
+    isCodyMentionNonReview,
     isReviewCommand,
     parseReviewDirective,
 } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 
 describe('codeCommentMarkers', () => {
     describe('isReviewCommand', () => {
-        it('should return true for "@kody review"', () => {
-            expect(isReviewCommand('@kody review')).toBe(true);
+        it('should return true for "@cody review"', () => {
+            expect(isReviewCommand('@cody review')).toBe(true);
         });
 
-        it('should return true for "@kody start-review"', () => {
-            expect(isReviewCommand('@kody start-review')).toBe(true);
+        it('should return true for "@cody start-review"', () => {
+            expect(isReviewCommand('@cody start-review')).toBe(true);
         });
 
         it('should return true with leading whitespace', () => {
-            expect(isReviewCommand('  @kody review')).toBe(true);
-            expect(isReviewCommand('\t@kody start-review')).toBe(true);
+            expect(isReviewCommand('  @cody review')).toBe(true);
+            expect(isReviewCommand('\t@cody start-review')).toBe(true);
         });
 
         it('should return true case-insensitive', () => {
-            expect(isReviewCommand('@KODY REVIEW')).toBe(true);
-            expect(isReviewCommand('@Kody Start-Review')).toBe(true);
+            expect(isReviewCommand('@CODY REVIEW')).toBe(true);
+            expect(isReviewCommand('@Cody Start-Review')).toBe(true);
         });
 
         it('should return true with text after command', () => {
-            expect(isReviewCommand('@kody review please')).toBe(true);
-            expect(isReviewCommand('@kody start-review now')).toBe(true);
+            expect(isReviewCommand('@cody review please')).toBe(true);
+            expect(isReviewCommand('@cody start-review now')).toBe(true);
         });
 
         it('should return false for partial matches like "reviewing"', () => {
-            expect(isReviewCommand('@kody reviewing')).toBe(false);
+            expect(isReviewCommand('@cody reviewing')).toBe(false);
         });
 
-        it('should return false for other @kody commands', () => {
-            expect(isReviewCommand('@kody help')).toBe(false);
-            expect(isReviewCommand('@kody explain')).toBe(false);
-            expect(isReviewCommand('@kody what is this?')).toBe(false);
+        it('should return false for other @cody commands', () => {
+            expect(isReviewCommand('@cody help')).toBe(false);
+            expect(isReviewCommand('@cody explain')).toBe(false);
+            expect(isReviewCommand('@cody what is this?')).toBe(false);
         });
 
-        it('should return false when @kody is not at the start', () => {
-            expect(isReviewCommand('hey @kody review')).toBe(false);
-            expect(isReviewCommand('please @kody start-review')).toBe(false);
+        it('should return false when @cody is not at the start', () => {
+            expect(isReviewCommand('hey @cody review')).toBe(false);
+            expect(isReviewCommand('please @cody start-review')).toBe(false);
         });
 
         it('should return false for null/undefined', () => {
@@ -59,24 +59,24 @@ describe('codeCommentMarkers', () => {
     });
 
     describe('hasReviewMarker', () => {
-        it('should return true for standard kody-codereview marker', () => {
-            expect(hasReviewMarker('<!-- kody-codereview -->')).toBe(true);
+        it('should return true for standard cody-codereview marker', () => {
+            expect(hasReviewMarker('<!-- cody-codereview -->')).toBe(true);
         });
 
         it('should return true with varying whitespace', () => {
-            expect(hasReviewMarker('<!--kody-codereview-->')).toBe(true);
-            expect(hasReviewMarker('<!--  kody-codereview  -->')).toBe(true);
+            expect(hasReviewMarker('<!--cody-codereview-->')).toBe(true);
+            expect(hasReviewMarker('<!--  cody-codereview  -->')).toBe(true);
         });
 
         it('should return true when marker is embedded in text', () => {
             expect(
-                hasReviewMarker('Some text <!-- kody-codereview --> more text'),
+                hasReviewMarker('Some text <!-- cody-codereview --> more text'),
             ).toBe(true);
         });
 
         it('should return true case-insensitive', () => {
-            expect(hasReviewMarker('<!-- KODY-CODEREVIEW -->')).toBe(true);
-            expect(hasReviewMarker('<!-- Kody-CodeReview -->')).toBe(true);
+            expect(hasReviewMarker('<!-- CODY-CODEREVIEW -->')).toBe(true);
+            expect(hasReviewMarker('<!-- Cody-CodeReview -->')).toBe(true);
         });
 
         it('should return false when marker is not present', () => {
@@ -94,114 +94,114 @@ describe('codeCommentMarkers', () => {
         });
     });
 
-    describe('isKodyMentionNonReview', () => {
-        it('should return true for @kody with other commands', () => {
-            expect(isKodyMentionNonReview('@kody help')).toBe(true);
-            expect(isKodyMentionNonReview('@kody explain this')).toBe(true);
-            expect(isKodyMentionNonReview('@kody what is this?')).toBe(true);
+    describe('isCodyMentionNonReview', () => {
+        it('should return true for @cody with other commands', () => {
+            expect(isCodyMentionNonReview('@cody help')).toBe(true);
+            expect(isCodyMentionNonReview('@cody explain this')).toBe(true);
+            expect(isCodyMentionNonReview('@cody what is this?')).toBe(true);
         });
 
         it('should return true with leading whitespace', () => {
-            expect(isKodyMentionNonReview('  @kody help')).toBe(true);
+            expect(isCodyMentionNonReview('  @cody help')).toBe(true);
         });
 
         it('should return false for review commands', () => {
-            expect(isKodyMentionNonReview('@kody review')).toBe(false);
-            expect(isKodyMentionNonReview('@kody start-review')).toBe(false);
+            expect(isCodyMentionNonReview('@cody review')).toBe(false);
+            expect(isCodyMentionNonReview('@cody start-review')).toBe(false);
         });
 
         it('should return false for review commands case-insensitive', () => {
-            expect(isKodyMentionNonReview('@kody REVIEW')).toBe(false);
-            expect(isKodyMentionNonReview('@KODY start-review')).toBe(false);
+            expect(isCodyMentionNonReview('@cody REVIEW')).toBe(false);
+            expect(isCodyMentionNonReview('@CODY start-review')).toBe(false);
         });
 
-        it('should return false when @kody is not at the start', () => {
-            expect(isKodyMentionNonReview('hey @kody help')).toBe(false);
+        it('should return false when @cody is not at the start', () => {
+            expect(isCodyMentionNonReview('hey @cody help')).toBe(false);
         });
 
         it('should return false for null/undefined', () => {
-            expect(isKodyMentionNonReview(null)).toBe(false);
-            expect(isKodyMentionNonReview(undefined)).toBe(false);
+            expect(isCodyMentionNonReview(null)).toBe(false);
+            expect(isCodyMentionNonReview(undefined)).toBe(false);
         });
 
         it('should return false for empty string', () => {
-            expect(isKodyMentionNonReview('')).toBe(false);
+            expect(isCodyMentionNonReview('')).toBe(false);
         });
 
-        it('should return true for @kody alone (just mention)', () => {
-            expect(isKodyMentionNonReview('@kody')).toBe(true);
+        it('should return true for @cody alone (just mention)', () => {
+            expect(isCodyMentionNonReview('@cody')).toBe(true);
         });
     });
 
-    describe('hasKodyMarker', () => {
+    describe('hasCodyMarker', () => {
         it('should return true for Code Review Completed marker', () => {
-            expect(hasKodyMarker('## Code Review Completed! 🔥')).toBe(true);
+            expect(hasCodyMarker('## Code Review Completed! 🔥')).toBe(true);
         });
 
         it('should return true for critical issue marker', () => {
             expect(
-                hasKodyMarker('# Found critical issues please fix them'),
+                hasCodyMarker('# Found critical issues please fix them'),
             ).toBe(true);
         });
 
-        it('should return true for @kody start patterns', () => {
-            expect(hasKodyMarker('@kody start')).toBe(true);
-            expect(hasKodyMarker('@kody start-review')).toBe(true);
+        it('should return true for @cody start patterns', () => {
+            expect(hasCodyMarker('@cody start')).toBe(true);
+            expect(hasCodyMarker('@cody start-review')).toBe(true);
         });
 
-        it('should return true for @kody review pattern', () => {
-            expect(hasKodyMarker('@kody review')).toBe(true);
+        it('should return true for @cody review pattern', () => {
+            expect(hasCodyMarker('@cody review')).toBe(true);
         });
 
-        it('should return true for kody without @ prefix', () => {
-            expect(hasKodyMarker('kody start')).toBe(true);
-            expect(hasKodyMarker('kody review')).toBe(true);
+        it('should return true for cody without @ prefix', () => {
+            expect(hasCodyMarker('cody start')).toBe(true);
+            expect(hasCodyMarker('cody review')).toBe(true);
         });
 
         it('should return true for start-review alone', () => {
-            expect(hasKodyMarker('start-review')).toBe(true);
+            expect(hasCodyMarker('start-review')).toBe(true);
         });
 
         it('should return false for regular comments', () => {
-            expect(hasKodyMarker('This is a regular comment')).toBe(false);
-            expect(hasKodyMarker('Please fix this bug')).toBe(false);
+            expect(hasCodyMarker('This is a regular comment')).toBe(false);
+            expect(hasCodyMarker('Please fix this bug')).toBe(false);
         });
 
         it('should return false for null/undefined', () => {
-            expect(hasKodyMarker(null)).toBe(false);
-            expect(hasKodyMarker(undefined)).toBe(false);
+            expect(hasCodyMarker(null)).toBe(false);
+            expect(hasCodyMarker(undefined)).toBe(false);
         });
     });
 
     describe('isForceReviewCommand', () => {
-        it('should return true for "@kody review --force"', () => {
-            expect(isForceReviewCommand('@kody review --force')).toBe(true);
+        it('should return true for "@cody review --force"', () => {
+            expect(isForceReviewCommand('@cody review --force')).toBe(true);
         });
 
-        it('should return true for "@kody start-review --force"', () => {
-            expect(isForceReviewCommand('@kody start-review --force')).toBe(
+        it('should return true for "@cody start-review --force"', () => {
+            expect(isForceReviewCommand('@cody start-review --force')).toBe(
                 true,
             );
         });
 
         it('should accept single-dash and trailing text', () => {
-            expect(isForceReviewCommand('@kody review -force')).toBe(true);
+            expect(isForceReviewCommand('@cody review -force')).toBe(true);
             expect(
-                isForceReviewCommand('@kody review --force please retry'),
+                isForceReviewCommand('@cody review --force please retry'),
             ).toBe(true);
         });
 
         it('should be case-insensitive', () => {
-            expect(isForceReviewCommand('@KODY REVIEW --FORCE')).toBe(true);
+            expect(isForceReviewCommand('@CODY REVIEW --FORCE')).toBe(true);
         });
 
         it('should return false for plain review commands', () => {
-            expect(isForceReviewCommand('@kody review')).toBe(false);
-            expect(isForceReviewCommand('@kody start-review')).toBe(false);
+            expect(isForceReviewCommand('@cody review')).toBe(false);
+            expect(isForceReviewCommand('@cody start-review')).toBe(false);
         });
 
         it('should not match "force" embedded mid-word', () => {
-            expect(isForceReviewCommand('@kody review --forced')).toBe(false);
+            expect(isForceReviewCommand('@cody review --forced')).toBe(false);
         });
 
         it('should return false for null/undefined/empty', () => {
@@ -213,59 +213,59 @@ describe('codeCommentMarkers', () => {
         it('isReviewCommand should still match when --force is present', () => {
             // Force is a *flag on top of* a review command; both helpers
             // must agree so the handler still routes it as a review.
-            expect(isReviewCommand('@kody review --force')).toBe(true);
-            expect(isReviewCommand('@kody start-review --force')).toBe(true);
+            expect(isReviewCommand('@cody review --force')).toBe(true);
+            expect(isReviewCommand('@cody start-review --force')).toBe(true);
         });
     });
 
     describe('isHeavyReviewCommand', () => {
         it('matches --heavy in any position', () => {
-            expect(isHeavyReviewCommand('@kody review --heavy')).toBe(true);
-            expect(isHeavyReviewCommand('@kody review auth --heavy')).toBe(true);
+            expect(isHeavyReviewCommand('@cody review --heavy')).toBe(true);
+            expect(isHeavyReviewCommand('@cody review auth --heavy')).toBe(true);
             expect(
-                isHeavyReviewCommand('@kody review --heavy --force'),
+                isHeavyReviewCommand('@cody review --heavy --force'),
             ).toBe(true);
         });
 
         it('does NOT match a bare `heavy` (dash required, like --force)', () => {
-            expect(isHeavyReviewCommand('@kody review heavy')).toBe(false);
+            expect(isHeavyReviewCommand('@cody review heavy')).toBe(false);
             expect(
-                isHeavyReviewCommand('@kody review heavy checkout path'),
+                isHeavyReviewCommand('@cody review heavy checkout path'),
             ).toBe(false);
         });
     });
 
     describe('parseReviewDirective', () => {
         it('returns the focus text for a plain directive', () => {
-            expect(parseReviewDirective('@kody review auth logic')).toBe(
+            expect(parseReviewDirective('@cody review auth logic')).toBe(
                 'auth logic',
             );
         });
 
         it('returns undefined when there is no directive', () => {
-            expect(parseReviewDirective('@kody review')).toBeUndefined();
-            expect(parseReviewDirective('@kody review --force')).toBeUndefined();
-            expect(parseReviewDirective('@kody review --heavy')).toBeUndefined();
+            expect(parseReviewDirective('@cody review')).toBeUndefined();
+            expect(parseReviewDirective('@cody review --force')).toBeUndefined();
+            expect(parseReviewDirective('@cody review --heavy')).toBeUndefined();
         });
 
         it('strips flags whatever their position (leading, trailing, multiple)', () => {
-            expect(parseReviewDirective('@kody review --heavy auth')).toBe(
+            expect(parseReviewDirective('@cody review --heavy auth')).toBe(
                 'auth',
             );
-            expect(parseReviewDirective('@kody review auth --heavy')).toBe(
+            expect(parseReviewDirective('@cody review auth --heavy')).toBe(
                 'auth',
             );
             expect(
-                parseReviewDirective('@kody review auth --heavy --force'),
+                parseReviewDirective('@cody review auth --heavy --force'),
             ).toBe('auth');
             expect(
-                parseReviewDirective('@kody review --force auth --heavy'),
+                parseReviewDirective('@cody review --force auth --heavy'),
             ).toBe('auth');
         });
 
         it('does not strip focus words that merely contain heavy/force', () => {
             expect(
-                parseReviewDirective('@kody review the forced retries path'),
+                parseReviewDirective('@cody review the forced retries path'),
             ).toBe('the forced retries path');
         });
     });
@@ -273,38 +273,38 @@ describe('codeCommentMarkers', () => {
     describe('integration: command detection consistency', () => {
         it('should correctly identify review commands vs mentions', () => {
             const reviewCommands = [
-                '@kody review',
-                '@kody start-review',
-                '  @kody review',
-                '@KODY REVIEW',
+                '@cody review',
+                '@cody start-review',
+                '  @cody review',
+                '@CODY REVIEW',
             ];
 
             const nonReviewMentions = [
-                '@kody help',
-                '@kody explain',
-                '@kody what is this code doing?',
-                '@kody',
+                '@cody help',
+                '@cody explain',
+                '@cody what is this code doing?',
+                '@cody',
             ];
 
             reviewCommands.forEach((cmd) => {
                 expect(isReviewCommand(cmd)).toBe(true);
-                expect(isKodyMentionNonReview(cmd)).toBe(false);
+                expect(isCodyMentionNonReview(cmd)).toBe(false);
             });
 
             nonReviewMentions.forEach((mention) => {
                 expect(isReviewCommand(mention)).toBe(false);
-                expect(isKodyMentionNonReview(mention)).toBe(true);
+                expect(isCodyMentionNonReview(mention)).toBe(true);
             });
         });
 
         it('should handle edge cases consistently', () => {
             // "reviewing" should not match as review command
-            expect(isReviewCommand('@kody reviewing')).toBe(false);
-            expect(isKodyMentionNonReview('@kody reviewing')).toBe(true);
+            expect(isReviewCommand('@cody reviewing')).toBe(false);
+            expect(isCodyMentionNonReview('@cody reviewing')).toBe(true);
 
             // "review-something" should not match as review command
-            expect(isReviewCommand('@kody review-code')).toBe(false);
-            expect(isKodyMentionNonReview('@kody review-code')).toBe(true);
+            expect(isReviewCommand('@cody review-code')).toBe(false);
+            expect(isCodyMentionNonReview('@cody review-code')).toBe(true);
         });
     });
 });

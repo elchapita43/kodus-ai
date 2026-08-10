@@ -24,7 +24,7 @@ const createBaseContextPack = (knowledgeContent: string): ContextPack => ({
                 {
                     id: 'knowledge::rule',
                     filePath: 'docs/rules.md',
-                    repositoryName: 'kodus-runtime',
+                    repositoryName: 'codus-runtime',
                     content: knowledgeContent,
                     lineRange: { start: 1, end: 5 },
                 },
@@ -40,7 +40,7 @@ const createBaseContextPack = (knowledgeContent: string): ContextPack => ({
 describe('prompt_codereview_system_gemini_v2', () => {
     it('injects knowledge layer references into the generation instructions', () => {
         const knowledgeContent =
-            '# Kodus Rules\n- Validate all external dependencies';
+            '# Codus Rules\n- Validate all external dependencies';
 
         const payload: CodeReviewPayload = {
             v2PromptOverrides: {
@@ -138,7 +138,7 @@ describe('prompt_codereview_system_gemini_v2', () => {
                 {
                     title: 'Avoid mutable defaults',
                     rule: 'Never mutate default array/object parameters in functions.',
-                    // extra fields from kody rules shape should be ignored in prompt rendering
+                    // extra fields from cody rules shape should be ignored in prompt rendering
                     path: 'src/**',
                 } as any,
             ],

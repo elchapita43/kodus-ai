@@ -19,31 +19,31 @@ const noOverride = (level: string, value: unknown = false) => ({
     level,
 });
 
-describe("countConfigOverridesByRoute — kody-rules", () => {
+describe("countConfigOverridesByRoute — cody-rules", () => {
     it("does NOT count ideRulesSyncEnabled overrides", () => {
         // REGRESSION: the auto-sync toggle is an import action, not a rule
-        // policy. Including it in the override count made the Kody Rules
+        // policy. Including it in the override count made the Cody Rules
         // nav badge read "1" on repos that had simply toggled IDE sync,
         // which users interpreted as "1 custom rule".
         const config: any = {
             ideRulesSyncEnabled: overridden("repository", "default", true, false),
-            kodyRulesGeneratorEnabled: noOverride("default"),
-            kodyKnowledgeApproval: { enabled: noOverride("default") },
+            codyRulesGeneratorEnabled: noOverride("default"),
+            codyKnowledgeApproval: { enabled: noOverride("default") },
         };
 
         const count = countConfigOverridesByRoute(
             config,
-            "kody-rules",
+            "cody-rules",
             "repository" as any,
         );
 
         expect(count).toBe(0);
     });
 
-    it("counts kodyRulesGeneratorEnabled and kodyKnowledgeApproval overrides", () => {
+    it("counts codyRulesGeneratorEnabled and codyKnowledgeApproval overrides", () => {
         const config: any = {
-            kodyRulesGeneratorEnabled: overridden("repository", "default"),
-            kodyKnowledgeApproval: {
+            codyRulesGeneratorEnabled: overridden("repository", "default"),
+            codyKnowledgeApproval: {
                 enabled: overridden("repository", "default"),
             },
             ideRulesSyncEnabled: noOverride("default"),
@@ -51,7 +51,7 @@ describe("countConfigOverridesByRoute — kody-rules", () => {
 
         const count = countConfigOverridesByRoute(
             config,
-            "kody-rules",
+            "cody-rules",
             "repository" as any,
         );
 
@@ -60,30 +60,30 @@ describe("countConfigOverridesByRoute — kody-rules", () => {
 
     it("returns 0 when no rule-policy fields have repository-level overrides", () => {
         const config: any = {
-            kodyRulesGeneratorEnabled: noOverride("default"),
-            kodyKnowledgeApproval: { enabled: noOverride("default") },
+            codyRulesGeneratorEnabled: noOverride("default"),
+            codyKnowledgeApproval: { enabled: noOverride("default") },
             ideRulesSyncEnabled: noOverride("default"),
         };
 
         const count = countConfigOverridesByRoute(
             config,
-            "kody-rules",
+            "cody-rules",
             "repository" as any,
         );
 
         expect(count).toBe(0);
     });
 
-    it("ignores fields outside the kody-rules prefix list", () => {
+    it("ignores fields outside the cody-rules prefix list", () => {
         const config: any = {
-            // Belongs to the general route, not kody-rules
+            // Belongs to the general route, not cody-rules
             ignorePaths: overridden("repository", "default"),
-            kodyRulesGeneratorEnabled: noOverride("default"),
+            codyRulesGeneratorEnabled: noOverride("default"),
         };
 
         const count = countConfigOverridesByRoute(
             config,
-            "kody-rules",
+            "cody-rules",
             "repository" as any,
         );
 
@@ -94,7 +94,7 @@ describe("countConfigOverridesByRoute — kody-rules", () => {
 describe("countConfigOverridesForRoutes — aggregate badge", () => {
     it("aggregates overrides across multiple routes without double-counting", () => {
         const config: any = {
-            kodyRulesGeneratorEnabled: overridden("repository", "default"),
+            codyRulesGeneratorEnabled: overridden("repository", "default"),
             ignorePaths: overridden("repository", "default"),
             // ideRulesSyncEnabled override is invisible to both routes
             ideRulesSyncEnabled: overridden("repository", "default"),
@@ -102,12 +102,12 @@ describe("countConfigOverridesForRoutes — aggregate badge", () => {
 
         const count = countConfigOverridesForRoutes(
             config,
-            ["general", "kody-rules"],
+            ["general", "cody-rules"],
             "repository" as any,
         );
 
-        // 1 from kody-rules (kodyRulesGeneratorEnabled) + 1 from general
-        // (ignorePaths). ideRulesSyncEnabled NOT counted under kody-rules.
+        // 1 from cody-rules (codyRulesGeneratorEnabled) + 1 from general
+        // (ignorePaths). ideRulesSyncEnabled NOT counted under cody-rules.
         expect(count).toBe(2);
     });
 });

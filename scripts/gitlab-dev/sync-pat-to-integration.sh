@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # After re-bootstrapping (which mints a fresh user PAT and revokes any
-# previous one), the GitLab integration in Kodus is left holding an
+# previous one), the GitLab integration in Codus is left holding an
 # invalid token. Re-encrypts the current .tmp/gitlab-dev-pat.txt with
 # the API_CRYPTO_KEY scheme and writes it into auth_integrations so
 # the running stack picks it up on the next call.
@@ -41,7 +41,7 @@ fi
 ENCRYPTED="${IV_HEX}:${CIPHER_HEX}"
 
 echo "==> updating auth_integration accessToken for GITLAB"
-docker exec -i db_postgres psql -U kodusdev -d kodus_db <<SQL
+docker exec -i db_postgres psql -U codusdev -d codus_db <<SQL
 UPDATE auth_integrations
 SET "authDetails" = jsonb_set("authDetails"::jsonb, '{accessToken}', to_jsonb('${ENCRYPTED}'::text), false)::json,
     "updatedAt" = NOW()

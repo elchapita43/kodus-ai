@@ -41,7 +41,7 @@ FROM base AS deps
 # migration moved them out of package.json/.npmrc. Without it here, the frozen
 # install sees empty overrides and aborts (ERR_PNPM_LOCKFILE_CONFIG_MISMATCH).
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY packages/kodus-common ./packages/kodus-common
+COPY packages/codus-common ./packages/codus-common
 
 # `--store-dir` points pnpm at a BuildKit cache mount so the
 # content-addressable store survives across builds. pnpm's store is safe
@@ -49,14 +49,14 @@ COPY packages/kodus-common ./packages/kodus-common
 # parallel bake targets reuse it without lock waits.
 #
 # The `npmrc` BuildKit secret (optional) lets CI inject auth for the
-# @kodus registry without the token ever landing in an image layer.
+# @codus registry without the token ever landing in an image layer.
 # Usage: `docker buildx build --secret id=npmrc,src=$HOME/.npmrc ...`.
 # When the secret is absent (required=false), the repo-local .npmrc
 # copied above stays in effect — today that file only holds registry
 # URLs, no tokens, so builds still work unauthenticated.
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc,required=false \
     --mount=type=cache,target=/pnpm-store,sharing=shared \
-    cd packages/kodus-common \
+    cd packages/codus-common \
   && pnpm install --store-dir /pnpm-store \
   && pnpm run prepack
 
@@ -70,7 +70,7 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc,required=false \
     --mount=type=cache,target=/pnpm-store,sharing=shared \
     if [ -s /run/secrets/github_token ]; then export GITHUB_TOKEN="$(cat /run/secrets/github_token)"; fi \
  && pnpm install --frozen-lockfile --store-dir /pnpm-store
-RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_modules/@kodus/kodus-common
+RUN rm -rf node_modules/@codus/codus-common && cp -r packages/codus-common node_modules/@codus/codus-common
 
 FROM deps AS build
 ARG API_CLOUD_MODE=false
@@ -103,11 +103,11 @@ FROM base AS prod-deps
 # See deps stage: pnpm-workspace.yaml must be present for overrides/catalog to
 # resolve under --frozen-lockfile.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY packages/kodus-common ./packages/kodus-common
+COPY packages/codus-common ./packages/codus-common
 
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc,required=false \
     --mount=type=cache,target=/pnpm-store,sharing=shared \
-    cd packages/kodus-common \
+    cd packages/codus-common \
   && pnpm install --store-dir /pnpm-store \
   && pnpm run prepack
 
@@ -127,10 +127,10 @@ RUN --mount=type=secret,id=npmrc,target=/root/.npmrc,required=false \
 # needed for `pnpm run prepack` but not at runtime — keeping them would
 # duplicate ~450MB inside the final image for no benefit. `dist/` and
 # `package.json` are what Node actually resolves.
-RUN rm -rf packages/kodus-common/node_modules \
-           packages/kodus-common/src \
-           packages/kodus-common/test
-RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_modules/@kodus/kodus-common
+RUN rm -rf packages/codus-common/node_modules \
+           packages/codus-common/src \
+           packages/codus-common/test
+RUN rm -rf node_modules/@codus/codus-common && cp -r packages/codus-common node_modules/@codus/codus-common
 
 # Dedicated stage for the bun binary. Using the official oven/bun image
 # instead of `curl bun.sh/install | bash` because:
@@ -142,14 +142,14 @@ RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_
 FROM docker.io/oven/bun:${BUN_VERSION}-debian AS bun-source
 
 FROM docker.io/library/node:22.22.2-slim AS runtime-common
-LABEL org.opencontainers.image.source="https://github.com/kodustech/kodus-ai"
+LABEL org.opencontainers.image.source="https://github.com/elchapita43/codus-ai"
 WORKDIR /usr/src/app
 ENV NODE_ENV=production
 
 # Redeclare ARGs to make them available in this stage
 ARG API_CLOUD_MODE=false
 ARG RELEASE_VERSION=local
-ARG KODUS_GRAPH_VERSION=0.3.0
+ARG CODUS_GRAPH_VERSION=0.3.0
 
 # Set ENVs for runtime
 ENV API_CLOUD_MODE=${API_CLOUD_MODE}
@@ -172,8 +172,8 @@ COPY --chown=1000:1000 --from=prod-deps /usr/src/app/node_modules ./node_modules
 COPY --chown=1000:1000 --from=build /usr/src/app/dist ./dist
 COPY --chown=1000:1000 --from=build /usr/src/app/libs/agents/skills ./libs/agents/skills
 COPY --chown=1000:1000 --from=build /usr/src/app/package.json ./package.json
-COPY --chown=1000:1000 --from=build /usr/src/app/default-kodus-config.yml ./default-kodus-config.yml
-COPY --chown=1000:1000 --from=build /usr/src/app/kodus-config.yml ./kodus-config.yml
+COPY --chown=1000:1000 --from=build /usr/src/app/default-codus-config.yml ./default-codus-config.yml
+COPY --chown=1000:1000 --from=build /usr/src/app/codus-config.yml ./codus-config.yml
 COPY --chown=1000:1000 --from=build /usr/src/app/scripts ./scripts
 COPY --chown=1000:1000 --from=build /usr/src/app/tsconfig-paths-bootstrap.js ./tsconfig-paths-bootstrap.js
 
@@ -189,12 +189,12 @@ RUN chown 1000:1000 /usr/src/app
 
 USER 1000
 
-# Install kodus-graph for the runtime user so self-hosted worker images can
+# Install codus-graph for the runtime user so self-hosted worker images can
 # find it through $HOME/.bun/bin after dropping root privileges.
-RUN bun install -g @kodus/kodus-graph@${KODUS_GRAPH_VERSION}
+RUN bun install -g @codus/codus-graph@${CODUS_GRAPH_VERSION}
 USER root
-RUN printf '%s\n' '#!/bin/sh' 'exec /home/node/.bun/bin/kodus-graph "$@"' > /usr/local/bin/kodus-graph \
-  && chmod 0755 /usr/local/bin/kodus-graph
+RUN printf '%s\n' '#!/bin/sh' 'exec /home/node/.bun/bin/codus-graph "$@"' > /usr/local/bin/codus-graph \
+  && chmod 0755 /usr/local/bin/codus-graph
 USER 1000
 
 ENTRYPOINT ["/usr/local/bin/prod-entrypoint"]

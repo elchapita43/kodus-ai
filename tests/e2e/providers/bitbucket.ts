@@ -91,7 +91,7 @@ export class BitbucketProvider extends BaseProvider {
                 method: "POST",
                 headers: this.headers(),
                 body: {
-                    description: "Kodus E2E webhook",
+                    description: "Codus E2E webhook",
                     url: webhookUrl,
                     active: true,
                     events: [
@@ -178,7 +178,7 @@ export class BitbucketProvider extends BaseProvider {
         // Why we don't POST directly from the fixture branch: observed
         // 2026-05-20 on QA run 3d7866, bitbucket returned a DECLINED
         // PR from 2 days earlier (id=12) in the body of a fresh
-        // `POST /pullrequests` request from `fixture/kody-rule-todo-
+        // `POST /pullrequests` request from `fixture/cody-rule-todo-
         // remove-me` → `main`. The scenario then polled that closed
         // PR for a review that would never come and failed after 12
         // min. Couldn't reproduce manually 5 min later. Most likely a
@@ -223,7 +223,7 @@ export class BitbucketProvider extends BaseProvider {
         // payload assembly) recognizing the new ref. Observed 2026-05-23:
         // when the throwaway branch is created and a PR is opened against
         // it in the same tick, the webhook fires with a PR whose
-        // `pullrequests/{id}/commits` endpoint returns 0 entries — Kodus's
+        // `pullrequests/{id}/commits` endpoint returns 0 entries — Codus's
         // ValidateNewCommitsStage then SKIPs the pipeline with
         // "PR has 0 commits", the scenario polls forever, and the test
         // times out at 25min. Confirmed via direct curl that the same
@@ -406,7 +406,7 @@ export class BitbucketProvider extends BaseProvider {
             {
                 method: "POST",
                 headers: this.headers(),
-                body: { content: { raw: "@kody review" } },
+                body: { content: { raw: "@cody review" } },
             },
         );
         ensureOk(resp, "bitbucket:triggerReview");
@@ -416,7 +416,7 @@ export class BitbucketProvider extends BaseProvider {
         };
     }
 
-    // Classify a PR comment against the "is this a real Kody review finding?"
+    // Classify a PR comment against the "is this a real Cody review finding?"
     // rules, returning WHY it was dropped so a timeout can dump the reasons
     // (product-posted-nothing vs detector-rejected-a-real-review). Keep the
     // predicate here single-sourced so the diagnostic can't drift from the
@@ -428,27 +428,27 @@ export class BitbucketProvider extends BaseProvider {
         if (c.created_on <= opts.sinceIso)
             return { keep: false, reason: "before sinceIso" };
         if (opts.triggerId && String(c.id) === opts.triggerId)
-            return { keep: false, reason: "the @kody trigger comment itself" };
+            return { keep: false, reason: "the @cody trigger comment itself" };
         const raw = c.content?.raw ?? "";
-        if (raw.toLowerCase().startsWith("@kody"))
-            return { keep: false, reason: "@kody command echo" };
+        if (raw.toLowerCase().startsWith("@cody"))
+            return { keep: false, reason: "@cody command echo" };
         // Drop "Started!" placeholder but keep "Complete!" — the latter is a
-        // valid mechanics signal even when Kody found no inline findings.
-        // Bitbucket-specific: Kody does NOT inject the `<!-- kody-codereview -->`
+        // valid mechanics signal even when Cody found no inline findings.
+        // Bitbucket-specific: Cody does NOT inject the `<!-- cody-codereview -->`
         // HTML marker into Bitbucket comments (it does on github/gitlab), so
         // the marker check alone matches nothing. Fall back to detecting the
-        // visible heading text Kody renders into the placeholder.
+        // visible heading text Cody renders into the placeholder.
         if (
-            raw.includes("<!-- kody-codereview") &&
-            !raw.includes("kody-codereview-completed")
+            raw.includes("<!-- cody-codereview") &&
+            !raw.includes("cody-codereview-completed")
         ) {
-            return { keep: false, reason: "in-progress kody-codereview marker" };
+            return { keep: false, reason: "in-progress cody-codereview marker" };
         }
         if (raw.includes("Code Review Started!")) {
             return { keep: false, reason: "'Code Review Started!' placeholder" };
         }
         // Bitbucket-only leftover: when the gate skips the pipeline mid-flow,
-        // Kody overwrites its "Code Review Started!" placeholder so only the
+        // Cody overwrites its "Code Review Started!" placeholder so only the
         // docs.kodus.io feedback footer remains (~80 chars of just the 👎
         // link, no review content) — easy to confuse with a real "No issues
         // found" outcome. Drop it.
@@ -458,9 +458,9 @@ export class BitbucketProvider extends BaseProvider {
         // text-matching the footer's docs link, not validating a URL.
         if (
             trimmed.length < 200 &&
-            /docs\.kodus\.io/.test(trimmed) &&
-            !trimmed.includes("Kody Review Complete") &&
-            !trimmed.includes("Kody Guide")
+            /docs\.codus\.io/.test(trimmed) &&
+            !trimmed.includes("Cody Review Complete") &&
+            !trimmed.includes("Cody Guide")
         ) {
             return {
                 keep: false,
@@ -556,10 +556,10 @@ export class BitbucketProvider extends BaseProvider {
 
     authMode(): "token" {
         // Bitbucket's "app password" / "API token" auth flows are both
-        // routed through Kodus's AuthMode.TOKEN branch — the backend
+        // routed through Codus's AuthMode.TOKEN branch — the backend
         // accepts `username:token` Basic auth. Returning the literal
         // "app-password" string here was silently bypassing the whole
-        // authenticateWithToken flow on the Kodus side (no enum match →
+        // authenticateWithToken flow on the Codus side (no enum match →
         // default success response in <10ms with nothing persisted), so
         // the subsequent /repositories/org call had no auth detail to
         // pull repos from and returned an empty list.
@@ -571,7 +571,7 @@ export class BitbucketProvider extends BaseProvider {
     }
 
     async currentUserId(): Promise<string> {
-        // Bitbucket returns uuid as `{abc-...}` with braces. Kodus's
+        // Bitbucket returns uuid as `{abc-...}` with braces. Codus's
         // bitbucket-cloud.service.ts strips them via sanitizeUUID before
         // storing as pullRequest.user.id, so we mirror that here — must
         // match exactly for the per-seat assign payload to land on the

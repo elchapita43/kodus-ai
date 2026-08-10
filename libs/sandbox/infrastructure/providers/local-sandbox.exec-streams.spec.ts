@@ -15,7 +15,7 @@ describe('LocalSandboxService exec — separates stdout and stderr', () => {
     let rc: any;
 
     beforeAll(() => {
-        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kodus-exec-streams-'));
+        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'codus-exec-streams-'));
         fs.writeFileSync(path.join(dir, 'real.txt'), 'hello world\n');
         const svc = new LocalSandboxService({} as any);
         rc = (svc as any).buildRemoteCommands(dir);
@@ -57,7 +57,7 @@ describe('LocalSandboxService exec — rejects path traversal in args', () => {
     let rc: any;
 
     beforeAll(() => {
-        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kodus-exec-traversal-'));
+        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'codus-exec-traversal-'));
         fs.writeFileSync(path.join(dir, 'real.txt'), 'hello\n');
         const svc = new LocalSandboxService({} as any);
         rc = (svc as any).buildRemoteCommands(dir);

@@ -27,8 +27,8 @@ const overpass_mono = Overpass_Mono({
 
 export const metadata: Metadata = {
     title: {
-        default: "Kodus",
-        template: "%s | Kodus",
+        default: "Codus",
+        template: "%s | Codus",
     },
     icons: { icon: "/favicon.ico" },
     robots: {
@@ -39,10 +39,10 @@ export const metadata: Metadata = {
     openGraph: {
         locale: "en_US",
         type: "website",
-        siteName: "Kodus",
+        siteName: "Codus",
         title: {
-            default: "Kodus",
-            template: "%s | Kodus",
+            default: "Codus",
+            template: "%s | Codus",
         },
     },
 };
@@ -77,12 +77,12 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
             : "",
     };
 
-    // Expose publicConfig as window.__KODUS_PUBLIC_CONFIG__ so module-scope
+    // Expose publicConfig as window.__CODUS_PUBLIC_CONFIG__ so module-scope
     // client code (e.g. isSelfHosted) can read the runtime config before
     // any React hook fires. Escaping < prevents premature </script>
     // tag closure if a config value ever contains one.
     const configScript =
-        "window.__KODUS_PUBLIC_CONFIG__ = " +
+        "window.__CODUS_PUBLIC_CONFIG__ = " +
         JSON.stringify(publicConfig).replace(/</g, "\\u003c") +
         ";";
 

@@ -1,6 +1,6 @@
 ---
 title: "Pipeline de revisión con enfoque en seguridad"
-description: "Configura Kody Rules enfocadas en el OWASP top 10, detección de secretos y patrones de codificación segura."
+description: "Configura Cody Rules enfocadas en el OWASP top 10, detección de secretos y patrones de codificación segura."
 icon: "shield-halved"
 ---
 
@@ -19,7 +19,7 @@ reviewOptions:
   security: true
 ```
 
-Esto te da las verificaciones de seguridad integradas de Kodus. Las reglas a continuación añaden las políticas de seguridad específicas de tu equipo por encima.
+Esto te da las verificaciones de seguridad integradas de Codus. Las reglas a continuación añaden las políticas de seguridad específicas de tu equipo por encima.
 
 ## Paso 2 — Crea reglas enfocadas en OWASP
 
@@ -93,17 +93,17 @@ Instructions:
 Crea convenciones persistentes que apliquen en todas partes:
 
 ```
-@kody remember: all user input must be validated and sanitized
+@cody remember: all user input must be validated and sanitized
 before use. Never trust client-side data.
 ```
 
 ```
-@kody remember: all API endpoints that handle sensitive data
+@cody remember: all API endpoints that handle sensitive data
 must use HTTPS only and include rate limiting.
 ```
 
 ```
-@kody remember: error messages must never expose stack traces,
+@cody remember: error messages must never expose stack traces,
 internal paths, or database details to the client.
 ```
 
@@ -111,7 +111,7 @@ internal paths, or database details to the client.
 
 Para las reglas de seguridad, querrás que los hallazgos críticos sean bloqueantes:
 
-1. Habilita **Solicitar cambios** en la configuración de flujo de trabajo de PR para que Kody solicite cambios cuando se encuentren problemas críticos
+1. Habilita **Solicitar cambios** en la configuración de flujo de trabajo de PR para que Cody solicite cambios cuando se encuentren problemas críticos
 2. Configura las reglas de seguridad en severidad **Crítica** para que siempre aparezcan por encima de cualquier filtro de severidad
 3. NO establezcas un límite bajo en `maxSuggestions` — los hallazgos de seguridad nunca deben suprimirse
 
@@ -141,4 +141,4 @@ Instructions:
 - [ ] Solicitar cambios habilitado para hallazgos críticos
 - [ ] Un PR de prueba confirmó que las reglas se activan correctamente
 
-Para más información sobre la configuración de reglas, consulta [Kody Rules](/how_to_use/es/code_review/configs/kody_rules).
+Para más información sobre la configuración de reglas, consulta [Cody Rules](/how_to_use/es/code_review/configs/cody_rules).

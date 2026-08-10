@@ -22,7 +22,7 @@ async function canUseUpdateNotifier(): Promise<boolean> {
 }
 
 export async function checkForUpdates(): Promise<void> {
-    if (process.env.KODUS_DISABLE_UPDATE_CHECK === '1') {
+    if (process.env.CODUS_DISABLE_UPDATE_CHECK === '1') {
         return;
     }
 

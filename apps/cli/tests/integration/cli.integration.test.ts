@@ -80,7 +80,7 @@ async function runCli(
                 env: {
                     PATH: process.env.PATH,
                     HOME: tmpHome,
-                    KODUS_API_URL: mockServer.url,
+                    CODUS_API_URL: mockServer.url,
                     NO_COLOR: '1',
                     FORCE_COLOR: '0',
                     NODE_NO_WARNINGS: '1',
@@ -100,7 +100,7 @@ async function runCli(
 }
 
 async function createTempGitRepo(): Promise<string> {
-    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-test-repo-'));
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-test-repo-'));
     await execFileAsync('git', ['init'], { cwd: dir });
     await execFileAsync('git', ['config', 'user.email', 'test@test.com'], {
         cwd: dir,
@@ -110,16 +110,16 @@ async function createTempGitRepo(): Promise<string> {
 }
 
 beforeAll(async () => {
-    // 1. Isolated HOME so ~/.kodus is temp
-    tmpHome = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-test-home-'));
-    const kodusDir = path.join(tmpHome, '.kodus');
-    await fs.mkdir(kodusDir, { recursive: true });
+    // 1. Isolated HOME so ~/.codus is temp
+    tmpHome = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-test-home-'));
+    const codusDir = path.join(tmpHome, '.codus');
+    await fs.mkdir(codusDir, { recursive: true });
 
     // 2. Team key config
     await fs.writeFile(
-        path.join(kodusDir, 'config.json'),
+        path.join(codusDir, 'config.json'),
         JSON.stringify({
-            teamKey: 'kodus_test_key',
+            teamKey: 'codus_test_key',
             teamName: 'Test Team',
             organizationName: 'Test Org',
         }),
@@ -200,7 +200,7 @@ describe('utility commands', () => {
         const { stdout, stderr, exitCode } = await runCli(['status']);
         expect(exitCode).toBe(0);
         const output = stdout + stderr;
-        expect(output).toContain('Kodus Status');
+        expect(output).toContain('Codus Status');
         expect(output).toContain('Version:');
         expect(output).toContain('Auth:');
         expect(output).toContain('Repository:');
@@ -213,7 +213,7 @@ describe('utility commands', () => {
         expect(exitCode).toBe(0);
         const output = stdout + stderr;
         expect(output).toContain('Available bundled skills');
-        expect(output).toContain('kodus-review');
+        expect(output).toContain('codus-review');
     });
 
     it('exposes full skill lifecycle commands', async () => {
@@ -324,7 +324,7 @@ describe('review integration', () => {
 
         const req = mockServer.requests.find((r) => r.url === '/cli/review');
         expect(req).toBeDefined();
-        expect(req!.headers['x-team-key']).toBe('kodus_test_key');
+        expect(req!.headers['x-team-key']).toBe('codus_test_key');
         // Should NOT have Authorization header
         expect(req!.headers['authorization']).toBeUndefined();
     });
@@ -502,7 +502,7 @@ describe('schema integration', () => {
         expect(exitCode).toBe(0);
 
         const json = parseFirstJsonObject(stdout);
-        expect(json).toHaveProperty('name', 'kodus');
+        expect(json).toHaveProperty('name', 'codus');
         expect(Array.isArray(json.commands)).toBe(true);
         expect(json.commands.some((c: any) => c.name === 'review')).toBe(true);
         expect(json.commands.some((c: any) => c.name === 'pr')).toBe(true);
@@ -549,7 +549,7 @@ describe('business validation integration', () => {
         expect(exitCode).toBe(1);
         expect(stderr).toContain('Unknown option: `--pr-url`.');
         expect(stderr).toContain(
-            'Run `kodus pr --help` to see available options.',
+            'Run `codus pr --help` to see available options.',
         );
     });
 
@@ -586,7 +586,7 @@ describe('auth status integration', () => {
 
     it('shows trial mode when no auth configured', async () => {
         const noAuthHome = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-noauth-'),
+            path.join(os.tmpdir(), 'codus-noauth-'),
         );
 
         try {
@@ -610,9 +610,9 @@ describe('auth status integration', () => {
 // Hook commands — install, status, uninstall
 // ---------------------------------------------------------------------------
 describe('hook integration', () => {
-    it('kodus hook install --agent returns structured error outside git repo', async () => {
+    it('codus hook install --agent returns structured error outside git repo', async () => {
         const nonRepoDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-non-repo-'),
+            path.join(os.tmpdir(), 'codus-non-repo-'),
         );
 
         try {
@@ -631,7 +631,7 @@ describe('hook integration', () => {
         }
     });
 
-    it('kodus hook install --dry-run does not create pre-push hook', async () => {
+    it('codus hook install --dry-run does not create pre-push hook', async () => {
         const hookPath = path.join(gitRepoDir, '.git', 'hooks', 'pre-push');
         await fs.unlink(hookPath).catch(() => {});
 
@@ -648,7 +648,7 @@ describe('hook integration', () => {
         await expect(fs.access(hookPath)).rejects.toThrow();
     });
 
-    it('kodus hook install creates pre-push hook', async () => {
+    it('codus hook install creates pre-push hook', async () => {
         const { stdout, stderr, exitCode } = await runCli([
             'hook',
             'install',
@@ -660,11 +660,11 @@ describe('hook integration', () => {
 
         const hookPath = path.join(gitRepoDir, '.git', 'hooks', 'pre-push');
         const content = await fs.readFile(hookPath, 'utf-8');
-        expect(content).toContain('# kodus-hook');
+        expect(content).toContain('# codus-hook');
         expect(content).toContain('--fail-on critical');
     });
 
-    it('kodus hook status shows installed', async () => {
+    it('codus hook status shows installed', async () => {
         // Install first
         await runCli(['hook', 'install', '--force']);
 
@@ -675,7 +675,7 @@ describe('hook integration', () => {
         expect(output).toContain('critical');
     });
 
-    it('kodus hook uninstall removes the hook', async () => {
+    it('codus hook uninstall removes the hook', async () => {
         // Install first
         await runCli(['hook', 'install', '--force']);
 
@@ -691,9 +691,9 @@ describe('hook integration', () => {
         await expect(fs.access(hookPath)).rejects.toThrow();
     });
 
-    it('kodus hook uninstall --agent returns structured error outside git repo', async () => {
+    it('codus hook uninstall --agent returns structured error outside git repo', async () => {
         const nonRepoDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-non-repo-'),
+            path.join(os.tmpdir(), 'codus-non-repo-'),
         );
 
         try {
@@ -717,7 +717,7 @@ describe('hook integration', () => {
 // Decision commands — enable and capture
 // ---------------------------------------------------------------------------
 describe('decisions integration', () => {
-    it('kodus decisions enable configures .claude/settings.json and ~/.codex/config.toml', async () => {
+    it('codus decisions enable configures .claude/settings.json and ~/.codex/config.toml', async () => {
         const { stdout, stderr, exitCode } = await runCli([
             'decisions',
             'enable',
@@ -746,20 +746,20 @@ describe('decisions integration', () => {
         );
         const stopJson = JSON.stringify(claudeSettings.hooks.Stop);
         expect(userPromptSubmitJson).toContain(
-            'kodus decisions capture --capture-agent claude-compatible --event user-prompt-submit',
+            'codus decisions capture --capture-agent claude-compatible --event user-prompt-submit',
         );
         expect(stopJson).toContain(
-            'kodus decisions capture --capture-agent claude-compatible --event stop',
+            'codus decisions capture --capture-agent claude-compatible --event stop',
         );
 
         const codexConfigPath = path.join(tmpHome, '.codex', 'config.toml');
         const codexConfig = await fs.readFile(codexConfigPath, 'utf-8');
         expect(codexConfig).toContain(
-            'notify = ["kodus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]',
+            'notify = ["codus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]',
         );
     });
 
-    it('kodus decisions capture exits cleanly for non-stop events (no local storage)', async () => {
+    it('codus decisions capture exits cleanly for non-stop events (no local storage)', async () => {
         const payload = JSON.stringify({
             session_id: 'session-1',
             turn_id: 'turn-1',
@@ -781,11 +781,11 @@ describe('decisions integration', () => {
         expect(exitCode).toBe(0);
 
         // No local file should be created — capture only sends to API on stop
-        const memoryDir = path.join(gitRepoDir, '.kody', 'pr');
+        const memoryDir = path.join(gitRepoDir, '.cody', 'pr');
         await expect(fs.access(memoryDir)).rejects.toThrow();
     });
 
-    it('kodus decisions capture exits cleanly with claude-compatible agent and Cursor env vars', async () => {
+    it('codus decisions capture exits cleanly with claude-compatible agent and Cursor env vars', async () => {
         const payload = JSON.stringify({
             session_id: 'session-2',
             prompt: 'add retry with backoff',
@@ -810,13 +810,13 @@ describe('decisions integration', () => {
         expect(exitCode).toBe(0);
 
         // No local file should be created — capture only sends to API on stop
-        const memoryDir = path.join(gitRepoDir, '.kody', 'pr');
+        const memoryDir = path.join(gitRepoDir, '.cody', 'pr');
         await expect(fs.access(memoryDir)).rejects.toThrow();
     });
 
-    it('kodus decisions disable --agent returns structured error outside git repo', async () => {
+    it('codus decisions disable --agent returns structured error outside git repo', async () => {
         const nonRepoDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-non-repo-'),
+            path.join(os.tmpdir(), 'codus-non-repo-'),
         );
 
         try {

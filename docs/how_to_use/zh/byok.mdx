@@ -1,16 +1,16 @@
 ---
 title: "BYOK - 自带密钥"
-description: "配置您自己的 API 密钥以获得最大灵活性和成本控制。所有 Kodus 套餐均可用。"
+description: "配置您自己的 API 密钥以获得最大灵活性和成本控制。所有 Codus 套餐均可用。"
 ---
 
-BYOK(自带密钥)是 **Kodus 在所有套餐中使用 LLM 的默认方式** — 社区版、团队版和企业版都一样。您连接自己的提供商账号、选择模型、只为实际使用付费,并直接在提供商的仪表板中监控成本。Kodus 从不对 token 加价,也不会以明文形式看到您的密钥。
+BYOK(自带密钥)是 **Codus 在所有套餐中使用 LLM 的默认方式** — 社区版、团队版和企业版都一样。您连接自己的提供商账号、选择模型、只为实际使用付费,并直接在提供商的仪表板中监控成本。Codus 从不对 token 加价,也不会以明文形式看到您的密钥。
 
 <Card
   title="如何对应到各套餐"
   icon="scale-balanced"
   href="/how_to_use/zh/pricing#byok-是所有套餐的默认方式"
 >
-  BYOK 在社区版免费、在团队版包含(每活跃开发 $10/月,另外支付您自己的 token 费用)、在企业版是两个选项之一(另一个是 Kodus 托管的 API 密钥)。
+  BYOK 在社区版免费、在团队版包含(每活跃开发 $10/月,另外支付您自己的 token 费用)、在企业版是两个选项之一(另一个是 Codus 托管的 API 密钥)。
 </Card>
 
 ## 入门
@@ -35,7 +35,7 @@ BYOK 界面提供两条路径:从精选目录中选择一个**推荐模型**(最
   </Step>
 
   <Step title="添加备用模型(推荐)">
-    主模型配置完成后,会显示**备用模型**部分。如果主提供商遇到速率限制或宕机,Kodus 会自动回退到备用模型。
+    主模型配置完成后,会显示**备用模型**部分。如果主提供商遇到速率限制或宕机,Codus 会自动回退到备用模型。
   </Step>
 </Steps>
 
@@ -125,7 +125,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
     | **Coding Plan** | `https://api.z.ai/api/coding/paas/v4` | [z.ai/subscribe](https://z.ai/subscribe) | 稳定的团队流量,统一月费 |
 
     <Warning>
-      GLM Coding Plan 密钥**只能**在 `/api/coding/paas/v4` 上工作。Lite 和 Pro 档位通常限制为**1 个并发请求** — 当您选择该方案时,Kodus 会预填 `maxConcurrentRequests=1`。如果您使用 Max 档位(最多 30),请在高级设置中上调。
+      GLM Coding Plan 密钥**只能**在 `/api/coding/paas/v4` 上工作。Lite 和 Pro 档位通常限制为**1 个并发请求** — 当您选择该方案时,Codus 会预填 `maxConcurrentRequests=1`。如果您使用 Max 档位(最多 30),请在高级设置中上调。
     </Warning>
   </Tab>
 
@@ -136,7 +136,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
     | **Kimi Code Plan** | `https://api.kimi.com/coding/v1` | [kimi.com/code](https://www.kimi.com/code) | 带专用编码端点的订阅 |
 
     <Info>
-      Kimi Code Plan 文档记录的上限为 30 个并发请求。您选择该方案时 Kodus 会预填 `maxConcurrentRequests=30`。
+      Kimi Code Plan 文档记录的上限为 30 个并发请求。您选择该方案时 Codus 会预填 `maxConcurrentRequests=30`。
     </Info>
   </Tab>
 </Tabs>
@@ -157,7 +157,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
   </Step>
 
   <Step title="选择或输入模型 ID">
-    如果 Kodus 能从提供商列出模型,您会看到下拉菜单。否则(例如自托管或未配置平台密钥时)需要手动输入精确的模型 ID。
+    如果 Codus 能从提供商列出模型,您会看到下拉菜单。否则(例如自托管或未配置平台密钥时)需要手动输入精确的模型 ID。
   </Step>
 
   <Step title="粘贴凭证">
@@ -185,7 +185,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 
     **获取 API 密钥:**
     1. 访问 [OpenAI API Keys](https://platform.openai.com/api-keys)
-    2. 为 Kodus 创建新密钥
+    2. 为 Codus 创建新密钥
     3. 添加计费信息
   </Tab>
 
@@ -240,7 +240,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 
     **如何配置:**
     1. 在手动向导中选择 **Google Vertex AI** 作为提供商。
-    2. 把**服务账号 JSON 文件的内容**粘贴到 Service Account JSON 字段(base64 编码同样可用)。Kodus 会自动从 JSON 中提取 `project_id`。
+    2. 把**服务账号 JSON 文件的内容**粘贴到 Service Account JSON 字段(base64 编码同样可用)。Codus 会自动从 JSON 中提取 `project_id`。
     3. **Region** —— 留空以使用全局端点(推荐)。仅在有数据驻留要求时才固定某个区域(例如 `us-east5`)。
 
     该服务账号需要具备在该项目中调用 Vertex AI 预测 API 的权限。
@@ -272,16 +272,16 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
     3. 提供密钥和模型 ID。
 
     <CardGroup cols={2}>
-      <Card title="Z.ai (GLM) 指南" href="/knowledge_base/zh/how-to-use-z-ai-with-kodus" icon="bolt">
+      <Card title="Z.ai (GLM) 指南" href="/knowledge_base/zh/how-to-use-z-ai-with-codus" icon="bolt">
         包含 Coding Plan 细节的完整 Z.ai 设置。
       </Card>
-      <Card title="Moonshot (Kimi) 指南" href="/knowledge_base/zh/how-to-use-moonshot-with-kodus" icon="moon">
+      <Card title="Moonshot (Kimi) 指南" href="/knowledge_base/zh/how-to-use-moonshot-with-codus" icon="moon">
         Kimi K2.6 + Kimi Code Plan 设置。
       </Card>
-      <Card title="Fireworks AI" href="/knowledge_base/zh/how-to-use-fireworks-with-kodus" icon="fire">
+      <Card title="Fireworks AI" href="/knowledge_base/zh/how-to-use-fireworks-with-codus" icon="fire">
         Fireworks 专属设置。
       </Card>
-      <Card title="Together AI" href="/knowledge_base/zh/how-to-use-together-ai-with-kodus" icon="handshake">
+      <Card title="Together AI" href="/knowledge_base/zh/how-to-use-together-ai-with-codus" icon="handshake">
         Together AI 设置。
       </Card>
     </CardGroup>
@@ -294,7 +294,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
     2. 填入 base URL、密钥和模型 ID。
 
     <Note>
-      base URL 按你的提供商所文档化的形式粘贴即可 —— 末尾带不带 `/v1` 都可以(例如 `https://api.kimi.com/coding` 或 `https://api.kimi.com/coding/v1`)。Kodus 会在内部做归一化,因为 Anthropic 的两条 SDK 路径对 `/v1` 应该放在哪里的处理并不一致。
+      base URL 按你的提供商所文档化的形式粘贴即可 —— 末尾带不带 `/v1` 都可以(例如 `https://api.kimi.com/coding` 或 `https://api.kimi.com/coding/v1`)。Codus 会在内部做归一化,因为 Anthropic 的两条 SDK 路径对 `/v1` 应该放在哪里的处理并不一致。
     </Note>
   </Tab>
 </Tabs>
@@ -305,7 +305,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 
 ### 预设级别
 
-当您选择 Low / Medium / High 时,Kodus 会自动将该级别转换为每个提供商的原生格式:
+当您选择 Low / Medium / High 时,Codus 会自动将该级别转换为每个提供商的原生格式:
 
 | 提供商 | "medium" 如何映射 |
 | --- | --- |
@@ -316,19 +316,19 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 | **OpenAI 兼容**(Kimi K2.6 / GLM 5.1) | `thinking: { type: "enabled" }` — 二元开关,级别被忽略 |
 
 <Note>
-  Kimi 和 GLM 目前将推理暴露为单一的开/关标志。选择 Low、Medium 或 High 都会发出相同的 payload(启用 thinking)。当它们的 API 支持级别粒度时,Kodus 会开始转发。
+  Kimi 和 GLM 目前将推理暴露为单一的开/关标志。选择 Low、Medium 或 High 都会发出相同的 payload(启用 thinking)。当它们的 API 支持级别粒度时,Codus 会开始转发。
 </Note>
 
 ### 自定义 JSON 覆盖
 
-在 Thinking 开关中选择 **Custom** 会显示一个 JSON 文本框。直接粘贴提供商选项 — **Kodus 会自动把它们包裹在当前提供商的命名空间下**。您无需了解 Vercel AI SDK 的路由规则。
+在 Thinking 开关中选择 **Custom** 会显示一个 JSON 文本框。直接粘贴提供商选项 — **Codus 会自动把它们包裹在当前提供商的命名空间下**。您无需了解 Vercel AI SDK 的路由规则。
 
 在以下情况使用:
 
 - 您需要为 Claude 设置特定的 `budgetTokens` 值(而不是预设的 effort 映射)
 - 您希望针对 OpenAI 兼容提供商按模型启用/禁用 thinking
 - 您想设置推理之外的字段 — **缓存、服务档位、安全设置、`user` 标签等**。覆盖会被合并进 `providerOptions`,因此任何适配器字段都可以透传
-- 提供商发布了一个 Kodus 尚未映射的新字段
+- 提供商发布了一个 Codus 尚未映射的新字段
 
 #### 示例(直接粘贴 — 无需命名空间)
 
@@ -379,7 +379,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
       "reasoningEffort": "high",
       "serviceTier": "flex",
       "store": false,
-      "user": "kodus-review"
+      "user": "codus-review"
     }
     ```
   </Tab>
@@ -420,7 +420,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 
 #### 手动指定命名空间(进阶用户)
 
-如果您的 JSON 顶层已经包含一个已知的命名空间键(`anthropic`、`google`、`openai`、`openrouter`、`openaiCompatible`),Kodus 会保持原样不动。当您想混合多个提供商命名空间或希望显式书写时很有用:
+如果您的 JSON 顶层已经包含一个已知的命名空间键(`anthropic`、`google`、`openai`、`openrouter`、`openaiCompatible`),Codus 会保持原样不动。当您想混合多个提供商命名空间或希望显式书写时很有用:
 
 ```json
 {
@@ -431,7 +431,7 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 }
 ```
 
-在底层,Kodus 使用以下命名空间映射:
+在底层,Codus 使用以下命名空间映射:
 
 | BYOK 提供商 | 命名空间键 |
 | --- | --- |
@@ -443,9 +443,9 @@ Z.ai 和 Moonshot 都在按 token 付费的开发者 API 之外提供一个订�
 
 #### 注意事项
 
-- **仅支持有效的 JSON。** 遗漏逗号或尾随逗号会破坏解析,Kodus 会忽略覆盖。
+- **仅支持有效的 JSON。** 遗漏逗号或尾随逗号会破坏解析,Codus 会忽略覆盖。
 - **优先级:**JSON 覆盖会**完全替换** effort 预设对应的命名空间块 — 如果您覆盖了 `anthropic.thinking` 但漏掉 `anthropic.outputConfig`,那个字段就不会被发送。OpenRouter routing(固定提供商 / 允许回退)是唯一例外:它会与您在 `openrouter` 下的覆盖进行深度合并。
-- **未知提供商 = 不自动包裹。** 如果您的 BYOK 提供商不在上表中,Kodus 会原样透传 JSON。这种情况很少见 — 仅在配置 Kodus 不识别的提供商时才会发生。
+- **未知提供商 = 不自动包裹。** 如果您的 BYOK 提供商不在上表中,Codus 会原样透传 JSON。这种情况很少见 — 仅在配置 Codus 不识别的提供商时才会发生。
 
 ## 固定 OpenRouter 上游提供商
 
@@ -472,7 +472,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
   上游名称必须与 OpenRouter 的目录一致。请在 [openrouter.ai/docs/features/provider-routing](https://openrouter.ai/docs/features/provider-routing) 上查看提供商标签 — 常见值包括 `moonshot`、`together`、`groq`、`fireworks`、`novita`。
 </Warning>
 
-在底层,Kodus 会把以下内容发送到 Vercel AI SDK 的调用中:
+在底层,Codus 会把以下内容发送到 Vercel AI SDK 的调用中:
 
 ```json
 {
@@ -505,9 +505,9 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
 
 ## 并发与速率限制
 
-`maxConcurrentRequests` 字段(**高级设置**下)限制 Kodus 并行向您的提供商发送的未完成请求数。多数情况下默认值即可 — 但有严格并发限制的订阅方案需要显式设置。
+`maxConcurrentRequests` 字段(**高级设置**下)限制 Codus 并行向您的提供商发送的未完成请求数。多数情况下默认值即可 — 但有严格并发限制的订阅方案需要显式设置。
 
-### Kodus 预填的默认值
+### Codus 预填的默认值
 
 | 提供商 / 方案 | 预填值 | 原因 |
 | --- | --- | --- |
@@ -516,7 +516,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
 | **Kimi Code Plan** | `30` | Moonshot 在编码端点的文档上限。 |
 | **GLM Developer API** | _(空)_ | 限制按密钥伸缩;没有合理的全局默认值。 |
 | **Kimi Developer API** | _(空)_ | 随您的充值档位伸缩(Tier 1 ≈ 50,Tier 5 ≈ 1000)。 |
-| **Anthropic / OpenAI / Google / OpenRouter** | _(空)_ | 提供商自行强制 TPM/RPM;Kodus 不设上限。 |
+| **Anthropic / OpenAI / Google / OpenRouter** | _(空)_ | 提供商自行强制 TPM/RPM;Codus 不设上限。 |
 
 ### 何时调整
 
@@ -538,7 +538,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
 </Tip>
 
 <Note>
-  **与备用模型的交互。** 当主模型遇到 429 并 Kodus 故障转移到备用模型时,备用模型自身的 `maxConcurrentRequests` 生效。将备用配置到不同提供商上并设一个宽松的值,是在主模型使用紧张订阅时吸收突发流量的好办法。
+  **与备用模型的交互。** 当主模型遇到 429 并 Codus 故障转移到备用模型时,备用模型自身的 `maxConcurrentRequests` 生效。将备用配置到不同提供商上并设一个宽松的值,是在主模型使用紧张订阅时吸收突发流量的好办法。
 </Note>
 
 ## 最佳实践
@@ -547,7 +547,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
 
 <CardGroup cols={2}>
   <Card title="专用密钥" icon="shield-check">
-    为 Kodus 创建独立的 API 密钥,便于审计使用情况和轮换密钥。
+    为 Codus 创建独立的 API 密钥,便于审计使用情况和轮换密钥。
   </Card>
   <Card title="定期轮换" icon="arrows-rotate">
     定期轮换密钥,并在 BYOK 设置中更新。
@@ -556,7 +556,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
     检查您的提供商仪表板是否有异常模式。
   </Card>
   <Card title="安全存储" icon="lock">
-    切勿将密钥提交到代码仓库。Kodus 对密钥进行静态和传输中加密存储。
+    切勿将密钥提交到代码仓库。Codus 对密钥进行静态和传输中加密存储。
   </Card>
 </CardGroup>
 
@@ -591,7 +591,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
   </Accordion>
 
   <Accordion title="自托管环境变量未显示">
-    - 如果 Kodus 通过 `.env`(自托管固定模式)配置,BYOK 界面会显示一个蓝色信息横幅,标明当前活动的提供商/模型 — 出于安全考虑,密钥不会显示。
+    - 如果 Codus 通过 `.env`(自托管固定模式)配置,BYOK 界面会显示一个蓝色信息横幅,标明当前活动的提供商/模型 — 出于安全考虑,密钥不会显示。
     - 在 `.env` 之上保存 BYOK 配置时会弹出确认对话框再覆盖。
   </Accordion>
 
@@ -614,7 +614,7 @@ OpenRouter 是一个路由器 — 当您请求某个模型(例如 `moonshotai/ki
   </Accordion>
 
   <Accordion title="主/备用系统如何工作?">
-    默认情况下,主模型处理每次审查。如果失败(速率限制、5xx、超时),Kodus 会在备用模型上重试一次。您只为真正处理审查的那个提供商付费。
+    默认情况下,主模型处理每次审查。如果失败(速率限制、5xx、超时),Codus 会在备用模型上重试一次。您只为真正处理审查的那个提供商付费。
   </Accordion>
 
   <Accordion title="我应该为主和备用使用相同的提供商吗?">

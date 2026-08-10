@@ -9,7 +9,7 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import type { Model } from 'mongoose';
 import { DataSource } from 'typeorm';
 
-import { KodyRulesModel } from '@libs/kodyRules/infrastructure/adapters/repositories/schemas/kodyRules.model';
+import { CodyRulesModel } from '@libs/codyRules/infrastructure/adapters/repositories/schemas/codyRules.model';
 import { PullRequestsModel } from '@libs/platformData/infrastructure/adapters/repositories/schemas/pullRequests.model';
 
 const KNOWN_INTEGRATIONS = new Set([
@@ -27,12 +27,12 @@ const KNOWN_INTEGRATIONS = new Set([
 ]);
 
 /**
- * Shape mirrors the `kodus-beacon` v1 schema (excluding wrapper fields like
+ * Shape mirrors the `codus-beacon` v1 schema (excluding wrapper fields like
  * `schema_version`, `instance_id`, `sent_at`, which the beacon service adds).
- * See `kodus-beacon/docs/api.md` for the canonical definition.
+ * See `codus-beacon/docs/api.md` for the canonical definition.
  */
 export interface HeartbeatMetrics {
-    kodus: {
+    codus: {
         version: string;
         deployment:
             | 'docker'
@@ -60,7 +60,7 @@ export interface HeartbeatMetrics {
         suggestions_applied: number;
     };
     config: {
-        kody_rules_enabled: boolean;
+        cody_rules_enabled: boolean;
         agent_review_repos_pct: number;
         integrations: string[];
     };
@@ -83,8 +83,8 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
         private readonly dataSource: DataSource,
         @InjectModel(PullRequestsModel.name)
         private readonly pullRequestsModel: Model<unknown>,
-        @InjectModel(KodyRulesModel.name)
-        private readonly kodyRulesModel: Model<unknown>,
+        @InjectModel(CodyRulesModel.name)
+        private readonly codyRulesModel: Model<unknown>,
     ) {}
 
     /**
@@ -111,7 +111,7 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
             activeUsers,
             integrations,
             prsReviewed,
-            kodyRulesEnabled,
+            codyRulesEnabled,
         ] = await Promise.all([
             this.safe('db_version', () => this.queryDbVersion(), 'unknown'),
             this.safe('organizations', () => this.countTable('organizations'), 0),
@@ -121,15 +121,15 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
             this.safe('integrations', () => this.queryIntegrations(), []),
             this.safe('prs_reviewed', () => this.queryPrsReviewed7d(), 0),
             this.safe(
-                'kody_rules_enabled',
-                () => this.queryKodyRulesEnabled(),
+                'cody_rules_enabled',
+                () => this.queryCodyRulesEnabled(),
                 false,
             ),
         ]);
 
         return {
-            kodus: {
-                version: detectKodusVersion(),
+            codus: {
+                version: detectCodusVersion(),
                 deployment: detectDeployment(),
                 uptime_hours: uptimeHours,
             },
@@ -155,7 +155,7 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
                 suggestions_applied: 0,
             },
             config: {
-                kody_rules_enabled: kodyRulesEnabled,
+                cody_rules_enabled: codyRulesEnabled,
                 // The agent-review flag is evaluated at runtime via PostHog
                 // feature flags, not stored in any Postgres/Mongo table. A
                 // truthful number would require querying PostHog directly,
@@ -223,8 +223,8 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
             .exec();
     }
 
-    private async queryKodyRulesEnabled(): Promise<boolean> {
-        const count = await this.kodyRulesModel
+    private async queryCodyRulesEnabled(): Promise<boolean> {
+        const count = await this.codyRulesModel
             .countDocuments({ 'rules.0': { $exists: true } })
             .exec();
         return count > 0;
@@ -254,9 +254,9 @@ export class HeartbeatCollectorService implements IHeartbeatCollectorService {
 
 // Read once at module load — package.json doesn't change at runtime, and we
 // avoid hitting the disk on every heartbeat.
-const KODUS_VERSION = readKodusVersion();
+const CODUS_VERSION = readCodusVersion();
 
-function readKodusVersion(): string {
+function readCodusVersion(): string {
     try {
         const pkg = JSON.parse(
             readFileSync(join(process.cwd(), 'package.json'), 'utf8'),
@@ -267,11 +267,11 @@ function readKodusVersion(): string {
     }
 }
 
-function detectKodusVersion(): string {
-    return KODUS_VERSION;
+function detectCodusVersion(): string {
+    return CODUS_VERSION;
 }
 
-function detectDeployment(): HeartbeatMetrics['kodus']['deployment'] {
+function detectDeployment(): HeartbeatMetrics['codus']['deployment'] {
     if (process.env.KUBERNETES_SERVICE_HOST) {
         return 'k8s';
     }

@@ -41,20 +41,20 @@ export const IN_APP_TEMPLATE_REGISTRY: Partial<
         title: 'Team invitation',
         body: `You've been invited to join a team.`,
     }),
-    [NotificationEvent.KODY_RULES_GENERATED]: (m) => ({
-        title: 'Kody rules generated',
-        body: `New Kody rules have been generated for ${m.organizationName ?? 'your organization'}.`,
+    [NotificationEvent.CODY_RULES_GENERATED]: (m) => ({
+        title: 'Cody rules generated',
+        body: `New Cody rules have been generated for ${m.organizationName ?? 'your organization'}.`,
     }),
     [NotificationEvent.SSO_DOMAIN_VERIFICATION]: (m) => ({
         title: 'Verify your SSO domain',
         body: `Verify your SSO domain: ${m.domain ?? ''}`,
     }),
     [NotificationEvent.ORG_REPORT]: () => ({
-        title: 'Your Kodus report is ready',
+        title: 'Your Codus report is ready',
         body: 'Your organization review report is ready.',
     }),
     [NotificationEvent.REPO_REPORT]: () => ({
-        title: 'Your Kodus repo digest is ready',
+        title: 'Your Codus repo digest is ready',
         body: 'Your per-repo review digest is ready.',
     }),
 
@@ -62,13 +62,13 @@ export const IN_APP_TEMPLATE_REGISTRY: Partial<
 
     [NotificationEvent.REVIEW_AUTO_APPROVED]: (m) => ({
         title: 'Pull request auto-approved',
-        body: `${m.repoName ?? 'A pull request'} was auto-approved by Kody.`,
+        body: `${m.repoName ?? 'A pull request'} was auto-approved by Cody.`,
         ctaUrl: m.prUrl as string | undefined,
     }),
 
     [NotificationEvent.REVIEW_FAILED]: (m) => ({
         title: 'Code review failed',
-        body: `Kody could not review ${m.repoName ?? 'a pull request'}: ${m.reason ?? 'unknown error'}.`,
+        body: `Cody could not review ${m.repoName ?? 'a pull request'}: ${m.reason ?? 'unknown error'}.`,
         ctaUrl: m.prUrl as string | undefined,
     }),
 
@@ -92,7 +92,7 @@ export const IN_APP_TEMPLATE_REGISTRY: Partial<
 
     [NotificationEvent.IDE_RULES_SYNC_FAILED]: (m) => ({
         title: 'IDE rule sync failed',
-        body: `Kody could not sync rules from ${m.repoName ?? 'your repository'}: ${m.reason ?? 'unknown error'}.`,
+        body: `Cody could not sync rules from ${m.repoName ?? 'your repository'}: ${m.reason ?? 'unknown error'}.`,
     }),
 
     [NotificationEvent.ORG_MEMBER_REMOVED]: (m) => {
@@ -135,7 +135,7 @@ export const IN_APP_TEMPLATE_REGISTRY: Partial<
                   : `in ${days} days`;
         return {
             title: 'Trial expiring',
-            body: `Your trial ends ${remaining}. Upgrade to keep Kody reviewing your pull requests.`,
+            body: `Your trial ends ${remaining}. Upgrade to keep Cody reviewing your pull requests.`,
             ctaUrl: m.upgradeUrl as string | undefined,
         };
     },
@@ -159,11 +159,11 @@ export const IN_APP_TEMPLATE_REGISTRY: Partial<
         const count = m.invalidCount as number | undefined;
         const repo = m.repoName ?? 'a repository';
         return {
-            title: 'Kody rule references are invalid',
+            title: 'Cody rule references are invalid',
             body:
                 count != null
                     ? `${count} ${count === 1 ? 'rule has' : 'rules have'} a file reference that no longer matches in ${repo}. Affected rules are skipped during review until fixed.`
-                    : `Some Kody rules in ${repo} reference files that no longer match. Affected rules are skipped during review until fixed.`,
+                    : `Some Cody rules in ${repo} reference files that no longer match. Affected rules are skipped during review until fixed.`,
         };
     },
 };

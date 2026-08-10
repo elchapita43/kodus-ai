@@ -21,7 +21,7 @@ import {
 import { SUPPORTED_REPO_PATTERN_FIELDS } from '../../utils/repo-settings-patterns.js';
 
 export const REPOSITORY_CONFIG_DESCRIPTION =
-    "Inspect and update the current repository settings in Kodus. Team-key auth is required for repository config commands. Use 'kodus config -r [repository]' as a shortcut for 'kodus config remote add [repository]'.";
+    "Inspect and update the current repository settings in Codus. Team-key auth is required for repository config commands. Use 'codus config -r [repository]' as a shortcut for 'codus config remote add [repository]'.";
 
 type RepositoryConfigHandlers = {
     action: (
@@ -66,7 +66,7 @@ export function registerRepositoryConfigCommand(
     command
         .command('add [repository]')
         .description(
-            "Add a repository to Kodus. Equivalent to 'kodus config -r [repository]'. Use '.' for the current repo.",
+            "Add a repository to Codus. Equivalent to 'codus config -r [repository]'. Use '.' for the current repo.",
         )
         .option('--no-prompt', 'Skip the post-add setup prompt')
         .action(
@@ -80,7 +80,7 @@ export function registerRepositoryConfigCommand(
 
     command
         .command('list')
-        .description('List repositories already configured in Kodus.')
+        .description('List repositories already configured in Codus.')
         .option('--json', 'Output configured repositories as JSON')
         .action(async (actionOptions: ConfigRepoListOptions) => {
             await configRepoListAction(actionOptions);
@@ -89,7 +89,7 @@ export function registerRepositoryConfigCommand(
     command
         .command('show [repository]')
         .description(
-            "Show repository settings in Kodus. Use '.' for the current repo.",
+            "Show repository settings in Codus. Use '.' for the current repo.",
         )
         .option('--json', 'Output repository settings as JSON')
         .action(
@@ -104,7 +104,7 @@ export function registerRepositoryConfigCommand(
     command
         .command('setup [repository]')
         .description(
-            "Run a guided repository setup in Kodus. Use '.' for the current repo.",
+            "Run a guided repository setup in Codus. Use '.' for the current repo.",
         )
         .option(
             '--yes',
@@ -145,11 +145,11 @@ export function registerRepositoryConfigCommand(
     command
         .command('open [repository]')
         .description(
-            "Open the Kodus dashboard for advanced repository settings. Use '.' for the current repo.",
+            "Open the Codus dashboard for advanced repository settings. Use '.' for the current repo.",
         )
         .option(
             '--section <section>',
-            'Section to open guidance for (general, review-categories, custom-prompts, suggestion-control, pr-summary, kody-rules, custom-messages, business-rules)',
+            'Section to open guidance for (general, review-categories, custom-prompts, suggestion-control, pr-summary, cody-rules, custom-messages, business-rules)',
         )
         .option('--json', 'Output dashboard handoff metadata as JSON')
         .action(

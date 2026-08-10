@@ -1,6 +1,6 @@
 ---
 title: "Conceptos"
-description: "Modelos mentales para aprovechar al máximo el CLI de Kodus."
+description: "Modelos mentales para aprovechar al máximo el CLI de Codus."
 ---
 
 Un breve recorrido por las ideas que aparecen en todo el CLI. Léelo una vez y el resto de la documentación tendrá más sentido.
@@ -35,15 +35,15 @@ También puedes usar `--format json` o `--format markdown` con cualquier comando
 Elige uno por máquina. El CLI detecta automáticamente lo que está disponible.
 
 - **Prueba** — sin autenticación. 5 revisiones por día. Bueno para "probarlo una vez".
-- **Inicio de sesión personal** (`kodus auth login`) — una cuenta individual. Los tokens se actualizan automáticamente.
-- **Clave de equipo** (`kodus auth team-key --key kodus_xxxxx`) — una clave compartida para un equipo, generada en el panel. Recomendada para agentes de IA y en cualquier lugar donde no quieras inicios de sesión interactivos.
-- **Token de CI/CD** (`kodus auth token`) — un token de larga duración para pipelines. Generado desde una máquina con sesión iniciada, usado mediante `KODUS_TOKEN`.
+- **Inicio de sesión personal** (`codus auth login`) — una cuenta individual. Los tokens se actualizan automáticamente.
+- **Clave de equipo** (`codus auth team-key --key codus_xxxxx`) — una clave compartida para un equipo, generada en el panel. Recomendada para agentes de IA y en cualquier lugar donde no quieras inicios de sesión interactivos.
+- **Token de CI/CD** (`codus auth token`) — un token de larga duración para pipelines. Generado desde una máquina con sesión iniciada, usado mediante `CODUS_TOKEN`.
 
 Consulta [Primeros Pasos](getting_started) para el árbol de decisiones completo.
 
-## Kody Rules
+## Cody Rules
 
-Una **Kody Rule** es una regla estructurada que el revisor de Kodus aplica en cada revisión, con ámbito a un repositorio o global para tu equipo.
+Una **Cody Rule** es una regla estructurada que el revisor de Codus aplica en cada revisión, con ámbito a un repositorio o global para tu equipo.
 
 ```
 Regla
@@ -55,49 +55,49 @@ Regla
 └── repo-id        <uuid> | global
 ```
 
-Las reglas se añaden sobre la revisión general de Kodus: la IA las usa como criterios adicionales, no como sustitutos.
+Las reglas se añaden sobre la revisión general de Codus: la IA las usa como criterios adicionales, no como sustitutos.
 
-Gestiona las reglas desde el panel o desde el CLI con `kodus rules create|update|view`. El CLI es útil cuando quieres reglas bajo control de versiones (generarlas desde un script, incorporarlas a un repo, reaplicarlas en el aprovisionamiento).
+Gestiona las reglas desde el panel o desde el CLI con `codus rules create|update|view`. El CLI es útil cuando quieres reglas bajo control de versiones (generarlas desde un script, incorporarlas a un repo, reaplicarlas en el aprovisionamiento).
 
 ## Configuración del Repositorio
 
-Cada repositorio en Kodus tiene configuraciones que rigen cómo se comportan las revisiones: archivos ignorados, patrones de ramas base, filtros de títulos, activadores de funciones. Estas viven en el backend de Kodus y se reflejan en cualquier lugar donde se revise el repo (PRs web, revisiones del CLI, bucles de agentes).
+Cada repositorio en Codus tiene configuraciones que rigen cómo se comportan las revisiones: archivos ignorados, patrones de ramas base, filtros de títulos, activadores de funciones. Estas viven en el backend de Codus y se reflejan en cualquier lugar donde se revise el repo (PRs web, revisiones del CLI, bucles de agentes).
 
 Desde el CLI:
 
 ```bash
-kodus config repo list                 # Ver tus repos configurados
-kodus config repo show                 # Ver la configuración del repo actual
-kodus config repo setup                # Asistente guiado
-kodus config repo set . reviewEnabled true
-kodus config repo add-ignore-file . "**/*.generated.ts"
-kodus config repo open                 # Ir al panel web
+codus config repo list                 # Ver tus repos configurados
+codus config repo show                 # Ver la configuración del repo actual
+codus config repo setup                # Asistente guiado
+codus config repo set . reviewEnabled true
+codus config repo add-ignore-file . "**/*.generated.ts"
+codus config repo open                 # Ir al panel web
 ```
 
-`kodus config repo` y `kodus config remote` son alias del mismo grupo de comandos.
+`codus config repo` y `codus config remote` son alias del mismo grupo de comandos.
 
 ## Configuración Centralizada
 
-Normalmente, la configuración de cada repositorio vive en Kodus. La **Configuración Centralizada** permite a un equipo almacenar esas configuraciones en un único repositorio git como fuente de verdad: cada cambio se convierte en un pull request contra ese repo, dándote revisión e historial de versiones sobre tu propia configuración de revisión.
+Normalmente, la configuración de cada repositorio vive en Codus. La **Configuración Centralizada** permite a un equipo almacenar esas configuraciones en un único repositorio git como fuente de verdad: cada cambio se convierte en un pull request contra ese repo, dándote revisión e historial de versiones sobre tu propia configuración de revisión.
 
 Habilitar, sincronizar o inspeccionar el estado:
 
 ```bash
-kodus config centralized status
-kodus config centralized init owner/config-repo --sync-option pr
-kodus config centralized sync
-kodus config centralized disable
+codus config centralized status
+codus config centralized init owner/config-repo --sync-option pr
+codus config centralized sync
+codus config centralized disable
 ```
 
-Usa la Configuración Centralizada cuando tu equipo quiera un control auditable y versionado sobre la configuración de revisiones. Mantén el predeterminado (configuración por repositorio en Kodus) cuando esa ceremonia sea excesiva.
+Usa la Configuración Centralizada cuando tu equipo quiera un control auditable y versionado sobre la configuración de revisiones. Mantén el predeterminado (configuración por repositorio en Codus) cuando esa ceremonia sea excesiva.
 
 ## Validación de Negocio
 
-Donde `kodus review` pregunta "¿es bueno este código?", `kodus pr business-validation` pregunta "¿este diff realmente hace lo que decía la tarea?". Lo apuntas a una tarea de Linear/Jira/URL y a una fuente de diff (árbol de trabajo, preparado, rama, commit) y verifica la implementación contra los criterios de aceptación de la tarea.
+Donde `codus review` pregunta "¿es bueno este código?", `codus pr business-validation` pregunta "¿este diff realmente hace lo que decía la tarea?". Lo apuntas a una tarea de Linear/Jira/URL y a una fuente de diff (árbol de trabajo, preparado, rama, commit) y verifica la implementación contra los criterios de aceptación de la tarea.
 
 ```bash
-kodus pr business-validation --task-id KC-1441 --branch main
-kodus pr business-validation --task-url https://linear.app/… --staged
+codus pr business-validation --task-id KC-1441 --branch main
+codus pr business-validation --task-url https://linear.app/… --staged
 ```
 
 Combínalo con una verificación previa a la fusión para detectar "el código funciona, pero no es lo que se pidió" antes de la revisión humana.

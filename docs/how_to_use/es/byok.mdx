@@ -1,16 +1,16 @@
 ---
 title: "BYOK - Trae Tu Propia Clave"
-description: "Configura tus propias claves de API para máxima flexibilidad y control de costos. Disponible en todos los planes de Kodus."
+description: "Configura tus propias claves de API para máxima flexibilidad y control de costos. Disponible en todos los planes de Codus."
 ---
 
-BYOK (Bring Your Own Key) es la **forma predeterminada en que Kodus usa LLMs en todos los planes** — Community, Teams y Enterprise. Conectas tu propia cuenta de proveedor, eliges un modelo, pagas solo por lo que usas y monitoreas los costos directamente en el panel de tu proveedor. Kodus nunca aplica márgenes sobre los tokens y nunca ve tu clave en texto plano.
+BYOK (Bring Your Own Key) es la **forma predeterminada en que Codus usa LLMs en todos los planes** — Community, Teams y Enterprise. Conectas tu propia cuenta de proveedor, eliges un modelo, pagas solo por lo que usas y monitoreas los costos directamente en el panel de tu proveedor. Codus nunca aplica márgenes sobre los tokens y nunca ve tu clave en texto plano.
 
 <Card
   title="Cómo se relaciona con los planes"
   icon="scale-balanced"
   href="/how_to_use/es/pricing#byok-es-el-predeterminado-en-todos-los-planes"
 >
-  BYOK es gratuito en Community, incluido en Teams ($10/desarrollador activo/mes sobre tu gasto en tokens) y una de dos opciones en Enterprise (la otra es una clave de API administrada por Kodus).
+  BYOK es gratuito en Community, incluido en Teams ($10/desarrollador activo/mes sobre tu gasto en tokens) y una de dos opciones en Enterprise (la otra es una clave de API administrada por Codus).
 </Card>
 
 ## Primeros pasos
@@ -35,7 +35,7 @@ La pantalla de BYOK tiene dos caminos: elegir un **modelo recomendado** del cat�
   </Step>
 
   <Step title="Agregar un modelo de respaldo (recomendado)">
-    Una vez configurado el modelo principal, aparece una sección **Modelo de respaldo**. Si tu proveedor principal alcanza límites de tasa o deja de estar disponible, Kodus conmuta automáticamente.
+    Una vez configurado el modelo principal, aparece una sección **Modelo de respaldo**. Si tu proveedor principal alcanza límites de tasa o deja de estar disponible, Codus conmuta automáticamente.
   </Step>
 </Steps>
 
@@ -125,7 +125,7 @@ Z.ai y Moonshot ofrecen cada uno un plan de suscripción con un **endpoint disti
     | **Coding Plan** | `https://api.z.ai/api/coding/paas/v4` | [z.ai/subscribe](https://z.ai/subscribe) | Volumen predecible de equipo, tarifa mensual fija |
 
     <Warning>
-      Las claves del GLM Coding Plan **solo** funcionan en `/api/coding/paas/v4`. Los niveles Lite y Pro suelen estar limitados a **1 solicitud concurrente** — Kodus rellena previamente `maxConcurrentRequests=1` cuando eliges este plan. Auméntalo en la configuración avanzada si estás en el nivel Max (hasta 30).
+      Las claves del GLM Coding Plan **solo** funcionan en `/api/coding/paas/v4`. Los niveles Lite y Pro suelen estar limitados a **1 solicitud concurrente** — Codus rellena previamente `maxConcurrentRequests=1` cuando eliges este plan. Auméntalo en la configuración avanzada si estás en el nivel Max (hasta 30).
     </Warning>
   </Tab>
 
@@ -136,7 +136,7 @@ Z.ai y Moonshot ofrecen cada uno un plan de suscripción con un **endpoint disti
     | **Kimi Code Plan** | `https://api.kimi.com/coding/v1` | [kimi.com/code](https://www.kimi.com/code) | Suscripción con endpoint de código dedicado |
 
     <Info>
-      El Kimi Code Plan está documentado con un tope de 30 solicitudes concurrentes. Kodus rellena previamente `maxConcurrentRequests=30` cuando eliges ese plan.
+      El Kimi Code Plan está documentado con un tope de 30 solicitudes concurrentes. Codus rellena previamente `maxConcurrentRequests=30` cuando eliges ese plan.
     </Info>
   </Tab>
 </Tabs>
@@ -157,7 +157,7 @@ Cuando el modelo que quieres no está en la lista curada (endpoint personalizado
   </Step>
 
   <Step title="Elegir o escribir el ID del modelo">
-    Si Kodus puede listar los modelos del proveedor, obtienes un menú desplegable. De lo contrario (por ejemplo, auto-alojado o cuando las claves de la plataforma no están configuradas), escribe el ID exacto del modelo manualmente.
+    Si Codus puede listar los modelos del proveedor, obtienes un menú desplegable. De lo contrario (por ejemplo, auto-alojado o cuando las claves de la plataforma no están configuradas), escribe el ID exacto del modelo manualmente.
   </Step>
 
   <Step title="Pegar las credenciales">
@@ -185,7 +185,7 @@ Cuando el modelo que quieres no está en la lista curada (endpoint personalizado
 
     **Obtener una clave de API:**
     1. Visita [OpenAI API Keys](https://platform.openai.com/api-keys)
-    2. Crea una nueva clave para Kodus
+    2. Crea una nueva clave para Codus
     3. Agrega información de facturación
   </Tab>
 
@@ -240,7 +240,7 @@ Cuando el modelo que quieres no está en la lista curada (endpoint personalizado
 
     **Cómo configurarlo:**
     1. En el asistente manual, elige **Google Vertex AI** como proveedor.
-    2. Pega el **contenido del archivo JSON de tu service account** en el campo Service Account JSON (base64 también funciona). Kodus extrae el `project_id` del JSON automáticamente.
+    2. Pega el **contenido del archivo JSON de tu service account** en el campo Service Account JSON (base64 también funciona). Codus extrae el `project_id` del JSON automáticamente.
     3. **Region** — déjalo vacío para usar el endpoint global (recomendado). Fija una región (p. ej. `us-east5`) solo si tienes requisitos de residencia de datos.
 
     La service account necesita permiso para llamar a la API de predicción de Vertex AI en ese proyecto.
@@ -272,16 +272,16 @@ Cuando el modelo que quieres no está en la lista curada (endpoint personalizado
     3. Proporciona la clave y el ID del modelo.
 
     <CardGroup cols={2}>
-      <Card title="Guía de Z.ai (GLM)" href="/knowledge_base/es/how-to-use-z-ai-with-kodus" icon="bolt">
+      <Card title="Guía de Z.ai (GLM)" href="/knowledge_base/es/how-to-use-z-ai-with-codus" icon="bolt">
         Configuración completa de Z.ai con detalles del Coding Plan.
       </Card>
-      <Card title="Guía de Moonshot (Kimi)" href="/knowledge_base/es/how-to-use-moonshot-with-kodus" icon="moon">
+      <Card title="Guía de Moonshot (Kimi)" href="/knowledge_base/es/how-to-use-moonshot-with-codus" icon="moon">
         Configuración de Kimi K2.6 + Kimi Code Plan.
       </Card>
-      <Card title="Fireworks AI" href="/knowledge_base/es/how-to-use-fireworks-with-kodus" icon="fire">
+      <Card title="Fireworks AI" href="/knowledge_base/es/how-to-use-fireworks-with-codus" icon="fire">
         Configuración específica de Fireworks.
       </Card>
-      <Card title="Together AI" href="/knowledge_base/es/how-to-use-together-ai-with-kodus" icon="handshake">
+      <Card title="Together AI" href="/knowledge_base/es/how-to-use-together-ai-with-codus" icon="handshake">
         Configuración de Together AI.
       </Card>
     </CardGroup>
@@ -294,7 +294,7 @@ Cuando el modelo que quieres no está en la lista curada (endpoint personalizado
     2. Introduce la base URL, la clave y el model ID.
 
     <Note>
-      Pega la base URL en el formato que documente tu proveedor — con o sin `/v1` al final (p. ej. `https://api.kimi.com/coding` o `https://api.kimi.com/coding/v1`). Kodus la normaliza internamente, porque las dos vías del SDK de Anthropic no coinciden en dónde va el `/v1`.
+      Pega la base URL en el formato que documente tu proveedor — con o sin `/v1` al final (p. ej. `https://api.kimi.com/coding` o `https://api.kimi.com/coding/v1`). Codus la normaliza internamente, porque las dos vías del SDK de Anthropic no coinciden en dónde va el `/v1`.
     </Note>
   </Tab>
 </Tabs>
@@ -305,7 +305,7 @@ Los seis modelos recomendados soportan razonamiento. El formulario de BYOK expon
 
 ### Niveles predefinidos
 
-Cuando eliges Low / Medium / High, Kodus traduce el nivel al formato nativo de cada proveedor automáticamente:
+Cuando eliges Low / Medium / High, Codus traduce el nivel al formato nativo de cada proveedor automáticamente:
 
 | Proveedor | Cómo se mapea "medium" |
 | --- | --- |
@@ -316,19 +316,19 @@ Cuando eliges Low / Medium / High, Kodus traduce el nivel al formato nativo de c
 | **Compatible con OpenAI** (Kimi K2.6 / GLM 5.1) | `thinking: { type: "enabled" }` — binario on/off, el nivel se ignora |
 
 <Note>
-  Kimi y GLM actualmente exponen el razonamiento como un único indicador on/off. Elegir Low, Medium o High emite el mismo payload (thinking habilitado). Cuando sus APIs añadan granularidad de nivel, Kodus empezará a reenviarla.
+  Kimi y GLM actualmente exponen el razonamiento como un único indicador on/off. Elegir Low, Medium o High emite el mismo payload (thinking habilitado). Cuando sus APIs añadan granularidad de nivel, Codus empezará a reenviarla.
 </Note>
 
 ### Sobrescritura con JSON personalizado
 
-Elegir **Custom** en el interruptor de Thinking revela un área de texto JSON. Pega directamente las opciones del proveedor — **Kodus las envuelve automáticamente bajo el namespace del proveedor activo**. No necesitas conocer las reglas de enrutamiento del Vercel AI SDK.
+Elegir **Custom** en el interruptor de Thinking revela un área de texto JSON. Pega directamente las opciones del proveedor — **Codus las envuelve automáticamente bajo el namespace del proveedor activo**. No necesitas conocer las reglas de enrutamiento del Vercel AI SDK.
 
 Úsalo cuando:
 
 - Necesitas un valor específico de `budgetTokens` para Claude (en lugar del mapeo predefinido de esfuerzo)
 - Quieres habilitar/deshabilitar el razonamiento por modelo en proveedores compatibles con OpenAI
 - Quieres campos más allá del razonamiento — **caching, service tier, safety settings, etiquetado `user`, etc.** La sobrescritura se fusiona en `providerOptions`, por lo que cualquier campo del adaptador pasa
-- El proveedor lanza un nuevo campo que Kodus aún no ha envuelto
+- El proveedor lanza un nuevo campo que Codus aún no ha envuelto
 
 #### Ejemplos (pega directamente — sin namespace)
 
@@ -379,7 +379,7 @@ Elegir **Custom** en el interruptor de Thinking revela un área de texto JSON. P
       "reasoningEffort": "high",
       "serviceTier": "flex",
       "store": false,
-      "user": "kodus-review"
+      "user": "codus-review"
     }
     ```
   </Tab>
@@ -420,7 +420,7 @@ Elegir **Custom** en el interruptor de Thinking revela un área de texto JSON. P
 
 #### Modo manual con namespaces (usuarios avanzados)
 
-Si tu JSON ya contiene una clave de namespace conocida en el nivel superior (`anthropic`, `google`, `openai`, `openrouter`, `openaiCompatible`), Kodus lo deja intacto. Útil si quieres mezclar múltiples namespaces de proveedores o ser explícito:
+Si tu JSON ya contiene una clave de namespace conocida en el nivel superior (`anthropic`, `google`, `openai`, `openrouter`, `openaiCompatible`), Codus lo deja intacto. Útil si quieres mezclar múltiples namespaces de proveedores o ser explícito:
 
 ```json
 {
@@ -431,7 +431,7 @@ Si tu JSON ya contiene una clave de namespace conocida en el nivel superior (`an
 }
 ```
 
-Internamente, estos son los mapeos de namespace que Kodus usa:
+Internamente, estos son los mapeos de namespace que Codus usa:
 
 | Proveedor BYOK | Clave de namespace |
 | --- | --- |
@@ -443,9 +443,9 @@ Internamente, estos son los mapeos de namespace que Kodus usa:
 
 #### Detalles a tener en cuenta
 
-- **Solo JSON válido.** Las comas faltantes o sobrantes rompen el análisis y Kodus ignora la sobrescritura.
+- **Solo JSON válido.** Las comas faltantes o sobrantes rompen el análisis y Codus ignora la sobrescritura.
 - **Precedencia:** la sobrescritura JSON **reemplaza por completo** el bloque de namespace del preset de esfuerzo — si sobrescribes `anthropic.thinking` pero olvidas `anthropic.outputConfig`, ese campo no se enviará. El enrutamiento de OpenRouter (Pin providers / Allow fallbacks) es la única excepción: se fusiona en profundidad con tu sobrescritura bajo `openrouter`.
-- **Proveedor desconocido = sin envoltura.** Si tu proveedor de BYOK no está en la tabla de namespaces anterior, Kodus pasa el JSON tal cual. Raro — solo aplica si configuras un proveedor que Kodus no reconoce.
+- **Proveedor desconocido = sin envoltura.** Si tu proveedor de BYOK no está en la tabla de namespaces anterior, Codus pasa el JSON tal cual. Raro — solo aplica si configuras un proveedor que Codus no reconoce.
 
 ## Fijar proveedores de OpenRouter
 
@@ -472,7 +472,7 @@ Cuando tu proveedor de BYOK es **OpenRouter**, el panel de Advanced settings mue
   Los nombres de upstream deben coincidir con el catálogo de OpenRouter. Revisa las etiquetas de proveedor en [openrouter.ai/docs/features/provider-routing](https://openrouter.ai/docs/features/provider-routing) — los valores comunes incluyen `moonshot`, `together`, `groq`, `fireworks`, `novita`.
 </Warning>
 
-Internamente, Kodus emite esto en la llamada del Vercel AI SDK:
+Internamente, Codus emite esto en la llamada del Vercel AI SDK:
 
 ```json
 {
@@ -505,9 +505,9 @@ Si necesitas campos más allá de `order` y `allow_fallbacks` (por ejemplo, `ign
 
 ## Concurrencia y límites de tasa
 
-El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuántas solicitudes simultáneas envía Kodus a tu proveedor en paralelo. La mayoría de las veces, el valor predeterminado es suficiente — pero los planes de suscripción con topes de concurrencia estrictos necesitan configurarlo explícitamente.
+El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuántas solicitudes simultáneas envía Codus a tu proveedor en paralelo. La mayoría de las veces, el valor predeterminado es suficiente — pero los planes de suscripción con topes de concurrencia estrictos necesitan configurarlo explícitamente.
 
-### Valores predeterminados que Kodus rellena
+### Valores predeterminados que Codus rellena
 
 | Proveedor / plan | Valor preconfigurado | Por qué |
 | --- | --- | --- |
@@ -516,7 +516,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
 | **Kimi Code Plan** | `30` | Tope documentado por Moonshot en el endpoint de código. |
 | **GLM Developer API** | _(vacío)_ | Los límites escalan por clave; sin un valor global razonable. |
 | **Kimi Developer API** | _(vacío)_ | Escala con tu nivel de recarga (Tier 1 ≈ 50, Tier 5 ≈ 1000). |
-| **Anthropic / OpenAI / Google / OpenRouter** | _(vacío)_ | Los proveedores aplican sus propios TPM/RPM; Kodus no lo limita. |
+| **Anthropic / OpenAI / Google / OpenRouter** | _(vacío)_ | Los proveedores aplican sus propios TPM/RPM; Codus no lo limita. |
 
 ### Cuándo ajustarlo
 
@@ -538,7 +538,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
 </Tip>
 
 <Note>
-  **Interacción con el respaldo.** Cuando el principal recibe un 429 y Kodus conmuta al modelo de respaldo, se aplica el `maxConcurrentRequests` del propio respaldo. Configurar un respaldo generoso en un proveedor distinto es una buena forma de absorber ráfagas cuando tu principal está en una suscripción ajustada.
+  **Interacción con el respaldo.** Cuando el principal recibe un 429 y Codus conmuta al modelo de respaldo, se aplica el `maxConcurrentRequests` del propio respaldo. Configurar un respaldo generoso en un proveedor distinto es una buena forma de absorber ráfagas cuando tu principal está en una suscripción ajustada.
 </Note>
 
 ## Mejores prácticas
@@ -547,7 +547,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
 
 <CardGroup cols={2}>
   <Card title="Claves dedicadas" icon="shield-check">
-    Crea claves de API separadas para Kodus. Facilita la auditoría de uso y la rotación de claves.
+    Crea claves de API separadas para Codus. Facilita la auditoría de uso y la rotación de claves.
   </Card>
   <Card title="Rotación regular" icon="arrows-rotate">
     Rota las claves periódicamente y actualízalas en la configuración de BYOK.
@@ -556,7 +556,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
     Revisa los paneles de tu proveedor para detectar patrones inusuales.
   </Card>
   <Card title="Almacenamiento seguro" icon="lock">
-    Nunca confirmes claves en repositorios. Kodus las almacena cifradas en reposo y en tránsito.
+    Nunca confirmes claves en repositorios. Codus las almacena cifradas en reposo y en tránsito.
   </Card>
 </CardGroup>
 
@@ -591,7 +591,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
   </Accordion>
 
   <Accordion title="Variables de entorno de alojamiento autónomo no aparecen">
-    - Si Kodus está configurado mediante `.env` (Modo Fijo auto-alojado), la pantalla de BYOK muestra un banner informativo azul con el proveedor/modelo activo — la clave nunca se muestra por seguridad.
+    - Si Codus está configurado mediante `.env` (Modo Fijo auto-alojado), la pantalla de BYOK muestra un banner informativo azul con el proveedor/modelo activo — la clave nunca se muestra por seguridad.
     - Guardar una configuración de BYOK sobre `.env` abre un diálogo de confirmación antes de sobrescribir.
   </Accordion>
 
@@ -614,7 +614,7 @@ El campo `maxConcurrentRequests` (bajo **Configuración avanzada**) limita cuán
   </Accordion>
 
   <Accordion title="¿Cómo funciona el sistema principal/respaldo?">
-    El modelo principal gestiona todas las revisiones por defecto. Si falla (límite de tasa, 5xx, tiempo de espera), Kodus reintenta una vez en el respaldo. Solo pagas por el proveedor que efectivamente procesó la revisión.
+    El modelo principal gestiona todas las revisiones por defecto. Si falla (límite de tasa, 5xx, tiempo de espera), Codus reintenta una vez en el respaldo. Solo pagas por el proveedor que efectivamente procesó la revisión.
   </Accordion>
 
   <Accordion title="¿Debería usar el mismo proveedor para el principal y el respaldo?">

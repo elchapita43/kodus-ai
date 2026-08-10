@@ -58,7 +58,7 @@ describe('command errors', () => {
             cause?: { code?: string };
         };
         error.cause = { code: 'ECONNREFUSED' };
-        process.env.KODUS_API_URL = 'http://localhost:3001';
+        process.env.CODUS_API_URL = 'http://localhost:3001';
 
         const normalized = normalizeCommandError(error);
 
@@ -67,12 +67,12 @@ describe('command errors', () => {
             exitCode: 1,
         });
         expect(normalized.message).toContain(
-            'Could not reach the Kodus API at http://localhost:3001.',
+            'Could not reach the Codus API at http://localhost:3001.',
         );
         expect(normalized.message).toContain(
             'If you are using the local API, make sure it is running.',
         );
 
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
     });
 });

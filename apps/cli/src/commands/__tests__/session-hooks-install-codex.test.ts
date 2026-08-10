@@ -11,7 +11,7 @@ let tmpDir: string;
 
 beforeEach(async () => {
     tmpDir = await fs.mkdtemp(
-        path.join(os.tmpdir(), 'kodus-codex-hooks-'),
+        path.join(os.tmpdir(), 'codus-codex-hooks-'),
     );
 });
 
@@ -40,7 +40,7 @@ describe('installCodexSessionHooks', () => {
 
         const content = await fs.readFile(configPath(), 'utf-8');
         expect(content).toContain(
-            'command = "kodus decisions hooks codex AfterAgent"',
+            'command = "codus decisions hooks codex AfterAgent"',
         );
     });
 
@@ -70,20 +70,20 @@ describe('installCodexSessionHooks', () => {
         expect(content).toContain('model = "gpt-4"');
         expect(content).toContain('[[hooks]]');
         expect(content).toContain(
-            'command = "kodus decisions hooks codex AfterAgent"',
+            'command = "codus decisions hooks codex AfterAgent"',
         );
     });
 });
 
 describe('removeCodexSessionHooks', () => {
-    it('removes kodus hooks', async () => {
+    it('removes codus hooks', async () => {
         await installCodexSessionHooks(configPath());
         const result = await removeCodexSessionHooks(configPath());
 
         expect(result.removed).toBe(true);
 
         const content = await fs.readFile(configPath(), 'utf-8');
-        expect(content).not.toContain('kodus decisions hooks codex');
+        expect(content).not.toContain('codus decisions hooks codex');
         expect(content).not.toContain('[[hooks]]');
     });
 
@@ -92,7 +92,7 @@ describe('removeCodexSessionHooks', () => {
         expect(result.removed).toBe(false);
     });
 
-    it('preserves non-kodus hooks and content', async () => {
+    it('preserves non-codus hooks and content', async () => {
         await fs.mkdir(tmpDir, { recursive: true });
 
         const existingContent = [
@@ -107,27 +107,27 @@ describe('removeCodexSessionHooks', () => {
 
         await fs.writeFile(configPath(), existingContent);
 
-        // Install kodus hooks (appends a new [[hooks]] block)
+        // Install codus hooks (appends a new [[hooks]] block)
         await installCodexSessionHooks(configPath());
 
         // Verify both hook blocks are present
         const contentBefore = await fs.readFile(configPath(), 'utf-8');
         expect(contentBefore).toContain('echo before-agent');
-        expect(contentBefore).toContain('kodus decisions hooks codex');
+        expect(contentBefore).toContain('codus decisions hooks codex');
 
-        // Remove kodus hooks
+        // Remove codus hooks
         const result = await removeCodexSessionHooks(configPath());
         expect(result.removed).toBe(true);
 
         const contentAfter = await fs.readFile(configPath(), 'utf-8');
 
-        // Non-kodus content should remain
+        // Non-codus content should remain
         expect(contentAfter).toContain('[settings]');
         expect(contentAfter).toContain('model = "gpt-4"');
         expect(contentAfter).toContain('[[hooks]]');
         expect(contentAfter).toContain('echo before-agent');
 
-        // Kodus hooks should be gone
-        expect(contentAfter).not.toContain('kodus decisions hooks codex');
+        // Codus hooks should be gone
+        expect(contentAfter).not.toContain('codus decisions hooks codex');
     });
 });

@@ -1,7 +1,7 @@
 export const EMAIL_FROM = {
     NOTIFICATIONS: {
         email: 'noreply@notifications.kodus.io',
-        name: 'Kody from Kodus',
+        name: 'Cody from Codus',
     },
 } as const;
 

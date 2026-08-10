@@ -3,7 +3,7 @@
 Reproduces the SSO handoff cookie-domain regression that broke
 self-hosted deployments on any host other than `*.kodus.io`
 (e.g. Dmitry's `*.web.scorpion.co`). Sets up Keycloak as a SAML IdP
-and Kodus as the SP, both on `*.kodus.lvh.me`, behind a TLS-terminating
+and Codus as the SP, both on `*.codus.lvh.me`, behind a TLS-terminating
 Caddy reverse proxy. Logs in as a SAML user end-to-end and verifies
 the `Set-Cookie` Domain attribute in the browser.
 
@@ -33,9 +33,9 @@ expected `Domain=` and the `/sso-callback` page consumes it cleanly.
     ```
 2. Production images of API + Web built locally:
     ```sh
-    WEB_TAGS=kodus-web:sso-e2e RELEASE_VERSION=sso-e2e \
+    WEB_TAGS=codus-web:sso-e2e RELEASE_VERSION=sso-e2e \
         docker buildx bake -f docker-bake.hcl web
-    API_TAGS=kodus-api:sso-e2e API_CLOUD_MODE=false \
+    API_TAGS=codus-api:sso-e2e API_CLOUD_MODE=false \
         docker buildx bake -f docker-bake.hcl api
     ```
 3. mkcert installed and trusted on the host:
@@ -56,12 +56,12 @@ expected `Domain=` and the `/sso-callback` page consumes it cleanly.
 terminates TLS using the mkcert wildcard cert.
 
 ```
-Browser ──► https://app.kodus.lvh.me   (Caddy → kodus-web:3000)
-Browser ──► https://api.kodus.lvh.me   (Caddy → kodus-api:3001)
+Browser ──► https://app.codus.lvh.me   (Caddy → codus-web:3000)
+Browser ──► https://api.codus.lvh.me   (Caddy → codus-api:3001)
 Browser ──► http://localhost:8080      (Keycloak)
 ```
 
-The expected cookie `Domain` is `.kodus.lvh.me`.
+The expected cookie `Domain` is `.codus.lvh.me`.
 
 ## Running
 
@@ -82,10 +82,10 @@ Output:
 ━━━ Step 1/3 — unit + integration tests ━━━
 ✓ unit + integration tests passed                     (28 cases)
 ━━━ Step 2/3 — prod web image ━━━
-✓ kodus-web:test already built
+✓ codus-web:test already built
 ━━━ Step 3/3 — runtime smoke test (cloud + self-hosted shapes) ━━━
 ✓ cloud shape resolves to https://api.kodus.io
-✓ self-hosted shape resolves to https://kodus-api-dev.web.scorpion.co
+✓ self-hosted shape resolves to https://codus-api-dev.web.scorpion.co
 ═══════════════════════════════════════════════════════════
  All SSO regression layers passed
 ═══════════════════════════════════════════════════════════
@@ -106,7 +106,7 @@ SAML callback in production-mode TLS. Prerequisites listed in the
 The browser layer parameterizes the topology via `SSO_E2E_DOMAIN`:
 
 ```sh
-# SaaS shape (default) — common parent ".kodus.lvh.me" (3 labels, analog of .kodus.io)
+# SaaS shape (default) — common parent ".codus.lvh.me" (3 labels, analog of .kodus.io)
 ./scripts/sso-e2e/run.sh
 
 # Dmitry shape — common parent ".web.scorpion.lvh.me" (4 labels, analog of .web.scorpion.co)
@@ -133,10 +133,10 @@ The script:
 2. Generates the wildcard TLS cert via mkcert if missing.
 3. Boots Caddy + Keycloak + API + Web via
    `docker/sso-e2e/docker-compose.yml`.
-4. Configures Keycloak (realm `kodus-sso-e2e`, SAML client
-   `kodus-orchestrator`, user `sso-user@kodus-test.com` /
+4. Configures Keycloak (realm `codus-sso-e2e`, SAML client
+   `codus-orchestrator`, user `sso-user@codus-test.com` /
    `TestSso!2026`).
-5. Configures Kodus (signup an admin, create org, register the SAML
+5. Configures Codus (signup an admin, create org, register the SAML
    IdP via `POST /sso-config`).
 6. Re-runs Keycloak setup so the SAML client's ACS URL is bound to
    the new orgId.
@@ -146,26 +146,26 @@ The script:
 
 Follow the steps printed by `run.sh`:
 
-1. Open `https://api.kodus.lvh.me/auth/sso/login/<orgId>` (printed
+1. Open `https://api.codus.lvh.me/auth/sso/login/<orgId>` (printed
    by the script). This is a direct call to the API that bypasses
    the front-end "active" gate (the seeded SSO config is
    `active: false` so the front-end's gate would otherwise refuse
    to redirect — the cookie-domain code path on the callback is
    identical either way).
-2. Sign in on Keycloak: `sso-user@kodus-test.com` / `TestSso!2026`.
-3. Land on `https://app.kodus.lvh.me/sso-callback` and then the app.
+2. Sign in on Keycloak: `sso-user@codus-test.com` / `TestSso!2026`.
+3. Land on `https://app.codus.lvh.me/sso-callback` and then the app.
 4. Open Chrome DevTools → Application → Cookies →
-   `https://app.kodus.lvh.me`. Confirm:
+   `https://app.codus.lvh.me`. Confirm:
 
     | Field | Value |
     |---|---|
     | Name | `sso_handoff` (briefly — 15s lifetime) |
-    | **Domain** | **`.kodus.lvh.me`** |
+    | **Domain** | **`.codus.lvh.me`** |
     | Path | `/` |
     | Secure | ✓ |
     | SameSite | `Lax` |
 
-The `Domain=.kodus.lvh.me` is the proof. Before the fix it was
+The `Domain=.codus.lvh.me` is the proof. Before the fix it was
 hard-coded to `.kodus.io`, so any self-hosted topology
 (Dmitry's `*.web.scorpion.co`, customer-A's `*.example.com`,
 internal `*.intranet.local`, …) would have its cookie scoped to
@@ -189,7 +189,7 @@ docker compose -f docker/sso-e2e/docker-compose.yml down -v
 | `scripts/sso-e2e/run.sh` | Browser SAML round-trip orchestrator |
 | `scripts/sso-e2e/prepare-env.sh` | Sanitize `.env` for `--env-file` |
 | `scripts/sso-e2e/bootstrap-keycloak.sh` | Realm + SAML client + user |
-| `scripts/sso-e2e/bootstrap-kodus.sh` | Signup + register SSO config |
+| `scripts/sso-e2e/bootstrap-codus.sh` | Signup + register SSO config |
 | `docker/sso-e2e/docker-compose.yml` | Caddy + Keycloak + API + Web prod |
 | `docker/sso-e2e/Caddyfile` | TLS reverse proxy config |
 
@@ -198,9 +198,9 @@ Generated artifacts (in `.tmp/`, all gitignored):
 | File | Purpose |
 |---|---|
 | `sso-e2e-api.env` | Sanitized env for the API container |
-| `sso-e2e-tls/kodus.lvh.me.{crt,key}` | Wildcard cert from mkcert |
-| `sso-e2e-keycloak.json` | IdP descriptor consumed by bootstrap-kodus |
-| `sso-e2e-org-id.txt` | OrgId written by bootstrap-kodus, read by bootstrap-keycloak's second pass |
+| `sso-e2e-tls/codus.lvh.me.{crt,key}` | Wildcard cert from mkcert |
+| `sso-e2e-keycloak.json` | IdP descriptor consumed by bootstrap-codus |
+| `sso-e2e-org-id.txt` | OrgId written by bootstrap-codus, read by bootstrap-keycloak's second pass |
 
 ## Appendix — Method A: instrumented log
 
@@ -214,16 +214,16 @@ console.log(
 );
 ```
 
-Rebuild, restart `kodus-api`, run the SAML flow once, then:
+Rebuild, restart `codus-api`, run the SAML flow once, then:
 
 ```sh
-docker logs kodus-sso-e2e-api 2>&1 | grep SSO_E2E
+docker logs codus-sso-e2e-api 2>&1 | grep SSO_E2E
 ```
 
 Expected output:
 
 ```
-[SSO_E2E] req.host=api.kodus.lvh.me frontendUrl=https://app.kodus.lvh.me nodeEnv=production → cookieDomain=.kodus.lvh.me
+[SSO_E2E] req.host=api.codus.lvh.me frontendUrl=https://app.codus.lvh.me nodeEnv=production → cookieDomain=.codus.lvh.me
 ```
 
 Remove the `console.log` before committing.

@@ -84,12 +84,12 @@ describe("/api/proxy/mcp/[...path]", () => {
         expect(url).toBe("http://my-mcp-container:4040/integrations");
     });
 
-    it("falls back to kodus-mcp-manager when the container name env is unset", async () => {
+    it("falls back to codus-mcp-manager when the container name env is unset", async () => {
         process.env.WEB_HOSTNAME_MCP_MANAGER = "localhost";
         delete process.env.GLOBAL_MCP_MANAGER_CONTAINER_NAME;
         await GET(mockReq("GET"), ctx(["integrations"]));
         const [url] = fetchMock.mock.calls[0];
-        expect(url).toBe("http://kodus-mcp-manager:4040/integrations");
+        expect(url).toBe("http://codus-mcp-manager:4040/integrations");
     });
 
     it("injects Bearer token resolved server-side from NextAuth", async () => {

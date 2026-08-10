@@ -94,7 +94,7 @@ export default function App() {
                         <DialogHeader>
                             <DialogTitle className="flex items-center gap-2">
                                 <PartyPopperIcon className="text-primary-light size-6" />
-                                Kody is ready for your first PR review
+                                Cody is ready for your first PR review
                             </DialogTitle>
 
                             <DialogDescription className="mt-4">

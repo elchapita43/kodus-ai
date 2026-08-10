@@ -10,7 +10,7 @@ import { REPOSITORY_SERVICE_TOKEN } from '../domain/contracts/RepositoryService.
 import { RepositoryRepository } from '../infrastructure/adapters/repositories/repository.repository';
 import { AstGraphRepository } from '../infrastructure/adapters/repositories/astGraph.repository';
 import { RepositoryService } from '../infrastructure/adapters/services/repository.service';
-import { KodusGraphCli } from '../infrastructure/adapters/services/graph/kodus-graph-cli';
+import { CodusGraphCli } from '../infrastructure/adapters/services/graph/codus-graph-cli';
 import { GraphIndexerService } from '../infrastructure/adapters/services/graph/graph-indexer.service';
 import { GraphContextService } from '../infrastructure/adapters/services/graph/graph-context.service';
 
@@ -28,14 +28,14 @@ import { GraphContextService } from '../infrastructure/adapters/services/graph/g
             provide: REPOSITORY_SERVICE_TOKEN,
             useClass: RepositoryService,
         },
-        KodusGraphCli,
+        CodusGraphCli,
         GraphIndexerService,
         GraphContextService,
     ],
     exports: [
         AstGraphRepository,
         REPOSITORY_SERVICE_TOKEN,
-        KodusGraphCli,
+        CodusGraphCli,
         GraphIndexerService,
         GraphContextService,
     ],

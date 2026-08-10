@@ -20,7 +20,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GitHubPullRequestHandler } from '@libs/platform/infrastructure/webhooks/github/githubPullRequest.handler';
 import { SavePullRequestUseCase } from '@libs/platformData/application/use-cases/pullRequests/save.use-case';
 import { RunCodeReviewAutomationUseCase } from '@libs/ee/automation/runCodeReview.use-case';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { EnqueueImplementationCheckUseCase } from '@libs/code-review/application/use-cases/enqueue-implementation-check.use-case';
@@ -142,7 +142,7 @@ const shouldSkip = !MONGODB_URI;
         beforeAll(async () => {
             const mongoUri = MONGODB_URI?.includes('://')
                 ? MONGODB_URI
-                : `mongodb://${MONGODB_URI}:27017/kodus_test`;
+                : `mongodb://${MONGODB_URI}:27017/codus_test`;
 
             mockCodeManagementService = {
                 getFilesByPullRequestId: jest.fn().mockResolvedValue(API_FILES),
@@ -216,7 +216,7 @@ const shouldSkip = !MONGODB_URI;
                         useValue: mockRunCodeReviewAutomation,
                     },
                     {
-                        provide: ChatWithKodyFromGitUseCase,
+                        provide: ChatWithCodyFromGitUseCase,
                         useValue: { execute: jest.fn() },
                     },
                     {
@@ -343,7 +343,7 @@ const shouldSkip = !MONGODB_URI;
                 await handler.execute(webhookParams);
 
                 // Git API must NOT be called by SavePullRequestUseCase
-                // Note: the handler itself may call getFilesByPullRequestId for Kody Rules sync on merge,
+                // Note: the handler itself may call getFilesByPullRequestId for Cody Rules sync on merge,
                 // but SavePullRequestUseCase should not call it for the "closed" action
                 expect(
                     mockPullRequestsService.aggregateAndSaveDataStructure,

@@ -133,7 +133,7 @@ jobs:
                   RELEASE_TAG: ${{ needs.validate.outputs.tag }}
               run: |
                   if [ -n "$(git status --porcelain docs/changelog 2>/dev/null)" ]; then
-                      git config user.name "kodus-changelog-bot"
+                      git config user.name "codus-changelog-bot"
                       git config user.email "actions@kodus.io"
                       git add docs/changelog
                       git commit -m "docs(changelog): publish ${RELEASE_TAG}"

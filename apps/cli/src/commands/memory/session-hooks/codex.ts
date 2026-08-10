@@ -9,7 +9,7 @@ const VALID_HOOKS: Set<CodexHookEvent> = new Set([
 
 export async function codexHookAction(hookName: string): Promise<void> {
     if (!VALID_HOOKS.has(hookName as CodexHookEvent)) {
-        if (process.env.KODUS_VERBOSE === 'true') {
+        if (process.env.CODUS_VERBOSE === 'true') {
             console.error(`[decisions] unknown Codex hook: ${hookName}`);
         }
         return;

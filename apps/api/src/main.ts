@@ -45,7 +45,7 @@ import { configureLongFetchTimeouts } from '@libs/core/infrastructure/http/fetch
 configureLongFetchTimeouts();
 
 // Initialize profiling early (before NestJS bootstrap)
-initPyroscope({ appName: 'kodus-api' });
+initPyroscope({ appName: 'codus-api' });
 
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -202,8 +202,8 @@ async function bootstrap() {
             );
 
             const swaggerBuilder = new DocumentBuilder()
-                .setTitle('Kodus API')
-                .setDescription('Public API for the Kodus platform.')
+                .setTitle('Codus API')
+                .setDescription('Public API for the Codus platform.')
                 .setVersion('1.0')
                 .addBearerAuth(
                     {
@@ -243,7 +243,7 @@ async function bootstrap() {
                 'Integration Config',
                 'Internal Metrics',
                 'Issues',
-                'Kody Rules',
+                'Cody Rules',
                 'MCP',
                 'Organization',
                 'Organization Parameters',

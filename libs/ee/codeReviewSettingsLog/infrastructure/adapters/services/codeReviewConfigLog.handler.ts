@@ -3,7 +3,7 @@ import {
     ConfigLevel,
     UserInfo,
 } from '@libs/core/infrastructure/config/types/general/codeReviewSettingsLog.type';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { Injectable } from '@nestjs/common';
 import {
     BaseLogParams,
@@ -25,7 +25,7 @@ interface PropertyConfig {
 // Property configurations moved from external file
 const PROPERTY_CONFIGS: Record<string, PropertyConfig> = {
     //#region General
-    'kodusConfigFileOverridesWebPreferences': {
+    'codusConfigFileOverridesWebPreferences': {
         actionDescription: 'Config File Overrides Web Preferences',
     },
     'pullRequestApprovalActive': {
@@ -91,8 +91,8 @@ const PROPERTY_CONFIGS: Record<string, PropertyConfig> = {
     'suggestionControl.severityLevelFilter': {
         actionDescription: 'Severity Level Filter',
     },
-    'suggestionControl.applyFiltersToKodyRules': {
-        actionDescription: 'Apply Filters to Kody Rules',
+    'suggestionControl.applyFiltersToCodyRules': {
+        actionDescription: 'Apply Filters to Cody Rules',
     },
     //#endregion
 
@@ -105,15 +105,15 @@ const PROPERTY_CONFIGS: Record<string, PropertyConfig> = {
     },
     //#endregion
 
-    //#region Kody Rules
-    'kodyRulesGeneratorEnabled': {
-        actionDescription: 'Kody Rules Generator',
+    //#region Cody Rules
+    'codyRulesGeneratorEnabled': {
+        actionDescription: 'Cody Rules Generator',
     },
-    'kodyLearningExcludedReviewers': {
-        actionDescription: 'Kody Rules Learning — Excluded Reviewers',
+    'codyLearningExcludedReviewers': {
+        actionDescription: 'Cody Rules Learning — Excluded Reviewers',
     },
-    'kodyKnowledgeApproval.enabled': {
-        actionDescription: 'Kody Knowledge Approval',
+    'codyKnowledgeApproval.enabled': {
+        actionDescription: 'Cody Knowledge Approval',
     },
     //#endregion
 
@@ -243,7 +243,7 @@ export class CodeReviewConfigLogHandler {
     }
 
     private resolveWithDefaults(deltaConfig: any): any {
-        const defaults = getDefaultKodusConfigFile();
+        const defaults = getDefaultCodusConfigFile();
         return this.deepMerge(defaults, deltaConfig || {});
     }
 

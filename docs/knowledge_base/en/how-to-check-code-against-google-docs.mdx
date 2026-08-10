@@ -3,7 +3,7 @@ title: "How to check code against Google Docs specs"
 description: "Validate your pull request implementation against specifications written in Google Docs."
 ---
 
-Product specs and requirements often live in Google Docs. Kodus can fetch the document content and compare it against your PR diff to verify that the implementation matches the spec.
+Product specs and requirements often live in Google Docs. Codus can fetch the document content and compare it against your PR diff to verify that the implementation matches the spec.
 
 ## How it works
 
@@ -12,14 +12,14 @@ Product specs and requirements often live in Google Docs. Kodus can fetch the do
 3. Comment on your PR:
 
 ```
-@kody -v business-logic https://docs.google.com/document/d/1abc123/edit
+@cody -v business-logic https://docs.google.com/document/d/1abc123/edit
 ```
 
-4. Kody fetches the document, extracts the requirements, and compares them against the PR diff
+4. Cody fetches the document, extracts the requirements, and compares them against the PR diff
 
 ## What you get
 
-Kody produces a structured validation report:
+Cody produces a structured validation report:
 
 - **Findings** with severity: MUST_FIX, SUGGESTION, or INFO
 - **Requirement tracing** — each finding quotes text from the Google Doc
@@ -31,7 +31,7 @@ Kody produces a structured validation report:
 - You can also paste the spec content inline:
 
 ```
-@kody -v business-logic
+@cody -v business-logic
 ## Requirements
 1. Users with role "admin" can delete any comment
 2. Users can only edit their own comments within 24 hours

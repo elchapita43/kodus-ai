@@ -14,7 +14,7 @@ export class RealMemoryApi implements IMemoryApi {
         payload: MemoryCaptureApiRequest,
         accessToken: string,
     ): Promise<MemoryCaptureApiResponse> {
-        const isTeamKey = accessToken.startsWith('kodus_');
+        const isTeamKey = accessToken.startsWith('codus_');
         const headers: Record<string, string> = isTeamKey
             ? { 'X-Team-Key': accessToken }
             : { Authorization: `Bearer ${accessToken}` };

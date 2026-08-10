@@ -2,7 +2,7 @@ import {
     BYOKProvider,
     getModelCapabilities,
     ReasoningConfig,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import { ProviderService } from '@libs/core/infrastructure/services/providers/provider.service';
 import { createLogger } from '@libs/core/log/logger';
@@ -96,7 +96,7 @@ export class GetModelsByProviderUseCase {
 
         // Prefer the org's OWN saved BYOK credentials so the catalog reflects
         // the user's actual endpoint/key (e.g. an openai_compatible proxy like
-        // Moonshot) rather than Kodus' bundled env keys — otherwise the list is
+        // Moonshot) rather than Codus' bundled env keys — otherwise the list is
         // for the wrong account and the user's real models all look "unknown".
         // Falls back to env when no saved slot matches (e.g. the setup wizard,
         // before the config is saved).

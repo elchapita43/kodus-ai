@@ -71,7 +71,7 @@ export interface SkillContracts {
 /** Per-skill fetcher behavior policy for MCP/tool orchestration. */
 export interface SkillFetcherPolicy {
     /**
-     * How declared allowed-tools must be matched for kodusmcp connections:
+     * How declared allowed-tools must be matched for codusmcp connections:
      * - any: at least one tool is enough
      * - all: all tools must be available
      */
@@ -148,7 +148,7 @@ const ContractsSchema = z.looseObject({
         .optional(),
 });
 
-const KodusExtensionsSchema = z.looseObject({
+const CodusExtensionsSchema = z.looseObject({
     'capabilities': z.array(z.string()).optional(),
     'capability-tool-map': z
         .record(z.string(), z.union([z.string(), z.array(z.string())]))
@@ -178,7 +178,7 @@ const SkillFrontmatterSchema = z.looseObject({
     // We support both text list and YAML array for compatibility.
     'allowed-tools': z.union([z.string(), z.array(z.string())]).optional(),
 
-    // Legacy Kodus top-level extension keys (kept for backwards compatibility).
+    // Legacy Codus top-level extension keys (kept for backwards compatibility).
     'capabilities': z.array(z.string()).optional(),
     'capability-definitions': z
         .record(
@@ -370,15 +370,15 @@ export class SkillLoaderService {
         }
 
         const metadata = asRecord(parsed.data.metadata);
-        const kodusMetadata = KodusExtensionsSchema.safeParse(
-            asRecord(metadata.kodus),
+        const codusMetadata = CodusExtensionsSchema.safeParse(
+            asRecord(metadata.codus),
         );
-        if (!kodusMetadata.success && metadata.kodus !== undefined) {
+        if (!codusMetadata.success && metadata.codus !== undefined) {
             this.logger.warn(
-                `[SkillLoader] invalid metadata.kodus schema. Ignoring Kodus extensions for this skill.`,
+                `[SkillLoader] invalid metadata.codus schema. Ignoring Codus extensions for this skill.`,
             );
         }
-        const kodus = kodusMetadata.success ? kodusMetadata.data : {};
+        const codus = codusMetadata.success ? codusMetadata.data : {};
         const legacyExtensionsUsed =
             parsed.data.capabilities !== undefined ||
             parsed.data['capability-definitions'] !== undefined ||
@@ -389,27 +389,27 @@ export class SkillLoaderService {
 
         if (legacyExtensionsUsed) {
             this.logger.warn(
-                `[SkillLoader] legacy Kodus top-level keys detected. Move extensions to metadata.kodus for spec-first compatibility.`,
+                `[SkillLoader] legacy Codus top-level keys detected. Move extensions to metadata.codus for spec-first compatibility.`,
             );
         }
 
         const fetcherPolicy = this.mapFetcherPolicy(
-            kodus['fetcher-policy'] ?? parsed.data['fetcher-policy'],
+            codus['fetcher-policy'] ?? parsed.data['fetcher-policy'],
         );
         const executionPolicy = this.mapExecutionPolicy(
-            kodus['execution-policy'] ?? parsed.data['execution-policy'],
+            codus['execution-policy'] ?? parsed.data['execution-policy'],
         );
         const contracts = this.mapContracts(
-            kodus.contracts ?? parsed.data.contracts,
+            codus.contracts ?? parsed.data.contracts,
         );
         const requiredMcps =
-            kodus['required-mcps'] ?? parsed.data['required-mcps'];
-        const capabilities = kodus.capabilities ?? parsed.data.capabilities;
+            codus['required-mcps'] ?? parsed.data['required-mcps'];
+        const capabilities = codus.capabilities ?? parsed.data.capabilities;
         const capabilityToolMap = this.normalizeCapabilityToolMap(
-            kodus['capability-tool-map'],
+            codus['capability-tool-map'],
         );
         const capabilityDefinitions = this.normalizeCapabilityDefinitions(
-            kodus['capability-definitions'] ??
+            codus['capability-definitions'] ??
                 parsed.data['capability-definitions'],
         );
         const allowedTools = this.normalizeAllowedTools(

@@ -4,7 +4,7 @@
 // cockpit-allowed tier — i.e. it neither (a) redirects to /settings/git (tier
 // gate) nor (b) renders the "Analytics Not Available" card. (b) is the exact
 // regression a self-hosted Enterprise customer hit: the layout used to gate on
-// `WEB_ANALYTICS_SECRET` (the x-api-key of the retired kodus-service-analytics
+// `WEB_ANALYTICS_SECRET` (the x-api-key of the retired codus-service-analytics
 // microservice), which self-hosted ships empty — so a valid license + a healthy
 // Postgres warehouse still showed "Analytics Not Available". A pure API check on
 // /cockpit/validate would NOT catch this (the secret only gated the web layout),

@@ -28,7 +28,7 @@ import {
     NoStructuredFallbackModelError,
     getModelName,
 } from '@libs/llm/byok-to-vercel';
-import { buildKodyRuleLink } from '@libs/code-review/utils/build-kody-rule-link';
+import { buildCodyRuleLink } from '@libs/code-review/utils/build-cody-rule-link';
 import {
     buildLangfuseTelemetry,
     toAiSdkTelemetryArgs,
@@ -84,11 +84,11 @@ import {
 } from '@libs/code-review/domain/contracts/RepositoryService.contract';
 import { AstGraphStatus } from '@libs/code-review/infrastructure/adapters/repositories/schemas/repository.model';
 import {
-    IKodyRule,
-    resolveKodyRuleSeverityLevel,
+    ICodyRule,
+    resolveCodyRuleSeverityLevel,
     SeverityLevel,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
-import { KodyRuleSummaryService } from '@libs/kodyRules/infrastructure/adapters/services/kody-rule-summary.service';
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
+import { CodyRuleSummaryService } from '@libs/codyRules/infrastructure/adapters/services/cody-rule-summary.service';
 import {
     CodeReviewPipelineContext,
     DedupTraceGroupSummary,
@@ -292,7 +292,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
         // Optional: specs construct the stage manually; when absent the
         // review simply runs on the full rule texts.
         @Optional()
-        private readonly kodyRuleSummaryService?: KodyRuleSummaryService,
+        private readonly codyRuleSummaryService?: CodyRuleSummaryService,
         // Optional so unit tests that don't care about plan tier still compile.
         // Production always wires LicenseService; missing service ⇒ linked
         // repos stay off (fail-closed for the paid feature).
@@ -310,32 +310,32 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
     }
 
     /**
-     * Review-ready kody rules: lazy-backfill summaries for long rules that
+     * Review-ready cody rules: lazy-backfill summaries for long rules that
      * lack a valid one (covers rules created before the summary feature), then
      * swap each long rule's text for its summary (sourceHash-guarded — see
-     * KodyRuleSummaryService). Any failure falls back to the raw config rules:
+     * CodyRuleSummaryService). Any failure falls back to the raw config rules:
      * the review never blocks on summarization. The frozen context is never
      * mutated — callers pass the result via OrchestratorInputComputed.
      */
-    private async prepareKodyRulesForReview(
+    private async prepareCodyRulesForReview(
         context: CodeReviewPipelineContext,
-    ): Promise<Partial<IKodyRule>[] | undefined> {
-        const rules = context.codeReviewConfig?.kodyRules;
-        if (!rules?.length || !this.kodyRuleSummaryService) {
+    ): Promise<Partial<ICodyRule>[] | undefined> {
+        const rules = context.codeReviewConfig?.codyRules;
+        if (!rules?.length || !this.codyRuleSummaryService) {
             return rules;
         }
         try {
             // Judgment units: atoms > summary > full text (see
-            // KodyRuleSummaryService.prepareForReview). Long rules are lazily
+            // CodyRuleSummaryService.prepareForReview). Long rules are lazily
             // decomposed into atomic requirements carrying the parent uuid.
-            return await this.kodyRuleSummaryService.prepareForReview(
+            return await this.codyRuleSummaryService.prepareForReview(
                 rules,
                 context.organizationAndTeamData,
             );
         } catch (error) {
             this.logger.warn({
                 message:
-                    '[kody-rule-summary] prepare failed — reviewing with full rule texts',
+                    '[cody-rule-summary] prepare failed — reviewing with full rule texts',
                 context: AgentReviewStage.name,
                 metadata: {
                     organizationId:
@@ -397,7 +397,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
 
     /**
      * Resolve whether HEAVY mode actually runs: the per-review opt-in (CLI
-     * `--heavy` / `@kody review --heavy`) AND the `heavy-review` feature gate,
+     * `--heavy` / `@cody review --heavy`) AND the `heavy-review` feature gate,
      * which is an ALPHA feature — cloud gates it by the org's release track +
      * PostHog allowlist, self-hosted keeps it off until it's promoted to beta.
      * A denied request degrades silently to a normal review.
@@ -556,7 +556,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             },
         });
 
-        // Observability for the `@kody review <directive>` steering feature:
+        // Observability for the `@cody review <directive>` steering feature:
         // emit a marker when a directive reached the finder, so it's visible in
         // logs (and assertable in E2E) that the review was actually focused.
         if (context.reviewDirective) {
@@ -593,7 +593,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 repositoryId,
             );
 
-            // Generate call graph context from AST graph in DB (via kodus-graph in E2B sandbox)
+            // Generate call graph context from AST graph in DB (via codus-graph in E2B sandbox)
             let callGraph = '';
             // Adaptive fit: a 1–3K-token callGraph fragment is the cheapest
             // thing to drop when the model's window can't hold the full
@@ -688,7 +688,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     callGraph,
                     adaptiveProfile,
                     heavy: resolvedHeavy,
-                    kodyRules: await this.prepareKodyRulesForReview(context),
+                    codyRules: await this.prepareCodyRulesForReview(context),
                     learnings: await this.prepareLearningsForReview(
                         context,
                         repositoryId,
@@ -768,7 +768,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             // Classify agent failures so the pipeline's final conclusion
             // reflects them. Core agents (bug / security / performance /
             // generalist) are the primary output — losing one of them is a
-            // critical error and should red-flag the check. Kody-rules is
+            // critical error and should red-flag the check. Cody-rules is
             // auxiliary: the review still has value from the core agents,
             // so its failure is partial (maps to NEUTRAL on GitHub).
             const CRITICAL_AGENTS = new Set([
@@ -807,7 +807,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             // held back and the check lands on NEUTRAL: degraded, not clean.
             // 'partial' rather than 'critical' because the agent may still have
             // produced real findings before the ceiling; what we can't claim is
-            // completeness. Core agents only — kody-rules is auxiliary and its
+            // completeness. Core agents only — cody-rules is auxiliary and its
             // truncation shouldn't gate the whole review.
             for (const cut of result.incomplete || []) {
                 if (!CRITICAL_AGENTS.has(cut.agentName)) {
@@ -997,29 +997,29 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             // Benchmark showed F1 drops of -5.7pp to -18.3pp with verify enabled.
             const reflectedSuggestions = validatedSuggestions;
 
-            const kodyRulesSuggestions = reflectedSuggestions.filter(
-                (s) => s.label === 'kody_rules',
+            const codyRulesSuggestions = reflectedSuggestions.filter(
+                (s) => s.label === 'cody_rules',
             );
-            const nonKodyRulesSuggestions = reflectedSuggestions.filter(
-                (s) => s.label !== 'kody_rules',
+            const nonCodyRulesSuggestions = reflectedSuggestions.filter(
+                (s) => s.label !== 'cody_rules',
             );
 
-            // Normalize Kody Rules legacy severity (critical/issue/warning) into the
+            // Normalize Cody Rules legacy severity (critical/issue/warning) into the
             // v2 severity scale (critical/high/medium/low). The agent returns the rule
-            // UUID in brokenKodyRulesIds — use it for exact matching.
-            const kodyRulesById = new Map(
-                (context.codeReviewConfig?.kodyRules ?? [])
+            // UUID in brokenCodyRulesIds — use it for exact matching.
+            const codyRulesById = new Map(
+                (context.codeReviewConfig?.codyRules ?? [])
                     .filter((r) => r.uuid)
                     .map((r) => [r.uuid!, r]),
             );
-            const kodyRulesWithSeverity: Partial<CodeSuggestion>[] =
-                kodyRulesSuggestions.map((s) => {
-                    const ruleUuid = s.brokenKodyRulesIds?.[0];
+            const codyRulesWithSeverity: Partial<CodeSuggestion>[] =
+                codyRulesSuggestions.map((s) => {
+                    const ruleUuid = s.brokenCodyRulesIds?.[0];
                     const matchedRule = ruleUuid
-                        ? kodyRulesById.get(ruleUuid)
+                        ? codyRulesById.get(ruleUuid)
                         : undefined;
                     const legacySeverity = matchedRule
-                        ? resolveKodyRuleSeverityLevel(matchedRule)
+                        ? resolveCodyRuleSeverityLevel(matchedRule)
                         : SeverityLevel.HIGH;
 
                     return {
@@ -1029,17 +1029,17 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 });
 
             const severityNormalizedNonRules: Partial<CodeSuggestion>[] =
-                nonKodyRulesSuggestions.map((suggestion) => ({
+                nonCodyRulesSuggestions.map((suggestion) => ({
                     ...suggestion,
                     severity: this.normalizeSeverity(suggestion.severity),
                 }));
 
             const severityNormalized: Partial<CodeSuggestion>[] = [
                 ...severityNormalizedNonRules,
-                ...kodyRulesWithSeverity,
+                ...codyRulesWithSeverity,
             ];
 
-            // Deduplicate Kody Rules deterministically by ruleUuid.
+            // Deduplicate Cody Rules deterministically by ruleUuid.
             // No LLM call needed — the ruleUuid unambiguously identifies
             // which rule each finding belongs to, so same-rule findings
             // can be merged without asking a model to decide.
@@ -1052,38 +1052,38 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             //   - File-level: keep the most detailed finding as the
             //     representative and append "Also found in: <file>:<line>"
             //     for the other occurrences, same pattern used by the
-            //     LLM-based dedup on non-kody suggestions. One comment
+            //     LLM-based dedup on non-cody suggestions. One comment
             //     covers every occurrence of the same rule.
-            const allKodyRules = severityNormalized.filter(
-                (s) => s.label === 'kody_rules',
+            const allCodyRules = severityNormalized.filter(
+                (s) => s.label === 'cody_rules',
             );
-            const kodyRulesForDedup = this.dedupKodyRulesByRuleUuid(
-                allKodyRules,
+            const codyRulesForDedup = this.dedupCodyRulesByRuleUuid(
+                allCodyRules,
                 prNumber,
             );
-            const nonKodyRulesForDedup = severityNormalized.filter(
-                (s) => s.label !== 'kody_rules',
+            const nonCodyRulesForDedup = severityNormalized.filter(
+                (s) => s.label !== 'cody_rules',
             );
 
-            let dedupedNonRules = nonKodyRulesForDedup;
+            let dedupedNonRules = nonCodyRulesForDedup;
             let dedupTrace: DedupTraceSummary = {
                 status:
-                    nonKodyRulesForDedup.length <= 1 ? 'skipped' : 'success',
+                    nonCodyRulesForDedup.length <= 1 ? 'skipped' : 'success',
                 totalClassifiedCount: severityNormalized.length,
-                kodyRulesSkippedCount: kodyRulesForDedup.length,
-                nonKodyInputCount: nonKodyRulesForDedup.length,
-                nonKodyOutputCount: nonKodyRulesForDedup.length,
+                codyRulesSkippedCount: codyRulesForDedup.length,
+                nonCodyInputCount: nonCodyRulesForDedup.length,
+                nonCodyOutputCount: nonCodyRulesForDedup.length,
                 finalOutputCount: severityNormalized.length,
-                uniqueCount: nonKodyRulesForDedup.length,
+                uniqueCount: nonCodyRulesForDedup.length,
                 groupsCount: 0,
                 removedCount: 0,
-                unique: nonKodyRulesForDedup.map((suggestion) =>
+                unique: nonCodyRulesForDedup.map((suggestion) =>
                     this.summarizeDedupSuggestion(suggestion),
                 ),
             };
             try {
                 const dedupResult = await this.deduplicateSuggestions(
-                    nonKodyRulesForDedup,
+                    nonCodyRulesForDedup,
                     prNumber,
                     context.codeReviewConfig?.byokConfig,
                     telemetryMeta,
@@ -1092,12 +1092,12 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 dedupTrace = {
                     ...dedupResult.trace,
                     totalClassifiedCount: severityNormalized.length,
-                    kodyRulesSkippedCount: kodyRulesForDedup.length,
-                    nonKodyInputCount: nonKodyRulesForDedup.length,
-                    nonKodyOutputCount: dedupResult.suggestions.length,
+                    codyRulesSkippedCount: codyRulesForDedup.length,
+                    nonCodyInputCount: nonCodyRulesForDedup.length,
+                    nonCodyOutputCount: dedupResult.suggestions.length,
                     finalOutputCount:
                         dedupResult.suggestions.length +
-                        kodyRulesForDedup.length,
+                        codyRulesForDedup.length,
                 };
             } catch (dedupError) {
                 this.logger.warn({
@@ -1115,16 +1115,16 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 };
             }
 
-            // Cross-stream dedup (PR #1527 follow-up): a file-scope Kody Rule and
+            // Cross-stream dedup (PR #1527 follow-up): a file-scope Cody Rule and
             // an AI suggestion can flag the same issue on the same file. They are
             // deduped in separate streams above, so both survive. Absorb the
-            // suggestion into the Kody Rule when they describe the same bug (the
+            // suggestion into the Cody Rule when they describe the same bug (the
             // rule wins — it's user-configured and carries the violation link).
             try {
                 dedupedNonRules =
-                    await this.crossDedupSuggestionsAgainstKodyRules(
+                    await this.crossDedupSuggestionsAgainstCodyRules(
                         dedupedNonRules,
-                        kodyRulesForDedup,
+                        codyRulesForDedup,
                         prNumber,
                         context.codeReviewConfig?.byokConfig,
                         telemetryMeta,
@@ -1137,9 +1137,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 });
             }
 
-            let deduped = [...dedupedNonRules, ...kodyRulesForDedup];
+            let deduped = [...dedupedNonRules, ...codyRulesForDedup];
 
-            // NOTE: Kody Rule link enrichment happens AFTER the content
+            // NOTE: Cody Rule link enrichment happens AFTER the content
             // formatter (see block further below). Doing it before would
             // let the formatter LLM strip or reword the link when it
             // collapses WHAT/WHY/HOW into natural prose.
@@ -1168,9 +1168,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     if (!classified) {
                         continue;
                     }
-                    const hasKodyRuleSeverity =
-                        deduped[i].brokenKodyRulesIds?.length > 0;
-                    if (hasKodyRuleSeverity) {
+                    const hasCodyRuleSeverity =
+                        deduped[i].brokenCodyRulesIds?.length > 0;
+                    if (hasCodyRuleSeverity) {
                         continue;
                     }
                     deduped[i].severity = classified;
@@ -1193,15 +1193,15 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             // as HIGH would pass the early filter, get reclassified to LOW,
             // and appear on the PR below the user's configured threshold.
             //
-            // Kody Rules are exempt by default (team-defined rules always
+            // Cody Rules are exempt by default (team-defined rules always
             // surface regardless of severity). Teams can opt in to filter
-            // them too via suggestionControl.applyFiltersToKodyRules=true.
+            // them too via suggestionControl.applyFiltersToCodyRules=true.
             const severityFilter =
                 context.codeReviewConfig?.suggestionControl
                     ?.severityLevelFilter;
-            const applyFiltersToKodyRules =
+            const applyFiltersToCodyRules =
                 context.codeReviewConfig?.suggestionControl
-                    ?.applyFiltersToKodyRules === true;
+                    ?.applyFiltersToCodyRules === true;
             if (
                 severityFilter &&
                 severityFilter !== 'low' &&
@@ -1217,8 +1217,8 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     acceptedLevels[severityFilter] || acceptedLevels.low;
                 const before = deduped.length;
                 const keeps = (s: Partial<CodeSuggestion>) => {
-                    if (s.label === 'kody_rules' && !applyFiltersToKodyRules) {
-                        return true; // kody rules bypass by default
+                    if (s.label === 'cody_rules' && !applyFiltersToCodyRules) {
+                        return true; // cody rules bypass by default
                     }
                     return accepted.includes(
                         (s.severity || 'medium').toLowerCase(),
@@ -1234,7 +1234,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 }
                 if (deduped.length < before) {
                     this.logger.log({
-                        message: `[AGENT] Post-classification severity filter: ${before - deduped.length} suggestions below ${severityFilter} threshold removed (applyFiltersToKodyRules=${applyFiltersToKodyRules})`,
+                        message: `[AGENT] Post-classification severity filter: ${before - deduped.length} suggestions below ${severityFilter} threshold removed (applyFiltersToCodyRules=${applyFiltersToCodyRules})`,
                         context: this.stageName,
                     });
                 }
@@ -1285,23 +1285,23 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 });
             }
 
-            // Enrich kody_rules suggestions with markdown links to the rule
+            // Enrich cody_rules suggestions with markdown links to the rule
             // page. Runs AFTER the content formatter so the formatter LLM
-            // cannot drop the "Kody rule violation: ..." appendix while
+            // cannot drop the "Cody rule violation: ..." appendix while
             // rewriting prose (observed with gemini-3-flash-preview on
             // short PR-level findings).
             const baseUrl = process.env.API_USER_INVITE_BASE_URL || '';
             for (const s of deduped) {
-                if (s.label !== 'kody_rules' || !s.brokenKodyRulesIds?.[0]) {
+                if (s.label !== 'cody_rules' || !s.brokenCodyRulesIds?.[0]) {
                     continue;
                 }
-                const ruleId = s.brokenKodyRulesIds[0];
-                const rule = kodyRulesById.get(ruleId);
+                const ruleId = s.brokenCodyRulesIds[0];
+                const rule = codyRulesById.get(ruleId);
                 if (!rule?.title) {
                     continue;
                 }
 
-                const ruleLink = buildKodyRuleLink(
+                const ruleLink = buildCodyRuleLink(
                     baseUrl,
                     ruleId,
                     rule,
@@ -1326,29 +1326,29 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     content = content.replace(rule.title, markdownLink);
                 } else {
                     // Append a link line at the end
-                    content += `\n\nKody rule violation: ${markdownLink}`;
+                    content += `\n\nCody rule violation: ${markdownLink}`;
                 }
                 s.suggestionContent = content;
             }
 
-            // Separate PR-level kody rules (no file/lines) from file-level suggestions.
+            // Separate PR-level cody rules (no file/lines) from file-level suggestions.
             // PR-level suggestions go to validSuggestionsByPR → CreatePrLevelCommentsStage.
             const prLevelSuggestions = deduped.filter(
                 (s) =>
-                    s.label === 'kody_rules' &&
+                    s.label === 'cody_rules' &&
                     !s.relevantFile &&
                     !s.relevantLinesStart,
             );
             const fileLevelSuggestions = deduped.filter(
                 (s) =>
                     !(
-                        s.label === 'kody_rules' &&
+                        s.label === 'cody_rules' &&
                         !s.relevantFile &&
                         !s.relevantLinesStart
                     ),
             );
 
-            // Sort file-level suggestions: kody_rules first, then by severity
+            // Sort file-level suggestions: cody_rules first, then by severity
             // (critical > high > medium > low).
             const severityOrder: Record<string, number> = {
                 critical: 0,
@@ -1357,9 +1357,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 low: 3,
             };
             fileLevelSuggestions.sort((a, b) => {
-                // kody_rules always first within the same file
-                const aIsRule = a.label === 'kody_rules' ? 0 : 1;
-                const bIsRule = b.label === 'kody_rules' ? 0 : 1;
+                // cody_rules always first within the same file
+                const aIsRule = a.label === 'cody_rules' ? 0 : 1;
+                const bIsRule = b.label === 'cody_rules' ? 0 : 1;
                 if (aIsRule !== bIsRule) {
                     return aIsRule - bIsRule;
                 }
@@ -1453,7 +1453,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     // produce a valid comment anchor either way.
                 }
 
-                // PR-level kody rules go to validSuggestionsByPR for CreatePrLevelCommentsStage
+                // PR-level cody rules go to validSuggestionsByPR for CreatePrLevelCommentsStage
                 if (prLevelSuggestions.length > 0) {
                     if (!draft.validSuggestionsByPR) {
                         draft.validSuggestionsByPR = [];
@@ -1461,15 +1461,15 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     draft.validSuggestionsByPR.push(
                         ...prLevelSuggestions.map((s) => ({
                             id:
-                                s.brokenKodyRulesIds?.[0] ||
+                                s.brokenCodyRulesIds?.[0] ||
                                 crypto.randomUUID(),
                             suggestionContent: s.suggestionContent || '',
                             oneSentenceSummary: s.oneSentenceSummary || '',
-                            label: (s.label as any) || 'kody_rules',
+                            label: (s.label as any) || 'cody_rules',
                             severity: this.normalizeSeverity(
                                 s.severity,
                             ) as SeverityLevel,
-                            brokenKodyRulesIds: s.brokenKodyRulesIds,
+                            brokenCodyRulesIds: s.brokenCodyRulesIds,
                             deliveryStatus: DeliveryStatus.NOT_SENT,
                         })),
                     );
@@ -1537,7 +1537,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
     }
 
     /**
-     * Deduplicate Kody Rules findings by ruleUuid.
+     * Deduplicate Cody Rules findings by ruleUuid.
      *
      * For each rule:
      *   - If it's PR-level (no relevantFile): keep a single finding — a
@@ -1546,7 +1546,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
      *   - If it's file-level: keep the most detailed finding (longest
      *     suggestionContent) and append an "Also found in:" list with
      *     the other `file:lineStart-lineEnd` locations, mirroring the
-     *     merge style used by deduplicateSuggestions for non-kody
+     *     merge style used by deduplicateSuggestions for non-cody
      *     findings. The team sees one comment per rule, but still knows
      *     every place the rule was violated.
      *
@@ -1554,7 +1554,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
      * should have been filtered earlier by the base agent guard, but we
      * stay defensive).
      */
-    private dedupKodyRulesByRuleUuid(
+    private dedupCodyRulesByRuleUuid(
         suggestions: Partial<CodeSuggestion>[],
         prNumber: number,
     ): Partial<CodeSuggestion>[] {
@@ -1566,7 +1566,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
         const passthrough: Partial<CodeSuggestion>[] = [];
 
         for (const s of suggestions) {
-            const ruleUuid = s.brokenKodyRulesIds?.[0];
+            const ruleUuid = s.brokenCodyRulesIds?.[0];
             if (!ruleUuid) {
                 passthrough.push(s);
                 continue;
@@ -1594,7 +1594,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 )[0];
                 result.push(best);
                 this.logger.log({
-                    message: `[KODY-DEDUP] PR#${prNumber} rule=${ruleUuid} (PR-level) collapsed ${group.length} findings → 1`,
+                    message: `[CODY-DEDUP] PR#${prNumber} rule=${ruleUuid} (PR-level) collapsed ${group.length} findings → 1`,
                     context: this.stageName,
                 });
                 continue;
@@ -1627,7 +1627,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             }
 
             this.logger.log({
-                message: `[KODY-DEDUP] PR#${prNumber} rule=${ruleUuid} (file-level) collapsed ${group.length} findings → 1 with ${otherLocations.length} extra locations`,
+                message: `[CODY-DEDUP] PR#${prNumber} rule=${ruleUuid} (file-level) collapsed ${group.length} findings → 1 with ${otherLocations.length} extra locations`,
                 context: this.stageName,
             });
             result.push(keep);
@@ -1699,7 +1699,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
      * veto — the exact pre-#1527 behavior — so a low-overlap merge is never
      * honored blindly.
      *
-     * `crossStream` mode (Kody-Rule vs suggestion): there is NO prior LLM
+     * `crossStream` mode (Cody-Rule vs suggestion): there is NO prior LLM
      * grouping to corroborate a match, so the cheap lexical-honor shortcut is
      * skipped — only a strong semantic signal (embedding-high or a tiebreak yes)
      * may absorb a suggestion into a rule, keeping false absorptions near zero.
@@ -1750,7 +1750,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
 
     /**
      * Build the pairwise "same bug?" tiebreak used by both the within-stream
-     * dedup guard and the cross-stream (Kody-Rule vs suggestion) dedup. Resolves
+     * dedup guard and the cross-stream (Cody-Rule vs suggestion) dedup. Resolves
      * the secondary model the same way the batch dedup does; any failure returns
      * null so the caller vetoes (keeps both).
      */
@@ -1806,23 +1806,23 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
     }
 
     /**
-     * Cross-stream dedup (PR #1527 follow-up): a Kody Rule and an AI suggestion
+     * Cross-stream dedup (PR #1527 follow-up): a Cody Rule and an AI suggestion
      * can flag the SAME issue on the same file, but they are deduped in separate
-     * streams so both survive. Here we cross-compare FILE-scope Kody Rules
+     * streams so both survive. Here we cross-compare FILE-scope Cody Rules
      * against the already-deduped suggestions; when they describe the same bug we
-     * drop the suggestion and keep the Kody Rule (it is user-configured and
+     * drop the suggestion and keep the Cody Rule (it is user-configured and
      * carries the rule-violation link). PR-scope rules (no relevantFile) are
      * excluded — they are not tied to a file/line. Fail-soft: any error keeps the
      * suggestion (pre-change behavior).
      */
-    private async crossDedupSuggestionsAgainstKodyRules(
+    private async crossDedupSuggestionsAgainstCodyRules(
         suggestions: Partial<CodeSuggestion>[],
-        kodyRules: Partial<CodeSuggestion>[],
+        codyRules: Partial<CodeSuggestion>[],
         prNumber: number,
         byokConfig?: any,
         telemetryMeta?: LangfuseTelemetryMetadata,
     ): Promise<Partial<CodeSuggestion>[]> {
-        const fileScopedRules = kodyRules.filter((r) => !!r.relevantFile);
+        const fileScopedRules = codyRules.filter((r) => !!r.relevantFile);
         if (!suggestions.length || !fileScopedRules.length) {
             return suggestions;
         }
@@ -1865,7 +1865,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
             }
             if (absorbedBy) {
                 this.logger.log({
-                    message: `[DEDUP-CROSS] PR#${prNumber}: suggestion ${s.relevantFile}:${s.relevantLinesStart}-${s.relevantLinesEnd} [${s.label}] absorbed by kody rule (${absorbedBy.reason}, score=${absorbedBy.score.toFixed(3)})`,
+                    message: `[DEDUP-CROSS] PR#${prNumber}: suggestion ${s.relevantFile}:${s.relevantLinesStart}-${s.relevantLinesEnd} [${s.label}] absorbed by cody rule (${absorbedBy.reason}, score=${absorbedBy.score.toFixed(3)})`,
                     context: this.stageName,
                 });
             } else {
@@ -1894,9 +1894,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 trace: {
                     status: 'skipped',
                     totalClassifiedCount: suggestions.length,
-                    kodyRulesSkippedCount: 0,
-                    nonKodyInputCount: suggestions.length,
-                    nonKodyOutputCount: suggestions.length,
+                    codyRulesSkippedCount: 0,
+                    nonCodyInputCount: suggestions.length,
+                    nonCodyOutputCount: suggestions.length,
                     finalOutputCount: suggestions.length,
                     uniqueCount: suggestions.length,
                     groupsCount: 0,
@@ -1963,9 +1963,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                         trace: {
                             status: 'skipped',
                             totalClassifiedCount: suggestions.length,
-                            kodyRulesSkippedCount: 0,
-                            nonKodyInputCount: suggestions.length,
-                            nonKodyOutputCount: suggestions.length,
+                            codyRulesSkippedCount: 0,
+                            nonCodyInputCount: suggestions.length,
+                            nonCodyOutputCount: suggestions.length,
                             finalOutputCount: suggestions.length,
                             uniqueCount: suggestions.length,
                             groupsCount: 0,
@@ -2047,9 +2047,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     trace: {
                         status: 'empty-keep-all',
                         totalClassifiedCount: suggestions.length,
-                        kodyRulesSkippedCount: 0,
-                        nonKodyInputCount: suggestions.length,
-                        nonKodyOutputCount: suggestions.length,
+                        codyRulesSkippedCount: 0,
+                        nonCodyInputCount: suggestions.length,
+                        nonCodyOutputCount: suggestions.length,
                         finalOutputCount: suggestions.length,
                         uniqueCount: 0,
                         groupsCount: 0,
@@ -2267,9 +2267,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 trace: {
                     status: 'success',
                     totalClassifiedCount: suggestions.length,
-                    kodyRulesSkippedCount: 0,
-                    nonKodyInputCount: suggestions.length,
-                    nonKodyOutputCount: result.length,
+                    codyRulesSkippedCount: 0,
+                    nonCodyInputCount: suggestions.length,
+                    nonCodyOutputCount: result.length,
                     finalOutputCount: result.length,
                     uniqueCount: uniqueSuggestions.length,
                     groupsCount: groupSummaries.length,
@@ -2309,9 +2309,9 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                 trace: {
                     status: 'failed-keep-all',
                     totalClassifiedCount: suggestions.length,
-                    kodyRulesSkippedCount: 0,
-                    nonKodyInputCount: suggestions.length,
-                    nonKodyOutputCount: suggestions.length,
+                    codyRulesSkippedCount: 0,
+                    nonCodyInputCount: suggestions.length,
+                    nonCodyOutputCount: suggestions.length,
                     finalOutputCount: suggestions.length,
                     uniqueCount: suggestions.length,
                     groupsCount: 0,
@@ -2365,7 +2365,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
     private getAgentStageName(event: AgentProgressEvent): string {
         const baseName =
             event.agentCategory ||
-            event.agentName.replace('kodus-', '').replace('-review-agent', '');
+            event.agentName.replace('codus-', '').replace('-review-agent', '');
 
         if (
             event.agentReplicaTotal &&
@@ -2381,7 +2381,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
     private formatAgentLabel(event: AgentProgressEvent): string {
         const name =
             event.agentCategory ||
-            event.agentName.replace('kodus-', '').replace('-review-agent', '');
+            event.agentName.replace('codus-', '').replace('-review-agent', '');
         const icon =
             name === 'bug'
                 ? 'Bug'
@@ -2391,7 +2391,7 @@ export class AgentReviewStage extends BasePipelineStage<CodeReviewPipelineContex
                     ? 'Generalist'
                     : name === 'rules'
                       ? 'Rules'
-                      : name === 'kody_rules'
+                      : name === 'cody_rules'
                         ? 'Rules'
                         : 'Performance';
         const replicaSuffix =

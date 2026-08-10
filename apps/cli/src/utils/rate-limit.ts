@@ -53,7 +53,7 @@ ${chalk.yellow('│')}  ${chalk.green('✓')} Custom configurations             
 ${chalk.yellow('│')}  ${chalk.green('✓')} Review history                                       ${chalk.yellow('│')}
 ${chalk.yellow('│')}  ${chalk.green('✓')} Team integration                                     ${chalk.yellow('│')}
 ${chalk.yellow('│')}                                                          ${chalk.yellow('│')}
-${chalk.yellow('│')}  ${chalk.dim('→')} ${chalk.cyan('kodus auth login')}                                     ${chalk.yellow('│')}
+${chalk.yellow('│')}  ${chalk.dim('→')} ${chalk.cyan('codus auth login')}                                     ${chalk.yellow('│')}
 ${chalk.yellow('╰──────────────────────────────────────────────────────────╯')}
 `;
 

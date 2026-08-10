@@ -7,13 +7,13 @@ description: |
       auto-review's by-design `skipped` row 3s before the command's
       `success` row landed (first-terminal-wins race, fixed alongside
       this file)
-    - kody-rules-create-and-apply × cloud × gitlab × paid: "No review
+    - cody-rules-create-and-apply × cloud × gitlab × paid: "No review
       activity within timeout" — provider-side latency, re-run to
       confirm transient
 
 scenarios:
     - command-review
-    - kody-rules-create-and-apply
+    - cody-rules-create-and-apply
 
 cells:
     - target: cloud

@@ -1,6 +1,6 @@
 ---
 title: "AIエージェント"
-description: "Kodus CLI を AI コーディングエージェントと統合して、自律的なレビュー・修正ループを実現します。"
+description: "Codus CLI を AI コーディングエージェントと統合して、自律的なレビュー・修正ループを実現します。"
 ---
 
 CLI には、AIコーディングエージェントが解析して行動するために設計された最小限の構造化出力モード（`--prompt-only`）が搭載されています。チームキーと組み合わせることで、エージェントがレビューし、修正を適用し、再レビューし、コミットする—重要なパスに人間が介在しない—自律的なレビュー・修正ループが実現します。
@@ -12,21 +12,21 @@ CLI には、AIコーディングエージェントが解析して行動する�
 - **Codex** — ネイティブスキル。
 - **Windsurf** — `--prompt-only` 出力経由。
 
-シェルコマンドを実行して構造化テキストを解析できる他のエージェントでも、`kodus review --prompt-only` はそのまま動作します。
+シェルコマンドを実行して構造化テキストを解析できる他のエージェントでも、`codus review --prompt-only` はそのまま動作します。
 
 ## 最速のセットアップ
 
 CLI と全エージェントスキルを一度にインストール:
 
 ```bash
-curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
+curl -fsSL https://review-skill.com/install | bash -s -- --team-key codus_xxxxx
 ```
 
 これにより:
 
-1. `@kodus/cli` バイナリをグローバルにインストール。
-2. `~/.kodus/config.json` にチームキーを設定。
-3. 検出された全エージェント（Claude Code、Cursor、Codex、Windsurf）に Kodus スキルをデプロイ。
+1. `@codus/cli` バイナリをグローバルにインストール。
+2. `~/.codus/config.json` にチームキーを設定。
+3. 検出された全エージェント（Claude Code、Cursor、Codex、Windsurf）に Codus スキルをデプロイ。
 
 個別ログインなし。インタラクティブなプロンプトなし。すぐにエージェントループに対応。
 
@@ -35,7 +35,7 @@ curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
 <Steps>
   <Step title="エージェントがレビューを実行">
     ```bash
-    kodus review --prompt-only
+    codus review --prompt-only
     ```
 
     CLI はファイルパス、行番号、重要度、提案された修正を含む構造化された問題を、LLM が消費するために設計されたコンパクトなテキスト形式で返します。
@@ -45,13 +45,13 @@ curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
   </Step>
   <Step title="エージェントが再レビューを実行">
     ```bash
-    kodus review --prompt-only --fail-on error
+    codus review --prompt-only --fail-on error
     ```
 
     `--fail-on error` により、エラーレベル以上の問題が残っている間はループがゼロ以外で終了します。エージェントはループを継続し、レビューがクリーンになるとプロセスは0で終了し、エージェントは次に進みます。
   </Step>
   <Step title="エージェントがコミットとプッシュ">
-    レビューがクリーンになったら、エージェントはコミットしてプッシュします。オプションで、手動プッシュ時の追加セーフティネットとして pre-push フックをインストール（`kodus hook install`）できます。
+    レビューがクリーンになったら、エージェントはコミットしてプッシュします。オプションで、手動プッシュ時の追加セーフティネットとして pre-push フックをインストール（`codus hook install`）できます。
   </Step>
 </Steps>
 
@@ -60,8 +60,8 @@ curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
 チームキーはエージェントに強く推奨されます — 個別のサインアップなし、インタラクティブなログインなし、簡単なローテーション、デバイスごとの追跡。
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
-kodus review --prompt-only
+export CODUS_TEAM_KEY=codus_xxxxx
+codus review --prompt-only
 ```
 
 <a href="https://app.kodus.io/organization/cli-keys" target="_blank">app.kodus.io/organization/cli-keys</a> でキーを生成し、そこに表示されるインストールコマンドをチームに配布してください。
@@ -82,13 +82,13 @@ kodus review --prompt-only
 
 ```bash
 # Claude Code セッションで、エージェントは以下を実行できます:
-kodus review --prompt-only --fail-on error    # 一般的なレビュー
-kodus pr business-validation --task-id KC-1441 --dry-run   # タスクに対して確認
-kodus review --prompt-only --fix               # 修正可能な問題を自動適用
+codus review --prompt-only --fail-on error    # 一般的なレビュー
+codus pr business-validation --task-id KC-1441 --dry-run   # タスクに対して確認
+codus review --prompt-only --fix               # 修正可能な問題を自動適用
 git commit -am "fix: KC-1441 address review findings"
 ```
 
-スキルインストーラーを使用すると、Claude Code の Kodus スキルはこれらをいつ実行するかを認識します — あなた側でプロンプトエンジニアリングは不要です。
+スキルインストーラーを使用すると、Claude Code の Codus スキルはこれらをいつ実行するかを認識します — あなた側でプロンプトエンジニアリングは不要です。
 
 ## 関連
 

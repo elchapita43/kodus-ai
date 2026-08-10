@@ -38,7 +38,7 @@ describe('credentials utils', () => {
 
     it('returns null when credentials file does not exist', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-credentials-test-'),
+            path.join(os.tmpdir(), 'codus-credentials-test-'),
         );
         tempDirs.push(home);
         const { loadCredentials } = await importCredentialsModule(home);
@@ -48,7 +48,7 @@ describe('credentials utils', () => {
 
     it('saves and loads credentials successfully', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-credentials-test-'),
+            path.join(os.tmpdir(), 'codus-credentials-test-'),
         );
         tempDirs.push(home);
         const { saveCredentials, loadCredentials } =
@@ -61,7 +61,7 @@ describe('credentials utils', () => {
             user: {
                 id: 'u1',
                 email: 'dev@kodus.io',
-                orgs: ['Kodus'],
+                orgs: ['Codus'],
             },
         };
 
@@ -73,7 +73,7 @@ describe('credentials utils', () => {
 
     it('writes credentials atomically without leaving temp files', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-credentials-test-'),
+            path.join(os.tmpdir(), 'codus-credentials-test-'),
         );
         tempDirs.push(home);
         const { saveCredentials } = await importCredentialsModule(home);
@@ -85,11 +85,11 @@ describe('credentials utils', () => {
             user: {
                 id: 'u1',
                 email: 'dev@kodus.io',
-                orgs: ['Kodus'],
+                orgs: ['Codus'],
             },
         });
 
-        const configDir = path.join(home, '.kodus');
+        const configDir = path.join(home, '.codus');
         const files = await fs.readdir(configDir);
         expect(files.some((f) => f.includes('.tmp'))).toBe(false);
         expect(files).toContain('credentials.json');
@@ -97,12 +97,12 @@ describe('credentials utils', () => {
 
     it('self-heals malformed JSON by isolating corrupted credentials', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-credentials-test-'),
+            path.join(os.tmpdir(), 'codus-credentials-test-'),
         );
         tempDirs.push(home);
         const { loadCredentials } = await importCredentialsModule(home);
 
-        const configDir = path.join(home, '.kodus');
+        const configDir = path.join(home, '.codus');
         const credentialsFile = path.join(configDir, 'credentials.json');
         await fs.mkdir(configDir, { recursive: true });
         await fs.writeFile(credentialsFile, '{ malformed-json ', 'utf-8');

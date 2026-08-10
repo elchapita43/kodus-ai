@@ -238,7 +238,7 @@ export class UnifiedLogHandler {
         actionType: ActionType,
     ): string {
         const entityDisplayNames = {
-            kodyRule: 'Kody Rule',
+            codyRule: 'Cody Rule',
             config: 'Configuration',
             repository: 'Repository',
             integration: 'Integration',

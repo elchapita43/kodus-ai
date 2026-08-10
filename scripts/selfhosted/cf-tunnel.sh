@@ -8,7 +8,7 @@
 # go stale. A named tunnel has a STABLE hostname (https, real cert at
 # Cloudflare's edge), reconnects automatically and survives restarts.
 #
-# Requirements (resolved from ~/.kodus-dev/config / 1Password like the
+# Requirements (resolved from ~/.codus-dev/config / 1Password like the
 # other secrets):
 #   CLOUDFLARE_API_TOKEN     scopes: Account>Cloudflare Tunnel:Edit,
 #                             Zone>DNS:Edit (zone kodus.io)
@@ -48,7 +48,7 @@ __cf_require_ids() {
 #   CF_TUNNEL_URL=https://<env-name>.e2e.kodus.io
 #   CF_TUNNEL_TOKEN=<run token for cloudflared>
 cf_tunnel_provision() {
-    local name="kodus-e2e-$1"
+    local name="codus-e2e-$1"
     local hostname="$1.${CF_TUNNEL_DOMAIN}"
 
     __cf_require_ids || {
@@ -84,7 +84,7 @@ cf_tunnel_provision() {
     record_id=$(__cf_curl \
         "$CF_API/zones/$CLOUDFLARE_ZONE_ID/dns_records?name=${hostname}&type=CNAME" |
         jq -r '.result[0].id // empty')
-    local dns_body="{\"type\":\"CNAME\",\"name\":\"${hostname}\",\"content\":\"${tunnel_id}.cfargotunnel.com\",\"proxied\":true,\"comment\":\"kodus e2e tunnel (auto)\"}"
+    local dns_body="{\"type\":\"CNAME\",\"name\":\"${hostname}\",\"content\":\"${tunnel_id}.cfargotunnel.com\",\"proxied\":true,\"comment\":\"codus e2e tunnel (auto)\"}"
     if [ -n "$record_id" ]; then
         __cf_curl -X PUT \
             "$CF_API/zones/$CLOUDFLARE_ZONE_ID/dns_records/$record_id" \
@@ -110,7 +110,7 @@ cf_tunnel_provision() {
 # cf_tunnel_destroy <env-name> — best-effort cleanup (DNS + tunnel).
 cf_tunnel_destroy() {
     cf_named_tunnel_available || return 0
-    local name="kodus-e2e-$1"
+    local name="codus-e2e-$1"
     local hostname="$1.${CF_TUNNEL_DOMAIN}"
     __cf_require_ids || return 0
 

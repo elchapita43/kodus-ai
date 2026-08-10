@@ -18,14 +18,14 @@
  *       type: "paragraph",
  *       content: [
  *         { type: "text", text: "Hello " },
- *         { type: "mcpMention", attrs: { app: "kodus", tool: "kodus_list_commits" } },
+ *         { type: "mcpMention", attrs: { app: "codus", tool: "codus_list_commits" } },
  *         { type: "text", text: " world" }
  *       ]
  *     }
  *   ]
  * };
  *
- * // Output: "Hello @mcp<kodus|kodus_list_commits> world"
+ * // Output: "Hello @mcp<codus|codus_list_commits> world"
  * convertTiptapJSONToText(tiptapJson);
  */
 export function convertTiptapJSONToText(

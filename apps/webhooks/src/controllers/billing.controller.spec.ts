@@ -35,7 +35,7 @@ const makeReq = (
 ): any => ({
     body,
     rawBody,
-    headers: signature ? { 'x-kodus-signature': signature } : {},
+    headers: signature ? { 'x-codus-signature': signature } : {},
 });
 
 const makeRes = (): jest.Mocked<Pick<Response, 'status' | 'send' | 'json'>> => {

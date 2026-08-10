@@ -1,7 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 
 import {
-    KODUS_MCP_INTEGRATION_ID,
+    CODUS_MCP_INTEGRATION_ID,
     MCPManagerService,
 } from '../mcp-manager.service';
 
@@ -15,7 +15,7 @@ jest.mock('@libs/core/log/logger', () => ({
 }));
 
 describe('MCPManagerService', () => {
-    it('does not inject bearer auth when formatting first-party Kodus MCP connections', async () => {
+    it('does not inject bearer auth when formatting first-party Codus MCP connections', async () => {
         const permissionValidationService = {
             shouldLimitResources: jest.fn().mockResolvedValue(false),
         };
@@ -32,20 +32,20 @@ describe('MCPManagerService', () => {
                 {
                     id: 'connection-1',
                     organizationId: 'org-123',
-                    integrationId: KODUS_MCP_INTEGRATION_ID,
-                    provider: 'kodus',
+                    integrationId: CODUS_MCP_INTEGRATION_ID,
+                    provider: 'codus',
                     status: 'ACTIVE',
-                    appName: 'kodus-code-management',
+                    appName: 'codus-code-management',
                     mcpUrl: 'https://api.kodus.io/mcp',
-                    allowedTools: ['KODUS_LIST_REPOSITORIES'],
+                    allowedTools: ['CODUS_LIST_REPOSITORIES'],
                     metadata: {
                         connection: {
                             id: 'connection-1',
                             mcpUrl: 'https://api.kodus.io/mcp',
                             status: 'ACTIVE',
-                            appName: 'kodus-code-management',
+                            appName: 'codus-code-management',
                             authUrl: '',
-                            allowedTools: ['KODUS_LIST_REPOSITORIES'],
+                            allowedTools: ['CODUS_LIST_REPOSITORIES'],
                         },
                     },
                     createdAt: new Date().toISOString(),
@@ -84,7 +84,7 @@ describe('MCPManagerService', () => {
         ]);
     });
 
-    it('injects the resolved auth header for kodusmcp OAuth/token connections', async () => {
+    it('injects the resolved auth header for codusmcp OAuth/token connections', async () => {
         const permissionValidationService = {
             shouldLimitResources: jest.fn().mockResolvedValue(false),
         };
@@ -102,7 +102,7 @@ describe('MCPManagerService', () => {
                             id: 'connection-1',
                             organizationId: 'org-123',
                             integrationId: 'linear-default',
-                            provider: 'kodusmcp',
+                            provider: 'codusmcp',
                             status: 'ACTIVE',
                             appName: 'Linear',
                             mcpUrl: 'https://mcp.linear.app/mcp',
@@ -117,7 +117,7 @@ describe('MCPManagerService', () => {
             }
             if (
                 path ===
-                'mcp/integration/kodusmcp/linear-default/connection-config'
+                'mcp/integration/codusmcp/linear-default/connection-config'
             ) {
                 return Promise.resolve({
                     headers: { Authorization: 'Bearer resolved-token' },
@@ -134,7 +134,7 @@ describe('MCPManagerService', () => {
         );
 
         expect(axiosGet).toHaveBeenCalledWith(
-            'mcp/integration/kodusmcp/linear-default/connection-config',
+            'mcp/integration/codusmcp/linear-default/connection-config',
             expect.objectContaining({
                 headers: expect.objectContaining({
                     Authorization: 'Bearer signed-token',
@@ -149,7 +149,7 @@ describe('MCPManagerService', () => {
         ]);
     });
 
-    it('keeps kodusmcp connections working (empty headers) when config resolution fails', async () => {
+    it('keeps codusmcp connections working (empty headers) when config resolution fails', async () => {
         const permissionValidationService = {
             shouldLimitResources: jest.fn().mockResolvedValue(false),
         };
@@ -167,7 +167,7 @@ describe('MCPManagerService', () => {
                             id: 'connection-2',
                             organizationId: 'org-123',
                             integrationId: 'context7-default',
-                            provider: 'kodusmcp',
+                            provider: 'codusmcp',
                             status: 'ACTIVE',
                             appName: 'Context7',
                             mcpUrl: 'https://context7.example/mcp',

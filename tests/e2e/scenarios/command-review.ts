@@ -5,7 +5,7 @@ import { assertHealthyExecution } from "../lib/execution-health.js";
 
 // Same fixture branches as code-review-basic. The diff doesn't matter
 // for the command-review path — what's under test is whether posting
-// `@kody review` on an EXISTING (already-opened) PR triggers a fresh
+// `@cody review` on an EXISTING (already-opened) PR triggers a fresh
 // review pipeline run, not whether the LLM finds anything in this
 // particular diff. The diff just has to be non-empty so the review
 // has something to chew on.
@@ -23,7 +23,7 @@ const FIXTURE_BRANCHES: Record<
 export const commandReview: Scenario = {
     id: "command-review",
     title:
-        "Kody re-reviews a PR after the user posts `@kody review` (or `@kody start-review`)",
+        "Cody re-reviews a PR after the user posts `@cody review` (or `@cody start-review`)",
     priority: "P0",
     appliesTo: {
         target: ["cloud", "self-hosted"],
@@ -45,11 +45,11 @@ export const commandReview: Scenario = {
         );
 
         const baseUrl = ctx.target.apiBaseUrl;
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
-        // The @kody review command still runs through the prerequisites
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
+        // The @cody review command still runs through the prerequisites
         // gate; on licensed self-hosted the PR author needs a seat.
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
@@ -66,7 +66,7 @@ export const commandReview: Scenario = {
 
         // Critical: disable automatic review at the org level. Without
         // this, when we open the PR the auto-review pipeline fires
-        // immediately and the `@kody review` we post seconds later
+        // immediately and the `@cody review` we post seconds later
         // would race with (or be confused with) the auto-review. By
         // forcing automatedReviewActive=false up front, the ONLY way
         // a review can happen on this PR is via the command — which
@@ -99,12 +99,12 @@ export const commandReview: Scenario = {
             head: fixture!.head,
             base: fixture!.base,
             title: `[e2e] command-review ${ctx.runId.slice(0, 8)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId}. Auto-review disabled — the review on this PR can only come from the @kody review command this scenario posts below.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId}. Auto-review disabled — the review on this PR can only come from the @cody review command this scenario posts below.`,
         });
 
         try {
             // Brief sanity wait: if auto-review wasn't actually
-            // disabled (config didn't land for some reason), Kody would
+            // disabled (config didn't land for some reason), Cody would
             // start reviewing the freshly-opened PR within ~10s. We
             // give it 20s to surface that bug. If a review DOES land
             // here we still proceed, because:
@@ -126,9 +126,9 @@ export const commandReview: Scenario = {
             // Post the trigger comment AFTER we've snapshot pre-state.
             // The webhook handlers detect this exact pattern (see
             // libs/common/utils/codeManagement/codeCommentMarkers.ts:48
-            // KODY_REVIEW_COMMAND_PATTERN = /^\s*@kody\s+(start-review|review)\b/i).
+            // CODY_REVIEW_COMMAND_PATTERN = /^\s*@cody\s+(start-review|review)\b/i).
             const sinceIso = new Date().toISOString();
-            await ctx.provider.postComment(pr.number, "@kody review");
+            await ctx.provider.postComment(pr.number, "@cody review");
 
             const pollStartMs = Date.now();
             const review = await ctx.provider.pollForReview(
@@ -140,7 +140,7 @@ export const commandReview: Scenario = {
             ctx.assert(
                 review.reviewComments + review.issueComments + review.reviews >
                     0,
-                `No review findings on PR/MR #${pr.number} within ${reviewLatencySec}s after posting "@kody review". pre-command findings count was ${preCount}.`,
+                `No review findings on PR/MR #${pr.number} within ${reviewLatencySec}s after posting "@cody review". pre-command findings count was ${preCount}.`,
             );
 
             // Execution HEALTH, not just output: a command-triggered review can
@@ -159,7 +159,7 @@ export const commandReview: Scenario = {
                 preCommandFindings: preCount,
                 reviewLatencySec,
                 executionStatus,
-                command: "@kody review",
+                command: "@cody review",
             };
         } finally {
             try {

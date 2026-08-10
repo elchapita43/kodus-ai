@@ -1,4 +1,4 @@
-import { LLMModelProvider, PromptRunnerService } from '@kodus/kodus-common/llm';
+import { LLMModelProvider, PromptRunnerService } from '@codus/codus-common/llm';
 import { Injectable, Inject, Optional } from '@nestjs/common';
 
 import type { AgentSpec } from '@libs/agent-harness/domain/contracts/agent.contract';
@@ -908,7 +908,7 @@ export class BusinessRulesValidationAgentProvider extends AbstractSkillProvider<
         };
 
         this.metricsCollector?.recordCounter(
-            'kodus_business_logic_validation_outcome_total',
+            'codus_business_logic_validation_outcome_total',
             1,
             labels,
         );

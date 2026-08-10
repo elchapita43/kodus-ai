@@ -1,6 +1,6 @@
 ---
 title: "核心概念"
-description: "充分利用 Kodus CLI 所需的心智模型。"
+description: "充分利用 Codus CLI 所需的心智模型。"
 ---
 
 下面是贯穿整个 CLI 的核心概念。先读一次，后续文档会更易理解。
@@ -35,15 +35,15 @@ description: "充分利用 Kodus CLI 所需的心智模型。"
 每台机器选择一种，CLI 会自动检测可用方式。
 
 - **试用** — 无需认证。每日 5 次审查，适合"先试一下"。
-- **个人登录**（`kodus auth login`） — 个人账户，令牌自动刷新。
-- **团队密钥**（`kodus auth team-key --key kodus_xxxxx`） — 团队共享的密钥，在仪表板生成。推荐用于 AI 代理和任何不希望交互式登录的场景。
-- **CI/CD 令牌**（`kodus auth token`） — 长效令牌，在已登录机器上生成，通过 `KODUS_TOKEN` 使用。
+- **个人登录**（`codus auth login`） — 个人账户，令牌自动刷新。
+- **团队密钥**（`codus auth team-key --key codus_xxxxx`） — 团队共享的密钥，在仪表板生成。推荐用于 AI 代理和任何不希望交互式登录的场景。
+- **CI/CD 令牌**（`codus auth token`） — 长效令牌，在已登录机器上生成，通过 `CODUS_TOKEN` 使用。
 
 完整决策树见 [快速开始](getting_started)。
 
-## Kody Rules
+## Cody Rules
 
-**Kody Rule** 是 Kodus 审查器在每次审查中应用的结构化规则，可按仓库或团队全局作用。
+**Cody Rule** 是 Codus 审查器在每次审查中应用的结构化规则，可按仓库或团队全局作用。
 
 ```
 Rule
@@ -55,49 +55,49 @@ Rule
 └── repo-id        <uuid> | global
 ```
 
-规则叠加在通用 Kodus 审查之上 — AI 将其作为额外判据，而不是替代通用检查。
+规则叠加在通用 Codus 审查之上 — AI 将其作为额外判据，而不是替代通用检查。
 
-可从仪表板或 CLI 通过 `kodus rules create|update|view` 管理规则。当您希望规则在版本控制中（脚本生成、入库、配置时重新应用）时，CLI 会非常有用。
+可从仪表板或 CLI 通过 `codus rules create|update|view` 管理规则。当您希望规则在版本控制中（脚本生成、入库、配置时重新应用）时，CLI 会非常有用。
 
 ## 仓库设置
 
-Kodus 中的每个仓库都有控制审查行为的设置：忽略文件、基础分支模式、标题过滤器、功能开关。这些设置保存在 Kodus 后端，并在任何审查场景（Web PR、CLI 审查、代理循环）中生效。
+Codus 中的每个仓库都有控制审查行为的设置：忽略文件、基础分支模式、标题过滤器、功能开关。这些设置保存在 Codus 后端，并在任何审查场景（Web PR、CLI 审查、代理循环）中生效。
 
 通过 CLI：
 
 ```bash
-kodus config repo list                 # 查看已配置的仓库
-kodus config repo show                 # 查看当前仓库的设置
-kodus config repo setup                # 引导式向导
-kodus config repo set . reviewEnabled true
-kodus config repo add-ignore-file . "**/*.generated.ts"
-kodus config repo open                 # 跳转到 Web 仪表板
+codus config repo list                 # 查看已配置的仓库
+codus config repo show                 # 查看当前仓库的设置
+codus config repo setup                # 引导式向导
+codus config repo set . reviewEnabled true
+codus config repo add-ignore-file . "**/*.generated.ts"
+codus config repo open                 # 跳转到 Web 仪表板
 ```
 
-`kodus config repo` 和 `kodus config remote` 是同一命令组的别名。
+`codus config repo` 和 `codus config remote` 是同一命令组的别名。
 
 ## 集中化配置（Centralized Config）
 
-通常，每个仓库的设置存在 Kodus 中。**集中化配置** 允许团队将这些设置存入一个单一事实源的 git 仓库 — 每次变更都成为对该仓库的 Pull Request，从而让审查配置本身也有审查与版本历史。
+通常，每个仓库的设置存在 Codus 中。**集中化配置** 允许团队将这些设置存入一个单一事实源的 git 仓库 — 每次变更都成为对该仓库的 Pull Request，从而让审查配置本身也有审查与版本历史。
 
 启用、同步或查看状态：
 
 ```bash
-kodus config centralized status
-kodus config centralized init owner/config-repo --sync-option pr
-kodus config centralized sync
-kodus config centralized disable
+codus config centralized status
+codus config centralized init owner/config-repo --sync-option pr
+codus config centralized sync
+codus config centralized disable
 ```
 
 若团队需要对审查设置进行可审计、可版本控制的管理，使用集中化配置。若不需要此仪式，保留默认的单仓库设置即可。
 
 ## 业务验证（Business Validation）
 
-若 `kodus review` 问的是"代码质量是否良好？"，那么 `kodus pr business-validation` 问的是"这段 diff 是否真的做了任务要求的事？"。将它指向 Linear/Jira/URL 任务和 diff 来源（工作目录、暂存、分支、提交），它会根据任务的验收标准检查实现。
+若 `codus review` 问的是"代码质量是否良好？"，那么 `codus pr business-validation` 问的是"这段 diff 是否真的做了任务要求的事？"。将它指向 Linear/Jira/URL 任务和 diff 来源（工作目录、暂存、分支、提交），它会根据任务的验收标准检查实现。
 
 ```bash
-kodus pr business-validation --task-id KC-1441 --branch main
-kodus pr business-validation --task-url https://linear.app/… --staged
+codus pr business-validation --task-id KC-1441 --branch main
+codus pr business-validation --task-url https://linear.app/… --staged
 ```
 
 在合并前搭配一次预检，可在人工审查之前捕获"代码能跑，但不是任务要求"的情况。

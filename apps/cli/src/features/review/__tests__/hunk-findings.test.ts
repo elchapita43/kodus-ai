@@ -96,7 +96,7 @@ describe('convertReviewToHunkFindings', () => {
         expect(findings.map((f) => f.title)).toEqual([
             'Use const.',
             'Add a test.',
-            'Kodus finding',
+            'Codus finding',
         ]);
     });
 
@@ -119,7 +119,7 @@ describe('convertReviewToHunkFindings', () => {
         const { findings } = convertReviewToHunkFindings(
             review([issue({ file: undefined }), issue(), issue()]),
         );
-        expect(findings.map((f) => f.id)).toEqual(['kodus-1', 'kodus-2']);
+        expect(findings.map((f) => f.id)).toEqual(['codus-1', 'codus-2']);
     });
 
     it('keeps category and ruleId when present, omits them when blank', () => {

@@ -473,7 +473,7 @@ export class IntegrationOAuthService {
     }
 
     /**
-     * Resolve the ready-to-send auth header(s) for a managed (kodusmcp)
+     * Resolve the ready-to-send auth header(s) for a managed (codusmcp)
      * connection on the agent-runtime path. Picks the credential that exists for
      * (org, integrationId): a stored static-token credential takes precedence,
      * otherwise the OAuth access token (refreshed on read). Returns `{}` when the

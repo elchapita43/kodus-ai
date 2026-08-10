@@ -1,4 +1,4 @@
-import { BYOKConfig, BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, BYOKProvider } from '@codus/codus-common/llm';
 
 // Capture which Vertex SDK factory each model id routes to. Mock factories
 // are hoisted above module-scope consts, so define the jest.fn inside the

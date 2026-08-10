@@ -14,8 +14,8 @@ import {
     CodeReviewConfig,
     CodeReviewConfigWithoutLLMProvider,
     FileChange,
-    KodusConfigFile,
-    KodyFineTuningConfig,
+    CodusConfigFile,
+    CodyFineTuningConfig,
     ReviewModeConfig,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import {
@@ -32,7 +32,7 @@ import { ValidateCodeManagementIntegration } from '@libs/common/utils/decorators
 import { deepMerge } from '@libs/common/utils/deep';
 import {
     buildDefaultGlobalCodeReviewConfig,
-    getDefaultKodusConfigFile,
+    getDefaultCodusConfigFile,
 } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { CacheService } from '@libs/core/cache/cache.service';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
@@ -45,9 +45,9 @@ import {
     INTEGRATION_SERVICE_TOKEN,
 } from '@libs/integrations/domain/integrations/contracts/integration.service.contracts';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
 import {
     GLOBAL_PARAMETERS_SERVICE_TOKEN,
     IGlobalParametersService,
@@ -62,7 +62,7 @@ import {
 } from '@libs/organization/domain/parameters/contracts/parameters.service.contract';
 import { AuthMode } from '@libs/platform/domain/platformIntegrations/enums/codeManagement/authMode.enum';
 import { CodeManagementService } from '@libs/platform/infrastructure/adapters/services/codeManagement.service';
-import { KodyRulesValidationService } from '../kodyRules/service/kody-rules-validation.service';
+import { CodyRulesValidationService } from '../codyRules/service/cody-rules-validation.service';
 
 const GLOBAL_IGNORE_PATHS_CACHE_KEY = 'global:ignore_paths';
 const GLOBAL_IGNORE_PATHS_CACHE_TTL = 43200000; // 12 hours
@@ -84,12 +84,12 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
         private readonly organizationParametersService: IOrganizationParametersService,
         @Inject(PARAMETERS_SERVICE_TOKEN)
         private readonly parametersService: IParametersService,
-        @Inject(forwardRef(() => KODY_RULES_SERVICE_TOKEN))
-        private readonly kodyRulesService: IKodyRulesService,
+        @Inject(forwardRef(() => CODY_RULES_SERVICE_TOKEN))
+        private readonly codyRulesService: ICodyRulesService,
         @Inject(GLOBAL_PARAMETERS_SERVICE_TOKEN)
         private readonly globalParametersService: IGlobalParametersService,
         private readonly codeManagementService: CodeManagementService,
-        private readonly kodyRulesValidationService: KodyRulesValidationService,
+        private readonly codyRulesValidationService: CodyRulesValidationService,
         private readonly permissionValidationService: PermissionValidationService,
         private readonly cacheService: CacheService,
     ) {
@@ -107,9 +107,9 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
                 parameters,
                 language,
                 defaultBranch,
-                kodyRulesEntity,
+                codyRulesEntity,
                 reviewModeConfig,
-                kodyFineTuningConfig,
+                codyFineTuningConfig,
             ] = await Promise.all([
                 this.parametersService.findOne({
                     configKey: ParametersKey.CODE_REVIEW_CONFIG,
@@ -121,11 +121,11 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
                     organizationAndTeamData,
                 ),
                 this.getDefaultBranch(organizationAndTeamData, repository),
-                this.kodyRulesService.findByOrganizationId(
+                this.codyRulesService.findByOrganizationId(
                     organizationAndTeamData.organizationId,
                 ),
                 this.getReviewModeConfigParameter(organizationAndTeamData),
-                this.getKodyFineTuningConfigParameter(organizationAndTeamData),
+                this.getCodyFineTuningConfigParameter(organizationAndTeamData),
             ]);
 
             // Self-heal: a team can reach a review without its
@@ -157,8 +157,8 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
                 );
 
             const { standardRules, memoryRules } =
-                this.kodyRulesValidationService.filterKodyRules(
-                    kodyRulesEntity?.toObject()?.rules || [],
+                this.codyRulesValidationService.filterCodyRules(
+                    codyRulesEntity?.toObject()?.rules || [],
                     repository.id,
                     mergedConfigs.directoryId,
                     limited,
@@ -174,10 +174,10 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
                     language?.configValue ??
                     this.DEFAULT_CONFIG.languageResultPrompt,
                 baseBranchDefault: defaultBranch,
-                kodyRules: standardRules,
-                kodyMemoryRules: memoryRules,
+                codyRules: standardRules,
+                codyMemoryRules: memoryRules,
                 reviewModeConfig,
-                kodyFineTuningConfig,
+                codyFineTuningConfig,
                 ignorePaths:
                     mergedConfigs.ignorePaths.concat(globalIgnorePaths),
                 // v2-only prompt overrides (categories and severity guidance). Read from repo/global parameters.
@@ -420,14 +420,14 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
 
         const directoryDelta = directoryConfig?.configs;
 
-        const repositoryFileDelta = await this.getKodusConfigFile({
+        const repositoryFileDelta = await this.getCodusConfigFile({
             organizationAndTeamData,
             repository,
             defaultBranch,
             overrideConfig: this.getFileOverridePreference(repoConfig),
         });
 
-        const directoryFileDelta = await this.getKodusConfigFile({
+        const directoryFileDelta = await this.getCodusConfigFile({
             organizationAndTeamData,
             repository,
             directoryId: directoryConfig?.id,
@@ -473,32 +473,32 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
     ): boolean {
         if (
             directoryConfig &&
-            directoryConfig?.configs?.kodusConfigFileOverridesWebPreferences !==
+            directoryConfig?.configs?.codusConfigFileOverridesWebPreferences !==
                 undefined
         ) {
             return directoryConfig.configs
-                .kodusConfigFileOverridesWebPreferences;
+                .codusConfigFileOverridesWebPreferences;
         }
 
         if (
             repoConfig &&
-            repoConfig?.configs?.kodusConfigFileOverridesWebPreferences !==
+            repoConfig?.configs?.codusConfigFileOverridesWebPreferences !==
                 undefined
         ) {
-            return repoConfig.configs.kodusConfigFileOverridesWebPreferences;
+            return repoConfig.configs.codusConfigFileOverridesWebPreferences;
         }
 
-        return this.DEFAULT_CONFIG.kodusConfigFileOverridesWebPreferences;
+        return this.DEFAULT_CONFIG.codusConfigFileOverridesWebPreferences;
     }
 
     private getDefaultConfigs(): CodeReviewConfig {
         try {
-            const kodusConfigYMLfile = getDefaultKodusConfigFile();
+            const codusConfigYMLfile = getDefaultCodusConfigFile();
 
             const DEFAULT_CONFIG = {
-                ...kodusConfigYMLfile,
+                ...codusConfigYMLfile,
                 languageResultPrompt: LanguageValue.ENGLISH,
-                kodyRules: [],
+                codyRules: [],
             };
 
             return DEFAULT_CONFIG as CodeReviewConfig;
@@ -696,7 +696,7 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
         return defaultBranch;
     }
 
-    async getKodusConfigFile(params: {
+    async getCodusConfigFile(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { id: string; name: string };
         overrideConfig?: boolean;
@@ -704,7 +704,7 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
         directoryId?: string;
         defaultBranch?: string;
         removeProperties?: boolean;
-    }): Promise<KodusConfigFile | undefined> {
+    }): Promise<CodusConfigFile | undefined> {
         const {
             organizationAndTeamData,
             repository,
@@ -729,7 +729,7 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
             defaultBranch ||
             (await this.getDefaultBranch(organizationAndTeamData, repository));
 
-        const kodusConfigFileContent = await this.getConfigurationFile(
+        const codusConfigFileContent = await this.getConfigurationFile(
             organizationAndTeamData,
             repository,
             defaultBranchName,
@@ -737,29 +737,29 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
             directoryId,
         );
 
-        if (!kodusConfigFileContent) {
+        if (!codusConfigFileContent) {
             return;
         }
 
-        const parsedConfig = yaml.load(kodusConfigFileContent);
-        const kodusConfigYMLfile =
+        const parsedConfig = yaml.load(codusConfigFileContent);
+        const codusConfigYMLfile =
             parsedConfig && typeof parsedConfig === 'object'
-                ? (parsedConfig as KodusConfigFile)
-                : ({} as KodusConfigFile);
+                ? (parsedConfig as CodusConfigFile)
+                : ({} as CodusConfigFile);
 
         // strip properties not in default config
-        for (const key in kodusConfigYMLfile) {
+        for (const key in codusConfigYMLfile) {
             if (!(key in this.DEFAULT_CONFIG)) {
-                delete kodusConfigYMLfile[key as keyof KodusConfigFile];
+                delete codusConfigYMLfile[key as keyof CodusConfigFile];
             }
         }
 
         if (removeProperties) {
-            delete kodusConfigYMLfile.version;
-            delete kodusConfigYMLfile.kodusConfigFileOverridesWebPreferences;
+            delete codusConfigYMLfile.version;
+            delete codusConfigYMLfile.codusConfigFileOverridesWebPreferences;
         }
 
-        return kodusConfigYMLfile;
+        return codusConfigYMLfile;
     }
 
     private async getConfigurationFile(
@@ -769,7 +769,7 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
         directoryPath?: string,
         directoryId?: string,
     ): Promise<string | null> {
-        const configFileName = 'kodus-config.yml';
+        const configFileName = 'codus-config.yml';
         let fullPath = configFileName;
 
         // Directory groups override config through the centralized config
@@ -815,18 +815,18 @@ export default class CodeBaseConfigService implements ICodeBaseConfigService {
         return ReviewModeConfig.HEAVY_MODE;
     }
 
-    private async getKodyFineTuningConfigParameter(
+    private async getCodyFineTuningConfigParameter(
         organizationAndTeamData: OrganizationAndTeamData,
-    ): Promise<KodyFineTuningConfig> {
-        const kodyFineTuningConfig =
+    ): Promise<CodyFineTuningConfig> {
+        const codyFineTuningConfig =
             await this.organizationParametersService.findByKey(
-                OrganizationParametersKey.KODY_FINE_TUNING_CONFIG,
+                OrganizationParametersKey.CODY_FINE_TUNING_CONFIG,
                 organizationAndTeamData,
             );
 
         const enableService =
-            kodyFineTuningConfig?.configValue?.enabled !== undefined
-                ? kodyFineTuningConfig.configValue.enabled
+            codyFineTuningConfig?.configValue?.enabled !== undefined
+                ? codyFineTuningConfig.configValue.enabled
                 : true;
 
         return {

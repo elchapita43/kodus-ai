@@ -1,11 +1,11 @@
 ---
 title: "Github FGPAT 令牌"
-description: "生成 Kody 进行代码审查所需的 GitHub Fine-Grained PAT,包括如何解除对组织代码库的访问限制。"
+description: "生成 Cody 进行代码审查所需的 GitHub Fine-Grained PAT,包括如何解除对组织代码库的访问限制。"
 ---
 
 ## FGPAT 简介
 
-要使 Kody 能够执行自动代码审查,您需要在 GitHub 中生成一个细粒度个人访问令牌(FGPAT)。此令牌允许 Kody 以受控方式安全地访问您的代码库并执行代码分析。
+要使 Cody 能够执行自动代码审查,您需要在 GitHub 中生成一个细粒度个人访问令牌(FGPAT)。此令牌允许 Cody 以受控方式安全地访问您的代码库并执行代码分析。
 
 ## 检查细粒度访问权限
 
@@ -16,7 +16,7 @@ description: "生成 Kody 进行代码审查所需的 GitHub Fine-Grained PAT,�
 1. 您必须是组织所有者。
 1. 转到 GitHub 中的组织设置:
    - 您可以使用此 URL 替换为您的组织名称: <small>https://github.com/organizations/YOUR_ORG_NAME/settings/personal-access-tokens)</small>。
-1. 在**细粒度个人访问令牌**下,选择**"允许通过细粒度个人访问令牌访问"**以启用 Kody 的安全访问。
+1. 在**细粒度个人访问令牌**下,选择**"允许通过细粒度个人访问令牌访问"**以启用 Cody 的安全访问。
 
 ## 生成 FGPAT(细粒度个人访问令牌)
 
@@ -52,7 +52,7 @@ description: "生成 Kody 进行代码审查所需的 GitHub Fine-Grained PAT,�
 
 5. **使用以下规格设置新令牌**:
 
-   - **令牌名称**:选择一个容易识别的名称,例如 `kody_code_review`。
+   - **令牌名称**:选择一个容易识别的名称,例如 `cody_code_review`。
    - **到期日期**:如果可能,选择较长的到期日期,最好至少 180 天。
    - **资源所有者**:确保组织设置为令牌所有者,因为团队的代码库位于组织下。
    - **代码库访问**:选择**所有代码库**以允许令牌访问所有代码库。
@@ -71,8 +71,8 @@ description: "生成 Kody 进行代码审查所需的 GitHub Fine-Grained PAT,�
 
 6. **完成并保存令牌**:
    - 设置权限后,点击 `生成令牌`。
-   - 确保复制生成的令牌并安全存储,因为您需要它来配置 Kody。
+   - 确保复制生成的令牌并安全存储,因为您需要它来配置 Cody。
 
-## 将令牌添加到 Kody
+## 将令牌添加到 Cody
 
-生成令牌后,将其粘贴到 Kody 配置屏幕中进行自动化设置。一旦您尝试启用自动化,模态框将自动打开。
+生成令牌后,将其粘贴到 Cody 配置屏幕中进行自动化设置。一旦您尝试启用自动化,模态框将自动打开。

@@ -3,7 +3,7 @@
  * the agent-harness engine.
  *
  * This is THE engine for EVERY review agent (bug / security / performance /
- * generalist / kody-rules) — the legacy in-house loop was removed, and all
+ * generalist / cody-rules) — the legacy in-house loop was removed, and all
  * providers route here via BaseCodeReviewAgentProvider (`loopFn =
  * runAgentLoopViaCore`, unconditional). The per-agent difference is the
  * AgentSpec (prompt + tools), not a forked loop.
@@ -112,7 +112,7 @@ export async function runAgentLoopViaCore(
 
     // Recall-pass gating — ported from the legacy loop: skip the heavy passes in
     // fast mode, self-contained (no tools) trial flow, or when the caller asks.
-    // EXCEPTION: an explicit `heavy` opt-in (CLI `--heavy` / PR `@kody review
+    // EXCEPTION: an explicit `heavy` opt-in (CLI `--heavy` / PR `@cody review
     // --heavy`) forces the recall passes to run regardless — the whole point of
     // heavy is more recall via resampling, so it must not be silently nullified
     // by the default fast/self-contained gating.

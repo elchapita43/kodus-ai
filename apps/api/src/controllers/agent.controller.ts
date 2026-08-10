@@ -52,7 +52,7 @@ export class AgentController {
         }
 
         // Thread granularity matters: it keys both log/trace correlation and the
-        // persisted `kodus-agent-sessions` record. With only org+team, every
+        // persisted `codus-agent-sessions` record. With only org+team, every
         // user and conversation of a team would collapse onto one thread/record,
         // so we add the user (and an optional conversation id) to keep distinct
         // chats from bleeding into the same session document.

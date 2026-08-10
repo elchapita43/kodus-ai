@@ -110,8 +110,8 @@ describe('CockpitReviewAnalyticsService', () => {
             const [sql] = query.mock.calls[0];
             expect(sql).toContain(`WHEN 'critical' THEN 0`);
             // native columns exclude rule-driven suggestions
-            expect(sql).toContain(`s."brokenKodyRulesIds" IS NOT NULL`);
-            expect(sql).toContain(`lower(s."label") = 'kody_rules'`);
+            expect(sql).toContain(`s."brokenCodyRulesIds" IS NOT NULL`);
+            expect(sql).toContain(`lower(s."label") = 'cody_rules'`);
             expect(rows[0]).toEqual({
                 severity: 'critical',
                 sent: 10,
@@ -166,7 +166,7 @@ describe('CockpitReviewAnalyticsService', () => {
         });
     });
 
-    describe('getKodyRulesUsage', () => {
+    describe('getCodyRulesUsage', () => {
         it('unnests rule ids and maps usage rows with feedback', async () => {
             query.mockResolvedValue([
                 {
@@ -179,11 +179,11 @@ describe('CockpitReviewAnalyticsService', () => {
                 },
             ]);
 
-            const rows = await service.getKodyRulesUsage(baseQuery);
+            const rows = await service.getCodyRulesUsage(baseQuery);
 
             const [sql] = query.mock.calls[0];
-            expect(sql).toContain('unnest(sc."brokenKodyRulesIds")');
-            expect(sql).toContain(`s."brokenKodyRulesIds" IS NOT NULL`);
+            expect(sql).toContain('unnest(sc."brokenCodyRulesIds")');
+            expect(sql).toContain(`s."brokenCodyRulesIds" IS NOT NULL`);
             expect(sql).toContain('"analytics"."suggestion_feedback"');
             expect(rows).toEqual([
                 {

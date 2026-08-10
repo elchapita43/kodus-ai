@@ -51,7 +51,7 @@ const modelExpr = {
 };
 
 // Aggregation mirror of deriveArea() in libs/core/log/token-usage-tu.ts —
-// keep the rule order identical (system → kody_rules → cross_file → review →
+// keep the rule order identical (system → cody_rules → cross_file → review →
 // suggestions → summary → conversation → other).
 const rn = { $ifNull: [gf('gen_ai.run.name'), ''] };
 const areaExpr = {
@@ -64,19 +64,19 @@ const areaExpr = {
                         {
                             $regexMatch: {
                                 input: rn,
-                                regex: 'kody.?rules?',
+                                regex: 'cody.?rules?',
                                 options: 'i',
                             },
                         },
                         {
                             $regexMatch: {
                                 input: rn,
-                                regex: '^kodyMemory',
+                                regex: '^codyMemory',
                             },
                         },
                     ],
                 },
-                then: 'kody_rules',
+                then: 'cody_rules',
             },
             {
                 case: {

@@ -15,7 +15,7 @@ const log = logger('pr-execution-sse');
 // This scenario opens a real PR (fixture branch pair, review fires) while
 // holding an authenticated SSE connection, and requires at least one
 // non-ping `execution_updated` frame to arrive. Heartbeats alone = FAIL.
-const FIXTURE = { head: 'fixture/kody-rule-todo-remove-me', base: 'main' };
+const FIXTURE = { head: 'fixture/cody-rule-todo-remove-me', base: 'main' };
 
 export const prExecutionSse: Scenario = {
     id: 'pr-execution-sse',
@@ -35,10 +35,10 @@ export const prExecutionSse: Scenario = {
             );
         }
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         // Start listening BEFORE the PR exists so no frame can be missed.
@@ -56,7 +56,7 @@ export const prExecutionSse: Scenario = {
             head: FIXTURE.head,
             base: FIXTURE.base,
             title: `[e2e] pr-execution-sse ${ctx.runId.slice(-6)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId} to assert execution updates reach the SSE stream.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId} to assert execution updates reach the SSE stream.`,
         });
 
         try {

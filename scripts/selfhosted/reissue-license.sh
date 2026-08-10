@@ -1,12 +1,12 @@
 #!/bin/bash
-# Re-issue a self-hosted Enterprise license for this Kodus instance.
+# Re-issue a self-hosted Enterprise license for this Codus instance.
 # Generates an Ed25519 keypair owned by the instance operator, signs a
 # license JWT with it, stores the JWT in organization_parameters, and
 # prints the public key (DER, base64) to embed into the fork's
 # LICENSE_PUBLIC_KEYS so the API can verify it.
 set -euo pipefail
 
-LIC_DIR="$HOME/kodus-installer/license"
+LIC_DIR="$HOME/codus-installer/license"
 mkdir -p "$LIC_DIR"
 chmod 700 "$LIC_DIR"
 
@@ -66,7 +66,7 @@ PY
 
 # 3) Update the org parameter (single org in this instance)
 JWT="$(cat "$LIC_DIR/license.jwt")"
-docker exec db_kodus_postgres psql -U kodusdev -d kodus_db -c \
+docker exec db_codus_postgres psql -U codusdev -d codus_db -c \
   "UPDATE organization_parameters SET \"configValue\" = json_build_object('key', '$JWT')::jsonb, \"updatedAt\" = now() WHERE \"configKey\" = 'license_key'"
 
 echo "DB actualizada. Private key: $LIC_DIR/private.pem"

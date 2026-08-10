@@ -79,7 +79,7 @@ export class SamlStrategy extends PassportStrategy(MultiSamlStrategy, 'saml') {
                                     idpIssuer: samlConfig.idpIssuer,
                                     issuer:
                                         samlConfig.issuer ||
-                                        'kodus-orchestrator',
+                                        'codus-orchestrator',
                                     callbackUrl:
                                         buildApiUrl(`/auth/sso/saml/callback/${organizationId}`),
                                     wantAssertionsSigned: false,
@@ -107,7 +107,7 @@ export class SamlStrategy extends PassportStrategy(MultiSamlStrategy, 'saml') {
                             idpIssuer: ssoConfig.providerConfig.idpIssuer,
                             issuer:
                                 ssoConfig.providerConfig.issuer ||
-                                'kodus-orchestrator',
+                                'codus-orchestrator',
                             callbackUrl: buildApiUrl(`/auth/sso/saml/callback/${organizationId}`),
                             wantAssertionsSigned: false,
                             identifierFormat:

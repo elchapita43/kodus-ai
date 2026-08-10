@@ -38,7 +38,7 @@ class InteractiveUI {
                 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
             ),
         );
-        console.log(chalk.bold.cyan('  Kodus Code Review - Interactive Mode'));
+        console.log(chalk.bold.cyan('  Codus Code Review - Interactive Mode'));
         console.log(
             chalk.bold.cyan(
                 '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',

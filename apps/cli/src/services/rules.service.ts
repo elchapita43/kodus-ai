@@ -1,38 +1,38 @@
 import type {
-    KodyRuleMutationResult,
-    CreateKodyRuleRequest,
-    KodyRule,
-    KodyRuleScope,
-    KodyRuleSeverity,
-    UpdateKodyRuleRequest,
-    ViewKodyRulesRequest,
+    CodyRuleMutationResult,
+    CreateCodyRuleRequest,
+    CodyRule,
+    CodyRuleScope,
+    CodyRuleSeverity,
+    UpdateCodyRuleRequest,
+    ViewCodyRulesRequest,
 } from '../types/rules.js';
 import { CommandError } from '../utils/command-errors.js';
 import { resolveTeamKeyAccess } from '../utils/team-key-auth.js';
 import { api } from './api/index.js';
 
-export type UpdateKodyRuleInput = {
+export type UpdateCodyRuleInput = {
     ruleId: string;
-} & UpdateKodyRuleRequest;
+} & UpdateCodyRuleRequest;
 
-const VALID_SEVERITIES: KodyRuleSeverity[] = [
+const VALID_SEVERITIES: CodyRuleSeverity[] = [
     'low',
     'medium',
     'high',
     'critical',
 ];
 
-const VALID_SCOPES: KodyRuleScope[] = ['pull request', 'file'];
+const VALID_SCOPES: CodyRuleScope[] = ['pull request', 'file'];
 
 const RULES_AUTH_MESSAGE =
-    'Kody Rules commands require team-key auth. Run: kodus auth team-key --key <your-key>.\nGet your key from: https://app.kodus.io/organization/cli-keys';
+    'Cody Rules commands require team-key auth. Run: codus auth team-key --key <your-key>.\nGet your key from: https://app.kodus.io/organization/cli-keys';
 
 class RulesService {
     async createRule(
-        input: CreateKodyRuleRequest,
-    ): Promise<KodyRuleMutationResult> {
+        input: CreateCodyRuleRequest,
+    ): Promise<CodyRuleMutationResult> {
         const { teamKey } = await resolveTeamKeyAccess(RULES_AUTH_MESSAGE);
-        const payload: CreateKodyRuleRequest = {
+        const payload: CreateCodyRuleRequest = {
             title: this.requireText(input.title, 'title'),
             rule: this.requireText(input.rule, 'rule'),
             repositoryId:
@@ -46,13 +46,13 @@ class RulesService {
     }
 
     async updateRule(
-        input: UpdateKodyRuleInput,
-    ): Promise<KodyRuleMutationResult> {
+        input: UpdateCodyRuleInput,
+    ): Promise<CodyRuleMutationResult> {
         const { teamKey } = await resolveTeamKeyAccess(RULES_AUTH_MESSAGE);
         const ruleId = this.requireText(input.ruleId, 'rule-id');
         let hasRuleChanges = false;
 
-        const payload: UpdateKodyRuleRequest = {};
+        const payload: UpdateCodyRuleRequest = {};
 
         const title = this.normalizeOptionalText(input.title);
         if (title) {
@@ -98,9 +98,9 @@ class RulesService {
         return api.rules.updateRule(teamKey, ruleId, payload);
     }
 
-    async viewRules(input: ViewKodyRulesRequest = {}): Promise<KodyRule[]> {
+    async viewRules(input: ViewCodyRulesRequest = {}): Promise<CodyRule[]> {
         const { teamKey } = await resolveTeamKeyAccess(RULES_AUTH_MESSAGE);
-        const query: ViewKodyRulesRequest = {
+        const query: ViewCodyRulesRequest = {
             repositoryId: this.normalizeOptionalText(input.repositoryId),
             ruleId: this.normalizeOptionalText(input.ruleId),
         };
@@ -108,8 +108,8 @@ class RulesService {
         return api.rules.viewRules(teamKey, query);
     }
 
-    private normalizeSeverity(value: string): KodyRuleSeverity {
-        const normalized = value.trim().toLowerCase() as KodyRuleSeverity;
+    private normalizeSeverity(value: string): CodyRuleSeverity {
+        const normalized = value.trim().toLowerCase() as CodyRuleSeverity;
         if (!VALID_SEVERITIES.includes(normalized)) {
             throw new CommandError(
                 'INVALID_INPUT',
@@ -120,8 +120,8 @@ class RulesService {
         return normalized;
     }
 
-    private normalizeScope(value: string): KodyRuleScope {
-        const normalized = value.trim().toLowerCase() as KodyRuleScope;
+    private normalizeScope(value: string): CodyRuleScope {
+        const normalized = value.trim().toLowerCase() as CodyRuleScope;
         if (!VALID_SCOPES.includes(normalized)) {
             throw new CommandError(
                 'INVALID_INPUT',

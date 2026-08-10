@@ -23,7 +23,7 @@ export interface ConversationMessage {
 /** Light tenancy/correlation metadata attached to a thread's record. Every
  *  field optional — the store persists whatever the caller knows. */
 export interface ConversationAppendMeta {
-    /** Logical tenant of the session (legacy flow used `kodus-agent-conversation`). */
+    /** Logical tenant of the session (legacy flow used `codus-agent-conversation`). */
     readonly tenantId?: string;
     readonly organizationId?: string;
     readonly teamId?: string;

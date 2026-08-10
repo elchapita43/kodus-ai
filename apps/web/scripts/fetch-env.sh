@@ -4,15 +4,15 @@ ENVIRONMENT=$1
 
 # Lista de todas as chaves que você precisa
 KEYS=(
-    "/prod/kodus-web/WEB_HOSTNAME_API"
-    "/prod/kodus-web/WEB_NEXTAUTH_SECRET"
-    "/prod/kodus-web/NEXTAUTH_URL"
+    "/prod/codus-web/WEB_HOSTNAME_API"
+    "/prod/codus-web/WEB_NEXTAUTH_SECRET"
+    "/prod/codus-web/NEXTAUTH_URL"
 
-    "/prod/kodus-web/WEB_GITHUB_INSTALL_URL"
-    "/prod/kodus-web/WEB_JIRA_SCOPES"
-    "/prod/kodus-web/WEB_TERMS_AND_CONDITIONS"
+    "/prod/codus-web/WEB_GITHUB_INSTALL_URL"
+    "/prod/codus-web/WEB_JIRA_SCOPES"
+    "/prod/codus-web/WEB_TERMS_AND_CONDITIONS"
 
-    "/prod/kodus-web/WEB_RULE_FILES_DOCS"
+    "/prod/codus-web/WEB_RULE_FILES_DOCS"
 )
 
 # Lista de todas as chaves que você precisa

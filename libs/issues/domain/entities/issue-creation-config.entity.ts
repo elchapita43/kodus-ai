@@ -3,7 +3,7 @@ import { SeverityLevel } from '@libs/common/utils/enums/severityLevel.enum';
 export interface IssueCreationConfig {
     automaticCreationEnabled: boolean;
     sourceFilters: {
-        includeKodyRules: boolean;
+        includeCodyRules: boolean;
         includeCodeReviewEngine: boolean;
     };
     severityFilters: {

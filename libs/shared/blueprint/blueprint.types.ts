@@ -2,7 +2,7 @@
  * Blueprint Pattern — Core Types
  *
  * Provides the type definitions for deterministic skill execution.
- * Skills have a blueprint (Kodus-owned execution steps) and instructions
+ * Skills have a blueprint (Codus-owned execution steps) and instructions
  * (SKILL.md body, user-editable per team).
  *
  * No NestJS or flow-engine dependencies — pure TypeScript.

@@ -14,7 +14,7 @@ describe('StartSSOConnectionTestUseCase', () => {
         idpIssuer: 'idp-issuer',
         entryPoint: 'https://idp.example.com/sso',
         cert: 'certificate',
-        issuer: 'kodus-orchestrator',
+        issuer: 'codus-orchestrator',
     };
 
     const makeSut = () => {

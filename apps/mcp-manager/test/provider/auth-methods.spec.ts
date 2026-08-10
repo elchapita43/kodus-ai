@@ -4,7 +4,7 @@ import {
     ManagedAuthMethod,
     normalizeAuthMethods,
     resolveAuthMethodEnv,
-} from '../../src/modules/providers/kodusMCP/auth-methods';
+} from '../../src/modules/providers/codusMCP/auth-methods';
 import { MCPIntegrationAuthType } from '../../src/modules/integrations/enums/integration.enum';
 
 describe('normalizeAuthMethods', () => {

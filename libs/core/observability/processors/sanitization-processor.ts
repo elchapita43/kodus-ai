@@ -49,7 +49,7 @@ export class SanitizationProcessor implements SpanProcessor {
 
     async process(item: TraceItem): Promise<void> {
         item.attributes = this.tryFilter(item.attributes);
-        // Assuming TraceItem might evolve to have input/output like in Mastra/Kodus
+        // Assuming TraceItem might evolve to have input/output like in Mastra/Codus
         if ((item as any).input) {
             (item as any).input = this.tryFilter((item as any).input);
         }

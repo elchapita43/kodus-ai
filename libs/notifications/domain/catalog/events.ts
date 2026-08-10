@@ -17,8 +17,8 @@ export enum NotificationEvent {
     ORG_MEMBER_REMOVED = 'org.member_removed',
     ORG_ROLE_CHANGED = 'org.role_changed',
 
-    // ── Kody Rules ─────────────────────────────────────────────
-    KODY_RULES_GENERATED = 'kody_rules.generated',
+    // ── Cody Rules ─────────────────────────────────────────────
+    CODY_RULES_GENERATED = 'cody_rules.generated',
 
     // ── IDE rule sync ──────────────────────────────────────────
     IDE_RULES_SYNCED = 'ide.rules_synced',
@@ -47,7 +47,7 @@ export enum NotificationEvent {
     SPEND_LIMIT_THRESHOLD_REACHED = 'spend_limit.threshold_reached',
     SPEND_LIMIT_EXCEEDED_FINAL = 'spend_limit.exceeded_final',
 
-    // ── Kody Rules (continued) ─────────────────────────────────
+    // ── Cody Rules (continued) ─────────────────────────────────
     RULE_FILE_REFERENCES_INVALID = 'rule.file_references_invalid',
 
     // ── Security (future — critical) ───────────────────────────
@@ -84,7 +84,7 @@ export interface NotificationPayloadMap {
         inviteLink: string;
     };
 
-    [NotificationEvent.KODY_RULES_GENERATED]: {
+    [NotificationEvent.CODY_RULES_GENERATED]: {
         /** All active users in the org receive the notification. */
         users: Array<{ email: string; name: string }>;
         rules: string[];
@@ -205,7 +205,7 @@ export interface NotificationPayloadMap {
         periodKey: string;
     };
 
-    // ── Kody Rules (file reference validation) ────────────────
+    // ── Cody Rules (file reference validation) ────────────────
 
     [NotificationEvent.RULE_FILE_REFERENCES_INVALID]: {
         source: 'ide' | 'manual' | 'auto_recheck';

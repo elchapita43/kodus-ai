@@ -7,17 +7,17 @@ Too many low-priority suggestions can make developers ignore code review feedbac
 
 ## Review filters
 
-Kodus filters which findings actually get posted:
+Codus filters which findings actually get posted:
 
 - **Minimum severity** — only show suggestions at or above a threshold (default: Medium)
-- **Apply filters to Kody Rules** — off by default, so your team's own rules always surface
+- **Apply filters to Cody Rules** — off by default, so your team's own rules always surface
 
-Configure these in **Code Review Settings** → **Review filters**, or in `kodus-config.yml`:
+Configure these in **Code Review Settings** → **Review filters**, or in `codus-config.yml`:
 
 ```yaml
 suggestionControl:
   severityLevelFilter: medium   # low | medium | high | critical
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 ```
 
 ## Ignore files and paths
@@ -57,6 +57,6 @@ reviewOptions:
 
 ## Review cadence
 
-Use **Auto-pause** to prevent spam during active development — Kodus pauses reviews when it detects rapid consecutive pushes (default: 3 pushes in 15 minutes).
+Use **Auto-pause** to prevent spam during active development — Codus pauses reviews when it detects rapid consecutive pushes (default: 3 pushes in 15 minutes).
 
 For details, see [General Configuration](/how_to_use/en/code_review/configs/general) and [Suggestion Control](/how_to_use/en/code_review/configs/suggestion_control).

@@ -1,7 +1,7 @@
 # Docs
 
-Mintlify-powered public documentation site for Kodus. Lives at `docs/`
-inside the kodus-ai monorepo (was previously a separate repo). Site is
+Mintlify-powered public documentation site for Codus. Lives at `docs/`
+inside the codus-ai monorepo (was previously a separate repo). Site is
 configured via `docs.json` and content is written in `.mdx` files.
 
 ## Development
@@ -42,7 +42,7 @@ the default branch.
 - `knowledge_base/` — concept docs / FAQ
 - `_snippets/` — reusable MDX fragments imported via `<Snippet>` component
 - `_snippets/env-vars-generated.mdx` — **auto-generated** from
-  `kodus-ai/.env.schema`. Don't edit by hand. Run `pnpm run env:apply` to
+  `codus-ai/.env.schema`. Don't edit by hand. Run `pnpm run env:apply` to
   regenerate after schema changes.
 
 ## Internal engineering docs

@@ -95,7 +95,7 @@ jobs:
                   OWNER: ${{ github.repository_owner }}
               run: |
                   set -euo pipefail
-                  for image in kodus-ai-api kodus-ai-webhook kodus-ai-worker kodus-ai-web kodus-mcp-manager; do
+                  for image in codus-ai-api codus-ai-webhook codus-ai-worker codus-ai-web codus-mcp-manager; do
                     SRC="ghcr.io/${OWNER}/${image}:${RC_VERSION}"
                     DST_VER="ghcr.io/${OWNER}/${image}:${RELEASE_VERSION}"
                     DST_LATEST="ghcr.io/${OWNER}/${image}:latest"
@@ -113,7 +113,7 @@ jobs:
                     echo "Tag ${TAG} already exists on origin. Skipping."
                     exit 0
                   fi
-                  git config user.name "kodus-release-bot"
+                  git config user.name "codus-release-bot"
                   git config user.email "actions@kodus.io"
                   git tag "${TAG}"
                   git push origin "${TAG}"

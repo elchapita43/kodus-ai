@@ -102,10 +102,10 @@ async function runHook(
                 env: {
                     PATH: process.env.PATH,
                     NODE_PATH: process.env.NODE_PATH,
-                    KODUS_API_URL: `http://127.0.0.1:${mockServerPort}`,
-                    KODUS_TEAM_KEY: 'kodus_test_key_e2e_12345',
+                    CODUS_API_URL: `http://127.0.0.1:${mockServerPort}`,
+                    CODUS_TEAM_KEY: 'codus_test_key_e2e_12345',
                     HOME: tmpDir,
-                    KODUS_VERBOSE: 'true',
+                    CODUS_VERBOSE: 'true',
                     NO_UPDATE_NOTIFIER: '1',
                     NODE_OPTIONS: '',
                 },
@@ -175,7 +175,7 @@ describe('Process E2E — session hooks', { timeout: 60_000 }, () => {
         await fs.access(cliEntryPoint);
 
         // Create a temp directory that acts as HOME + git repo
-        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-e2e-'));
+        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-e2e-'));
 
         // Initialize a bare git repo so gitService.isGitRepository() returns true
         await new Promise<void>((resolve, reject) => {
@@ -214,9 +214,9 @@ describe('Process E2E — session hooks', { timeout: 60_000 }, () => {
             git.on('error', reject);
         });
 
-        // Create .kody and .kodus directories
-        await fs.mkdir(path.join(tmpDir, '.kody'), { recursive: true });
-        await fs.mkdir(path.join(tmpDir, '.kodus'), { recursive: true });
+        // Create .cody and .codus directories
+        await fs.mkdir(path.join(tmpDir, '.cody'), { recursive: true });
+        await fs.mkdir(path.join(tmpDir, '.codus'), { recursive: true });
 
         // Start mock HTTP server
         const { server, port } = await startMockServer();
@@ -304,7 +304,7 @@ describe('Process E2E — session hooks', { timeout: 60_000 }, () => {
 
         // Verify auth header
         for (const req of eventRequests) {
-            expect(req.headers['x-team-key']).toBe('kodus_test_key_e2e_12345');
+            expect(req.headers['x-team-key']).toBe('codus_test_key_e2e_12345');
         }
 
         // Verify session_start fields
@@ -454,7 +454,7 @@ describe('Process E2E — session hooks', { timeout: 60_000 }, () => {
 
     it('Hook in non-git directory exits cleanly with no events sent', async () => {
         const nonGitDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-e2e-nogit-'),
+            path.join(os.tmpdir(), 'codus-e2e-nogit-'),
         );
 
         try {

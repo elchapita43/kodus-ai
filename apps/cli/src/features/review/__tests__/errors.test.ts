@@ -23,7 +23,7 @@ describe('buildReviewErrorHints', () => {
                 }),
             ),
         ).toEqual([
-            'Run `kodus auth login` to use your account or `kodus auth team-key --key <your-key>` to use a team key.',
+            'Run `codus auth login` to use your account or `codus auth team-key --key <your-key>` to use a team key.',
         ]);
     });
 
@@ -33,11 +33,11 @@ describe('buildReviewErrorHints', () => {
                 createError({
                     code: 'API_REQUEST_FAILED',
                     message:
-                        'Could not reach the Kodus API at http://localhost:3001.',
+                        'Could not reach the Codus API at http://localhost:3001.',
                 }),
             ),
         ).toEqual([
-            'Check `KODUS_API_URL` and make sure the Kodus API is running if you are testing locally.',
+            'Check `CODUS_API_URL` and make sure the Codus API is running if you are testing locally.',
         ]);
     });
 
@@ -50,7 +50,7 @@ describe('buildReviewErrorHints', () => {
                 }),
             ),
         ).toEqual([
-            'Run `kodus review` inside a Git repository, or pass explicit file paths to review.',
+            'Run `codus review` inside a Git repository, or pass explicit file paths to review.',
         ]);
     });
 
@@ -63,7 +63,7 @@ describe('buildReviewErrorHints', () => {
                 }),
             ),
         ).toEqual([
-            'Run `kodus review --help` to see supported options, examples, and valid flag combinations.',
+            'Run `codus review --help` to see supported options, examples, and valid flag combinations.',
         ]);
     });
 

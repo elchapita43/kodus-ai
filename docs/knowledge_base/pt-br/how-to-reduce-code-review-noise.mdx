@@ -7,17 +7,17 @@ Muitas sugestões de baixa prioridade podem fazer os desenvolvedores ignorarem c
 
 ## Filtros de revisão
 
-O Kodus filtra quais achados são efetivamente publicados:
+O Codus filtra quais achados são efetivamente publicados:
 
 - **Severidade mínima** — mostra apenas sugestões no nível escolhido ou acima (padrão: Medium)
-- **Aplicar filtros às Kody Rules** — desligado por padrão, para que as regras do seu time sempre apareçam
+- **Aplicar filtros às Cody Rules** — desligado por padrão, para que as regras do seu time sempre apareçam
 
-Configure em **Code Review Settings** → **Review filters**, ou no `kodus-config.yml`:
+Configure em **Code Review Settings** → **Review filters**, ou no `codus-config.yml`:
 
 ```yaml
 suggestionControl:
   severityLevelFilter: medium   # low | medium | high | critical
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 ```
 
 ## Ignorar arquivos e caminhos
@@ -57,6 +57,6 @@ reviewOptions:
 
 ## Cadência de revisão
 
-Use **Pausa automática** para evitar spam durante o desenvolvimento ativo — o Kodus pausa as revisões quando detecta pushes consecutivos rápidos (padrão: 3 pushes em 15 minutos).
+Use **Pausa automática** para evitar spam durante o desenvolvimento ativo — o Codus pausa as revisões quando detecta pushes consecutivos rápidos (padrão: 3 pushes em 15 minutos).
 
 Para detalhes, consulte [Configuração Geral](/how_to_use/pt-br/code_review/configs/general) e [Controle de Sugestões](/how_to_use/pt-br/code_review/configs/suggestion_control).

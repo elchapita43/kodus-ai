@@ -22,7 +22,7 @@ export const RouteButtonWithOverrideCount = ({
     level,
     config,
     customMessagesOverrideCount,
-    kodyRulesOverrideCount,
+    codyRulesOverrideCount,
 }: {
     label: string;
     href: string;
@@ -31,10 +31,10 @@ export const RouteButtonWithOverrideCount = ({
     level: FormattedConfigLevel;
     config?: FormattedCodeReviewConfig;
     customMessagesOverrideCount?: number;
-    kodyRulesOverrideCount?: number;
+    codyRulesOverrideCount?: number;
 }) => {
     const isCustomMessagesRoute = href === "custom-messages";
-    const isKodyRulesRoute = href === "kody-rules";
+    const isCodyRulesRoute = href === "cody-rules";
 
     const configOverrideCount =
         countConfigOverridesByRoute(config, href, level) ?? 0;
@@ -42,9 +42,9 @@ export const RouteButtonWithOverrideCount = ({
     let routeOverrideCount: number | null;
     if (isCustomMessagesRoute) {
         routeOverrideCount = customMessagesOverrideCount ?? 0;
-    } else if (isKodyRulesRoute) {
+    } else if (isCodyRulesRoute) {
         routeOverrideCount =
-            configOverrideCount + (kodyRulesOverrideCount ?? 0);
+            configOverrideCount + (codyRulesOverrideCount ?? 0);
     } else {
         routeOverrideCount = configOverrideCount;
     }

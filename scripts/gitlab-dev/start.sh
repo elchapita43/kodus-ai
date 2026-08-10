@@ -5,7 +5,7 @@
 # successful probe.
 #
 # After this returns you can browse http://gitlab.lvh.me:8929 in your
-# browser (root / KodusDev!2026) before doing anything else.
+# browser (root / CodusDev!2026) before doing anything else.
 
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
@@ -16,9 +16,9 @@ echo "════════════════════════�
 # The backend network is `external:` in the compose file. Surface a
 # clearer hint than "network not found" if the dev stack hasn't been
 # brought up yet.
-if ! docker network inspect kodus-backend-services >/dev/null 2>&1; then
+if ! docker network inspect codus-backend-services >/dev/null 2>&1; then
     cat >&2 <<EOF
-error: docker network "kodus-backend-services" not found.
+error: docker network "codus-backend-services" not found.
 
 Start the dev backing services first:
     pnpm run docker:start
@@ -61,7 +61,7 @@ done
 cat <<EOF
 
   GitLab is up:  ${GITLAB_URL}
-  Root login:    root / KodusDev!2026
+  Root login:    root / CodusDev!2026
 
   Next:
     bash scripts/gitlab-dev/create-project.sh   # seeds repo + mints PAT

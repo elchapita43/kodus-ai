@@ -36,7 +36,7 @@ x-bench-logging: &bench-logging
 # Shared build + env definition for the three app services. They all build the
 # SAME docker/Dockerfile; only the `target` stage (api/worker/webhooks) differs.
 x-bench-app: &bench-app
-    image: kodus-ai-bench:${BENCH_TAG:-latest}
+    image: codus-ai-bench:${BENCH_TAG:-latest}
     build:
         context: .
         dockerfile: docker/Dockerfile
@@ -49,14 +49,14 @@ x-bench-app: &bench-app
           required: false
     restart: unless-stopped
     networks:
-        - kodus-bench-net
+        - codus-bench-net
     logging: *bench-logging
 
 services:
     #----------------------------------------------------------------
     # Application Services (compiled artifact — node dist/...)
     #----------------------------------------------------------------
-    kodus-api:
+    codus-api:
         <<: *bench-app
         # Distinct image per service: all three build the SAME Dockerfile but
         # different target stages (api/worker/webhooks), each with its own baked
@@ -64,7 +64,7 @@ services:
         # overwrite it, so all three containers run whatever built last — e.g.
         # the api container running `node dist/apps/worker/main.js` (no HTTP
         # server → /health refused). Per-service tags keep them separate.
-        image: kodus-ai-bench-api:${BENCH_TAG:-latest}
+        image: codus-ai-bench-api:${BENCH_TAG:-latest}
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -72,15 +72,15 @@ services:
             args:
                 - API_CLOUD_MODE=${API_CLOUD_MODE:-false}
                 - RELEASE_VERSION=${BENCH_TAG:-local}
-        container_name: kodus_api_bench
+        container_name: codus_api_bench
         # The web proxy + MCP URL reach the API by the dev container name
-        # `kodus_api` (.env: GLOBAL_API_CONTAINER_NAME, API_KODUS_MCP_SERVER_URL),
-        # but our container is `kodus_api_bench` — add `kodus_api` as a network
+        # `codus_api` (.env: GLOBAL_API_CONTAINER_NAME, API_CODUS_MCP_SERVER_URL),
+        # but our container is `codus_api_bench` — add `codus_api` as a network
         # alias so those hostnames resolve. Overrides the anchor's short-form net.
         networks:
-            kodus-bench-net:
+            codus-bench-net:
                 aliases:
-                    - kodus_api
+                    - codus_api
         # Only the API runs migrations/seeds, once, before the others come up.
         # The entrypoint gates on RUN_MIGRATIONS; worker/webhooks set it false
         # so they don't race the schema.
@@ -111,7 +111,7 @@ services:
 
     worker:
         <<: *bench-app
-        image: kodus-ai-bench-worker:${BENCH_TAG:-latest}
+        image: codus-ai-bench-worker:${BENCH_TAG:-latest}
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -119,7 +119,7 @@ services:
             args:
                 - API_CLOUD_MODE=${API_CLOUD_MODE:-false}
                 - RELEASE_VERSION=${BENCH_TAG:-local}
-        container_name: kodus_worker_bench
+        container_name: codus_worker_bench
         environment:
             - COMPONENT_TYPE=worker
             - WORKER_ROLE=code-review
@@ -127,7 +127,7 @@ services:
             - RUN_MIGRATIONS=false
             - RUN_SEEDS=false
         depends_on:
-            kodus-api:
+            codus-api:
                 condition: service_started
             rabbitmq:
                 condition: service_healthy
@@ -143,7 +143,7 @@ services:
 
     webhooks:
         <<: *bench-app
-        image: kodus-ai-bench-webhooks:${BENCH_TAG:-latest}
+        image: codus-ai-bench-webhooks:${BENCH_TAG:-latest}
         build:
             context: .
             dockerfile: docker/Dockerfile
@@ -151,7 +151,7 @@ services:
             args:
                 - API_CLOUD_MODE=${API_CLOUD_MODE:-false}
                 - RELEASE_VERSION=${BENCH_TAG:-local}
-        container_name: kodus_webhooks_bench
+        container_name: codus_webhooks_bench
         environment:
             - COMPONENT_TYPE=webhook
             - API_CLOUD_MODE=${API_CLOUD_MODE:-false}
@@ -162,7 +162,7 @@ services:
         ports:
             - '${API_WEBHOOKS_PORT:-3332}:3332'
         depends_on:
-            kodus-api:
+            codus-api:
                 condition: service_started
             rabbitmq:
                 condition: service_healthy
@@ -184,13 +184,13 @@ services:
     # baked), so it picks up the droplet's .env.
     #----------------------------------------------------------------
     web:
-        image: kodus-ai-web-bench:${BENCH_TAG:-latest}
+        image: codus-ai-web-bench:${BENCH_TAG:-latest}
         build:
             context: .
             dockerfile: docker/Dockerfile.web
             args:
                 - RELEASE_VERSION=${BENCH_TAG:-local}
-        container_name: kodus_web_bench
+        container_name: codus_web_bench
         env_file:
             - path: ${ENV_FILE:-.env}
             - path: .env.local
@@ -201,11 +201,11 @@ services:
         ports:
             - '${WEB_PORT:-3000}:3000'
         depends_on:
-            kodus-api:
+            codus-api:
                 condition: service_started
         restart: unless-stopped
         networks:
-            - kodus-bench-net
+            - codus-bench-net
         healthcheck:
             test:
                 [
@@ -227,7 +227,7 @@ services:
         build:
             context: ./docker/rabbitMQ
             dockerfile: Dockerfile
-        container_name: kodus_rabbitmq_bench
+        container_name: codus_rabbitmq_bench
         hostname: ${RABBITMQ_HOSTNAME:-rabbitmq-local}
         environment:
             - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-dev}
@@ -237,7 +237,7 @@ services:
         volumes:
             - rabbitmq_bench:/var/lib/rabbitmq
         networks:
-            kodus-bench-net:
+            codus-bench-net:
                 aliases:
                     - rabbitmq-local
                     - rabbitmq
@@ -256,7 +256,7 @@ services:
 
     db_postgres:
         image: docker.io/pgvector/pgvector:pg16
-        container_name: kodus_postgres_bench
+        container_name: codus_postgres_bench
         environment:
             POSTGRES_USER: ${API_PG_DB_USERNAME}
             POSTGRES_PASSWORD: ${API_PG_DB_PASSWORD}
@@ -265,7 +265,7 @@ services:
             - pgdata_bench:/var/lib/postgresql/data
             - ./docker/postgres/initdb.d:/docker-entrypoint-initdb.d
         networks:
-            - kodus-bench-net
+            - codus-bench-net
         restart: unless-stopped
         healthcheck:
             test:
@@ -281,7 +281,7 @@ services:
 
     db_mongodb:
         image: docker.io/mongo:8
-        container_name: kodus_mongodb_bench
+        container_name: codus_mongodb_bench
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${API_MG_DB_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${API_MG_DB_PASSWORD}
@@ -289,7 +289,7 @@ services:
         volumes:
             - mongodbdata_bench:/data/db
         networks:
-            - kodus-bench-net
+            - codus-bench-net
         restart: unless-stopped
         healthcheck:
             test:
@@ -311,6 +311,6 @@ volumes:
 networks:
     # Local (NOT external) so a fresh droplet boots without a pre-created
     # network. One bench stack per droplet, so a single bridge is enough.
-    kodus-bench-net:
+    codus-bench-net:
         driver: bridge
-        name: kodus-bench-net
+        name: codus-bench-net

@@ -6,13 +6,13 @@ import {
     DialogTitle,
 } from "@components/ui/dialog";
 import { magicModal } from "@components/ui/magic-modal";
-import { KodyRule } from "@services/kodyRules/types";
+import { CodyRule } from "@services/codyRules/types";
 
-export const KodyRulesInheritedRulesModal = ({
+export const CodyRulesInheritedRulesModal = ({
     inheritedRules,
     repoName,
 }: {
-    inheritedRules: KodyRule[];
+    inheritedRules: CodyRule[];
     repoName: string;
 }) => {
     return (

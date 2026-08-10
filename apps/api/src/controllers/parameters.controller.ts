@@ -52,7 +52,7 @@ import {
 import { DeleteRepositoryCodeReviewParameterUseCase } from '@libs/code-review/application/use-cases/configuration/delete-repository-code-review-parameter.use-case';
 import { CentralizedConfigDownloadUseCase } from '@libs/centralized-config/application/use-cases/centralized-config-download.use-case';
 import { CentralizedConfigInitUseCase } from '@libs/centralized-config/application/use-cases/centralized-config-init.use-case';
-import { GenerateKodusConfigFileUseCase } from '@libs/code-review/application/use-cases/configuration/generate-kodus-config-file.use-case';
+import { GenerateCodusConfigFileUseCase } from '@libs/code-review/application/use-cases/configuration/generate-codus-config-file.use-case';
 import { GetCodeReviewParameterUseCase } from '@libs/code-review/application/use-cases/configuration/get-code-review-parameter.use-case';
 import { ListCodeReviewAutomationLabelsWithStatusUseCase } from '@libs/code-review/application/use-cases/configuration/list-code-review-automation-labels-with-status.use-case';
 import { UpdateCodeReviewParameterRepositoriesUseCase } from '@libs/code-review/application/use-cases/configuration/update-code-review-parameter-repositories-use-case';
@@ -84,7 +84,7 @@ export class ParametersController {
         private readonly findByKeyParametersUseCase: FindByKeyParametersUseCase,
         private readonly updateOrCreateCodeReviewParameterUseCase: UpdateOrCreateCodeReviewParameterUseCase,
         private readonly updateCodeReviewParameterRepositoriesUseCase: UpdateCodeReviewParameterRepositoriesUseCase,
-        private readonly generateKodusConfigFileUseCase: GenerateKodusConfigFileUseCase,
+        private readonly generateCodusConfigFileUseCase: GenerateCodusConfigFileUseCase,
         private readonly deleteRepositoryCodeReviewParameterUseCase: DeleteRepositoryCodeReviewParameterUseCase,
         private readonly previewPrSummaryUseCase: PreviewPrSummaryUseCase,
         private readonly listCodeReviewAutomationLabelsWithStatusUseCase: ListCodeReviewAutomationLabelsWithStatusUseCase,
@@ -360,7 +360,7 @@ export class ParametersController {
         return await this.getDefaultConfigUseCase.execute();
     }
 
-    @Get('/generate-kodus-config-file')
+    @Get('/generate-codus-config-file')
     @ApiQuery({ name: 'teamId', type: String, required: true })
     @ApiQuery({ name: 'repositoryId', type: String, required: false })
     @ApiQuery({ name: 'directoryId', type: String, required: false })
@@ -372,21 +372,21 @@ export class ParametersController {
         }),
     )
     @ApiOperation({
-        summary: 'Generate Kodus config file',
+        summary: 'Generate Codus config file',
         description: 'Return a YAML config file for the repository/team.',
     })
     @ApiOkResponse({
         type: ApiYamlStringResponseDto,
         content: { 'application/x-yaml': {} },
     })
-    public async GenerateKodusConfigFile(
+    public async GenerateCodusConfigFile(
         @Res() response: Response,
         @Query('teamId') teamId: string,
         @Query('repositoryId') repositoryId?: string,
         @Query('directoryId') directoryId?: string,
     ) {
         const { yamlString } =
-            await this.generateKodusConfigFileUseCase.execute(
+            await this.generateCodusConfigFileUseCase.execute(
                 teamId,
                 repositoryId,
                 directoryId,
@@ -394,7 +394,7 @@ export class ParametersController {
 
         response.set({
             'Content-Type': 'application/x-yaml',
-            'Content-Disposition': 'attachment; filename=kodus-config.yml',
+            'Content-Disposition': 'attachment; filename=codus-config.yml',
         });
 
         return response.send(yamlString);
@@ -535,7 +535,7 @@ export class ParametersController {
     @ApiOperation({
         summary: 'Download centralized config ZIP',
         description:
-            "Download a ZIP containing the team's centralized kodus-config.yml files (global, per-repo and per-directory) ready to be placed in the central config repository.",
+            "Download a ZIP containing the team's centralized codus-config.yml files (global, per-repo and per-directory) ready to be placed in the central config repository.",
     })
     @ApiOkResponse({ content: { 'application/zip': {} } })
     public async downloadCentralizedConfig(

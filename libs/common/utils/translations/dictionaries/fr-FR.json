@@ -1,18 +1,18 @@
 {
     "reviewComment": {
-        "talkToKody": "Parlez à Kody en mentionnant @kody",
-        "feedback": "Cette suggestion a-t-elle été utile? Réagissez avec 👍 ou 👎 pour aider Kody à apprendre de cette interaction."
+        "talkToCody": "Parlez à Cody en mentionnant @cody",
+        "feedback": "Cette suggestion a-t-elle été utile? Réagissez avec 👍 ou 👎 pour aider Cody à apprendre de cette interaction."
     },
     "pullRequestFinishSummaryMarkdown": {
         "withComments": "## Revue de code terminée! 🔥\n\nLa revue de code a été complétée avec succès en fonction de vos configurations actuelles.\n\n",
-        "withoutComments": "# Revue de Kody terminée\n**Excellentes nouvelles!** 🎉\nAucun problème n'a été trouvé correspondant à vos configurations de revue actuelles.\n\nContinuez votre excellent travail! 🚀",
-        "withErrors": "## Revue de Code Non Terminée ⚠️\n\nLa revue a échoué avant que des suggestions puissent être générées.\n\n**Raison :** {{errorMessage}}\n\nAprès avoir corrigé le problème, commentez `@kody review` sur cette PR pour relancer la revue.\n\n",
-        "partialErrorsNotice": "\n\n> ⚠️ Remarque : certaines étapes de la revue n'ont pas pu être complétées lors de cette exécution, l'approbation automatique (lorsqu'elle est activée) a donc été ignorée. Consultez les détails sur {{dashboardUrl}} puis commentez `@kody review` sur cette PR pour réessayer une fois le problème résolu.\n"
+        "withoutComments": "# Revue de Cody terminée\n**Excellentes nouvelles!** 🎉\nAucun problème n'a été trouvé correspondant à vos configurations de revue actuelles.\n\nContinuez votre excellent travail! 🚀",
+        "withErrors": "## Revue de Code Non Terminée ⚠️\n\nLa revue a échoué avant que des suggestions puissent être générées.\n\n**Raison :** {{errorMessage}}\n\nAprès avoir corrigé le problème, commentez `@cody review` sur cette PR pour relancer la revue.\n\n",
+        "partialErrorsNotice": "\n\n> ⚠️ Remarque : certaines étapes de la revue n'ont pas pu être complétées lors de cette exécution, l'approbation automatique (lorsqu'elle est activée) a donc été ignorée. Consultez les détails sur {{dashboardUrl}} puis commentez `@cody review` sur cette PR pour réessayer une fois le problème résolu.\n"
     },
     "pullRequestSummaryMarkdown": {
-        "title": "Résumé de PR (Commentaire créé par [Kody](https://kodus.io) 🤖)",
+        "title": "Résumé de PR (Commentaire créé par [Cody](https://kodus.io) 🤖)",
         "codeReviewStarted": "Revue de code commencée! 🚀",
-        "description": "✋ Bonjour, équipe! Je regarde déjà les fichiers modifiés et commence la revue pour m'assurer que tout est en ordre. Si vous avez besoin de plus de détails, je suis là! [Kody](https://kodus.io)",
+        "description": "✋ Bonjour, équipe! Je regarde déjà les fichiers modifiés et commence la revue pour m'assurer que tout est en ordre. Si vous avez besoin de plus de détails, je suis là! [Cody](https://kodus.io)",
         "changedFiles": "📂 Fichiers modifiés",
         "filesTable": [
             "Fichier",
@@ -28,15 +28,15 @@
         "totalChanges": "Total des modifications"
     },
     "configReviewMarkdown": {
-        "title": "Guide de Kody: Utilisation et Configuration",
-        "interactingTitle": "Interaction avec Kody",
+        "title": "Guide de Cody: Utilisation et Configuration",
+        "interactingTitle": "Interaction avec Cody",
         "requestReview": "Demander une revue",
-        "requestReviewDesc": "Demandez à Kody de revoir votre PR manuellement en ajoutant un commentaire avec la commande `@kody start-review` à la racine de votre PR.",
+        "requestReviewDesc": "Demandez à Cody de revoir votre PR manuellement en ajoutant un commentaire avec la commande `@cody start-review` à la racine de votre PR.",
         "validateBusinessLogic": "Valider la Logique Métier",
-        "validateBusinessLogicDesc": "Demandez à Kody de valider votre code contre les règles métier en ajoutant un commentaire avec la commande `@kody -v business-logic`.",
+        "validateBusinessLogicDesc": "Demandez à Cody de valider votre code contre les règles métier en ajoutant un commentaire avec la commande `@cody -v business-logic`.",
         "provideFeedback": "Fournir des commentaires",
-        "provideFeedbackDesc": "Aidez Kody à apprendre et à s'améliorer en réagissant à ses commentaires avec un 👍 pour des suggestions utiles ou un 👎 si des améliorations sont nécessaires.",
-        "configurationTitle": "Configuration actuelle de Kody",
+        "provideFeedbackDesc": "Aidez Cody à apprendre et à s'améliorer en réagissant à ses commentaires avec un 👍 pour des suggestions utiles ou un 👎 si des améliorations sont nécessaires.",
+        "configurationTitle": "Configuration actuelle de Cody",
         "reviewOptionsTitle": "Options de revue",
         "reviewOptionsDesc": "Les options de revue suivantes sont activées ou désactivées:",
         "tableOptions": "Options",

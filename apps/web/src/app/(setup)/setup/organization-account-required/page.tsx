@@ -4,7 +4,7 @@ import { redirect, useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "@components/ui/avatar";
 import { Button } from "@components/ui/button";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Page } from "@components/ui/page";
 import { useSuspenseGetCodeReviewParameter } from "@services/parameters/hooks";
 import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react";
@@ -41,7 +41,7 @@ export default function App() {
                         </svg>
 
                         <p>
-                            Kody feels like having a senior dev reviewing every
+                            Cody feels like having a senior dev reviewing every
                             pull request—clear, actionable feedback on quality,
                             security, and performance, right in Git.
                         </p>
@@ -82,7 +82,7 @@ export default function App() {
                         </p>
 
                         <p className="text-text-secondary text-sm">
-                            Kodus only works when installed on a GitHub
+                            Codus only works when installed on a GitHub
                             organization.
                         </p>
                     </div>

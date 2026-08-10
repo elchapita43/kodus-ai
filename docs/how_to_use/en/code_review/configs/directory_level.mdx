@@ -7,7 +7,7 @@ description: "Target specific folders in your repo with custom code review setti
 
 Apply custom code review settings to specific folders in your repository. Ideal for monorepos where different areas have different standards or ownership.
 
-Kody selects a single config per PR: **Directory** → **Repository** → **Global**
+Cody selects a single config per PR: **Directory** → **Repository** → **Global**
 
 <Note>
   Learn how settings flow between levels in <a href="/how_to_use/en/code_review/configs/inheritance_overrides">Config Inheritance & Overrides</a>.
@@ -26,7 +26,7 @@ Kody selects a single config per PR: **Directory** → **Repository** → **Glob
 - **Two or more configured directories touched**: Escalates to repository config (or global if no repo config)
 
 <Note>
-  Kody uses one config per PR to keep reviews predictable. Mixing configs causes conflicts.
+  Cody uses one config per PR to keep reviews predictable. Mixing configs causes conflicts.
 </Note>
 
 ## Examples
@@ -55,5 +55,5 @@ Kody selects a single config per PR: **Directory** → **Repository** → **Glob
 2. Add directory entries and assign configurations
 3. Save changes
 
-If you also use `kodus-config.yml`, it overrides web settings (see Config Priority in General settings).
+If you also use `codus-config.yml`, it overrides web settings (see Config Priority in General settings).
 

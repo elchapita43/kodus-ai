@@ -63,7 +63,7 @@ export interface UsageByReviewResultContract extends BaseUsageContract {
     startedAt?: string;
 }
 
-/** Token spend grouped by process area (review, kody_rules, cross_file, …). */
+/** Token spend grouped by process area (review, cody_rules, cross_file, …). */
 export interface UsageByAreaResultContract extends BaseUsageContract {
     area: string;
 }

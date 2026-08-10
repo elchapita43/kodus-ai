@@ -35,12 +35,12 @@ describe('GitHubPublicPrService', () => {
                 { owner: 'microsoft', repo: 'vscode', prNumber: 240128 },
             ],
             [
-                '  https://github.com/kodus-ai/kodus-ai/pull/123  ',
-                { owner: 'kodus-ai', repo: 'kodus-ai', prNumber: 123 },
+                '  https://github.com/codus-ai/codus-ai/pull/123  ',
+                { owner: 'codus-ai', repo: 'codus-ai', prNumber: 123 },
             ],
             [
-                'https://github.com/kodus-ai/kodus-ai.git/pull/42',
-                { owner: 'kodus-ai', repo: 'kodus-ai', prNumber: 42 },
+                'https://github.com/codus-ai/codus-ai.git/pull/42',
+                { owner: 'codus-ai', repo: 'codus-ai', prNumber: 42 },
             ],
         ])('parses %s', (input, expected) => {
             expect(service.parseUrl(input)).toEqual(expected);
@@ -48,31 +48,31 @@ describe('GitHubPublicPrService', () => {
 
         it.each([
             'not a url',
-            'https://github.com/kodus-ai/kodus-ai',
-            'https://github.com/kodus-ai/kodus-ai/pull/abc',
-            'https://github.com/kodus-ai/kodus-ai/issues/1',
+            'https://github.com/codus-ai/codus-ai',
+            'https://github.com/codus-ai/codus-ai/pull/abc',
+            'https://github.com/codus-ai/codus-ai/issues/1',
             'https://github.com/onlyone/pull/1',
-            'https://github.com/kodus-ai/kodus-ai/pull/0',
+            'https://github.com/codus-ai/codus-ai/pull/0',
         ])('rejects %s', (input) => {
             expect(() => service.parseUrl(input)).toThrow(PublicPrFetchError);
         });
 
         it.each([
-            ['https://gitlab.com/kodus/kodus-ai/-/merge_requests/1', 'GitLab'],
+            ['https://gitlab.com/codus/codus-ai/-/merge_requests/1', 'GitLab'],
             [
                 'https://gitlab.com/group/sub/repo/-/merge_requests/42',
                 'GitLab',
             ],
             [
-                'https://bitbucket.org/kodus/kodus-ai/pull-requests/7',
+                'https://bitbucket.org/codus/codus-ai/pull-requests/7',
                 'Bitbucket',
             ],
             [
-                'https://dev.azure.com/kodus/proj/_git/repo/pullrequest/9',
+                'https://dev.azure.com/codus/proj/_git/repo/pullrequest/9',
                 'Azure DevOps',
             ],
             [
-                'https://kodus.visualstudio.com/proj/_git/repo/pullrequest/9',
+                'https://codus.visualstudio.com/proj/_git/repo/pullrequest/9',
                 'Azure DevOps',
             ],
             [

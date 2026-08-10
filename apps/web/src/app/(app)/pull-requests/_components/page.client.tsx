@@ -413,7 +413,7 @@ export function PullRequestsPageClient() {
                   key: "reviewed",
                   label: "Reviewed today",
                   sub: "today",
-                  hint: "Distinct PRs Kody reviewed today (UTC). Opens today's reviews — add a Status filter to narrow (e.g. failed).",
+                  hint: "Distinct PRs Cody reviewed today (UTC). Opens today's reviews — add a Status filter to narrow (e.g. failed).",
                   value: digest.reviewedToday,
                   tone: "text-success",
                   active: reviewedTodayActive,
@@ -424,7 +424,7 @@ export function PullRequestsPageClient() {
                   key: "awaiting",
                   label: "Awaiting review",
                   sub: "backlog",
-                  hint: "PRs Kody was triggered on but skipped and never reviewed — blocked by config (no license, BYOK, manual/paused cadence, ignored user). Current backlog, not today.",
+                  hint: "PRs Cody was triggered on but skipped and never reviewed — blocked by config (no license, BYOK, manual/paused cadence, ignored user). Current backlog, not today.",
                   // Backlog is a current total, not a "today" number — read it
                   // from facets (same source as the toggle's 665), so the card
                   // and the toggle never disagree.
@@ -441,7 +441,7 @@ export function PullRequestsPageClient() {
                   key: "attention",
                   label: "Needs attention",
                   sub: "total",
-                  hint: "Open PRs where Kody delivered a suggestion the author still hasn't applied — your actionable backlog (Kody verifies whether each suggestion was implemented). Click to see exactly these PRs; may lag until the next verification pass.",
+                  hint: "Open PRs where Cody delivered a suggestion the author still hasn't applied — your actionable backlog (Cody verifies whether each suggestion was implemented). Click to see exactly these PRs; may lag until the next verification pass.",
                   // Open PRs that still carry an unresolved delivered suggestion
                   // (implementationStatus ≠ implemented) — actionable, not
                   // "ever delivered a crit/high".
@@ -462,7 +462,7 @@ export function PullRequestsPageClient() {
                   key: "mine-attention",
                   label: "Needs my attention",
                   sub: "open",
-                  hint: "Your open PRs where Kody left a suggestion you haven't applied yet. Click to filter to just these.",
+                  hint: "Your open PRs where Cody left a suggestion you haven't applied yet. Click to filter to just these.",
                   value: facets.needsAttention ?? 0,
                   tone: "text-warning",
                   active: needsAttention === "true",
@@ -472,7 +472,7 @@ export function PullRequestsPageClient() {
                   key: "mine-reviewed",
                   label: "My reviewed PRs",
                   sub: "total",
-                  hint: "All of your PRs Kody has already reviewed. Click to see the full queue.",
+                  hint: "All of your PRs Cody has already reviewed. Click to see the full queue.",
                   value: facets.mine ?? 0,
                   tone: "text-success",
                   active: needsAttention !== "true",

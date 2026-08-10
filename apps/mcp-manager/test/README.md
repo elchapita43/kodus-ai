@@ -5,7 +5,7 @@
 ![Node](https://img.shields.io/badge/Node.js-v18+-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
 
-> Automated testing system for **Kodus MCP Manager** with PostgreSQL and smart mocks.
+> Automated testing system for **Codus MCP Manager** with PostgreSQL and smart mocks.
 
 ---
 
@@ -46,7 +46,7 @@ The `yarn test` command automatically executes:
 |------|-------------|--------|
 | 🐳 | Check/start PostgreSQL container | ✅ |
 | ⏳ | Wait for database to be ready | ✅ |
-| 🗄️ | Create test database (`kodus_mcp_test`) | ✅ |
+| 🗄️ | Create test database (`codus_mcp_test`) | ✅ |
 | 🔄 | Run migrations on test database | ✅ |
 | 🧪 | Execute complete test suite | ✅ |
 | 🧹 | Clean up test database | ✅ |
@@ -61,7 +61,7 @@ The `yarn test` command automatically executes:
 
 ### 🗃️ Database
 - **Container**: Same PostgreSQL as development
-- **Database**: `kodus_mcp_test` (isolated and temporary)
+- **Database**: `codus_mcp_test` (isolated and temporary)
 - **Migrations**: Executed automatically
 - **Cleanup**: Database removed after tests
 
@@ -73,12 +73,12 @@ The `yarn test` command automatically executes:
 |----------|-------|-------------|
 | `NODE_ENV` | `test` | Execution environment |
 | `JWT_SECRET` | `test-secret-key` | JWT key for tests |
-| `MCP_PROVIDERS` | `kodusmcp,custom` | Enabled providers |
+| `MCP_PROVIDERS` | `codusmcp,custom` | Enabled providers |
 | `DB_HOST` | `localhost` | PostgreSQL host |
 | `DB_PORT` | `5432` | PostgreSQL port |
-| `DB_USERNAME` | `kodus` | Database username |
-| `DB_PASSWORD` | `kodus123` | Database password |
-| `DB_DATABASE` | `kodus_mcp_test` | Test database name |
+| `DB_USERNAME` | `codus` | Database username |
+| `DB_PASSWORD` | `codus123` | Database password |
+| `DB_DATABASE` | `codus_mcp_test` | Test database name |
 
 ---
 
@@ -119,7 +119,7 @@ docker-compose --version
 |---------|-------------|
 | 🎯 **Simplicity** | Uses the same PostgreSQL container as development |
 | ⚡ **Efficiency** | No need to start additional containers |
-| 🔒 **Isolation** | Separate test database (`kodus_mcp_test`) |
+| 🔒 **Isolation** | Separate test database (`codus_mcp_test`) |
 | 🧹 **Cleanup** | Database created and removed automatically |
 | 🔄 **Flexibility** | Can run alongside development |
 | 📊 **Coverage** | Unit + integration tests |
@@ -151,7 +151,7 @@ sudo systemctl stop postgresql
 **🔴 "Migrations failed"**
 ```bash
 # Clean test database manually
-docker-compose exec postgres psql -U kodus -c "DROP DATABASE IF EXISTS kodus_mcp_test;"
+docker-compose exec postgres psql -U codus -c "DROP DATABASE IF EXISTS codus_mcp_test;"
 ```
 
 ---

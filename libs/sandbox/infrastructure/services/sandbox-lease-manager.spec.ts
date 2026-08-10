@@ -602,7 +602,7 @@ describe('SandboxLeaseManager', () => {
         const prKey = '7e2e97b8-aefa-422e-92d4-30b378c0332e:repo:201';
 
         // Scenario: worker A scheduled a kill (lease has killAt set). Worker
-        // B receives a new @kody and calls acquire — must clear killAt
+        // B receives a new @cody and calls acquire — must clear killAt
         // atomically so the cron doesn't kill the sandbox under us.
         leaseRepo.upsertAcquire.mockResolvedValue({
             _id: prKey,
@@ -625,7 +625,7 @@ describe('SandboxLeaseManager', () => {
     // ─── Test 9e: stale connect → delete lease + cold-start ───────────────
 
     it('joiner falls back to cold-start when E2B sandbox no longer exists', async () => {
-        // Scenario: review released and the idle-kill fired, but a slow @kody
+        // Scenario: review released and the idle-kill fired, but a slow @cody
         // arrives just after — the lease doc may still exist for a tick.
         // Sandbox.connect throws "sandbox not found" → we delete the stale
         // lease and re-acquire as creator with a fresh sandbox.
@@ -808,7 +808,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-abc123',
+                'codus-sandbox-abc123',
             );
 
             leaseRepo.upsertAcquire.mockResolvedValue({
@@ -880,7 +880,7 @@ describe('SandboxLeaseManager', () => {
             const prKey = '7e2e97b8-aefa-422e-92d4-30b378c0332e:repo:43';
             const os = require('os');
             const path = require('path');
-            const oldSandboxId = path.join(os.tmpdir(), 'kodus-sandbox-old');
+            const oldSandboxId = path.join(os.tmpdir(), 'codus-sandbox-old');
 
             leaseRepo.claimCleanup.mockResolvedValue(null);
 
@@ -942,7 +942,7 @@ describe('SandboxLeaseManager', () => {
             const prKey = '7e2e97b8-aefa-422e-92d4-30b378c0332e:repo:44';
             const os = require('os');
             const path = require('path');
-            const localSandboxId = path.join(os.tmpdir(), 'kodus-sandbox-race');
+            const localSandboxId = path.join(os.tmpdir(), 'codus-sandbox-race');
 
             leaseRepo.upsertAcquire.mockResolvedValue({
                 _id: prKey,
@@ -1007,7 +1007,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-invalidate-race',
+                'codus-sandbox-invalidate-race',
             );
 
             leaseRepo.findByPrKey
@@ -1034,7 +1034,7 @@ describe('SandboxLeaseManager', () => {
             const prKey = '7e2e97b8-aefa-422e-92d4-30b378c0332e:repo:45';
             const os = require('os');
             const path = require('path');
-            const localSandboxId = path.join(os.tmpdir(), 'kodus-sandbox-fail');
+            const localSandboxId = path.join(os.tmpdir(), 'codus-sandbox-fail');
             const cloneParams = {
                 cloneUrl: 'https://github.com/org/repo.git',
                 authToken: 'token',
@@ -1101,7 +1101,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-orphan',
+                'codus-sandbox-orphan',
             );
             const cloneParams = {
                 cloneUrl: 'https://github.com/org/repo.git',
@@ -1161,7 +1161,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-invalidated',
+                'codus-sandbox-invalidated',
             );
 
             leaseRepo.upsertAcquire.mockResolvedValue({
@@ -1197,7 +1197,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-failed',
+                'codus-sandbox-failed',
             );
 
             leaseRepo.upsertAcquire.mockResolvedValue({
@@ -1227,7 +1227,7 @@ describe('SandboxLeaseManager', () => {
             const path = require('path');
             const localSandboxId = path.join(
                 os.tmpdir(),
-                'kodus-sandbox-mid-create',
+                'codus-sandbox-mid-create',
             );
             const cloneParams = {
                 cloneUrl: 'https://github.com/org/repo.git',
@@ -1291,7 +1291,7 @@ describe('SandboxLeaseManager', () => {
                     leaseCount: 1,
                     state: 'READY',
                     cleanupStatus: 'in_progress',
-                    sandboxId: '/tmp/kodus-sandbox-cleanup-wait',
+                    sandboxId: '/tmp/codus-sandbox-cleanup-wait',
                     createdAt: new Date(),
                     expiresAt: new Date(Date.now() + 30 * 60 * 1000),
                 } as any)
@@ -1340,7 +1340,7 @@ describe('SandboxLeaseManager', () => {
                     leaseCount: 1,
                     state: 'READY',
                     cleanupStatus: 'in_progress',
-                    sandboxId: '/tmp/kodus-sandbox-inprogress-undo',
+                    sandboxId: '/tmp/codus-sandbox-inprogress-undo',
                     createdAt: new Date(),
                     expiresAt: new Date(Date.now() + 30 * 60 * 1000),
                 } as any)
@@ -1811,7 +1811,7 @@ describe('SandboxLeaseReaperService', () => {
         const configService = makeMockConfigService('test-e2b-key');
         const os = require('os');
         const path = require('path');
-        const localSandboxId = path.join(os.tmpdir(), 'kodus-sandbox-stale');
+        const localSandboxId = path.join(os.tmpdir(), 'codus-sandbox-stale');
 
         leaseRepo.findExpired.mockResolvedValue([
             {
@@ -1868,7 +1868,7 @@ describe('SandboxLeaseReaperService', () => {
         const configService = makeMockConfigService('test-e2b-key');
         const os = require('os');
         const path = require('path');
-        const localSandboxId = path.join(os.tmpdir(), 'kodus-sandbox-race');
+        const localSandboxId = path.join(os.tmpdir(), 'codus-sandbox-race');
 
         leaseRepo.findReadyToKill.mockResolvedValue([
             {

@@ -1,6 +1,6 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  *
  * This file is generated at Docker image build time.
  * Once compiled, the value of `API_CLOUD_MODE` is hardcoded and cannot be changed using .env,

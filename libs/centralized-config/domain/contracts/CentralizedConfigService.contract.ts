@@ -1,9 +1,9 @@
-import { KodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
+import { CodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import {
-    IKodyRule,
-    KodyRulesType,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRulesType,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { DeepPartial } from 'typeorm';
 
 export const CENTRALIZED_CONFIG_SERVICE_TOKEN =
@@ -16,14 +16,14 @@ export interface IConfigFileMeta {
     directoryPaths?: string[];
 }
 
-export interface IKodyRuleFileMeta {
-    centralizedDirectoryPath: string; // Path in centralized repo, e.g., "org-a/.kody-rules/memories"
+export interface ICodyRuleFileMeta {
+    centralizedDirectoryPath: string; // Path in centralized repo, e.g., "org-a/.cody-rules/memories"
     repositoryId?: string; // Target repository ID or undefined for global
     directoryPath?: string; // Target directory path (canonical: first folder of the group) or undefined for repo-level
     directoryPaths?: string[]; // All folder paths of the directory group when the rule lives inside one
-    ruleType: KodyRulesType; // MEMORY or STANDARD based on subdirectory
-    ruleFilePath: string; // Full path in centralized repo, e.g., "org-a/.kody-rules/memories/logging.yml"
-    path: string; // Canonical centralized source path for DB tracking, e.g., "org-a/.kody-rules/memories/logging.yml"
+    ruleType: CodyRulesType; // MEMORY or STANDARD based on subdirectory
+    ruleFilePath: string; // Full path in centralized repo, e.g., "org-a/.cody-rules/memories/logging.yml"
+    path: string; // Canonical centralized source path for DB tracking, e.g., "org-a/.cody-rules/memories/logging.yml"
 }
 
 export interface ICentralizedConfigService {
@@ -46,7 +46,7 @@ export interface ICentralizedConfigService {
     ): Promise<{ name: string; id: string }>;
 
     /**
-     * Discovers all kodus-config.yml files in the centralized config repository
+     * Discovers all codus-config.yml files in the centralized config repository
      */
     discoverConfigFiles(params: {
         organizationAndTeamData: OrganizationAndTeamData;
@@ -60,7 +60,7 @@ export interface ICentralizedConfigService {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { name: string; id: string };
         dir?: string;
-    }): Promise<KodusConfigFile | null>;
+    }): Promise<CodusConfigFile | null>;
 
     /**
      * Synchronizes config files by updating parameters based on discovered files
@@ -97,28 +97,28 @@ export interface ICentralizedConfigService {
     }>;
 
     /**
-     * Discovers all .kody-rules YAML files in the centralized config repository
+     * Discovers all .cody-rules YAML files in the centralized config repository
      */
-    discoverKodyRulesFiles(params: {
+    discoverCodyRulesFiles(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { name: string; id: string };
-    }): Promise<IKodyRuleFileMeta[]>;
+    }): Promise<ICodyRuleFileMeta[]>;
 
     /**
-     * Fetches and parses a Kody rule file from the centralized repository
+     * Fetches and parses a Cody rule file from the centralized repository
      */
-    fetchKodyRuleFile(params: {
+    fetchCodyRuleFile(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { name: string; id: string };
         filePath: string;
-    }): Promise<DeepPartial<IKodyRule> | null>;
+    }): Promise<DeepPartial<ICodyRule> | null>;
 
     /**
-     * Synchronizes Kody rules from centralized repository to target scopes
+     * Synchronizes Cody rules from centralized repository to target scopes
      */
-    synchronizeKodyRules(params: {
+    synchronizeCodyRules(params: {
         organizationAndTeamData: OrganizationAndTeamData;
-        ruleFiles: IKodyRuleFileMeta[];
+        ruleFiles: ICodyRuleFileMeta[];
         actor: {
             organizationId: string;
             source: string;
@@ -133,11 +133,11 @@ export interface ICentralizedConfigService {
     }>;
 
     /**
-     * Removes stale Kody rules that are no longer present in centralized repository
+     * Removes stale Cody rules that are no longer present in centralized repository
      */
-    removeStaleKodyRules(params: {
+    removeStaleCodyRules(params: {
         organizationAndTeamData: OrganizationAndTeamData;
-        ruleFiles: IKodyRuleFileMeta[];
+        ruleFiles: ICodyRuleFileMeta[];
         actor: {
             organizationId: string;
             source: string;

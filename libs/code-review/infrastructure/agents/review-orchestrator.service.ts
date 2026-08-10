@@ -5,12 +5,12 @@ import {
     CodeSuggestion,
     ReviewOptions,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { BugAgentProvider } from '@libs/code-review/infrastructure/agents/providers/bug-agent.provider';
 import { SecurityAgentProvider } from '@libs/code-review/infrastructure/agents/providers/security-agent.provider';
 import { PerformanceAgentProvider } from '@libs/code-review/infrastructure/agents/providers/performance-agent.provider';
 import { GeneralistAgentProvider } from '@libs/code-review/infrastructure/agents/providers/generalist-agent.provider';
-import { KodyRulesAgentProvider } from '@libs/code-review/infrastructure/agents/providers/kody-rules-agent.provider';
+import { CodyRulesAgentProvider } from '@libs/code-review/infrastructure/agents/providers/cody-rules-agent.provider';
 import {
     ReviewAgentInput,
     ReviewAgentOutput,
@@ -22,7 +22,7 @@ import {
 
 export interface OrchestratorInput extends ReviewAgentInput {
     reviewOptions: ReviewOptions;
-    kodyRules?: Partial<IKodyRule>[];
+    codyRules?: Partial<ICodyRule>[];
 }
 
 export interface OrchestratorAgentFailure {
@@ -74,14 +74,14 @@ export class ReviewOrchestratorService {
         'bug': 4,
         'security': 3,
         'performance': 3,
-        'kody-rules': 4,
+        'cody-rules': 4,
     };
     private static readonly NORMAL_MODE_MAX_STEPS: Record<string, number> = {
         'generalist': 20,
         'bug': 20,
         'security': 12,
         'performance': 12,
-        'kody-rules': 20,
+        'cody-rules': 20,
     };
     private static readonly DEEP_MODE_MAX_STEPS = 100;
 
@@ -91,12 +91,12 @@ export class ReviewOrchestratorService {
         private readonly performanceAgent: PerformanceAgentProvider,
         private readonly generalistAgent: GeneralistAgentProvider,
         @Optional()
-        private readonly kodyRulesAgent?: KodyRulesAgentProvider,
+        private readonly codyRulesAgent?: CodyRulesAgentProvider,
     ) {}
 
     async execute(input: OrchestratorInput): Promise<OrchestratorOutput> {
         const startTime = Date.now();
-        const { reviewOptions, kodyRules, ...agentInput } = input;
+        const { reviewOptions, codyRules, ...agentInput } = input;
 
         // Determine which agents to run based on review options
         const agentTasks: Array<{
@@ -142,15 +142,15 @@ export class ReviewOrchestratorService {
             });
         }
 
-        // Add Kody Rules agent if there are active standard rules
-        if (this.kodyRulesAgent && kodyRules && kodyRules.length > 0) {
+        // Add Cody Rules agent if there are active standard rules
+        if (this.codyRulesAgent && codyRules && codyRules.length > 0) {
             agentTasks.push({
-                name: 'kody-rules',
+                name: 'cody-rules',
                 provider: {
                     execute: (inp: ReviewAgentInput) =>
-                        this.kodyRulesAgent!.execute({
+                        this.codyRulesAgent!.execute({
                             ...inp,
-                            kodyRules,
+                            codyRules,
                         }),
                 },
             });

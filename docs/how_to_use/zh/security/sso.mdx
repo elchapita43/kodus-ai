@@ -1,11 +1,11 @@
 ---
 title: "单点登录"
-description: "启用单点登录(SSO)以安全高效地访问 Kodus。"
+description: "启用单点登录(SSO)以安全高效地访问 Codus。"
 ---
 
 ## 概述
 
-单点登录(SSO)允许您通过单一身份提供商管理对 Kodus 的访问,简化身份验证并增强安全性。
+单点登录(SSO)允许您通过单一身份提供商管理对 Codus 的访问,简化身份验证并增强安全性。
 
 ## 入门
 
@@ -23,8 +23,8 @@ description: "启用单点登录(SSO)以安全高效地访问 Kodus。"
         </Info>
     </Step>
 
-    <Step title="在 IdP 中将 Kodus 配置为 SP">
-        通过提供我们的实体 ID(默认为 `kodus-orchestrator`)和 SSO 设置页面中找到的组织回调 URL,在 IdP 中将 Kodus 配置为 SP。
+    <Step title="在 IdP 中将 Codus 配置为 SP">
+        通过提供我们的实体 ID(默认为 `codus-orchestrator`)和 SSO 设置页面中找到的组织回调 URL,在 IdP 中将 Codus 配置为 SP。
 
         确保名称 ID 格式设置为电子邮件。
 
@@ -34,7 +34,7 @@ description: "启用单点登录(SSO)以安全高效地访问 Kodus。"
     </Step>
 
     <Step title="启用并测试 SSO">
-        在 Kodus 中启用 SSO 并通过注销然后重新登录来测试配置。当尝试使用与 IdP 关联的电子邮件域登录时,您将可以选择通过 SSO 登录。
+        在 Codus 中启用 SSO 并通过注销然后重新登录来测试配置。当尝试使用与 IdP 关联的电子邮件域登录时,您将可以选择通过 SSO 登录。
     </Step>
 
 </Steps>
@@ -43,7 +43,7 @@ description: "启用单点登录(SSO)以安全高效地访问 Kodus。"
 
 ### 映射属性
 
-您可以将以下属性从 IdP 映射到 Kodus 用户,改善用户体验。
+您可以将以下属性从 IdP 映射到 Codus 用户,改善用户体验。
 
 -   名字,映射到 `firstName`
 -   姓氏,映射到 `lastName`

@@ -26,10 +26,10 @@ function ReviewAutoApprovedEmail({
 }: ReviewAutoApprovedEmailProps) {
     return (
         <BrandLayout
-            preview={`Kody auto-approved a pull request in ${repoName}`}>
+            preview={`Cody auto-approved a pull request in ${repoName}`}>
             <Heading style={baseHeading}>Pull request auto-approved</Heading>
             <Text style={baseText}>
-                Kody auto-approved a pull request in <strong>{repoName}</strong>{' '}
+                Cody auto-approved a pull request in <strong>{repoName}</strong>{' '}
                 — it met your configured approval criteria.
             </Text>
             <Section style={{ margin: '24px 0' }}>

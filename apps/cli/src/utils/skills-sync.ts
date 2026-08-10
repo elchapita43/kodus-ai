@@ -15,11 +15,11 @@ import { buildSkillSyncTargets } from './skills-sync-targets.js';
 import { type BundledSkillDocument, readBundledSkills } from './skills.js';
 
 export const DEFAULT_SYNC_SKILL_NAMES = [
-    'kodus-review',
-    'kodus-pr-suggestions-resolver',
-    'kodus-business-rules-validation',
-    'kodus-kody-rules',
-    'kodus-centralized-config',
+    'codus-review',
+    'codus-pr-suggestions-resolver',
+    'codus-business-rules-validation',
+    'codus-cody-rules',
+    'codus-centralized-config',
 ] as const;
 
 const LEGACY_BUSINESS_RULES_NAME = 'business-rules-validation';

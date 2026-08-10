@@ -225,7 +225,7 @@ export default function MarketingSurveyPage() {
                             </Heading>
                             <span className="text-text-secondary text-sm">
                                 Select the option that best describes how you
-                                found Kody.
+                                found Cody.
                             </span>
                         </div>
 
@@ -251,7 +251,7 @@ export default function MarketingSurveyPage() {
                                 What are you looking to solve?
                             </Heading>
                             <span className="text-text-secondary text-sm">
-                                Select your primary goal for using Kody.
+                                Select your primary goal for using Cody.
                             </span>
                         </div>
 

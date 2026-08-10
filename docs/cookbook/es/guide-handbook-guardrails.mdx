@@ -1,16 +1,16 @@
 ---
 title: "Convierte tu documento de mejores prácticas en reglas de revisión"
-description: "Transforma tu manual de ingeniería en Kody Rules activas con plugins MCP opcionales."
+description: "Transforma tu manual de ingeniería en Cody Rules activas con plugins MCP opcionales."
 icon: "shield-check"
 ---
 
 ## Por qué esta guía es importante
 
-Todos los equipos de ingeniería tienen en algún lugar un documento de "mejores prácticas". El problema es que las sugerencias del IDE no lo leen, los revisores olvidan los matices y el documento pierde autoridad progresivamente. Esta guía muestra cómo convertir tu manual en reglas activas para que Kody las aplique automáticamente y cite la sección relevante cada vez que el código se desvíe.
+Todos los equipos de ingeniería tienen en algún lugar un documento de "mejores prácticas". El problema es que las sugerencias del IDE no lo leen, los revisores olvidan los matices y el documento pierde autoridad progresivamente. Esta guía muestra cómo convertir tu manual en reglas activas para que Cody las aplique automáticamente y cite la sección relevante cada vez que el código se desvíe.
 
 Nos centraremos en dos elementos fundamentales:
 
-- [Kody Rules](/how_to_use/es/code_review/configs/kody_rules) – codifica cada punto de política como verificaciones deterministas a nivel de archivo o de PR.
+- [Cody Rules](/how_to_use/es/code_review/configs/cody_rules) – codifica cada punto de política como verificaciones deterministas a nivel de archivo o de PR.
 - [Plugins personalizados](/cookbook/es/custom-plugin-install) – obtiene estándares de servidores MCP remotos cuando la fuente de verdad vive fuera de Git.
 
 Sigue el flujo y cualquier repositorio puede evolucionar de "PDF del manual" a "paquete de políticas vivas".
@@ -18,7 +18,7 @@ Sigue el flujo y cualquier repositorio puede evolucionar de "PDF del manual" a "
 
 ## Lista de verificación previa
 
-- Tienes permiso para editar **Configuración de Code Review → Kody Rules**.
+- Tienes permiso para editar **Configuración de Code Review → Cody Rules**.
 - El paquete de políticas vive en el repositorio (p. ej., `docs/engineering-standards.md`). Si el tuyo está en otra ruta, ajusta en consecuencia. Si está en Notion, Confluence o Google Docs, planea exponerlo a través de un endpoint MCP remoto.
 - Sabes qué temas deben evaluarse a nivel de archivo (controladores, configs) versus a nivel de PR (feature flags, narrativas de despliegue, arquitectura).
 
@@ -28,7 +28,7 @@ Sigue el flujo y cualquier repositorio puede evolucionar de "PDF del manual" a "
 
 ## Fase 1 – Da forma a un paquete de políticas compatible con reglas
 
-1. Crea o reutiliza un archivo markdown como `docs/engineering-standards.md`. El único requisito: Kody debe poder referenciarlo mediante `@file:...`.
+1. Crea o reutiliza un archivo markdown como `docs/engineering-standards.md`. El único requisito: Cody debe poder referenciarlo mediante `@file:...`.
 2. Organiza el contenido en puntos cortos y verificables:
 
 ```md
@@ -75,9 +75,9 @@ Only flag code that clearly violates those bullets. If the section is missing, s
 </Callout>
 
 
-## Fase 3 – Traduce las secciones a Kody Rules
+## Fase 3 – Traduce las secciones a Cody Rules
 
-Abre **Configuración de Code Review → Kody Rules** y mapea cada sección de política al ámbito apropiado.
+Abre **Configuración de Code Review → Cody Rules** y mapea cada sección de política al ámbito apropiado.
 
 | Sección de política    | Tipo de regla | Ejemplo de ámbito                     | Severidad |
 | ---------------------- | ------------- | ------------------------------------- | --------- |
@@ -117,26 +117,26 @@ Use @MCP:policy_pack.getSection({"id":"security"}) to fetch the latest restricte
 ```
 
 <Info>
-  Las reglas ya comprenden variables (`fileDiff`, `pr_files_diff`, etc.), referencias a archivos e invocaciones MCP. Consulta la matriz completa en la [guía de Kody Rules](/how_to_use/es/code_review/configs/kody_rules).
+  Las reglas ya comprenden variables (`fileDiff`, `pr_files_diff`, etc.), referencias a archivos e invocaciones MCP. Consulta la matriz completa en la [guía de Cody Rules](/how_to_use/es/code_review/configs/cody_rules).
 </Info>
 
 
 ## Fase 4 – Refleja estándares externos via MCP (opcional)
 
-A veces el manual (o parte de él) debe permanecer en Notion, Confluence, Google Docs u otro sistema. Aun así puedes pasárselo a Kody:
+A veces el manual (o parte de él) debe permanecer en Notion, Confluence, Google Docs u otro sistema. Aun así puedes pasárselo a Cody:
 
 1. Construye o adopta un endpoint MCP remoto que exponga `listSections()` y `getSection(id)`.
 2. Instálalo mediante **Agregar Plugin Personalizado**. Sigue la [guía de plugins personalizados](/cookbook/es/custom-plugin-install) para el flujo exacto.
 3. Reemplaza las referencias `@file` por `@MCP:policy_pack.getSection({"id":"architecture"})`.
 4. Almacena en caché las respuestas en el servidor MCP para que múltiples reglas compartan el payload por revisión.
 
-Ahora Kody aplica los mismos estándares independientemente de dónde viva el documento.
+Ahora Cody aplica los mismos estándares independientemente de dónde viva el documento.
 
 ## Fase 5 – Prueba, observa y mantén vivo el sistema
 
 <AccordionGroup>
   <Accordion title="Crea un PR de verificación">
-    Crea un PR desechable que infrinja cada sección. Menciona @kody y verifica que los comentarios en línea y a nivel de PR citen los puntos correctos.
+    Crea un PR desechable que infrinja cada sección. Menciona @cody y verifica que los comentarios en línea y a nivel de PR citen los puntos correctos.
   </Accordion>
   <Accordion title="Ajusta el ruido y la severidad">
     Durante el despliegue, observa con qué frecuencia se activa cada regla. Ajusta los globs de archivos, añade exclusiones o modifica la severidad hasta que la señal cumpla las expectativas.
@@ -150,6 +150,6 @@ Ahora Kody aplica los mismos estándares independientemente de dónde viva el do
 
 - [ ] `docs/engineering-standards.md` (o equivalente MCP) existe con puntos etiquetados y analizables.
 - [ ] Cada regla referencia el paquete de políticas mediante `@file` o `@MCP`, asegurando que lee el texto más reciente.
-- [ ] Kody Rules a nivel de archivo y de PR cubren tus secciones críticas.
+- [ ] Cody Rules a nivel de archivo y de PR cubren tus secciones críticas.
 - [ ] El plugin MCP opcional refleja estándares fuera del repositorio cuando es necesario.
 - [ ] Un PR de prueba confirmó los comentarios en línea y el resumen del PR antes del despliegue general.

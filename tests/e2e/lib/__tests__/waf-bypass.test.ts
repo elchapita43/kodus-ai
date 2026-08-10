@@ -11,10 +11,10 @@ test("wafBypassHeader: injects only for qa.*.kodus.io hosts", () => {
     try {
         assert.deepEqual(
             wafBypassHeader("https://qa.web.kodus.io/api/proxy/api/health"),
-            { "x-kodus-e2e": "s3cret" },
+            { "x-codus-e2e": "s3cret" },
         );
         assert.deepEqual(wafBypassHeader("https://qa.api.kodus.io/x"), {
-            "x-kodus-e2e": "s3cret",
+            "x-codus-e2e": "s3cret",
         });
         // NEVER to third parties or prod
         assert.deepEqual(wafBypassHeader("https://api.github.com/repos/x"), {});

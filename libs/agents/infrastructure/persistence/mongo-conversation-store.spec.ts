@@ -85,7 +85,7 @@ describe('MongoConversationStore', () => {
             // Insert-only identity / created stamps.
             expect(update.$setOnInsert['sessionData.threadId']).toBe('thread-1');
             expect(update.$setOnInsert['sessionData.tenantId']).toBe(
-                'kodus-agent-conversation',
+                'codus-agent-conversation',
             );
             expect(update.$setOnInsert.id).toBe(
                 update.$setOnInsert['sessionData.sessionId'],

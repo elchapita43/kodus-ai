@@ -2,7 +2,7 @@
 #
 # QA variant of benchmark-evaluate.sh.
 #
-# Extracts candidates by fetching Kodus review comments directly from GitHub
+# Extracts candidates by fetching Codus review comments directly from GitHub
 # (gh api), with NO local infra touching (no Mongo, no Postgres, no docker).
 # Then runs the same judge-sonnet.js over golden vs candidates.
 #
@@ -16,10 +16,10 @@
 #
 # Examples:
 #   ./benchmark-evaluate-qa.sh qa-smoke --bot malinosqui
-#   ./benchmark-evaluate-qa.sh qa-smoke --bot "kodus-qa[bot]"
+#   ./benchmark-evaluate-qa.sh qa-smoke --bot "codus-qa[bot]"
 #
 # The --bot flag is required (author login whose comments count as the QA
-# review). KODUS_BOT_LOGIN env var is accepted as fallback when --bot is
+# review). CODUS_BOT_LOGIN env var is accepted as fallback when --bot is
 # omitted.
 #
 # Optional env:
@@ -67,7 +67,7 @@ fi
 RUN_NAME="$1"
 shift
 EXTRACT_ONLY=false
-BOT_LOGIN="${KODUS_BOT_LOGIN:-}"
+BOT_LOGIN="${CODUS_BOT_LOGIN:-}"
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -97,12 +97,12 @@ done
 
 if [ -z "$BOT_LOGIN" ]; then
   echo "Error: --bot <github-login> is required"
-  echo "  (or set KODUS_BOT_LOGIN env var)"
+  echo "  (or set CODUS_BOT_LOGIN env var)"
   echo "Example: ./benchmark-evaluate-qa.sh $RUN_NAME --bot malinosqui"
   exit 1
 fi
 
-export KODUS_BOT_LOGIN="$BOT_LOGIN"
+export CODUS_BOT_LOGIN="$BOT_LOGIN"
 
 MANIFEST="$RUNS_DIR/$RUN_NAME.json"
 if [ ! -f "$MANIFEST" ]; then
@@ -128,7 +128,7 @@ RUN_NAME="$RUN_NAME" \
 MANIFEST="$MANIFEST" \
 RESULTS_DIR="$RESULTS_DIR" \
 BENCHMARK_OWNER="$BENCHMARK_OWNER" \
-KODUS_BOT_LOGIN="$KODUS_BOT_LOGIN" \
+CODUS_BOT_LOGIN="$CODUS_BOT_LOGIN" \
 COMMENT_GRACE_SEC="$COMMENT_GRACE_SEC" \
 node -e "
 const { execFileSync } = require('child_process');
@@ -138,7 +138,7 @@ const RUN_NAME = process.env.RUN_NAME;
 const MANIFEST = process.env.MANIFEST;
 const RESULTS_DIR = process.env.RESULTS_DIR;
 const OWNER = process.env.BENCHMARK_OWNER;
-const BOT = process.env.KODUS_BOT_LOGIN;
+const BOT = process.env.CODUS_BOT_LOGIN;
 const GRACE = parseInt(process.env.COMMENT_GRACE_SEC, 10) || 60;
 
 const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
@@ -177,7 +177,7 @@ function fetchReviews(repo, prNum) {
 function parseSeverity(body) {
   if (!body) return 'unknown';
   const lower = body.toLowerCase();
-  const marker = lower.match(/<!--\s*kodus[-_]severity\s*:\s*(critical|high|medium|low)\s*-->/);
+  const marker = lower.match(/<!--\s*codus[-_]severity\s*:\s*(critical|high|medium|low)\s*-->/);
   if (marker) return marker[1];
   if (/(severity[:\s]+critical|\bcritical\b.*severity|\[critical\]|🔴\s*critical|\*\*critical\*\*)/.test(lower)) return 'critical';
   if (/(severity[:\s]+high|\[high\]|🟠\s*high|\*\*high\*\*)/.test(lower)) return 'high';
@@ -251,9 +251,9 @@ for (const entry of manifest.prs) {
     });
   }
 
-  // Also include non-empty review summary bodies (sometimes Kodus posts a
+  // Also include non-empty review summary bodies (sometimes Codus posts a
   // per-issue review summary without an inline anchor). Keep this conservative
-  // — only if the review body itself carries a Kodus-style severity marker.
+  // — only if the review body itself carries a Codus-style severity marker.
   for (const r of botReviews) {
     const body = r.body || '';
     if (body.length < 20) continue;
@@ -269,7 +269,7 @@ for (const entry of manifest.prs) {
     });
   }
 
-  const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'kodus-qa' };
+  const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'codus-qa' };
   results.severity.push({ ...prInfo, issues });
   prMetadata.push({
     repo: entry.repo, head: entry.head, title: bpr.title,

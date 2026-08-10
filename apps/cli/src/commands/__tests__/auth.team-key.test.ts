@@ -62,7 +62,7 @@ describe('auth team-key command', () => {
                 JSON.stringify({
                     data: {
                         team: { uuid: 'team-1', name: 'Platform Team' },
-                        organization: { uuid: 'org-1', name: 'Kodus' },
+                        organization: { uuid: 'org-1', name: 'Codus' },
                     },
                 }),
                 {
@@ -73,19 +73,19 @@ describe('auth team-key command', () => {
         );
         mockClearCredentials.mockResolvedValue(undefined);
 
-        await teamKeyAction({ key: 'kodus_abc123' });
+        await teamKeyAction({ key: 'codus_abc123' });
 
         expect(mockSaveConfig).toHaveBeenCalledWith({
-            teamKey: 'kodus_abc123',
+            teamKey: 'codus_abc123',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         });
         expect(mockClearCredentials).toHaveBeenCalled();
         expect(fetchMock).toHaveBeenCalledWith(
             expect.stringContaining('/cli/validate-key'),
             expect.objectContaining({
                 headers: expect.objectContaining({
-                    'X-Team-Key': 'kodus_abc123',
+                    'X-Team-Key': 'codus_abc123',
                 }),
             }),
         );
@@ -101,7 +101,7 @@ describe('auth team-key command', () => {
                 JSON.stringify({
                     data: {
                         teamName: 'Backend Team',
-                        organizationName: 'Kodus',
+                        organizationName: 'Codus',
                     },
                 }),
                 {
@@ -113,7 +113,7 @@ describe('auth team-key command', () => {
         mockClearCredentials.mockRejectedValue(new Error('fs error'));
 
         await expect(
-            teamKeyAction({ key: 'kodus_abc123' }),
+            teamKeyAction({ key: 'codus_abc123' }),
         ).rejects.toMatchObject({
             name: 'CliExitError',
             exitCode: 1,
@@ -137,7 +137,7 @@ describe('auth team-key command', () => {
         );
 
         await expect(
-            teamKeyAction({ key: 'kodus_abc123' }),
+            teamKeyAction({ key: 'codus_abc123' }),
         ).rejects.toMatchObject({
             name: 'CliExitError',
             exitCode: 1,
@@ -165,7 +165,7 @@ describe('auth team-key command', () => {
         );
 
         await expect(
-            teamKeyAction({ key: 'kodus_abc123' }),
+            teamKeyAction({ key: 'codus_abc123' }),
         ).rejects.toMatchObject({
             name: 'CliExitError',
             exitCode: 1,
@@ -199,16 +199,16 @@ describe('auth team-status command', () => {
     it('shows team details when team config exists', async () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc123',
+            teamKey: 'codus_abc123',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         } as any);
 
         await teamStatusAction();
 
         const output = logSpy.mock.calls.map((c) => c.join(' ')).join('\n');
         expect(output).toContain('Authenticated');
-        expect(output).toContain('Kodus');
+        expect(output).toContain('Codus');
         expect(output).toContain('Platform Team');
     });
 });

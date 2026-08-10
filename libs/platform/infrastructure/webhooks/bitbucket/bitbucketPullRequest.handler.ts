@@ -14,7 +14,7 @@ import { EnqueueAstGraphUpdateOnMergedUseCase } from '@libs/code-review/applicat
 import { EnqueueImplementationCheckUseCase } from '@libs/code-review/application/use-cases/enqueue-implementation-check.use-case';
 import {
     isForceReviewCommand,
-    isKodyMentionNonReview,
+    isCodyMentionNonReview,
     isReviewCommand,
     parseReviewDirective,
     isHeavyReviewCommand
@@ -25,7 +25,7 @@ import { PullRequestClosedEvent } from '@libs/core/domain/events/pull-request-cl
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     IWebhookEventHandler,
     IWebhookEventParams,
@@ -53,7 +53,7 @@ export class BitbucketPullRequestHandler implements IWebhookEventHandler {
         @Inject(PULL_REQUESTS_SERVICE_TOKEN)
         private readonly pullRequestsService: IPullRequestsService,
         private readonly savePullRequestUseCase: SavePullRequestUseCase,
-        private readonly chatWithKodyFromGitUseCase: ChatWithKodyFromGitUseCase,
+        private readonly chatWithCodyFromGitUseCase: ChatWithCodyFromGitUseCase,
         private readonly codeManagement: CodeManagementService,
         private readonly generateIssuesFromPrClosedUseCase: GenerateIssuesFromPrClosedUseCase,
         private readonly eventEmitter: EventEmitter2,
@@ -401,7 +401,7 @@ export class BitbucketPullRequestHandler implements IWebhookEventHandler {
                         } catch (e) {
                             this.logger.error({
                                 message:
-                                    'Failed to sync Kody Rules after PR merge',
+                                    'Failed to sync Cody Rules after PR merge',
                                 context: BitbucketPullRequestHandler.name,
                                 error: e,
                                 metadata: {
@@ -519,14 +519,14 @@ export class BitbucketPullRequestHandler implements IWebhookEventHandler {
 
             // Bitbucket-specific: Verify if the comment is a review marker (emoji or API generated)
             const emojiPattern = /(?:👍|👎)/u;
-            const apiGeneratedPattern = /(?:kody code-review)/i;
+            const apiGeneratedPattern = /(?:cody code-review)/i;
             const hasMarker =
                 emojiPattern.test(comment.body) ||
                 apiGeneratedPattern.test(comment.body);
 
             if (isStartCommand && !hasMarker) {
                 this.logger.log({
-                    message: `@kody start command detected in Bitbucket comment for PR#${prId}`,
+                    message: `@cody start command detected in Bitbucket comment for PR#${prId}`,
                     serviceName: BitbucketPullRequestHandler.name,
                     metadata: {
                         prId,
@@ -564,9 +564,9 @@ export class BitbucketPullRequestHandler implements IWebhookEventHandler {
             if (
                 !isStartCommand &&
                 !hasMarker &&
-                isKodyMentionNonReview(comment.body)
+                isCodyMentionNonReview(comment.body)
             ) {
-                this.chatWithKodyFromGitUseCase.execute(params);
+                this.chatWithCodyFromGitUseCase.execute(params);
                 return;
             }
         } catch (error) {

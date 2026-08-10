@@ -18,8 +18,8 @@ import {
 } from '@libs/organization/domain/organization/contracts/organization.service.contract';
 
 import { CreatePRCodeReviewUseCase } from './create-prs-code-review.use-case';
-import { SyncSelectedRepositoriesKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/sync-selected-repositories.use-case';
-import { GenerateKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/generate-kody-rules.use-case';
+import { SyncSelectedRepositoriesCodyRulesUseCase } from '@libs/codyRules/application/use-cases/sync-selected-repositories.use-case';
+import { GenerateCodyRulesUseCase } from '@libs/codyRules/application/use-cases/generate-cody-rules.use-case';
 import { CreateOrUpdateParametersUseCase } from '@libs/organization/application/use-cases/parameters/create-or-update-use-case';
 import { TelemetryService } from '@libs/telemetry/application/services/telemetry.service';
 import { CodeManagementService } from '@libs/platform/infrastructure/adapters/services/codeManagement.service';
@@ -49,11 +49,11 @@ export class FinishOnboardingUseCase {
                 email?: string;
             };
         },
-        private readonly syncSelectedReposKodyRulesUseCase: SyncSelectedRepositoriesKodyRulesUseCase,
+        private readonly syncSelectedReposCodyRulesUseCase: SyncSelectedRepositoriesCodyRulesUseCase,
         private readonly createOrUpdateParametersUseCase: CreateOrUpdateParametersUseCase,
         private readonly telemetry: TelemetryService,
         private readonly codeManagement: CodeManagementService,
-        private readonly generateKodyRulesUseCase: GenerateKodyRulesUseCase,
+        private readonly generateCodyRulesUseCase: GenerateCodyRulesUseCase,
         @Inject(LICENSE_SERVICE_TOKEN)
         private readonly licenseService: ILicenseService,
         private readonly permissionValidationService: PermissionValidationService,
@@ -80,7 +80,7 @@ export class FinishOnboardingUseCase {
             // [TIMING:onboarding] Provider-comparative instrumentation —
             // bitbucket finish-onboarding was observed far slower than
             // github/gitlab; the per-step breakdown isolates the slow path
-            // (now `syncSelectedReposKodyRulesUseCase` provider tree reads).
+            // (now `syncSelectedReposCodyRulesUseCase` provider tree reads).
             // Logs land in the api container so a single tail can isolate it.
             const __onboardingT0 = Date.now();
             const __mark = (
@@ -143,13 +143,13 @@ export class FinishOnboardingUseCase {
             // but it now converts rule files via the LLM (fast-batch + per-file
             // fallback) and takes minutes — long enough to blow past the gateway
             // timeout and 504 the finish-onboarding request. Detaching keeps
-            // onboarding snappy; the KodyLearning cron's staleness recovery
+            // onboarding snappy; the CodyLearning cron's staleness recovery
             // covers runs that die mid-flight, and generated rules go through the
             // unified approval policy. Sync runs first (generation is chained off
             // its .finally) so generation sees the imported rules — preserving
             // the previous sequential ordering, just off the request path.
             setImmediate(() => {
-                this.syncSelectedReposKodyRulesUseCase
+                this.syncSelectedReposCodyRulesUseCase
                     // Pass organizationId explicitly: this runs after the HTTP
                     // response, so the sync use-case can no longer resolve it
                     // from the (possibly disposed) request scope.
@@ -157,7 +157,7 @@ export class FinishOnboardingUseCase {
                     .catch((error) => {
                         this.logger.error({
                             message:
-                                'Background Kody Rules sync from repo files failed after onboarding',
+                                'Background Cody Rules sync from repo files failed after onboarding',
                             context: FinishOnboardingUseCase.name,
                             error:
                                 error instanceof Error
@@ -167,12 +167,12 @@ export class FinishOnboardingUseCase {
                         });
                     })
                     .finally(() => {
-                        this.generateKodyRulesUseCase
+                        this.generateCodyRulesUseCase
                             .execute({ teamId, months: 3 }, organizationId)
                             .catch((error) => {
                                 this.logger.error({
                                     message:
-                                        'Background Kody Rules generation failed after onboarding',
+                                        'Background Cody Rules generation failed after onboarding',
                                     context: FinishOnboardingUseCase.name,
                                     error:
                                         error instanceof Error

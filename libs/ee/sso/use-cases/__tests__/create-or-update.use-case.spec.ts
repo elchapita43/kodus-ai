@@ -11,7 +11,7 @@ describe('CreateOrUpdateSSOConfigUseCase', () => {
         idpIssuer: 'idp-issuer',
         entryPoint: 'https://idp.example.com/sso',
         cert: 'certificate',
-        issuer: 'kodus-orchestrator',
+        issuer: 'codus-orchestrator',
     };
 
     const makeSut = () => {
@@ -111,7 +111,7 @@ describe('CreateOrUpdateSSOConfigUseCase', () => {
                         cert: 'certificate',
                         entryPoint: 'https://idp.example.com/sso',
                         idpIssuer: 'idp-issuer',
-                        issuer: 'kodus-orchestrator',
+                        issuer: 'codus-orchestrator',
                     },
                 }),
             },

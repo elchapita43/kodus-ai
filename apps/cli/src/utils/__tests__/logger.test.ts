@@ -9,8 +9,8 @@ import {
 
 describe('logger output modes', () => {
     afterEach(() => {
-        delete process.env.KODUS_QUIET;
-        delete process.env.KODUS_VERBOSE;
+        delete process.env.CODUS_QUIET;
+        delete process.env.CODUS_VERBOSE;
         vi.restoreAllMocks();
     });
 

@@ -29,7 +29,7 @@ Os harnesses de propósito geral que resolveram edição de código em repositó
 
 ### Nosso harness hoje (o loop)
 
-No caminho default, o Kodus roda **1 agente generalista** agêntico. O loop (`runAgentLoop`, sobre o `generateText` multi-step do AI SDK):
+No caminho default, o Codus roda **1 agente generalista** agêntico. O loop (`runAgentLoop`, sobre o `generateText` multi-step do AI SDK):
 
 * **Parada (`stopWhen`):** chamada do *done-tool* `submitResult` **ou** teto de passos (`maxSteps` = 20 em normal, 100 em deep; *fast* é capado).
 * **A cada passo:** o modelo ou chama uma **tool** (executada no sandbox E2B, com o resultado realimentado no histórico) ou chama `submitResult` (encerra).
@@ -55,7 +55,7 @@ O gap em relação aos líderes (Greptile, CodeRabbit) não é falta de peças: 
   * Cubic: planner → micro-agentes especializados → filtering agent. [D]
   * CodeRabbit: agentes Review / Verification / Chat / Pre-Merge em paralelo. [D]
   * Cursor Bugbot: migrou de pipeline fixo para 1 loop totalmente agêntico + múltiplos modelos. [D]
-* Kodus (hoje): 1 agente generalista no caminho default. O trio Bug / Security / Performance existe no código, mas é exclusivo do modo deep e está desligado por padrão.
+* Codus (hoje): 1 agente generalista no caminho default. O trio Bug / Security / Performance existe no código, mas é exclusivo do modo deep e está desligado por padrão.
 
 ##### 2. Retrieval de contexto
 
@@ -63,7 +63,7 @@ O gap em relação aos líderes (Greptile, CodeRabbit) não é falta de peças: 
   * **Greptile:** **grafo do repositório + embeddings + memória**, consultados *durante* a review, com navegação multi-hop. **[D]**
   * **CodeRabbit:** **codegraph + LanceDB (embeddings) + 20–50 linters / ast-grep**. **[D]**
   * **Cubic:** **LSP** (go-to-definition / find-references) + terminal, em modelo *context-pulling*. **[D]**
-* **Kodus (hoje):** temos **grafo AST** (`@kodus/kodus-graph`, 9 linguagens, índice persistido em banco) **e embeddings** (no fine-tuning). Porém:
+* **Codus (hoje):** temos **grafo AST** (`@codus/codus-graph`, 9 linguagens, índice persistido em banco) **e embeddings** (no fine-tuning). Porém:
   * o call graph é **achatado num bloco de texto injetado no prompt**;
   * o tool de navegação AST (`getCallers`) está **desabilitado**;
   * o agente explora por **grep / readFile textual**.
@@ -77,9 +77,9 @@ O gap em relação aos líderes (Greptile, CodeRabbit) não é falta de peças: 
   * **CodeRabbit:** **verify agent gera scripts e "extrai prova do codebase antes de postar"**. **[D]**
   * **Anthropic:** *verification step* checa o candidato "contra o comportamento real do código". **[D]**
   * **Greptile:** confidence + **supressão adaptativa** (*Adaptive Noise Filtering*). **[D]**
-* **Kodus (hoje):** verify roda **AST parse + checkTypes (compilador nativo) + validação semântica por LLM**, com score de confidence 1–10 por finding.
+* **Codus (hoje):** verify roda **AST parse + checkTypes (compilador nativo) + validação semântica por LLM**, com score de confidence 1–10 por finding.
 
-> **O que é "supressão adaptativa" (Greptile):** o sistema mantém contadores por *categoria/tipo* de sugestão — ex. `{ made: 10, addressed: 0, reactions: -3 }` (quantas vezes emitiu aquele tipo, quantas foram endereçadas, saldo de reações). Quando uma categoria é **repetidamente ignorada (3×+) ou recebe downvotes**, ela passa a ser **automaticamente suprimida** nas próximas reviews — sem humano no meio. Sinais que alimentam: 👍/👎, replies dos devs e **análise commit-inicial vs commit-final** (o que de fato foi corrigido até o merge). Safeguard: *security nunca é suprimida*. Resultado alegado: ~80% menos comentários ignorados, 3× mais adoção. **[D]** Contraste com o nosso Kody Fine-Tuning: lá é por *categoria*, automático e contínuo; o nosso é por *similaridade de cluster* (embedding), pós-geração e só no engine EE.
+> **O que é "supressão adaptativa" (Greptile):** o sistema mantém contadores por *categoria/tipo* de sugestão — ex. `{ made: 10, addressed: 0, reactions: -3 }` (quantas vezes emitiu aquele tipo, quantas foram endereçadas, saldo de reações). Quando uma categoria é **repetidamente ignorada (3×+) ou recebe downvotes**, ela passa a ser **automaticamente suprimida** nas próximas reviews — sem humano no meio. Sinais que alimentam: 👍/👎, replies dos devs e **análise commit-inicial vs commit-final** (o que de fato foi corrigido até o merge). Safeguard: *security nunca é suprimida*. Resultado alegado: ~80% menos comentários ignorados, 3× mais adoção. **[D]** Contraste com o nosso Cody Fine-Tuning: lá é por *categoria*, automático e contínuo; o nosso é por *similaridade de cluster* (embedding), pós-geração e só no engine EE.
 
 **Diferença real:** mesma intenção, mas **não materializamos "prova"** — o agente não gera um check direcionado para *provar* o defeito antes de postar. A infraestrutura (sandbox E2B + checkTypes) já existe; falta o passo de prova ativa.
 
@@ -88,11 +88,11 @@ O gap em relação aos líderes (Greptile, CodeRabbit) não é falta de peças: 
 - **Concorrentes:**
   - **Greptile:** **memória adaptativa** — contabiliza made / addressed / reactions, suprime categorias ignoradas 3×+ (*security nunca é suprimida*), e um sub-agent **recupera** da memory bank *durante* a review. **[D]**
   - **Cursor:** feedback vira **regras candidatas promovidas automaticamente** quando o sinal acumula (e auto-desativadas se performam mal), entrando no contexto do agente. **[D]**
-- **Kodus (hoje) — temos bastante, e parte ALIMENTA o agente (não é só filtro):**
-  - **Kody Rules (STANDARD)** injetadas no kody-rules agent; **Memory Rules** injetadas no prompt de **todos** os agentes (Bug/Security/Perf/Generalist). Isso *muda o que o agente procura*.
+- **Codus (hoje) — temos bastante, e parte ALIMENTA o agente (não é só filtro):**
+  - **Cody Rules (STANDARD)** injetadas no cody-rules agent; **Memory Rules** injetadas no prompt de **todos** os agentes (Bug/Security/Perf/Generalist). Isso *muda o que o agente procura*.
   - **IDE rules auto-sync:** ingerimos `.cursorrules`, `.cursor/rules/*.mdc`, `CLAUDE.md`, `.agents.md`, copilot-instructions, windsurf, aider e outros → viram regras injetadas. **Cobertura de formatos provavelmente maior que a dos concorrentes.**
   - **Geração de regras a partir de comentários de PRs históricos** (via LLM) — porém *one-time* / onboarding, não contínua.
-  - **Kody Fine-Tuning:** filtro **pós-geração** por cluster de embeddings (👍/👎 + `IMPLEMENTED`) — esse sim roda **só no engine EE/legacy**, é **opt-in** e exige ≥ 50 sugestões históricas.
+  - **Cody Fine-Tuning:** filtro **pós-geração** por cluster de embeddings (👍/👎 + `IMPLEMENTED`) — esse sim roda **só no engine EE/legacy**, é **opt-in** e exige ≥ 50 sugestões históricas.
   - Sinais 👍/👎 e `implementationStatus` são **persistidos**.
 
 **Diferença real:**
@@ -111,7 +111,7 @@ O gap em relação aos líderes (Greptile, CodeRabbit) não é falta de peças: 
 
 Todas reusam infraestrutura que já existe:
 
-1. **Ligar a memória no caminho do agente** e transformar padrões recorrentes em **Kody Rules** que o agente lê (estilo Cursor), pesando "implementado / ignorado" acima de reações 👍/👎.
+1. **Ligar a memória no caminho do agente** e transformar padrões recorrentes em **Cody Rules** que o agente lê (estilo Cursor), pesando "implementado / ignorado" acima de reações 👍/👎.
 2. **Reativar a navegação no grafo como tool do loop** (`getCallers` / `findReferences` sobre o índice AST já persistido em banco).
 3. **Verify com prova ativa** — o agente gera um check no sandbox para confirmar o finding antes de postar (estilo CodeRabbit).
 
@@ -148,7 +148,7 @@ A literatura converge em **quatro jogadas** que movem métrica. Todas foram veri
 
 * **A ideia:** uma memória que guarda lições tanto dos **acertos quanto dos erros**, que o agente **consulta na hora da review** — e usa os erros para criar "não cometa de novo".
 * **A evidência:** agentes com esse tipo de memória foram **+4,6% e +8,3%** melhores que sem memória, em benchmarks de software e web.
-* **Nosso gap:** nosso aprendizado (Kody Fine-Tuning) usa quase só o que deu **certo** (sugestão implementada + 👍), é um **filtro depois** que o agente já gerou, e **nem roda no caminho default**. Falta transformar o "ignoraram / rejeitaram" em lição que o agente **consulta dentro do loop**.
+* **Nosso gap:** nosso aprendizado (Cody Fine-Tuning) usa quase só o que deu **certo** (sugestão implementada + 👍), é um **filtro depois** que o agente já gerou, e **nem roda no caminho default**. Falta transformar o "ignoraram / rejeitaram" em lição que o agente **consulta dentro do loop**.
 * *Fonte: ReasoningBank (ICLR).*
 
 #####  Caso real de produção: scaling + verificação adversarial (Ramp)
@@ -165,7 +165,7 @@ Bônus pro **BYOK**: rodaram em GPT-5.5, mas modelos abertos ~5× mais baratos (
 
 #####  Caveat (ler junto com os números acima)
 
-Quase nenhuma dessas fontes é benchmark de **PR code review** — vêm de domínios vizinhos (resolver issues, busca multi-hop, detecção de vulnerabilidade). **As ideias transferem; os percentuais não.** Trate os ganhos como **direção**, não como o número que o Kodus vai bater.
+Quase nenhuma dessas fontes é benchmark de **PR code review** — vêm de domínios vizinhos (resolver issues, busca multi-hop, detecção de vulnerabilidade). **As ideias transferem; os percentuais não.** Trate os ganhos como **direção**, não como o número que o Codus vai bater.
 
 #####  Pergunta aberta de maior valor
 

@@ -1,4 +1,4 @@
-import { LLMModule } from '@kodus/kodus-common/llm';
+import { LLMModule } from '@codus/codus-common/llm';
 import { AgentsModule } from '@libs/agents/modules/agents.module';
 import { AIEngineModule } from '@libs/ai-engine/modules/ai-engine.module';
 import { AnalyticsModule } from '@libs/analytics/modules/analytics.module';
@@ -33,9 +33,9 @@ import { UserModule } from '@libs/identity/modules/user.module';
 import { IntegrationConfigModule } from '@libs/integrations/modules/config.module';
 import { IntegrationModule } from '@libs/integrations/modules/integrations.module';
 import { IssuesModule } from '@libs/issues/issues.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { LearningsModule } from '@libs/learnings/modules/learnings.module';
-import { KodusIssuesMcpModule } from '@libs/mcp-server/kodus-issues-mcp.module';
+import { CodusIssuesMcpModule } from '@libs/mcp-server/codus-issues-mcp.module';
 import { McpModule } from '@libs/mcp-server/mcp.module';
 import { OrganizationOnboardingModule } from '@libs/organization/modules/organization-onboarding.module';
 import { OrganizationModule } from '@libs/organization/modules/organization.module';
@@ -55,7 +55,7 @@ import { AgentController } from './controllers/agent.controller';
 import { AuthController } from './controllers/auth.controller';
 import { CliConfigController } from './controllers/cli/cli-config.controller';
 import { CliCentralizedConfigController } from './controllers/cli/cli-centralized-config.controller';
-import { CliKodyRulesController } from './controllers/cli/cli-kody-rules.controller';
+import { CliCodyRulesController } from './controllers/cli/cli-cody-rules.controller';
 import { CliAuthController } from './controllers/cli-auth.controller';
 import { CliReviewController } from './controllers/cli/cli-review.controller';
 import { CliReviewsController } from './controllers/cli-reviews.controller';
@@ -66,7 +66,7 @@ import { GithubController } from './controllers/github.controller';
 import { IntegrationController } from './controllers/integration.controller';
 import { IntegrationConfigController } from './controllers/integrationConfig.controller';
 import { IssuesController } from './controllers/issues.controller';
-import { KodyRulesController } from './controllers/kodyRules.controller';
+import { CodyRulesController } from './controllers/codyRules.controller';
 import { LearningsController } from './controllers/learnings.controller';
 import { LicenseController } from './controllers/license.controller';
 import { OrganizationController } from './controllers/organization.controller';
@@ -114,7 +114,7 @@ import { NotificationController } from './controllers/notification.controller';
         AuthModule,
         UserModule,
         PermissionsModule,
-        KodyRulesModule,
+        CodyRulesModule,
         LearningsModule,
         IssuesModule,
         OrganizationModule,
@@ -147,7 +147,7 @@ import { NotificationController } from './controllers/notification.controller';
         PermissionValidationModule,
         LicenseModule,
         McpModule.forRoot(),
-        KodusIssuesMcpModule.forRoot(),
+        CodusIssuesMcpModule.forRoot(),
         HealthModule,
         CronModule,
         SSOModule,
@@ -161,7 +161,7 @@ import { NotificationController } from './controllers/notification.controller';
         PullRequestMessagesController,
         CodeBaseController,
         IssuesController,
-        KodyRulesController,
+        CodyRulesController,
         LearningsController,
         RuleLikeController,
         OrganizationController,
@@ -186,7 +186,7 @@ import { NotificationController } from './controllers/notification.controller';
         CliReviewsController,
         CliConfigController,
         CliCentralizedConfigController,
-        CliKodyRulesController,
+        CliCodyRulesController,
         SSOConfigController,
         LicenseController,
         MetricsController,

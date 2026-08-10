@@ -5,7 +5,7 @@ import {
     getTranslationsForLanguageByCategory,
     TranslationsCategory,
 } from '@libs/common/utils/translations/translations';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { LanguageValue } from '@libs/core/domain/enums/language-parameter.enum';
 import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
 import {
@@ -218,7 +218,7 @@ ${filesTable}
 
         if (!translation) return '';
 
-        const defaultConfig = getDefaultKodusConfigFile();
+        const defaultConfig = getDefaultCodusConfigFile();
         const defaultReviewOptions = Object.keys(
             defaultConfig?.reviewOptions || {},
         );
@@ -283,7 +283,7 @@ ${reviewOptionsMarkdown}
                 statusText = translation.automaticTitle || 'Automatic Review';
                 description =
                     translation.automaticDesc ||
-                    'Kody will automatically review every push to this PR.';
+                    'Cody will automatically review every push to this PR.';
                 break;
 
             case ReviewCadenceType.AUTO_PAUSE: {
@@ -296,7 +296,7 @@ ${reviewOptionsMarkdown}
                     translation.autoPauseDesc
                         ?.replace('{timeWindow}', String(timeWindow))
                         ?.replace('{pushes}', String(pushes)) ||
-                    `Kody reviews the first push automatically, then pauses if you make ${pushes}+ pushes in ${timeWindow} minutes. Use @kody start-review to continue.`;
+                    `Cody reviews the first push automatically, then pauses if you make ${pushes}+ pushes in ${timeWindow} minutes. Use @cody start-review to continue.`;
                 break;
             }
 
@@ -304,7 +304,7 @@ ${reviewOptionsMarkdown}
                 statusText = translation.manualTitle || 'Manual Review';
                 description =
                     translation.manualDesc ||
-                    'Kody only reviews when you request with @kody start-review command.';
+                    'Cody only reviews when you request with @cody start-review command.';
                 break;
 
             default:
@@ -442,7 +442,7 @@ ${reviewOptionsMarkdown}
         const fence = '`'.repeat(Math.max(3, longestBacktickRun + 1));
 
         return [
-            `**Kody Code Review** — ${prompts.length} suggested fix${prompts.length > 1 ? 'es' : ''}.`,
+            `**Cody Code Review** — ${prompts.length} suggested fix${prompts.length > 1 ? 'es' : ''}.`,
             `Paste the prompt below to your agent and all review fixed at once!\n`,
             `<details>`,
             `<summary>🛠️ Open Agent Prompt</summary>`,

@@ -1,7 +1,7 @@
 {
     "$schema": "https://mintlify.com/docs.json",
     "theme": "aspen",
-    "name": "Kodus",
+    "name": "Codus",
     "colors": {
         "primary": "#F8B76D",
         "light": "#F8B76D",
@@ -66,19 +66,19 @@
                                         ]
                                     },
                                     {
-                                        "group": "Kody Rules",
+                                        "group": "Cody Rules",
                                         "pages": [
-                                            "how_to_use/en/code_review/configs/kody_rules",
+                                            "how_to_use/en/code_review/configs/cody_rules",
                                             "how_to_use/en/code_review/configs/rules_inheritance",
                                             "how_to_use/en/code_review/configs/rules_file_detection",
                                             "how_to_use/en/code_review/configs/repository_rules",
                                             "how_to_use/en/code_review/configs/global_rule_sources",
-                                            "how_to_use/en/code_review/learning/kody_rules_generation"
+                                            "how_to_use/en/code_review/learning/cody_rules_generation"
                                         ]
                                     },
                                     "how_to_use/en/code_review/plugins",
                                     "how_to_use/en/code_review/business_logic_validation",
-                                    "how_to_use/en/code_review/learning/kody_learning"
+                                    "how_to_use/en/code_review/learning/cody_learning"
                                 ]
                             },
                             {
@@ -99,7 +99,7 @@
                                 "pages": [
                                     "how_to_use/en/cockpit/overview",
                                     "how_to_use/en/cockpit/configuration",
-                                    "how_to_use/en/cockpit/kodus_review",
+                                    "how_to_use/en/cockpit/codus_review",
                                     {
                                         "group": "Metrics",
                                         "pages": [
@@ -107,7 +107,7 @@
                                             "how_to_use/en/cockpit/metrics/lead_time_for_changes",
                                             "how_to_use/en/cockpit/metrics/change_failure_rate",
                                             "how_to_use/en/cockpit/metrics/pr_size",
-                                            "how_to_use/en/cockpit/metrics/kody_suggestions",
+                                            "how_to_use/en/cockpit/metrics/cody_suggestions",
                                             "how_to_use/en/cockpit/metrics/lead_time_breakdown",
                                             "how_to_use/en/cockpit/metrics/developer_activity",
                                             "how_to_use/en/cockpit/metrics/prs_by_developer",
@@ -117,7 +117,7 @@
                                 ]
                             },
                             {
-                                "group": "Kody Issues",
+                                "group": "Cody Issues",
                                 "pages": [
                                     "how_to_use/en/issues/overview"
                                 ]
@@ -161,7 +161,7 @@
                             {
                                 "group": "Concepts",
                                 "pages": [
-                                    "how_to_deploy/en/kodus_architecture"
+                                    "how_to_deploy/en/codus_architecture"
                                 ]
                             },
                             {
@@ -173,20 +173,20 @@
                             {
                                 "group": "Deploy with Docker",
                                 "pages": [
-                                    "how_to_deploy/en/deploy_kodus/generic_vm",
-                                    "how_to_deploy/en/deploy_kodus/mcp_manager",
-                                    "how_to_deploy/en/deploy_kodus/sandbox",
-                                    "how_to_deploy/en/deploy_kodus/analytics_worker",
-                                    "how_to_deploy/en/deploy_kodus/reverse_proxy",
-                                    "how_to_deploy/en/deploy_kodus/telemetry",
-                                    "how_to_deploy/en/deploy_kodus/troubleshooting",
-                                    "how_to_deploy/en/deploy_kodus/updating"
+                                    "how_to_deploy/en/deploy_codus/generic_vm",
+                                    "how_to_deploy/en/deploy_codus/mcp_manager",
+                                    "how_to_deploy/en/deploy_codus/sandbox",
+                                    "how_to_deploy/en/deploy_codus/analytics_worker",
+                                    "how_to_deploy/en/deploy_codus/reverse_proxy",
+                                    "how_to_deploy/en/deploy_codus/telemetry",
+                                    "how_to_deploy/en/deploy_codus/troubleshooting",
+                                    "how_to_deploy/en/deploy_codus/updating"
                                 ]
                             },
                             {
                                 "group": "Deploy with Kubernetes",
                                 "pages": [
-                                    "how_to_deploy/en/deploy_kodus/kubernetes"
+                                    "how_to_deploy/en/deploy_codus/kubernetes"
                                 ]
                             },
                             {
@@ -297,14 +297,14 @@
                             {
                                 "group": "LLM Providers",
                                 "pages": [
-                                    "knowledge_base/en/how-to-use-z-ai-with-kodus",
-                                    "knowledge_base/en/how-to-use-synthetic-with-kodus",
-                                    "knowledge_base/en/how-to-use-chutes-with-kodus",
-                                    "knowledge_base/en/how-to-use-moonshot-with-kodus",
-                                    "knowledge_base/en/how-to-use-novita-with-kodus",
-                                    "knowledge_base/en/how-to-use-groq-with-kodus",
-                                    "knowledge_base/en/how-to-use-together-ai-with-kodus",
-                                    "knowledge_base/en/how-to-use-fireworks-with-kodus"
+                                    "knowledge_base/en/how-to-use-z-ai-with-codus",
+                                    "knowledge_base/en/how-to-use-synthetic-with-codus",
+                                    "knowledge_base/en/how-to-use-chutes-with-codus",
+                                    "knowledge_base/en/how-to-use-moonshot-with-codus",
+                                    "knowledge_base/en/how-to-use-novita-with-codus",
+                                    "knowledge_base/en/how-to-use-groq-with-codus",
+                                    "knowledge_base/en/how-to-use-together-ai-with-codus",
+                                    "knowledge_base/en/how-to-use-fireworks-with-codus"
                                 ]
                             }
                         ]
@@ -328,9 +328,9 @@
                             {
                                 "group": "Recipes",
                                 "pages": [
-                                    "cookbook/en/kodus-for-monorepos",
+                                    "cookbook/en/codus-for-monorepos",
                                     "cookbook/en/security-first-review-pipeline",
-                                    "cookbook/en/kodus-sprint-workflow",
+                                    "cookbook/en/codus-sprint-workflow",
                                     "cookbook/en/team-onboarding",
                                     "cookbook/en/compliance-review-pipeline"
                                 ]
@@ -398,19 +398,19 @@
                                         ]
                                     },
                                     {
-                                        "group": "Reglas de Kody",
+                                        "group": "Reglas de Cody",
                                         "pages": [
-                                            "how_to_use/es/code_review/configs/kody_rules",
+                                            "how_to_use/es/code_review/configs/cody_rules",
                                             "how_to_use/es/code_review/configs/rules_inheritance",
                                             "how_to_use/es/code_review/configs/rules_file_detection",
                                             "how_to_use/es/code_review/configs/repository_rules",
                                             "how_to_use/es/code_review/configs/global_rule_sources",
-                                            "how_to_use/es/code_review/learning/kody_rules_generation"
+                                            "how_to_use/es/code_review/learning/cody_rules_generation"
                                         ]
                                     },
                                     "how_to_use/es/code_review/plugins",
                                     "how_to_use/es/code_review/business_logic_validation",
-                                    "how_to_use/es/code_review/learning/kody_learning"
+                                    "how_to_use/es/code_review/learning/cody_learning"
                                 ]
                             },
                             {
@@ -431,7 +431,7 @@
                                 "pages": [
                                     "how_to_use/es/cockpit/overview",
                                     "how_to_use/es/cockpit/configuration",
-                                    "how_to_use/es/cockpit/kodus_review",
+                                    "how_to_use/es/cockpit/codus_review",
                                     {
                                         "group": "Métricas",
                                         "pages": [
@@ -439,7 +439,7 @@
                                             "how_to_use/es/cockpit/metrics/lead_time_for_changes",
                                             "how_to_use/es/cockpit/metrics/change_failure_rate",
                                             "how_to_use/es/cockpit/metrics/pr_size",
-                                            "how_to_use/es/cockpit/metrics/kody_suggestions",
+                                            "how_to_use/es/cockpit/metrics/cody_suggestions",
                                             "how_to_use/es/cockpit/metrics/lead_time_breakdown",
                                             "how_to_use/es/cockpit/metrics/developer_activity",
                                             "how_to_use/es/cockpit/metrics/prs_by_developer",
@@ -449,7 +449,7 @@
                                 ]
                             },
                             {
-                                "group": "Kody Issues",
+                                "group": "Cody Issues",
                                 "pages": [
                                     "how_to_use/es/issues/overview"
                                 ]
@@ -493,7 +493,7 @@
                             {
                                 "group": "Conceptos",
                                 "pages": [
-                                    "how_to_deploy/es/kodus_architecture"
+                                    "how_to_deploy/es/codus_architecture"
                                 ]
                             },
                             {
@@ -505,20 +505,20 @@
                             {
                                 "group": "Despliegue con Docker",
                                 "pages": [
-                                    "how_to_deploy/es/deploy_kodus/generic_vm",
-                                    "how_to_deploy/es/deploy_kodus/mcp_manager",
-                                    "how_to_deploy/es/deploy_kodus/sandbox",
-                                    "how_to_deploy/es/deploy_kodus/analytics_worker",
-                                    "how_to_deploy/es/deploy_kodus/reverse_proxy",
-                                    "how_to_deploy/es/deploy_kodus/telemetry",
-                                    "how_to_deploy/es/deploy_kodus/troubleshooting",
-                                    "how_to_deploy/es/deploy_kodus/updating"
+                                    "how_to_deploy/es/deploy_codus/generic_vm",
+                                    "how_to_deploy/es/deploy_codus/mcp_manager",
+                                    "how_to_deploy/es/deploy_codus/sandbox",
+                                    "how_to_deploy/es/deploy_codus/analytics_worker",
+                                    "how_to_deploy/es/deploy_codus/reverse_proxy",
+                                    "how_to_deploy/es/deploy_codus/telemetry",
+                                    "how_to_deploy/es/deploy_codus/troubleshooting",
+                                    "how_to_deploy/es/deploy_codus/updating"
                                 ]
                             },
                             {
                                 "group": "Desplegar con Kubernetes",
                                 "pages": [
-                                    "how_to_deploy/es/deploy_kodus/kubernetes"
+                                    "how_to_deploy/es/deploy_codus/kubernetes"
                                 ]
                             },
                             {
@@ -629,14 +629,14 @@
                             {
                                 "group": "Proveedores de LLM",
                                 "pages": [
-                                    "knowledge_base/es/how-to-use-z-ai-with-kodus",
-                                    "knowledge_base/es/how-to-use-synthetic-with-kodus",
-                                    "knowledge_base/es/how-to-use-chutes-with-kodus",
-                                    "knowledge_base/es/how-to-use-moonshot-with-kodus",
-                                    "knowledge_base/es/how-to-use-novita-with-kodus",
-                                    "knowledge_base/es/how-to-use-groq-with-kodus",
-                                    "knowledge_base/es/how-to-use-together-ai-with-kodus",
-                                    "knowledge_base/es/how-to-use-fireworks-with-kodus"
+                                    "knowledge_base/es/how-to-use-z-ai-with-codus",
+                                    "knowledge_base/es/how-to-use-synthetic-with-codus",
+                                    "knowledge_base/es/how-to-use-chutes-with-codus",
+                                    "knowledge_base/es/how-to-use-moonshot-with-codus",
+                                    "knowledge_base/es/how-to-use-novita-with-codus",
+                                    "knowledge_base/es/how-to-use-groq-with-codus",
+                                    "knowledge_base/es/how-to-use-together-ai-with-codus",
+                                    "knowledge_base/es/how-to-use-fireworks-with-codus"
                                 ]
                             }
                         ]
@@ -660,9 +660,9 @@
                             {
                                 "group": "Recetas",
                                 "pages": [
-                                    "cookbook/es/kodus-for-monorepos",
+                                    "cookbook/es/codus-for-monorepos",
                                     "cookbook/es/security-first-review-pipeline",
-                                    "cookbook/es/kodus-sprint-workflow",
+                                    "cookbook/es/codus-sprint-workflow",
                                     "cookbook/es/team-onboarding",
                                     "cookbook/es/compliance-review-pipeline"
                                 ]
@@ -730,19 +730,19 @@
                                         ]
                                     },
                                     {
-                                        "group": "Regras do Kody",
+                                        "group": "Regras do Cody",
                                         "pages": [
-                                            "how_to_use/pt-br/code_review/configs/kody_rules",
+                                            "how_to_use/pt-br/code_review/configs/cody_rules",
                                             "how_to_use/pt-br/code_review/configs/rules_inheritance",
                                             "how_to_use/pt-br/code_review/configs/rules_file_detection",
                                             "how_to_use/pt-br/code_review/configs/repository_rules",
                                             "how_to_use/pt-br/code_review/configs/global_rule_sources",
-                                            "how_to_use/pt-br/code_review/learning/kody_rules_generation"
+                                            "how_to_use/pt-br/code_review/learning/cody_rules_generation"
                                         ]
                                     },
                                     "how_to_use/pt-br/code_review/plugins",
                                     "how_to_use/pt-br/code_review/business_logic_validation",
-                                    "how_to_use/pt-br/code_review/learning/kody_learning"
+                                    "how_to_use/pt-br/code_review/learning/cody_learning"
                                 ]
                             },
                             {
@@ -763,7 +763,7 @@
                                 "pages": [
                                     "how_to_use/pt-br/cockpit/overview",
                                     "how_to_use/pt-br/cockpit/configuration",
-                                    "how_to_use/pt-br/cockpit/kodus_review",
+                                    "how_to_use/pt-br/cockpit/codus_review",
                                     {
                                         "group": "Métricas",
                                         "pages": [
@@ -771,7 +771,7 @@
                                             "how_to_use/pt-br/cockpit/metrics/lead_time_for_changes",
                                             "how_to_use/pt-br/cockpit/metrics/change_failure_rate",
                                             "how_to_use/pt-br/cockpit/metrics/pr_size",
-                                            "how_to_use/pt-br/cockpit/metrics/kody_suggestions",
+                                            "how_to_use/pt-br/cockpit/metrics/cody_suggestions",
                                             "how_to_use/pt-br/cockpit/metrics/lead_time_breakdown",
                                             "how_to_use/pt-br/cockpit/metrics/developer_activity",
                                             "how_to_use/pt-br/cockpit/metrics/prs_by_developer",
@@ -781,7 +781,7 @@
                                 ]
                             },
                             {
-                                "group": "Kody Issues",
+                                "group": "Cody Issues",
                                 "pages": [
                                     "how_to_use/pt-br/issues/overview"
                                 ]
@@ -825,7 +825,7 @@
                             {
                                 "group": "Conceitos",
                                 "pages": [
-                                    "how_to_deploy/pt-br/kodus_architecture"
+                                    "how_to_deploy/pt-br/codus_architecture"
                                 ]
                             },
                             {
@@ -837,20 +837,20 @@
                             {
                                 "group": "Implantar com Docker",
                                 "pages": [
-                                    "how_to_deploy/pt-br/deploy_kodus/generic_vm",
-                                    "how_to_deploy/pt-br/deploy_kodus/mcp_manager",
-                                    "how_to_deploy/pt-br/deploy_kodus/sandbox",
-                                    "how_to_deploy/pt-br/deploy_kodus/analytics_worker",
-                                    "how_to_deploy/pt-br/deploy_kodus/reverse_proxy",
-                                    "how_to_deploy/pt-br/deploy_kodus/telemetry",
-                                    "how_to_deploy/pt-br/deploy_kodus/troubleshooting",
-                                    "how_to_deploy/pt-br/deploy_kodus/updating"
+                                    "how_to_deploy/pt-br/deploy_codus/generic_vm",
+                                    "how_to_deploy/pt-br/deploy_codus/mcp_manager",
+                                    "how_to_deploy/pt-br/deploy_codus/sandbox",
+                                    "how_to_deploy/pt-br/deploy_codus/analytics_worker",
+                                    "how_to_deploy/pt-br/deploy_codus/reverse_proxy",
+                                    "how_to_deploy/pt-br/deploy_codus/telemetry",
+                                    "how_to_deploy/pt-br/deploy_codus/troubleshooting",
+                                    "how_to_deploy/pt-br/deploy_codus/updating"
                                 ]
                             },
                             {
                                 "group": "Implantar com Kubernetes",
                                 "pages": [
-                                    "how_to_deploy/pt-br/deploy_kodus/kubernetes"
+                                    "how_to_deploy/pt-br/deploy_codus/kubernetes"
                                 ]
                             },
                             {
@@ -961,14 +961,14 @@
                             {
                                 "group": "Provedores de LLM",
                                 "pages": [
-                                    "knowledge_base/pt-br/how-to-use-z-ai-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-synthetic-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-chutes-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-moonshot-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-novita-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-groq-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-together-ai-with-kodus",
-                                    "knowledge_base/pt-br/how-to-use-fireworks-with-kodus"
+                                    "knowledge_base/pt-br/how-to-use-z-ai-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-synthetic-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-chutes-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-moonshot-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-novita-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-groq-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-together-ai-with-codus",
+                                    "knowledge_base/pt-br/how-to-use-fireworks-with-codus"
                                 ]
                             }
                         ]
@@ -992,9 +992,9 @@
                             {
                                 "group": "Receitas",
                                 "pages": [
-                                    "cookbook/pt-br/kodus-for-monorepos",
+                                    "cookbook/pt-br/codus-for-monorepos",
                                     "cookbook/pt-br/security-first-review-pipeline",
-                                    "cookbook/pt-br/kodus-sprint-workflow",
+                                    "cookbook/pt-br/codus-sprint-workflow",
                                     "cookbook/pt-br/team-onboarding",
                                     "cookbook/pt-br/compliance-review-pipeline"
                                 ]
@@ -1062,19 +1062,19 @@
                                         ]
                                     },
                                     {
-                                        "group": "Kodyルール",
+                                        "group": "Codyルール",
                                         "pages": [
-                                            "how_to_use/ja/code_review/configs/kody_rules",
+                                            "how_to_use/ja/code_review/configs/cody_rules",
                                             "how_to_use/ja/code_review/configs/rules_inheritance",
                                             "how_to_use/ja/code_review/configs/rules_file_detection",
                                             "how_to_use/ja/code_review/configs/repository_rules",
                                             "how_to_use/ja/code_review/configs/global_rule_sources",
-                                            "how_to_use/ja/code_review/learning/kody_rules_generation"
+                                            "how_to_use/ja/code_review/learning/cody_rules_generation"
                                         ]
                                     },
                                     "how_to_use/ja/code_review/plugins",
                                     "how_to_use/ja/code_review/business_logic_validation",
-                                    "how_to_use/ja/code_review/learning/kody_learning"
+                                    "how_to_use/ja/code_review/learning/cody_learning"
                                 ]
                             },
                             {
@@ -1095,7 +1095,7 @@
                                 "pages": [
                                     "how_to_use/ja/cockpit/overview",
                                     "how_to_use/ja/cockpit/configuration",
-                                    "how_to_use/ja/cockpit/kodus_review",
+                                    "how_to_use/ja/cockpit/codus_review",
                                     {
                                         "group": "メトリクス",
                                         "pages": [
@@ -1103,7 +1103,7 @@
                                             "how_to_use/ja/cockpit/metrics/lead_time_for_changes",
                                             "how_to_use/ja/cockpit/metrics/change_failure_rate",
                                             "how_to_use/ja/cockpit/metrics/pr_size",
-                                            "how_to_use/ja/cockpit/metrics/kody_suggestions",
+                                            "how_to_use/ja/cockpit/metrics/cody_suggestions",
                                             "how_to_use/ja/cockpit/metrics/lead_time_breakdown",
                                             "how_to_use/ja/cockpit/metrics/developer_activity",
                                             "how_to_use/ja/cockpit/metrics/prs_by_developer",
@@ -1113,7 +1113,7 @@
                                 ]
                             },
                             {
-                                "group": "Kody Issues",
+                                "group": "Cody Issues",
                                 "pages": [
                                     "how_to_use/ja/issues/overview"
                                 ]
@@ -1157,7 +1157,7 @@
                             {
                                 "group": "概念",
                                 "pages": [
-                                    "how_to_deploy/ja/kodus_architecture"
+                                    "how_to_deploy/ja/codus_architecture"
                                 ]
                             },
                             {
@@ -1169,20 +1169,20 @@
                             {
                                 "group": "Dockerでデプロイ",
                                 "pages": [
-                                    "how_to_deploy/ja/deploy_kodus/generic_vm",
-                                    "how_to_deploy/ja/deploy_kodus/mcp_manager",
-                                    "how_to_deploy/ja/deploy_kodus/sandbox",
-                                    "how_to_deploy/ja/deploy_kodus/analytics_worker",
-                                    "how_to_deploy/ja/deploy_kodus/reverse_proxy",
-                                    "how_to_deploy/ja/deploy_kodus/telemetry",
-                                    "how_to_deploy/ja/deploy_kodus/troubleshooting",
-                                    "how_to_deploy/ja/deploy_kodus/updating"
+                                    "how_to_deploy/ja/deploy_codus/generic_vm",
+                                    "how_to_deploy/ja/deploy_codus/mcp_manager",
+                                    "how_to_deploy/ja/deploy_codus/sandbox",
+                                    "how_to_deploy/ja/deploy_codus/analytics_worker",
+                                    "how_to_deploy/ja/deploy_codus/reverse_proxy",
+                                    "how_to_deploy/ja/deploy_codus/telemetry",
+                                    "how_to_deploy/ja/deploy_codus/troubleshooting",
+                                    "how_to_deploy/ja/deploy_codus/updating"
                                 ]
                             },
                             {
                                 "group": "Kubernetes でデプロイ",
                                 "pages": [
-                                    "how_to_deploy/ja/deploy_kodus/kubernetes"
+                                    "how_to_deploy/ja/deploy_codus/kubernetes"
                                 ]
                             },
                             {
@@ -1293,14 +1293,14 @@
                             {
                                 "group": "LLMプロバイダー",
                                 "pages": [
-                                    "knowledge_base/ja/how-to-use-z-ai-with-kodus",
-                                    "knowledge_base/ja/how-to-use-synthetic-with-kodus",
-                                    "knowledge_base/ja/how-to-use-chutes-with-kodus",
-                                    "knowledge_base/ja/how-to-use-moonshot-with-kodus",
-                                    "knowledge_base/ja/how-to-use-novita-with-kodus",
-                                    "knowledge_base/ja/how-to-use-groq-with-kodus",
-                                    "knowledge_base/ja/how-to-use-together-ai-with-kodus",
-                                    "knowledge_base/ja/how-to-use-fireworks-with-kodus"
+                                    "knowledge_base/ja/how-to-use-z-ai-with-codus",
+                                    "knowledge_base/ja/how-to-use-synthetic-with-codus",
+                                    "knowledge_base/ja/how-to-use-chutes-with-codus",
+                                    "knowledge_base/ja/how-to-use-moonshot-with-codus",
+                                    "knowledge_base/ja/how-to-use-novita-with-codus",
+                                    "knowledge_base/ja/how-to-use-groq-with-codus",
+                                    "knowledge_base/ja/how-to-use-together-ai-with-codus",
+                                    "knowledge_base/ja/how-to-use-fireworks-with-codus"
                                 ]
                             }
                         ]
@@ -1324,9 +1324,9 @@
                             {
                                 "group": "レシピ",
                                 "pages": [
-                                    "cookbook/ja/kodus-for-monorepos",
+                                    "cookbook/ja/codus-for-monorepos",
                                     "cookbook/ja/security-first-review-pipeline",
-                                    "cookbook/ja/kodus-sprint-workflow",
+                                    "cookbook/ja/codus-sprint-workflow",
                                     "cookbook/ja/team-onboarding",
                                     "cookbook/ja/compliance-review-pipeline"
                                 ]
@@ -1394,19 +1394,19 @@
                                         ]
                                     },
                                     {
-                                        "group": "Kody 规则",
+                                        "group": "Cody 规则",
                                         "pages": [
-                                            "how_to_use/zh/code_review/configs/kody_rules",
+                                            "how_to_use/zh/code_review/configs/cody_rules",
                                             "how_to_use/zh/code_review/configs/rules_inheritance",
                                             "how_to_use/zh/code_review/configs/rules_file_detection",
                                             "how_to_use/zh/code_review/configs/repository_rules",
                                             "how_to_use/zh/code_review/configs/global_rule_sources",
-                                            "how_to_use/zh/code_review/learning/kody_rules_generation"
+                                            "how_to_use/zh/code_review/learning/cody_rules_generation"
                                         ]
                                     },
                                     "how_to_use/zh/code_review/plugins",
                                     "how_to_use/zh/code_review/business_logic_validation",
-                                    "how_to_use/zh/code_review/learning/kody_learning"
+                                    "how_to_use/zh/code_review/learning/cody_learning"
                                 ]
                             },
                             {
@@ -1427,7 +1427,7 @@
                                 "pages": [
                                     "how_to_use/zh/cockpit/overview",
                                     "how_to_use/zh/cockpit/configuration",
-                                    "how_to_use/zh/cockpit/kodus_review",
+                                    "how_to_use/zh/cockpit/codus_review",
                                     {
                                         "group": "指标",
                                         "pages": [
@@ -1435,7 +1435,7 @@
                                             "how_to_use/zh/cockpit/metrics/lead_time_for_changes",
                                             "how_to_use/zh/cockpit/metrics/change_failure_rate",
                                             "how_to_use/zh/cockpit/metrics/pr_size",
-                                            "how_to_use/zh/cockpit/metrics/kody_suggestions",
+                                            "how_to_use/zh/cockpit/metrics/cody_suggestions",
                                             "how_to_use/zh/cockpit/metrics/lead_time_breakdown",
                                             "how_to_use/zh/cockpit/metrics/developer_activity",
                                             "how_to_use/zh/cockpit/metrics/prs_by_developer",
@@ -1445,7 +1445,7 @@
                                 ]
                             },
                             {
-                                "group": "Kody 工单",
+                                "group": "Cody 工单",
                                 "pages": [
                                     "how_to_use/zh/issues/overview"
                                 ]
@@ -1489,7 +1489,7 @@
                             {
                                 "group": "概念",
                                 "pages": [
-                                    "how_to_deploy/zh/kodus_architecture"
+                                    "how_to_deploy/zh/codus_architecture"
                                 ]
                             },
                             {
@@ -1501,20 +1501,20 @@
                             {
                                 "group": "使用 Docker 部署",
                                 "pages": [
-                                    "how_to_deploy/zh/deploy_kodus/generic_vm",
-                                    "how_to_deploy/zh/deploy_kodus/mcp_manager",
-                                    "how_to_deploy/zh/deploy_kodus/sandbox",
-                                    "how_to_deploy/zh/deploy_kodus/analytics_worker",
-                                    "how_to_deploy/zh/deploy_kodus/reverse_proxy",
-                                    "how_to_deploy/zh/deploy_kodus/telemetry",
-                                    "how_to_deploy/zh/deploy_kodus/troubleshooting",
-                                    "how_to_deploy/zh/deploy_kodus/updating"
+                                    "how_to_deploy/zh/deploy_codus/generic_vm",
+                                    "how_to_deploy/zh/deploy_codus/mcp_manager",
+                                    "how_to_deploy/zh/deploy_codus/sandbox",
+                                    "how_to_deploy/zh/deploy_codus/analytics_worker",
+                                    "how_to_deploy/zh/deploy_codus/reverse_proxy",
+                                    "how_to_deploy/zh/deploy_codus/telemetry",
+                                    "how_to_deploy/zh/deploy_codus/troubleshooting",
+                                    "how_to_deploy/zh/deploy_codus/updating"
                                 ]
                             },
                             {
                                 "group": "使用 Kubernetes 部署",
                                 "pages": [
-                                    "how_to_deploy/zh/deploy_kodus/kubernetes"
+                                    "how_to_deploy/zh/deploy_codus/kubernetes"
                                 ]
                             },
                             {
@@ -1625,14 +1625,14 @@
                             {
                                 "group": "LLM 提供商",
                                 "pages": [
-                                    "knowledge_base/zh/how-to-use-z-ai-with-kodus",
-                                    "knowledge_base/zh/how-to-use-synthetic-with-kodus",
-                                    "knowledge_base/zh/how-to-use-chutes-with-kodus",
-                                    "knowledge_base/zh/how-to-use-moonshot-with-kodus",
-                                    "knowledge_base/zh/how-to-use-novita-with-kodus",
-                                    "knowledge_base/zh/how-to-use-groq-with-kodus",
-                                    "knowledge_base/zh/how-to-use-together-ai-with-kodus",
-                                    "knowledge_base/zh/how-to-use-fireworks-with-kodus"
+                                    "knowledge_base/zh/how-to-use-z-ai-with-codus",
+                                    "knowledge_base/zh/how-to-use-synthetic-with-codus",
+                                    "knowledge_base/zh/how-to-use-chutes-with-codus",
+                                    "knowledge_base/zh/how-to-use-moonshot-with-codus",
+                                    "knowledge_base/zh/how-to-use-novita-with-codus",
+                                    "knowledge_base/zh/how-to-use-groq-with-codus",
+                                    "knowledge_base/zh/how-to-use-together-ai-with-codus",
+                                    "knowledge_base/zh/how-to-use-fireworks-with-codus"
                                 ]
                             }
                         ]
@@ -1656,9 +1656,9 @@
                             {
                                 "group": "实用方案",
                                 "pages": [
-                                    "cookbook/zh/kodus-for-monorepos",
+                                    "cookbook/zh/codus-for-monorepos",
                                     "cookbook/zh/security-first-review-pipeline",
-                                    "cookbook/zh/kodus-sprint-workflow",
+                                    "cookbook/zh/codus-sprint-workflow",
                                     "cookbook/zh/team-onboarding",
                                     "cookbook/zh/compliance-review-pipeline"
                                 ]
@@ -1698,21 +1698,21 @@
             },
             {
                 "label": "Github",
-                "href": "https://github.com/kodustech"
+                "href": "https://github.com/elchapita43"
             }
         ],
         "primary": {
             "type": "button",
             "color": "primary",
-            "label": "Try Kodus",
+            "label": "Try Codus",
             "href": "https://kodus.io/"
         }
     },
     "footer": {
         "socials": {
-            "twitter": "https://twitter.com/kodustech",
-            "github": "https://github.com/kodustech",
-            "linkedin": "https://www.linkedin.com/company/kodustech"
+            "twitter": "https://twitter.com/elchapita43",
+            "github": "https://github.com/elchapita43",
+            "linkedin": "https://www.linkedin.com/company/elchapita43"
         }
     },
     "integrations": {

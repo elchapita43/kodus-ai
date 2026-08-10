@@ -108,7 +108,7 @@ describe('ForgejoService fullName pull request mapping', () => {
                 title: 'Fix login flow',
                 body: 'Details',
                 state: 'open',
-                html_url: 'https://git.example.com/kodustech/kodus-ai/pulls/7',
+                html_url: 'https://git.example.com/elchapita43/codus-ai/pulls/7',
                 created_at: '2024-01-16T10:00:00Z',
                 updated_at: '2024-01-16T10:00:00Z',
                 closed_at: null,
@@ -125,8 +125,8 @@ describe('ForgejoService fullName pull request mapping', () => {
                     sha: 'head-sha',
                     repo: {
                         id: 22,
-                        name: 'kodus-ai',
-                        full_name: 'kodustech/kodus-ai',
+                        name: 'codus-ai',
+                        full_name: 'elchapita43/codus-ai',
                         default_branch: 'main',
                     },
                 },
@@ -135,28 +135,28 @@ describe('ForgejoService fullName pull request mapping', () => {
                     sha: 'base-sha',
                     repo: {
                         id: 22,
-                        name: 'kodus-ai',
-                        full_name: 'kodustech/kodus-ai',
+                        name: 'codus-ai',
+                        full_name: 'elchapita43/codus-ai',
                     },
                 },
             },
             {
                 id: '22',
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 default_branch: 'main',
             },
         );
 
-        expect(transformed.repository).toBe('kodustech/kodus-ai');
+        expect(transformed.repository).toBe('elchapita43/codus-ai');
         expect(transformed.repositoryData).toEqual({
             id: '22',
-            name: 'kodustech/kodus-ai',
+            name: 'elchapita43/codus-ai',
         });
         expect(transformed.base.repo).toEqual({
             id: '22',
-            name: 'kodus-ai',
+            name: 'codus-ai',
             defaultBranch: 'main',
-            fullName: 'kodustech/kodus-ai',
+            fullName: 'elchapita43/codus-ai',
         });
     });
 
@@ -193,7 +193,7 @@ describe('ForgejoService fullName pull request mapping', () => {
             },
             repository: {
                 id: '22',
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
             },
         });
 
@@ -203,12 +203,12 @@ describe('ForgejoService fullName pull request mapping', () => {
                 pull_number: 7,
                 state: 'open',
                 title: 'Fix login flow',
-                repository: 'kodustech/kodus-ai',
+                repository: 'elchapita43/codus-ai',
                 repositoryData: {
                     platform: 'forgejo',
                     id: '22',
-                    name: 'kodustech/kodus-ai',
-                    fullName: 'kodustech/kodus-ai',
+                    name: 'elchapita43/codus-ai',
+                    fullName: 'elchapita43/codus-ai',
                     language: '',
                     defaultBranch: 'main',
                 },

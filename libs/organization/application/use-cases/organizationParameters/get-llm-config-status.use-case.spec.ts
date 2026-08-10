@@ -1,4 +1,4 @@
-import { BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKProvider } from '@codus/codus-common/llm';
 
 // Keep the env-LLM branch deterministic: these tests exercise the BYOK
 // detection logic, so env is always "not configured" here.

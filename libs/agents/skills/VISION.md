@@ -1,4 +1,4 @@
-# Kodus Skills Framework — Design Document
+# Codus Skills Framework — Design Document
 
 ## 1. Problema
 
@@ -14,11 +14,11 @@ O manager quer: qualidade minima garantida, regras customizadas por time, visibi
 
 ## 2. Visao de Produto
 
-**"O Kody aprende seu time."**
+**"O Cody aprende seu time."**
 
-O Kodus Skills Framework e um sistema onde:
+O Codus Skills Framework e um sistema onde:
 
-1. **Skills sao artefatos versionados** — arquivos declarativos (SKILL.md) que definem o que o Kody analisa, quais ferramentas usa, e quais regras segue
+1. **Skills sao artefatos versionados** — arquivos declarativos (SKILL.md) que definem o que o Cody analisa, quais ferramentas usa, e quais regras segue
 2. **Skills declaram capabilities abstratas** — "preciso ler contexto de task" em vez de "chama getJiraIssue" — o runtime resolve pro provider certo
 3. **O sistema aprende** — apos execucoes bem-sucedidas, promove a tool que funciona melhor pra cada time/provider
 4. **O manager configura e observa** — habilita skills por time, define regras custom, ve metricas de qualidade
@@ -32,7 +32,7 @@ O Kodus Skills Framework e um sistema onde:
 | **Tech Lead** | Configura regras por time | Quais skills rodam, o que pegam, metricas de qualidade |
 | **Parceiro** | Cria skill custom | Template SKILL.md + docs + API de capabilities |
 
-### O que diferencia o Kodus
+### O que diferencia o Codus
 
 | Concorrente | O que faz | O que falta |
 |-------------|-----------|-------------|
@@ -206,7 +206,7 @@ description: >
   Use when reviewing PRs that reference Jira, Linear, or other task management tools.
 metadata:
   version: '1.0.0'
-  kodus:
+  codus:
     capabilities:
       - pr.metadata.read
       - pr.diff.read
@@ -264,8 +264,8 @@ references/
 
 | Capability | Mode | Tools resolvidas |
 |-----------|------|-----------------|
-| `pr.diff.read` | `fixed_tools` | `KODUS_GET_PULL_REQUEST_DIFF` |
-| `pr.metadata.read` | `fixed_tools` | `KODUS_GET_PULL_REQUEST` |
+| `pr.diff.read` | `fixed_tools` | `CODUS_GET_PULL_REQUEST_DIFF` |
+| `pr.metadata.read` | `fixed_tools` | `CODUS_GET_PULL_REQUEST` |
 | `task.context.read` | `provider_dynamic` | Resolvido por provider (Jira, Linear, etc) |
 
 ### 6.2 Capability extensivel via SKILL.md
@@ -377,9 +377,9 @@ evals:
       taskQuality: COMPLETE
     trajectory:
       - capability: pr.metadata.read
-        tool: KODUS_GET_PULL_REQUEST
+        tool: CODUS_GET_PULL_REQUEST
       - capability: pr.diff.read
-        tool: KODUS_GET_PULL_REQUEST_DIFF
+        tool: CODUS_GET_PULL_REQUEST_DIFF
       - capability: task.context.read
         tool: getJiraIssue
     outcome:

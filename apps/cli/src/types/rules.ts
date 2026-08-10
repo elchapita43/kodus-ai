@@ -1,14 +1,14 @@
-export type KodyRuleSeverity = 'low' | 'medium' | 'high' | 'critical';
+export type CodyRuleSeverity = 'low' | 'medium' | 'high' | 'critical';
 
-export type KodyRuleScope = 'pull request' | 'file';
+export type CodyRuleScope = 'pull request' | 'file';
 
-export interface KodyRule {
+export interface CodyRule {
     uuid: string;
     repositoryId?: string;
     title: string;
     rule: string;
-    severity?: KodyRuleSeverity;
-    scope?: KodyRuleScope;
+    severity?: CodyRuleSeverity;
+    scope?: CodyRuleScope;
     path?: string;
 }
 
@@ -21,7 +21,7 @@ export interface CentralizedPrResponse {
     message?: string;
 }
 
-export type KodyRuleMutationResult = KodyRule | CentralizedPrResponse;
+export type CodyRuleMutationResult = CodyRule | CentralizedPrResponse;
 
 export const isCentralizedPrResponse = (
     value: unknown,
@@ -33,25 +33,25 @@ export const isCentralizedPrResponse = (
     return (value as { mode?: string }).mode === 'centralized-pr';
 };
 
-export interface CreateKodyRuleRequest {
+export interface CreateCodyRuleRequest {
     title: string;
     rule: string;
     repositoryId?: string;
-    severity?: KodyRuleSeverity;
-    scope?: KodyRuleScope;
+    severity?: CodyRuleSeverity;
+    scope?: CodyRuleScope;
     path?: string;
 }
 
-export interface UpdateKodyRuleRequest {
+export interface UpdateCodyRuleRequest {
     repositoryId?: string;
     title?: string;
     rule?: string;
-    severity?: KodyRuleSeverity;
-    scope?: KodyRuleScope;
+    severity?: CodyRuleSeverity;
+    scope?: CodyRuleScope;
     path?: string;
 }
 
-export interface ViewKodyRulesRequest {
+export interface ViewCodyRulesRequest {
     ruleId?: string;
     repositoryId?: string;
 }

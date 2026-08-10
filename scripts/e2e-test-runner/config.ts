@@ -3,7 +3,7 @@
  */
 
 export interface TestConfig {
-    // Kodus API
+    // Codus API
     apiBaseUrl: string;
 
     // GitHub config (for creating PRs)
@@ -39,7 +39,7 @@ export interface TestConfig {
 }
 
 export const defaultConfig: TestConfig = {
-    apiBaseUrl: process.env.KODUS_API_URL || 'http://localhost:3000',
+    apiBaseUrl: process.env.CODUS_API_URL || 'http://localhost:3000',
 
     github: {
         token: process.env.GITHUB_TEST_TOKEN || '',

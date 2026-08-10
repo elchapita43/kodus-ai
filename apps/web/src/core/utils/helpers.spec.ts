@@ -60,21 +60,21 @@ describe("createUrl", () => {
         it("self-hosted billing container: http + port", () => {
             const createUrl = loadCreateUrl({ nodeEnv: "self-hosted" });
             const url = createUrl(
-                "kodus-service-billing",
+                "codus-service-billing",
                 "3992",
                 "/api/billing/trial",
                 { internal: true },
             );
             expect(url).toBe(
-                "http://kodus-service-billing:3992/api/billing/trial",
+                "http://codus-service-billing:3992/api/billing/trial",
             );
         });
 
         it("production with internal flag still http + port (no heuristic override)", () => {
             const createUrl = loadCreateUrl({ nodeEnv: "production" });
             expect(
-                createUrl("kodus_api", "3001", "/team", { internal: true }),
-            ).toBe("http://kodus_api:3001/team");
+                createUrl("codus_api", "3001", "/team", { internal: true }),
+            ).toBe("http://codus_api:3001/team");
         });
 
         it("explicit https:// scheme in hostName beats the internal default", () => {
@@ -117,11 +117,11 @@ describe("createUrl", () => {
             const createUrl = loadCreateUrl({ nodeEnv: "self-hosted" });
             expect(
                 createUrl(
-                    "kodus-service-billing",
+                    "codus-service-billing",
                     "3992",
                     "/api/billing/trial",
                 ),
-            ).toBe("https://kodus-service-billing/api/billing/trial");
+            ).toBe("https://codus-service-billing/api/billing/trial");
         });
 
         it("localhost stays http + port even without a flag", () => {

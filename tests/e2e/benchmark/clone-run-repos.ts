@@ -12,7 +12,7 @@
 // sets warm; a run CLAIMS one by renaming it to its RUN_ID (atomic: the first
 // repo's rename is the lock), which is instant. No pool free -> clone inline.
 //
-// Local mirror cache (~/.cache/kodus-bench-mirrors/<base>.git): the source is
+// Local mirror cache (~/.cache/codus-bench-mirrors/<base>.git): the source is
 // mirrored ONCE and kept fresh with `remote update --prune`, so neither pool
 // refill nor an inline clone re-downloads full history every time. `--mirror`
 // keeps ALL refs, so the exact head/base branches are always present; we push
@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
-const ORG = process.env.FARM_GH_ORG || "kodus-bench";
+const ORG = process.env.FARM_GH_ORG || "codus-bench";
 const TOKEN = process.env.FARM_GH_TOKEN || process.env.GH_CLONE_TOKEN || process.env.GH_TEST_TOKEN || process.env.GH_DEV_TOKEN;
 if (!TOKEN) throw new Error("FARM_GH_TOKEN not set");
 
@@ -40,7 +40,7 @@ const MODE = process.argv.includes("--destroy") ? "destroy"
 const RUN_ID = process.env.FARM_RUN_ID;
 if (MODE !== "refill" && !RUN_ID) throw new Error("FARM_RUN_ID not set");
 
-const MIRROR_DIR = join(homedir(), ".cache", "kodus-bench-mirrors");
+const MIRROR_DIR = join(homedir(), ".cache", "codus-bench-mirrors");
 
 interface BenchPR { repo: string; head: string; base: string }
 

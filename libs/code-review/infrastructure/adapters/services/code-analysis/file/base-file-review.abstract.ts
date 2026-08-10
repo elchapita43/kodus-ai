@@ -1,10 +1,10 @@
 import { createLogger } from '@libs/core/log/logger';
 /**
  * @license
- * © Kodus Tech. All rights reserved.
+ * © Codus Tech. All rights reserved.
  */
 
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { Injectable } from '@nestjs/common';
 
 import {

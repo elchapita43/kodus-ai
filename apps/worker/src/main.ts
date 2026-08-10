@@ -11,7 +11,7 @@ import { configureLongFetchTimeouts } from '@libs/core/infrastructure/http/fetch
 configureLongFetchTimeouts();
 
 // Initialize profiling early (before NestJS bootstrap)
-initPyroscope({ appName: 'kodus-worker' });
+initPyroscope({ appName: 'codus-worker' });
 
 import { INestApplicationContext } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';

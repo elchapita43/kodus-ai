@@ -4,7 +4,7 @@ import {
     ParserType,
     PromptRole,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Inject, Injectable } from '@nestjs/common';
 import { IPullRequestMessages } from '@libs/code-review/domain/pullRequestMessages/interfaces/pullRequestMessages.interface';
 import { ISuggestionByPR } from '@libs/platformData/domain/pullRequests/interfaces/pullRequests.interface';
@@ -487,10 +487,10 @@ You must always respond in ${languageResultPrompt}.`;
                 }
 
                 const newSummary = result || 'No summary generated';
-                const startMarker = '<!-- kody-pr-summary:start -->';
-                const endMarker = '<!-- kody-pr-summary:end -->';
+                const startMarker = '<!-- cody-pr-summary:start -->';
+                const endMarker = '<!-- cody-pr-summary:end -->';
                 const blockRegex =
-                    /<!-- kody-pr-summary:start -->([\s\S]*?)<!-- kody-pr-summary:end -->/;
+                    /<!-- cody-pr-summary:start -->([\s\S]*?)<!-- cody-pr-summary:end -->/;
 
                 let finalDescription = result || 'No comment generated';
 
@@ -558,15 +558,15 @@ You must always respond in ${languageResultPrompt}.`;
                             BehaviourForExistingDescription.CONCATENATE
                     ) {
                         // Re-runs of the same PR shouldn't keep stacking
-                        // `<!-- kody-pr-summary:start --> ... :end -->`
+                        // `<!-- cody-pr-summary:start --> ... :end -->`
                         // blocks (issue #1019). Strip any previous block
                         // — and the `\n\n---\n\n` separator we emit
                         // before it — from the existing body before
                         // concatenating the freshly-generated one.
                         const previousBlockWithSeparator =
-                            /\n*---\n*<!-- kody-pr-summary:start -->[\s\S]*?<!-- kody-pr-summary:end -->/g;
+                            /\n*---\n*<!-- cody-pr-summary:start -->[\s\S]*?<!-- cody-pr-summary:end -->/g;
                         const previousBlockStandalone =
-                            /<!-- kody-pr-summary:start -->[\s\S]*?<!-- kody-pr-summary:end -->/g;
+                            /<!-- cody-pr-summary:start -->[\s\S]*?<!-- cody-pr-summary:end -->/g;
                         const cleanedBody = updatedPR.body
                             .replace(previousBlockWithSeparator, '')
                             .replace(previousBlockStandalone, '')
@@ -738,7 +738,7 @@ You must always respond in ${languageResultPrompt}.`;
                 commentBody = [
                     '# Code Review Started',
                     '',
-                    '<!-- kody-codereview -->',
+                    '<!-- cody-codereview -->',
                     '&#8203;',
                 ].join('\n');
             }
@@ -1602,7 +1602,7 @@ You must always respond in ${languageResultPrompt}.`;
                         errorMessage,
                     );
 
-                    // Optional team-authored note appended below Kody's default
+                    // Optional team-authored note appended below Cody's default
                     // error comment (issue #1452). The technical reason above is
                     // always preserved; this is only the org-specific next step
                     // (e.g. "reach out to #devops"). Single newlines collapse in
@@ -1621,7 +1621,7 @@ You must always respond in ${languageResultPrompt}.`;
 
             if (!resultText) {
                 // Non-failed runs (full SUCCESS and PARTIAL_ERROR where only
-                // auxiliary work failed, e.g. kody-rules) share the same
+                // auxiliary work failed, e.g. cody-rules) share the same
                 // base copy. For PARTIAL_ERROR we still append a short notice
                 // explaining why auto-approve didn't fire — otherwise the
                 // user sees "review completed" + no approval and thinks
@@ -1650,7 +1650,7 @@ You must always respond in ${languageResultPrompt}.`;
             // failures already render via the `withErrors` template +
             // friendlyMessage). The warnings ARE persisted to
             // automation_execution.dataExecution.reviewWarnings for the
-            // admin-facing Pull Requests dashboard in the Kodus web app.
+            // admin-facing Pull Requests dashboard in the Codus web app.
 
             // Cross-repo transparency (#1576): CodeRabbit-style line listing
             // which linked repos/refs were actually cloned and consulted.
@@ -1661,7 +1661,7 @@ You must always respond in ${languageResultPrompt}.`;
             // Add unique tag with timestamp to identify this comment as completed
             const uniqueId = `completed-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-            return `${resultText}${linkedReposLine}\n\n${await this.generateConfigReviewMarkdown(organizationAndTeamData, prNumber, codeReviewConfig)}\n\n<!-- kody-codereview-${uniqueId} -->\n<!-- kody-codereview -->\n&#8203;`;
+            return `${resultText}${linkedReposLine}\n\n${await this.generateConfigReviewMarkdown(organizationAndTeamData, prNumber, codeReviewConfig)}\n\n<!-- cody-codereview-${uniqueId} -->\n<!-- cody-codereview -->\n&#8203;`;
         } catch (error) {
             this.logger.error({
                 message:
@@ -1674,7 +1674,7 @@ You must always respond in ${languageResultPrompt}.`;
             const fallbackText = '## Code Review Completed! 🔥';
             const uniqueId = `completed-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-            return `${fallbackText}\n\n<!-- kody-codereview-${uniqueId} -->\n<!-- kody-codereview -->\n&#8203;`;
+            return `${fallbackText}\n\n<!-- cody-codereview-${uniqueId} -->\n<!-- cody-codereview -->\n&#8203;`;
         }
     }
 
@@ -1726,7 +1726,7 @@ ${filesTableContent}
 
 ${summaryContent}
 
-<!-- kody-codereview -->\n&#8203;`.trim();
+<!-- cody-codereview -->\n&#8203;`.trim();
         } catch (error) {
             this.logger.error({
                 message: 'Error generating pull request summary markdown',
@@ -2135,7 +2135,7 @@ ${reviewOptions}
         return platformType === PlatformType.BITBUCKET
             ? markdown
                   .replace(
-                      /(<\/?details>)|(<\/?summary>)|(<!-- kody-codereview -->(\n|\\n)?&#8203;)/g,
+                      /(<\/?details>)|(<\/?summary>)|(<!-- cody-codereview -->(\n|\\n)?&#8203;)/g,
                       '',
                   )
                   .trim()
@@ -2295,7 +2295,7 @@ ${reviewOptions}
 
     /**
      * Finds the last completed code review comment on a PR
-     * using the tag <!-- kody-codereview-completed-{uniqueId} -->
+     * using the tag <!-- cody-codereview-completed-{uniqueId} -->
      */
     async findLastReviewComment(
         organizationAndTeamData: OrganizationAndTeamData,
@@ -2323,7 +2323,7 @@ ${reviewOptions}
             const completedReviewComments = comments
                 .filter((comment: any) => {
                     const body = comment.body || '';
-                    return body.includes('<!-- kody-codereview-completed-');
+                    return body.includes('<!-- cody-codereview-completed-');
                 })
                 .sort(
                     (a, b) =>

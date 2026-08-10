@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs/promises';
 import path from 'path';
 import { gitService } from '../../services/git.service.js';
-import { KODUS_MARKER } from './install.js';
+import { CODUS_MARKER } from './install.js';
 import { exitWithCode } from '../../utils/cli-exit.js';
 import { cliError, cliInfo } from '../../utils/logger.js';
 
@@ -23,8 +23,8 @@ export async function statusAction(): Promise<void> {
         return;
     }
 
-    if (!content.includes(KODUS_MARKER)) {
-        cliInfo(chalk.yellow('Pre-push hook: installed (not by kodus)'));
+    if (!content.includes(CODUS_MARKER)) {
+        cliInfo(chalk.yellow('Pre-push hook: installed (not by codus)'));
         return;
     }
 

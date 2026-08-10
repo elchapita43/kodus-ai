@@ -36,24 +36,24 @@ describe('repoConfigService.addRepository', () => {
         vi.clearAllMocks();
         vi.unstubAllEnvs();
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_team_key',
+            teamKey: 'codus_team_key',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         } as any);
         mockGitService.isGitRepository.mockResolvedValue(true);
         mockGitService.getRemoteUrl.mockResolvedValue(
-            'git@github.com:kodustech/cli.git',
+            'git@github.com:elchapita43/cli.git',
         );
         mockGitService.extractOrgRepo.mockResolvedValue({
-            org: 'kodustech',
+            org: 'elchapita43',
             repo: 'cli',
         });
         mockApiConfig.getAvailableRepositories.mockResolvedValue([
             {
                 id: 'repo-1',
                 name: 'cli',
-                full_name: 'kodustech/cli',
-                organizationName: 'kodustech',
+                full_name: 'elchapita43/cli',
+                organizationName: 'elchapita43',
                 selected: false,
             },
         ] as any);
@@ -74,14 +74,14 @@ describe('repoConfigService.addRepository', () => {
         const result = await repoConfigService.addRepository('.');
 
         expect(mockApiConfig.getAvailableRepositories).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
         );
         expect(mockApiConfig.addRepositories).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
             ['repo-1'],
         );
         expect(result).toEqual({
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             status: 'added',
         });
     });
@@ -91,8 +91,8 @@ describe('repoConfigService.addRepository', () => {
             {
                 id: 'repo-1',
                 name: 'cli',
-                full_name: 'kodustech/cli',
-                organizationName: 'kodustech',
+                full_name: 'elchapita43/cli',
+                organizationName: 'elchapita43',
                 selected: true,
             },
         ] as any);
@@ -101,7 +101,7 @@ describe('repoConfigService.addRepository', () => {
 
         expect(mockApiConfig.addRepositories).not.toHaveBeenCalled();
         expect(result).toEqual({
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             status: 'already-added',
         });
     });
@@ -118,27 +118,27 @@ describe('repoConfigService.addRepository', () => {
 
     it('works without persisting team metadata locally', async () => {
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_team_key',
+            teamKey: 'codus_team_key',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         } as any);
 
         await expect(repoConfigService.addRepository('.')).resolves.toEqual({
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             status: 'added',
         });
     });
 
-    it('prefers KODUS_TEAM_KEY from the environment over the saved config', async () => {
-        vi.stubEnv('KODUS_TEAM_KEY', 'kodus_env_team_key');
+    it('prefers CODUS_TEAM_KEY from the environment over the saved config', async () => {
+        vi.stubEnv('CODUS_TEAM_KEY', 'codus_env_team_key');
 
         await repoConfigService.addRepository('.');
 
         expect(mockApiConfig.getAvailableRepositories).toHaveBeenCalledWith(
-            'kodus_env_team_key',
+            'codus_env_team_key',
         );
         expect(mockApiConfig.addRepositories).toHaveBeenCalledWith(
-            'kodus_env_team_key',
+            'codus_env_team_key',
             ['repo-1'],
         );
     });
@@ -153,7 +153,7 @@ describe('repoConfigService.addRepository', () => {
         );
     });
 
-    it('fails when repository is not found in Kodus available repositories', async () => {
+    it('fails when repository is not found in Codus available repositories', async () => {
         mockApiConfig.getAvailableRepositories.mockResolvedValue([] as any);
 
         await expect(repoConfigService.addRepository('.')).rejects.toEqual(
@@ -169,9 +169,9 @@ describe('repoConfigService.listRepositories', () => {
         vi.clearAllMocks();
         vi.unstubAllEnvs();
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_team_key',
+            teamKey: 'codus_team_key',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         } as any);
     });
 
@@ -182,8 +182,8 @@ describe('repoConfigService.listRepositories', () => {
                 {
                     id: 'repo-1',
                     name: 'cli',
-                    full_name: 'kodustech/cli',
-                    organizationName: 'kodustech',
+                    full_name: 'elchapita43/cli',
+                    organizationName: 'elchapita43',
                     selected: true,
                 },
             ] as any);
@@ -191,12 +191,12 @@ describe('repoConfigService.listRepositories', () => {
         const result = await repoConfigService.listRepositories();
 
         expect(mockApiConfig.getSelectedRepositories).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
         );
         expect(result).toEqual([
             {
                 id: 'repo-1',
-                fullName: 'kodustech/cli',
+                fullName: 'elchapita43/cli',
             },
         ]);
     });

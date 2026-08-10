@@ -92,14 +92,14 @@ export class AstGraphTables1775690886942 implements MigrationInterface {
             CREATE INDEX IF NOT EXISTS "idx_ast_edges_repo_source" ON "ast_edges" ("repo_id", "source_qualified")
         `);
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum"
+            ALTER TYPE "codus_workflow"."workflow_jobs_workflowtype_enum"
             RENAME TO "workflow_jobs_workflowtype_enum_old"
         `);
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_workflowtype_enum" AS ENUM(
                 'CODE_REVIEW',
                 'CRON_CHECK_PR_APPROVAL',
-                'CRON_KODY_LEARNING',
+                'CRON_CODY_LEARNING',
                 'CRON_CODE_REVIEW_FEEDBACK',
                 'WEBHOOK_PROCESSING',
                 'CHECK_SUGGESTION_IMPLEMENTATION',
@@ -108,11 +108,11 @@ export class AstGraphTables1775690886942 implements MigrationInterface {
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "workflowType" TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum" USING "workflowType"::"text"::"kodus_workflow"."workflow_jobs_workflowtype_enum"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "workflowType" TYPE "codus_workflow"."workflow_jobs_workflowtype_enum" USING "workflowType"::"text"::"codus_workflow"."workflow_jobs_workflowtype_enum"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            DROP TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old"
         `);
         await queryRunner.query(`
             DO $$ BEGIN
@@ -138,24 +138,24 @@ export class AstGraphTables1775690886942 implements MigrationInterface {
             ALTER TABLE "ast_nodes" DROP CONSTRAINT "FK_3646ba9180736a6764f10a98f02"
         `);
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old" AS ENUM(
                 'CODE_REVIEW',
                 'CRON_CHECK_PR_APPROVAL',
-                'CRON_KODY_LEARNING',
+                'CRON_CODY_LEARNING',
                 'CRON_CODE_REVIEW_FEEDBACK',
                 'WEBHOOK_PROCESSING',
                 'CHECK_SUGGESTION_IMPLEMENTATION'
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "workflowType" TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old" USING "workflowType"::"text"::"kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "workflowType" TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old" USING "workflowType"::"text"::"codus_workflow"."workflow_jobs_workflowtype_enum_old"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum"
+            DROP TYPE "codus_workflow"."workflow_jobs_workflowtype_enum"
         `);
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            ALTER TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old"
             RENAME TO "workflow_jobs_workflowtype_enum"
         `);
         await queryRunner.query(`

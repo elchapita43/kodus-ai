@@ -1,12 +1,12 @@
 ---
 title: "Início Rápido Local"
-description: "Coloque o Kodus em execução na sua máquina local — API, Worker, Webhooks, Web UI e todas as dependências em um único comando."
+description: "Coloque o Codus em execução na sua máquina local — API, Worker, Webhooks, Web UI e todas as dependências em um único comando."
 icon: "laptop"
 ---
 
 <Note>
   Este guia é destinado ao desenvolvimento local. Para implantação em produção,
-  consulte o guia [Implantar Kodus](/how_to_deploy/pt-br/deploy_kodus/generic_vm).
+  consulte o guia [Implantar Codus](/how_to_deploy/pt-br/deploy_codus/generic_vm).
 </Note>
 
 <Note>
@@ -14,8 +14,8 @@ icon: "laptop"
   self-hosted — o que significa que o heartbeat anônimo diário para
   `telemetry.kodus.io` vem habilitado por padrão. Se você não quiser que
   seus experimentos locais apareçam na frota, defina
-  `KODUS_TELEMETRY_DISABLED=true` no seu `.env`. Veja
-  [Telemetria Anônima](/how_to_deploy/pt-br/deploy_kodus/telemetry) pra
+  `CODUS_TELEMETRY_DISABLED=true` no seu `.env`. Veja
+  [Telemetria Anônima](/how_to_deploy/pt-br/deploy_codus/telemetry) pra
   saber o que é enviado e como inspecionar.
 </Note>
 
@@ -34,8 +34,8 @@ icon: "laptop"
       Para uma configuração rápida e automatizada, use nosso script de setup:
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
-      cd kodus-ai
+      git clone https://github.com/elchapita43/codus-ai.git
+      cd codus-ai
       pnpm run setup
       ```
 
@@ -80,7 +80,7 @@ icon: "laptop"
       ### 1. Clonar o repositório
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
+      git clone https://github.com/elchapita43/codus-ai.git
       ```
 
       ### 2. Instalar dependências
@@ -127,7 +127,7 @@ Selecione um modo e preencha seu .env antes de iniciar os serviços.
       Crie as redes Docker necessárias:
 
       ```bash
-      docker network create kodus-backend-services || true
+      docker network create codus-backend-services || true
       docker network create shared-network || true
       ```
 
@@ -141,10 +141,10 @@ Selecione um modo e preencha seu .env antes de iniciar os serviços.
 
       Este comando inicia:
 
-      - Kodus API
+      - Codus API
       - Worker (tarefas assíncronas)
       - Serviço de Webhooks
-      - Aplicação Web do Kodus
+      - Aplicação Web do Codus
       - Banco de dados PostgreSQL
       - Banco de dados MongoDB
       - RabbitMQ
@@ -226,7 +226,7 @@ pnpm run dev:health-check
 ```
 
 Esta verificação abrangente de saúde valida:
-- ✅ **Serviços**: Kodus API, Worker, Webhooks, Web, PostgreSQL, MongoDB, RabbitMQ
+- ✅ **Serviços**: Codus API, Worker, Webhooks, Web, PostgreSQL, MongoDB, RabbitMQ
 - 🔌 **Disponibilidade de portas**: Web (3000), API (3001), PostgreSQL (5432), MongoDB (27017), RabbitMQ (5672/15672)
 - 🗄️ **Configuração do banco de dados**: Migrações e dados iniciais
 - 🌐 **Endpoints da API**: Endpoints de saúde e conectividade básica
@@ -264,16 +264,16 @@ sudo usermod -aG docker $USER
 **Erros na criação de redes:**
 ```bash
 # Verificar se as redes já existem
-docker network ls | grep kodus
+docker network ls | grep codus
 # Remover redes conflitantes se necessário
-docker network rm kodus-backend-services shared-network
+docker network rm codus-backend-services shared-network
 ```
 
 ### Problemas Comuns
 
 **Conflitos de porta:**
 - Certifique-se de que as portas 3000 (Web), 3001 (API), 5432 (PostgreSQL), 27017 (MongoDB) e 5672/15672 (RabbitMQ) estão disponíveis
-- Pare outros serviços que usam essas portas antes de iniciar o Kodus
+- Pare outros serviços que usam essas portas antes de iniciar o Codus
 
 **Variáveis de ambiente não carregando:**
 - Verifique se o arquivo `.env` existe na raiz do projeto

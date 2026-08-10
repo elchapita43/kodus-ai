@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
-import { KODUS_MARKER, generateHookScript } from '../hook/install.js';
+import { CODUS_MARKER, generateHookScript } from '../hook/install.js';
 
 // Mock gitService
 vi.mock('../../services/git.service.js', () => ({
@@ -29,7 +29,7 @@ const mockConfirm = vi.mocked(confirm);
 let tmpDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-hook-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-hook-test-'));
     const hooksDir = path.join(tmpDir, '.git', 'hooks');
     await fs.mkdir(hooksDir, { recursive: true });
 
@@ -57,7 +57,7 @@ describe('hook install', () => {
     it('hook contains marker and is executable', async () => {
         await installAction({ failOn: 'critical', fast: true });
         const content = await fs.readFile(hookPath(), 'utf-8');
-        expect(content).toContain(KODUS_MARKER);
+        expect(content).toContain(CODUS_MARKER);
 
         const stat = await fs.stat(hookPath());
         // Check executable bit (owner)
@@ -70,7 +70,7 @@ describe('hook install', () => {
         expect(content).toContain('--fail-on warning');
     });
 
-    it('does not overwrite existing non-kodus hook without --force', async () => {
+    it('does not overwrite existing non-codus hook without --force', async () => {
         // Write a third-party hook
         await fs.writeFile(hookPath(), '#!/bin/sh\necho "third-party hook"\n');
 
@@ -80,14 +80,14 @@ describe('hook install', () => {
 
         const content = await fs.readFile(hookPath(), 'utf-8');
         expect(content).toContain('third-party hook');
-        expect(content).not.toContain(KODUS_MARKER);
+        expect(content).not.toContain(CODUS_MARKER);
     });
 
-    it('overwrites existing kodus hook without prompting', async () => {
-        // Write an old kodus hook
+    it('overwrites existing codus hook without prompting', async () => {
+        // Write an old codus hook
         await fs.writeFile(
             hookPath(),
-            `#!/bin/sh\n${KODUS_MARKER}\nkodus review --fail-on error\n`,
+            `#!/bin/sh\n${CODUS_MARKER}\ncodus review --fail-on error\n`,
         );
 
         await installAction({ failOn: 'critical', fast: true });
@@ -98,10 +98,10 @@ describe('hook install', () => {
 });
 
 describe('hook uninstall', () => {
-    it('removes hook with kodus marker', async () => {
+    it('removes hook with codus marker', async () => {
         await fs.writeFile(
             hookPath(),
-            `#!/bin/sh\n${KODUS_MARKER}\nkodus review\n`,
+            `#!/bin/sh\n${CODUS_MARKER}\ncodus review\n`,
         );
 
         await uninstallAction();
@@ -120,7 +120,7 @@ describe('hook uninstall', () => {
 });
 
 describe('hook status', () => {
-    it('detects installed kodus hook', async () => {
+    it('detects installed codus hook', async () => {
         const script = generateHookScript('critical', true);
         await fs.writeFile(hookPath(), script);
 

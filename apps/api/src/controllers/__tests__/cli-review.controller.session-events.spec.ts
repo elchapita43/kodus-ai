@@ -96,14 +96,14 @@ describe('CliReviewController.ingestSessionEvent', () => {
 
         const result = await controller.ingestSessionEvent(
             { body },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
             undefined,
         );
 
         expect(result).toEqual({ accepted: true });
         expect(teamCliKeyService.validateKey).toHaveBeenCalledWith(
-            'kodus_test_key',
+            'codus_test_key',
         );
         expect(ingestUseCase.execute).toHaveBeenCalledWith({
             organizationAndTeamData: {
@@ -133,7 +133,7 @@ describe('CliReviewController.ingestSessionEvent', () => {
 
         await controller.ingestSessionEvent(
             { body },
-            'kodus_key',
+            'codus_key',
             undefined,
             undefined,
         );
@@ -186,7 +186,7 @@ describe('CliReviewController.ingestSessionEvent', () => {
         ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('authenticates via Bearer kodus_ prefix', async () => {
+    it('authenticates via Bearer codus_ prefix', async () => {
         const body = {
             sessionId: 'sess-1',
             type: 'session_end' as const,
@@ -197,12 +197,12 @@ describe('CliReviewController.ingestSessionEvent', () => {
         await controller.ingestSessionEvent(
             { body },
             undefined,
-            'Bearer kodus_my_key',
+            'Bearer codus_my_key',
             undefined,
         );
 
         expect(teamCliKeyService.validateKey).toHaveBeenCalledWith(
-            'kodus_my_key',
+            'codus_my_key',
         );
         expect(ingestUseCase.execute).toHaveBeenCalled();
     });
@@ -222,7 +222,7 @@ describe('CliReviewController.ingestSessionEvent', () => {
 
         const result = await controller.ingestSessionEvent(
             { body },
-            'kodus_key',
+            'codus_key',
             undefined,
             undefined,
         );

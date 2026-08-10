@@ -5,7 +5,7 @@ import {
     ParserType,
     PromptRole,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import {
     prompt_validateCodeSemantics,
     ValidateCodeSemanticsResult,

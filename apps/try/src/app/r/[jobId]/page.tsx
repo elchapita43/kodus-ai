@@ -219,7 +219,7 @@ export default function ResultPage({
 
             {/* Pin the progress strip right under the navbar while
                 the review is still running. Lets the user read the PR
-                in full while Kodus works in the background. */}
+                in full while Codus works in the background. */}
             {!isCompleted && !isFailed && !error && (
                 <ReviewProgressBar
                     elapsedSeconds={elapsed}
@@ -255,7 +255,7 @@ export default function ResultPage({
                             }`}
                         >
                             <aside
-                                className={`lg:sticky lg:self-start lg:overflow-y-auto kodus-scroll ${
+                                className={`lg:sticky lg:self-start lg:overflow-y-auto codus-scroll ${
                                     isCompleted || isFailed
                                         ? "lg:top-20 lg:max-h-[calc(100vh-6rem)]"
                                         : "lg:top-32 lg:max-h-[calc(100vh-9rem)]"
@@ -393,7 +393,7 @@ export default function ResultPage({
                             </div>
 
                             <aside
-                                className={`lg:sticky lg:self-start lg:overflow-y-auto kodus-scroll ${
+                                className={`lg:sticky lg:self-start lg:overflow-y-auto codus-scroll ${
                                     isCompleted || isFailed
                                         ? "lg:top-20 lg:max-h-[calc(100vh-6rem)]"
                                         : "lg:top-32 lg:max-h-[calc(100vh-9rem)]"

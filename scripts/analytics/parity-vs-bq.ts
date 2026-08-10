@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { writeFileSync } from 'fs';
 
 /**
- * Parity harness: hits the legacy cockpit (kodus-service-analytics on
+ * Parity harness: hits the legacy cockpit (codus-service-analytics on
  * BigQuery) and the new internal cockpit (apps/api on Postgres
  * analytics) for the same set of queries, compares responses, and
  * emits a drift report.
@@ -26,7 +26,7 @@ import { writeFileSync } from 'fs';
  *
  * Split orgs (local cloned from prod rewriting organizationId):
  *   --orgs <newOrgId>=<legacyOrgId>[:Label]
- *   e.g. --orgs 0a3dd273-...=04bd288b-...:kodus-prod
+ *   e.g. --orgs 0a3dd273-...=04bd288b-...:codus-prod
  *
  * Smoke test (compares the new endpoint against itself — should be 100% MATCH):
  *   pnpm run analytics:parity-vs-bq \
@@ -52,7 +52,7 @@ interface CliArgs {
     jwtNew: string;
     /** JWT for the legacy side. Ignored when `apiKeyLegacy` is set. */
     jwtLegacy: string;
-    /** `x-api-key` for the legacy side. The real kodus-service-analytics
+    /** `x-api-key` for the legacy side. The real codus-service-analytics
      *  authenticates with an API key (`WEB_ANALYTICS_SECRET` in prod),
      *  not a bearer JWT — pass this when hitting the actual legacy
      *  deployment. */
@@ -150,7 +150,7 @@ const ALL_ENDPOINTS: EndpointDef[] = [
     },
     {
         // Chart counterpart to the `/highlights/pr-size` endpoint —
-        // only the highlight existed in `kodus-service-analytics`, so
+        // only the highlight existed in `codus-service-analytics`, so
         // legacy always 404s here. Flag as new-only to keep the parity
         // summary honest.
         name: 'productivity.charts.pr-size',

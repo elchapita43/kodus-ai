@@ -10,7 +10,7 @@ import {
 } from "@components/ui/collapsible";
 import { FormControl } from "@components/ui/form-control";
 import { Input } from "@components/ui/input";
-import { KodyReviewPreview } from "@components/ui/kody-review-preview";
+import { CodyReviewPreview } from "@components/ui/cody-review-preview";
 import { magicModal } from "@components/ui/magic-modal";
 import { Switch } from "@components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -104,7 +104,7 @@ export const GitlabTokenModal = (props: {
                             Reviews will be posted from the token owner's
                             account:
                         </p>
-                        <KodyReviewPreview
+                        <CodyReviewPreview
                             mode="inline"
                             author={{
                                 name: getUsernameFromEmail(props.userEmail),

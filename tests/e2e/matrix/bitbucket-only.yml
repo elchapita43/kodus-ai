@@ -17,7 +17,7 @@ scenarios:
     - onboarding-webhook-registration
     - code-review-basic
     - command-review
-    - kody-rules-create-and-apply
+    - cody-rules-create-and-apply
     - license-attribution
     - per-seat-license-toggle
 

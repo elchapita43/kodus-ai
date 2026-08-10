@@ -10,7 +10,7 @@ import {
 import { MCPRegistry } from './registry';
 import { mcpToolsToEngineTools } from './tools';
 /**
- * Create an MCP adapter for Kodus Flow
+ * Create an MCP adapter for Codus Flow
  *
  * @example
  * ```typescript

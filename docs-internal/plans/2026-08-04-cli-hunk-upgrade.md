@@ -13,8 +13,8 @@ Baseline: `hunkdiff@0.12.1` (May 2026) → `hunkdiff@0.18.0-beta.0` (Aug 2026)
    arguments used to fall back to the legacy inquirer list; hunk understands
    `hunk diff <range>`, `hunk show <ref>` and `-- <pathspec…>`, so all of them
    now open the TUI (`features/review/hunk-viewer.ts`).
-3. **A Kodus findings sidebar**, shipped as a bundled hunk extension
-   (`apps/cli/hunk-extension/kodus`) and loaded with `--extension`.
+3. **A Codus findings sidebar**, shipped as a bundled hunk extension
+   (`apps/cli/hunk-extension/codus`) and loaded with `--extension`.
 4. **Rewritten inline notes** using STML (`--experimental`), which also fixed
    three separate ways the old notes silently dropped text — see below.
 5. **Worktree fix** (unrelated to hunk): hook paths resolve through
@@ -37,10 +37,10 @@ Baseline: `hunkdiff@0.12.1` (May 2026) → `hunkdiff@0.18.0-beta.0` (Aug 2026)
 | Session daemon hardening (Host/Origin validation, body caps, timeouts) | 0.13.1, 0.15.1 | prerequisite for the live-session work below |
 | CJK / emoji alignment, wrapping, selection | 0.14.0–0.17.6 | |
 
-## The Kodus findings sidebar
+## The Codus findings sidebar
 
-`kodus review` now spawns hunk with `--extension <pkg>/hunk-extension/kodus`
-and hands the extension a structured sidecar through `KODUS_HUNK_FINDINGS`.
+`codus review` now spawns hunk with `--extension <pkg>/hunk-extension/codus`
+and hands the extension a structured sidecar through `CODUS_HUNK_FINDINGS`.
 
 Why a second sidecar rather than reusing `--agent-context`: that payload is
 hunk's own inline-note schema, and it flattens severity into a glyph inside a
@@ -54,7 +54,7 @@ what a file-ordered diff cannot — "what are the worst things in this changeset
 and where?" — so it sorts **by severity, not by path**:
 
 ```
- Kodus · 3 findings
+ Codus · 3 findings
  ‼1  ✖1  ℹ1
  ‼ src/a.ts:3
    eval() on a value derived from a hardcoded credential is remote code execution
@@ -64,13 +64,13 @@ and where?" — so it sorts **by severity, not by path**:
    Prefer const over let for a value that is never reassigned
 ```
 
-Keys (defaults; remappable via hunk's `[keybindings]` as `kodus.*`):
+Keys (defaults; remappable via hunk's `[keybindings]` as `codus.*`):
 
 | Command | Key | Does |
 | --- | --- | --- |
-| `kodus.toggle` | `y` | show/hide the pane |
-| `kodus.next` | `n` | jump to the next finding, severity-first |
-| `kodus.previous` | `p` | previous finding |
+| `codus.toggle` | `y` | show/hide the pane |
+| `codus.next` | `n` | jump to the next finding, severity-first |
+| `codus.previous` | `p` | previous finding |
 
 `n`/`p` are deliberately not hunk's `}` / `{` (next *annotated* hunk, document
 order): a `critical` three files down comes before an `info` in the current
@@ -82,12 +82,12 @@ Implementation notes:
   stealing width from the diff is worse than no panel. Hunk still owns pane
   arrangement, so at narrow terminal widths it drops the sidebar area entirely
   (the built-in file nav included); `y` or `s` brings it back.
-- Kodus reviews whole files while hunk only renders changed spans, so a finding
+- Codus reviews whole files while hunk only renders changed spans, so a finding
   can land outside every hunk. `findHunkIndex` falls back to the nearest hunk
   rather than refusing to navigate.
 - Path matching is exact-first with a path-segment suffix fallback, so a review
   scoped to a subdirectory still resolves.
-- The pure logic lives in `hunk-extension/kodus/findings.ts` (no JSX, types
+- The pure logic lives in `hunk-extension/codus/findings.ts` (no JSX, types
   only) so it is unit-tested from `src/features/review/__tests__/`. The `.tsx`
   entry sits outside `src/` so our `tsc` never compiles it — hunk runs it.
 - Verified end-to-end by driving the real TUI in a pty: pane renders, `y`
@@ -95,11 +95,11 @@ Implementation notes:
 
 ## Live validation (2026-08-04)
 
-Ran a real `kodus review` against the production API on this very changeset
+Ran a real `codus review` against the production API on this very changeset
 (13 files, ~10 min, `Found 3 issues in 13 files (1 critical)`), then drove the
 real TUI in a pty. It caught three things worth recording.
 
-**1. `getHooksDir()` fallback was wrong — Kody found it.**
+**1. `getHooksDir()` fallback was wrong — Cody found it.**
 `git rev-parse --git-common-dir` prints an absolute path inside a linked
 worktree but a *cwd-relative* one in an ordinary checkout (`../../.git` from a
 nested directory). Resolving it against `--show-toplevel` climbed above the
@@ -126,13 +126,13 @@ area); it toggles normally after that. Verified at 140 columns: one `y` reveals
 the pane.
 
 Also verified end-to-end with real API output: `--extension` reaches hunk, the
-`KODUS_HUNK_FINDINGS` sidecar is read, the pane renders `Kodus · 3 findings`
+`CODUS_HUNK_FINDINGS` sidecar is read, the pane renders `Codus · 3 findings`
 with `‼1 ✖2`, and `n` walks findings severity-first while moving the review
 stream.
 
 ### Open follow-up: `@opentui` peer mismatch
 
-Kody's third finding is real. `hunkdiff@0.18.0-beta.0` declares peers
+Cody's third finding is real. `hunkdiff@0.18.0-beta.0` declares peers
 `@opentui/core ^0.4.3` / `@opentui/react ^0.4.3`, but pnpm's auto-install-peers
 resolved `0.1.107` — 12 MB in `node_modules` at a version that does not satisfy
 the range. No runtime impact: hunk ships a prebuilt binary (81 MB for
@@ -184,7 +184,7 @@ kept coming back through a different door.
    relaxed only at the narrow end where the stack layout is predictable.
    Wrapping early on a wide terminal is cosmetic; clipping loses text.
 
-Also fixed while reading real Kody-rule findings:
+Also fixed while reading real Cody-rule findings:
 
 - **Markdown leaked verbatim.** `[rule name](https://app.kodus.io/…)` rendered
   as literal syntax with a 100-char URL wrapped mid-sentence, plus backslash
@@ -220,29 +220,29 @@ Verified working: launched `hunk diff` in a pty, pushed a finding with
 Two wins:
 
 - **Push findings into an already-open hunk instead of spawning a nested TUI.**
-  Today `kodus review` blocks until the whole review lands, then takes over the
+  Today `codus review` blocks until the whole review lands, then takes over the
   terminal. Instead: if `hunk session get --repo <root>` resolves, stream each
   finding in as it arrives. Also fixes the "I already have hunk open" case.
 - **Read the human's notes back out.** `comment list --type user` returns
-  human-authored inline notes — that closes the loop for `kodus fix`: review in
-  hunk, mark what you actually want fixed, and `kodus fix` acts on exactly
+  human-authored inline notes — that closes the loop for `codus fix`: review in
+  hunk, mark what you actually want fixed, and `codus fix` acts on exactly
   those instead of guessing. Today the hand-off is one-way.
 
 ### 2. Deepen the sidebar
 
 Now that the extension exists, cheap additions on the same API:
 
-- `ctx.dialogs.confirm` + a `kodus.fix` command to send the selected finding to
-  `kodus fix` without leaving the review.
+- `ctx.dialogs.confirm` + a `codus.fix` command to send the selected finding to
+  `codus fix` without leaving the review.
 - Dismiss/accept state per finding, surfaced back to the API on exit.
 - `transformChangeset` to collapse files with no findings when a review is
   large.
 
-### 3. Ship hunk's agent skill through `kodus skills`
+### 3. Ship hunk's agent skill through `codus skills`
 
 `hunk skill path` prints a bundled `hunk-review/SKILL.md` teaching an agent to
 drive a live session. We already have a skills sync pipeline
-(`utils/skills-sync*.ts`); re-exporting it lets Claude/Codex narrate a Kodus
+(`utils/skills-sync*.ts`); re-exporting it lets Claude/Codex narrate a Codus
 review inside the user's open hunk window.
 
 ### 4. Revisit STML when it stabilizes
@@ -272,7 +272,7 @@ Containment already in place:
 
 - A broken extension is skipped with a startup notice; a component that throws
   costs the pane, not the session. Review still works.
-- `resolveKodusExtensionDir()` returns null when the folder is absent, and
+- `resolveCodusExtensionDir()` returns null when the folder is absent, and
   `buildHunkArgs` simply omits `--extension` — so a build without it degrades
   to plain hunk.
 
@@ -282,8 +282,8 @@ the pty smoke test on every hunkdiff bump.
 ## Unrelated bug found while auditing
 
 `services/git-hooks.service.ts` installs a `prepare-commit-msg` hook that looks
-for sessions in `$(git rev-parse --git-common-dir)/kody-sessions`, but
-`services/session-local.service.ts` writes them to `<repoRoot>/.kody/sessions`.
-Nothing writes `kody-sessions`, so the `Kody-Checkpoint:` trailer never fires.
+for sessions in `$(git rev-parse --git-common-dir)/cody-sessions`, but
+`services/session-local.service.ts` writes them to `<repoRoot>/.cody/sessions`.
+Nothing writes `cody-sessions`, so the `Cody-Checkpoint:` trailer never fires.
 The service also has no production caller — only tests reference it. Needs a
 decision: wire it up against the real session dir, or delete it.

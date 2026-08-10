@@ -23,7 +23,7 @@ export const billingFetch = async <Data>(
         if (hostName === "localhost") {
             hostName =
                 process.env.GLOBAL_BILLING_CONTAINER_NAME ||
-                "kodus-service-billing";
+                "codus-service-billing";
         }
         const port = process.env.WEB_PORT_BILLING;
         // Internal hop: always http + port, no protocol guessing. The

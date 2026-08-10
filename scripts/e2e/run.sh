@@ -16,7 +16,7 @@
 #   pnpm run e2e:dry-run
 #   pnpm run e2e:smoke                                # github × code-review-basic
 #   pnpm run e2e:smoke --provider gitlab              # different provider
-#   pnpm run e2e:smoke --scenario kody-rules-create-and-apply
+#   pnpm run e2e:smoke --scenario cody-rules-create-and-apply
 #   pnpm run e2e:smoke --name junior                  # against named instance
 #   pnpm run e2e:matrix                               # default: matrix/fast.yml
 #   pnpm run e2e:matrix matrix/full.yml               # full tier (adds upgrade/SSO/Stripe)
@@ -32,7 +32,7 @@
 # Config sources (same as scripts/selfhosted/):
 #   1. Inline env (highest)
 #   2. scripts/e2e/.env (gitignored)
-#   3. ~/.kodus-dev/config (managed by `pnpm run selfhosted:setup`)
+#   3. ~/.codus-dev/config (managed by `pnpm run selfhosted:setup`)
 #
 # Per-provider env vars needed for smoke/matrix (matrix skips cells without):
 #   github       GH_TEST_TOKEN, GH_TEST_REPO        (optional: GH_TEST_PR_NUMBER)
@@ -46,8 +46,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-STATE_DIR="$REPO_ROOT/.kodus-dev"
-GLOBAL_CONFIG="$HOME/.kodus-dev/config"
+STATE_DIR="$REPO_ROOT/.codus-dev"
+GLOBAL_CONFIG="$HOME/.codus-dev/config"
 LOCAL_ENV="$SCRIPT_DIR/.env"
 E2E_DIR="$REPO_ROOT/tests/e2e"
 
@@ -96,7 +96,7 @@ resolve_op_refs() {
         if ! command -v op >/dev/null 2>&1; then
             err "$var is a 1Password ref ($val) but 'op' CLI is not installed."
             err "  Install: brew install --cask 1password-cli"
-            err "  Or replace with plain value in ~/.kodus-dev/config"
+            err "  Or replace with plain value in ~/.codus-dev/config"
             exit 1
         fi
         if ! resolved=$(op read --no-newline "$val" 2>&1); then
@@ -116,7 +116,7 @@ case "$MODE" in
     *) err "Unknown mode '$MODE'"; echo ""; usage; exit 2 ;;
 esac
 
-# Load config in priority order: caller env > scripts/e2e/.env > ~/.kodus-dev/config.
+# Load config in priority order: caller env > scripts/e2e/.env > ~/.codus-dev/config.
 # load_config_file is "set only if unset", so whichever file we load FIRST wins.
 # Load LOCAL_ENV first so a per-repo override beats the global default.
 #
@@ -318,7 +318,7 @@ case "$MODE" in
             # SSO E2E droplet only matters if the matrix file references
             # an sso-* scenario. Cheap check: grep the YAML.
             if grep -qE '^\s*-\s*sso-(cookie-domain|multi-user)\b' "$E2E_DIR/$MATRIX_FILE"; then
-                # The sso-e2e droplet's bootstrap-kodus-sso.sh has to
+                # The sso-e2e droplet's bootstrap-codus-sso.sh has to
                 # POST /sso-config, which is gated by the enterprise-
                 # tier license guard (libs/ee/license/guards/
                 # enterprise-tier.guard.ts). A signed-up tenant on a
@@ -327,12 +327,12 @@ case "$MODE" in
                 # provision script exits 1 — burning ~10 min on a
                 # doomed droplet. Fail FAST here instead.
                 #
-                # Operator fix: set SH_LICENSE_KEY in ~/.kodus-dev/config
-                # (op://Engineering/kodus-self-hosted-dev/license-paid).
+                # Operator fix: set SH_LICENSE_KEY in ~/.codus-dev/config
+                # (op://Engineering/codus-self-hosted-dev/license-paid).
                 if [ -z "${SH_LICENSE_KEY:-}" ]; then
                     err "Matrix references sso-* scenarios but SH_LICENSE_KEY is empty."
                     err "  sso-e2e droplet provision will fail at POST /sso-config (HTTP 403 enterprise tier)."
-                    err "  Fix: set SH_LICENSE_KEY in ~/.kodus-dev/config (pnpm run selfhosted:setup)."
+                    err "  Fix: set SH_LICENSE_KEY in ~/.codus-dev/config (pnpm run selfhosted:setup)."
                     err "  Workaround for this run: use a YAML without sso-cookie-domain / sso-multi-user."
                     exit 1
                 fi

@@ -8,7 +8,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# _common.sh loads ~/.kodus-dev/config + scripts/selfhosted/.env in the
+# _common.sh loads ~/.codus-dev/config + scripts/selfhosted/.env in the
 # right priority order. Don't duplicate that here.
 # shellcheck disable=SC1091
 . "$SCRIPT_DIR/_common.sh"
@@ -79,13 +79,13 @@ require_provider_token() {
 
 # ---------- HARD SAFETY GUARD ----------
 # Never delete a droplet that isn't one of OUR test droplets. provision.sh
-# always names them "kodus-selfhosted-<name>", so before issuing the DELETE
+# always names them "codus-selfhosted-<name>", so before issuing the DELETE
 # (which is keyed on SERVER_ID from the state file) we re-read the droplet's
 # LIVE name from the provider and refuse anything that doesn't match. This
-# protects production resources (e.g. kodus-web-new) from a stale/wrong
+# protects production resources (e.g. codus-web-new) from a stale/wrong
 # SERVER_ID in a state file or any future tooling bug. Fail-closed: if we
 # can't read the name, we don't delete.
-EXPECTED_NAME_PREFIX="kodus-selfhosted-"
+EXPECTED_NAME_PREFIX="codus-selfhosted-"
 if [ "$PROVIDER" = "digitalocean" ]; then
     require_provider_token DIGITALOCEAN_TOKEN
     LIVE_NAME=$(curl -fsS \
@@ -103,7 +103,7 @@ if [ "$PROVIDER" = "digitalocean" ]; then
         *)
             err "SAFETY: refusing to delete droplet $SERVER_ID — its live name is"
             err "'$LIVE_NAME', which is NOT a '${EXPECTED_NAME_PREFIX}*' test droplet."
-            err "Aborting to protect production resources (e.g. kodus-web-new)."
+            err "Aborting to protect production resources (e.g. codus-web-new)."
             exit 1
             ;;
     esac

@@ -115,12 +115,12 @@ const SCENARIO_REQUIRED: Record<string, ScenarioRequirement> = {
         envOrFiles: [
             {
                 env: "SH_LICENSE_KEY_PATH",
-                defaultFile: "~/.kodus-dev/license-seats1.jwt",
+                defaultFile: "~/.codus-dev/license-seats1.jwt",
             },
         ],
     },
     // Mints a throwaway repo per run, which needs org Administration on
-    // kodus-e2e (create + delete). The regular fine-grained GH_TEST_TOKEN
+    // codus-e2e (create + delete). The regular fine-grained GH_TEST_TOKEN
     // lacks that by design, so without the admin token the scenario would
     // 403 at repo creation — skip it instead. In CI the token is the QA
     // environment secret GH_REPO_ADMIN_TOKEN; set it locally to opt in.

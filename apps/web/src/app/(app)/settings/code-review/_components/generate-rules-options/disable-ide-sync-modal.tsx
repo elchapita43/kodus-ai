@@ -12,12 +12,12 @@ import {
 import { magicModal } from "@components/ui/magic-modal";
 import { useEffectOnce } from "@hooks/use-effect-once";
 
-import type { ImportedKodyRulesCounts } from "@services/kodyRules/fetch";
+import type { ImportedCodyRulesCounts } from "@services/codyRules/fetch";
 
 export type DisableIdeSyncAction = "keep" | "pause" | "delete";
 
 interface Props {
-    counts: ImportedKodyRulesCounts;
+    counts: ImportedCodyRulesCounts;
 }
 
 /**
@@ -56,7 +56,7 @@ export const DisableIdeSyncModal = ({ counts }: Props) => {
                             <strong>{counts.pinned}</strong> of{" "}
                             {counts.active === 1 ? "it" : "them"}{" "}
                             {counts.pinned === 1 ? "is" : "are"} pinned via{" "}
-                            <code className="text-xs">@kody-sync</code> and
+                            <code className="text-xs">@cody-sync</code> and
                             will keep syncing regardless of your choice.
                         </DialogDescription>
                     )}

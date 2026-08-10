@@ -92,7 +92,7 @@ export const CliKeysPage = ({
     const [keyToConfigure, setKeyToConfigure] = useState<CLIKey | null>(null);
     const [configDraft, setConfigDraft] = useState({
         repositoryConfig: false,
-        kodyRulesManage: false,
+        codyRulesManage: false,
     });
     const [createdKey, setCreatedKey] = useState<string | null>(null);
     const [createdMessage, setCreatedMessage] = useState<string | undefined>();
@@ -162,7 +162,7 @@ export const CliKeysPage = ({
         cliKey: CLIKey,
         draft: {
             repositoryConfig: boolean;
-            kodyRulesManage: boolean;
+            codyRulesManage: boolean;
         },
     ) => {
         setUpdatingKeyId(cliKey.uuid);
@@ -172,7 +172,7 @@ export const CliKeysPage = ({
                     (capability) =>
                         capability !==
                             CLI_KEY_CAPABILITIES.CONFIG_REPO_MANAGE &&
-                        capability !== CLI_KEY_CAPABILITIES.KODY_RULES_MANAGE,
+                        capability !== CLI_KEY_CAPABILITIES.CODY_RULES_MANAGE,
                 ) ?? [];
 
             const capabilities: CLIKeyCapability[] = [...otherCapabilities];
@@ -181,8 +181,8 @@ export const CliKeysPage = ({
                 capabilities.push(CLI_KEY_CAPABILITIES.CONFIG_REPO_MANAGE);
             }
 
-            if (draft.kodyRulesManage) {
-                capabilities.push(CLI_KEY_CAPABILITIES.KODY_RULES_MANAGE);
+            if (draft.codyRulesManage) {
+                capabilities.push(CLI_KEY_CAPABILITIES.CODY_RULES_MANAGE);
             }
 
             const updatedKey = await updateCLIKeyConfig({
@@ -226,9 +226,9 @@ export const CliKeysPage = ({
                 cliKey,
                 CLI_KEY_CAPABILITIES.CONFIG_REPO_MANAGE,
             ),
-            kodyRulesManage: thisKeyHasCapability(
+            codyRulesManage: thisKeyHasCapability(
                 cliKey,
-                CLI_KEY_CAPABILITIES.KODY_RULES_MANAGE,
+                CLI_KEY_CAPABILITIES.CODY_RULES_MANAGE,
             ),
         });
     };
@@ -624,7 +624,7 @@ export const CliKeysPage = ({
                                     </span>
                                     <span className="text-text-secondary text-sm">
                                         Enables commands like{" "}
-                                        <code>kodus config repo ...</code> for
+                                        <code>codus config repo ...</code> for
                                         this key.
                                     </span>
                                 </div>
@@ -646,20 +646,20 @@ export const CliKeysPage = ({
                             <div className="bg-card-lv2 border-card-lv1 flex items-start justify-between gap-4 rounded-xl border p-4">
                                 <div className="flex flex-col gap-1">
                                     <span className="text-sm font-semibold">
-                                        Allow Kody Rules management via CLI
+                                        Allow Cody Rules management via CLI
                                     </span>
                                     <span className="text-text-secondary text-sm">
-                                        Enables commands that manage Kody Rules
+                                        Enables commands that manage Cody Rules
                                         for this key.
                                     </span>
                                 </div>
 
                                 <Switch
-                                    checked={configDraft.kodyRulesManage}
+                                    checked={configDraft.codyRulesManage}
                                     onCheckedChange={(checked) =>
                                         setConfigDraft((current) => ({
                                             ...current,
-                                            kodyRulesManage: checked,
+                                            codyRulesManage: checked,
                                         }))
                                     }
                                     disabled={

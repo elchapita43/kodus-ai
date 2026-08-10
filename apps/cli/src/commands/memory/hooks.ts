@@ -8,24 +8,24 @@ import path from 'path';
 
 export const SUPPORTED_AGENTS = new Set(['claude', 'cursor', 'codex']);
 
-const DECISIONS_CAPTURE_COMMAND_PREFIX = 'kodus decisions capture';
+const DECISIONS_CAPTURE_COMMAND_PREFIX = 'codus decisions capture';
 
 export const CLAUDE_CAPTURE_COMMANDS = {
     userPromptSubmit:
-        'kodus decisions capture --capture-agent claude-compatible --event user-prompt-submit',
-    stop: 'kodus decisions capture --capture-agent claude-compatible --event stop',
+        'codus decisions capture --capture-agent claude-compatible --event user-prompt-submit',
+    stop: 'codus decisions capture --capture-agent claude-compatible --event stop',
     postToolUseWrite:
-        'kodus decisions capture --capture-agent claude-compatible --event post-tool-use-write',
+        'codus decisions capture --capture-agent claude-compatible --event post-tool-use-write',
     postToolUseEdit:
-        'kodus decisions capture --capture-agent claude-compatible --event post-tool-use-edit',
+        'codus decisions capture --capture-agent claude-compatible --event post-tool-use-edit',
 };
 
 export const CODEX_NOTIFY_LINE =
-    'notify = ["kodus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]';
+    'notify = ["codus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]';
 export const CODEX_NOTIFY_LINE_STOP_LEGACY =
-    'notify = ["kodus", "decisions", "capture", "--agent", "codex", "--event", "stop"]';
+    'notify = ["codus", "decisions", "capture", "--agent", "codex", "--event", "stop"]';
 export const CODEX_NOTIFY_LINE_LEGACY =
-    'notify = ["kodus", "decisions", "capture", "--agent", "codex", "--event", "agent-turn-complete"]';
+    'notify = ["codus", "decisions", "capture", "--agent", "codex", "--event", "agent-turn-complete"]';
 
 // ---------------------------------------------------------------------------
 // Shared helpers
@@ -105,7 +105,7 @@ function isRecord(value: unknown): value is JsonObject {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function isKodusCaptureCommand(command: string): boolean {
+function isCodusCaptureCommand(command: string): boolean {
     return command.includes(DECISIONS_CAPTURE_COMMAND_PREFIX);
 }
 
@@ -161,7 +161,7 @@ function upsertHook(
                 continue;
             }
 
-            if (isKodusCaptureCommand(hookValue.command)) {
+            if (isCodusCaptureCommand(hookValue.command)) {
                 hookValue.command = command;
                 return true;
             }
@@ -278,7 +278,7 @@ export async function installCodexNotify(configPath: string): Promise<{
             configPath,
             changed: false,
             skipped: true,
-            reason: 'Existing `notify` entry found. Merge manually if you want Kodus decision capture.',
+            reason: 'Existing `notify` entry found. Merge manually if you want Codus decision capture.',
         };
     }
 
@@ -334,7 +334,7 @@ export async function removeClaudeCompatibleHooks(
                 }
                 return (
                     typeof h.command !== 'string' ||
-                    !isKodusCaptureCommand(h.command)
+                    !isCodusCaptureCommand(h.command)
                 );
             });
 

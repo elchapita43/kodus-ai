@@ -13,10 +13,10 @@ export function SignupBanner({ reason }: { reason?: string }) {
             <div className="relative">
                 <p className="text-sm text-[var(--text)] font-medium">
                     {reason ??
-                        "Reviews on every PR, your own kody rules, private repos."}
+                        "Reviews on every PR, your own cody rules, private repos."}
                 </p>
                 <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                    Connect GitHub and Kodus reviews every PR you open.
+                    Connect GitHub and Codus reviews every PR you open.
                 </p>
             </div>
             <a

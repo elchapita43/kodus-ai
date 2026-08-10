@@ -11,7 +11,7 @@ import {
 import { Page } from "@components/ui/page";
 import { Spinner } from "@components/ui/spinner";
 import { toast } from "@components/ui/toaster/use-toast";
-import { KodyLearningStatus } from "@services/parameters/types";
+import { CodyLearningStatus } from "@services/parameters/types";
 import { usePermission } from "@services/permissions/hooks";
 import { Action, ResourceType } from "@services/permissions/types";
 import { SaveIcon } from "lucide-react";
@@ -65,7 +65,7 @@ function buildPromptSections(defaults: PromptDefaults): PromptSectionConfig[] {
         {
             fieldName: "v2PromptOverrides.generation",
             title: "Suggestion Prompts",
-            description: "Define how kody writes suggestions comments.",
+            description: "Define how cody writes suggestions comments.",
             contentClassName: "grid grid-cols-1 gap-6",
             fields: [
                 {
@@ -74,7 +74,7 @@ function buildPromptSections(defaults: PromptDefaults): PromptSectionConfig[] {
                     label: "Base instruction",
                     helperText: "Used for all suggestions (max 2000).",
                     placeholder:
-                        "Describe what Kody should analyze and suggest... Use @ to insert MCP tools for dynamic data.",
+                        "Describe what Cody should analyze and suggest... Use @ to insert MCP tools for dynamic data.",
                     defaultValue: defaults.generation?.main ?? "",
                 },
             ],
@@ -82,7 +82,7 @@ function buildPromptSections(defaults: PromptDefaults): PromptSectionConfig[] {
         {
             fieldName: "v2PromptOverrides.categories",
             title: "Category Prompts",
-            description: "Set the prompt Kody uses for each category.",
+            description: "Set the prompt Cody uses for each category.",
             contentClassName: "grid grid-cols-1 gap-6",
             fields: [
                 {
@@ -290,8 +290,8 @@ function CustomPromptsContent() {
     }
 
     if (
-        platformConfig.kodyLearningStatus ===
-        KodyLearningStatus.GENERATING_CONFIG
+        platformConfig.codyLearningStatus ===
+        CodyLearningStatus.GENERATING_CONFIG
     ) {
         return <GeneratingConfig />;
     }

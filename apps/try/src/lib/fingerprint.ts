@@ -1,4 +1,4 @@
-const STORAGE_KEY = "kodus-try-fingerprint";
+const STORAGE_KEY = "codus-try-fingerprint";
 
 function randomFingerprint(): string {
     const arr = new Uint8Array(16);

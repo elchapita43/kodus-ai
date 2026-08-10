@@ -108,7 +108,7 @@ describe('ForgejoService.requestChangesPullRequest', () => {
             },
             repository: {
                 id: 'repo-789',
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
             },
             prNumber: 42,
             criticalComments: [
@@ -138,10 +138,10 @@ describe('ForgejoService.requestChangesPullRequest', () => {
         const body = repoCreatePullReviewMock.mock.calls[0][0].body.body;
 
         expect(body).toContain(
-            '- [Sanitize this input.](https://git.example.com/kodustech/kodus-ai/pulls/42#issuecomment-7001)',
+            '- [Sanitize this input.](https://git.example.com/elchapita43/codus-ai/pulls/42#issuecomment-7001)',
         );
         expect(body).toContain(
-            '- [Handle missing token.](https://git.example.com/kodustech/kodus-ai/pulls/42#issuecomment-7002)',
+            '- [Handle missing token.](https://git.example.com/elchapita43/codus-ai/pulls/42#issuecomment-7002)',
         );
         expect(body).not.toContain('1. Sanitize this input.');
     });

@@ -104,7 +104,7 @@ const makeDispatcher = () => {
 const baseMessage = (
     overrides: Partial<NotificationMessage> = {},
 ): NotificationMessage => ({
-    event: NotificationEvent.KODY_RULES_GENERATED, // informational, defaults [email, in_app]
+    event: NotificationEvent.CODY_RULES_GENERATED, // informational, defaults [email, in_app]
     payload: {
         organizationName: 'Acme',
         users: [],
@@ -135,7 +135,7 @@ describe('NotificationDispatcherService', () => {
             );
 
             // The dispatcher creates a delivery row per (recipient, channel).
-            // KODY_RULES_GENERATED catalog default is [email, in_app].
+            // CODY_RULES_GENERATED catalog default is [email, in_app].
             expect(t.deliveryRepo.create).toHaveBeenCalledTimes(2);
         });
 
@@ -712,7 +712,7 @@ describe('NotificationDispatcherService', () => {
                 error: new Error('SMTP timeout'),
                 errMsg: 'SMTP timeout',
                 attemptsSoFar: 5, // == informational maxAttempts
-                event: NotificationEvent.KODY_RULES_GENERATED,
+                event: NotificationEvent.CODY_RULES_GENERATED,
                 channel: NotificationChannel.EMAIL,
                 criticality: Criticality.INFORMATIONAL,
                 userId: 'user-1',
@@ -770,12 +770,12 @@ describe('NotificationDispatcherService', () => {
     describe('redeliver', () => {
         const baseDelivery = {
             uuid: 'd-1',
-            event: NotificationEvent.KODY_RULES_GENERATED,
+            event: NotificationEvent.CODY_RULES_GENERATED,
             criticality: Criticality.INFORMATIONAL,
             channel: NotificationChannel.EMAIL,
             title: 'Title',
             body: 'Body',
-            category: 'kody_rules',
+            category: 'cody_rules',
             recipientEmail: 'a@b.com',
             recipientRole: 'contributor',
             recipientUser: { uuid: 'user-1' } as any,
@@ -796,7 +796,7 @@ describe('NotificationDispatcherService', () => {
                     userEmail: 'a@b.com',
                     userRole: 'contributor',
                     organizationId: 'org-1',
-                    event: NotificationEvent.KODY_RULES_GENERATED,
+                    event: NotificationEvent.CODY_RULES_GENERATED,
                 }) as NotificationDeliveryContext,
             );
             expect(t.deliveryRepo.updateStatus).toHaveBeenCalledWith(

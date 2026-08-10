@@ -1,7 +1,7 @@
 jest.mock(
-    '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case',
+    '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case',
     () => ({
-        ChatWithKodyFromGitUseCase: jest.fn(),
+        ChatWithCodyFromGitUseCase: jest.fn(),
     }),
 );
 

@@ -1,7 +1,7 @@
 {
   "type": "excalidraw",
   "version": 2,
-  "source": "kodus-agent-loop-gen",
+  "source": "codus-agent-loop-gen",
   "elements": [
     {
       "id": "title",
@@ -30,11 +30,11 @@
       "locked": false,
       "fontSize": 30,
       "fontFamily": 2,
-      "text": "Kodus \u2014 Agent Review Harness (o loop)",
+      "text": "Codus \u2014 Agent Review Harness (o loop)",
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "Kodus \u2014 Agent Review Harness (o loop)",
+      "originalText": "Codus \u2014 Agent Review Harness (o loop)",
       "lineHeight": 1.25,
       "baseline": 30
     },
@@ -107,7 +107,7 @@
         },
         {
           "type": "arrow",
-          "id": "o_kody"
+          "id": "o_cody"
         },
         {
           "type": "arrow",
@@ -226,7 +226,7 @@
       "baseline": 12
     },
     {
-      "id": "a_kody",
+      "id": "a_cody",
       "type": "rectangle",
       "x": 600,
       "y": 70,
@@ -251,11 +251,11 @@
       "boundElements": [
         {
           "type": "text",
-          "id": "a_kody_t"
+          "id": "a_cody_t"
         },
         {
           "type": "arrow",
-          "id": "o_kody"
+          "id": "o_cody"
         }
       ],
       "updated": 1,
@@ -263,7 +263,7 @@
       "locked": false
     },
     {
-      "id": "a_kody_t",
+      "id": "a_cody_t",
       "type": "text",
       "x": 608,
       "y": 78,
@@ -289,11 +289,11 @@
       "locked": false,
       "fontSize": 12,
       "fontFamily": 2,
-      "text": "\ud83d\udccf Kody Rules\n(se houver regra ativa)",
+      "text": "\ud83d\udccf Cody Rules\n(se houver regra ativa)",
       "textAlign": "center",
       "verticalAlign": "middle",
-      "containerId": "a_kody",
-      "originalText": "\ud83d\udccf Kody Rules\n(se houver regra ativa)",
+      "containerId": "a_cody",
+      "originalText": "\ud83d\udccf Cody Rules\n(se houver regra ativa)",
       "lineHeight": 1.25,
       "baseline": 12
     },
@@ -349,7 +349,7 @@
       "endArrowhead": "arrow"
     },
     {
-      "id": "o_kody",
+      "id": "o_cody",
       "type": "arrow",
       "x": 540.0,
       "y": 24,
@@ -392,7 +392,7 @@
         "gap": 4
       },
       "endBinding": {
-        "elementId": "a_kody",
+        "elementId": "a_cody",
         "focus": 0,
         "gap": 4
       },

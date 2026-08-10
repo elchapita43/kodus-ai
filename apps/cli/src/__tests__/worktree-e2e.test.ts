@@ -27,7 +27,7 @@ function run(
             cwd,
             // Without this the CLI reaches the network on every invocation and
             // the test hangs when that call is slow.
-            env: { ...process.env, KODUS_DISABLE_UPDATE_CHECK: '1' },
+            env: { ...process.env, CODUS_DISABLE_UPDATE_CHECK: '1' },
         });
         let stdout = '';
         let stderr = '';
@@ -72,7 +72,7 @@ describe('Worktree E2E — hook commands', { timeout: 60_000 }, () => {
         cliEntryPoint = path.join(cliRoot, 'dist', 'index.js');
         await fs.access(cliEntryPoint);
 
-        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-worktree-'));
+        tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-worktree-'));
         mainRepo = path.join(tmpDir, 'main');
         worktree = path.join(tmpDir, 'wt');
 
@@ -95,7 +95,7 @@ describe('Worktree E2E — hook commands', { timeout: 60_000 }, () => {
         // Git executes hooks from the main checkout for every linked worktree.
         const hookPath = path.join(mainRepo, '.git', 'hooks', 'pre-push');
         const content = await fs.readFile(hookPath, 'utf-8');
-        expect(content).toContain('# kodus-hook');
+        expect(content).toContain('# codus-hook');
 
         // And nothing may have been written under the worktree's `.git` file.
         const dotGit = await fs.stat(path.join(worktree, '.git'));

@@ -11,11 +11,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
-// Pull the judge key from ~/.kodus-dev/config if not already in env.
+// Pull the judge key from ~/.codus-dev/config if not already in env.
 function loadConfig(): void {
     let text: string;
     try {
-        text = readFileSync(join(homedir(), ".kodus-dev", "config"), "utf8");
+        text = readFileSync(join(homedir(), ".codus-dev", "config"), "utf8");
     } catch {
         return;
     }

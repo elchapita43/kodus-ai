@@ -3,34 +3,34 @@ import { createLogger } from '@libs/core/log/logger';
 import { promises as fsPromises } from 'fs';
 import * as yaml from 'js-yaml';
 
-import { GenerateKodusConfigFileUseCase } from '@libs/code-review/application/use-cases/configuration/generate-kodus-config-file.use-case';
+import { GenerateCodusConfigFileUseCase } from '@libs/code-review/application/use-cases/configuration/generate-codus-config-file.use-case';
 import { GetCodeReviewParameterUseCase } from '@libs/code-review/application/use-cases/configuration/get-code-review-parameter.use-case';
 import { CentralizedConfigPrService } from '@libs/centralized-config/infrastructure/adapters/services/centralized-config-pr.service';
 import { buildGroupFolderName } from '@libs/centralized-config/utils/path-encoder';
-import { formatRuleToYaml } from '@libs/centralized-config/utils/kody-rules-centralized-pr.builder';
-import { FindRulesInOrganizationByRuleFilterKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/find-rules-in-organization-by-filter.use-case';
-import { CreateOrUpdateKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/create-or-update.use-case';
+import { formatRuleToYaml } from '@libs/centralized-config/utils/cody-rules-centralized-pr.builder';
+import { FindRulesInOrganizationByRuleFilterCodyRulesUseCase } from '@libs/codyRules/application/use-cases/find-rules-in-organization-by-filter.use-case';
+import { CreateOrUpdateCodyRulesUseCase } from '@libs/codyRules/application/use-cases/create-or-update.use-case';
 import {
     IPullRequestMessagesService,
     PULL_REQUEST_MESSAGES_SERVICE_TOKEN,
 } from '@libs/code-review/domain/pullRequestMessages/contracts/pullRequestMessages.service.contract';
 import { deepDifference, deepMerge } from '@libs/common/utils/deep';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 
 import { IUser } from '@libs/identity/domain/user/interfaces/user.interface';
 import { IPullRequestMessages } from '@libs/code-review/domain/pullRequestMessages/interfaces/pullRequestMessages.interface';
-import { KodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
+import { CodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { ConfigLevel } from '@libs/core/infrastructure/config/types/general/pullRequestMessages.type';
 import {
-    IKodyRule,
-    KodyRuleCentralizedStatus,
-    KodyRulesStatus,
-    KodyRulesType,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRuleCentralizedStatus,
+    CodyRulesStatus,
+    CodyRulesType,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import * as path from 'path';
 
 type FileEntry = { path: string; content: string };
-type CustomMessagesConfig = NonNullable<KodusConfigFile['customMessages']>;
+type CustomMessagesConfig = NonNullable<CodusConfigFile['customMessages']>;
 
 @Injectable()
 export class CentralizedConfigDownloadUseCase {
@@ -40,9 +40,9 @@ export class CentralizedConfigDownloadUseCase {
 
     constructor(
         private readonly getCodeReviewParameterUseCase: GetCodeReviewParameterUseCase,
-        private readonly generateKodusConfigFileUseCase: GenerateKodusConfigFileUseCase,
-        private readonly findRulesInOrganizationByRuleFilterKodyRulesUseCase: FindRulesInOrganizationByRuleFilterKodyRulesUseCase,
-        private readonly createOrUpdateKodyRulesUseCase: CreateOrUpdateKodyRulesUseCase,
+        private readonly generateCodusConfigFileUseCase: GenerateCodusConfigFileUseCase,
+        private readonly findRulesInOrganizationByRuleFilterCodyRulesUseCase: FindRulesInOrganizationByRuleFilterCodyRulesUseCase,
+        private readonly createOrUpdateCodyRulesUseCase: CreateOrUpdateCodyRulesUseCase,
         @Inject(PULL_REQUEST_MESSAGES_SERVICE_TOKEN)
         private readonly pullRequestMessagesService: IPullRequestMessagesService,
         private readonly centralizedConfigPrService: CentralizedConfigPrService,
@@ -126,7 +126,7 @@ export class CentralizedConfigDownloadUseCase {
                 // Repo Level Config
                 try {
                     const res =
-                        await this.generateKodusConfigFileUseCase.execute(
+                        await this.generateCodusConfigFileUseCase.execute(
                             teamId,
                             repo.id,
                             undefined,
@@ -134,7 +134,7 @@ export class CentralizedConfigDownloadUseCase {
                         );
 
                     const repoEntry = this.createConfigEntryWithCustomMessages(
-                        `${repoFolderName}/kodus-config.yml`,
+                        `${repoFolderName}/codus-config.yml`,
                         res.yamlString,
                         customMessagesByScope.get(
                             this.getCustomMessagesScopeKeyRepository(
@@ -148,7 +148,7 @@ export class CentralizedConfigDownloadUseCase {
                     }
                 } catch (error) {
                     this.logger.error({
-                        message: 'Failed to generate repo Kodus config file',
+                        message: 'Failed to generate repo Codus config file',
                         context: CentralizedConfigDownloadUseCase.name,
                         metadata: {
                             teamId,
@@ -165,7 +165,7 @@ export class CentralizedConfigDownloadUseCase {
                     .map(async (dir) => {
                         try {
                             const res =
-                                await this.generateKodusConfigFileUseCase.execute(
+                                await this.generateCodusConfigFileUseCase.execute(
                                     teamId,
                                     repo.id,
                                     dir.id,
@@ -193,7 +193,7 @@ export class CentralizedConfigDownloadUseCase {
                             }
 
                             const groupBasePath = `${repoFolderName}/${groupFolderName}`;
-                            const configEntryName = `${groupBasePath}/kodus-config.yml`;
+                            const configEntryName = `${groupBasePath}/codus-config.yml`;
 
                             const customMessages = customMessagesByScope.get(
                                 this.getCustomMessagesScopeKeyDirectory(
@@ -213,7 +213,7 @@ export class CentralizedConfigDownloadUseCase {
                         } catch (error) {
                             this.logger.error({
                                 message:
-                                    'Failed to generate directory Kodus config file',
+                                    'Failed to generate directory Codus config file',
                                 context: CentralizedConfigDownloadUseCase.name,
                                 metadata: {
                                     teamId,
@@ -248,18 +248,18 @@ export class CentralizedConfigDownloadUseCase {
         try {
             const filePath = path.join(
                 process.cwd(),
-                'default-kodus-config.yml',
+                'default-codus-config.yml',
             );
             const fileContent = await fsPromises.readFile(filePath, 'utf8');
-            const header = `# This file is a copy of the default Kodus configuration. It is provided for reference and can be used as a starting point for your own configuration.\n# Any changes to this file will not affect the actual configuration used by Kodus.\n# Your own configuration should be defined in the global or repository-specific config files.\n# They behave as a diff to this default config, or higher level config that exists, so you only need to include the properties you want to override.\n\n`;
+            const header = `# This file is a copy of the default Codus configuration. It is provided for reference and can be used as a starting point for your own configuration.\n# Any changes to this file will not affect the actual configuration used by Codus.\n# Your own configuration should be defined in the global or repository-specific config files.\n# They behave as a diff to this default config, or higher level config that exists, so you only need to include the properties you want to override.\n\n`;
 
             return {
-                path: 'default-kodus-config.yml',
+                path: 'default-codus-config.yml',
                 content: header + fileContent,
             };
         } catch (error) {
             this.logger.error({
-                message: 'Failed to load default Kodus config file',
+                message: 'Failed to load default Codus config file',
                 context: CentralizedConfigDownloadUseCase.name,
                 metadata: {
                     teamId,
@@ -273,10 +273,10 @@ export class CentralizedConfigDownloadUseCase {
     private async getGlobalConfigEntry(
         teamId: string,
         options: { skipAuthorization?: boolean },
-        customMessages?: NonNullable<KodusConfigFile['customMessages']>,
+        customMessages?: NonNullable<CodusConfigFile['customMessages']>,
     ): Promise<FileEntry | null> {
         try {
-            const res = await this.generateKodusConfigFileUseCase.execute(
+            const res = await this.generateCodusConfigFileUseCase.execute(
                 teamId,
                 'global',
                 undefined,
@@ -284,13 +284,13 @@ export class CentralizedConfigDownloadUseCase {
             );
 
             return this.createConfigEntryWithCustomMessages(
-                'kodus-config.yml',
+                'codus-config.yml',
                 res.yamlString,
                 customMessages,
             );
         } catch (error) {
             this.logger.error({
-                message: 'Failed to generate global Kodus config file',
+                message: 'Failed to generate global Codus config file',
                 context: CentralizedConfigDownloadUseCase.name,
                 metadata: {
                     teamId,
@@ -370,25 +370,25 @@ export class CentralizedConfigDownloadUseCase {
         }
 
         const fetchedRules =
-            (await this.findRulesInOrganizationByRuleFilterKodyRulesUseCase.execute(
+            (await this.findRulesInOrganizationByRuleFilterCodyRulesUseCase.execute(
                 organizationId,
                 options.markRulesAsPendingWithSourcePath
                     ? {}
-                    : { status: KodyRulesStatus.ACTIVE },
-            )) as IKodyRule[];
+                    : { status: CodyRulesStatus.ACTIVE },
+            )) as ICodyRule[];
 
         // Only approved rules belong in the centralized config: exporting a
         // PENDING (awaiting approval) or REJECTED rule would resurrect it as
         // ACTIVE when the PR is merged and synced back.
         const rules = fetchedRules.filter(
             (rule) =>
-                rule.status === KodyRulesStatus.ACTIVE ||
-                rule.status === KodyRulesStatus.PAUSED,
+                rule.status === CodyRulesStatus.ACTIVE ||
+                rule.status === CodyRulesStatus.PAUSED,
         );
 
         if (rules.length === 0) {
             this.logger.log({
-                message: 'No Kody rules found for organization',
+                message: 'No Cody rules found for organization',
                 context: CentralizedConfigDownloadUseCase.name,
                 metadata: { teamId, organizationId },
             });
@@ -409,7 +409,7 @@ export class CentralizedConfigDownloadUseCase {
             if (!entryPath) {
                 this.logger.warn({
                     message:
-                        'Skipping Kody rule export because entry path could not be resolved',
+                        'Skipping Cody rule export because entry path could not be resolved',
                     context: CentralizedConfigDownloadUseCase.name,
                     metadata: {
                         teamId,
@@ -442,7 +442,7 @@ export class CentralizedConfigDownloadUseCase {
     }
 
     private async ensureRulePendingWithSourcePath(
-        rule: IKodyRule,
+        rule: ICodyRule,
         sourcePath: string,
         organizationId: string,
         user: Partial<IUser>,
@@ -450,8 +450,8 @@ export class CentralizedConfigDownloadUseCase {
     ): Promise<void> {
         const currentPath = rule.centralizedConfig?.path;
         const pendingStatus = currentPath
-            ? KodyRuleCentralizedStatus.PENDING_EDIT
-            : KodyRuleCentralizedStatus.PENDING_ADD;
+            ? CodyRuleCentralizedStatus.PENDING_EDIT
+            : CodyRuleCentralizedStatus.PENDING_ADD;
 
         const shouldUpdateRule =
             rule.centralizedConfig?.status !== pendingStatus ||
@@ -461,7 +461,7 @@ export class CentralizedConfigDownloadUseCase {
             return;
         }
 
-        await this.createOrUpdateKodyRulesUseCase.execute(
+        await this.createOrUpdateCodyRulesUseCase.execute(
             {
                 ...rule,
                 uuid: rule.uuid,
@@ -473,10 +473,10 @@ export class CentralizedConfigDownloadUseCase {
             organizationId,
             {
                 // Use the internal sync actor so the centralized PR flow is
-                // bypassed. The init PR already contains all Kody Rule files,
+                // bypassed. The init PR already contains all Cody Rule files,
                 // so we must not create separate PRs for each rule here.
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             skipAuthorization,
         );
@@ -531,7 +531,7 @@ export class CentralizedConfigDownloadUseCase {
             }
 
             const defaultCustomMessages = this.normalizeCustomMessages(
-                getDefaultKodusConfigFile().customMessages,
+                getDefaultCodusConfigFile().customMessages,
             );
 
             const globalScopeKey = this.getCustomMessagesScopeKeyGlobal();
@@ -677,7 +677,7 @@ export class CentralizedConfigDownloadUseCase {
     }
 
     private normalizeCustomMessages(
-        customMessages?: KodusConfigFile['customMessages'],
+        customMessages?: CodusConfigFile['customMessages'],
     ): CustomMessagesConfig {
         const normalized: CustomMessagesConfig = {};
 
@@ -815,7 +815,7 @@ export class CentralizedConfigDownloadUseCase {
     private createConfigEntryWithCustomMessages(
         path: string,
         yamlString?: string,
-        customMessages?: NonNullable<KodusConfigFile['customMessages']>,
+        customMessages?: NonNullable<CodusConfigFile['customMessages']>,
     ): FileEntry | null {
         const content = this.buildConfigContentWithCustomMessages(
             yamlString,
@@ -831,7 +831,7 @@ export class CentralizedConfigDownloadUseCase {
 
     private buildConfigContentWithCustomMessages(
         yamlString?: string,
-        customMessages?: NonNullable<KodusConfigFile['customMessages']>,
+        customMessages?: NonNullable<CodusConfigFile['customMessages']>,
     ): string | null {
         if (!customMessages || Object.keys(customMessages).length === 0) {
             return yamlString?.trim() ? yamlString : null;
@@ -847,22 +847,22 @@ export class CentralizedConfigDownloadUseCase {
         return yaml.dump(configObject);
     }
 
-    private parseConfigYaml(yamlString?: string): KodusConfigFile {
+    private parseConfigYaml(yamlString?: string): CodusConfigFile {
         if (!yamlString || !yamlString.trim()) {
-            return {} as KodusConfigFile;
+            return {} as CodusConfigFile;
         }
 
         try {
             const parsed = yaml.load(yamlString);
 
             if (parsed && typeof parsed === 'object') {
-                return parsed as KodusConfigFile;
+                return parsed as CodusConfigFile;
             }
         } catch {
-            return {} as KodusConfigFile;
+            return {} as CodusConfigFile;
         }
 
-        return {} as KodusConfigFile;
+        return {} as CodusConfigFile;
     }
 
     private normalizeDirectoryPath(path?: string): string {
@@ -874,7 +874,7 @@ export class CentralizedConfigDownloadUseCase {
         return error instanceof Error ? error.message : String(error);
     }
 
-    private getRuleFileName(rule: IKodyRule): string {
+    private getRuleFileName(rule: ICodyRule): string {
         return this.centralizedConfigPrService.buildRuleFileName(
             rule.title,
             rule.uuid,
@@ -882,7 +882,7 @@ export class CentralizedConfigDownloadUseCase {
     }
 
     private getRuleEntryPath(
-        rule: IKodyRule,
+        rule: ICodyRule,
         repositoryMapping: Map<
             string,
             {
@@ -907,11 +907,11 @@ export class CentralizedConfigDownloadUseCase {
         }
 
         const rulesDirectory =
-            rule.type === KodyRulesType.MEMORY ? 'memories' : 'review';
+            rule.type === CodyRulesType.MEMORY ? 'memories' : 'review';
         const fileName = this.getRuleFileName(rule);
 
         if (!rule.repositoryId || rule.repositoryId === 'global') {
-            return `.kody-rules/${rulesDirectory}/${fileName}`;
+            return `.cody-rules/${rulesDirectory}/${fileName}`;
         }
 
         const repoScope = repositoryMapping.get(String(rule.repositoryId));
@@ -934,7 +934,7 @@ export class CentralizedConfigDownloadUseCase {
 
         return this.centralizedConfigPrService.buildCentralizedPath({
             repositoryFolder: repoFolderName,
-            relativePath: `.kody-rules/${rulesDirectory}/${fileName}`,
+            relativePath: `.cody-rules/${rulesDirectory}/${fileName}`,
         });
     }
 

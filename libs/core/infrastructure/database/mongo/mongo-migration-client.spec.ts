@@ -45,10 +45,10 @@ describe('buildMongoUri', () => {
     it('assembles mongodb://host:port when a numeric port is set', () => {
         process.env.API_MG_DB_HOST = 'db_mongodb';
         process.env.API_MG_DB_PORT = '27017';
-        process.env.API_MG_DB_USERNAME = 'kodusdev';
+        process.env.API_MG_DB_USERNAME = 'codusdev';
         process.env.API_MG_DB_PASSWORD = 'secret';
         expect(buildMongoUri()).toBe(
-            'mongodb://kodusdev:secret@db_mongodb:27017',
+            'mongodb://codusdev:secret@db_mongodb:27017',
         );
     });
 
@@ -91,9 +91,9 @@ describe('buildMongoUri', () => {
         expect(buildMongoUri()).toBe('mongodb+srv://h');
     });
 
-    it('mongoDatabaseName defaults to kodus, overridden by env', () => {
-        expect(mongoDatabaseName()).toBe('kodus');
-        process.env.API_MG_DB_DATABASE = 'kodus_db';
-        expect(mongoDatabaseName()).toBe('kodus_db');
+    it('mongoDatabaseName defaults to codus, overridden by env', () => {
+        expect(mongoDatabaseName()).toBe('codus');
+        process.env.API_MG_DB_DATABASE = 'codus_db';
+        expect(mongoDatabaseName()).toBe('codus_db');
     });
 });

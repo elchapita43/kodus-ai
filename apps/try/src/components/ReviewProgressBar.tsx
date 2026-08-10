@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { PrInfo } from "@/lib/api";
 
-const KODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
+const CODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
 
 // Median run is ~3min on Gemini 3 Flash + sandbox. We tell the user
 // 4 min so the ETA doesn't flip from "30s remaining" to "still working"
@@ -130,7 +130,7 @@ export function ReviewProgressBar({
             aria-live="polite"
         >
             <div className="max-w-[1600px] mx-auto px-6 py-2.5 flex items-center gap-3">
-                <KodyAvatar />
+                <CodyAvatar />
 
                 <div className="min-w-0 flex-1">
                     <p
@@ -138,7 +138,7 @@ export function ReviewProgressBar({
                         className="text-[13px] text-[var(--text)] truncate fade-up"
                         style={{ animationDuration: "0.35s" }}
                     >
-                        <span className="text-[var(--text-muted)]">Kody:</span>{" "}
+                        <span className="text-[var(--text-muted)]">Cody:</span>{" "}
                         <span className="font-medium">{message}</span>
                     </p>
                     {pr && (
@@ -209,7 +209,7 @@ export function ReviewProgressBar({
                     style={{
                         background:
                             "linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)",
-                        animation: "kodus-shimmer 1.8s linear infinite",
+                        animation: "codus-shimmer 1.8s linear infinite",
                     }}
                 />
             </div>
@@ -217,7 +217,7 @@ export function ReviewProgressBar({
     );
 }
 
-function KodyAvatar() {
+function CodyAvatar() {
     return (
         <div className="relative shrink-0">
             <span
@@ -225,12 +225,12 @@ function KodyAvatar() {
                 className="absolute inset-0 rounded-full bg-[var(--accent)]/40 blur-sm"
                 style={{
                     animation:
-                        "kodus-pulse-ring 1.8s cubic-bezier(0.21,0.6,0.35,1) infinite",
+                        "codus-pulse-ring 1.8s cubic-bezier(0.21,0.6,0.35,1) infinite",
                 }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-                src={KODY_AVATAR_URL}
+                src={CODY_AVATAR_URL}
                 alt=""
                 width={26}
                 height={26}

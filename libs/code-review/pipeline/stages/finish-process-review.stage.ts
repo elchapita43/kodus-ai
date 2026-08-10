@@ -161,7 +161,7 @@ export class RequestChangesOrApproveStage extends BasePipelineStage<CodeReviewPi
             // Any failure (critical or partial) means we couldn't fully
             // analyze the PR — 0 line comments here is unanalyzed, not
             // clean. Approving here would signal "all good" when the
-            // truth is "we couldn't tell." User must re-run (`@kody
+            // truth is "we couldn't tell." User must re-run (`@cody
             // review` after fixing the cause) before auto-approve can
             // re-engage.
             if (reviewHasFailures) {

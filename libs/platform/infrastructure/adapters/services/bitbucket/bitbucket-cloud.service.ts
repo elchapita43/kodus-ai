@@ -11,7 +11,7 @@ import {
     rateGateKey,
     runWithRateGate,
 } from '@libs/core/infrastructure/http/per-key-rate-gate';
-import { hasKodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
+import { hasCodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 import { decrypt, encrypt } from '@libs/common/utils/crypto';
 import {
     isFileMatchingGlob,
@@ -404,7 +404,7 @@ export class BitbucketCloudService implements Omit<
             ) {
                 form.append(
                     'author',
-                    `${author.name} <${author.email || 'kody@kodus.io'}>`,
+                    `${author.name} <${author.email || 'cody@kodus.io'}>`,
                 );
             }
 
@@ -487,7 +487,7 @@ export class BitbucketCloudService implements Omit<
         if (author?.name) {
             form.append(
                 'author',
-                `${author.name} <${author.email || 'kody@kodus.io'}>`,
+                `${author.name} <${author.email || 'cody@kodus.io'}>`,
             );
         }
         form.append(`/${EMPTY_REPO_SEED_PATH}`, EMPTY_REPO_SEED_CONTENT);
@@ -2166,12 +2166,12 @@ export class BitbucketCloudService implements Omit<
             ? lineComment.suggestion.label
             : '';
 
-        const header = `\`kody|code-review\` \`${labelText}\` \`severity-level|${severityText}\`\n\n`;
+        const header = `\`cody|code-review\` \`${labelText}\` \`severity-level|${severityText}\`\n\n`;
 
         const thumbsUpBlock = `\`\`\`\n👍\n\`\`\`\n`;
         const thumbsDownBlock = `\`\`\`\n👎\n\`\`\`\n`;
 
-        const footer = `Was this suggestion helpful? reply with 👍 or 👎 to help Kody learn from this interaction.\n`;
+        const footer = `Was this suggestion helpful? reply with 👍 or 👎 to help Cody learn from this interaction.\n`;
 
         return [
             header,
@@ -3092,7 +3092,7 @@ export class BitbucketCloudService implements Omit<
                 });
             }
 
-            this.mcpManagerService?.createKodusMCPIntegration(
+            this.mcpManagerService?.createCodusMCPIntegration(
                 params.organizationAndTeamData.organizationId,
             );
 
@@ -3248,7 +3248,7 @@ export class BitbucketCloudService implements Omit<
                         repo_slug: `{${repo.id}}`,
                         workspace: `{${repo.workspaceId}}`,
                         _body: {
-                            description: 'Kodus Webhook',
+                            description: 'Codus Webhook',
                             url: webhookUrl,
                             active: true,
                             events: [
@@ -4489,7 +4489,7 @@ export class BitbucketCloudService implements Omit<
                 .filter(
                     (comment) =>
                         comment?.deleted !== true &&
-                        !hasKodyMarker(comment?.content?.raw),
+                        !hasCodyMarker(comment?.content?.raw),
                 )
                 .map((comment) => {
                     const mappedComment: PullRequestReviewComment = {

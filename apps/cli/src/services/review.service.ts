@@ -78,7 +78,7 @@ class ReviewService {
         );
 
         const teamConfig = await loadConfig();
-        const isTeamKey = token.startsWith('kodus_');
+        const isTeamKey = token.startsWith('codus_');
 
         if (isTeamKey && teamConfig) {
             const gitInfo = await gitService.getGitInfo();

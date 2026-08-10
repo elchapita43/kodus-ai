@@ -22,7 +22,7 @@ export class RealConfigApi implements IConfigApi {
     ) {}
 
     private buildAuthHeaders(accessToken: string): Record<string, string> {
-        return accessToken.startsWith('kodus_')
+        return accessToken.startsWith('codus_')
             ? { 'X-Team-Key': accessToken }
             : { Authorization: `Bearer ${accessToken}` };
     }

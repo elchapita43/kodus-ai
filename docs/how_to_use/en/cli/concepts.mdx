@@ -1,6 +1,6 @@
 ---
 title: "Concepts"
-description: "Mental models to get the most out of the Kodus CLI."
+description: "Mental models to get the most out of the Codus CLI."
 ---
 
 A short tour of the ideas that show up everywhere in the CLI. Read this once and the rest of the docs will make more sense.
@@ -35,15 +35,15 @@ You can also use `--format json` or `--format markdown` with any command for non
 Pick one per machine. The CLI auto-detects what's available.
 
 - **Trial** — no auth. 5 reviews per day. Good for "try it once".
-- **Personal login** (`kodus auth login`) — an individual account. Tokens refresh automatically.
-- **Team key** (`kodus auth team-key --key kodus_xxxxx`) — one shared key for a team, generated in the dashboard. Recommended for AI agents and anywhere you don't want interactive logins.
-- **CI/CD token** (`kodus auth token`) — a long-lived token for pipelines. Generated from a logged-in machine, used via `KODUS_TOKEN`.
+- **Personal login** (`codus auth login`) — an individual account. Tokens refresh automatically.
+- **Team key** (`codus auth team-key --key codus_xxxxx`) — one shared key for a team, generated in the dashboard. Recommended for AI agents and anywhere you don't want interactive logins.
+- **CI/CD token** (`codus auth token`) — a long-lived token for pipelines. Generated from a logged-in machine, used via `CODUS_TOKEN`.
 
 See [Getting Started](getting_started) for the full decision tree.
 
-## Kody Rules
+## Cody Rules
 
-A **Kody Rule** is a structured rule the Kodus reviewer applies during every review, scoped to a repository or global to your team.
+A **Cody Rule** is a structured rule the Codus reviewer applies during every review, scoped to a repository or global to your team.
 
 ```
 Rule
@@ -55,49 +55,49 @@ Rule
 └── repo-id        <uuid> | global
 ```
 
-Rules layer on top of the general Kodus review — the AI uses them as additional criteria, not replacements.
+Rules layer on top of the general Codus review — the AI uses them as additional criteria, not replacements.
 
-Manage rules from the dashboard or from the CLI with `kodus rules create|update|view`. The CLI is useful when you want rules in version control (generate them from a script, check into a repo, re-apply on provisioning).
+Manage rules from the dashboard or from the CLI with `codus rules create|update|view`. The CLI is useful when you want rules in version control (generate them from a script, check into a repo, re-apply on provisioning).
 
 ## Repository Settings
 
-Every repository in Kodus has settings that govern how reviews behave: ignored files, base branch patterns, title filters, feature toggles. These live in the Kodus backend and are mirrored anywhere the repo is reviewed (web PRs, CLI reviews, agent loops).
+Every repository in Codus has settings that govern how reviews behave: ignored files, base branch patterns, title filters, feature toggles. These live in the Codus backend and are mirrored anywhere the repo is reviewed (web PRs, CLI reviews, agent loops).
 
 From the CLI:
 
 ```bash
-kodus config repo list                 # See your configured repos
-kodus config repo show                 # See settings for the current repo
-kodus config repo setup                # Guided wizard
-kodus config repo set . reviewEnabled true
-kodus config repo add-ignore-file . "**/*.generated.ts"
-kodus config repo open                 # Jump to the web dashboard
+codus config repo list                 # See your configured repos
+codus config repo show                 # See settings for the current repo
+codus config repo setup                # Guided wizard
+codus config repo set . reviewEnabled true
+codus config repo add-ignore-file . "**/*.generated.ts"
+codus config repo open                 # Jump to the web dashboard
 ```
 
-`kodus config repo` and `kodus config remote` are aliases for the same command group.
+`codus config repo` and `codus config remote` are aliases for the same command group.
 
 ## Centralized Config
 
-Normally, each repository's settings live in Kodus. **Centralized Config** lets a team store those settings in a single source-of-truth git repository — every change becomes a pull request against that repo, giving you review and version history on your review configuration itself.
+Normally, each repository's settings live in Codus. **Centralized Config** lets a team store those settings in a single source-of-truth git repository — every change becomes a pull request against that repo, giving you review and version history on your review configuration itself.
 
 Enable, sync, or inspect state:
 
 ```bash
-kodus config centralized status
-kodus config centralized init owner/config-repo --sync-option pr
-kodus config centralized sync
-kodus config centralized disable
+codus config centralized status
+codus config centralized init owner/config-repo --sync-option pr
+codus config centralized sync
+codus config centralized disable
 ```
 
-Use Centralized Config when your team wants auditable, versioned control over review settings. Keep the default (per-repo settings in Kodus) when that ceremony is overkill.
+Use Centralized Config when your team wants auditable, versioned control over review settings. Keep the default (per-repo settings in Codus) when that ceremony is overkill.
 
 ## Business Validation
 
-Where `kodus review` asks "is this code good?", `kodus pr business-validation` asks "does this diff actually do what the task said to do?". You point it at a Linear/Jira/URL-based task and a diff source (working tree, staged, branch, commit) and it checks the implementation against the task's acceptance criteria.
+Where `codus review` asks "is this code good?", `codus pr business-validation` asks "does this diff actually do what the task said to do?". You point it at a Linear/Jira/URL-based task and a diff source (working tree, staged, branch, commit) and it checks the implementation against the task's acceptance criteria.
 
 ```bash
-kodus pr business-validation --task-id KC-1441 --branch main
-kodus pr business-validation --task-url https://linear.app/… --staged
+codus pr business-validation --task-id KC-1441 --branch main
+codus pr business-validation --task-url https://linear.app/… --staged
 ```
 
 Pair with a pre-merge check to catch "code works, but it's not what was asked for" before human review.

@@ -7,7 +7,7 @@ Revisões de código normalmente focam na qualidade do código — segurança, p
 
 ## O que é verificado
 
-O Kodus compara o diff do seu PR com os requisitos da tarefa e identifica:
+O Codus compara o diff do seu PR com os requisitos da tarefa e identifica:
 
 - **Implementações ausentes** — critérios de aceitação não cobertos no código
 - **Implementações parciais** — requisitos apenas parcialmente atendidos
@@ -18,18 +18,18 @@ O Kodus compara o diff do seu PR com os requisitos da tarefa e identifica:
 
 ### Automático (padrão)
 
-Com `business_logic: true` nas suas opções de revisão (habilitado por padrão), o Kodus valida automaticamente as regras de negócio durante cada revisão de PR quando um plugin de gerenciamento de tarefas está conectado.
+Com `business_logic: true` nas suas opções de revisão (habilitado por padrão), o Codus valida automaticamente as regras de negócio durante cada revisão de PR quando um plugin de gerenciamento de tarefas está conectado.
 
 ### Sob demanda
 
 Comente em qualquer PR com um link ou especificação inline:
 
 ```
-@kody -v business-logic https://kodustech.atlassian.net/browse/KC-1292
+@cody -v business-logic https://elchapita43.atlassian.net/browse/KC-1292
 ```
 
 ```
-@kody -v business-logic
+@cody -v business-logic
 Pedidos acima de R$500 devem emitir créditos de cashback.
 Códigos de desconto não podem ser combinados com recompensas de fidelidade.
 Frete grátis aplica-se apenas a pedidos domésticos.
@@ -63,6 +63,6 @@ Cada achado inclui a **citação exata** da tarefa que estabelece o requisito, g
 
 - Tarefas com critérios de aceitação explícitos recebem a validação mais completa
 - Após corrigir os problemas, reexecute o comando para confirmar a conformidade
-- Se o escopo do PR não corresponder à tarefa, o Kody sinaliza uma incompatibilidade de escopo em vez de especular
+- Se o escopo do PR não corresponder à tarefa, o Cody sinaliza uma incompatibilidade de escopo em vez de especular
 
 Para detalhes, consulte [Validação de Lógica de Negócio](/how_to_use/pt-br/code_review/business_logic_validation).

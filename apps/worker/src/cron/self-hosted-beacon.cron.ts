@@ -9,7 +9,7 @@ import {
 
 /**
  * Daily anonymous heartbeat for self-hosted instances. Sends one POST per
- * UTC day to the `kodus-beacon` receiver (telemetry.kodus.io); the service
+ * UTC day to the `codus-beacon` receiver (telemetry.kodus.io); the service
  * itself owns dedupe, opt-out, and `instance_id` persistence.
  *
  * Schedule: 03:17 UTC daily — the odd minute is intentional jitter so the
@@ -45,13 +45,13 @@ export class SelfHostedBeaconCron implements OnModuleInit {
 
             if (this.beacon.isDisabled()) {
                 this.logger.log(
-                    'Anonymous usage telemetry is DISABLED (KODUS_TELEMETRY_DISABLED is set). No heartbeat will be sent.',
+                    'Anonymous usage telemetry is DISABLED (CODUS_TELEMETRY_DISABLED is set). No heartbeat will be sent.',
                 );
                 return;
             }
 
             this.logger.log(
-                'Anonymous usage telemetry is enabled. One heartbeat per UTC day to telemetry.kodus.io with aggregated counters only — no code, names, or identifiers. Inspect with `yarn telemetry:preview`. Disable with KODUS_TELEMETRY_DISABLED=true. Schema: https://github.com/kodustech/kodus-beacon/blob/main/docs/api.md',
+                'Anonymous usage telemetry is enabled. One heartbeat per UTC day to telemetry.kodus.io with aggregated counters only — no code, names, or identifiers. Inspect with `yarn telemetry:preview`. Disable with CODUS_TELEMETRY_DISABLED=true. Schema: https://github.com/elchapita43/codus-beacon/blob/main/docs/api.md',
             );
         } catch {
             // Even logging is best-effort here. If the logger itself is

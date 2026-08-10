@@ -134,7 +134,7 @@ export class CodeReviewPipelineObserver implements IPipelineObserver {
 
         // Classify collected errors by severity. Errors with severity === 'partial'
         // come from stages that declared `errorSeverity = 'partial'` (business
-        // logic, PR-level comments, summary, verify, kody-rules agent) and
+        // logic, PR-level comments, summary, verify, cody-rules agent) and
         // should degrade the review to PARTIAL_ERROR / neutral rather than
         // red-flagging the whole run.
         const errors = context.errors || [];
@@ -393,7 +393,7 @@ export class CodeReviewPipelineObserver implements IPipelineObserver {
         let message = '';
         if (errors.length > 0) {
             // One sentence, not a concatenation. Joining every raw provider
-            // string produced run-ons like "Not Found [kody-rules] all 1 judge
+            // string produced run-ons like "Not Found [cody-rules] all 1 judge
             // shard(s) failed… green-wash…" in the UI — three internal messages
             // glued together, none of them actionable. Show the single most
             // actionable reason; the rest stay in `partialErrors` metadata,

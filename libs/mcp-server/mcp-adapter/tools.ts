@@ -30,7 +30,7 @@ export function validateMCPSchema(schema: unknown): boolean {
 }
 
 /**
- * Convert MCP tool to Kodus Flow engine tool with validation
+ * Convert MCP tool to Codus Flow engine tool with validation
  */
 export function mcpToolToEngineTool(mcpTool: MCPToolRawWithServer): EngineTool {
     if (!mcpTool || typeof mcpTool !== 'object') {

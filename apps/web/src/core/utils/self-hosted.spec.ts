@@ -2,7 +2,7 @@
  * Tests for the isSelfHosted dual-mode behavior. The runtime-config
  * migration removed WEB_NODE_ENV from next.config.js's env: block, so
  * module-scope client code has to read the value from the injected
- * window.__KODUS_PUBLIC_CONFIG__ instead of process.env. Regression:
+ * window.__CODUS_PUBLIC_CONFIG__ instead of process.env. Regression:
  * clients were getting isSelfHosted=false in self-hosted deployments,
  * which broke branches like the onboarding trial skip.
  */
@@ -21,7 +21,7 @@ describe("isSelfHosted", () => {
         } else {
             delete (globalThis as any).window;
         }
-        delete (globalThis as any).__KODUS_PUBLIC_CONFIG__;
+        delete (globalThis as any).__CODUS_PUBLIC_CONFIG__;
         jest.resetModules();
     });
 
@@ -48,10 +48,10 @@ describe("isSelfHosted", () => {
             expect(loadIsSelfHosted()).toBe(false);
         });
 
-        it("ignores window.__KODUS_PUBLIC_CONFIG__ on server side", () => {
+        it("ignores window.__CODUS_PUBLIC_CONFIG__ on server side", () => {
             process.env.WEB_NODE_ENV = "development";
             // Even if a stray global exists, server side must not use it
-            (globalThis as any).__KODUS_PUBLIC_CONFIG__ = {
+            (globalThis as any).__CODUS_PUBLIC_CONFIG__ = {
                 nodeEnv: "self-hosted",
             };
             expect(loadIsSelfHosted()).toBe(false);
@@ -63,22 +63,22 @@ describe("isSelfHosted", () => {
             (globalThis as any).window = globalThis;
         });
 
-        it("reads window.__KODUS_PUBLIC_CONFIG__.nodeEnv", () => {
-            (globalThis as any).__KODUS_PUBLIC_CONFIG__ = {
+        it("reads window.__CODUS_PUBLIC_CONFIG__.nodeEnv", () => {
+            (globalThis as any).__CODUS_PUBLIC_CONFIG__ = {
                 nodeEnv: "self-hosted",
             };
             expect(loadIsSelfHosted()).toBe(true);
         });
 
         it("returns false when nodeEnv is not self-hosted", () => {
-            (globalThis as any).__KODUS_PUBLIC_CONFIG__ = {
+            (globalThis as any).__CODUS_PUBLIC_CONFIG__ = {
                 nodeEnv: "development",
             };
             expect(loadIsSelfHosted()).toBe(false);
         });
 
         it("returns false when config global is missing (pre-hydration)", () => {
-            delete (globalThis as any).__KODUS_PUBLIC_CONFIG__;
+            delete (globalThis as any).__CODUS_PUBLIC_CONFIG__;
             expect(loadIsSelfHosted()).toBe(false);
         });
 
@@ -88,7 +88,7 @@ describe("isSelfHosted", () => {
             // could still read it from a stale bundle), client must only
             // trust the window-injected value.
             process.env.WEB_NODE_ENV = "self-hosted";
-            (globalThis as any).__KODUS_PUBLIC_CONFIG__ = {
+            (globalThis as any).__CODUS_PUBLIC_CONFIG__ = {
                 nodeEnv: "development",
             };
             expect(loadIsSelfHosted()).toBe(false);

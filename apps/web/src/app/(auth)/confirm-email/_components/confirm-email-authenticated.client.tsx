@@ -6,7 +6,7 @@ import { redirect, useRouter } from "next/navigation";
 import { Button } from "@components/ui/button";
 import { Card } from "@components/ui/card";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Page } from "@components/ui/page";
 import { toast } from "@components/ui/toaster/use-toast";
 import { useEffectOnce } from "@hooks/use-effect-once";
@@ -130,7 +130,7 @@ export const ConfirmEmailAuthenticatedView = () => {
                 color="lv1"
                 className="flex w-md flex-col items-center justify-center gap-10 p-10">
                 <Page.Header className="flex w-full flex-col items-center gap-8">
-                    <SvgKodus className="h-8" />
+                    <SvgCodus className="h-8" />
 
                     <div className="flex flex-col items-center gap-2">
                         <Heading variant="h2" className="text-center">

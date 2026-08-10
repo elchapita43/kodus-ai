@@ -16,7 +16,7 @@ export class OrganizationParamPreset1764958841020 implements MigrationInterface 
                 'category_workitems_type',
                 'timezone_config',
                 'review_mode_config',
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'auto_join_config',
                 'byok_config',
                 'cockpit_metrics_visibility',
@@ -49,7 +49,7 @@ export class OrganizationParamPreset1764958841020 implements MigrationInterface 
                 'category_workitems_type',
                 'cockpit_metrics_visibility',
                 'dry_run_limit',
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'review_mode_config',
                 'timezone_config'
             )

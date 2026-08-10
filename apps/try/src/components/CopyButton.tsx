@@ -29,7 +29,7 @@ export function CopyButton({
                     ? gateReason
                     : {
                           title: "Sign up to copy LLM prompts",
-                          body: "Copy-for-LLM is part of the full Kodus product. Create a free account to copy structured prompts straight into Cursor, Claude Code or ChatGPT.",
+                          body: "Copy-for-LLM is part of the full Codus product. Create a free account to copy structured prompts straight into Cursor, Claude Code or ChatGPT.",
                       },
             );
             return;

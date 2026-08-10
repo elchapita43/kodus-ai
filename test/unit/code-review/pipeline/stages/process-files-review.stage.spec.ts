@@ -3,7 +3,7 @@ import { ProcessFilesReview } from '@/code-review/pipeline/stages/process-files-
 import { SUGGESTION_SERVICE_TOKEN } from '@/code-review/domain/contracts/SuggestionService.contract';
 import { PULL_REQUESTS_SERVICE_TOKEN } from '@/platformData/domain/pullRequests/contracts/pullRequests.service.contracts';
 import { FILE_REVIEW_CONTEXT_PREPARATION_TOKEN } from '@/core/domain/interfaces/file-review-context-preparation.interface';
-import { KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@/core/domain/interfaces/kody-fine-tuning-context-preparation.interface';
+import { CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@/core/domain/interfaces/cody-fine-tuning-context-preparation.interface';
 import { CodeAnalysisOrchestrator } from '@/ee/codeBase/codeAnalysisOrchestrator.service';
 import { GraphContentFormatter } from '@/code-review/infrastructure/adapters/services/graphContentFormatter.service';
 import { PriorityStatus } from '@/platformData/domain/pullRequests/enums/priorityStatus.enum';
@@ -46,13 +46,13 @@ describe('ProcessFilesReview', () => {
         prepareFileContext: jest.fn(),
     };
 
-    const mockKodyFineTuningContextPreparation = {
-        prepareKodyFineTuningContext: jest.fn(),
+    const mockCodyFineTuningContextPreparation = {
+        prepareCodyFineTuningContext: jest.fn(),
     };
 
     const mockCodeAnalysisOrchestrator = {
         executeStandardAnalysis: jest.fn(),
-        executeKodyRulesAnalysis: jest.fn(),
+        executeCodyRulesAnalysis: jest.fn(),
     };
 
     const mockAstContentFormatter = {
@@ -81,8 +81,8 @@ describe('ProcessFilesReview', () => {
                     useValue: mockFileReviewContextPreparation,
                 },
                 {
-                    provide: KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
-                    useValue: mockKodyFineTuningContextPreparation,
+                    provide: CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
+                    useValue: mockCodyFineTuningContextPreparation,
                 },
                 {
                     provide: CodeAnalysisOrchestrator,
@@ -177,8 +177,8 @@ describe('ProcessFilesReview', () => {
             );
             mockSuggestionService.getDiscardedSuggestions.mockReturnValue([]);
 
-            // kodyFineTuning: keep all suggestions
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            // codyFineTuning: keep all suggestions
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 {
                     keepedSuggestions: crossFileSuggestions,
                     discardedSuggestions: [],
@@ -196,8 +196,8 @@ describe('ProcessFilesReview', () => {
                 (_org, _pr, suggestions) => Promise.resolve(suggestions),
             );
 
-            // kodyRules: no suggestions
-            mockCodeAnalysisOrchestrator.executeKodyRulesAnalysis.mockResolvedValue(
+            // codyRules: no suggestions
+            mockCodeAnalysisOrchestrator.executeCodyRulesAnalysis.mockResolvedValue(
                 {
                     codeSuggestions: [],
                 },
@@ -488,7 +488,7 @@ describe('ProcessFilesReview', () => {
             );
             mockSuggestionService.filterSuggestionsCodeDiff.mockReturnValue([]);
             mockSuggestionService.getDiscardedSuggestions.mockReturnValue([]);
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 { keepedSuggestions: [], discardedSuggestions: [] },
             );
             mockSuggestionService.filterSuggestionsSafeGuard.mockResolvedValue({
@@ -498,7 +498,7 @@ describe('ProcessFilesReview', () => {
             mockSuggestionService.analyzeSuggestionsSeverity.mockResolvedValue(
                 [],
             );
-            mockCodeAnalysisOrchestrator.executeKodyRulesAnalysis.mockResolvedValue(
+            mockCodeAnalysisOrchestrator.executeCodyRulesAnalysis.mockResolvedValue(
                 { codeSuggestions: [] },
             );
             const context = createBatchContext();
@@ -545,7 +545,7 @@ describe('ProcessFilesReview', () => {
             );
             mockSuggestionService.filterSuggestionsCodeDiff.mockReturnValue([]);
             mockSuggestionService.getDiscardedSuggestions.mockReturnValue([]);
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 { keepedSuggestions: [], discardedSuggestions: [] },
             );
             mockSuggestionService.filterSuggestionsSafeGuard.mockResolvedValue({
@@ -555,7 +555,7 @@ describe('ProcessFilesReview', () => {
             mockSuggestionService.analyzeSuggestionsSeverity.mockResolvedValue(
                 [],
             );
-            mockCodeAnalysisOrchestrator.executeKodyRulesAnalysis.mockResolvedValue(
+            mockCodeAnalysisOrchestrator.executeCodyRulesAnalysis.mockResolvedValue(
                 { codeSuggestions: [] },
             );
             const context = createBatchContext();
@@ -611,7 +611,7 @@ describe('ProcessFilesReview', () => {
             );
             mockSuggestionService.filterSuggestionsCodeDiff.mockReturnValue([]);
             mockSuggestionService.getDiscardedSuggestions.mockReturnValue([]);
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 { keepedSuggestions: [], discardedSuggestions: [] },
             );
             mockSuggestionService.filterSuggestionsSafeGuard.mockResolvedValue({
@@ -621,7 +621,7 @@ describe('ProcessFilesReview', () => {
             mockSuggestionService.analyzeSuggestionsSeverity.mockResolvedValue(
                 [],
             );
-            mockCodeAnalysisOrchestrator.executeKodyRulesAnalysis.mockResolvedValue(
+            mockCodeAnalysisOrchestrator.executeCodyRulesAnalysis.mockResolvedValue(
                 { codeSuggestions: [] },
             );
             const batch = [file1, file2];
@@ -641,7 +641,7 @@ describe('ProcessFilesReview', () => {
 
     // ─── Frozen object safety (Zod v4 regression guard) ──────────────────
 
-    describe('frozen object safety — applyKodyFineTuningFilter', () => {
+    describe('frozen object safety — applyCodyFineTuningFilter', () => {
         it('should not throw when discarded suggestions are frozen (Object.freeze)', async () => {
             const frozenDiscarded = Object.freeze({
                 id: 'd1',
@@ -649,7 +649,7 @@ describe('ProcessFilesReview', () => {
                 label: 'code_style',
             });
 
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 {
                     keepedSuggestions: [{ id: 'k1', severity: 'high' }],
                     discardedSuggestions: [frozenDiscarded],
@@ -663,21 +663,21 @@ describe('ProcessFilesReview', () => {
                     repository: { id: 'repo-1', fullName: 'org/repo' },
                 },
                 codeReviewConfig: {
-                    kodyFineTuningConfig: { enabled: true },
+                    codyFineTuningConfig: { enabled: true },
                 },
                 clusterizedSuggestions: [],
             };
 
-            const result = await (stage as any).applyKodyFineTuningFilter(
+            const result = await (stage as any).applyCodyFineTuningFilter(
                 [{ id: 'k1' }, frozenDiscarded],
                 context,
             );
 
             expect(result.keepedSuggestions).toHaveLength(1);
-            expect(result.discardedSuggestionsByKodyFineTuning).toHaveLength(1);
+            expect(result.discardedSuggestionsByCodyFineTuning).toHaveLength(1);
             expect(
-                result.discardedSuggestionsByKodyFineTuning[0].priorityStatus,
-            ).toBe(PriorityStatus.DISCARDED_BY_KODY_FINE_TUNING);
+                result.discardedSuggestionsByCodyFineTuning[0].priorityStatus,
+            ).toBe(PriorityStatus.DISCARDED_BY_CODY_FINE_TUNING);
         });
 
         it('should not mutate the original frozen discarded suggestion', async () => {
@@ -686,7 +686,7 @@ describe('ProcessFilesReview', () => {
                 severity: 'low',
             });
 
-            mockKodyFineTuningContextPreparation.prepareKodyFineTuningContext.mockResolvedValue(
+            mockCodyFineTuningContextPreparation.prepareCodyFineTuningContext.mockResolvedValue(
                 {
                     keepedSuggestions: [],
                     discardedSuggestions: [frozenDiscarded],
@@ -703,13 +703,13 @@ describe('ProcessFilesReview', () => {
                 clusterizedSuggestions: [],
             };
 
-            const result = await (stage as any).applyKodyFineTuningFilter(
+            const result = await (stage as any).applyCodyFineTuningFilter(
                 [frozenDiscarded],
                 context,
             );
 
             // Must be a new object, not the same frozen reference
-            expect(result.discardedSuggestionsByKodyFineTuning[0]).not.toBe(
+            expect(result.discardedSuggestionsByCodyFineTuning[0]).not.toBe(
                 frozenDiscarded,
             );
             // Original must remain unchanged

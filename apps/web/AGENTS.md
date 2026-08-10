@@ -1,6 +1,6 @@
 # Web - Next.js Dashboard
 
-Frontend for the Kodus platform.
+Frontend for the Codus platform.
 
 ## What Agents Get Wrong
 

@@ -6,11 +6,11 @@
  *   pnpm run env:generate --apply      # writes to real targets
  *
  * Targets:
- *   kodus-ai/.env.example
- *   kodus-ai/.env.template                    ← 1Password injection template (`op inject` source)
- *   kodus-installer/.env.example
- *   kodus-installer/scripts/schema-vars.sh   ← required-vars list, sourced by install.sh/doctor.sh
- *   kodus/docs/_snippets/env-vars-generated.mdx
+ *   codus-ai/.env.example
+ *   codus-ai/.env.template                    ← 1Password injection template (`op inject` source)
+ *   codus-installer/.env.example
+ *   codus-installer/scripts/schema-vars.sh   ← required-vars list, sourced by install.sh/doctor.sh
+ *   codus/docs/_snippets/env-vars-generated.mdx
  */
 
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -29,8 +29,8 @@ const SCHEMA_PATH = join(REPO_ROOT, '.env.schema');
 
 const APPLY = process.argv.includes('--apply');
 // --installer flag writes ONLY the installer template; used by CI in the
-// release workflow (which clones the kodus-installer repo into ./kodus-installer
-// and runs `pnpm run env:apply --installer-out=../kodus-installer/.env.example`).
+// release workflow (which clones the codus-installer repo into ./codus-installer
+// and runs `pnpm run env:apply --installer-out=../codus-installer/.env.example`).
 // Default `--apply` does NOT touch the installer — that's a cross-repo target.
 const APPLY_INSTALLER = process.argv.includes('--installer');
 const INSTALLER_OUT_ARG = process.argv.find((a) =>
@@ -38,7 +38,7 @@ const INSTALLER_OUT_ARG = process.argv.find((a) =>
 );
 const INSTALLER_OUT = INSTALLER_OUT_ARG
     ? INSTALLER_OUT_ARG.replace('--installer-out=', '')
-    : join(REPO_ROOT, '..', 'kodus-installer', '.env.example');
+    : join(REPO_ROOT, '..', 'codus-installer', '.env.example');
 const INSTALLER_SCHEMA_VARS_OUT_ARG = process.argv.find((a) =>
     a.startsWith('--installer-schema-vars-out='),
 );
@@ -46,7 +46,7 @@ const INSTALLER_SCHEMA_VARS_OUT_ARG = process.argv.find((a) =>
 // generated artifacts ship together. CI passes both explicitly.
 const INSTALLER_SCHEMA_VARS_OUT = INSTALLER_SCHEMA_VARS_OUT_ARG
     ? INSTALLER_SCHEMA_VARS_OUT_ARG.replace('--installer-schema-vars-out=', '')
-    : join(REPO_ROOT, '..', 'kodus-installer', 'scripts', 'schema-vars.sh');
+    : join(REPO_ROOT, '..', 'codus-installer', 'scripts', 'schema-vars.sh');
 const INSTALLER_HELM_VALUES_OUT_ARG = process.argv.find((a) =>
     a.startsWith('--installer-helm-values-out='),
 );
@@ -54,7 +54,7 @@ const INSTALLER_HELM_VALUES_OUT_ARG = process.argv.find((a) =>
 // installer repo; CI there validates the chart against it.
 const INSTALLER_HELM_VALUES_OUT = INSTALLER_HELM_VALUES_OUT_ARG
     ? INSTALLER_HELM_VALUES_OUT_ARG.replace('--installer-helm-values-out=', '')
-    : join(REPO_ROOT, '..', 'kodus-installer', 'charts', 'kodus', 'schema.generated.yaml');
+    : join(REPO_ROOT, '..', 'codus-installer', 'charts', 'codus', 'schema.generated.yaml');
 const POC_DIR = join(REPO_ROOT, '.env-preview');
 
 const TARGETS = APPLY
@@ -66,13 +66,13 @@ const TARGETS = APPLY
           // explicitly to write it (CI does this with --installer-out=...).
           installerEnv: APPLY_INSTALLER
               ? INSTALLER_OUT
-              : join(POC_DIR, 'kodus-installer.env.example'),
+              : join(POC_DIR, 'codus-installer.env.example'),
           installerSchemaVars: APPLY_INSTALLER
               ? INSTALLER_SCHEMA_VARS_OUT
-              : join(POC_DIR, 'kodus-installer.schema-vars.sh'),
+              : join(POC_DIR, 'codus-installer.schema-vars.sh'),
           installerHelmValues: APPLY_INSTALLER
               ? INSTALLER_HELM_VALUES_OUT
-              : join(POC_DIR, 'kodus-installer.schema.generated.yaml'),
+              : join(POC_DIR, 'codus-installer.schema.generated.yaml'),
           // docs lives inside this repo now (was a sister repo before).
           docsSnippet: join(
               REPO_ROOT,
@@ -82,26 +82,26 @@ const TARGETS = APPLY
           ),
       }
     : {
-          envExample: join(POC_DIR, 'kodus-ai.env.example'),
-          envTemplate: join(POC_DIR, 'kodus-ai.env.template'),
-          installerEnv: join(POC_DIR, 'kodus-installer.env.example'),
-          installerSchemaVars: join(POC_DIR, 'kodus-installer.schema-vars.sh'),
+          envExample: join(POC_DIR, 'codus-ai.env.example'),
+          envTemplate: join(POC_DIR, 'codus-ai.env.template'),
+          installerEnv: join(POC_DIR, 'codus-installer.env.example'),
+          installerSchemaVars: join(POC_DIR, 'codus-installer.schema-vars.sh'),
           installerHelmValues: join(
               POC_DIR,
-              'kodus-installer.schema.generated.yaml',
+              'codus-installer.schema.generated.yaml',
           ),
           docsSnippet: join(POC_DIR, 'env-vars-generated.mdx'),
       };
 
-const HEADER_KODUS_AI = `# AUTO-GENERATED from .env.schema. Do NOT edit by hand.
+const HEADER_CODUS_AI = `# AUTO-GENERATED from .env.schema. Do NOT edit by hand.
 # Run \`pnpm run env:generate --apply\` after editing the schema.
-# Source: kodus-ai/.env.schema
+# Source: codus-ai/.env.schema
 `;
 
 const HEADER_INSTALLER = `# =============================================
-# Kodus self-hosted environment file
-# AUTO-GENERATED from kodus-ai/.env.schema. Do NOT edit by hand.
-# Run \`pnpm run env:generate --apply\` in kodus-ai after editing the schema.
+# Codus self-hosted environment file
+# AUTO-GENERATED from codus-ai/.env.schema. Do NOT edit by hand.
+# Run \`pnpm run env:generate --apply\` in codus-ai after editing the schema.
 # =============================================
 `;
 
@@ -113,7 +113,7 @@ const HEADER_TEMPLATE = `# AUTO-GENERATED from .env.schema. Do NOT edit by hand.
 #
 #   pnpm run env:pull           # = op inject -i .env.template -o .env
 #
-# Secrets are pulled from the "Kodus-Dev" vault in 1Password (each item
+# Secrets are pulled from the "Codus-Dev" vault in 1Password (each item
 # is named after its env var; the value lives in the "password" field).
 # Non-secret defaults live inline here — edit the schema to change them.
 #
@@ -126,13 +126,13 @@ const HEADER_TEMPLATE = `# AUTO-GENERATED from .env.schema. Do NOT edit by hand.
 //
 // NOTE: The vault name must NOT contain spaces — `op inject` parses
 // secret refs as `op://<vault>/<item>/<field>` and splits on whitespace,
-// so "Kodus Dev" breaks but "Kodus-Dev" works. Kebab-case is also the
+// so "Codus Dev" breaks but "Codus-Dev" works. Kebab-case is also the
 // idiomatic 1Password convention for vault names referenced by op://.
-const ONEPASSWORD_VAULT = 'Kodus-Dev';
+const ONEPASSWORD_VAULT = 'Codus-Dev';
 const ONEPASSWORD_FIELD = 'password';
 
 function renderEnvExample(sections: SchemaSection[]): string {
-    const out: string[] = [HEADER_KODUS_AI];
+    const out: string[] = [HEADER_CODUS_AI];
     for (const section of sections) {
         const items = section.items.filter((it) =>
             includesAudience(it, 'cloud'),
@@ -253,7 +253,7 @@ function renderInstallerSchemaVars(sections: SchemaSection[]): string {
         .filter((it) => it.required && !it.installerComment)
         .map((it) => it.name);
 
-    // Anything with a `kodus: autogen=<method>` annotation. The installer's
+    // Anything with a `codus: autogen=<method>` annotation. The installer's
     // generate-secrets.sh iterates this list and produces a value via the
     // method when the var is empty.
     const autogen = selfHosted
@@ -262,13 +262,13 @@ function renderInstallerSchemaVars(sections: SchemaSection[]): string {
 
     const lines: string[] = [];
     lines.push('#!/usr/bin/env bash');
-    lines.push('# AUTO-GENERATED from kodus-ai/.env.schema. Do NOT edit by hand.');
+    lines.push('# AUTO-GENERATED from codus-ai/.env.schema. Do NOT edit by hand.');
     lines.push('# Sourced by scripts/install.sh, scripts/doctor.sh, scripts/generate-secrets.sh');
-    lines.push('# Run `pnpm run env:generate --apply --installer` in kodus-ai to regenerate.');
+    lines.push('# Run `pnpm run env:generate --apply --installer` in codus-ai to regenerate.');
     lines.push('');
     lines.push('# Vars the installer must see set before booting the stack.');
     lines.push('# Derived from `@required` in the schema (self-hosted audience).');
-    lines.push('KODUS_REQUIRED_VARS=(');
+    lines.push('CODUS_REQUIRED_VARS=(');
     for (const name of required) {
         lines.push(`    ${name}`);
     }
@@ -276,8 +276,8 @@ function renderInstallerSchemaVars(sections: SchemaSection[]): string {
     lines.push('');
     lines.push('# Secrets the installer can mint unattended.');
     lines.push('# Format: VAR=method  (hex32 | base64-32 | base64url-32 | mirror:OTHER_VAR)');
-    lines.push('# Derived from `kodus: autogen=...` in the schema.');
-    lines.push('KODUS_AUTOGEN_SECRETS=(');
+    lines.push('# Derived from `codus: autogen=...` in the schema.');
+    lines.push('CODUS_AUTOGEN_SECRETS=(');
     for (const entry of autogen) {
         lines.push(`    "${entry}"`);
     }
@@ -300,7 +300,7 @@ function yamlScalar(v: string): string {
     return v;
 }
 
-// Anti-drift manifest for the Kodus Helm chart: the config keys (ConfigMap) and
+// Anti-drift manifest for the Codus Helm chart: the config keys (ConfigMap) and
 // secret keys (Secret) the chart must expose, derived from the same schema that
 // produces .env.example / schema-vars.sh. The installer CI validates the chart
 // against this so the two can never drift (the class of bug that broke the
@@ -321,11 +321,11 @@ function renderHelmValues(sections: SchemaSection[]): string {
     const autogen = selfHosted.filter((it) => it.autogen);
 
     const lines: string[] = [];
-    lines.push('# AUTO-GENERATED from kodus-ai/.env.schema. Do NOT edit by hand.');
-    lines.push('# Anti-drift source of truth for the Kodus Helm chart. The installer CI');
+    lines.push('# AUTO-GENERATED from codus-ai/.env.schema. Do NOT edit by hand.');
+    lines.push('# Anti-drift source of truth for the Codus Helm chart. The installer CI');
     lines.push('# (scripts/validate-chart-schema.sh) validates the chart against this file so');
     lines.push('# the chart can never fall out of sync with the schema.');
-    lines.push('# Regenerate: `pnpm run env:generate --apply --installer` in kodus-ai.');
+    lines.push('# Regenerate: `pnpm run env:generate --apply --installer` in codus-ai.');
     lines.push('');
     lines.push('# Non-sensitive self-hosted vars (ConfigMap keys) with installer defaults.');
     lines.push('config:');
@@ -350,7 +350,7 @@ function renderHelmValues(sections: SchemaSection[]): string {
 
 function renderDocsSnippet(sections: SchemaSection[]): string {
     const out: string[] = [];
-    out.push('{/* AUTO-GENERATED from kodus-ai/.env.schema. Do NOT edit. */}');
+    out.push('{/* AUTO-GENERATED from codus-ai/.env.schema. Do NOT edit. */}');
     out.push('');
     for (const section of sections) {
         const items = section.items;

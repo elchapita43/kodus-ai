@@ -22,10 +22,10 @@ describe('FinishOnboardingUseCase', () => {
         const createOrUpdateParametersUseCase = {
             execute: jest.fn().mockResolvedValue(undefined),
         };
-        const syncSelectedReposKodyRulesUseCase = {
+        const syncSelectedReposCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue(undefined),
         };
-        const generateKodyRulesUseCase = {
+        const generateCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([]),
         };
         const request = {
@@ -62,11 +62,11 @@ describe('FinishOnboardingUseCase', () => {
             organizationService as any,
             {} as any, // reviewPRUseCase
             request as any,
-            syncSelectedReposKodyRulesUseCase as any,
+            syncSelectedReposCodyRulesUseCase as any,
             createOrUpdateParametersUseCase as any,
             telemetry as any,
             codeManagement as any,
-            generateKodyRulesUseCase as any,
+            generateCodyRulesUseCase as any,
             licenseService as any,
             permissionValidationService as any,
         );
@@ -74,8 +74,8 @@ describe('FinishOnboardingUseCase', () => {
         return {
             useCase,
             createOrUpdateParametersUseCase,
-            syncSelectedReposKodyRulesUseCase,
-            generateKodyRulesUseCase,
+            syncSelectedReposCodyRulesUseCase,
+            generateCodyRulesUseCase,
             licenseService,
             permissionValidationService,
             organizationService,
@@ -87,8 +87,8 @@ describe('FinishOnboardingUseCase', () => {
         const {
             useCase,
             createOrUpdateParametersUseCase,
-            syncSelectedReposKodyRulesUseCase,
-            generateKodyRulesUseCase,
+            syncSelectedReposCodyRulesUseCase,
+            generateCodyRulesUseCase,
         } = buildUseCase();
 
         await useCase.execute({ teamId: 'team-1', reviewPR: false } as any);
@@ -106,9 +106,9 @@ describe('FinishOnboardingUseCase', () => {
         // completion so it sees the imported rules.
         await new Promise((resolve) => setImmediate(resolve));
         expect(
-            syncSelectedReposKodyRulesUseCase.execute,
+            syncSelectedReposCodyRulesUseCase.execute,
         ).toHaveBeenCalledWith({ teamId: 'team-1', organizationId: 'org-1' });
-        expect(generateKodyRulesUseCase.execute).toHaveBeenCalledWith(
+        expect(generateCodyRulesUseCase.execute).toHaveBeenCalledWith(
             { teamId: 'team-1', months: 3 },
             'org-1',
         );
@@ -126,7 +126,7 @@ describe('FinishOnboardingUseCase', () => {
     });
 
     it('does not fail onboarding when trial provisioning throws', async () => {
-        const { useCase, licenseService, syncSelectedReposKodyRulesUseCase } =
+        const { useCase, licenseService, syncSelectedReposCodyRulesUseCase } =
             buildUseCase();
         licenseService.startTrial.mockRejectedValueOnce(
             new Error('billing down'),
@@ -140,7 +140,7 @@ describe('FinishOnboardingUseCase', () => {
         // billing error.
         await new Promise((resolve) => setImmediate(resolve));
         expect(
-            syncSelectedReposKodyRulesUseCase.execute,
+            syncSelectedReposCodyRulesUseCase.execute,
         ).toHaveBeenCalledWith({ teamId: 'team-1', organizationId: 'org-1' });
     });
 

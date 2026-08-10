@@ -78,10 +78,10 @@ export enum BoardPriorityType {
 export type PlatformConfigValue = {
     finishOnboard?: boolean;
     finishProjectManagementConnection?: boolean;
-    kodyLearningStatus?: KodyLearningStatus;
+    codyLearningStatus?: CodyLearningStatus;
 };
 
-export enum KodyLearningStatus {
+export enum CodyLearningStatus {
     ENABLED = "enabled",
     DISABLED = "disabled",
     GENERATING_RULES = "generating_rules",
@@ -142,13 +142,13 @@ export type OrganizationParametersAutoAssignConfig = {
 
 export interface CockpitMetricsVisibility {
     tabs: {
-        kodusReview: boolean;
+        codusReview: boolean;
         productivity: boolean;
     };
     summary: {
         deployFrequency: boolean;
         prCycleTime: boolean;
-        kodySuggestions: boolean;
+        codySuggestions: boolean;
         bugRatio: boolean;
         prSize: boolean;
     };

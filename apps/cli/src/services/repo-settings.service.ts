@@ -59,7 +59,7 @@ class RepositorySettingsService {
         if (!matchedRepository) {
             throw new CommandError(
                 'INVALID_INPUT',
-                `Repository '${repositoryRef}' is not configured in Kodus yet. Run 'kodus config add -r ${target}' first.`,
+                `Repository '${repositoryRef}' is not configured in Codus yet. Run 'codus config add -r ${target}' first.`,
             );
         }
 
@@ -71,13 +71,13 @@ class RepositorySettingsService {
     private async requireTeamKey(): Promise<string> {
         const accessToken = await authService.getValidToken();
 
-        if (accessToken.startsWith('kodus_')) {
+        if (accessToken.startsWith('codus_')) {
             return accessToken;
         }
 
         throw new CommandError(
             'AUTH_REQUIRED',
-            'Repository settings require team-key auth. Run: kodus auth team-key --key <your-key>.',
+            'Repository settings require team-key auth. Run: codus auth team-key --key <your-key>.',
         );
     }
 

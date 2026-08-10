@@ -25,14 +25,14 @@ const mockResolveTeamKeyAccess = vi.mocked(resolveTeamKeyAccess);
 describe('rulesService', () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        mockResolveTeamKeyAccess.mockResolvedValue({ teamKey: 'kodus_team_key' });
+        mockResolveTeamKeyAccess.mockResolvedValue({ teamKey: 'codus_team_key' });
     });
 
     it('requires team-key auth on create', async () => {
         mockResolveTeamKeyAccess.mockRejectedValue(
             new CommandError(
                 'AUTH_REQUIRED',
-                'Kody Rules commands require team-key auth.',
+                'Cody Rules commands require team-key auth.',
             ),
         );
 
@@ -62,7 +62,7 @@ describe('rulesService', () => {
             rule: 'Prefer async/await',
         });
 
-        expect(mockRulesApi.createRule).toHaveBeenCalledWith('kodus_team_key', {
+        expect(mockRulesApi.createRule).toHaveBeenCalledWith('codus_team_key', {
             title: 'Use async/await',
             rule: 'Prefer async/await',
             repositoryId: 'global',
@@ -89,7 +89,7 @@ describe('rulesService', () => {
             repositoryId: 'repo-1',
         });
 
-        expect(mockRulesApi.createRule).toHaveBeenCalledWith('kodus_team_key', {
+        expect(mockRulesApi.createRule).toHaveBeenCalledWith('codus_team_key', {
             title: 'Use strict equals',
             rule: 'Prefer === and !==',
             repositoryId: 'repo-1',
@@ -164,7 +164,7 @@ describe('rulesService', () => {
             repositoryId: 'repo-7',
         });
 
-        expect(mockRulesApi.viewRules).toHaveBeenCalledWith('kodus_team_key', {
+        expect(mockRulesApi.viewRules).toHaveBeenCalledWith('codus_team_key', {
             repositoryId: 'repo-7',
             ruleId: 'rule-9',
         });

@@ -1,0 +1,10 @@
+{
+    "name": "codus-hunk-extension",
+    "private": true,
+    "description": "Codus findings sidebar for the Hunk terminal diff viewer",
+    "hunk": {
+        "extensions": [
+            "./index.tsx"
+        ]
+    }
+}

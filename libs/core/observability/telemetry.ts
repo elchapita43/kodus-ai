@@ -46,7 +46,7 @@ export class TelemetrySystem {
     constructor(config: Partial<TelemetryConfig> = {}) {
         this.config = {
             enabled: true,
-            serviceName: 'kodus-ai',
+            serviceName: 'codus-ai',
             sampling: {
                 rate: 1.0,
                 strategy: 'probabilistic',

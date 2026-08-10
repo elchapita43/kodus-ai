@@ -32,12 +32,12 @@ describe('skills sync manifest helpers', () => {
         };
 
         expect(resolveManagedManifestPath(target)).toBe(
-            '/tmp/.codex/skills/.kodus-managed-skills.json',
+            '/tmp/.codex/skills/.codus-managed-skills.json',
         );
     });
 
     it('writes sorted skill names and reads only valid entries back', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-manifest-');
+        const tempRoot = await makeTempDir('codus-skills-manifest-');
         tempDirs.push(tempRoot);
 
         const target: SkillSyncTarget = {
@@ -49,7 +49,7 @@ describe('skills sync manifest helpers', () => {
 
         await writeManagedSkillNames(
             target,
-            ['kodus-review', 'z-last', 'a-first'],
+            ['codus-review', 'z-last', 'a-first'],
             false,
         );
 
@@ -58,23 +58,23 @@ describe('skills sync manifest helpers', () => {
             'utf8',
         );
         expect(manifestRaw).toContain('"a-first"');
-        expect(manifestRaw).toContain('"kodus-review"');
+        expect(manifestRaw).toContain('"codus-review"');
         expect(manifestRaw).toContain('"z-last"');
 
         await fs.writeFile(
             resolveManagedManifestPath(target),
-            JSON.stringify(['kodus-review', '../evil', 42, 'a-first']),
+            JSON.stringify(['codus-review', '../evil', 42, 'a-first']),
             'utf8',
         );
 
         expect(await readManagedSkillNames(target)).toEqual([
-            'kodus-review',
+            'codus-review',
             'a-first',
         ]);
     });
 
     it('does not create files during dry run', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-manifest-dry-');
+        const tempRoot = await makeTempDir('codus-skills-manifest-dry-');
         tempDirs.push(tempRoot);
 
         const target: SkillSyncTarget = {
@@ -84,7 +84,7 @@ describe('skills sync manifest helpers', () => {
             baseDir: path.join(tempRoot, '.codex', 'skills'),
         };
 
-        await writeManagedSkillNames(target, ['kodus-review'], true);
+        await writeManagedSkillNames(target, ['codus-review'], true);
 
         await expect(
             fs.access(resolveManagedManifestPath(target)),

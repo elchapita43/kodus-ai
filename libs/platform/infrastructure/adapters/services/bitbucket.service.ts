@@ -241,7 +241,7 @@ export class BitbucketService implements Omit<
         if (includeHeader) {
             const severityText = suggestion?.severity || '';
             const labelText = suggestion?.label || '';
-            commentBody += `\`kody|code-review\` \`${labelText}\` \`severity-level|${severityText}\`\n\n\n`;
+            commentBody += `\`cody|code-review\` \`${labelText}\` \`severity-level|${severityText}\`\n\n\n`;
         }
 
         if (suggestion?.suggestionContent) {
@@ -259,7 +259,7 @@ export class BitbucketService implements Omit<
 
         if (includeFooter) {
             commentBody +=
-                'Was this suggestion helpful? reply with 👍 or 👎 to help Kody learn from this interaction.\n\n';
+                'Was this suggestion helpful? reply with 👍 or 👎 to help Cody learn from this interaction.\n\n';
             commentBody += `\`\`\`\n👍\n\`\`\`\n\n\`\`\`\n👎\n\`\`\``;
         }
 

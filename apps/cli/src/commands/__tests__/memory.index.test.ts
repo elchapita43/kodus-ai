@@ -23,7 +23,7 @@ describe('decisions capture command', () => {
         await program.parseAsync(
             [
                 'node',
-                'kodus',
+                'codus',
                 'decisions',
                 'capture',
                 '--agent',

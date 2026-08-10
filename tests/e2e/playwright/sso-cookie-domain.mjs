@@ -1,11 +1,11 @@
 // SSO cookie-domain E2E driver — Playwright × droplet.
 //
-// Drives the full SAML round-trip end-to-end against a Kodus droplet
+// Drives the full SAML round-trip end-to-end against a Codus droplet
 // provisioned by scripts/sso-e2e/droplet/provision.sh:
 //
 //   1. Navigate to https://api.<IP>.sslip.io/auth/sso/login/<orgId>
 //      → 302 to Keycloak with a SAMLRequest.
-//   2. Fill the Keycloak login form (sso-user@kodus-test.com).
+//   2. Fill the Keycloak login form (sso-user@codus-test.com).
 //   3. Keycloak POSTs the SAMLResponse back to
 //      https://api.<IP>.sslip.io/auth/sso/saml/callback/<orgId>.
 //   4. API emits `Set-Cookie: sso_handoff=...; Domain=.<IP>.sslip.io`
@@ -21,8 +21,8 @@
 //   SSO_E2E_API_URL    https://api.<IP>.sslip.io      (provision.sh emits this)
 //   SSO_E2E_APP_URL    https://app.<IP>.sslip.io
 //   SSO_E2E_BASE       <IP>.sslip.io                  (expected cookie Domain suffix)
-//   SSO_E2E_ORG_ID     orgId from bootstrap-kodus-sso.sh
-//   SSO_E2E_USER       (default: sso-user@kodus-test.com)
+//   SSO_E2E_ORG_ID     orgId from bootstrap-codus-sso.sh
+//   SSO_E2E_USER       (default: sso-user@codus-test.com)
 //   SSO_E2E_PASSWORD   (default: TestSso!2026)
 //   SSO_E2E_IGNORE_TLS=1 if Caddy fell back to its internal CA.
 //
@@ -36,7 +36,7 @@ const {
     SSO_E2E_APP_URL,
     SSO_E2E_BASE,
     SSO_E2E_ORG_ID,
-    SSO_E2E_USER = "sso-user@kodus-test.com",
+    SSO_E2E_USER = "sso-user@codus-test.com",
     SSO_E2E_PASSWORD = "TestSso!2026",
     SSO_E2E_IGNORE_TLS,
     SSO_E2E_HEADLESS = "1",

@@ -23,8 +23,8 @@ export const trialExpiringEmailMeta = (params: {
     from: EMAIL_FROM.NOTIFICATIONS,
     subject:
         params.daysRemaining === 1
-            ? 'Your Kodus trial ends tomorrow'
-            : `Your Kodus trial ends in ${params.daysRemaining} days`,
+            ? 'Your Codus trial ends tomorrow'
+            : `Your Codus trial ends in ${params.daysRemaining} days`,
 });
 
 function TrialExpiringEmail({
@@ -39,13 +39,13 @@ function TrialExpiringEmail({
 
     return (
         <BrandLayout
-            preview={`Your Kodus trial ends ${remaining}. Upgrade to keep things running.`}>
+            preview={`Your Codus trial ends ${remaining}. Upgrade to keep things running.`}>
             <Heading style={baseHeading}>
                 Your trial ends {remaining}
             </Heading>
             <Text style={baseText}>
-                Your Kodus trial ends on{' '}
-                <strong>{trialEndsAtLabel}</strong>. To keep Kody reviewing
+                Your Codus trial ends on{' '}
+                <strong>{trialEndsAtLabel}</strong>. To keep Cody reviewing
                 your pull requests without interruption, upgrade your
                 organization before then.
             </Text>

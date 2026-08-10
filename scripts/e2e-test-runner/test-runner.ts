@@ -8,7 +8,7 @@
  *   npx ts-node scripts/e2e-test-runner/test-runner.ts
  *
  * Environment variables:
- *   KODUS_API_URL - API base URL (default: http://localhost:3000)
+ *   CODUS_API_URL - API base URL (default: http://localhost:3000)
  *   GITHUB_TEST_TOKEN - GitHub PAT with repo access
  *   GITHUB_TEST_REPOS - Comma-separated list of repos (e.g., "org/repo1,org/repo2")
  *   TEST_ACCOUNTS_COUNT - Number of test accounts to create (default: 3)
@@ -20,7 +20,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import pLimit from 'p-limit';
 import { TestConfig, defaultConfig } from './config';
-import { KodusApiClient, GitHubApiClient, GitLabApiClient, Repository } from './api-client';
+import { CodusApiClient, GitHubApiClient, GitLabApiClient, Repository } from './api-client';
 
 interface TestAccount {
     id: string;
@@ -233,20 +233,20 @@ class E2ETestRunner {
 
         this.log(`Creating account ${index + 1}/${this.config.testAccounts.count}: ${email}`);
 
-        const kodusClient = new KodusApiClient(this.config);
+        const codusClient = new CodusApiClient(this.config);
 
         try {
             // 1. Sign up
-            const signUpResult = await kodusClient.signUp(email, password, name);
+            const signUpResult = await codusClient.signUp(email, password, name);
             this.log(`Account created: ${email}`, {
                 organizationId: signUpResult.organization.id,
                 teamId: signUpResult.team.id,
             });
 
             // 2. Login (skip email confirmation for testing - assume auto-confirmed or use test mode)
-            const loginResult = await kodusClient.login(email, password);
+            const loginResult = await codusClient.login(email, password);
 
-            kodusClient.setContext(signUpResult.organization.id, signUpResult.team.id);
+            codusClient.setContext(signUpResult.organization.id, signUpResult.team.id);
 
             const account: TestAccount = {
                 id,
@@ -287,9 +287,9 @@ class E2ETestRunner {
 
         this.log(`Setting up ${platform} integration for ${account.email}`);
 
-        const kodusClient = new KodusApiClient(this.config);
-        await kodusClient.login(account.email, account.password);
-        kodusClient.setContext(account.organizationId, account.teamId);
+        const codusClient = new CodusApiClient(this.config);
+        await codusClient.login(account.email, account.password);
+        codusClient.setContext(account.organizationId, account.teamId);
 
         const token =
             platform === 'github' ? this.config.github.token : this.config.gitlab?.token;
@@ -299,10 +299,10 @@ class E2ETestRunner {
         }
 
         // Create integration
-        await kodusClient.createIntegration(platform, token);
+        await codusClient.createIntegration(platform, token);
 
         // List and select repositories
-        const repos = await kodusClient.listRepositories();
+        const repos = await codusClient.listRepositories();
         const testRepos =
             platform === 'github' ? this.config.github.testRepos : this.config.gitlab?.testRepos;
 
@@ -314,11 +314,11 @@ class E2ETestRunner {
             throw new Error(`No matching test repos found for ${platform}`);
         }
 
-        await kodusClient.selectRepositories(selectedRepos);
+        await codusClient.selectRepositories(selectedRepos);
 
         // Get CLI key for later use
         try {
-            const cliKey = await kodusClient.getTeamCliKey();
+            const cliKey = await codusClient.getTeamCliKey();
             account.teamCliKey = cliKey.key;
         } catch (e) {
             this.log(`Could not get CLI key for ${account.email}`, e);
@@ -428,13 +428,13 @@ This PR contains intentional code issues for the code review system to detect.`,
 
         this.log(`Triggering review for PR #${pr.prNumber} in ${pr.repo}`);
 
-        const kodusClient = new KodusApiClient(this.config);
-        await kodusClient.login(account.email, account.password);
-        kodusClient.setContext(account.organizationId, account.teamId);
+        const codusClient = new CodusApiClient(this.config);
+        await codusClient.login(account.email, account.password);
+        codusClient.setContext(account.organizationId, account.teamId);
 
         const [, repoName] = pr.repo.split('/');
 
-        await kodusClient.finishOnboarding({
+        await codusClient.finishOnboarding({
             reviewPR: true,
             pullNumber: pr.prNumber,
             repositoryName: pr.repo,
@@ -470,20 +470,20 @@ This PR contains intentional code issues for the code review system to detect.`,
                     pr.prNumber,
                 );
 
-                // Look for Kody comments
-                const hasKodyComment =
+                // Look for Cody comments
+                const hasCodyComment =
                     comments.some(
                         (c) =>
-                            c.body?.includes('kody') ||
-                            c.body?.includes('Kody') ||
-                            c.user?.login?.includes('kody'),
+                            c.body?.includes('cody') ||
+                            c.body?.includes('Cody') ||
+                            c.user?.login?.includes('cody'),
                     ) ||
                     reviewComments.some(
                         (c) =>
-                            c.body?.includes('suggestion') || c.user?.login?.includes('kody'),
+                            c.body?.includes('suggestion') || c.user?.login?.includes('cody'),
                     );
 
-                if (hasKodyComment) {
+                if (hasCodyComment) {
                     pr.status = 'review_completed';
                     this.log(`Review completed for PR #${pr.prNumber}`, {
                         comments: comments.length,

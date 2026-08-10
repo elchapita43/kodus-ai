@@ -171,7 +171,7 @@ export const LinkedRepositories = () => {
                         </div>
 
                         <p className="text-text-secondary mb-3 text-sm">
-                            Sibling repos Kody uses as read-only context when
+                            Sibling repos Cody uses as read-only context when
                             reviewing this repository.
                         </p>
 
@@ -399,7 +399,7 @@ function LinkedRepositoriesPlanGate() {
                 </div>
             </div>
             <p className="text-text-secondary mb-3 text-sm">
-                Sibling repos Kody uses as read-only context when reviewing this
+                Sibling repos Cody uses as read-only context when reviewing this
                 repository.
             </p>
             <div className="border-card-lv3 bg-card-lv1 flex flex-col items-center gap-3 rounded-lg border border-dashed px-4 py-8 text-center">
@@ -411,7 +411,7 @@ function LinkedRepositoriesPlanGate() {
                         Available on Teams and Enterprise
                     </p>
                     <p className="text-text-secondary max-w-sm text-xs leading-relaxed">
-                        Cross-repo context lets Kody check contracts and APIs
+                        Cross-repo context lets Cody check contracts and APIs
                         across sibling services during review. Upgrade to unlock
                         linked repositories.
                     </p>
@@ -448,7 +448,7 @@ function EmptyState({
             <div className="space-y-1">
                 <p className="text-sm font-medium">No linked repositories</p>
                 <p className="text-text-secondary max-w-sm text-xs leading-relaxed">
-                    Link a sibling service so Kody can check contracts across
+                    Link a sibling service so Cody can check contracts across
                     repo boundaries during review.
                 </p>
             </div>
@@ -529,7 +529,7 @@ function AddRepositoryDialog({
                     <DialogTitle>Add linked repository</DialogTitle>
                     <DialogDescription>
                         Choose a sibling repo already connected to this team.
-                        Kody will use it as read-only context.
+                        Cody will use it as read-only context.
                     </DialogDescription>
                 </DialogHeader>
 

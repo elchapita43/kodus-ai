@@ -2,7 +2,7 @@
 //
 // Unlike run.ts (tier-0, N models on the shared QA cloud tenant), this targets
 // a per-run DROPLET running a branch's compiled engine, opens the full 50-PR
-// dataset on a fresh per-run clone-set, waits for Kody to review each, collects
+// dataset on a fresh per-run clone-set, waits for Cody to review each, collects
 // findings, and writes results.json. The precision/recall judging is a separate
 // post-step (scorecard.ts / judge.ts) driven by bench-run.sh.
 //
@@ -14,10 +14,10 @@
 //
 // Inputs (env):
 //   FARM_WEB_BASE_URL   the droplet's web URL, e.g. http://159.203.x.x:3000   (required)
-//   FARM_RUN_ID         unique run id; the cloned repos are kodus-e2e/<base>-<run id>  (required)
+//   FARM_RUN_ID         unique run id; the cloned repos are codus-e2e/<base>-<run id>  (required)
 //   FARM_MODEL_SLUG     which curated model BYOK to benchmark (default: the run's pinned model)
-//   GH_TEST_TOKEN       GitHub token for opening PRs + reading findings (from ~/.kodus-dev/config)
-//   BYOK_* / ANTHROPIC_API_KEY   pulled from ~/.kodus-dev/config if not already set
+//   GH_TEST_TOKEN       GitHub token for opening PRs + reading findings (from ~/.codus-dev/config)
+//   BYOK_* / ANTHROPIC_API_KEY   pulled from ~/.codus-dev/config if not already set
 //
 // Output: tests/e2e/benchmark/results-farm-<run id>.json
 import { readFileSync, writeFileSync } from "node:fs";
@@ -29,7 +29,7 @@ import { http, ensureOk } from "../lib/http.js";
 import { logger } from "../lib/log.js";
 import { loadTier0Models } from "./models.js";
 import { setByokConfig, testByok } from "./byok.js";
-import type { TargetContext, KodusSession } from "../lib/types.js";
+import type { TargetContext, CodusSession } from "../lib/types.js";
 
 const log = logger("farm");
 
@@ -52,7 +52,7 @@ interface BenchPR {
     golden_comments: { comment: string; severity?: string }[];
 }
 
-// Pull BYOK_* / GH_TEST_TOKEN / ANTHROPIC_API_KEY from ~/.kodus-dev/config if
+// Pull BYOK_* / GH_TEST_TOKEN / ANTHROPIC_API_KEY from ~/.codus-dev/config if
 // not already exported. Indent-tolerant; never overrides a caller-set var.
 // (Mirrors run.ts:loadConfig.)
 // Parse a config value, stripping a trailing inline comment WITHOUT corrupting
@@ -72,7 +72,7 @@ function parseConfigValue(raw: string): string {
 }
 
 function loadConfig(): void {
-    const path = join(homedir(), ".kodus-dev", "config");
+    const path = join(homedir(), ".codus-dev", "config");
     let text: string;
     try {
         text = readFileSync(path, "utf8");
@@ -91,18 +91,18 @@ function loadConfig(): void {
 }
 
 // The full 50-PR dataset. Each run remaps repo -> the per-run clone
-// kodus-e2e/<base>-<RUN_ID> (created by clone-run-repos.ts before this runs).
+// codus-e2e/<base>-<RUN_ID> (created by clone-run-repos.ts before this runs).
 function loadPRs(): BenchPR[] {
     const p = join(process.cwd(), "..", "..", "scripts", "benchmark", "prs-benchmark.json");
     const raw = JSON.parse(readFileSync(p, "utf8"));
     return (raw.prs ?? raw) as BenchPR[];
 }
 
-const CLONE_ORG = process.env.FARM_GH_ORG || "kodus-bench";
+const CLONE_ORG = process.env.FARM_GH_ORG || "codus-bench";
 // Dedicated benchmark-org PAT (NOT GH_TEST_TOKEN, which the rest of the e2e
 // suite uses). Falls back to GH_TEST_TOKEN for backward compat.
 const FARM_GH = process.env.FARM_GH_TOKEN || process.env.GH_TEST_TOKEN || "";
-// ai-code-review-benchmark/sentry  ->  kodus-e2e/sentry-<RUN_ID>
+// ai-code-review-benchmark/sentry  ->  codus-e2e/sentry-<RUN_ID>
 function clonedRepo(sourceRepo: string): string {
     const base = sourceRepo.split("/")[1];
     return `${CLONE_ORG}/${base}-${RUN_ID}`;
@@ -110,7 +110,7 @@ function clonedRepo(sourceRepo: string): string {
 
 // --- onboarding (mirrors run.ts, retargeted to DROPLET) ---
 
-async function listOrgRepos(session: KodusSession): Promise<Array<Record<string, unknown>>> {
+async function listOrgRepos(session: CodusSession): Promise<Array<Record<string, unknown>>> {
     const resp = await http<{ data: Array<Record<string, unknown>> }>(
         `${DROPLET.apiBaseUrl}/code-management/repositories/org?teamId=${encodeURIComponent(session.teamId)}`,
         { headers: { Authorization: `Bearer ${session.accessToken}` }, timeoutMs: 30_000 },
@@ -121,7 +121,7 @@ async function listOrgRepos(session: KodusSession): Promise<Array<Record<string,
 // Idempotent: if every benchmark repo is already `selected`, do nothing (a
 // re-onboard deletes+recreates the webhooks and silently stops reviews — see
 // run.ts:registerRepos for the full rationale).
-async function registerRepos(session: KodusSession, repoFullNames: string[]): Promise<void> {
+async function registerRepos(session: CodusSession, repoFullNames: string[]): Promise<void> {
     const avail = await listOrgRepos(session);
     const availByName = new Map(avail.map((x) => [x.full_name as string, x]));
     const found = repoFullNames.map((fn) => {
@@ -158,10 +158,10 @@ async function registerRepos(session: KodusSession, repoFullNames: string[]): Pr
 // No review-license step: the droplet runs self-hosted with no license, which
 // permissionValidation treats as Community Edition = "allow everything". The
 // cloud billing dance (trial/migrate-to-free) is intentionally gone — it needs
-// a kodus-service-billing microservice the droplet doesn't run. The review model
+// a codus-service-billing microservice the droplet doesn't run. The review model
 // comes from the droplet's .env (API_LLM_PROVIDER_MODEL), not per-tenant BYOK.
 
-async function ensureOnboarded(session: KodusSession, repoFullNames: string[]): Promise<void> {
+async function ensureOnboarded(session: CodusSession, repoFullNames: string[]): Promise<void> {
     let avail = await listOrgRepos(session);
     const selected = new Set(avail.filter((r) => r.selected === true).map((r) => r.full_name as string));
     const allSelected = avail.length > 0 && repoFullNames.every((fn) => selected.has(fn));
@@ -211,7 +211,7 @@ async function collectFindings(repo: string, prNumber: number): Promise<string[]
     );
     return (body ?? [])
         .map((c) => (c.body ?? "").trim())
-        .filter((b) => b && !b.toLowerCase().startsWith("@kody"))
+        .filter((b) => b && !b.toLowerCase().startsWith("@cody"))
         .map((b) => b.replace(/^(?:\s*!\[[^\]]*\]\([^)]*\)\s*)+/i, "").trim());
 }
 
@@ -243,7 +243,7 @@ async function collectFindingsStable(repo: string, prNumber: number): Promise<st
     return prev;
 }
 
-// Open a PR on its per-run clone, wait for Kody, collect findings, close.
+// Open a PR on its per-run clone, wait for Cody, collect findings, close.
 // `modelLabel` is only for the result/scorecard grouping (the actual model is
 // the droplet's .env config in self-hosted CE).
 async function reviewOnePR(modelLabel: string, pr: BenchPR): Promise<{ ok: boolean; result: unknown }> {
@@ -258,10 +258,10 @@ async function reviewOnePR(modelLabel: string, pr: BenchPR): Promise<{ ok: boole
         let retried = false;
         if (outcome !== "completed") {
             retried = true;
-            log.info(`${repoShort}: review ${outcome} — retrying once via @kody review (PR #${opened.number})`);
+            log.info(`${repoShort}: review ${outcome} — retrying once via @cody review (PR #${opened.number})`);
             await sleep(5_000);
             const retryAt = Date.now() - 5_000;
-            await provider.postComment(opened.number, "@kody review").catch(() => {});
+            await provider.postComment(opened.number, "@cody review").catch(() => {});
             outcome = await waitForReviewOutcome(repo, opened.number, retryAt);
         }
         const reviewed = outcome === "completed";
@@ -294,7 +294,7 @@ async function main() {
     // .env is not a benchmarkable model. Self-hosted CE honors the org's BYOK
     // config (byokPromptRunner uses it whenever present; no cloud/license gate),
     // so we set it WITHOUT the cloud billing dance (that needs an absent
-    // kodus-service-billing). FARM_MODEL_SLUG selects from curated-models.json.
+    // codus-service-billing). FARM_MODEL_SLUG selects from curated-models.json.
     const slug = process.env.FARM_MODEL_SLUG;
     const models = loadTier0Models();
     const model = slug ? models.find((m) => m.slug === slug) : models[0];

@@ -509,7 +509,7 @@ Examples:
 
     try {
         const uri = buildMongoUri();
-        const dbName = process.env.API_MG_DB_DATABASE || 'kodus_db';
+        const dbName = process.env.API_MG_DB_DATABASE || 'codus_db';
 
         console.log(`Connecting to MongoDB (database: ${dbName})...`);
 

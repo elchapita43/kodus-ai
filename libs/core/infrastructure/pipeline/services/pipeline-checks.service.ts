@@ -13,12 +13,12 @@ import { ChecksAdapterFactory } from './checks-adapter.factory';
 // groups check runs by (name, head_sha) and only surfaces the most recent
 // one, so a stable name guarantees one check per commit whose status is
 // always the latest run's outcome — state lives in title/summary instead.
-export const KODY_CHECK_RUN_NAME = 'Kody Code Review';
+export const CODY_CHECK_RUN_NAME = 'Cody Code Review';
 
 export const checkStageMap = {
     _pipelineStart: {
         title: 'Code Review Starting',
-        summary: 'Kody is analyzing your code changes...',
+        summary: 'Cody is analyzing your code changes...',
     },
 
     PRLevelReviewStage: {
@@ -298,7 +298,7 @@ export class PipelineChecksService implements IPipelineChecksService {
                 organizationAndTeamData,
                 repository,
                 headSha,
-                name: KODY_CHECK_RUN_NAME,
+                name: CODY_CHECK_RUN_NAME,
             });
 
             if (existingCheckId) {
@@ -324,7 +324,7 @@ export class PipelineChecksService implements IPipelineChecksService {
                 repository,
                 headSha,
                 status,
-                name: KODY_CHECK_RUN_NAME,
+                name: CODY_CHECK_RUN_NAME,
                 output: {
                     title,
                     summary,

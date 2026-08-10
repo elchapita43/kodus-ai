@@ -1,6 +1,6 @@
 # PR-summary eval
 
-Guards the **"generate PR summary on open"** feature — the AI description Kody
+Guards the **"generate PR summary on open"** feature — the AI description Cody
 writes to a PR when a client opens it.
 
 ## Why this exists
@@ -28,7 +28,7 @@ behaviour contract.
 4. **Composed (first open)** — the `behaviourForExistingDescription` config:
    - `replace` → only the fresh block; any existing author description dropped;
    - `concatenate` → author description kept, fresh block appended, and a stale
-     prior Kody block stripped so it never stacks (issue #1019);
+     prior Cody block stripped so it never stacks (issue #1019);
    - `complement` → the existing description is injected into the model prompt so
      the summary complements rather than repeats it.
 5. **Composed (new commit / push on an open PR)** — the `behaviourForNewCommits`
@@ -37,7 +37,7 @@ behaviour contract.
      pipeline stage, since that gate — not `generateSummaryPR` — is where the
      decision lives; a config flip here silently killing posting is the
      incident class);
-   - `replace` → the prior Kody block is regenerated in place, author text kept;
+   - `replace` → the prior Cody block is regenerated in place, author text kept;
    - `concatenate` → the new summary is appended INSIDE the block, accumulating
      the prior summary rather than replacing it.
    The **commit-run gate** drives `UpdateCommentsAndGenerateSummaryStage` with a
@@ -82,7 +82,7 @@ network errors — "not measured", never a silent green).
 
 ## No calibrated floor (by design)
 
-Unlike the recall/kody-rules evals, this gate is **binary property assertions**,
+Unlike the recall/cody-rules evals, this gate is **binary property assertions**,
 not a numeric threshold — there is no `targets.json` to drift and nothing to
 flake on run-to-run variance. Add cases to `datasets/cases.json`; keep every
 behaviour (`replace`/`concatenate`/`complement`) represented (the harness

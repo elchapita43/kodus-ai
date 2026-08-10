@@ -15,7 +15,7 @@ I couldn't start the skill because required context fields are missing: \`${fiel
 
 ### How to fix
 - Ensure the event includes organization, team, repository, and pull request number.
-- Run again: \`@kody -v business-logic\``;
+- Run again: \`@cody -v business-logic\``;
     }
 
     return `## ⚠️ Invalid Skill Response

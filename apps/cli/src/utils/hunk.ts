@@ -40,15 +40,15 @@ export function resolveHunkBin(): string {
 let cachedExtensionDir: string | null | undefined;
 
 /**
- * Absolute path to the Kodus hunk extension bundled with this package, or null
+ * Absolute path to the Codus hunk extension bundled with this package, or null
  * when it isn't on disk.
  *
  * It ships as raw `.tsx` outside `src/` (hunk compiles it itself; our `tsc`
- * must not), so it sits at `<package root>/hunk-extension/kodus` both in the
+ * must not), so it sits at `<package root>/hunk-extension/codus` both in the
  * repo and in the published tarball. This module lands at `dist/utils/hunk.js`
  * once compiled and `src/utils/hunk.ts` under vitest — same depth either way.
  */
-export function resolveKodusExtensionDir(): string | null {
+export function resolveCodusExtensionDir(): string | null {
     if (cachedExtensionDir !== undefined) {
         return cachedExtensionDir;
     }
@@ -59,7 +59,7 @@ export function resolveKodusExtensionDir(): string | null {
         '..',
         '..',
         'hunk-extension',
-        'kodus',
+        'codus',
     );
 
     cachedExtensionDir = existsSync(path.join(candidate, 'index.tsx'))

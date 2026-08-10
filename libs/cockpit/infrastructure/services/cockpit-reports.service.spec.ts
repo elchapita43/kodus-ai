@@ -8,7 +8,7 @@ describe('CockpitReportsService', () => {
     let review: any;
     let codeHealth: any;
     let productivity: any;
-    let kodyRules: any;
+    let codyRules: any;
     let service: CockpitReportsService;
 
     const ORG = 'org-1';
@@ -24,18 +24,18 @@ describe('CockpitReportsService', () => {
             getRepositoriesHealth: jest.fn(),
             getImplementationRateByCategory: jest.fn().mockResolvedValue([]),
             getNegativeFeedbackByCategory: jest.fn().mockResolvedValue([]),
-            getKodyRulesUsage: jest.fn().mockResolvedValue([]),
+            getCodyRulesUsage: jest.fn().mockResolvedValue([]),
         };
         codeHealth = { getImplementationRate: jest.fn() };
         productivity = { getLeadTimeHighlight: jest.fn() };
-        kodyRules = {
+        codyRules = {
             findByOrganizationId: jest.fn().mockResolvedValue({ rules: [] }),
         };
         service = new CockpitReportsService(
             review,
             codeHealth,
             productivity,
-            kodyRules,
+            codyRules,
         );
     });
 
@@ -87,7 +87,7 @@ describe('CockpitReportsService', () => {
             // Total votes 1+1+2+1 = 5 < MIN_FEEDBACK_VOTES(10) → not enough.
             review.getReviewQualityByRuleGroup.mockResolvedValue([
                 {
-                    group: 'kody_rules',
+                    group: 'cody_rules',
                     sent: 40,
                     implemented: 14,
                     rate: 0.35,
@@ -124,7 +124,7 @@ describe('CockpitReportsService', () => {
 
             expect(section!.feedback.totalVotes).toBe(5);
             expect(section!.feedback.hasEnoughVotes).toBe(false);
-            expect(section!.feedback.kodyRules.negativeRate).toBeCloseTo(0.5);
+            expect(section!.feedback.codyRules.negativeRate).toBeCloseTo(0.5);
             expect(section!.feedback.general.negativeRate).toBeCloseTo(0.33);
         });
 
@@ -160,11 +160,11 @@ describe('CockpitReportsService', () => {
             expect(section!.criticalImplemented).toBe(0);
             expect(section!.feedback.totalVotes).toBe(12);
             expect(section!.feedback.hasEnoughVotes).toBe(true);
-            expect(section!.feedback.kodyRules.negativeRate).toBeNull();
+            expect(section!.feedback.codyRules.negativeRate).toBeNull();
         });
     });
 
-        it('builds category rows (excluding kody_rules) and rule health worst-first', async () => {
+        it('builds category rows (excluding cody_rules) and rule health worst-first', async () => {
             review.getReviewOperationalMetrics.mockResolvedValue(
                 opsMetrics(58),
             );
@@ -178,7 +178,7 @@ describe('CockpitReportsService', () => {
             review.getImplementationRateWeekly.mockResolvedValue([]);
             review.getImplementationRateByCategory.mockResolvedValue([
                 { category: 'bug', sent: 30, implemented: 18, rate: 0.6 },
-                { category: 'kody_rules', sent: 10, implemented: 2, rate: 0.2 },
+                { category: 'cody_rules', sent: 10, implemented: 2, rate: 0.2 },
                 {
                     category: 'performance',
                     sent: 12,
@@ -189,7 +189,7 @@ describe('CockpitReportsService', () => {
             review.getNegativeFeedbackByCategory.mockResolvedValue([
                 { category: 'performance', thumbsUp: 1, thumbsDown: 5 },
             ]);
-            review.getKodyRulesUsage.mockResolvedValue([
+            review.getCodyRulesUsage.mockResolvedValue([
                 {
                     ruleId: 'r-noisy',
                     triggers: 10,
@@ -218,7 +218,7 @@ describe('CockpitReportsService', () => {
                     lastTriggeredAt: null,
                 },
             ]);
-            kodyRules.findByOrganizationId.mockResolvedValue({
+            codyRules.findByOrganizationId.mockResolvedValue({
                 rules: [
                     { uuid: 'r-noisy', title: 'Noisy rule', status: 'active' },
                     {
@@ -236,7 +236,7 @@ describe('CockpitReportsService', () => {
                 END,
             );
 
-            // kody_rules category excluded; sorted by volume.
+            // cody_rules category excluded; sorted by volume.
             expect(section!.categories.map((c) => c.category)).toEqual([
                 'bug',
                 'performance',
@@ -311,7 +311,7 @@ describe('CockpitReportsService', () => {
             // Did not pay for the ~12-query warehouse fan-out.
             expect(codeHealth.getImplementationRate).not.toHaveBeenCalled();
             expect(review.getRepositoriesHealth).not.toHaveBeenCalled();
-            expect(review.getKodyRulesUsage).not.toHaveBeenCalled();
+            expect(review.getCodyRulesUsage).not.toHaveBeenCalled();
         });
 
         it('ranks only repos with >=10 reviews, by implementation rate', async () => {

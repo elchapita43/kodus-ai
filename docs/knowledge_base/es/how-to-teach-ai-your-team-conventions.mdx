@@ -1,45 +1,45 @@
 ---
 title: "Cómo enseñarle a la IA las convenciones de codificación de tu equipo"
-description: "Usa Memorias para que Kody aprenda tus preferencias de codificación, decisiones de arquitectura y convenciones del equipo a través de una conversación natural."
+description: "Usa Memorias para que Cody aprenda tus preferencias de codificación, decisiones de arquitectura y convenciones del equipo a través de una conversación natural."
 ---
 
-Cada equipo tiene contexto no escrito — preferencias tecnológicas, convenciones de nomenclatura, decisiones de arquitectura, detalles de migración. En lugar de documentarlo todo desde el principio, puedes enseñárselo a Kody mediante una conversación natural para que las futuras revisiones sean más relevantes y desaparezcan las sugerencias repetitivas de poco valor.
+Cada equipo tiene contexto no escrito — preferencias tecnológicas, convenciones de nomenclatura, decisiones de arquitectura, detalles de migración. En lugar de documentarlo todo desde el principio, puedes enseñárselo a Cody mediante una conversación natural para que las futuras revisiones sean más relevantes y desaparezcan las sugerencias repetitivas de poco valor.
 
 ## Cómo funciona
 
-Cuando hablas con Kody en los comentarios de un PR, detecta cuándo estás declarando contexto del código o una preferencia del equipo y lo guarda automáticamente como una **Memoria**. Las Memorias se aplican luego como contexto de alta prioridad en todas las revisiones de código y conversaciones futuras.
+Cuando hablas con Cody en los comentarios de un PR, detecta cuándo estás declarando contexto del código o una preferencia del equipo y lo guarda automáticamente como una **Memoria**. Las Memorias se aplican luego como contexto de alta prioridad en todas las revisiones de código y conversaciones futuras.
 
 ### Enseñanza explícita
 
-Dile directamente a Kody que recuerde algo:
+Dile directamente a Cody que recuerde algo:
 
 ```
-@kody remember: este repositorio refleja una API de terceros, así que algunos campos del payload se mantienen intencionalmente en snake_case.
+@cody remember: este repositorio refleja una API de terceros, así que algunos campos del payload se mantienen intencionalmente en snake_case.
 ```
 
 ```
-@kody please remember: este servicio sigue arquitectura hexagonal y deja los adapters en los bordes.
+@cody please remember: este servicio sigue arquitectura hexagonal y deja los adapters en los bordes.
 ```
 
 ### Aprendizaje implícito
 
-Expresa una preferencia de forma natural — Kody la capta:
+Expresa una preferencia de forma natural — Cody la capta:
 
 ```
-@kody este repositorio refleja una API de terceros, así que algunos campos del payload se mantienen intencionalmente en snake_case.
-```
-
-```
-@kody en este servicio, las pruebas suelen vivir junto a los archivos de implementación y no en una carpeta central de tests.
+@cody este repositorio refleja una API de terceros, así que algunos campos del payload se mantienen intencionalmente en snake_case.
 ```
 
 ```
-@kody el módulo de facturación está a mitad de una migración, así que convienen cambios incrementales y no refactors amplios.
+@cody en este servicio, las pruebas suelen vivir junto a los archivos de implementación y no en una carpeta central de tests.
 ```
 
-## Qué no guardará Kody
+```
+@cody el módulo de facturación está a mitad de una migración, así que convienen cambios incrementales y no refactors amplios.
+```
 
-Kody es selectivo respecto a lo que se convierte en memoria:
+## Qué no guardará Cody
+
+Cody es selectivo respecto a lo que se convierte en memoria:
 
 - Instrucciones temporales ("arregla esto ahora", "omite esto por hoy")
 - Preguntas ("¿cuál es el plazo?")
@@ -63,6 +63,6 @@ Si deseas revisar las memorias generadas por IA antes de que entren en vigor, ac
 
 ## Gestionar memorias
 
-Ve a **Configuración de Revisión de Código** → **Kody Rules** → pestaña **Memorias** para ver, editar o eliminar memorias. También puedes crear memorias manualmente desde la interfaz.
+Ve a **Configuración de Revisión de Código** → **Cody Rules** → pestaña **Memorias** para ver, editar o eliminar memorias. También puedes crear memorias manualmente desde la interfaz.
 
-Para más detalles, consulta [Kody Rules — Memorias](/how_to_use/es/code_review/configs/kody_rules#memorias).
+Para más detalles, consulta [Cody Rules — Memorias](/how_to_use/es/code_review/configs/cody_rules#memorias).

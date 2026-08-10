@@ -7,10 +7,10 @@
 //      tested at the unit layer).
 //   2. Sign-in page recognises an SSO domain and offers
 //      "Continue with SSO".
-//   3. A Keycloak user that does NOT exist in the Kodus DB completes
+//   3. A Keycloak user that does NOT exist in the Codus DB completes
 //      SSO and lands on /confirm-email (the auto-signup path that
-//      creates a status=pending Kodus user).
-//   4. A Kodus user with status=removed is rejected at the SAML
+//      creates a status=pending Codus user).
+//   4. A Codus user with status=removed is rejected at the SAML
 //      callback and bounced to /sign-in?reason=removed.
 //
 // Requires sso_config.active=true on the droplet — the companion
@@ -24,10 +24,10 @@
 //   SSO_E2E_APP_URL       https://app.<IP>.sslip.io
 //   SSO_E2E_BASE          <IP>.sslip.io
 //   SSO_E2E_ORG_ID        org uuid from provision.sh
-//   SSO_E2E_ADMIN_EMAIL   (default: sso-user@kodus-test.com)
+//   SSO_E2E_ADMIN_EMAIL   (default: sso-user@codus-test.com)
 //   SSO_E2E_ADMIN_PASSWORD (default: TestSso!2026)
-//   SSO_E2E_NEWBIE_EMAIL  (default: newbie-sso@kodus-test.com)
-//   SSO_E2E_REMOVED_EMAIL (default: removed-sso@kodus-test.com)
+//   SSO_E2E_NEWBIE_EMAIL  (default: newbie-sso@codus-test.com)
+//   SSO_E2E_REMOVED_EMAIL (default: removed-sso@codus-test.com)
 //   SSO_E2E_USER_PASSWORD (default: TestSso!2026, shared by IdP users)
 //   SSO_E2E_IGNORE_TLS=1  when Caddy fell back to its internal CA
 //   SSO_E2E_HEADLESS=0    for a visible Chromium window
@@ -45,10 +45,10 @@ const {
     SSO_E2E_APP_URL,
     SSO_E2E_BASE,
     SSO_E2E_ORG_ID,
-    SSO_E2E_ADMIN_EMAIL = "sso-user@kodus-test.com",
+    SSO_E2E_ADMIN_EMAIL = "sso-user@codus-test.com",
     SSO_E2E_ADMIN_PASSWORD = "TestSso!2026",
-    SSO_E2E_NEWBIE_EMAIL = "newbie-sso@kodus-test.com",
-    SSO_E2E_REMOVED_EMAIL = "removed-sso@kodus-test.com",
+    SSO_E2E_NEWBIE_EMAIL = "newbie-sso@codus-test.com",
+    SSO_E2E_REMOVED_EMAIL = "removed-sso@codus-test.com",
     SSO_E2E_USER_PASSWORD = "TestSso!2026",
     SSO_E2E_IGNORE_TLS,
     SSO_E2E_HEADLESS = "1",
@@ -202,7 +202,7 @@ async function subFlow1() {
         // With sso_config.active=true, the sign-in form forces SSO
         // even for the admin's own domain — so we drive the SAML
         // round-trip for the admin too. The admin row already exists
-        // in Kodus (created by bootstrap-kodus-sso.sh), so the
+        // in Codus (created by bootstrap-codus-sso.sh), so the
         // callback just mints a session.
         //
         // We verify the admin lands on an authenticated app route
@@ -213,7 +213,7 @@ async function subFlow1() {
         // for them. The form rendering itself is covered at the unit
         // layer (apps/web/src/features/ee/sso/__tests__/page.spec.tsx);
         // here we only need to prove the SSO authentication path
-        // works for an existing Kodus user.
+        // works for an existing Codus user.
         const landedUrl = await ssoRoundTrip(page, SSO_E2E_ADMIN_EMAIL);
         if (landedUrl.includes("/sign-in") || landedUrl.includes("/confirm-email")) {
             throw new Error(`admin SSO login bounced to ${landedUrl} — expected authenticated landing`);
@@ -279,9 +279,9 @@ async function subFlow2() {
 // Implementation note: instead of clicking the form's "Continue with
 // SSO" button, we navigate the page directly to the SSO login URL on
 // the API origin. Reason: the button's onClick reads `apiPublicUrl`
-// from window.__KODUS_PUBLIC_CONFIG__, which is server-rendered from
+// from window.__CODUS_PUBLIC_CONFIG__, which is server-rendered from
 // WEB_HOSTNAME_API. On this droplet WEB_HOSTNAME_API is the
-// Docker-internal API name (`kodus-api`) — required for the
+// Docker-internal API name (`codus-api`) — required for the
 // /api/proxy/api/* SSR fetch to work — so the apiPublicUrl that
 // reaches the browser is unreachable from outside the cluster, and
 // clicking the button lands the browser on chrome-error. The spec
@@ -335,8 +335,8 @@ async function subFlow3() {
     try {
         const finalUrl = await ssoRoundTrip(page, SSO_E2E_NEWBIE_EMAIL);
 
-        // Auto-signup means: a Keycloak user with no Kodus row gets
-        // a Kodus row created by signUpUseCase on first SAML callback,
+        // Auto-signup means: a Keycloak user with no Codus row gets
+        // a Codus row created by signUpUseCase on first SAML callback,
         // status=pending → front-end redirects to /confirm-email. On
         // subsequent logins after they've been promoted to active,
         // they bypass /confirm-email and land on /setup or /. Either
@@ -362,7 +362,7 @@ async function subFlow3() {
 async function subFlow4() {
     log(`sub-flow-4: removed user ${SSO_E2E_REMOVED_EMAIL} is rejected`);
 
-    // Step A: ensure removed-sso has a Kodus DB row via SSO auto-signup.
+    // Step A: ensure removed-sso has a Codus DB row via SSO auto-signup.
     // In self-hosted (!API_CLOUD_MODE) signUpUseCase marks the row as
     // STATUS.ACTIVE immediately (signup.use-case.ts:76-79), regardless
     // of preVerified — there's no /confirm-email step. The user lands
@@ -396,7 +396,7 @@ async function subFlow4() {
         "ssh",
         [
             "-i",
-            ".kodus-dev/ssh-keys/sso-e2e",
+            ".codus-dev/ssh-keys/sso-e2e",
             "-o",
             "StrictHostKeyChecking=no",
             "-o",
@@ -407,7 +407,7 @@ async function subFlow4() {
             // a hardcoded IP here pointed at a long-dead droplet, failing
             // this sub-flow's SQL step with ssh exit 255 on every run.
             `root@${SSO_E2E_BASE.replace(/\.sslip\.io$/, "")}`,
-            `docker exec -i db_kodus_postgres psql -U kodusdev -d kodus_db -c "${sql}"`,
+            `docker exec -i db_codus_postgres psql -U codusdev -d codus_db -c "${sql}"`,
         ],
         { cwd: process.cwd().replace(/tests\/e2e\/playwright$/, ""), encoding: "utf8" },
     );

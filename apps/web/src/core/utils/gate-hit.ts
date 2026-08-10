@@ -7,7 +7,7 @@ import { capturePostHogEvent } from "./posthog";
 export type GateFeature =
     | "cockpit"
     | "mcp_plugins"
-    | "kody_rules"
+    | "cody_rules"
     | "linked_repositories";
 
 type GateEventInput = {

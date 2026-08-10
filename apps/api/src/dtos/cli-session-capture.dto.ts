@@ -111,7 +111,7 @@ export class CliSessionCaptureRequestDto {
     @ValidateIf((_, value) => value !== null)
     @IsString()
     @MaxLength(200)
-    @ApiProperty({ example: 'kodustech/cli', nullable: true })
+    @ApiProperty({ example: 'elchapita43/cli', nullable: true })
     orgRepo: string | null;
 
     @IsIn(CLI_SESSION_CAPTURE_AGENTS)

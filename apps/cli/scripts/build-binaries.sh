@@ -6,9 +6,9 @@ pnpm add -g pkg
 # Build para todas plataformas
 pkg . \
   --targets node18-linux-x64,node18-macos-x64,node18-win-x64 \
-  --output dist/kodus
+  --output dist/codus
 
 echo "✅ Binários criados em dist/"
-echo "  - dist/kodus-linux"
-echo "  - dist/kodus-macos"  
-echo "  - dist/kodus-win.exe"
+echo "  - dist/codus-linux"
+echo "  - dist/codus-macos"  
+echo "  - dist/codus-win.exe"

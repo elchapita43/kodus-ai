@@ -17,9 +17,9 @@ import {
     MCPTool,
 } from '../providers/interfaces/provider.interface';
 import { ProviderFactory } from '../providers/provider.factory';
-import { KodusMCPProvider } from '../providers/kodusMCP/kodus-mcp.provider';
-import { getAuthMethod } from '../providers/kodusMCP/auth-methods';
-import { validateTokenSubmission } from '../providers/kodusMCP/token-submission';
+import { CodusMCPProvider } from '../providers/codusMCP/codus-mcp.provider';
+import { getAuthMethod } from '../providers/codusMCP/auth-methods';
+import { validateTokenSubmission } from '../providers/codusMCP/token-submission';
 import { defaultReadOnlyToolSlugs } from '../providers/read-only-tools';
 import { ConnectTokenDto } from './dto/connect-token.dto';
 import { CreateIntegrationDto } from './dto/create-integration.dto';
@@ -177,7 +177,7 @@ export class McpService {
                 (connection) => connection.integrationId === integration.id,
             );
 
-            if (integration.provider === 'kodusmcp' && integration.isDefault) {
+            if (integration.provider === 'codusmcp' && integration.isDefault) {
                 return {
                     ...integration,
                     isConnected: true,
@@ -544,10 +544,10 @@ export class McpService {
 
     /**
      * Resolve the auth header(s) the agent runtime must send for a managed
-     * (kodusmcp) connection — refreshed OAuth bearer or a stored static token.
+     * (codusmcp) connection — refreshed OAuth bearer or a stored static token.
      * Internal use only (consumed by the runtime's connection formatter).
      */
-    async getKodusMCPConnectionConfig(
+    async getCodusMCPConnectionConfig(
         organizationId: string,
         integrationId: string,
     ): Promise<{ headers: Record<string, string> }> {
@@ -561,7 +561,7 @@ export class McpService {
     }
 
     /**
-     * Connect a managed (kodusmcp) integration using a user-supplied static
+     * Connect a managed (codusmcp) integration using a user-supplied static
      * token (bring-your-own-token auth method). Validates the submission against
      * the selected method, stores the encrypted credential, and upserts an
      * ACTIVE connection row tagged with the chosen method.
@@ -572,8 +572,8 @@ export class McpService {
         dto: ConnectTokenDto,
     ) {
         const provider = this.providerFactory.getProvider(
-            'kodusmcp',
-        ) as KodusMCPProvider;
+            'codusmcp',
+        ) as CodusMCPProvider;
 
         const methods = provider.getAuthMethods(integrationId);
         const method = getAuthMethod(methods, dto.authMethod);
@@ -634,7 +634,7 @@ export class McpService {
     }
 
     /**
-     * Create or update the ACTIVE `mcp_connections` row for a managed (kodusmcp)
+     * Create or update the ACTIVE `mcp_connections` row for a managed (codusmcp)
      * integration once its credential is in place — used by both the token path
      * and the OAuth finalize. Without this, OAuth-connected integrations had no
      * connection row, so the UI couldn't tell they were connected.
@@ -650,8 +650,8 @@ export class McpService {
         allowedToolsOverride?: string[],
     ) {
         const provider = this.providerFactory.getProvider(
-            'kodusmcp',
-        ) as KodusMCPProvider;
+            'codusmcp',
+        ) as CodusMCPProvider;
 
         const config = provider.getManagedConfig(integrationId);
 
@@ -679,7 +679,7 @@ export class McpService {
         const newConnection = {
             integrationId,
             organizationId,
-            provider: 'kodusmcp',
+            provider: 'codusmcp',
             status: MCPConnectionStatus.ACTIVE,
             appName: config.name,
             mcpUrl: config.baseUrl,
@@ -703,8 +703,8 @@ export class McpService {
         const { integrationId, baseUrl, authType, name, protocol } =
             createIntegrationDto;
 
-        if (providerType === 'kodusmcp') {
-            return this.createKodusMCPIntegration(
+        if (providerType === 'codusmcp') {
+            return this.createCodusMCPIntegration(
                 organizationId,
                 integrationId,
                 baseUrl || '',
@@ -728,12 +728,12 @@ export class McpService {
         throw new Error(`Provider type ${providerType} not supported`);
     }
 
-    async createKodusMCPIntegration(
+    async createCodusMCPIntegration(
         organizationId: string,
         integrationId: string,
         mcpUrl: string,
     ) {
-        const providerType = 'kodusmcp';
+        const providerType = 'codusmcp';
 
         if (!integrationId) {
             throw new Error('integrationId is required in request body');
@@ -754,7 +754,7 @@ export class McpService {
         if (existingConnection) {
             return {
                 message:
-                    'Kodus MCP integration already exists for this organization',
+                    'Codus MCP integration already exists for this organization',
                 connection: {
                     id: existingConnection.id,
                     integrationId: existingConnection.integrationId,
@@ -791,7 +791,7 @@ export class McpService {
             await this.connectionRepository.save(newConnection);
 
         return {
-            message: 'Kodus MCP integration created successfully',
+            message: 'Codus MCP integration created successfully',
             connection: {
                 id: savedConnection.id,
                 integrationId: savedConnection.integrationId,
@@ -873,14 +873,14 @@ export class McpService {
             return { authUrl };
         }
 
-        if (provider === MCPProviderType.KODUSMCP) {
+        if (provider === MCPProviderType.CODUSMCP) {
             const mcpProvider = this.providerFactory.getProvider(
-                MCPProviderType.KODUSMCP,
+                MCPProviderType.CODUSMCP,
             );
 
             if (typeof mcpProvider.initiateManagedOAuth !== 'function') {
                 throw new Error(
-                    'KodusMCP provider does not support managed OAuth initiation',
+                    'CodusMCP provider does not support managed OAuth initiation',
                 );
             }
 
@@ -918,14 +918,14 @@ export class McpService {
             });
         }
 
-        if (provider === MCPProviderType.KODUSMCP) {
+        if (provider === MCPProviderType.CODUSMCP) {
             const mcpProvider = this.providerFactory.getProvider(
-                MCPProviderType.KODUSMCP,
+                MCPProviderType.CODUSMCP,
             );
 
             if (typeof mcpProvider.finalizeManagedOAuth !== 'function') {
                 throw new Error(
-                    'KodusMCP provider does not support managed OAuth finalization',
+                    'CodusMCP provider does not support managed OAuth finalization',
                 );
             }
 
@@ -939,8 +939,8 @@ export class McpService {
             // Create the connection row so the integration reads as connected
             // (the OAuth grant is now ACTIVE). Tag it with the integration's
             // OAuth method.
-            const kodusProvider = mcpProvider as KodusMCPProvider;
-            const oauthMethod = kodusProvider
+            const codusProvider = mcpProvider as CodusMCPProvider;
+            const oauthMethod = codusProvider
                 .getAuthMethods(integrationId)
                 .find(
                     (method) => method.type === MCPIntegrationAuthType.OAUTH2,

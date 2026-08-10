@@ -38,7 +38,7 @@ export const configCommand = new Command('config').description(
 configCommand
     .option(
         '-r, --remote [repository]',
-        "Add a repository to Kodus. Shortcut for: kodus config remote add [repository]. Use '.' for the current repo.",
+        "Add a repository to Codus. Shortcut for: codus config remote add [repository]. Use '.' for the current repo.",
     )
     .option('--no-prompt', 'Skip the post-add setup prompt')
     .action(async (options, command) => {

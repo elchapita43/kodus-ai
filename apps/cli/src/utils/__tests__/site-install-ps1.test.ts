@@ -10,8 +10,8 @@ describe('site/install.ps1', () => {
 
         expect(source).toContain('npm bin -g');
         expect(source).toContain('[System.IO.Path]::PathSeparator');
-        expect(source).toContain('function Get-KodusExecutableName');
-        expect(source).toContain('kodus.cmd');
-        expect(source).toContain('kodus');
+        expect(source).toContain('function Get-CodusExecutableName');
+        expect(source).toContain('codus.cmd');
+        expect(source).toContain('codus');
     });
 });

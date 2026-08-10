@@ -260,7 +260,7 @@ export class AuthService implements IAuthService {
                 status: user.status,
                 sub: user.uuid,
                 organizationId: user.organization.uuid,
-                iss: 'kodus-orchestrator',
+                iss: 'codus-orchestrator',
                 aud: 'web',
             };
 
@@ -297,8 +297,8 @@ export class AuthService implements IAuthService {
         return this.jwtService.sign(payload, {
             algorithm: 'RS256',
             secret: privateKey,
-            issuer: 'kodus-ai',
-            audience: 'kodus-helpdesk',
+            issuer: 'codus-ai',
+            audience: 'codus-helpdesk',
             expiresIn: '5m',
         } as any);
     }

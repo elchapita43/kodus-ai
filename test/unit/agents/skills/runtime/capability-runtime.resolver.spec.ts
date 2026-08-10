@@ -6,8 +6,8 @@ describe('capability-runtime.resolver', () => {
             config: {
                 capabilities: ['pr.metadata.read', 'pr.diff.read'],
                 allowedTools: [
-                    'KODUS_GET_PULL_REQUEST',
-                    'KODUS_GET_PULL_REQUEST_DIFF',
+                    'CODUS_GET_PULL_REQUEST',
+                    'CODUS_GET_PULL_REQUEST_DIFF',
                 ],
                 fetcherPolicy: {
                     toolMode: 'all',
@@ -15,16 +15,16 @@ describe('capability-runtime.resolver', () => {
                 },
             },
             registeredTools: [
-                'KODUS_GET_PULL_REQUEST',
-                'KODUS_GET_PULL_REQUEST_DIFF',
+                'CODUS_GET_PULL_REQUEST',
+                'CODUS_GET_PULL_REQUEST_DIFF',
             ],
         });
 
         expect(runtime.getToolName('pr.metadata.read')).toBe(
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
         );
         expect(runtime.getToolName('pr.diff.read')).toBe(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
         );
         expect(runtime.missingCapabilities).toEqual([]);
         expect(runtime.hasRequiredTools).toBe(true);
@@ -34,17 +34,17 @@ describe('capability-runtime.resolver', () => {
         const runtime = createCapabilityToolRuntime({
             config: {
                 capabilities: ['pr.metadata.read', 'pr.diff.read'],
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
                 fetcherPolicy: {
                     toolMode: 'all',
                     allowWithoutTools: false,
                 },
             },
-            registeredTools: ['KODUS_GET_PULL_REQUEST'],
+            registeredTools: ['CODUS_GET_PULL_REQUEST'],
         });
 
         expect(runtime.getToolName('pr.metadata.read')).toBe(
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
         );
         expect(runtime.getToolName('pr.diff.read')).toBeUndefined();
         expect(runtime.missingCapabilities).toEqual(['pr.diff.read']);

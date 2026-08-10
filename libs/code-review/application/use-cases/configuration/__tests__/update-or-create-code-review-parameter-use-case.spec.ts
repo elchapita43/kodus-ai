@@ -4,7 +4,7 @@ import * as yaml from 'js-yaml';
 describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
     const buildCentralizedConfigPrServiceMock = () => ({
         getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue(null),
-        getScopedKodusConfigFileContent: jest.fn().mockResolvedValue(null),
+        getScopedCodusConfigFileContent: jest.fn().mockResolvedValue(null),
         createMutationPullRequestIfEnabled: jest
             .fn()
             .mockResolvedValue({ mode: 'direct' }),
@@ -63,8 +63,8 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             actor: {
                 source: 'sync',
                 organizationId: 'org-1',
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             configValue: {},
             organizationAndTeamData: {
@@ -263,8 +263,8 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             actor: {
                 source: 'sync',
                 organizationId: 'org-1',
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             configValue: {
                 reviewCadence: {
@@ -358,8 +358,8 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             actor: {
                 source: 'sync',
                 organizationId: 'org-1',
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             configValue: {
                 reviewCadence: {
@@ -491,7 +491,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({}),
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({}),
             createMutationPullRequestIfEnabled: jest.fn().mockResolvedValue({
                 mode: 'centralized-pr',
                 prUrl: 'https://example.test/pr/manual-settings',
@@ -673,7 +673,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({
                 customMessages: {
                     globalSettings: {
                         hideComments: true,
@@ -792,7 +792,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue(null),
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue(null),
             createMutationPullRequestIfEnabled: jest.fn().mockResolvedValue({
                 mode: 'centralized-pr',
                 prUrl: 'https://example.test/pr/2',
@@ -889,7 +889,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({
                 runOnDraft: true,
             }),
             createMutationPullRequestIfEnabled: jest.fn().mockResolvedValue({
@@ -986,7 +986,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({
                 runOnDraft: true,
             }),
             createMutationPullRequestIfEnabled: jest.fn().mockResolvedValue({
@@ -1084,7 +1084,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({
                 automatedReviewActive: false,
             }),
             createMutationPullRequestIfEnabled: jest.fn().mockResolvedValue({
@@ -1295,7 +1295,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrService = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue({ id: 'central-repo-1', name: 'centralized-config' }),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue({
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue({
                 automatedReviewActive: false,
                 isRequestChangesActive: true,
                 pullRequestApprovalActive: true,
@@ -1413,11 +1413,11 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             execute: jest.fn().mockResolvedValue(true),
         };
 
-        // Centralized disabled: getScopedKodusConfigFileContent returns null,
+        // Centralized disabled: getScopedCodusConfigFileContent returns null,
         // createMutationPullRequestIfEnabled returns { mode: 'direct' }
         const centralizedConfigPrServiceMock = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue(null),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue(null),
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue(null),
             createMutationPullRequestIfEnabled: jest
                 .fn()
                 .mockResolvedValue({ mode: 'direct' }),
@@ -1486,7 +1486,7 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
 
         const centralizedConfigPrServiceMock = {
             getCentralizedRepositoryIfEnabled: jest.fn().mockResolvedValue(null),
-            getScopedKodusConfigFileContent: jest.fn().mockResolvedValue(null),
+            getScopedCodusConfigFileContent: jest.fn().mockResolvedValue(null),
             createMutationPullRequestIfEnabled: jest
                 .fn()
                 .mockResolvedValue({ mode: 'direct' }),
@@ -1615,8 +1615,8 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             actor: {
                 source: 'sync',
                 organizationId: 'org-1',
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             configValue: { byokModel: 'gpt-5-mini' },
             organizationAndTeamData: {
@@ -1693,8 +1693,8 @@ describe('UpdateOrCreateCodeReviewParameterUseCase', () => {
             actor: {
                 source: 'sync',
                 organizationId: 'org-1',
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             // '' is the "inherit" sentinel — saving it should drop the override.
             configValue: { byokModel: '' },

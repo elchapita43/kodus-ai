@@ -32,9 +32,9 @@ interface AzureComment {
     content: string;
     publishedDate: string;
     author?: { displayName: string };
-    // "text" = a real human/Kody comment; "system" = Azure-generated activity
+    // "text" = a real human/Cody comment; "system" = Azure-generated activity
     // ("X restored the source branch", "updated the source branch", vote
-    // changes, status updates). Kody only ever posts "text".
+    // changes, status updates). Cody only ever posts "text".
     commentType?: string;
 }
 
@@ -373,7 +373,7 @@ export class AzureDevOpsProvider extends BaseProvider {
                     comments: [
                         {
                             parentCommentId: 0,
-                            content: "@kody review",
+                            content: "@cody review",
                             commentType: 1,
                         },
                     ],
@@ -413,26 +413,26 @@ export class AzureDevOpsProvider extends BaseProvider {
                         // branch", vote/status changes) is NOT review activity.
                         // Counting it broke per-seat's "expected NO review"
                         // assertion when the scenario restored a throwaway
-                        // fixture branch. Kody only posts commentType "text".
+                        // fixture branch. Cody only posts commentType "text".
                         if ((c.commentType ?? "").toLowerCase() === "system")
                             continue;
                         const text = c.content ?? "";
-                        if (text.toLowerCase().startsWith("@kody")) continue;
+                        if (text.toLowerCase().startsWith("@cody")) continue;
                         // Drop "Started!" placeholder but keep "Complete!" —
                         // the latter is a valid mechanics signal even when
-                        // Kody found no inline findings.
+                        // Cody found no inline findings.
                         if (
-                            text.includes("<!-- kody-codereview") &&
-                            !text.includes("kody-codereview-completed")
+                            text.includes("<!-- cody-codereview") &&
+                            !text.includes("cody-codereview-completed")
                         ) {
                             continue;
                         }
                         // Azure/Bitbucket leftover: when the gate skips the
-                        // pipeline mid-flow, Kody overwrites its "Started!"
+                        // pipeline mid-flow, Cody overwrites its "Started!"
                         // placeholder so only the docs.kodus.io feedback
                         // footer link remains. Drop it — same shape as the
-                        // bitbucket filter; real Kody completions contain
-                        // "Kody Review Complete" / "Kody Guide".
+                        // bitbucket filter; real Cody completions contain
+                        // "Cody Review Complete" / "Cody Guide".
                         const trimmed = text.trim();
                         // Regex (not String.includes) so CodeQL doesn't read
                         // this as URL-host sanitization — `trimmed` is a
@@ -440,9 +440,9 @@ export class AzureDevOpsProvider extends BaseProvider {
                         // the footer's docs link, not validating a URL.
                         if (
                             trimmed.length < 200 &&
-                            /docs\.kodus\.io/.test(trimmed) &&
-                            !trimmed.includes("Kody Review Complete") &&
-                            !trimmed.includes("Kody Guide")
+                            /docs\.codus\.io/.test(trimmed) &&
+                            !trimmed.includes("Cody Review Complete") &&
+                            !trimmed.includes("Cody Guide")
                         ) {
                             continue;
                         }
@@ -501,7 +501,7 @@ export class AzureDevOpsProvider extends BaseProvider {
     }
 
     async currentUserId(): Promise<string> {
-        // Azure-specific: Kodus's runCodeReview.use-case.ts picks
+        // Azure-specific: Codus's runCodeReview.use-case.ts picks
         // `mappedUsers.user.descriptor` BEFORE id when the platform is Azure
         // (the comment in that file calls this out explicitly). The
         // descriptor in webhook payloads is the AAD subject descriptor —
@@ -513,7 +513,7 @@ export class AzureDevOpsProvider extends BaseProvider {
         //
         // Use `api-version=7.1-preview.1` so connectionData includes
         // `authenticatedUser.subjectDescriptor` — that's the exact value
-        // Kodus stores on inbound webhooks.
+        // Codus stores on inbound webhooks.
         const resp = await http<{
             authenticatedUser: { id: string; subjectDescriptor?: string };
         }>(
@@ -530,7 +530,7 @@ export class AzureDevOpsProvider extends BaseProvider {
     }
 
     licenseGitTool(): string {
-        // Kodus's license.service.ts lowercases the platformType when it
+        // Codus's license.service.ts lowercases the platformType when it
         // sets gitTool, so AZURE_REPOS → "azure_repos".
         return "azure_repos";
     }

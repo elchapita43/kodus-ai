@@ -4,7 +4,7 @@
     "pullRequestNumber": 402,
     "prBody": "Implementa o fluxo de onboarding descrito em APP-789.",
     "prDiff": "diff --git a/src/onboarding.ts b/src/onboarding.ts\n+ export function startOnboarding(userId: string) {\n+   return { started: true, userId };\n+ }\n+ export function completeChecklist() {\n+   return ['profile', 'workspace'];\n+ }\n",
-    "userQuestion": "@kody -v business-logic APP-789",
+    "userQuestion": "@cody -v business-logic APP-789",
     "userLanguage": "pt-BR",
     "taskContext": {
       "id": "APP-789",

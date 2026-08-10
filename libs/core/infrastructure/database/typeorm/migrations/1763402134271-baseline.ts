@@ -88,7 +88,7 @@ export class Baseline1763402134271 implements MigrationInterface {
                 'DISCORD',
                 'AZURE_BOARDS',
                 'AZURE_REPOS',
-                'KODUS_WEB',
+                'CODUS_WEB',
                 'BITBUCKET'
             )
         `);
@@ -131,7 +131,7 @@ export class Baseline1763402134271 implements MigrationInterface {
                 'category_workitems_type',
                 'timezone_config',
                 'review_mode_config',
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'auto_join_config',
                 'byok_config',
                 'cockpit_metrics_visibility',
@@ -437,7 +437,7 @@ export class Baseline1763402134271 implements MigrationInterface {
         `);
         await queryRunner.query(`
             CREATE TYPE "public"."global_parameters_configkey_enum" AS ENUM(
-                'kody_fine_tuning_config',
+                'cody_fine_tuning_config',
                 'code_review_max_files'
             )
         `);

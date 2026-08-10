@@ -2,7 +2,7 @@
 
 <AccordionGroup>
   <Accordion title="Recommended Hardware">
-    Sized for the default `local` sandbox mode (kodus-graph + cross-file
+    Sized for the default `local` sandbox mode (codus-graph + cross-file
     context run inside the worker container).
 
     - **CPU**: 2+ cores (4+ recommended for repos above ~100k LOC)
@@ -18,7 +18,7 @@
   <Accordion title="Required Ports">
     Default host port mappings — adjust in `.env` if any conflict.
 
-    - **3000** — Kodus Web App
+    - **3000** — Codus Web App
     - **3001** — API
     - **3332** — Webhooks
     - **5432** — PostgreSQL
@@ -33,24 +33,24 @@
     - `api` — main backend
     - `worker` — code-review jobs
     - `webhooks` — Git provider webhook receiver
-    - `kodus-web` — Next.js frontend
-    - `db_kodus_postgres`, `db_kodus_mongodb`, `rabbitmq` — local
+    - `codus-web` — Next.js frontend
+    - `db_codus_postgres`, `db_codus_mongodb`, `rabbitmq` — local
       infrastructure. Skip with `USE_LOCAL_DB=false` /
       `USE_LOCAL_RABBITMQ=false` to point at managed instances.
 
     **Optional:**
-    - `kodus-mcp-manager` — Model Context Protocol broker. Enable with
-      `API_MCP_SERVER_ENABLED=true`. See [MCP Manager](/how_to_deploy/en/deploy_kodus/mcp_manager).
+    - `codus-mcp-manager` — Model Context Protocol broker. Enable with
+      `API_MCP_SERVER_ENABLED=true`. See [MCP Manager](/how_to_deploy/en/deploy_codus/mcp_manager).
     - `worker-analytics` — Cockpit ingestion (DORA metrics, PR
       classifier). **Self-hosted Enterprise only**, not wired by default.
-      See [Analytics Worker](/how_to_deploy/en/deploy_kodus/analytics_worker).
+      See [Analytics Worker](/how_to_deploy/en/deploy_codus/analytics_worker).
   </Accordion>
 </AccordionGroup>
 
 <Note>
   Code review uses an AST graph + cross-file context that runs in a
   sandbox — `local` (default, runs inside the worker) or `e2b` (paid
-  remote sandbox). See [Sandbox & AST Graph](/how_to_deploy/en/deploy_kodus/sandbox)
+  remote sandbox). See [Sandbox & AST Graph](/how_to_deploy/en/deploy_codus/sandbox)
   for the modes, caching behavior, and when to pick each.
 </Note>
 
@@ -63,14 +63,14 @@
 
 ## Domain Name Setup (Optional)
 
-If you're planning to integrate Kodus with cloud-based Git providers (GitHub, GitLab, or Bitbucket), you'll need public-facing URLs for both the Kodus Web App and its API. This allows your server to receive webhooks for proper Code Review functionality and ensures correct application behavior.
+If you're planning to integrate Codus with cloud-based Git providers (GitHub, GitLab, or Bitbucket), you'll need public-facing URLs for both the Codus Web App and its API. This allows your server to receive webhooks for proper Code Review functionality and ensures correct application behavior.
 
 We recommend setting up two subdomains:
-- One for the Web Application, e.g., `kodus-web.yourdomain.com`.
-- One for the API, e.g., `kodus-api.yourdomain.com`.
+- One for the Web Application, e.g., `codus-web.yourdomain.com`.
+- One for the API, e.g., `codus-api.yourdomain.com`.
 
 Webhooks are handled by a separate service (port 3332). You can either:
-- Use a dedicated webhooks subdomain, e.g., `kodus-webhooks.yourdomain.com`, or
+- Use a dedicated webhooks subdomain, e.g., `codus-webhooks.yourdomain.com`, or
 - Keep using the API domain and route `/github/webhook`, `/gitlab/webhook`, etc. to the webhooks service in your reverse proxy.
 
 Both subdomains should have DNS A records pointing to your server's IP address. Later in this guide, we will configure a reverse proxy (Nginx) to route requests to these subdomains to the correct internal services. This setup is essential for full functionality, including webhooks and authentication.
@@ -82,8 +82,8 @@ Both subdomains should have DNS A records pointing to your server's IP address. 
 <Steps>
   <Step title="Clone the installer repository">
     ```bash
-    git clone https://github.com/kodustech/kodus-installer.git
-    cd kodus-installer
+    git clone https://github.com/elchapita43/codus-installer.git
+    cd codus-installer
     ```
   </Step>
   <Step title="Copy the example environment file">
@@ -102,7 +102,7 @@ Both subdomains should have DNS A records pointing to your server's IP address. 
     nano .env
     ```
 
-    See [Environment Variables Configuration](/how_to_deploy/en/deploy_kodus/generic_vm#environment-variables-configuration) for detailed instructions.  
+    See [Environment Variables Configuration](/how_to_deploy/en/deploy_codus/generic_vm#environment-variables-configuration) for detailed instructions.  
   </Step>
 
   <Step title="Run the installer">
@@ -111,7 +111,7 @@ Both subdomains should have DNS A records pointing to your server's IP address. 
     ```
   </Step>
   <Step title="Success 🎉">
-  When complete, Kodus Services should be running on your machine.
+  When complete, Codus Services should be running on your machine.
   You can verify your installation using the following script:
   ```bash
   ./scripts/doctor.sh
@@ -122,7 +122,7 @@ Both subdomains should have DNS A records pointing to your server's IP address. 
 
 1. **Create your admin account** - This will be the first user with full system access
 2. **Configure your Git provider** - Connect GitHub, GitLab, or Bitbucket following the on-screen instructions
-3. **Select repositories** for analysis - Choose which code repositories Kody will review
+3. **Select repositories** for analysis - Choose which code repositories Cody will review
 
 <Info>
   For detailed steps on the initial configuration process, refer to our [Getting

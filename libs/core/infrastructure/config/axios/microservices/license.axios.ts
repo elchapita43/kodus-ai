@@ -9,7 +9,7 @@ export class AxiosLicenseService {
 
     constructor() {
         this.axiosInstance = axios.create({
-            baseURL: `${process.env.GLOBAL_KODUS_SERVICE_BILLING}/api/billing/`,
+            baseURL: `${process.env.GLOBAL_CODUS_SERVICE_BILLING}/api/billing/`,
             headers: {
                 'Content-Type': 'application/json',
             },

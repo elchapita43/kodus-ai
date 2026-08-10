@@ -21,11 +21,11 @@ const API = "https://api.github.com";
 // bug/missing-null-check, …) come along for openPRFromBranches.
 
 // Repo CREATE/DELETE needs org Administration rights, which the regular
-// fine-grained GH_TEST_TOKEN (scoped to kodus-e2e, All-repositories but no
+// fine-grained GH_TEST_TOKEN (scoped to codus-e2e, All-repositories but no
 // admin) typically lacks. GH_REPO_ADMIN_TOKEN(_2,_3…) are used ONLY here —
 // for minting/mirroring/deleting the throwaway repo. Everything else
 // (integration binding, listing, PRs, polling) keeps using GH_TEST_TOKEN,
-// whose first org is kodus-e2e (that's what the Kodus integration binds to —
+// whose first org is codus-e2e (that's what the Codus integration binds to —
 // github.service.ts picks orgs[0]). Falls back to GH_TEST_TOKEN when the
 // admin var is absent (a single fully-privileged token also works).
 //
@@ -107,7 +107,7 @@ export async function createThrowawayRepo(
     if (resp.status !== 201) {
         const hint =
             resp.status === 403
-                ? " — GH_TEST_TOKEN cannot create repos in the org. It needs repo-creation rights on kodus-e2e (classic PAT: `repo` scope + org membership allowing repo creation; fine-grained: org Administration/repo-create). Same requirement as scripts/e2e/provision-cloud-github-repos.sh."
+                ? " — GH_TEST_TOKEN cannot create repos in the org. It needs repo-creation rights on codus-e2e (classic PAT: `repo` scope + org membership allowing repo creation; fine-grained: org Administration/repo-create). Same requirement as scripts/e2e/provision-cloud-github-repos.sh."
                 : "";
         throw new Error(
             `create repo ${full} failed (HTTP ${resp.status}): ${resp.raw.slice(0, 300)}${hint}`,

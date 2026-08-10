@@ -167,7 +167,7 @@ export class UsageByReviewResponseDto extends ApiResponseBaseDto {
 }
 
 export class UsageByAreaDto extends TokenUsageBaseDto {
-    @ApiProperty({ description: 'Process area (review, kody_rules, …)' })
+    @ApiProperty({ description: 'Process area (review, cody_rules, …)' })
     area: string;
 }
 

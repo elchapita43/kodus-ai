@@ -90,7 +90,7 @@ function styleOverviewStandaloneLine(
         const details = line.slice(sepIndex);
         return `${chalk.hex(THEME.primary)(command)}${chalk.hex(THEME.textMuted)(details)}`;
     }
-    if (line.startsWith('kodus ')) {
+    if (line.startsWith('codus ')) {
         const sepIndex = line.indexOf(' - ');
         if (sepIndex === -1) {
             return chalk.hex(THEME.secondary)(line);
@@ -155,9 +155,9 @@ function styleOverviewRow(row: string, logoLines: string[]): string {
     }
 
     styled = styled.replace(
-        /\b(kodus [^|]+?)(\s+-\s+[^|]+)?(?=\s*$|\s{2,})/g,
+        /\b(codus [^|]+?)(\s+-\s+[^|]+)?(?=\s*$|\s{2,})/g,
         (_full, cmd, desc = '') => {
-            if (!cmd.startsWith('kodus ')) {
+            if (!cmd.startsWith('codus ')) {
                 return _full;
             }
             return `${chalk.hex(THEME.secondary)(cmd)}${chalk.hex(THEME.textMuted)(desc)}`;
@@ -171,7 +171,7 @@ function renderLogoLines(terminalWidth: number): string[] {
     const font = terminalWidth >= 100 ? 'Small' : 'Mini';
 
     try {
-        const logo = figlet.textSync('KODUS', {
+        const logo = figlet.textSync('CODUS', {
             font,
             width: Math.min(terminalWidth, 80),
             horizontalLayout: 'fitted',
@@ -179,7 +179,7 @@ function renderLogoLines(terminalWidth: number): string[] {
         });
         return logo.split('\n').filter((line) => line.trim().length > 0);
     } catch {
-        return ['KODUS'];
+        return ['CODUS'];
     }
 }
 
@@ -201,27 +201,27 @@ export async function showBanner() {
         'Quick Start',
         'Use these commands to get started quickly:',
         '',
-        '1) kodus review --fast - quick local analysis',
-        '2) kodus auth login - connect your account',
-        '3) kodus pr suggestions - fetch PR suggestions',
-        '4) kodus status - check auth/hooks/skills',
-        '5) kodus --help - list all commands',
+        '1) codus review --fast - quick local analysis',
+        '2) codus auth login - connect your account',
+        '3) codus pr suggestions - fetch PR suggestions',
+        '4) codus status - check auth/hooks/skills',
+        '5) codus --help - list all commands',
     ];
 
     const rightOverviewLines = [
         'Common Commands',
         'Use the most frequent commands:',
         '',
-        'kodus review --fast - quick local review',
-        'kodus review --fix - auto-apply fixable suggestions',
-        'kodus pr suggestions - fetch PR suggestions',
-        'kodus pr business-validation - run business validation',
-        'kodus auth status - check current auth mode',
-        'kodus hook install - install pre-push review hook',
-        'kodus skills list - list bundled skills',
-        'kodus skills resync - re-sync bundled skills',
-        'kodus update - update Kodus CLI version',
-        'kodus --help - see all commands and options',
+        'codus review --fast - quick local review',
+        'codus review --fix - auto-apply fixable suggestions',
+        'codus pr suggestions - fetch PR suggestions',
+        'codus pr business-validation - run business validation',
+        'codus auth status - check current auth mode',
+        'codus hook install - install pre-push review hook',
+        'codus skills list - list bundled skills',
+        'codus skills resync - re-sync bundled skills',
+        'codus update - update Codus CLI version',
+        'codus --help - see all commands and options',
         '',
         '──────────────────────────────',
         '',
@@ -243,7 +243,7 @@ export async function showBanner() {
         padding: { top: 0, bottom: 0, left: 1, right: 1 },
         borderStyle: 'bold',
         borderColor: THEME.cardStrong,
-        title: `${chalk.bold.hex(THEME.primary)('Kodus CLI')} ${chalk.hex(THEME.textMuted)(`v${pkg.version}`)}`,
+        title: `${chalk.bold.hex(THEME.primary)('Codus CLI')} ${chalk.hex(THEME.textMuted)(`v${pkg.version}`)}`,
         titleAlignment: 'left',
     });
 

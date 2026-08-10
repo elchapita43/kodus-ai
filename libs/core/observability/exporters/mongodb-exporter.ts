@@ -73,10 +73,10 @@ export class MongoDBExporter implements LogProcessor, ObservabilityExporter {
     // Write-Ahead Log (WAL) for critical spans
     private walEnabled = true;
     private walPath =
-        process.env.KODUS_WAL_PATH ||
+        process.env.CODUS_WAL_PATH ||
         join(
-            process.env.KODUS_DATA_DIR || tmpdir(),
-            'kodus-wal-critical-spans.jsonl',
+            process.env.CODUS_DATA_DIR || tmpdir(),
+            'codus-wal-critical-spans.jsonl',
         );
     // P0 #1: when we start a flush we rename walPath → walProcessingPath
     // so the next writeToWal lands in a fresh walPath while the current
@@ -94,10 +94,10 @@ export class MongoDBExporter implements LogProcessor, ObservabilityExporter {
     private readonly dlqMaxBytes = 100 * 1024 * 1024; // 100MB
     private readonly dlqMaxRotatedFiles = 5;
     private dlqPath =
-        process.env.KODUS_DLQ_PATH ||
+        process.env.CODUS_DLQ_PATH ||
         join(
-            process.env.KODUS_DATA_DIR || tmpdir(),
-            'kodus-dlq-overflow.jsonl',
+            process.env.CODUS_DATA_DIR || tmpdir(),
+            'codus-dlq-overflow.jsonl',
         );
 
     private isInitialized = false;
@@ -115,8 +115,8 @@ export class MongoDBExporter implements LogProcessor, ObservabilityExporter {
 
     constructor(config: Partial<MongoDBExporterConfig> = {}) {
         this.config = {
-            connectionString: 'mongodb://localhost:27017/kodus',
-            database: 'kodus',
+            connectionString: 'mongodb://localhost:27017/codus',
+            database: 'codus',
             collections: {
                 logs: 'observability_logs_ts',
                 telemetry: 'observability_telemetry',
@@ -1152,7 +1152,7 @@ export class MongoDBExporter implements LogProcessor, ObservabilityExporter {
      * BigInt, throwing getters, etc.). One bad item would otherwise
      * poison the entire `insertMany` batch and the catch block would
      * re-buffer all of them, producing the runaway error loop documented
-     * in https://github.com/kodustech/kodus-ai/issues/1106.
+     * in https://github.com/elchapita43/codus-ai/issues/1106.
      *
      * Returns the survivors and the count of dropped items so callers
      * can log a single rolled-up warning instead of one error per item.

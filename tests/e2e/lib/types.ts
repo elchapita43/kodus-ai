@@ -41,7 +41,7 @@ export interface OpenPRArgs {
 }
 
 // For test repos that already have head/base branch pairs with deliberate
-// diffs committed (e.g. the forked benchmark repos in the kodus-e2e org).
+// diffs committed (e.g. the forked benchmark repos in the codus-e2e org).
 // No clone, no push — just opens a PR between two existing branches. Each
 // call creates a fresh PR number, so the `validate-new-commits` pipeline
 // stage always treats it as a new review (unlike re-triggering on a
@@ -69,14 +69,14 @@ export interface ReviewSignal {
     issueComments: number;
     reviews: number;
     sample?: string;
-    // Set when Kody posted a license-related notification (e.g. "Your
+    // Set when Cody posted a license-related notification (e.g. "Your
     // trial has ended! Activate your plan…" or a BYOK prompt) instead of
     // a real review. Scenarios that expect the entitlement gate to
-    // BLOCK a review still want to verify Kody told the user *why* —
+    // BLOCK a review still want to verify Cody told the user *why* —
     // bare silence (no comment at all) is a different failure mode
     // (webhook never arrived, pipeline crashed silently) than the
     // intended UX. Providers populate this when they detect a
-    // license/trial/BYOK-prompt comment from Kody on the PR.
+    // license/trial/BYOK-prompt comment from Cody on the PR.
     licenseBlockedNotice?: {
         message: string;
         kind: 'trial-ended' | 'byok-required' | 'no-license' | 'other';
@@ -99,7 +99,7 @@ export interface Provider {
     deleteWebhook(id: string): Promise<void>;
     // Lists webhooks currently registered against the target repo/project.
     // Used by the onboarding-webhook-registration scenario to verify that
-    // Kodus's auto-register step actually wired a hook — the alternative
+    // Codus's auto-register step actually wired a hook — the alternative
     // (waiting for a review to materialize) only fails after 10+ min and
     // doesn't distinguish "webhook never registered" from "review pipeline
     // bug downstream of webhook receipt".
@@ -119,8 +119,8 @@ export interface Provider {
         pr: { number: number },
         opts: { sinceIso: string; triggerId?: string; timeoutSec?: number },
     ): Promise<ReviewSignal>;
-    // Phase-A poll for "Kody acknowledged the PR" — i.e. ANY comment
-    // carrying the `<!-- kody-codereview` marker has appeared on the
+    // Phase-A poll for "Cody acknowledged the PR" — i.e. ANY comment
+    // carrying the `<!-- cody-codereview` marker has appeared on the
     // PR (including the "Code Review Started!" placeholder that
     // `pollForReview` deliberately filters out). Lets the scenario
     // distinguish "review pipeline never woke up" (fail fast, ~60s)
@@ -134,15 +134,15 @@ export interface Provider {
     ): Promise<{ startedAt: string; sample: string }>;
     postComment(prNumber: number, body: string): Promise<{ id: string }>;
     // Optional: posts a comment as a DIFFERENT identity (token override). The
-    // conversation scenario needs this — Kody ignores comments whose author
-    // login contains "kody"/"kodus" (the e2e bots), so the `@kody` mention must
-    // come from a non-Kody account.
+    // conversation scenario needs this — Cody ignores comments whose author
+    // login contains "cody"/"codus" (the e2e bots), so the `@cody` mention must
+    // come from a non-Cody account.
     postCommentAs?(
         prNumber: number,
         body: string,
         token: string,
     ): Promise<{ id: string }>;
-    // Optional: posts an INLINE review comment as a different identity. Kody's
+    // Optional: posts an INLINE review comment as a different identity. Cody's
     // ConversationAgent only resolves the mention from a review comment (issue
     // comments are never found), so the conversation scenario needs this.
     postReviewCommentAs?(
@@ -150,33 +150,33 @@ export interface Provider {
         body: string,
         token: string,
     ): Promise<{ id: string }>;
-    // Optional: polls for Kody's conversational reply to an `@kody <question>`
+    // Optional: polls for Cody's conversational reply to an `@cody <question>`
     // new non-trigger, non-code-review comment, or null at timeout. Only GitHub
     // is wired; the conversation scenario gates on its presence.
-    pollForKodyReply?(
+    pollForCodyReply?(
         pr: { number: number },
         opts: { sinceIso: string; triggerId?: string; timeoutSec?: number },
     ): Promise<{ id: string; body: string } | null>;
     // Optional: merges a PR (falls back to close). Drives the closed/merged-PR
-    // webhook that triggers kody-issues generation (v2/BYOK path).
+    // webhook that triggers cody-issues generation (v2/BYOK path).
     mergePR?(pr: OpenedPR): Promise<void>;
     authMode(): 'token' | 'oauth' | 'app-password';
     authToken(): string;
     // Provider-specific extra body fields for POST /code-management/auth-integration.
     // Azure DevOps needs `orgUrl` + `orgName`; everything else returns {}.
-    // Override only when the Kodus backend rejects a bare token+authMode body.
+    // Override only when the Codus backend rejects a bare token+authMode body.
     authExtraFields?(): Record<string, unknown>;
-    // Returns the id Kodus stores as `pullRequest.user.id` for PRs opened by
+    // Returns the id Codus stores as `pullRequest.user.id` for PRs opened by
     // this PAT — i.e. exactly what `validate-prerequisites.stage.ts` reads
     // when deciding whether the author has a license seat. Per-provider:
     //   * github / gitlab: numeric id from /user (stringified)
     //   * bitbucket: uuid from /2.0/user with `{}` stripped (sanitizeUUID)
     //   * azure-devops: authenticatedUser.id GUID from connectionData
     currentUserId(): Promise<string>;
-    // Kodus's gitTool value for /license/assign (lowercase platformType).
+    // Codus's gitTool value for /license/assign (lowercase platformType).
     // Matches `assignLicense(provider.toLowerCase())` in license.service.ts.
     licenseGitTool(): string;
-    // Detects Kody's "blocked: PR author has no license seat" signal on the
+    // Detects Cody's "blocked: PR author has no license seat" signal on the
     // PR since `sinceIso`. validate-prerequisites.stage.ts emits a 👎 on
     // USER_NOT_LICENSED — a reaction on github/gitlab, a comment carrying the
     // docs.kodus.io emoji-meaning link on bitbucket/azure. Resolves true once
@@ -210,16 +210,16 @@ export interface TenantCredentials {
     // Optional per-tenant fixture repo (cloud only). When set, the
     // provider for this cell targets THIS repo instead of the
     // env-resolved per-target default. Required for cloud GitHub PAT
-    // tenants, where each license tier is a separate Kodus org: sharing
+    // tenants, where each license tier is a separate Codus org: sharing
     // one repo across orgs makes the webhook→org resolution ambiguous
     // (it picks the first org by updatedAt DESC), so the test's own org
     // isn't reliably the one that reviews its PR. One repo per tenant
     // restores the 1 org : 1 repo invariant the other providers already
-    // have. `owner/name` form, e.g. `kodus-e2e/tiny-url-cloud-paid`.
+    // have. `owner/name` form, e.g. `codus-e2e/tiny-url-cloud-paid`.
     repoFullName?: string;
 }
 
-export interface KodusSession {
+export interface CodusSession {
     accessToken: string;
     organizationId: string;
     teamId: string;
@@ -230,15 +230,15 @@ export interface RunContext {
     provider: Provider;
     license: LicenseMode;
     tenant?: TenantCredentials;
-    kodus: {
-        login: (creds: TenantCredentials) => Promise<KodusSession>;
-        registerIntegration: (session: KodusSession) => Promise<void>;
+    codus: {
+        login: (creds: TenantCredentials) => Promise<CodusSession>;
+        registerIntegration: (session: CodusSession) => Promise<void>;
         registerRepo: (
-            session: KodusSession,
+            session: CodusSession,
             opts?: { forceRecreate?: boolean },
         ) => Promise<ProviderRepoRef>;
         finishOnboarding: (
-            session: KodusSession,
+            session: CodusSession,
             repo: ProviderRepoRef,
         ) => Promise<void>;
     };

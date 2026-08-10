@@ -8,7 +8,7 @@ description: "Análises e métricas abrangentes para o desempenho da equipe de e
 O Cockpit Analytics fornece insights abrangentes sobre o desempenho da sua equipe de engenharia por meio de métricas-chave que medem produtividade, qualidade de código e eficiência de entrega. Essas métricas ajudam a identificar áreas de melhoria e acompanhar o progresso ao longo do tempo.
 
 <Warning>
-  O Cockpit exige um plano pago: **Teams ou Enterprise na cloud**, ou **self-hosted Enterprise licenciado**. Self-hosted sem licença (Community) e planos free BYOK não incluem. No self-hosted Enterprise também é preciso rodar o [Analytics Worker](/how_to_deploy/pt-br/deploy_kodus/analytics_worker).
+  O Cockpit exige um plano pago: **Teams ou Enterprise na cloud**, ou **self-hosted Enterprise licenciado**. Self-hosted sem licença (Community) e planos free BYOK não incluem. No self-hosted Enterprise também é preciso rodar o [Analytics Worker](/how_to_deploy/pt-br/deploy_codus/analytics_worker).
 </Warning>
 
 <Frame caption="Monitore o desempenho da sua equipe com análises em tempo real.">
@@ -26,7 +26,7 @@ O Cockpit Analytics fornece insights abrangentes sobre o desempenho da sua equip
 
 O cockpit é dividido em duas abas:
 
-- **Kodus Review** — o quanto as revisões do Kodus são eficazes: taxa de implementação, calibração de severidade, feedback negativo e a saúde das suas Kody Rules. É sobre o próprio Kodus, e é onde você toma ação. Veja [Kodus Review](/how_to_use/pt-br/cockpit/kodus_review).
+- **Codus Review** — o quanto as revisões do Codus são eficazes: taxa de implementação, calibração de severidade, feedback negativo e a saúde das suas Cody Rules. É sobre o próprio Codus, e é onde você toma ação. Veja [Codus Review](/how_to_use/pt-br/cockpit/codus_review).
 - **Productivity** — métricas gerais de entrega: frequência de deploy, lead time, tempo de ciclo de PR, tamanho de PR e atividade dos desenvolvedores.
 
 <Note>
@@ -37,7 +37,7 @@ O cockpit é dividido em duas abas:
 ## Categorias de Métricas Principais
 
 **Métricas Disponíveis:**
-- **Kodus Review:** Taxa de implementação (geral, por severidade, por categoria), feedback negativo, saúde de repositórios e Kody Rules
+- **Codus Review:** Taxa de implementação (geral, por severidade, por categoria), feedback negativo, saúde de repositórios e Cody Rules
 - **Produtividade:** Frequência de deploy, lead time, tempos de ciclo de PR
 - **Qualidade:** Tamanho de PR, eficácia de revisão de código
 - **Desempenho da Equipe:** Padrões de colaboração, identificação de gargalos
@@ -48,7 +48,7 @@ O cockpit é dividido em duas abas:
 O Cockpit rastreia desenvolvedores usando o **nome de usuário do commit Git**. Isso pode diferir de:
 - Nome de exibição do GitHub/GitLab
 - Endereço de e-mail
-- Conta de workspace do Kodus
+- Conta de workspace do Codus
 
 <Tip>
   Se você ver discrepâncias nas métricas dos desenvolvedores, verifique se os nomes de usuário de commit são consistentes na configuração Git da sua equipe.

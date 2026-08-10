@@ -283,7 +283,7 @@
 }
 
 /* Ported from apps/try so the review components animate/skeleton identically. */
-@keyframes kodus-fade-up {
+@keyframes codus-fade-up {
     from {
         opacity: 0;
         transform: translateY(8px);
@@ -294,9 +294,9 @@
     }
 }
 .fade-up {
-    animation: kodus-fade-up 0.6s cubic-bezier(0.21, 0.6, 0.35, 1) both;
+    animation: codus-fade-up 0.6s cubic-bezier(0.21, 0.6, 0.35, 1) both;
 }
-@keyframes kodus-skeleton-wave {
+@keyframes codus-skeleton-wave {
     0% {
         background-position: -200% 0;
     }
@@ -304,7 +304,7 @@
         background-position: 200% 0;
     }
 }
-.kodus-skeleton {
+.codus-skeleton {
     background: linear-gradient(
         90deg,
         var(--bg-3) 0%,
@@ -312,22 +312,22 @@
         var(--bg-3) 100%
     );
     background-size: 200% 100%;
-    animation: kodus-skeleton-wave 1.8s ease-in-out infinite;
+    animation: codus-skeleton-wave 1.8s ease-in-out infinite;
     border-radius: 6px;
 }
 
-.kodus-scroll::-webkit-scrollbar {
+.codus-scroll::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
-.kodus-scroll::-webkit-scrollbar-track {
+.codus-scroll::-webkit-scrollbar-track {
     background: transparent;
 }
-.kodus-scroll::-webkit-scrollbar-thumb {
+.codus-scroll::-webkit-scrollbar-thumb {
     background: var(--bg-4);
     border-radius: 4px;
 }
-.kodus-scroll::-webkit-scrollbar-thumb:hover {
+.codus-scroll::-webkit-scrollbar-thumb:hover {
     background: var(--border-strong);
 }
 

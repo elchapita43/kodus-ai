@@ -917,7 +917,7 @@ export class BitbucketDataCenterService implements Omit<
                     await axiosClient.post(
                         `/projects/${projectKey}/repos/${repoSlug}/webhooks`,
                         {
-                            name: 'Kodus Webhook',
+                            name: 'Codus Webhook',
                             url: webhookUrl,
                             active: true,
                             events: [
@@ -1495,7 +1495,7 @@ export class BitbucketDataCenterService implements Omit<
             const repoSlug = repoConfig.name;
 
             const resolvedSourceBranch =
-                sourceBranch || `kody-auto-${Date.now()}`;
+                sourceBranch || `cody-auto-${Date.now()}`;
             const resolvedTargetBranch = targetBranch || 'master';
 
             // An empty repository has no base branch yet, so branch creation
@@ -2746,7 +2746,7 @@ export class BitbucketDataCenterService implements Omit<
 
             // Trigger background syncs if MCP is configured
             if (this.mcpManagerService) {
-                this.mcpManagerService.createKodusMCPIntegration(
+                this.mcpManagerService.createCodusMCPIntegration(
                     params.organizationAndTeamData.organizationId,
                 );
             }

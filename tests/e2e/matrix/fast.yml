@@ -3,7 +3,7 @@ description: |
     Fast tier — the core gates that any release must keep working. Runs
     per PR / on every push to main. Covers webhook auto-registration
     after onboarding, code-review across the 4 providers in both
-    targets, license attribution gates, kody-rules create + apply, and
+    targets, license attribution gates, cody-rules create + apply, and
     per-seat license toggling.
 
     Lifecycle scenarios (upgrade N-1 → N, SSO cookie-domain + multi-user,
@@ -12,18 +12,18 @@ description: |
 
 # Order matters: onboarding-webhook-registration runs first per cell. If
 # the provider's webhook isn't registered after onboarding, the rest of
-# the scenarios are guaranteed to fail (events never reach Kodus) and
+# the scenarios are guaranteed to fail (events never reach Codus) and
 # would just waste pipeline budget. Keeping it first surfaces the real
 # regression in ~30s instead of as a downstream 10-min timeout.
 scenarios:
     - onboarding-webhook-registration
     - code-review-basic
-    # @kody review / @kody start-review command path. Disables
+    # @cody review / @cody start-review command path. Disables
     # automatedReviewActive at the org level first, then opens a PR
     # and posts the comment, so the review under test can only come
     # from the command. Covers all 4 providers.
     - command-review
-    - kody-rules-create-and-apply
+    - cody-rules-create-and-apply
     # Centralized config (config-as-code) init→sync→disable. Signs up its own
     # throwaway org (enabling centralized config makes a tenant's review config
     # read-only, so it must not touch the shared review tenants). Pinned to
@@ -42,13 +42,13 @@ scenarios:
     #     no LLM; localizes credit/idempotency bugs in the gate↔billing path.
     #   * trial-managed-review: the REAL thing — throwaway repo (exclusive
     #     webhook route) + PR + managed-LLM review. The only cell exercising
-    #     Kodus-managed keys; every other review cell is BYOK.
+    #     Codus-managed keys; every other review cell is BYOK.
     - trial-entitlement-gate
     - trial-credits-consume
     - trial-managed-review
     # Per-seat gate: appliesTo restricts to self-hosted × github × license-paid
     # (one cell). Skipped automatically when SH_LICENSE_KEY_PATH (default
-    # ~/.kodus-dev/license-seats1.jwt) isn't available — see run-matrix.ts.
+    # ~/.codus-dev/license-seats1.jwt) isn't available — see run-matrix.ts.
     - per-seat-license-toggle
     # RBAC authorization matrix: signs up its own throwaway org, provisions one
     # user per role, and asserts the expected 200/403 across API endpoints.
@@ -112,8 +112,8 @@ cells:
     # authenticateWithCodeOauth code path in github.service.ts which
     # `github` (PAT) doesn't touch. Cloud-only because each self-hosted
     # droplet would need its own App registered + installed (webhook
-    # URL is per-app, not per-install). Uses kodus-ai-qa App installed
-    # scope-limited to kodus-e2e/tiny-url-app — set
+    # URL is per-app, not per-install). Uses codus-ai-qa App installed
+    # scope-limited to codus-e2e/tiny-url-app — set
     # GH_APP_TEST_REPO and GH_APP_INSTALLATION_ID in the env to enable;
     # the cell is SKIPPED otherwise via --skip-missing-tokens.
     - target: cloud

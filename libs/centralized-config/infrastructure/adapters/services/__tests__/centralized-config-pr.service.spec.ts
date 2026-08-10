@@ -15,7 +15,7 @@ describe('CentralizedConfigPrService', () => {
     const activePullRequest = {
         prUrl: 'https://example.test/pull/123',
         prNumber: 123,
-        sourceBranch: 'kodus-centralized-config-global-123',
+        sourceBranch: 'codus-centralized-config-global-123',
         targetBranch: 'main',
         repository: centralizedRepository,
         createdAt: '2026-01-01T00:00:00.000Z',
@@ -48,7 +48,7 @@ describe('CentralizedConfigPrService', () => {
             findIntegrationConfigFormatted: jest.fn().mockResolvedValue([]),
         };
 
-        const kodyRulesService = {
+        const codyRulesService = {
             findByOrganizationId: jest.fn().mockResolvedValue(null),
             updateRule: jest.fn().mockResolvedValue(null),
         };
@@ -88,7 +88,7 @@ describe('CentralizedConfigPrService', () => {
         const service = new CentralizedConfigPrService(
             parametersService as any,
             integrationConfigService as any,
-            kodyRulesService as any,
+            codyRulesService as any,
             moduleRef as any,
             codeManagementService as any,
         );
@@ -106,7 +106,7 @@ describe('CentralizedConfigPrService', () => {
                 pullRequestState: PullRequestState.CLOSED,
             });
 
-        await service.getScopedKodusConfigFileContent({
+        await service.getScopedCodusConfigFileContent({
             organizationAndTeamData,
         });
 
@@ -136,7 +136,7 @@ describe('CentralizedConfigPrService', () => {
                 pullRequestState: PullRequestState.OPENED,
             });
 
-        await service.getScopedKodusConfigFileContent({
+        await service.getScopedCodusConfigFileContent({
             organizationAndTeamData,
         });
 
@@ -160,7 +160,7 @@ describe('CentralizedConfigPrService', () => {
 
     it('reuses a discovered open centralized pull request when active metadata is missing', async () => {
         const discoveredSourceBranch =
-            'kodus-centralized-standard-delete-1775678312159';
+            'codus-centralized-standard-delete-1775678312159';
 
         const { service, codeManagementService } = buildService({
             pullRequestState: PullRequestState.OPENED,
@@ -186,14 +186,14 @@ describe('CentralizedConfigPrService', () => {
             repositoryId: 'global',
             files: [
                 {
-                    path: '.kody-rules/review/sample.yml',
+                    path: '.cody-rules/review/sample.yml',
                     operation: 'delete',
                 },
             ],
-            title: 'Remove Kody Rule from global',
+            title: 'Remove Cody Rule from global',
             description: 'Delete centralized rule file',
             commitMessage: 'remove rule via centralized config',
-            sourceBranch: 'kodus-centralized-standard-delete-new',
+            sourceBranch: 'codus-centralized-standard-delete-new',
         });
 
         expect(result).toEqual(

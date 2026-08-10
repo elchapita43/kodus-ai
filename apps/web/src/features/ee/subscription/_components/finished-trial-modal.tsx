@@ -36,7 +36,7 @@ export const FinishedTrialModal = () => {
                     <div className="text-text-secondary flex flex-col gap-2 text-sm">
                         <p>
                             Your subscription will be downgraded to Basic and
-                            Kody won't work at its maximum.
+                            Cody won't work at its maximum.
                         </p>
 
                         <p>
@@ -58,7 +58,7 @@ export const FinishedTrialModal = () => {
                                 cookie.set("true");
                                 router.refresh();
                             }}>
-                            Stop using Kody
+                            Stop using Cody
                         </Button>
 
                         <Button

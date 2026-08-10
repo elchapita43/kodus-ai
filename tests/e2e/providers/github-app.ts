@@ -13,9 +13,9 @@ import { GitHubProvider } from "./github.js";
 //   - matches how the backend models it — authMode is per-integration,
 //     not per-instance.
 //
-// Required env (set in scripts/e2e/.env or ~/.kodus-dev/config):
+// Required env (set in scripts/e2e/.env or ~/.codus-dev/config):
 //   GH_APP_TEST_REPO          full_name of the repo the App is installed in
-//                             (e.g. kodus-e2e/tiny-url-app)
+//                             (e.g. codus-e2e/tiny-url-app)
 //   GH_APP_INSTALLATION_ID    numeric installation id captured after the
 //                             one-time install on github.com
 //   GH_TEST_TOKEN             still required — used for opening PRs,

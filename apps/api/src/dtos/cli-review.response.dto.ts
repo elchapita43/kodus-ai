@@ -163,7 +163,7 @@ export class CliBusinessValidationResponseDto {
 
     @ApiProperty({
         example:
-            '@kody -v business-logic https://linear.app/kodus/issue/KD-1234/validar-regra',
+            '@cody -v business-logic https://linear.app/codus/issue/KD-1234/validar-regra',
     })
     command: string;
 
@@ -171,14 +171,14 @@ export class CliBusinessValidationResponseDto {
     prNumber?: number;
 
     @ApiPropertyOptional({
-        example: 'https://github.com/kodus-ai/kodus-ai/pull/123',
+        example: 'https://github.com/codus-ai/codus-ai/pull/123',
     })
     prUrl?: string;
 
     @ApiPropertyOptional({ example: '123456789' })
     repositoryId?: string;
 
-    @ApiPropertyOptional({ example: 'kodus-ai' })
+    @ApiPropertyOptional({ example: 'codus-ai' })
     repositoryName?: string;
 
     @ApiPropertyOptional({ example: 'KD-1234' })

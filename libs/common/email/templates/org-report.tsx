@@ -98,7 +98,7 @@ export function orgReportEmailMeta({
     const month = fmtMonth(startDate);
     return {
         from: EMAIL_FROM.NOTIFICATIONS,
-        subject: `Your Kody review report · ${company}${
+        subject: `Your Cody review report · ${company}${
             month ? ` · ${month}` : ''
         }`,
     };
@@ -179,7 +179,7 @@ function OrgReportEmail({
         >
             <Heading style={baseHeading}>Hi {recipientName} 👋</Heading>
             <Text style={baseText}>
-                Here&apos;s how <strong>{company}</strong> acted on Kody this
+                Here&apos;s how <strong>{company}</strong> acted on Cody this
                 period.
             </Text>
             <Text style={mutedText}>{period}</Text>
@@ -195,7 +195,7 @@ function OrgReportEmail({
                     {criticalImplemented === 1
                         ? ' suggestion'
                         : ' suggestions'}{' '}
-                    Kody raised this period.
+                    Cody raised this period.
                 </Text>
             </Section>
 
@@ -312,7 +312,7 @@ function OrgReportEmail({
 
             {rulesNeedingAttention.length > 0 ? (
                 <>
-                    <Text style={sectionHeading}>Kody Rules worth a look</Text>
+                    <Text style={sectionHeading}>Cody Rules worth a look</Text>
                     <Text style={sectionSubhead}>
                         Rules the team is downvoting or ignoring — candidates to
                         rewrite, re-scope, or retire.

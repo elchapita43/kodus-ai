@@ -1,9 +1,9 @@
 ---
 title: "Linked Repositories"
-description: "Let Kody read sibling repositories as context to catch cross-repo contract mismatches during review."
+description: "Let Cody read sibling repositories as context to catch cross-repo contract mismatches during review."
 ---
 
-Linked Repositories let Kody read sibling repositories as **read-only context** while reviewing a pull request. Use it to catch the bugs a single-repo review can't see: the backend renames an API field and the frontend still reads the old one, a producer adds an enum value no consumer handles, or writer and reader derive the same key differently.
+Linked Repositories let Cody read sibling repositories as **read-only context** while reviewing a pull request. Use it to catch the bugs a single-repo review can't see: the backend renames an API field and the frontend still reads the old one, a producer adds an enum value no consumer handles, or writer and reader derive the same key differently.
 
 Available on **Teams and Enterprise** plans. Configured **per repository** — there is no global default, because relationships are directional: linking `frontend → backend-api` means *reviews of `frontend`* may consult `backend-api`, not the other way around. Link both directions explicitly if both teams want the check.
 
@@ -16,7 +16,7 @@ const isNotApproved =
     error.response?.data?.error === 'INTEGRATION_NOT_APPROVED';
 ```
 
-With the backend linked, Kody checks the other side of that contract and comments on the PR:
+With the backend linked, Cody checks the other side of that contract and comments on the PR:
 
 > **Bug · medium** — The frontend checks `error.response?.data?.error` for `INTEGRATION_NOT_APPROVED`, but the backend's `sendError` returns the code in a `message` field. The not-approved branch never matches, so users always see the generic error toast. Read `data.message` instead.
 
@@ -24,16 +24,16 @@ The review summary also shows what was consulted: **Additional context used:** `
 
 ## How it works
 
-When a pull request in a repository with linked repositories touches boundary surface (changed string literals, payload fields, status values, exported symbols), Kody's review agent can search and read the linked repositories — the same way it greps your own repo — to verify that both sides of a contract still agree. Findings are only raised with confirmed evidence from the counterpart file, and the comment always lands on a line of **your** PR; linked-repo code is quoted inside it as supporting evidence, never commented on directly.
+When a pull request in a repository with linked repositories touches boundary surface (changed string literals, payload fields, status values, exported symbols), Cody's review agent can search and read the linked repositories — the same way it greps your own repo — to verify that both sides of a contract still agree. Findings are only raised with confirmed evidence from the counterpart file, and the comment always lands on a line of **your** PR; linked-repo code is quoted inside it as supporting evidence, never commented on directly.
 
 Reviews that used cross-repo context say so: the review summary includes an
 **Additional context used** line listing each repository and the ref it was
 read at.
 
 <Info>
-- Only repositories **already connected to the same Kodus organization** can be linked (Kody reuses your existing Git integration — no extra tokens).
+- Only repositories **already connected to the same Codus organization** can be linked (Cody reuses your existing Git integration — no extra tokens).
 - Up to **3 linked repositories** per repository.
-- Access is read-only. Kody never pushes to, comments on, or modifies a linked repository.
+- Access is read-only. Cody never pushes to, comments on, or modifies a linked repository.
 - If a linked repository can't be fetched (permissions, timeout), the review continues normally without it.
 </Info>
 
@@ -43,7 +43,7 @@ Go to **Code Review Settings → _your repository_ → Linked Repositories**, pi
 
 ### Instructions
 
-A free-text hint that tells the review agent **what this link is for and where to look**. Kody works without it, but a good instruction makes the cross-repo pass faster and more accurate — it's the difference between the agent exploring the linked repo from scratch and going straight to the relevant code.
+A free-text hint that tells the review agent **what this link is for and where to look**. Cody works without it, but a good instruction makes the cross-repo pass faster and more accurate — it's the difference between the agent exploring the linked repo from scratch and going straight to the relevant code.
 
 Good instructions name the relationship and the load-bearing paths:
 
@@ -61,7 +61,7 @@ Weak instructions restate the obvious ("backend repo") and add nothing.
 
 ### Ref pin (branch selection)
 
-Controls which branch ("ref") of the linked repository Kody reads. **Most teams leave this empty**: Kody then reads the branch with the same name as your PR's branch when it exists (so coordinated multi-repo changes see each other before merging), and falls back to the default branch otherwise.
+Controls which branch ("ref") of the linked repository Cody reads. **Most teams leave this empty**: Cody then reads the branch with the same name as your PR's branch when it exists (so coordinated multi-repo changes see each other before merging), and falls back to the default branch otherwise.
 
 The full resolution order, first match wins:
 

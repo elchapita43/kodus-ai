@@ -1,6 +1,6 @@
 import { http } from "./http.js";
 import { login, signUp } from "./onboarding.js";
-import type { KodusSession, RunContext, TargetContext } from "./types.js";
+import type { CodusSession, RunContext, TargetContext } from "./types.js";
 
 // Shared trial-org provisioning used by `trial-entitlement-gate` (API-level
 // gate check) and `trial-managed-review` (real managed review on a throwaway
@@ -24,7 +24,7 @@ export function runSlug(runId: string): string {
 
 export interface FreshTrialOrg {
     email: string;
-    session: KodusSession;
+    session: CodusSession;
 }
 
 /** Sign up a fresh throwaway org and activate its managed (byok:false)
@@ -34,18 +34,18 @@ export async function provisionFreshTrialOrg(
     emailPrefix: string,
 ): Promise<FreshTrialOrg> {
     const target = ctx.target as TargetContext;
-    // `@kodus.local` matches the throwaway domain the RBAC scenarios
+    // `@codus.local` matches the throwaway domain the RBAC scenarios
     // already use on cloud QA. Slug from the runId TAIL — the head is the
     // date (collides across same-day runs); the tail carries ms + the
     // random hex suffix.
-    const email = `${emailPrefix}-${runSlug(ctx.runId)}@kodus.local`;
+    const email = `${emailPrefix}-${runSlug(ctx.runId)}@codus.local`;
     await signUp(target, { email, password: TRIAL_ORG_PASSWORD });
     const session = await login(target, {
         email,
         password: TRIAL_ORG_PASSWORD,
     });
 
-    // Mirrors setup-tenants.ts: byok:false → a managed (Kodus-keys) trial.
+    // Mirrors setup-tenants.ts: byok:false → a managed (Codus-keys) trial.
     // 409 / "already exists" is idempotent OK — the desired end-state (a
     // valid trial subscription record) is satisfied either way.
     const resp = await http(`${target.webBaseUrl}/api/proxy/billing/trial`, {
@@ -104,7 +104,7 @@ export interface ConsumeCreditResult {
  *  and `http` does not throw on non-2xx, so we return the body either way. */
 export async function consumeTrialReviewCredit(
     ctx: RunContext,
-    session: KodusSession,
+    session: CodusSession,
     usageKey?: string,
 ): Promise<ConsumeCreditResult> {
     const target = ctx.target as TargetContext;
@@ -132,7 +132,7 @@ export async function consumeTrialReviewCredit(
  *  (PermissionValidationService → validateOrganizationLicense). */
 export async function fetchOrgLicense(
     ctx: RunContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<OrgLicense> {
     const target = ctx.target as TargetContext;
     const url =

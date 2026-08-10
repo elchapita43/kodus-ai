@@ -327,7 +327,7 @@ describe('FindByKeyParametersUseCase', () => {
                     activePullRequest: {
                         prUrl: 'https://example.test/pull/123',
                         prNumber: 123,
-                        sourceBranch: 'kodus-centralized-config-global-123',
+                        sourceBranch: 'codus-centralized-config-global-123',
                         targetBranch: 'main',
                         repository: { id: 'repo-1', name: 'centralized-repo' },
                         createdAt: '2026-01-01T00:00:00.000Z',
@@ -356,7 +356,7 @@ describe('FindByKeyParametersUseCase', () => {
                     activePullRequest: {
                         prUrl: 'https://example.test/pull/123',
                         prNumber: 123,
-                        sourceBranch: 'kodus-centralized-config-global-123',
+                        sourceBranch: 'codus-centralized-config-global-123',
                         targetBranch: 'main',
                         repository: { id: 'repo-1', name: 'centralized-repo' },
                         createdAt: '2026-01-01T00:00:00.000Z',

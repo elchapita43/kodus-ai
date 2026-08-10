@@ -115,7 +115,7 @@ export interface LeadTimeBreakdownRow {
 }
 
 // -------------------------------------------------------------------------
-// Kodus Review analytics (cockpit revamp) — implementation-rate breakdowns,
+// Codus Review analytics (cockpit revamp) — implementation-rate breakdowns,
 // ignored-criticals highlight, repository health and the suggestions
 // explorer. All read from `analytics.suggestions_mv` + `pull_requests_opt`.
 // -------------------------------------------------------------------------
@@ -143,9 +143,9 @@ export interface ImplementationRateBySeverityRow
     extends ImplementationRateBreakdown {
     severity: string;
     /**
-     * Same counters excluding rule-driven suggestions (Kody Rules carry a
-     * user-defined severity, not a Kodus risk call). Lets the chart toggle
-     * between the full population and a Kodus-native calibration view.
+     * Same counters excluding rule-driven suggestions (Cody Rules carry a
+     * user-defined severity, not a Codus risk call). Lets the chart toggle
+     * between the full population and a Codus-native calibration view.
      */
     nativeSent: number;
     nativeImplemented: number;
@@ -186,7 +186,7 @@ export interface RepositoryHealthRow {
 }
 
 /** Per-rule aggregation straight from the warehouse (no rule metadata). */
-export interface KodyRuleUsageRow {
+export interface CodyRuleUsageRow {
     ruleId: string;
     triggers: number;
     implemented: number;
@@ -197,14 +197,14 @@ export interface KodyRuleUsageRow {
 }
 
 /**
- * Review-quality split by suggestion origin — rule-driven (enforces a Kody
- * Rule) vs Kodus-native analysis — computed in one pass over `suggestions_mv`
- * joined to feedback, using the same IS_KODY_RULE predicate as the severity
+ * Review-quality split by suggestion origin — rule-driven (enforces a Cody
+ * Rule) vs Codus-native analysis — computed in one pass over `suggestions_mv`
+ * joined to feedback, using the same IS_CODY_RULE predicate as the severity
  * chart. Powers the report's "is the team acting on / liking what we say?"
  * read without needing per-rule metadata from Mongo.
  */
 export interface ReviewQualityByRuleGroupRow {
-    group: 'kody_rules' | 'general';
+    group: 'cody_rules' | 'general';
     sent: number;
     implemented: number;
     /** implemented / sent, 0..1. */
@@ -213,7 +213,7 @@ export interface ReviewQualityByRuleGroupRow {
     thumbsDown: number;
 }
 
-export type KodyRuleHealthState =
+export type CodyRuleHealthState =
     | 'healthy'
     | 'noisy'
     | 'ignored'
@@ -279,8 +279,8 @@ export interface ReviewOperationalMetrics {
     };
 }
 
-/** Warehouse usage merged with rule metadata from Mongo `kodyRules`. */
-export interface KodyRuleHealthRow extends KodyRuleUsageRow {
+/** Warehouse usage merged with rule metadata from Mongo `codyRules`. */
+export interface CodyRuleHealthRow extends CodyRuleUsageRow {
     title: string;
     severity: string | null;
     /** External repo id the rule is scoped to; null → org-wide (global). */
@@ -302,7 +302,7 @@ export interface KodyRuleHealthRow extends KodyRuleUsageRow {
      * `noisy` (negative feedback) only becomes computable in phase 3 when
      * `suggestion_feedback` lands in the warehouse.
      */
-    state: KodyRuleHealthState;
+    state: CodyRuleHealthState;
 }
 
 export interface SuggestionsExplorerQuery {
@@ -312,7 +312,7 @@ export interface SuggestionsExplorerQuery {
     repository?: string;
     category?: string;
     severity?: string;
-    /** Kody Rule UUID — matches suggestions enforcing this rule. */
+    /** Cody Rule UUID — matches suggestions enforcing this rule. */
     ruleId?: string;
     implementationStatus?:
         | 'implemented'

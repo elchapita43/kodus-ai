@@ -1,6 +1,6 @@
 ---
 title: "合规性 PR 审查（SOC2、HIPAA）"
-description: "配置 Kody 规则和记忆以执行审计追踪、数据处理和访问控制要求。"
+description: "配置 Cody 规则和记忆以执行审计追踪、数据处理和访问控制要求。"
 icon: "file-shield"
 ---
 
@@ -12,26 +12,26 @@ SOC2、HIPAA 和 GDPR 等合规框架要求围绕数据处理、访问控制和�
 
 ## 步骤 1 — 定义合规记忆
 
-首先教 Kody 高级别的合规原则：
+首先教 Cody 高级别的合规原则：
 
 ```
-@kody remember: we are SOC2 compliant. All data access must be logged
+@cody remember: we are SOC2 compliant. All data access must be logged
 with who accessed what, when, and from where.
 ```
 
 ```
-@kody remember: PII (personally identifiable information) must never
+@cody remember: PII (personally identifiable information) must never
 appear in logs, error messages, or API responses. PII includes:
 name, email, phone, address, SSN, date of birth, IP address.
 ```
 
 ```
-@kody remember: all data at rest must be encrypted. Database fields
+@cody remember: all data at rest must be encrypted. Database fields
 containing PII must use application-level encryption.
 ```
 
 ```
-@kody remember: access control follows least privilege principle.
+@cody remember: access control follows least privilege principle.
 New endpoints default to authenticated + authorized, never public.
 ```
 
@@ -141,4 +141,4 @@ New endpoints default to authenticated + authorized, never public.
 - [ ] 规则设置在组织级别以保持一致性
 - [ ] 测试 PR 验证规则正确触发
 
-有关配置规则的更多信息，请参阅 [Kody 规则](/how_to_use/zh/code_review/configs/kody_rules)。
+有关配置规则的更多信息，请参阅 [Cody 规则](/how_to_use/zh/code_review/configs/cody_rules)。

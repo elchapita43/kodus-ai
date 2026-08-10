@@ -24,7 +24,7 @@ describe('fetchPullRequestMetadata', () => {
 
         const result = await fetchPullRequestMetadata(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
             {
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -40,9 +40,9 @@ describe('fetchPullRequestMetadata', () => {
         expect(result.traces[0]).toMatchObject({
             capability: 'pr.metadata.read',
             status: 'success',
-            toolName: 'KODUS_GET_PULL_REQUEST',
+            toolName: 'CODUS_GET_PULL_REQUEST',
         });
-        expect(callTool).toHaveBeenCalledWith('KODUS_GET_PULL_REQUEST', {
+        expect(callTool).toHaveBeenCalledWith('CODUS_GET_PULL_REQUEST', {
             organizationId: 'org-1',
             teamId: 'team-1',
             repository: {
@@ -58,7 +58,7 @@ describe('fetchPullRequestMetadata', () => {
 
         const result = await fetchPullRequestMetadata(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
             undefined,
             executionContext,
         );

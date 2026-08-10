@@ -23,9 +23,9 @@ jest.mock('@libs/mcp-server/services/mcp-manager.service', () => ({
 
 const execFileAsync = promisify(execFile);
 const GIT_ENV = {
-    GIT_AUTHOR_NAME: 'kodus-test',
+    GIT_AUTHOR_NAME: 'codus-test',
     GIT_AUTHOR_EMAIL: 'test@kodus.io',
-    GIT_COMMITTER_NAME: 'kodus-test',
+    GIT_COMMITTER_NAME: 'codus-test',
     GIT_COMMITTER_EMAIL: 'test@kodus.io',
 };
 
@@ -40,7 +40,7 @@ const GIT_ENV = {
  * clone params, and the real sandbox runs the real `git fetch` — the same
  * command that appears in the issue's log:
  *
- *   git -C /tmp/kodus-sandbox-XXXX fetch --depth=1 <url> <sha>:cli-base
+ *   git -C /tmp/codus-sandbox-XXXX fetch --depth=1 <url> <sha>:cli-base
  *
  * Before the fix this fetched github.com and died with "repository not found".
  * The assertion here is that the working tree really materializes from the
@@ -119,8 +119,8 @@ describe('CLI sandbox clone against a self-managed git host', () => {
         const { stdout } = await execFileAsync('git', ['--exec-path']);
         process.env.GIT_EXEC_PATH = stdout.trim();
 
-        serverRoot = await mkdtemp(join(tmpdir(), 'kodus-git-server-'));
-        workDir = await mkdtemp(join(tmpdir(), 'kodus-git-work-'));
+        serverRoot = await mkdtemp(join(tmpdir(), 'codus-git-server-'));
+        workDir = await mkdtemp(join(tmpdir(), 'codus-git-work-'));
 
         // A real repository with a real commit.
         await execFileAsync('git', ['init', '-b', 'main', workDir]);

@@ -1,4 +1,4 @@
-// Shallow UI smoke for kodus-web — visits the auth-public pages headless
+// Shallow UI smoke for codus-web — visits the auth-public pages headless
 // and verifies the React tree actually renders (not a 5xx, not a blank
 // page, not a JS-error-only DOM). Catches build/deploy regressions that
 // the API-side E2E would miss.
@@ -11,7 +11,7 @@
 import { chromium } from "playwright";
 import { writeFileSync } from "node:fs";
 
-const KODUS_WEB_URL = (process.env.KODUS_WEB_URL || "http://localhost:3000").replace(/\/$/, "");
+const CODUS_WEB_URL = (process.env.CODUS_WEB_URL || "http://localhost:3000").replace(/\/$/, "");
 
 // One of `expectAny` strings must appear in the rendered body text.
 // Keep these LOOSE so harmless copy tweaks don't break the smoke.
@@ -20,7 +20,7 @@ const PAGES = [
         path: "/",
         // Unauthenticated root redirects to /sign-in (307) — after follow,
         // we land on the sign-in page.
-        expectAny: ["Sign", "Login", "email", "Kodus"],
+        expectAny: ["Sign", "Login", "email", "Codus"],
     },
     {
         path: "/sign-up",
@@ -43,7 +43,7 @@ page.on("console", (msg) => {
 
 let failed = 0;
 for (const p of PAGES) {
-    const url = `${KODUS_WEB_URL}${p.path}`;
+    const url = `${CODUS_WEB_URL}${p.path}`;
     let status = 0;
     try {
         const resp = await page.goto(url, {

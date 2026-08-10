@@ -221,7 +221,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
         if (globalRulesSourceDisablesReviewForRepository) {
             this.logger.log({
                 message:
-                    'Repository is a global Kody Rules source, skipping automation',
+                    'Repository is a global Cody Rules source, skipping automation',
                 context: this.stageName,
                 metadata: {
                     organizationAndTeamData,
@@ -236,7 +236,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
                 draft.statusInfo = {
                     status: AutomationStatus.SKIPPED,
                     message:
-                        'Code reviews are disabled for the global Kody Rules source repository',
+                        'Code reviews are disabled for the global Cody Rules source repository',
                 };
             });
         }
@@ -505,7 +505,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
                     : 'general';
 
             // PLAN_LIMIT_EXCEEDED on a trial is one of two things: the
-            // Kodus-paid reviews are genuinely used up (trial still active —
+            // Codus-paid reviews are genuinely used up (trial still active —
             // steer to BYOK, not "trial ended"), or the license service
             // couldn't confirm the credit (transient billing failure — say so
             // and ask to retry, never "used up" or "trial ended").
@@ -755,7 +755,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
     }
 
     /**
-     * A repository selected purely as a source of GLOBAL Kody Rules is a
+     * A repository selected purely as a source of GLOBAL Cody Rules is a
      * config/data repository, not a codebase to review — mirror the
      * centralized-config behaviour and skip the automation for its PRs.
      */
@@ -787,7 +787,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
 
             if (isSource) {
                 this.logger.log({
-                    message: 'Global Kody Rules source repository identified',
+                    message: 'Global Cody Rules source repository identified',
                     context: this.stageName,
                     metadata: {
                         organizationAndTeamData,
@@ -801,7 +801,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
         } catch (error) {
             this.logger.warn({
                 message:
-                    'Error resolving global Kody Rules source repository review exclusion',
+                    'Error resolving global Cody Rules source repository review exclusion',
                 context: this.stageName,
                 error,
                 metadata: {
@@ -938,20 +938,20 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
             '## Your trial has ended! 😢\n\n' +
             'To keep getting reviews, activate your plan [here](https://app.kodus.io/settings/subscription).\n\n' +
             'Got questions about plans or want to see if we can extend your trial? Talk to our founders [here](https://cal.com/gabrielmalinosqui/30min).😎\n\n' +
-            '<!-- kody-codereview -->'
+            '<!-- cody-codereview -->'
         );
     }
 
     private async trialCreditsExhaustedMessage(): Promise<string> {
         return (
-            "## You've used all your free Kodus-paid PR reviews 🎁\n\n" +
+            "## You've used all your free Codus-paid PR reviews 🎁\n\n" +
             'Your trial is still active — this just means the PR reviews we ' +
             'cover during the trial are used up.\n\n' +
             '**[Connect your own AI key](https://app.kodus.io/organization/byok)** ' +
-            'to keep Kody reviewing — unlimited reviews, on any plan (Free included).\n\n' +
+            'to keep Cody reviewing — unlimited reviews, on any plan (Free included).\n\n' +
             'Want more trial reviews to finish evaluating before adding a key? ' +
             '[Talk to our founders](https://cal.com/gabrielmalinosqui/30min). 😎\n\n' +
-            '<!-- kody-codereview -->'
+            '<!-- cody-codereview -->'
         );
     }
 
@@ -961,8 +961,8 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
             "We couldn't confirm your subscription right now — the license " +
             'service is temporarily unreachable.\n\n' +
             'Please re-run the review in a few minutes (or push a new commit) ' +
-            "and Kody will pick it up.\n\n" +
-            '<!-- kody-codereview -->'
+            "and Cody will pick it up.\n\n" +
+            '<!-- cody-codereview -->'
         );
     }
 
@@ -970,7 +970,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
         return (
             '## User License not found! 😢\n\n' +
             'To perform the review, ask the admin to add a subscription for your user in [subscription management](https://app.kodus.io/settings/subscription).\n\n' +
-            '<!-- kody-codereview -->'
+            '<!-- cody-codereview -->'
         );
     }
 
@@ -979,7 +979,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
             '## BYOK Configuration Required! 🔑\n\n' +
             'Your plan requires a Bring Your Own Key (BYOK) configuration to perform code reviews.\n\n' +
             'Please configure your API keys in [Settings > BYOK Configuration](https://app.kodus.io/organization/byok).\n\n' +
-            '<!-- kody-codereview -->'
+            '<!-- cody-codereview -->'
         );
     }
 
@@ -1136,7 +1136,7 @@ export class ValidatePrerequisitesStage extends BasePipelineStage<CodeReviewPipe
                     organizationAndTeamData.organizationId,
                 );
 
-            // Notify the PR author when they're a Kodus user; otherwise fall
+            // Notify the PR author when they're a Codus user; otherwise fall
             // back to the org owners so an external-contributor / bot PR still
             // alerts someone. Rate-limit per recipient target (the author, or
             // a single "owners" bucket) so a burst of PRs sends one alert.

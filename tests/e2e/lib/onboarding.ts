@@ -1,5 +1,5 @@
 import type {
-    KodusSession,
+    CodusSession,
     Provider,
     ProviderRepoRef,
     TargetContext,
@@ -122,7 +122,7 @@ function decodeJwtPayload(jwt: string): Record<string, unknown> {
     }
 }
 
-// Signs up a fresh Kodus tenant. Used by smoke/matrix runs against
+// Signs up a fresh Codus tenant. Used by smoke/matrix runs against
 // self-hosted droplets so every (provider × target) cell starts with a
 // virgin organization — no leftover integrations, repos, or rules from
 // previous cells. Without this, re-running the matrix against the same
@@ -135,7 +135,7 @@ export async function signUp(
     creds: { email: string; password: string; name?: string },
 ): Promise<void> {
     log.info(`Signing up tenant ${creds.email}`);
-    // Kodus's API has been spelled both `/auth/signUp` (camelCase) and
+    // Codus's API has been spelled both `/auth/signUp` (camelCase) and
     // `/auth/signup` (lowercase) at different versions — try the canonical
     // form first, fall back to the lowercase variant on a 404.
     let resp = await http(`${target.apiBaseUrl}/auth/signUp`, {
@@ -159,7 +159,7 @@ export async function signUp(
         });
     }
     // 409 (or any 4xx that looks like "already exists") is idempotent OK
-    // for our purposes — the tenant exists, we'll log in next. Kodus has
+    // for our purposes — the tenant exists, we'll log in next. Codus has
     // shipped this as 409 and as 400 with different message shapes at
     // various versions, so match loosely on the response text.
     if (resp.status === 409 || (resp.status === 400 && /already|exists/i.test(resp.raw))) {
@@ -173,7 +173,7 @@ export async function signUp(
 export async function login(
     target: TargetContext,
     creds: TenantCredentials,
-): Promise<KodusSession> {
+): Promise<CodusSession> {
     log.info(`Logging in as ${creds.email} via ${target.apiBaseUrl}`);
     const resp = await http<LoginEnvelope>(
         `${target.apiBaseUrl}/auth/login`,
@@ -253,7 +253,7 @@ export async function login(
 // account, so we can't sign up a fresh one per run like self-hosted does).
 // Over time a tenant accumulates code-management integrations from earlier
 // runs of OTHER providers on the same org — we observed e2e-paid-gh stacked
-// with GITLAB → BITBUCKET → AZURE_REPOS → GITHUB. Kodus's getTypeIntegration
+// with GITLAB → BITBUCKET → AZURE_REPOS → GITHUB. Codus's getTypeIntegration
 // resolves by CATEGORY (not platform), picking the FIRST code-management
 // integration, so the stale gitlab/bitbucket one wins and the github review
 // never fires (0 webhook, no review) — deterministically, every run.
@@ -268,7 +268,7 @@ export async function login(
 // registerIntegration timeout-recovery path below.
 async function activeCodeManagementPlatform(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<string> {
     const resp = await http<{ data?: Array<{ platformName?: string; category?: string }> }>(
         `${target.apiBaseUrl}/integration/connections?teamId=${encodeURIComponent(session.teamId)}`,
@@ -283,7 +283,7 @@ async function activeCodeManagementPlatform(
 async function clearConflictingIntegrations(
     target: TargetContext,
     provider: Provider,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<void> {
     const wanted = provider.integrationType.toUpperCase();
     for (let i = 0; i < 8; i++) {
@@ -336,7 +336,7 @@ function invalidateRegisteredIntegrations(
 export async function registerIntegration(
     target: TargetContext,
     provider: Provider,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<void> {
     const cacheKey = `${target.apiBaseUrl}:${session.organizationId}:${provider.integrationType}`;
     if (registeredIntegrationCache.has(cacheKey)) {
@@ -431,7 +431,7 @@ export async function registerIntegration(
 async function pollIntegrationLanded(
     target: TargetContext,
     provider: Provider,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<boolean> {
     const wanted = provider.integrationType.toUpperCase();
     const deadline = Date.now() + 60_000;
@@ -448,7 +448,7 @@ async function pollIntegrationLanded(
 
 // Within a single matrix run a tenant's repo only needs to be registered
 // ONCE. Re-POSTing /code-management/repositories on every scenario makes
-// Kodus delete+recreate that repo's GitHub webhook each time (see
+// Codus delete+recreate that repo's GitHub webhook each time (see
 // github.service.ts createPullRequestWebhook: it lists → deletes → creates
 // the hook with the same URL). That recreate opens a brief blind spot: a
 // PR opened right then fires its `opened` event at the about-to-be-deleted
@@ -477,7 +477,7 @@ export function invalidateRegisteredRepo(fullName: string): void {
 export async function registerRepo(
     target: TargetContext,
     provider: Provider,
-    session: KodusSession,
+    session: CodusSession,
     opts?: { forceRecreate?: boolean },
 ): Promise<ProviderRepoRef> {
     const repoRef = await provider.repoRef();
@@ -507,7 +507,7 @@ export async function registerRepo(
             full_name?: string;
             id: string | number;
             name?: string;
-            // Bitbucket-shape: Kodus exposes org via `organizationName`
+            // Bitbucket-shape: Codus exposes org via `organizationName`
             // (workspace slug) instead of folding it into full_name.
             organizationName?: string;
         }>;
@@ -519,7 +519,7 @@ export async function registerRepo(
         },
     );
     ensureOk(listResp, "onboarding:listRepos");
-    // Each provider Kodus integrates with returns a slightly different
+    // Each provider Codus integrates with returns a slightly different
     // repo shape on /repositories/org. Try several fields so we don't
     // have to maintain a per-provider matcher in the test runner:
     //   * github exposes `full_name` ("org/repo")
@@ -598,7 +598,7 @@ export async function registerRepo(
         );
     }
     // Normalize back to ProviderRepoRef. `found` may not carry `full_name`
-    // (Bitbucket case — Kodus folds workspace + name separately); fall back
+    // (Bitbucket case — Codus folds workspace + name separately); fall back
     // to the originally-requested form so callers always have a stable
     // "workspace/repo" handle to log against.
     const normalized: ProviderRepoRef = {
@@ -611,20 +611,20 @@ export async function registerRepo(
     return normalized;
 }
 
-// Codes the cloud QA proxy (or any nginx in front of Kodus) returns
+// Codes the cloud QA proxy (or any nginx in front of Codus) returns
 // when the upstream is still processing the request past the proxy's
 // read-timeout. On qa.web.kodus.io the timeout is 60s; bitbucket
 // onboarding regularly runs past that because the rule-generation path
 // makes N sequential Bitbucket Cloud API calls (objectively slower
 // than github/gitlab) plus an LLM call. The backend still finishes
-// successfully — confirmed 2026-05-20 by reading kody-rules from DB
+// successfully — confirmed 2026-05-20 by reading cody-rules from DB
 // after a 504. So we treat these statuses as "ack, still working" and
-// fall through to polling kodyLearningStatus on PLATFORM_CONFIGS.
+// fall through to polling codyLearningStatus on PLATFORM_CONFIGS.
 const PROXY_PENDING_STATUSES = new Set([502, 503, 504, 524, 408]);
 
 // Match the use-case enum (libs/organization/domain/parameters/types/
 // configValue.type.ts).
-type KodyLearningStatus =
+type CodyLearningStatus =
     | "enabled"
     | "disabled"
     | "generating_rules"
@@ -632,15 +632,15 @@ type KodyLearningStatus =
 
 interface PlatformConfigsResponse {
     data?: {
-        configValue?: { kodyLearningStatus?: KodyLearningStatus };
+        configValue?: { codyLearningStatus?: CodyLearningStatus };
     };
-    configValue?: { kodyLearningStatus?: KodyLearningStatus };
+    configValue?: { codyLearningStatus?: CodyLearningStatus };
 }
 
-async function readKodyLearningStatus(
+async function readCodyLearningStatus(
     target: TargetContext,
-    session: KodusSession,
-): Promise<KodyLearningStatus | undefined> {
+    session: CodusSession,
+): Promise<CodyLearningStatus | undefined> {
     const url = `${target.apiBaseUrl}/parameters/find-by-key?key=platform_configs&teamId=${encodeURIComponent(session.teamId)}`;
     const resp = await http<PlatformConfigsResponse>(url, {
         headers: { Authorization: `Bearer ${session.accessToken}` },
@@ -651,24 +651,24 @@ async function readKodyLearningStatus(
     }
     const root = (resp.body ?? {}) as PlatformConfigsResponse;
     return (
-        root.data?.configValue?.kodyLearningStatus ??
-        root.configValue?.kodyLearningStatus
+        root.data?.configValue?.codyLearningStatus ??
+        root.configValue?.codyLearningStatus
     );
 }
 
 export async function finishOnboarding(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     repo: ProviderRepoRef,
 ): Promise<void> {
     log.info("Finishing onboarding");
     // finish-onboarding does substantial work synchronously: generates
-    // per-repo Kody rules via LLM and syncs rules from repo files. The
+    // per-repo Cody rules via LLM and syncs rules from repo files. The
     // upstream HTTP path can sit past nginx's 60s read-timeout on
     // qa.web.kodus.io (cloud) or any reverse-proxy a self-hosted
     // operator runs in front of the API. The work itself still
-    // completes — `generate-kody-rules.use-case` writes
-    // `kodyLearningStatus = ENABLED` on the platform_configs parameter
+    // completes — `generate-cody-rules.use-case` writes
+    // `codyLearningStatus = ENABLED` on the platform_configs parameter
     // when it's done. Treat proxy-timeout statuses as "queued, will
     // poll for completion" instead of failing immediately.
     const resp = await http(
@@ -715,7 +715,7 @@ export async function finishOnboarding(
     }
 
     log.info(
-        `finishOnboarding got HTTP ${resp.status} from the proxy — polling kodyLearningStatus to see if the backend finished anyway`,
+        `finishOnboarding got HTTP ${resp.status} from the proxy — polling codyLearningStatus to see if the backend finished anyway`,
     );
 
     // Poll for up to 5 minutes. Observed real-world latency for
@@ -724,14 +724,14 @@ export async function finishOnboarding(
     // genuine hang. Poll every 10s.
     const deadline = Date.now() + 300_000;
     while (Date.now() < deadline) {
-        const status = await readKodyLearningStatus(target, session).catch(
+        const status = await readCodyLearningStatus(target, session).catch(
             () => undefined,
         );
         if (status === "enabled") {
             log.info(
-                `finishOnboarding eventually consistent: kodyLearningStatus=enabled (after proxy ${resp.status})`,
+                `finishOnboarding eventually consistent: codyLearningStatus=enabled (after proxy ${resp.status})`,
             );
-            // Same race guard as the 2xx happy-path: kodyLearningStatus
+            // Same race guard as the 2xx happy-path: codyLearningStatus
             // flips before team_automation is fully committed/propagated.
             // 10s buffer keeps a webhook fired immediately after this
             // call from being silently dropped by validate-prerequisites.
@@ -743,7 +743,7 @@ export async function finishOnboarding(
     }
 
     throw new Error(
-        `onboarding:finishOnboarding: HTTP ${resp.status} from proxy AND kodyLearningStatus did not become 'enabled' within 300s polling. Backend appears stuck.`,
+        `onboarding:finishOnboarding: HTTP ${resp.status} from proxy AND codyLearningStatus did not become 'enabled' within 300s polling. Backend appears stuck.`,
     );
 }
 
@@ -758,7 +758,7 @@ export async function finishOnboarding(
 //      scenario opens times out blaming "no review activity".
 //
 //   2. At the start of any scenario that depends on auto-review being on
-//      (code-review-basic, kody-rules-create-and-apply, license-attribution,
+//      (code-review-basic, cody-rules-create-and-apply, license-attribution,
 //      per-seat-license-toggle). Defense-in-depth: if a previous cell on
 //      the same tenant (matrix tenants are deterministic per provider) left
 //      `automatedReviewActive=false` behind — e.g. command-review's finally
@@ -777,7 +777,7 @@ export async function finishOnboarding(
 // downstream "no review" symptom, which is the existing failure shape.
 export async function resetCodeReviewConfig(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<void> {
     try {
         const resp = await http(
@@ -810,18 +810,18 @@ export async function resetCodeReviewConfig(
 // seat on self-hosted, so the review pipeline doesn't skip every PR.
 //
 // Why this is needed: a self-hosted droplet provisioned with a valid
-// `KODUS_LICENSE_KEY` runs in *licensed* mode, which enforces per-seat
+// `CODUS_LICENSE_KEY` runs in *licensed* mode, which enforces per-seat
 // access (permissionValidation.service.ts:291). When the PR author's git id
 // isn't in `getAllUsersWithLicense()`, `ValidatePrerequisitesStage` aborts
 // the review with `USER_NOT_LICENSED` — the org default
 // `auto_license_assignment.enabled=false` means there's no auto-grant — and
-// Kody only leaves a 👎 reaction. The review scenarios poll for *comments*,
+// Cody only leaves a 👎 reaction. The review scenarios poll for *comments*,
 // so they misread that skip as "pipeline ran, 0 findings". Onboarding never
 // assigns a seat, so we do it explicitly here. (Before the license var-name
 // fix the key wasn't read → invalid license → Community Edition → no seat
 // enforcement, which is why this was previously latent.)
 //
-// gitId/gitTool come from the provider in the exact shape Kodus stores as
+// gitId/gitTool come from the provider in the exact shape Codus stores as
 // `pullRequest.user.id` from the webhook `sender.id` (see
 // Provider.currentUserId): the same identity the pipeline checks the seat
 // against. The body matches POST /license/assign (license.controller.ts).
@@ -834,7 +834,7 @@ export async function resetCodeReviewConfig(
 // state themselves (per-seat-license-toggle) must NOT call this.
 export async function ensureLicenseSeat(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     provider: Provider,
 ): Promise<void> {
     if (target.target !== "self-hosted") return;

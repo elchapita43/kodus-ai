@@ -35,7 +35,7 @@ jobs:
                     
                     # Check usando query segura para imageTags nulos
                     IMAGE_EXISTS=$(aws ecr describe-images \
-                      --repository-name kodus-web-prod \
+                      --repository-name codus-web-prod \
                       --region $AWS_REGION \
                       --query "imageDetails[?imageTags && contains(imageTags, '$IMAGE_TAG_INPUT')]" \
                       --output text)
@@ -50,7 +50,7 @@ jobs:
                   else
                     echo "Buscando a tag mais recente no ECR..."
                     LAST_TAG=$(aws ecr describe-images \
-                      --repository-name kodus-web-prod \
+                      --repository-name codus-web-prod \
                       --region $AWS_REGION \
                       --query "sort_by(imageDetails, &imagePushedAt)[-1].imageTags[0]" \
                       --output text)
@@ -86,7 +86,7 @@ jobs:
                   username: ${{ secrets.AWS_PROD_USERNAME }}
                   key: ${{ secrets.AWS_PROD_KEY_SSH }}
                   script: |
-                      cd ~/kodus-web
+                      cd ~/codus-web
                       ./start-web-app.sh prod ${{ env.IMAGE_TAG }} ${{ github.ref }}
 
             - name: Remove Runner IP from Security Group
@@ -107,7 +107,7 @@ jobs:
               with:
                   webhook: ${{ secrets.DISCORD_WEBHOOK_INTERNAL || secrets.DISCORD_WEBHOOK }}
                   status: ${{ job.status }}
-                  title: "Deploy Prod: kodus-web"
+                  title: "Deploy Prod: codus-web"
                   description: |
                       Image: `${{ env.IMAGE_TAG }}`
                       Triggered by: @${{ github.actor }}

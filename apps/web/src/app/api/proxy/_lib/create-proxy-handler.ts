@@ -132,7 +132,7 @@ const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
  *     browser resolves it against the current proxy URL, which is
  *     same-origin, so it just works.
  *   - An absolute URL on the upstream's *internal* origin
- *     ("http://kodus_api:3001/foo") — rewrite to a same-origin proxy
+ *     ("http://codus_api:3001/foo") — rewrite to a same-origin proxy
  *     path so the internal hostname never escapes the server. The
  *     browser will hit the proxy again on the next hop, which is what
  *     we want.

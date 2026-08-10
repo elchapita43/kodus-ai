@@ -32,7 +32,7 @@ describe('PullRequestsService.handleInitialPullRequest — E11000 race recovery 
 
     const stubRepository = {
         id: 'repo-uuid-stable',
-        name: 'kodus-app',
+        name: 'codus-app',
     };
     const stubOrg = {
         organizationId: 'org-1',
@@ -82,7 +82,7 @@ describe('PullRequestsService.handleInitialPullRequest — E11000 race recovery 
 
     function makeE11000(): Error {
         const err: any = new Error(
-            'E11000 duplicate key error collection: kodus.pullRequests index: number_1_repository.id_1_organizationId_1',
+            'E11000 duplicate key error collection: codus.pullRequests index: number_1_repository.id_1_organizationId_1',
         );
         err.code = 11000;
         return err;

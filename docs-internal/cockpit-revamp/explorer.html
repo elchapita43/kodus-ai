@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Suggestions Explorer — Kodus (mock)</title>
+<title>Suggestions Explorer — Codus (mock)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <style>
@@ -141,8 +141,8 @@
     <div class="filterbar">
         <select id="f-repo" onchange="applyFilters()">
             <option value="">Repository: all</option>
-            <option value="kodus-ai">kodus-ai</option>
-            <option value="kodus-web">kodus-web</option>
+            <option value="codus-ai">codus-ai</option>
+            <option value="codus-web">codus-web</option>
             <option value="mobile-app">mobile-app</option>
         </select>
         <select id="f-category" onchange="applyFilters()">
@@ -199,45 +199,45 @@ const RULE_ANY = 'Avoid `any` in TypeScript';
 const suggestions = [
     { sev: 'medium', cat: 'Maintainability', rule: RULE_ANY, status: 'notimpl', up: 0, down: 3,
       title: '`as any` used to bypass the TypeORM type — declare an interface for the raw result.',
-      repo: 'kodus-ai', file: 'libs/analytics/repositories/suggestions.repo.ts', pr: '#1242', date: 'May 22',
+      repo: 'codus-ai', file: 'libs/analytics/repositories/suggestions.repo.ts', pr: '#1242', date: 'May 22',
       existing: 'const rows = await qb.getRawMany() as any;',
       improved: 'interface SuggestionRow { id: string; label: string; }\nconst rows: SuggestionRow[] = await qb.getRawMany();',
       devnote: { who: 'wellington.s', text: 'TypeORM raw results are untyped, declaring interfaces for every ad-hoc query is overkill.' } },
     { sev: 'medium', cat: 'Maintainability', rule: RULE_ANY, status: 'notimpl', up: 0, down: 2,
       title: 'Parameter `payload: any` — type it with the webhook DTO.',
-      repo: 'kodus-ai', file: 'apps/api/src/webhooks/gitlab.controller.ts', pr: '#1239', date: 'May 20',
+      repo: 'codus-ai', file: 'apps/api/src/webhooks/gitlab.controller.ts', pr: '#1239', date: 'May 20',
       existing: 'handleWebhook(payload: any) {',
       improved: 'handleWebhook(payload: GitlabWebhookDto) {',
       devnote: { who: 'gabriel.m', text: 'The webhook payload shape is unknown by design — we validate downstream.' } },
     { sev: 'medium', cat: 'Maintainability', rule: RULE_ANY, status: 'impl', up: 1, down: 0,
       title: 'Return type `Promise<any>` — use the already-exported `ReviewResult` type.',
-      repo: 'kodus-ai', file: 'libs/code-review/pipeline/stages/finish.stage.ts', pr: '#1235', date: 'May 18',
+      repo: 'codus-ai', file: 'libs/code-review/pipeline/stages/finish.stage.ts', pr: '#1235', date: 'May 18',
       existing: 'async execute(): Promise<any> {',
       improved: 'async execute(): Promise<ReviewResult> {' },
     { sev: 'low', cat: 'Maintainability', rule: RULE_ANY, status: 'notimpl', up: 0, down: 1,
       title: '`catch (e: any)` — use `unknown` and narrow the type.',
-      repo: 'kodus-web', file: 'libs/billing/stripe.service.ts', pr: '#1228', date: 'May 12' },
+      repo: 'codus-web', file: 'libs/billing/stripe.service.ts', pr: '#1228', date: 'May 12' },
     { sev: 'critical', cat: 'Security', rule: null, status: 'notimpl', up: 1, down: 0,
       title: 'SQL injection: `orgId` interpolated directly into the query — use a bind parameter.',
-      repo: 'kodus-ai', file: 'libs/analytics/query-builder.ts', pr: '#1241', date: 'May 21',
+      repo: 'codus-ai', file: 'libs/analytics/query-builder.ts', pr: '#1241', date: 'May 21',
       existing: "qb.where(`org_id = '${orgId}'`)",
       improved: 'qb.where("org_id = :orgId", { orgId })' },
     { sev: 'critical', cat: 'Security', rule: null, status: 'impl', up: 2, down: 0,
       title: 'Webhook token logged in plain text inside the error handler.',
-      repo: 'kodus-ai', file: 'apps/api/src/webhooks/github.controller.ts', pr: '#1238', date: 'May 19' },
+      repo: 'codus-ai', file: 'apps/api/src/webhooks/github.controller.ts', pr: '#1238', date: 'May 19' },
     { sev: 'high', cat: 'Potential Issues', rule: null, status: 'partial', up: 1, down: 0,
       title: 'Race condition: counter read and written without a lock — may double-charge billing.',
-      repo: 'kodus-ai', file: 'libs/billing/usage-counter.service.ts', pr: '#1226', date: 'May 10' },
+      repo: 'codus-ai', file: 'libs/billing/usage-counter.service.ts', pr: '#1226', date: 'May 10' },
     { sev: 'high', cat: 'Error Handling', rule: 'Require error handling in async flows', status: 'impl', up: 3, down: 0,
       title: 'Unhandled promise rejection: wrap the queue publish in try/catch and ack the message.',
-      repo: 'kodus-ai', file: 'libs/queue/publisher.service.ts', pr: '#1234', date: 'May 17' },
+      repo: 'codus-ai', file: 'libs/queue/publisher.service.ts', pr: '#1234', date: 'May 17' },
     { sev: 'medium', cat: 'Performance', rule: 'Avoid N+1 queries in repositories', status: 'impl', up: 2, down: 0,
       title: 'N+1: fetching rules per repository inside a loop — batch with a single IN query.',
-      repo: 'kodus-web', file: 'src/features/rules/loader.ts', pr: '#1231', date: 'May 15' },
+      repo: 'codus-web', file: 'src/features/rules/loader.ts', pr: '#1231', date: 'May 15' },
     { sev: 'low', cat: 'Code Style', rule: null, status: 'notimpl', up: 0, down: 4,
       title: 'Sort imports by group (external, internal, relative).',
-      repo: 'kodus-web', file: 'src/features/cockpit/page.tsx', pr: '#1230', date: 'May 14',
-      devnote: { who: 'pedro.a', text: 'We have a lint rule for this already, Kodus doesn’t need to comment it.' } },
+      repo: 'codus-web', file: 'src/features/cockpit/page.tsx', pr: '#1230', date: 'May 14',
+      devnote: { who: 'pedro.a', text: 'We have a lint rule for this already, Codus doesn’t need to comment it.' } },
     { sev: 'medium', cat: 'Refactoring', rule: null, status: 'notimpl', up: 0, down: 2,
       title: 'Extract duplicated pagination logic into a shared hook.',
       repo: 'mobile-app', file: 'src/screens/feed/FeedScreen.tsx', pr: '#1224', date: 'May 8' },

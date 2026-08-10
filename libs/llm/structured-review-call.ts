@@ -1,6 +1,6 @@
 /**
  * Structured single-shot LLM call for the review pipeline, on the LOCAL
- * (Vercel AI SDK) stack — no kodus-common PromptRunnerService.
+ * (Vercel AI SDK) stack — no codus-common PromptRunnerService.
  *
  * Model policy (mirrors the code-review agents):
  *   - main:      the org's BYOK model, or our managed default when no BYOK
@@ -11,13 +11,13 @@
  *                managed Groq — that would bill us for their inference. A BYOK
  *                org without its own fallback simply fails.
  *
- * The managed Groq fallback is built from the same env the (removed) kodus-common
+ * The managed Groq fallback is built from the same env the (removed) codus-common
  * Groq provider used (`API_GROQ_API_KEY` / `API_GROQ_BASE_URL`), so there is no
  * decrypt path and no synthetic BYOK config.
  */
 import { Output, type LanguageModel, type Schema } from 'ai';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import type { BYOKConfig } from '@kodus/kodus-common/llm';
+import type { BYOKConfig } from '@codus/codus-common/llm';
 import { z } from 'zod';
 import { byokToVercelModel, getModelName } from '@libs/llm/byok-to-vercel';
 import { wrapByokModel } from '@libs/llm/byok-model-wrapper';
@@ -88,7 +88,7 @@ export async function runStructuredReviewCall<S extends z.ZodType | Schema>(
     // A raw zod schema would go through the AI SDK's zodSchema(), whose
     // INPUT-side conversion drops `.optional()` fields from `required` —
     // OpenAI strict structured outputs 400 on that, which silently killed
-    // kody-rules shards and guidance-file extraction for BYOK-OpenAI orgs.
+    // cody-rules shards and guidance-file extraction for BYOK-OpenAI orgs.
     // Convert centrally so every caller (present and future) sends a
     // strict-compatible wire schema; AI-SDK Schema objects pass through
     // untouched (the caller already controls its wire format).

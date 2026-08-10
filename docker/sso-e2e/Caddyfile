@@ -7,8 +7,8 @@
 # completes exactly as it would in a real deployment.
 #
 # Domains:
-#   app.kodus.lvh.me  ─►  TLS termination ─►  http://kodus-web:3000
-#   api.kodus.lvh.me  ─►  TLS termination ─►  http://kodus-api:3001
+#   app.codus.lvh.me  ─►  TLS termination ─►  http://codus-web:3000
+#   api.codus.lvh.me  ─►  TLS termination ─►  http://codus-api:3001
 #
 # Listens on :443 only — :80 is left untouched so the HTTP-port
 # topology in docker-compose.yml still works for sanity-checks.
@@ -22,11 +22,11 @@
 # cookie-domain algorithm in two distinct topologies without rebuilding
 # the stack:
 #
-#   .kodus.lvh.me        → 3 labels common  (analog of SaaS .kodus.io)
+#   .codus.lvh.me        → 3 labels common  (analog of SaaS .kodus.io)
 #   .web.scorpion.lvh.me → 4 labels common  (analog of Dmitry .web.scorpion.co)
 
 (proxy_web) {
-    reverse_proxy kodus-web:3000 {
+    reverse_proxy codus-web:3000 {
         header_up Host {host}
         header_up X-Forwarded-Proto https
         header_up X-Forwarded-Host {host}
@@ -34,22 +34,22 @@
 }
 
 (proxy_api) {
-    reverse_proxy kodus-api:3001 {
+    reverse_proxy codus-api:3001 {
         # Preserve the public host so `req.get('host')` in
         # auth.controller.ts (and therefore the cookie domain
-        # derivation) sees the public host, not `kodus-api:3001`.
+        # derivation) sees the public host, not `codus-api:3001`.
         header_up Host {host}
         header_up X-Forwarded-Proto https
         header_up X-Forwarded-Host {host}
     }
 }
 
-app.kodus.lvh.me:443, app.web.scorpion.lvh.me:443 {
-    tls /tls/kodus.lvh.me.crt /tls/kodus.lvh.me.key
+app.codus.lvh.me:443, app.web.scorpion.lvh.me:443 {
+    tls /tls/codus.lvh.me.crt /tls/codus.lvh.me.key
     import proxy_web
 }
 
-api.kodus.lvh.me:443, api.web.scorpion.lvh.me:443 {
-    tls /tls/kodus.lvh.me.crt /tls/kodus.lvh.me.key
+api.codus.lvh.me:443, api.web.scorpion.lvh.me:443 {
+    tls /tls/codus.lvh.me.crt /tls/codus.lvh.me.key
     import proxy_api
 }

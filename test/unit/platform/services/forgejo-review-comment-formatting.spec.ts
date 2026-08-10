@@ -107,7 +107,7 @@ describe('ForgejoService review comment formatting', () => {
                 severity: 'high',
             },
             repository: {
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 language: 'typescript',
             },
             language: 'en-US',
@@ -149,7 +149,7 @@ describe('ForgejoService review comment formatting', () => {
                 teamId: 'team-456',
             },
             repository: {
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 language: 'typescript',
             },
             prNumber: 42,

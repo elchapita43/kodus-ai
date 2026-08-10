@@ -14,7 +14,7 @@ import NextLink from "next/link";
 import { Button } from "@components/ui/button";
 import { Card } from "@components/ui/card";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Page } from "@components/ui/page";
 import { Spinner } from "@components/ui/spinner";
 import {
@@ -51,7 +51,7 @@ export function CliAuthorizeClient({
             <Shell>
                 <ErrorBlock
                     title="Missing authorization code"
-                    description="Open this page from the Kodus CLI by running kodus auth login."
+                    description="Open this page from the Codus CLI by running codus auth login."
                 />
             </Shell>
         );
@@ -75,7 +75,7 @@ export function CliAuthorizeClient({
             <Shell>
                 <ErrorBlock
                     title="Authorization request not found"
-                    description="The link may have expired. Run kodus auth login again to start a new request."
+                    description="The link may have expired. Run codus auth login again to start a new request."
                 />
             </Shell>
         );
@@ -92,7 +92,7 @@ export function CliAuthorizeClient({
             <Shell>
                 <ErrorBlock
                     title={errorTitle}
-                    description="Run kodus auth login again from the CLI to start a new request."
+                    description="Run codus auth login again from the CLI to start a new request."
                 />
             </Shell>
         );
@@ -145,10 +145,10 @@ export function CliAuthorizeClient({
                     <TerminalIcon aria-hidden className="size-6" />
                 </div>
                 <Heading variant="h2" className="text-balance">
-                    Authorize Kodus CLI
+                    Authorize Codus CLI
                 </Heading>
                 <p className="text-text-secondary text-pretty text-sm">
-                    A device is requesting access to your Kodus account.
+                    A device is requesting access to your Codus account.
                 </p>
             </div>
 
@@ -207,7 +207,7 @@ export function CliAuthorizeClient({
             <p className="text-text-tertiary text-center text-xs text-balance">
                 Only authorize if you just ran{" "}
                 <code className="bg-card-lv2 text-text-secondary rounded px-1.5 py-0.5 font-mono text-[11px]">
-                    kodus auth login
+                    codus auth login
                 </code>{" "}
                 on a trusted device.
             </p>
@@ -222,7 +222,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                 color="lv1"
                 className="flex w-full max-w-md flex-col gap-6 p-8">
                 <div className="flex justify-center">
-                    <SvgKodus className="h-7" />
+                    <SvgCodus className="h-7" />
                 </div>
                 {children}
             </Card>

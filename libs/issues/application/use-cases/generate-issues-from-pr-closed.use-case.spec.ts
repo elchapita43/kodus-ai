@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GenerateIssuesFromPrClosedUseCase } from './generate-issues-from-pr-closed.use-case';
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import { PULL_REQUESTS_SERVICE_TOKEN } from '@libs/platformData/domain/pullRequests/contracts/pullRequests.service.contracts';
 import { INTEGRATION_CONFIG_SERVICE_TOKEN } from '@libs/integrations/domain/integrationConfigs/contracts/integration-config.service.contracts';
 import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
@@ -94,12 +94,12 @@ const mockPrFiles = [
 
 describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
     let useCase: GenerateIssuesFromPrClosedUseCase;
-    let kodyIssuesManagementServiceMock: any;
+    let codyIssuesManagementServiceMock: any;
     let pullRequestServiceMock: any;
     let integrationConfigServiceMock: any;
 
     beforeEach(async () => {
-        kodyIssuesManagementServiceMock = {
+        codyIssuesManagementServiceMock = {
             processClosedPr: jest.fn().mockResolvedValue(undefined),
             clearIssuesCache: jest.fn().mockResolvedValue(undefined),
         };
@@ -116,8 +116,8 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             providers: [
                 GenerateIssuesFromPrClosedUseCase,
                 {
-                    provide: KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
-                    useValue: kodyIssuesManagementServiceMock,
+                    provide: CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
+                    useValue: codyIssuesManagementServiceMock,
                 },
                 {
                     provide: PULL_REQUESTS_SERVICE_TOKEN,
@@ -152,7 +152,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     organizationAndTeamData: {
@@ -176,7 +176,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             const callArgs =
-                kodyIssuesManagementServiceMock.processClosedPr.mock
+                codyIssuesManagementServiceMock.processClosedPr.mock
                     .calls[0][0];
             expect(callArgs.pullRequest.user).toEqual(gitlabMergePayload.user);
             expect(callArgs.pullRequest.user.id).toBe(101);
@@ -189,7 +189,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.clearIssuesCache,
+                codyIssuesManagementServiceMock.clearIssuesCache,
             ).toHaveBeenCalledWith('org-uuid');
         });
 
@@ -226,7 +226,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     organizationAndTeamData: {
@@ -250,7 +250,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             const callArgs =
-                kodyIssuesManagementServiceMock.processClosedPr.mock
+                codyIssuesManagementServiceMock.processClosedPr.mock
                     .calls[0][0];
             expect(callArgs.pullRequest.user).toEqual(
                 githubMergePayload.pull_request.user,
@@ -271,7 +271,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).not.toHaveBeenCalled();
         });
 
@@ -289,7 +289,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).not.toHaveBeenCalled();
         });
 
@@ -307,7 +307,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).not.toHaveBeenCalled();
         });
 
@@ -318,7 +318,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).not.toHaveBeenCalled();
         });
 
@@ -329,7 +329,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.processClosedPr,
+                codyIssuesManagementServiceMock.processClosedPr,
             ).not.toHaveBeenCalled();
         });
     });
@@ -342,7 +342,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             pullRequestServiceMock.findByNumberAndRepositoryName.mockResolvedValue(
                 { files: mockPrFiles },
             );
-            kodyIssuesManagementServiceMock.processClosedPr.mockRejectedValue(
+            codyIssuesManagementServiceMock.processClosedPr.mockRejectedValue(
                 new Error('LLM timeout'),
             );
 
@@ -361,7 +361,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             pullRequestServiceMock.findByNumberAndRepositoryName.mockResolvedValue(
                 { files: mockPrFiles },
             );
-            kodyIssuesManagementServiceMock.processClosedPr.mockRejectedValue(
+            codyIssuesManagementServiceMock.processClosedPr.mockRejectedValue(
                 new Error('LLM timeout'),
             );
 
@@ -371,7 +371,7 @@ describe('GenerateIssuesFromPrClosedUseCase (cloud mode)', () => {
             });
 
             expect(
-                kodyIssuesManagementServiceMock.clearIssuesCache,
+                codyIssuesManagementServiceMock.clearIssuesCache,
             ).not.toHaveBeenCalled();
         });
     });

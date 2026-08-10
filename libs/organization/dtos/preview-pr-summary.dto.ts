@@ -17,7 +17,7 @@ export class PreviewPrSummaryDto {
     @IsNotEmpty()
     @IsObject()
     @ApiProperty({
-        example: { id: '1135722979', name: 'kodus-ai' },
+        example: { id: '1135722979', name: 'codus-ai' },
     })
     repository: {
         id: string;

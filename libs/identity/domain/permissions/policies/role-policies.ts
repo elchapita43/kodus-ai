@@ -37,12 +37,12 @@ const repoAdmin: PolicyRule[] = [
     { action: Action.Update, resource: ResourceType.CodeReviewSettings, scope: 'repo' },
     { action: Action.Create, resource: ResourceType.CodeReviewSettings, scope: 'repo' },
 
-    // Kody rules — read org-wide (library is open to everyone), edit assigned
-    // repos (editing a repo's kody rules is part of its code-review config).
-    { action: Action.Read, resource: ResourceType.KodyRules, scope: 'org' },
-    { action: Action.Update, resource: ResourceType.KodyRules, scope: 'repo' },
-    { action: Action.Create, resource: ResourceType.KodyRules, scope: 'repo' },
-    { action: Action.Delete, resource: ResourceType.KodyRules, scope: 'repo' },
+    // Cody rules — read org-wide (library is open to everyone), edit assigned
+    // repos (editing a repo's cody rules is part of its code-review config).
+    { action: Action.Read, resource: ResourceType.CodyRules, scope: 'org' },
+    { action: Action.Update, resource: ResourceType.CodyRules, scope: 'repo' },
+    { action: Action.Create, resource: ResourceType.CodyRules, scope: 'repo' },
+    { action: Action.Delete, resource: ResourceType.CodyRules, scope: 'repo' },
 
     // Cockpit — read only (no org-wide Update: cockpit *settings* are owner-only).
     { action: Action.Read, resource: ResourceType.Cockpit, scope: 'org' },
@@ -68,7 +68,7 @@ const repoAdmin: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.CliReview, scope: 'org' },
 
     // Learnings (memoria por proyecto) — read org-wide, write on assigned
-    // repos (same pattern as KodyRules: learning about a repo is part of
+    // repos (same pattern as CodyRules: learning about a repo is part of
     // its code-review config).
     { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
     { action: Action.Update, resource: ResourceType.Learnings, scope: 'repo' },
@@ -78,7 +78,7 @@ const repoAdmin: PolicyRule[] = [
 
 const billingManager: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.CodeReviewSettings, scope: 'org' },
-    { action: Action.Read, resource: ResourceType.KodyRules, scope: 'org' },
+    { action: Action.Read, resource: ResourceType.CodyRules, scope: 'org' },
     { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
 
     { action: Action.Manage, resource: ResourceType.Billing, scope: 'org' },
@@ -93,11 +93,11 @@ const billingManager: PolicyRule[] = [
 ];
 
 // Contributor is a read-only role that is NOT gated by repo assignment: it
-// sees the whole org (settings, kody rules, issues, PRs, logs) by default.
+// sees the whole org (settings, cody rules, issues, PRs, logs) by default.
 // Cockpit and Token Usage stay admin-only.
 const contributor: PolicyRule[] = [
     { action: Action.Read, resource: ResourceType.CodeReviewSettings, scope: 'org' },
-    { action: Action.Read, resource: ResourceType.KodyRules, scope: 'org' },
+    { action: Action.Read, resource: ResourceType.CodyRules, scope: 'org' },
     { action: Action.Read, resource: ResourceType.Learnings, scope: 'org' },
     { action: Action.Read, resource: ResourceType.Issues, scope: 'org' },
     { action: Action.Read, resource: ResourceType.IssuesSettings, scope: 'org' },

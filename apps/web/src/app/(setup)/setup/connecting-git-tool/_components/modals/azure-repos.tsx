@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@components/ui/button";
 import { FormControl } from "@components/ui/form-control";
 import { Input } from "@components/ui/input";
-import { KodyReviewPreview } from "@components/ui/kody-review-preview";
+import { CodyReviewPreview } from "@components/ui/cody-review-preview";
 import { magicModal } from "@components/ui/magic-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCodeManagementIntegration } from "@services/codeManagement/fetch";
@@ -116,7 +116,7 @@ export const AzureReposTokenModal = (props: {
                             Reviews will be posted from the token owner's
                             account:
                         </p>
-                        <KodyReviewPreview
+                        <CodyReviewPreview
                             mode="inline"
                             author={{
                                 name: getUsernameFromEmail(props.userEmail),

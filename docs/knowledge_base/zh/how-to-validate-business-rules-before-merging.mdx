@@ -7,7 +7,7 @@ description: "在代码到达生产环境之前捕获拉取请求中缺失的需
 
 ## 检查内容
 
-Kodus 将您的 PR 差异与任务需求进行比较，识别：
+Codus 将您的 PR 差异与任务需求进行比较，识别：
 
 - **缺失的实现** — 代码中未涵盖的验收标准
 - **部分实现** — 仅部分解决的需求
@@ -18,18 +18,18 @@ Kodus 将您的 PR 差异与任务需求进行比较，识别：
 
 ### 自动（默认）
 
-在审查选项中设置 `business_logic: true`（默认启用），当连接了任务管理插件时，Kodus 在每次 PR 审查期间自动验证业务规则。
+在审查选项中设置 `business_logic: true`（默认启用），当连接了任务管理插件时，Codus 在每次 PR 审查期间自动验证业务规则。
 
 ### 按需
 
 在任何 PR 上使用链接或内联规范评论：
 
 ```
-@kody -v business-logic https://kodustech.atlassian.net/browse/KC-1292
+@cody -v business-logic https://elchapita43.atlassian.net/browse/KC-1292
 ```
 
 ```
-@kody -v business-logic
+@cody -v business-logic
 Orders above $500 must issue cashback credits.
 Discount codes cannot be combined with loyalty rewards.
 Free shipping applies only to domestic orders.
@@ -63,6 +63,6 @@ Free shipping applies only to domestic orders.
 
 - 具有明确验收标准的任务获得最全面的验证
 - 修复问题后，重新运行命令以确认合规
-- 如果 PR 范围与任务不匹配，Kody 会标记范围不匹配而不是推测
+- 如果 PR 范围与任务不匹配，Cody 会标记范围不匹配而不是推测
 
 更多详情，请参阅[业务逻辑验证](/how_to_use/zh/code_review/business_logic_validation)。

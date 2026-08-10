@@ -28,16 +28,16 @@ describe('escapeRegExp', () => {
     });
 
     it('leaves the current control markers intact (no behavior change)', () => {
-        expect(escapeRegExp('@kody-sync')).toBe('@kody-sync');
-        expect(escapeRegExp('@kody-ignore')).toBe('@kody-ignore');
+        expect(escapeRegExp('@cody-sync')).toBe('@cody-sync');
+        expect(escapeRegExp('@cody-ignore')).toBe('@cody-ignore');
     });
 });
 
 describe('stripControlMarkers', () => {
-    it('removes @kody-sync / @kody-ignore case-insensitively, every occurrence', () => {
+    it('removes @cody-sync / @cody-ignore case-insensitively, every occurrence', () => {
         expect(
             stripControlMarkers(
-                'start @kody-sync middle @KODY-IGNORE end @kody-sync',
+                'start @cody-sync middle @CODY-IGNORE end @cody-sync',
             ),
         ).toBe('start  middle  end ');
     });
@@ -45,7 +45,7 @@ describe('stripControlMarkers', () => {
     it('does not mangle text that contains regex-special characters', () => {
         // Regression guard: the old escape ignored `.` etc.; a complete escape
         // must still treat surrounding content as literal and untouched.
-        const text = 'version 1.2.3 (stable) and cost is $5 @kody-sync';
+        const text = 'version 1.2.3 (stable) and cost is $5 @cody-sync';
         expect(stripControlMarkers(text)).toBe(
             'version 1.2.3 (stable) and cost is $5 ',
         );
@@ -62,11 +62,11 @@ describe('ReferenceDetectorService.extractMarkers', () => {
         ReferenceDetectorService.prototype,
     ) as ReferenceDetectorService;
 
-    it('does NOT treat Kodus control markers as file references', () => {
-        // Every rule file synced via the @kody-sync marker used to get a
-        // spurious "file not found: @kody-sync" sync error on the rule.
+    it('does NOT treat Codus control markers as file references', () => {
+        // Every rule file synced via the @cody-sync marker used to get a
+        // spurious "file not found: @cody-sync" sync error on the rule.
         const markers = service.extractMarkers(
-            'Rule body here.\n\n@kody-sync\n\nAlso @KODY-SYNC and @kody-ignore.',
+            'Rule body here.\n\n@cody-sync\n\nAlso @CODY-SYNC and @cody-ignore.',
             [],
         );
         expect(markers).toEqual([]);
@@ -74,29 +74,29 @@ describe('ReferenceDetectorService.extractMarkers', () => {
 
     it('still extracts real @file references', () => {
         const markers = service.extractMarkers(
-            'See @AGENTS.md and @docs/standards.md for details. @kody-sync',
+            'See @AGENTS.md and @docs/standards.md for details. @cody-sync',
             [],
         );
         expect(markers).toContain('@AGENTS.md');
         expect(markers).toContain('@docs/standards.md');
-        expect(markers).not.toContain('@kody-sync');
+        expect(markers).not.toContain('@cody-sync');
     });
 });
 
 // LLM path: the detector's model output itself can name control markers as
 // files. The regex-path fix alone was NOT enough — reproduced live on the
-// manual validation env ('File not found: @kody-sync' on a clean rule).
+// manual validation env ('File not found: @cody-sync' on a clean rule).
 jest.mock('@libs/llm/llm-call', () => ({
     tracedGenerateText: jest.fn().mockResolvedValue({
         text: JSON.stringify([
-            { filePath: '@kody-sync', originalText: '@kody-sync' },
+            { filePath: '@cody-sync', originalText: '@cody-sync' },
             // The EXACT production shape that escaped the first fix: the
             // model fabricates a repo prefix around the marker.
             {
-                filePath: 'kody-sync/@kody-sync',
-                fileName: 'kody-sync/@kody-sync',
-                repositoryName: 'kody-sync',
-                originalText: '@kody-sync',
+                filePath: 'cody-sync/@cody-sync',
+                fileName: 'cody-sync/@cody-sync',
+                repositoryName: 'cody-sync',
+                originalText: '@cody-sync',
             },
             {
                 filePath: 'docs/real-file.md',
@@ -115,7 +115,7 @@ jest.mock('@libs/core/log/langfuse', () => ({
 }));
 
 describe('ReferenceDetectorService.detectReferences (LLM path)', () => {
-    it('filters Kodus control markers from the model output', async () => {
+    it('filters Codus control markers from the model output', async () => {
         const { ReferenceDetectorService: Svc } = jest.requireActual(
             '@libs/ai-engine/infrastructure/adapters/services/reference-detector.service',
         );
@@ -130,7 +130,7 @@ describe('ReferenceDetectorService.detectReferences (LLM path)', () => {
         };
         const refs = await service.detectReferences({
             requirementId: 'r1',
-            promptText: 'rule body with @kody-sync and @docs/real-file.md',
+            promptText: 'rule body with @cody-sync and @docs/real-file.md',
             organizationAndTeamData: { organizationId: 'o', teamId: 't' },
             detectionMode: 'rule',
         });

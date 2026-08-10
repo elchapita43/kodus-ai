@@ -31,7 +31,7 @@ async function callGemini(prompt) {
 
 async function main() {
     console.log("==================================================");
-    console.log("📊 KODUS AI - AVALIAÇÃO DE ASSERTIVIDADE DOS PRS");
+    console.log("📊 CODUS AI - AVALIAÇÃO DE ASSERTIVIDADE DOS PRS");
     console.log("==================================================\n");
 
     const prsData = JSON.parse(await fsPromises.readFile('prs.json', 'utf-8'));

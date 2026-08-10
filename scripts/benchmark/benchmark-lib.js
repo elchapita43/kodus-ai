@@ -64,12 +64,12 @@ function mongoEval(jsCode) {
         [
             'mongosh',
             '-u',
-            'kodusdev',
+            'codusdev',
             '-p',
             '123456',
             '--authenticationDatabase',
             'admin',
-            'kodus_db',
+            'codus_db',
             '--quiet',
             '--eval',
             jsCode,
@@ -81,7 +81,7 @@ function mongoEval(jsCode) {
 function psqlEval(sql) {
     return runDockerExec(
         'db_postgres',
-        ['psql', '-U', 'kodusdev', '-d', 'kodus_db', '-t', '-A', '-c', sql],
+        ['psql', '-U', 'codusdev', '-d', 'codus_db', '-t', '-A', '-c', sql],
         60000,
     );
 }
@@ -233,7 +233,7 @@ success AS (
   JOIN targets t
     ON t.repository_id = ae."repositoryId"
    AND t.pull_request_number = ae."pullRequestNumber"
-  WHERE cre.stage_name = 'Kody Review Finished'
+  WHERE cre.stage_name = 'Cody Review Finished'
     AND cre.status = 'success'
 )
 SELECT COALESCE(

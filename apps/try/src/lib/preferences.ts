@@ -1,4 +1,4 @@
-const KEY = "kodus-review-prefs";
+const KEY = "codus-review-prefs";
 
 export type DiffStyle = "split" | "unified";
 

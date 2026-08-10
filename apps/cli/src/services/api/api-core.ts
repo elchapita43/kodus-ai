@@ -15,7 +15,7 @@ import { cliDebug, cliError, isCliVerboseMode } from '../../utils/logger.js';
 function cliUserAgent(): string {
     const platform = `${os.platform()}/${os.release()}`;
     const node = process.version.replace(/^v/, '');
-    return `KodusCLI/${CLI_VERSION} (${platform}; node ${node})`;
+    return `CodusCLI/${CLI_VERSION} (${platform}; node ${node})`;
 }
 
 /**
@@ -72,13 +72,13 @@ function validateApiUrl(customUrl: string): string | null {
 
 /**
  * Returns the API base URL.
- * Priority: KODUS_API_URL env var > config.json apiUrl > default
+ * Priority: CODUS_API_URL env var > config.json apiUrl > default
  */
 export async function resolveApiBaseUrl(): Promise<string> {
     const defaultUrl = 'https://api.kodus.io';
 
-    if (process.env.KODUS_API_URL) {
-        return validateApiUrl(process.env.KODUS_API_URL) ?? defaultUrl;
+    if (process.env.CODUS_API_URL) {
+        return validateApiUrl(process.env.CODUS_API_URL) ?? defaultUrl;
     }
 
     const config = await getCachedConfig();
@@ -91,10 +91,10 @@ export async function resolveApiBaseUrl(): Promise<string> {
 
 // Default 60 minutes — covers large branch reviews that split into many
 // agent batches (e.g. ~6 batches × 5 min each). Overridable via
-// KODUS_REQUEST_TIMEOUT_MIN (in minutes) for extreme cases.
+// CODUS_REQUEST_TIMEOUT_MIN (in minutes) for extreme cases.
 const DEFAULT_REQUEST_TIMEOUT_MIN = 60;
 const parsedTimeoutMin = Number.parseInt(
-    process.env.KODUS_REQUEST_TIMEOUT_MIN ?? '',
+    process.env.CODUS_REQUEST_TIMEOUT_MIN ?? '',
     10,
 );
 const REQUEST_TIMEOUT_MIN =
@@ -125,7 +125,7 @@ const longLivedDispatcher = new Agent({
  * Tear down the keep-alive HTTP pool used by every CLI request. Without
  * this, the dispatcher's idle sockets keep the Node event loop alive for
  * up to `REQUEST_TIMEOUT_MS` (60 min by default), so commands like
- * `kodus auth login` appear to "hang" after success — the user gets
+ * `codus auth login` appear to "hang" after success — the user gets
  * dropped into raw stdin (still owned by the inquirer prompt that just
  * ran) and the shell never returns. Terminal commands should call this
  * once they've finished all API work.
@@ -184,29 +184,29 @@ function getDefaultApiErrorMessage(
     const endpointPath = endpoint.split('?')[0] || endpoint;
 
     if (statusCode === 400) {
-        return `Invalid request sent to Kodus API (${endpointPath}).`;
+        return `Invalid request sent to Codus API (${endpointPath}).`;
     }
 
     if (statusCode === 401) {
         if (endpointPath.startsWith('/cli/config/repositories')) {
-            return 'Repository configuration requires team-key auth. Run: kodus auth team-key --key <your-key>.';
+            return 'Repository configuration requires team-key auth. Run: codus auth team-key --key <your-key>.';
         }
         if (endpointPath === '/pull-requests/suggestions') {
-            return 'Authentication failed while fetching pull request suggestions. Run: kodus auth login or configure a valid team key.';
+            return 'Authentication failed while fetching pull request suggestions. Run: codus auth login or configure a valid team key.';
         }
-        return 'Authentication failed. Run: kodus auth login or configure a valid team key.';
+        return 'Authentication failed. Run: codus auth login or configure a valid team key.';
     }
 
     if (statusCode === 403) {
-        return `Access denied for Kodus API endpoint (${endpointPath}).`;
+        return `Access denied for Codus API endpoint (${endpointPath}).`;
     }
 
     if (statusCode === 404) {
-        return `Kodus API endpoint not found (${endpointPath}).`;
+        return `Codus API endpoint not found (${endpointPath}).`;
     }
 
     if (statusCode === 422) {
-        return `Kodus API could not process the request (${endpointPath}).`;
+        return `Codus API could not process the request (${endpointPath}).`;
     }
 
     if (statusCode === 429) {
@@ -214,7 +214,7 @@ function getDefaultApiErrorMessage(
     }
 
     if (statusCode >= 500) {
-        return 'Kodus API is currently unavailable. Please try again.';
+        return 'Codus API is currently unavailable. Please try again.';
     }
 
     return `Request failed with status ${statusCode}`;
@@ -250,7 +250,7 @@ function normalizeApiErrorMessage(
         endpointPath.endsWith('/settings') &&
         trimmed === `Cannot GET ${endpointPath}`
     ) {
-        return 'Repository settings are not available in this Kodus API environment. `config remote show`, `setup`, and `set` require the repository settings endpoint.';
+        return 'Repository settings are not available in this Codus API environment. `config remote show`, `setup`, and `set` require the repository settings endpoint.';
     }
 
     if (
@@ -315,10 +315,10 @@ export async function request<T>(
                 'User-Agent': cliUserAgent(),
                 ...cfHeaders,
                 ...(deviceIdentity?.deviceId
-                    ? { 'X-Kodus-Device-Id': deviceIdentity.deviceId }
+                    ? { 'X-Codus-Device-Id': deviceIdentity.deviceId }
                     : {}),
                 ...(deviceIdentity?.deviceToken
-                    ? { 'X-Kodus-Device-Token': deviceIdentity.deviceToken }
+                    ? { 'X-Codus-Device-Token': deviceIdentity.deviceToken }
                     : {}),
                 ...options.headers,
             },
@@ -340,7 +340,7 @@ export async function request<T>(
 
     clearTimeout(timeout);
 
-    const responseDeviceToken = response.headers.get('x-kodus-device-token');
+    const responseDeviceToken = response.headers.get('x-codus-device-token');
     if (responseDeviceToken) {
         await updateDeviceToken(responseDeviceToken).catch(() => {});
     }
@@ -460,10 +460,10 @@ export async function requestBinary(
             headers: {
                 ...cfHeaders,
                 ...(deviceIdentity?.deviceId
-                    ? { 'X-Kodus-Device-Id': deviceIdentity.deviceId }
+                    ? { 'X-Codus-Device-Id': deviceIdentity.deviceId }
                     : {}),
                 ...(deviceIdentity?.deviceToken
-                    ? { 'X-Kodus-Device-Token': deviceIdentity.deviceToken }
+                    ? { 'X-Codus-Device-Token': deviceIdentity.deviceToken }
                     : {}),
                 ...options.headers,
             },
@@ -485,7 +485,7 @@ export async function requestBinary(
 
     clearTimeout(timeout);
 
-    const responseDeviceToken = response.headers.get('x-kodus-device-token');
+    const responseDeviceToken = response.headers.get('x-codus-device-token');
     if (responseDeviceToken) {
         await updateDeviceToken(responseDeviceToken).catch(() => {});
     }

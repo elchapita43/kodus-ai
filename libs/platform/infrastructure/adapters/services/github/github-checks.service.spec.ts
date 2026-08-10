@@ -18,8 +18,8 @@ describe('GithubChecksService', () => {
     } as any;
 
     const mockRepository = {
-        owner: 'kodus-ai',
-        name: 'kodus',
+        owner: 'codus-ai',
+        name: 'codus',
     } as any;
 
     beforeEach(async () => {
@@ -60,7 +60,7 @@ describe('GithubChecksService', () => {
             organizationAndTeamData: mockOrganizationAndTeamData,
             repository: mockRepository,
             headSha: 'sha123',
-            name: 'Kody Code Review',
+            name: 'Cody Code Review',
         };
 
         it('should return the id of an in-progress check run (reusable)', async () => {
@@ -73,10 +73,10 @@ describe('GithubChecksService', () => {
             const result = await service.findCheckRun(findParams);
 
             expect(mockOctokit.checks.listForRef).toHaveBeenCalledWith({
-                owner: 'kodus-ai',
-                repo: 'kodus',
+                owner: 'codus-ai',
+                repo: 'codus',
                 ref: 'sha123',
-                check_name: 'Kody Code Review',
+                check_name: 'Cody Code Review',
                 filter: 'latest',
                 per_page: 1,
             });
@@ -136,8 +136,8 @@ describe('GithubChecksService', () => {
                 mockGithubService.getAuthenticatedOctokit,
             ).toHaveBeenCalledWith(mockOrganizationAndTeamData);
             expect(mockOctokit.checks.create).toHaveBeenCalledWith({
-                owner: 'kodus-ai',
-                repo: 'kodus',
+                owner: 'codus-ai',
+                repo: 'codus',
                 name: 'test-check',
                 head_sha: 'sha123',
                 status: 'in_progress',
@@ -175,8 +175,8 @@ describe('GithubChecksService', () => {
             });
 
             expect(mockOctokit.checks.update).toHaveBeenCalledWith({
-                owner: 'kodus-ai',
-                repo: 'kodus',
+                owner: 'codus-ai',
+                repo: 'codus',
                 check_run_id: 100,
                 status: 'completed',
                 conclusion: 'success',

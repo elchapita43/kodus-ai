@@ -3803,17 +3803,17 @@
                 ]
             }
         },
-        "/kody-rules/create-or-update": {
+        "/cody-rules/create-or-update": {
             "post": {
                 "description": "Create a new rule or update an existing one.",
-                "operationId": "KodyRulesController_create",
+                "operationId": "CodyRulesController_create",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateKodyRuleDto"
+                                "$ref": "#/components/schemas/CreateCodyRuleDto"
                             }
                         }
                     }
@@ -3824,7 +3824,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRuleResponseDto"
+                                    "$ref": "#/components/schemas/CodyRuleResponseDto"
                                 }
                             }
                         }
@@ -3925,14 +3925,14 @@
                 ],
                 "summary": "Create or update rule",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-by-organization-id": {
+        "/cody-rules/find-by-organization-id": {
             "get": {
                 "description": "Return all rules for the current organization.",
-                "operationId": "KodyRulesController_findByOrganizationId",
+                "operationId": "CodyRulesController_findByOrganizationId",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -3940,7 +3940,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesFindByOrgResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesFindByOrgResponseDto"
                                 }
                             }
                         }
@@ -4041,14 +4041,14 @@
                 ],
                 "summary": "List rules by organization",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/limits": {
+        "/cody-rules/limits": {
             "get": {
-                "description": "Return the current kody rules limit usage.",
-                "operationId": "KodyRulesController_getRulesLimitStatus",
+                "description": "Return the current cody rules limit usage.",
+                "operationId": "CodyRulesController_getRulesLimitStatus",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -4056,7 +4056,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesLimitResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesLimitResponseDto"
                                 }
                             }
                         }
@@ -4157,14 +4157,14 @@
                 ],
                 "summary": "Get rules limit status",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/suggestions": {
+        "/cody-rules/suggestions": {
             "get": {
                 "description": "Return suggestions for a specific rule.",
-                "operationId": "KodyRulesController_findSuggestionsByRule",
+                "operationId": "CodyRulesController_findSuggestionsByRule",
                 "parameters": [
                     {
                         "name": "ruleId",
@@ -4282,14 +4282,14 @@
                 ],
                 "summary": "Get suggestions by rule",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-rules-in-organization-by-filter": {
+        "/cody-rules/find-rules-in-organization-by-filter": {
             "get": {
                 "description": "Return rules matching a key/value filter.",
-                "operationId": "KodyRulesController_findRulesInOrganizationByFilter",
+                "operationId": "CodyRulesController_findRulesInOrganizationByFilter",
                 "parameters": [
                     {
                         "name": "key",
@@ -4431,14 +4431,14 @@
                 ],
                 "summary": "Find rules by filter",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/delete-rule-in-organization-by-id": {
+        "/cody-rules/delete-rule-in-organization-by-id": {
             "delete": {
                 "description": "Delete a rule in the organization by rule id.",
-                "operationId": "KodyRulesController_deleteRuleInOrganizationById",
+                "operationId": "CodyRulesController_deleteRuleInOrganizationById",
                 "parameters": [
                     {
                         "name": "ruleId",
@@ -4556,14 +4556,14 @@
                 ],
                 "summary": "Delete rule by id",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-library-kody-rules": {
+        "/cody-rules/find-library-cody-rules": {
             "get": {
                 "description": "Return library rules with pagination.",
-                "operationId": "KodyRulesController_findLibraryKodyRules",
+                "operationId": "CodyRulesController_findLibraryCodyRules",
                 "parameters": [
                     {
                         "name": "page",
@@ -4656,7 +4656,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesLibraryResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesLibraryResponseDto"
                                 }
                             }
                         }
@@ -4752,14 +4752,14 @@
                 },
                 "summary": "List library rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-library-kody-rules-with-feedback": {
+        "/cody-rules/find-library-cody-rules-with-feedback": {
             "get": {
                 "description": "Return library rules with user feedback and pagination.",
-                "operationId": "KodyRulesController_findLibraryKodyRulesWithFeedback",
+                "operationId": "CodyRulesController_findLibraryCodyRulesWithFeedback",
                 "parameters": [
                     {
                         "name": "page",
@@ -4852,7 +4852,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesLibraryResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesLibraryResponseDto"
                                 }
                             }
                         }
@@ -4953,14 +4953,14 @@
                 ],
                 "summary": "List library rules with feedback",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-library-kody-rules-buckets": {
+        "/cody-rules/find-library-cody-rules-buckets": {
             "get": {
-                "description": "Return available kody rules buckets.",
-                "operationId": "KodyRulesController_findLibraryKodyRulesBuckets",
+                "description": "Return available cody rules buckets.",
+                "operationId": "CodyRulesController_findLibraryCodyRulesBuckets",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -4968,7 +4968,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesBucketsResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesBucketsResponseDto"
                                 }
                             }
                         }
@@ -5064,14 +5064,14 @@
                 },
                 "summary": "List library buckets",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/find-recommended-kody-rules": {
+        "/cody-rules/find-recommended-cody-rules": {
             "get": {
                 "description": "Return recommended rules for the organization.",
-                "operationId": "KodyRulesController_findRecommendedKodyRules",
+                "operationId": "CodyRulesController_findRecommendedCodyRules",
                 "parameters": [
                     {
                         "name": "limit",
@@ -5189,21 +5189,21 @@
                 ],
                 "summary": "Find recommended rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/add-library-kody-rules": {
+        "/cody-rules/add-library-cody-rules": {
             "post": {
                 "description": "Add library rules to the organization repositories.",
-                "operationId": "KodyRulesController_addLibraryKodyRules",
+                "operationId": "CodyRulesController_addLibraryCodyRules",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AddLibraryKodyRulesDto"
+                                "$ref": "#/components/schemas/AddLibraryCodyRulesDto"
                             }
                         }
                     }
@@ -5214,7 +5214,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesArrayResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesArrayResponseDto"
                                 }
                             }
                         }
@@ -5315,21 +5315,21 @@
                 ],
                 "summary": "Add library rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/generate-kody-rules": {
+        "/cody-rules/generate-cody-rules": {
             "post": {
                 "description": "Generate rules based on repository history.",
-                "operationId": "KodyRulesController_generateKodyRules",
+                "operationId": "CodyRulesController_generateCodyRules",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/GenerateKodyRulesDTO"
+                                "$ref": "#/components/schemas/GenerateCodyRulesDTO"
                             }
                         }
                     }
@@ -5340,7 +5340,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesArrayResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesArrayResponseDto"
                                 }
                             }
                         }
@@ -5441,21 +5441,21 @@
                 ],
                 "summary": "Generate rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/change-status-kody-rules": {
+        "/cody-rules/change-status-cody-rules": {
             "post": {
                 "description": "Update status for one or more rules.",
-                "operationId": "KodyRulesController_changeStatusKodyRules",
+                "operationId": "CodyRulesController_changeStatusCodyRules",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ChangeStatusKodyRulesDTO"
+                                "$ref": "#/components/schemas/ChangeStatusCodyRulesDTO"
                             }
                         }
                     }
@@ -5466,7 +5466,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesArrayResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesArrayResponseDto"
                                 }
                             }
                         }
@@ -5567,14 +5567,14 @@
                 ],
                 "summary": "Change rule status",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/check-sync-status": {
+        "/cody-rules/check-sync-status": {
             "get": {
                 "description": "Return sync status flags for IDE and generator.",
-                "operationId": "KodyRulesController_checkSyncStatus",
+                "operationId": "CodyRulesController_checkSyncStatus",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -5599,7 +5599,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesSyncStatusResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesSyncStatusResponseDto"
                                 }
                             }
                         }
@@ -5700,14 +5700,14 @@
                 ],
                 "summary": "Check sync status",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/sync-ide-rules": {
+        "/cody-rules/sync-ide-rules": {
             "post": {
                 "description": "Sync IDE rules for a repository.",
-                "operationId": "KodyRulesController_syncIdeRules",
+                "operationId": "CodyRulesController_syncIdeRules",
                 "parameters": [],
                 "responses": {
                     "204": {
@@ -5809,14 +5809,14 @@
                 ],
                 "summary": "Sync IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/fast-sync-ide-rules": {
+        "/cody-rules/fast-sync-ide-rules": {
             "post": {
                 "description": "Fast sync IDE rules with optional limits.",
-                "operationId": "KodyRulesController_fastSyncIdeRules",
+                "operationId": "CodyRulesController_fastSyncIdeRules",
                 "parameters": [],
                 "responses": {
                     "201": {
@@ -5824,7 +5824,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesFastSyncResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesFastSyncResponseDto"
                                 }
                             }
                         }
@@ -5925,14 +5925,14 @@
                 ],
                 "summary": "Fast sync IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/pending-ide-rules": {
+        "/cody-rules/pending-ide-rules": {
             "get": {
                 "description": "Return pending IDE rules for a repository.",
-                "operationId": "KodyRulesController_listPendingIdeRules",
+                "operationId": "CodyRulesController_listPendingIdeRules",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -6058,21 +6058,21 @@
                 ],
                 "summary": "List pending IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/import-fast-ide-rules": {
+        "/cody-rules/import-fast-ide-rules": {
             "post": {
                 "description": "Import rules from fast sync results.",
-                "operationId": "KodyRulesController_importFastIdeRules",
+                "operationId": "CodyRulesController_importFastIdeRules",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ImportFastKodyRulesDto"
+                                "$ref": "#/components/schemas/ImportFastCodyRulesDto"
                             }
                         }
                     }
@@ -6083,7 +6083,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesArrayResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesArrayResponseDto"
                                 }
                             }
                         }
@@ -6184,21 +6184,21 @@
                 ],
                 "summary": "Import fast IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/review-fast-ide-rules": {
+        "/cody-rules/review-fast-ide-rules": {
             "post": {
                 "description": "Activate or delete fast imported rules.",
-                "operationId": "KodyRulesController_reviewFastIdeRules",
+                "operationId": "CodyRulesController_reviewFastIdeRules",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ReviewFastKodyRulesDto"
+                                "$ref": "#/components/schemas/ReviewFastCodyRulesDto"
                             }
                         }
                     }
@@ -6310,14 +6310,14 @@
                 ],
                 "summary": "Review fast IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/inherited-rules": {
+        "/cody-rules/inherited-rules": {
             "get": {
                 "description": "Return global and repository inherited rules.",
-                "operationId": "KodyRulesController_getInheritedRules",
+                "operationId": "CodyRulesController_getInheritedRules",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -6350,7 +6350,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/KodyRulesInheritedResponseDto"
+                                    "$ref": "#/components/schemas/CodyRulesInheritedResponseDto"
                                 }
                             }
                         }
@@ -6451,14 +6451,14 @@
                 ],
                 "summary": "Get inherited rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
-        "/kody-rules/resync-ide-rules": {
+        "/cody-rules/resync-ide-rules": {
             "post": {
                 "description": "Resync IDE rules (internal).",
-                "operationId": "KodyRulesController_resyncIdeRules",
+                "operationId": "CodyRulesController_resyncIdeRules",
                 "parameters": [],
                 "responses": {
                     "204": {
@@ -6560,7 +6560,7 @@
                 ],
                 "summary": "Resync IDE rules",
                 "tags": [
-                    "Kody Rules"
+                    "Cody Rules"
                 ]
             }
         },
@@ -8372,10 +8372,10 @@
                 ]
             }
         },
-        "/parameters/generate-kodus-config-file": {
+        "/parameters/generate-codus-config-file": {
             "get": {
                 "description": "Return a YAML config file for the repository/team.",
-                "operationId": "ParametersController_GenerateKodusConfigFile",
+                "operationId": "ParametersController_GenerateCodusConfigFile",
                 "parameters": [
                     {
                         "name": "teamId",
@@ -8507,7 +8507,7 @@
                         "jwt": []
                     }
                 ],
-                "summary": "Generate Kodus config file",
+                "summary": "Generate Codus config file",
                 "tags": [
                     "Parameters"
                 ]
@@ -8787,7 +8787,7 @@
                                             "category_workitems_type",
                                             "timezone_config",
                                             "review_mode_config",
-                                            "kody_fine_tuning_config",
+                                            "cody_fine_tuning_config",
                                             "auto_join_config",
                                             "byok_config",
                                             "cockpit_metrics_visibility",
@@ -8929,7 +8929,7 @@
                                 "category_workitems_type",
                                 "timezone_config",
                                 "review_mode_config",
-                                "kody_fine_tuning_config",
+                                "cody_fine_tuning_config",
                                 "auto_join_config",
                                 "byok_config",
                                 "cockpit_metrics_visibility",
@@ -13997,7 +13997,7 @@
                                 "organization_settings",
                                 "plugin_settings",
                                 "logs",
-                                "kody_rules"
+                                "cody_rules"
                             ],
                             "type": "string"
                         }
@@ -17796,8 +17796,8 @@
         }
     },
     "info": {
-        "title": "Kodus API",
-        "description": "Public API for the Kodus platform.",
+        "title": "Codus API",
+        "description": "Public API for the Codus platform.",
         "version": "1.0",
         "contact": {}
     },
@@ -17851,7 +17851,7 @@
             "description": ""
         },
         {
-            "name": "Kody Rules",
+            "name": "Cody Rules",
             "description": ""
         },
         {
@@ -18874,7 +18874,7 @@
                     "potential_issues",
                     "code_style",
                     "documentation_and_comments",
-                    "kody_rules",
+                    "cody_rules",
                     "breaking_changes",
                     "bug",
                     "performance",
@@ -19043,7 +19043,7 @@
                     "data"
                 ]
             },
-            "KodyRuleSeverity": {
+            "CodyRuleSeverity": {
                 "type": "string",
                 "enum": [
                     "low",
@@ -19052,7 +19052,7 @@
                     "critical"
                 ]
             },
-            "KodyRulesOrigin": {
+            "CodyRulesOrigin": {
                 "type": "string",
                 "enum": [
                     "user",
@@ -19060,7 +19060,7 @@
                     "generated"
                 ]
             },
-            "KodyRulesStatus": {
+            "CodyRulesStatus": {
                 "type": "string",
                 "enum": [
                     "active",
@@ -19069,7 +19069,7 @@
                     "deleted"
                 ]
             },
-            "KodyRuleProcessingStatus": {
+            "CodyRuleProcessingStatus": {
                 "type": "string",
                 "enum": [
                     "pending",
@@ -19078,34 +19078,34 @@
                     "failed"
                 ]
             },
-            "CreateKodyRuleDto": {
+            "CreateCodyRuleDto": {
                 "type": "object",
                 "properties": {
                     "severity": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRuleSeverity"
+                                "$ref": "#/components/schemas/CodyRuleSeverity"
                             }
                         ]
                     },
                     "origin": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesOrigin"
+                                "$ref": "#/components/schemas/CodyRulesOrigin"
                             }
                         ]
                     },
                     "status": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesStatus"
+                                "$ref": "#/components/schemas/CodyRulesStatus"
                             }
                         ]
                     },
                     "referenceProcessingStatus": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRuleProcessingStatus"
+                                "$ref": "#/components/schemas/CodyRuleProcessingStatus"
                             }
                         ]
                     }
@@ -19115,7 +19115,7 @@
                     "origin"
                 ]
             },
-            "KodyRulesExampleDto": {
+            "CodyRulesExampleDto": {
                 "type": "object",
                 "properties": {
                     "snippet": {
@@ -19130,7 +19130,7 @@
                     "isCorrect"
                 ]
             },
-            "KodyRuleInheritanceDto": {
+            "CodyRuleInheritanceDto": {
                 "type": "object",
                 "properties": {
                     "inheritable": {
@@ -19155,7 +19155,7 @@
                     "include"
                 ]
             },
-            "KodyRuleExternalReferenceDto": {
+            "CodyRuleExternalReferenceDto": {
                 "type": "object",
                 "properties": {
                     "filePath": {
@@ -19176,7 +19176,7 @@
                     "repositoryName"
                 ]
             },
-            "KodyRuleSyncErrorDto": {
+            "CodyRuleSyncErrorDto": {
                 "type": "object",
                 "properties": {
                     "type": {
@@ -19198,7 +19198,7 @@
                     "details"
                 ]
             },
-            "KodyRuleDto": {
+            "CodyRuleDto": {
                 "type": "object",
                 "properties": {
                     "uuid": {
@@ -19241,7 +19241,7 @@
                         "nullable": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRulesExampleDto"
+                            "$ref": "#/components/schemas/CodyRulesExampleDto"
                         }
                     },
                     "origin": {
@@ -19251,7 +19251,7 @@
                         "type": "string"
                     },
                     "inheritance": {
-                        "$ref": "#/components/schemas/KodyRuleInheritanceDto"
+                        "$ref": "#/components/schemas/CodyRuleInheritanceDto"
                     },
                     "createdAt": {
                         "type": "string"
@@ -19265,13 +19265,13 @@
                     "externalReferences": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleExternalReferenceDto"
+                            "$ref": "#/components/schemas/CodyRuleExternalReferenceDto"
                         }
                     },
                     "syncErrors": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleSyncErrorDto"
+                            "$ref": "#/components/schemas/CodyRuleSyncErrorDto"
                         }
                     }
                 },
@@ -19296,7 +19296,7 @@
                     "syncErrors"
                 ]
             },
-            "KodyRuleResponseDto": {
+            "CodyRuleResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19308,7 +19308,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRuleDto"
+                        "$ref": "#/components/schemas/CodyRuleDto"
                     }
                 },
                 "required": [
@@ -19317,7 +19317,7 @@
                     "data"
                 ]
             },
-            "KodyRulesFindByOrgDataDto": {
+            "CodyRulesFindByOrgDataDto": {
                 "type": "object",
                 "properties": {
                     "_uuid": {
@@ -19329,7 +19329,7 @@
                     "_rules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     },
                     "_createdAt": {
@@ -19347,7 +19347,7 @@
                     "_updatedAt"
                 ]
             },
-            "KodyRulesFindByOrgResponseDto": {
+            "CodyRulesFindByOrgResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19359,7 +19359,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesFindByOrgDataDto"
+                        "$ref": "#/components/schemas/CodyRulesFindByOrgDataDto"
                     }
                 },
                 "required": [
@@ -19368,7 +19368,7 @@
                     "data"
                 ]
             },
-            "KodyRulesLimitDto": {
+            "CodyRulesLimitDto": {
                 "type": "object",
                 "properties": {
                     "total": {
@@ -19379,7 +19379,7 @@
                     "total"
                 ]
             },
-            "KodyRulesLimitResponseDto": {
+            "CodyRulesLimitResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19391,7 +19391,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesLimitDto"
+                        "$ref": "#/components/schemas/CodyRulesLimitDto"
                     }
                 },
                 "required": [
@@ -19432,7 +19432,7 @@
                     "RUBY"
                 ]
             },
-            "KodyRulesLibraryRuleDto": {
+            "CodyRulesLibraryRuleDto": {
                 "type": "object",
                 "properties": {
                     "title": {
@@ -19456,7 +19456,7 @@
                     "examples": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRulesExampleDto"
+                            "$ref": "#/components/schemas/CodyRulesExampleDto"
                         }
                     },
                     "language": {
@@ -19509,7 +19509,7 @@
                     "userFeedback"
                 ]
             },
-            "KodyRulesPaginationDto": {
+            "CodyRulesPaginationDto": {
                 "type": "object",
                 "properties": {
                     "currentPage": {
@@ -19540,17 +19540,17 @@
                     "hasPreviousPage"
                 ]
             },
-            "KodyRulesLibraryDataDto": {
+            "CodyRulesLibraryDataDto": {
                 "type": "object",
                 "properties": {
                     "data": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRulesLibraryRuleDto"
+                            "$ref": "#/components/schemas/CodyRulesLibraryRuleDto"
                         }
                     },
                     "pagination": {
-                        "$ref": "#/components/schemas/KodyRulesPaginationDto"
+                        "$ref": "#/components/schemas/CodyRulesPaginationDto"
                     }
                 },
                 "required": [
@@ -19558,7 +19558,7 @@
                     "pagination"
                 ]
             },
-            "KodyRulesLibraryResponseDto": {
+            "CodyRulesLibraryResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19570,7 +19570,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesLibraryDataDto"
+                        "$ref": "#/components/schemas/CodyRulesLibraryDataDto"
                     }
                 },
                 "required": [
@@ -19579,7 +19579,7 @@
                     "data"
                 ]
             },
-            "KodyRulesBucketDto": {
+            "CodyRulesBucketDto": {
                 "type": "object",
                 "properties": {
                     "slug": {
@@ -19602,7 +19602,7 @@
                     "rulesCount"
                 ]
             },
-            "KodyRulesBucketsResponseDto": {
+            "CodyRulesBucketsResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19616,7 +19616,7 @@
                     "data": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRulesBucketDto"
+                            "$ref": "#/components/schemas/CodyRulesBucketDto"
                         }
                     }
                 },
@@ -19626,27 +19626,27 @@
                     "data"
                 ]
             },
-            "AddLibraryKodyRulesDto": {
+            "AddLibraryCodyRulesDto": {
                 "type": "object",
                 "properties": {
                     "severity": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRuleSeverity"
+                                "$ref": "#/components/schemas/CodyRuleSeverity"
                             }
                         ]
                     },
                     "origin": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesOrigin"
+                                "$ref": "#/components/schemas/CodyRulesOrigin"
                             }
                         ]
                     },
                     "status": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesStatus"
+                                "$ref": "#/components/schemas/CodyRulesStatus"
                             }
                         ]
                     }
@@ -19655,7 +19655,7 @@
                     "severity"
                 ]
             },
-            "KodyRulesArrayResponseDto": {
+            "CodyRulesArrayResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19669,7 +19669,7 @@
                     "data": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     }
                 },
@@ -19679,7 +19679,7 @@
                     "data"
                 ]
             },
-            "GenerateKodyRulesDTO": {
+            "GenerateCodyRulesDTO": {
                 "type": "object",
                 "properties": {
                     "teamId": {
@@ -19705,13 +19705,13 @@
                     "teamId"
                 ]
             },
-            "ChangeStatusKodyRulesDTO": {
+            "ChangeStatusCodyRulesDTO": {
                 "type": "object",
                 "properties": {
                     "status": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesStatus"
+                                "$ref": "#/components/schemas/CodyRulesStatus"
                             }
                         ]
                     }
@@ -19720,22 +19720,22 @@
                     "status"
                 ]
             },
-            "KodyRulesSyncStatusDto": {
+            "CodyRulesSyncStatusDto": {
                 "type": "object",
                 "properties": {
                     "ideRulesSyncEnabledFirstTime": {
                         "type": "boolean"
                     },
-                    "kodyRulesGeneratorEnabledFirstTime": {
+                    "codyRulesGeneratorEnabledFirstTime": {
                         "type": "boolean"
                     }
                 },
                 "required": [
                     "ideRulesSyncEnabledFirstTime",
-                    "kodyRulesGeneratorEnabledFirstTime"
+                    "codyRulesGeneratorEnabledFirstTime"
                 ]
             },
-            "KodyRulesSyncStatusResponseDto": {
+            "CodyRulesSyncStatusResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19747,7 +19747,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesSyncStatusDto"
+                        "$ref": "#/components/schemas/CodyRulesSyncStatusDto"
                     }
                 },
                 "required": [
@@ -19756,13 +19756,13 @@
                     "data"
                 ]
             },
-            "KodyRulesFastSyncDataDto": {
+            "CodyRulesFastSyncDataDto": {
                 "type": "object",
                 "properties": {
                     "rules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     },
                     "skippedFiles": {
@@ -19785,7 +19785,7 @@
                     "errors"
                 ]
             },
-            "KodyRulesFastSyncResponseDto": {
+            "CodyRulesFastSyncResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19797,7 +19797,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesFastSyncDataDto"
+                        "$ref": "#/components/schemas/CodyRulesFastSyncDataDto"
                     }
                 },
                 "required": [
@@ -19806,14 +19806,14 @@
                     "data"
                 ]
             },
-            "KodyRulesScope": {
+            "CodyRulesScope": {
                 "type": "string",
                 "enum": [
                     "pull-request",
                     "file"
                 ]
             },
-            "ImportFastKodyRuleExampleDto": {
+            "ImportFastCodyRuleExampleDto": {
                 "type": "object",
                 "properties": {
                     "snippet": {
@@ -19830,7 +19830,7 @@
                     "isCorrect"
                 ]
             },
-            "ImportFastKodyRuleItemDto": {
+            "ImportFastCodyRuleItemDto": {
                 "type": "object",
                 "properties": {
                     "title": {
@@ -19856,14 +19856,14 @@
                     "severity": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRuleSeverity"
+                                "$ref": "#/components/schemas/CodyRuleSeverity"
                             }
                         ]
                     },
                     "scope": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/KodyRulesScope"
+                                "$ref": "#/components/schemas/CodyRulesScope"
                             }
                         ]
                     },
@@ -19871,7 +19871,7 @@
                         "description": "Example snippets for the rule.",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/ImportFastKodyRuleExampleDto"
+                            "$ref": "#/components/schemas/ImportFastCodyRuleExampleDto"
                         }
                     }
                 },
@@ -19883,7 +19883,7 @@
                     "repositoryId"
                 ]
             },
-            "ImportFastKodyRulesDto": {
+            "ImportFastCodyRulesDto": {
                 "type": "object",
                 "properties": {
                     "teamId": {
@@ -19894,7 +19894,7 @@
                     "rules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/ImportFastKodyRuleItemDto"
+                            "$ref": "#/components/schemas/ImportFastCodyRuleItemDto"
                         }
                     }
                 },
@@ -19903,7 +19903,7 @@
                     "rules"
                 ]
             },
-            "ReviewFastKodyRulesDto": {
+            "ReviewFastCodyRulesDto": {
                 "type": "object",
                 "properties": {
                     "teamId": {
@@ -19926,25 +19926,25 @@
                     "teamId"
                 ]
             },
-            "KodyRulesInheritedDataDto": {
+            "CodyRulesInheritedDataDto": {
                 "type": "object",
                 "properties": {
                     "globalRules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     },
                     "repoRules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     },
                     "directoryRules": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/KodyRuleDto"
+                            "$ref": "#/components/schemas/CodyRuleDto"
                         }
                     }
                 },
@@ -19954,7 +19954,7 @@
                     "directoryRules"
                 ]
             },
-            "KodyRulesInheritedResponseDto": {
+            "CodyRulesInheritedResponseDto": {
                 "type": "object",
                 "properties": {
                     "statusCode": {
@@ -19966,7 +19966,7 @@
                         "example": "Object"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/KodyRulesInheritedDataDto"
+                        "$ref": "#/components/schemas/CodyRulesInheritedDataDto"
                     }
                 },
                 "required": [
@@ -20051,7 +20051,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example": "Kodus"
+                        "example": "Codus"
                     },
                     "phone": {
                         "type": "string",
@@ -20426,7 +20426,7 @@
                     "groupingMode": {
                         "type": "string"
                     },
-                    "applyFiltersToKodyRules": {
+                    "applyFiltersToCodyRules": {
                         "type": "boolean"
                     },
                     "limitationType": {
@@ -20444,7 +20444,7 @@
                 },
                 "required": [
                     "groupingMode",
-                    "applyFiltersToKodyRules",
+                    "applyFiltersToCodyRules",
                     "limitationType",
                     "maxSuggestions",
                     "severityLevelFilter",
@@ -20529,7 +20529,7 @@
                     "automatedReviewActive": {
                         "type": "boolean"
                     },
-                    "kodusConfigFileOverridesWebPreferences": {
+                    "codusConfigFileOverridesWebPreferences": {
                         "type": "boolean"
                     },
                     "reviewCadence": {
@@ -20580,7 +20580,7 @@
                     "ideRulesSyncEnabled": {
                         "type": "boolean"
                     },
-                    "kodyRulesGeneratorEnabled": {
+                    "codyRulesGeneratorEnabled": {
                         "type": "boolean"
                     },
                     "customMessages": {
@@ -20594,7 +20594,7 @@
                 },
                 "required": [
                     "automatedReviewActive",
-                    "kodusConfigFileOverridesWebPreferences",
+                    "codusConfigFileOverridesWebPreferences",
                     "reviewCadence",
                     "pullRequestApprovalActive",
                     "isRequestChangesActive",
@@ -20608,7 +20608,7 @@
                     "suggestionControl",
                     "summary",
                     "ideRulesSyncEnabled",
-                    "kodyRulesGeneratorEnabled",
+                    "codyRulesGeneratorEnabled",
                     "customMessages",
                     "v2PromptOverrides"
                 ]
@@ -23247,7 +23247,7 @@
                     "DISCORD",
                     "AZURE_BOARDS",
                     "AZURE_REPOS",
-                    "KODUS_WEB",
+                    "CODUS_WEB",
                     "BITBUCKET"
                 ]
             },

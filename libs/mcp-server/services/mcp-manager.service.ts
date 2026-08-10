@@ -130,8 +130,8 @@ interface MCPIntegrationOAuth2 extends MCPIntegrationBase {
     tokenExpiry?: number;
 }
 
-export const KODUS_MCP_INTEGRATION_ID = 'kd_mcp_oTUrzqsaxTg';
-export const KODUS_ISSUES_INTEGRATION_ID = 'kodus-issues-default';
+export const CODUS_MCP_INTEGRATION_ID = 'kd_mcp_oTUrzqsaxTg';
+export const CODUS_ISSUES_INTEGRATION_ID = 'codus-issues-default';
 
 @Injectable()
 export class MCPManagerService {
@@ -278,7 +278,7 @@ export class MCPManagerService {
         }
     }
 
-    public async createKodusMCPIntegration(
+    public async createCodusMCPIntegration(
         organizationId: string,
     ): Promise<void> {
         try {
@@ -287,10 +287,10 @@ export class MCPManagerService {
             };
 
             await this.axiosMCPManagerService.post(
-                `mcp/integration/kodusmcp`,
+                `mcp/integration/codusmcp`,
                 {
-                    integrationId: KODUS_MCP_INTEGRATION_ID,
-                    baseUrl: process.env.API_KODUS_MCP_SERVER_URL ?? '',
+                    integrationId: CODUS_MCP_INTEGRATION_ID,
+                    baseUrl: process.env.API_CODUS_MCP_SERVER_URL ?? '',
                 },
                 {
                     headers: this.getAuthHeaders(organizationAndTeamData),
@@ -298,7 +298,7 @@ export class MCPManagerService {
             );
         } catch (error) {
             this.logger.error({
-                message: 'Error creating Kodus MCP integration',
+                message: 'Error creating Codus MCP integration',
                 context: MCPManagerService.name,
                 error: error,
                 metadata: { organizationId },
@@ -405,8 +405,8 @@ export class MCPManagerService {
             type = integration.protocol;
         }
 
-        if (connection.provider === 'kodusmcp') {
-            const config = await this.fetchKodusMcpConnectionConfig(connection);
+        if (connection.provider === 'codusmcp') {
+            const config = await this.fetchCodusMcpConnectionConfig(connection);
             if (config?.headers) {
                 headers = { ...headers, ...config.headers };
             }
@@ -428,18 +428,18 @@ export class MCPManagerService {
     }
 
     /**
-     * Resolve the auth header(s) for a managed (kodusmcp) connection from the
+     * Resolve the auth header(s) for a managed (codusmcp) connection from the
      * MCP Manager. Native OAuth/token MCPs (Linear, Sentry, Atlassian, …) need a
      * per-org `Authorization` header that the manager mints and refreshes;
      * `none`-auth servers get `{}`. Failures are tolerated so a transient manager
      * hiccup never drops the connection — it falls back to no header.
      */
-    private async fetchKodusMcpConnectionConfig(
+    private async fetchCodusMcpConnectionConfig(
         connection: MCPItem,
     ): Promise<{ headers?: Record<string, string> } | undefined> {
         try {
             return (await this.axiosMCPManagerService.get(
-                `mcp/integration/kodusmcp/${connection.integrationId}/connection-config`,
+                `mcp/integration/codusmcp/${connection.integrationId}/connection-config`,
                 {
                     headers: this.getAuthHeaders({
                         organizationId: connection.organizationId,
@@ -448,7 +448,7 @@ export class MCPManagerService {
             )) as { headers?: Record<string, string> } | undefined;
         } catch (error) {
             this.logger.warn({
-                message: 'Failed to resolve kodusmcp connection config',
+                message: 'Failed to resolve codusmcp connection config',
                 context: MCPManagerService.name,
                 error,
                 metadata: {

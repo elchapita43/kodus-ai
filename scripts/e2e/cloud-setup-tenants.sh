@@ -7,7 +7,7 @@
 # Config sources (caller env wins):
 #   1. inline env on the call
 #   2. scripts/e2e/.env       (per-repo override; gitignored)
-#   3. ~/.kodus-dev/config    (team default, set by `pnpm run selfhosted:setup`)
+#   3. ~/.codus-dev/config    (team default, set by `pnpm run selfhosted:setup`)
 #
 # `op://Vault/Item/field` references are resolved via the 1Password CLI
 # the same way `run.sh` does — required since cloud signup needs the
@@ -18,7 +18,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 E2E_DIR="$REPO_ROOT/tests/e2e"
-GLOBAL_CONFIG="$HOME/.kodus-dev/config"
+GLOBAL_CONFIG="$HOME/.codus-dev/config"
 LOCAL_ENV="$SCRIPT_DIR/.env"
 
 RED='\033[0;31m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'

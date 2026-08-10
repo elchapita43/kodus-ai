@@ -53,7 +53,7 @@ function buildMongoUri() {
     const port = process.env.API_MG_DB_PORT ?? '27017';
     const user = process.env.API_MG_DB_USERNAME ?? '';
     const pass = process.env.API_MG_DB_PASSWORD ?? '';
-    const db = process.env.API_MG_DB_DATABASE ?? 'kodus_db';
+    const db = process.env.API_MG_DB_DATABASE ?? 'codus_db';
     const auth = user && pass ? `${user}:${encodeURIComponent(pass)}@` : '';
     return {
         uri: `mongodb://${auth}${host}:${port}/${db}?authSource=admin`,

@@ -4,7 +4,7 @@
  *
  * Enterprise Code (`libs/ee/`) — see `license_ee.md`. Not AGPL.
  *
- * Config shape (kodus-config.yml / CodeReviewConfig):
+ * Config shape (codus-config.yml / CodeReviewConfig):
  * ```yaml
  * linkedRepositories:
  *   - repository: "org/backend-api"

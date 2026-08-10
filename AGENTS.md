@@ -1,15 +1,15 @@
-# Kodus AI
+# Codus AI
 
 AI-powered code review platform. Monorepo with 4 NestJS/Next.js apps, 20 shared libs, and 2 published npm packages.
 
 ## Structure
 
-- `apps/api/` - NestJS REST API (auth, code review orchestration, kody rules, integrations, permissions)
+- `apps/api/` - NestJS REST API (auth, code review orchestration, cody rules, integrations, permissions)
 - `apps/web/` - Next.js 15 dashboard (App Router, Radix UI, React Query, NextAuth)
 - `apps/worker/` - RabbitMQ consumer (webhook processing, code review execution, suggestion checks, monitoring crons)
 - `apps/webhooks/` - Webhook ingestion (GitHub, GitLab, Azure Repos, Bitbucket, Forgejo). Fire-and-forget with outbox pattern
 - `libs/` - 20 NestJS domain modules (core, code-review, ai-engine, agents, integrations, platform, identity, organization, etc.)
-- `packages/kodus-common/` - Published npm package with LLM abstraction layer (OpenAI, Anthropic, Gemini, Vertex AI, Novita)
+- `packages/codus-common/` - Published npm package with LLM abstraction layer (OpenAI, Anthropic, Gemini, Vertex AI, Novita)
 
 ## Stack
 
@@ -18,7 +18,7 @@ AI-powered code review platform. Monorepo with 4 NestJS/Next.js apps, 20 shared 
 - Frontend: Next.js 15 (App Router + Turbopack), Radix UI + TailwindCSS 4, React Query v5
 - Databases: PostgreSQL (TypeORM) + MongoDB (Mongoose)
 - Queue: RabbitMQ with delayed message exchange plugin (quorum queues)
-- Auth: JWT + refresh tokens, OAuth (GitHub/GitLab), SAML SSO, Team CLI keys (`kodus_*` prefix)
+- Auth: JWT + refresh tokens, OAuth (GitHub/GitLab), SAML SSO, Team CLI keys (`codus_*` prefix)
 - Observability: OpenTelemetry, Pyroscope profiling, BetterStack heartbeats, Sentry
 - LLM Providers: Anthropic, OpenAI, Google Gemini, Vertex AI, Novita (with BYOK support)
 
@@ -61,10 +61,10 @@ Everything runs via Docker (`docker-compose.dev.yml`):
 
 ## Key Concepts
 
-- "Kody" is the AI agent that performs automated code reviews
-- "Kody Rules" are custom review rules (per org, per repo, or from library)
+- "Cody" is the AI agent that performs automated code reviews
+- "Cody Rules" are custom review rules (per org, per repo, or from library)
 - Organization > Team > Members hierarchy
 - Git integrations: GitHub, GitLab, Bitbucket, Azure Repos, Forgejo
 - Project management integrations: Jira, Linear, Azure Boards
 - "Dry Run" is a preview mode to test code review rules before enabling
-- CLI reviews via team API keys (`x-team-key` header or `Bearer kodus_*`)
+- CLI reviews via team API keys (`x-team-key` header or `Bearer codus_*`)

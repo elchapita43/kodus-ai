@@ -81,7 +81,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
         };
 
-        const generateKodusConfigFileUseCase = {
+        const generateCodusConfigFileUseCase = {
             execute: jest
                 .fn()
                 .mockImplementation(
@@ -112,7 +112,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
                 ),
         };
 
-        const findRulesInOrganizationByRuleFilterKodyRulesUseCase = {
+        const findRulesInOrganizationByRuleFilterCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([]),
         };
 
@@ -152,15 +152,15 @@ describe('CentralizedConfigDownloadUseCase', () => {
             ]),
         };
 
-        const createOrUpdateKodyRulesUseCase = {
+        const createOrUpdateCodyRulesUseCase = {
             execute: jest.fn(),
         };
 
         const useCase = new CentralizedConfigDownloadUseCase(
             getCodeReviewParameterUseCase as any,
-            generateKodusConfigFileUseCase as any,
-            findRulesInOrganizationByRuleFilterKodyRulesUseCase as any,
-            createOrUpdateKodyRulesUseCase as any,
+            generateCodusConfigFileUseCase as any,
+            findRulesInOrganizationByRuleFilterCodyRulesUseCase as any,
+            createOrUpdateCodyRulesUseCase as any,
             pullRequestMessagesService as any,
             centralizedConfigPrServiceMock as CentralizedConfigPrService,
         );
@@ -169,12 +169,12 @@ describe('CentralizedConfigDownloadUseCase', () => {
             skipAuthorization: true,
         });
 
-        const globalEntry = entries.find((e) => e.path === 'kodus-config.yml');
+        const globalEntry = entries.find((e) => e.path === 'codus-config.yml');
         const repoEntry = entries.find(
-            (e) => e.path === 'repo-one/kodus-config.yml',
+            (e) => e.path === 'repo-one/codus-config.yml',
         );
         const dirConfigEntry = entries.find(
-            (e) => e.path === 'repo-one/src/kodus-config.yml',
+            (e) => e.path === 'repo-one/src/codus-config.yml',
         );
 
         expect(globalEntry).toBeDefined();
@@ -216,7 +216,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
         };
 
-        const generateKodusConfigFileUseCase = {
+        const generateCodusConfigFileUseCase = {
             execute: jest
                 .fn()
                 .mockImplementation(
@@ -236,7 +236,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
                 ),
         };
 
-        const findRulesInOrganizationByRuleFilterKodyRulesUseCase = {
+        const findRulesInOrganizationByRuleFilterCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([]),
         };
 
@@ -255,15 +255,15 @@ describe('CentralizedConfigDownloadUseCase', () => {
             ]),
         };
 
-        const createOrUpdateKodyRulesUseCase = {
+        const createOrUpdateCodyRulesUseCase = {
             execute: jest.fn(),
         };
 
         const useCase = new CentralizedConfigDownloadUseCase(
             getCodeReviewParameterUseCase as any,
-            generateKodusConfigFileUseCase as any,
-            findRulesInOrganizationByRuleFilterKodyRulesUseCase as any,
-            createOrUpdateKodyRulesUseCase as any,
+            generateCodusConfigFileUseCase as any,
+            findRulesInOrganizationByRuleFilterCodyRulesUseCase as any,
+            createOrUpdateCodyRulesUseCase as any,
             pullRequestMessagesService as any,
             centralizedConfigPrServiceMock as CentralizedConfigPrService,
         );
@@ -273,7 +273,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
         });
 
         const repoEntry = entries.find(
-            (entry) => entry.path === 'repo-one/kodus-config.yml',
+            (entry) => entry.path === 'repo-one/codus-config.yml',
         );
 
         expect(repoEntry).toBeDefined();
@@ -314,7 +314,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
         };
 
-        const generateKodusConfigFileUseCase = {
+        const generateCodusConfigFileUseCase = {
             execute: jest
                 .fn()
                 .mockImplementation(
@@ -330,7 +330,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
                 ),
         };
 
-        const findRulesInOrganizationByRuleFilterKodyRulesUseCase = {
+        const findRulesInOrganizationByRuleFilterCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([]),
         };
 
@@ -381,15 +381,15 @@ describe('CentralizedConfigDownloadUseCase', () => {
             ]),
         };
 
-        const createOrUpdateKodyRulesUseCase = {
+        const createOrUpdateCodyRulesUseCase = {
             execute: jest.fn(),
         };
 
         const useCase = new CentralizedConfigDownloadUseCase(
             getCodeReviewParameterUseCase as any,
-            generateKodusConfigFileUseCase as any,
-            findRulesInOrganizationByRuleFilterKodyRulesUseCase as any,
-            createOrUpdateKodyRulesUseCase as any,
+            generateCodusConfigFileUseCase as any,
+            findRulesInOrganizationByRuleFilterCodyRulesUseCase as any,
+            createOrUpdateCodyRulesUseCase as any,
             pullRequestMessagesService as any,
             centralizedConfigPrServiceMock as CentralizedConfigPrService,
         );
@@ -398,15 +398,15 @@ describe('CentralizedConfigDownloadUseCase', () => {
             skipAuthorization: true,
         });
 
-        const globalEntry = entries.find((e) => e.path === 'kodus-config.yml');
+        const globalEntry = entries.find((e) => e.path === 'codus-config.yml');
         const repoEntry = entries.find(
-            (entry) => entry.path === 'repo-one/kodus-config.yml',
+            (entry) => entry.path === 'repo-one/codus-config.yml',
         );
         const parentDirConfigEntry = entries.find(
-            (entry) => entry.path === 'repo-one/src/kodus-config.yml',
+            (entry) => entry.path === 'repo-one/src/codus-config.yml',
         );
         const childDirConfigEntry = entries.find(
-            (entry) => entry.path === 'repo-one/src%2Fapp/kodus-config.yml',
+            (entry) => entry.path === 'repo-one/src%2Fapp/codus-config.yml',
         );
 
         expect(globalEntry).toBeDefined();
@@ -444,13 +444,13 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
         };
 
-        const generateKodusConfigFileUseCase = {
+        const generateCodusConfigFileUseCase = {
             execute: jest.fn().mockResolvedValue({
                 yamlString: 'languageResultPrompt: english\n',
             }),
         };
 
-        const findRulesInOrganizationByRuleFilterKodyRulesUseCase = {
+        const findRulesInOrganizationByRuleFilterCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([
                 {
                     uuid: 'rule-1',
@@ -472,7 +472,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             ]),
         };
 
-        const createOrUpdateKodyRulesUseCase = {
+        const createOrUpdateCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue({ uuid: 'rule-1' }),
         };
 
@@ -482,9 +482,9 @@ describe('CentralizedConfigDownloadUseCase', () => {
 
         const useCase = new CentralizedConfigDownloadUseCase(
             getCodeReviewParameterUseCase as any,
-            generateKodusConfigFileUseCase as any,
-            findRulesInOrganizationByRuleFilterKodyRulesUseCase as any,
-            createOrUpdateKodyRulesUseCase as any,
+            generateCodusConfigFileUseCase as any,
+            findRulesInOrganizationByRuleFilterCodyRulesUseCase as any,
+            createOrUpdateCodyRulesUseCase as any,
             pullRequestMessagesService as any,
             centralizedConfigPrServiceMock as CentralizedConfigPrService,
         );
@@ -495,11 +495,11 @@ describe('CentralizedConfigDownloadUseCase', () => {
         });
 
         const ruleEntry = entries.find((entry) =>
-            entry.path.startsWith('repo-one/.kody-rules/review/'),
+            entry.path.startsWith('repo-one/.cody-rules/review/'),
         );
 
         expect(ruleEntry).toBeDefined();
-        expect(createOrUpdateKodyRulesUseCase.execute).toHaveBeenCalledWith(
+        expect(createOrUpdateCodyRulesUseCase.execute).toHaveBeenCalledWith(
             expect.objectContaining({
                 uuid: 'rule-1',
                 centralizedConfig: {
@@ -509,8 +509,8 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
             'org-1',
             {
-                userId: 'kody',
-                userEmail: 'kody@kodus.io',
+                userId: 'cody',
+                userEmail: 'cody@kodus.io',
             },
             true,
         );
@@ -536,7 +536,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             }),
         };
 
-        const generateKodusConfigFileUseCase = {
+        const generateCodusConfigFileUseCase = {
             execute: jest.fn().mockResolvedValue({
                 yamlString: 'languageResultPrompt: english\n',
             }),
@@ -552,7 +552,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             repositoryId: 'repo-1',
         };
 
-        const findRulesInOrganizationByRuleFilterKodyRulesUseCase = {
+        const findRulesInOrganizationByRuleFilterCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue([
                 {
                     ...baseRule,
@@ -578,7 +578,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
             ]),
         };
 
-        const createOrUpdateKodyRulesUseCase = {
+        const createOrUpdateCodyRulesUseCase = {
             execute: jest.fn().mockResolvedValue({ uuid: 'active-rule' }),
         };
 
@@ -588,9 +588,9 @@ describe('CentralizedConfigDownloadUseCase', () => {
 
         const useCase = new CentralizedConfigDownloadUseCase(
             getCodeReviewParameterUseCase as any,
-            generateKodusConfigFileUseCase as any,
-            findRulesInOrganizationByRuleFilterKodyRulesUseCase as any,
-            createOrUpdateKodyRulesUseCase as any,
+            generateCodusConfigFileUseCase as any,
+            findRulesInOrganizationByRuleFilterCodyRulesUseCase as any,
+            createOrUpdateCodyRulesUseCase as any,
             pullRequestMessagesService as any,
             centralizedConfigPrServiceMock as CentralizedConfigPrService,
         );
@@ -601,7 +601,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
         });
 
         const ruleEntries = entries.filter((entry) =>
-            entry.path.startsWith('repo-one/.kody-rules/review/'),
+            entry.path.startsWith('repo-one/.cody-rules/review/'),
         );
 
         // Only the approved (active) rule is exported.
@@ -610,7 +610,7 @@ describe('CentralizedConfigDownloadUseCase', () => {
         expect(exported.title).toBe('Active rule');
 
         // The pending/rejected rules are never marked into the centralized PR.
-        const markedUuids = createOrUpdateKodyRulesUseCase.execute.mock.calls.map(
+        const markedUuids = createOrUpdateCodyRulesUseCase.execute.mock.calls.map(
             (call) => call[0]?.uuid,
         );
         expect(markedUuids).toContain('active-rule');

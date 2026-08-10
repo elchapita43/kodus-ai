@@ -1,13 +1,13 @@
 <p align="center">
-  <img alt="logotipo de kodus" src="https://kodus.io/wp-content/uploads/2026/06/kodus-thumb-git-scaled.png">
+  <img alt="logotipo de codus" src="https://kodus.io/wp-content/uploads/2026/06/codus-thumb-git-scaled.png">
 </p>
 
 <p align="center">
    <a href="http://makeapullrequest.com">
       <img alt="PRs bienvenidos" src="https://img.shields.io/badge/PRs-welcome-darkgreen.svg?style=shields" />
    </a>
-   <a href="https://github.com/kodustech/kodus-ai" target="_blank">
-      <img src="https://img.shields.io/github/stars/kodustech/kodus-ai" alt="Estrellas de Github" />
+   <a href="https://github.com/elchapita43/codus-ai" target="_blank">
+      <img src="https://img.shields.io/github/stars/elchapita43/codus-ai" alt="Estrellas de Github" />
    </a>
    <a href="./license.md">
       <img src="https://img.shields.io/badge/license-AGPLv3-red" alt="Licencia" />
@@ -21,8 +21,8 @@
    <a href="https://discord.gg/6WbWrRbsH7">Comunidad</a> ·
    <a href="https://docs.kodus.io">Docs</a> ·
    <a href="https://docs.kodus.io/how_to_use/en/cli/overview">Docs del CLI</a> ·
-   <strong><a href="https://app.kodus.io">Prueba Kodus Cloud </a></strong> ·
-   <strong><a href="https://docs.kodus.io/how_to_deploy/en/deploy_kodus/generic_vm">Guía de Self-Host</a></strong>
+   <strong><a href="https://app.kodus.io">Prueba Codus Cloud </a></strong> ·
+   <strong><a href="https://docs.kodus.io/how_to_deploy/en/deploy_codus/generic_vm">Guía de Self-Host</a></strong>
 </p>
 
 <p align="center">
@@ -35,13 +35,13 @@
    <a href="./README.fr.md">Français</a>
 </p>
 
-## Por qué los equipos eligen Kodus
+## Por qué los equipos eligen Codus
 
 - **Agnóstico de modelos**: Usa Claude, GPT-5, Gemini, Llama, GLM, Kimi o cualquier endpoint compatible con OpenAI.
 - **Sin recargo en los costos de LLM**: Pagas directamente a los proveedores de modelos. Sin multiplicadores ocultos.
-- **Aprende de tu contexto**: Kody se adapta a tu arquitectura, estándares y flujo de trabajo.
+- **Aprende de tu contexto**: Cody se adapta a tu arquitectura, estándares y flujo de trabajo.
 - **Tú estableces las reglas**: Define reglas de revisión personalizadas en lenguaje natural.
-- **Privacidad y seguridad**: El código fuente no se usa para entrenar modelos, los datos se cifran en tránsito y en reposo, y se admiten runners self-hosted. Las instancias self-hosted envían un heartbeat anónimo por día (solo contadores agregados — sin código, nombres ni identificadores); desactívalo con `KODUS_TELEMETRY_DISABLED=true`. Consulta [Telemetría anónima](https://docs.kodus.io/how_to_deploy/en/deploy_kodus/telemetry).
+- **Privacidad y seguridad**: El código fuente no se usa para entrenar modelos, los datos se cifran en tránsito y en reposo, y se admiten runners self-hosted. Las instancias self-hosted envían un heartbeat anónimo por día (solo contadores agregados — sin código, nombres ni identificadores); desactívalo con `CODUS_TELEMETRY_DISABLED=true`. Consulta [Telemetría anónima](https://docs.kodus.io/how_to_deploy/en/deploy_codus/telemetry).
 - **Flujo de Git nativo**: Funciona directamente en PRs con GitHub, GitLab, Bitbucket y Azure Repos.
 - **Listo para CLI + CI/CD**: Ejecuta revisiones localmente y en pipelines.
 - **Impacto operativo**: Haz seguimiento de la deuda técnica y métricas de entrega manteniendo alta la calidad de revisión.
@@ -51,13 +51,13 @@
 <details>
   <summary><strong>🔑 Trae Tu Propia Clave (BYOK)</strong></summary>
 <br />
-Conecta tus propias credenciales de proveedor y elige los modelos detrás de las revisiones de Kodus: OpenAI, Anthropic, Google Gemini, Vertex AI, Novita o cualquier endpoint compatible con OpenAI. Mantén la facturación y el uso bajo tu propia cuenta de proveedor, sin recargos ocultos de LLM.
+Conecta tus propias credenciales de proveedor y elige los modelos detrás de las revisiones de Codus: OpenAI, Anthropic, Google Gemini, Vertex AI, Novita o cualquier endpoint compatible con OpenAI. Mantén la facturación y el uso bajo tu propia cuenta de proveedor, sin recargos ocultos de LLM.
 
 <br />
 <br />
 
 <p align="center">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/byok-scaled.png" alt="Configuración de proveedor de modelos Kodus BYOK" width="900">
+  <img src="https://kodus.io/wp-content/uploads/2026/06/byok-scaled.png" alt="Configuración de proveedor de modelos Codus BYOK" width="900">
 </p>
 
 </details>
@@ -73,7 +73,7 @@ Haz seguimiento del consumo de tokens en las revisiones de código con IA, compr
 <br />
 
 <p align="center">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/token-usage-scaled.png" alt="Dashboard de uso de tokens de Kodus" width="900">
+  <img src="https://kodus.io/wp-content/uploads/2026/06/token-usage-scaled.png" alt="Dashboard de uso de tokens de Codus" width="900">
 </p>
 
 </details>
@@ -81,28 +81,28 @@ Haz seguimiento del consumo de tokens en las revisiones de código con IA, compr
 <br />
 
 <details>
-  <summary><strong>⚙️ Kody Rules</strong></summary>
+  <summary><strong>⚙️ Cody Rules</strong></summary>
 <br />
-Kody Rules permite a los equipos definir instrucciones de revisión en lenguaje natural y aplicarlas en organizaciones, repositorios, rutas o ámbitos de revisión específicos. Kody usa esas reglas como contexto al revisar pull requests, ayudando a aplicar decisiones de arquitectura, expectativas de seguridad, prácticas de testing y convenciones específicas del repositorio sin depender de que los revisores repitan manualmente los mismos comentarios.
+Cody Rules permite a los equipos definir instrucciones de revisión en lenguaje natural y aplicarlas en organizaciones, repositorios, rutas o ámbitos de revisión específicos. Cody usa esas reglas como contexto al revisar pull requests, ayudando a aplicar decisiones de arquitectura, expectativas de seguridad, prácticas de testing y convenciones específicas del repositorio sin depender de que los revisores repitan manualmente los mismos comentarios.
 
 <br />
 <br />
 
 <p align="center">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/rules-scaled.png" alt="Reglas de Kody" width="900">
+  <img src="https://kodus.io/wp-content/uploads/2026/06/rules-scaled.png" alt="Reglas de Cody" width="900">
 </p>
 </details>
 <br />
 <details>
   <summary><strong>📊 Cockpit</strong></summary>
 <br />
-Cockpit ayuda a los equipos a medir la efectividad de las revisiones de Kodus, la salud de las Kody Rules, la salud de los repositorios y las métricas de entrega en todo el flujo de trabajo de ingeniería.
+Cockpit ayuda a los equipos a medir la efectividad de las revisiones de Codus, la salud de las Cody Rules, la salud de los repositorios y las métricas de entrega en todo el flujo de trabajo de ingeniería.
 
 <br />
 <br />
 
 <p align="center">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/cockpit-kodus-scaled.png" alt="Cockpit de Kodus mostrando la salud del pipeline de revisión de código con IA" width="900">
+  <img src="https://kodus.io/wp-content/uploads/2026/06/cockpit-codus-scaled.png" alt="Cockpit de Codus mostrando la salud del pipeline de revisión de código con IA" width="900">
 </p>
 
 </details>
@@ -110,47 +110,47 @@ Cockpit ayuda a los equipos a medir la efectividad de las revisiones de Kodus, l
 <br />
 
 <details>
-  <summary><strong>🧩 Kody Issues</strong></summary>
+  <summary><strong>🧩 Cody Issues</strong></summary>
 <br />
-Haz seguimiento automático de las sugerencias no implementadas de pull requests cerrados, gestiónalas por estado, severidad, categoría y repositorio, y deja que Kody las resuelva cuando la corrección aparezca en un PR futuro.
+Haz seguimiento automático de las sugerencias no implementadas de pull requests cerrados, gestiónalas por estado, severidad, categoría y repositorio, y deja que Cody las resuelva cuando la corrección aparezca en un PR futuro.
 <br />
 <br />
 
 <p align="center">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/issues-scaled.png" alt="Dashboard de Kody Issues" width="900">
+  <img src="https://kodus.io/wp-content/uploads/2026/06/issues-scaled.png" alt="Dashboard de Cody Issues" width="900">
 </p>
 
 </details>
 
 <br />
 <details>
-  <summary><strong>🔎 Mira a Kody revisando un pull request real</strong></summary>
+  <summary><strong>🔎 Mira a Cody revisando un pull request real</strong></summary>
 <br />
-Kody hace más que resumir diffs. Revisa código con contexto, marca riesgos por severidad y sugiere correcciones concretas directamente en el pull request.
+Cody hace más que resumir diffs. Revisa código con contexto, marca riesgos por severidad y sugiere correcciones concretas directamente en el pull request.
 
 <br />
 <br />
 
 <p align="center">
   <img
-    src="https://kodus.io/wp-content/uploads/2025/12/review-kody-.png"
-    alt="Kody detectando un problema crítico de seguridad IDOR en una revisión de pull request"
+    src="https://kodus.io/wp-content/uploads/2025/12/review-cody-.png"
+    alt="Cody detectando un problema crítico de seguridad IDOR en una revisión de pull request"
     width="700"
   />
 </p>
 
-En este ejemplo, Kody detecta un riesgo crítico de IDOR donde un parámetro de consulta `organizationId` podría evadir la protección de tenant al pasarse como un array, y luego sugiere una validación explícita en tiempo de ejecución antes de que el código se fusione.
+En este ejemplo, Cody detecta un riesgo crítico de IDOR donde un parámetro de consulta `organizationId` podría evadir la protección de tenant al pasarse como un array, y luego sugiere una validación explícita en tiempo de ejecución antes de que el código se fusione.
 
 </details>
 
 ## Comienza
 
-Elige el flujo de trabajo que coincida con cómo quieres usar Kodus.
+Elige el flujo de trabajo que coincida con cómo quieres usar Codus.
 
 <table>
   <tr>
     <td width="50%">
-      <strong>Prueba Kodus Cloud</strong>
+      <strong>Prueba Codus Cloud</strong>
       <br />
       Comienza a revisar pull requests sin gestionar infraestructura.
       <br />
@@ -160,13 +160,13 @@ Elige el flujo de trabajo que coincida con cómo quieres usar Kodus.
       <a href="https://kodus.io/pricing">Ver precios</a>
     </td>
     <td width="50%">
-      <strong>Self-host Kodus</strong>
+      <strong>Self-host Codus</strong>
       <br />
-      Despliega Kodus en tu propia infraestructura con control sobre los datos,
+      Despliega Codus en tu propia infraestructura con control sobre los datos,
       los modelos y la configuración de ejecución.
       <br />
       <br />
-      <a href="https://docs.kodus.io/how_to_deploy/en/deploy_kodus/generic_vm">Guía de instalación</a>
+      <a href="https://docs.kodus.io/how_to_deploy/en/deploy_codus/generic_vm">Guía de instalación</a>
     </td>
   </tr>
   <tr>
@@ -177,11 +177,11 @@ Elige el flujo de trabajo que coincida con cómo quieres usar Kodus.
       trabajo, diff staged, rama o commit.
       <br />
       <br />
-      <code>kodus review</code>
+      <code>codus review</code>
       <br />
-      <code>kodus review --staged</code>
+      <code>codus review --staged</code>
       <br />
-      <code>kodus review --prompt-only</code>
+      <code>codus review --prompt-only</code>
       <br />
       <br />
       <a href="https://docs.kodus.io/how_to_use/en/cli/introduction">Visión general del CLI</a>
@@ -193,13 +193,13 @@ Elige el flujo de trabajo que coincida con cómo quieres usar Kodus.
     <td width="50%">
       <strong>Contribuye localmente</strong>
       <br />
-      Ejecuta el monorepo de Kodus localmente para desarrollo en la API, worker,
+      Ejecuta el monorepo de Codus localmente para desarrollo en la API, worker,
       servicio de webhooks, aplicación web e infraestructura local.
       <br />
       <br />
-      <code>git clone https://github.com/kodustech/kodus-ai.git</code>
+      <code>git clone https://github.com/elchapita43/codus-ai.git</code>
       <br />
-      <code>cd kodus-ai</code>
+      <code>cd codus-ai</code>
       <br />
       <code>yarn setup</code>
       <br />
@@ -211,10 +211,10 @@ Elige el flujo de trabajo que coincida con cómo quieres usar Kodus.
 
 ## Estructura del Monorepo
 
-Kodus es un monorepo con múltiples aplicaciones, librerías de dominio compartidas y paquetes publicados.
+Codus es un monorepo con múltiples aplicaciones, librerías de dominio compartidas y paquetes publicados.
 
 ```txt
-kodus-ai/
+codus-ai/
 ├── apps/
 │   ├── api/          # API NestJS
 │   ├── web/          # Dashboard Next.js
@@ -222,37 +222,37 @@ kodus-ai/
 │   └── webhooks/     # Ingestión de webhooks de proveedores Git
 ├── libs/             # Módulos de dominio NestJS compartidos
 ├── packages/
-│   ├── kodus-flow/   # SDK de orquestación de agentes IA
-│   └── kodus-common/ # Paquete de abstracción de LLM
+│   ├── codus-flow/   # SDK de orquestación de agentes IA
+│   └── codus-common/ # Paquete de abstracción de LLM
 └── scripts/          # Scripts de dev, deploy, benchmark y automatización
 ```
 
 | Ruta | Propósito |
 | --- | --- |
-| `apps/api` | API NestJS principal para autenticación, organizaciones, equipos, Kody Rules, integraciones, permisos y orquestación de revisiones de código. |
-| `apps/web` | Aplicación web Next.js para el dashboard de Kodus. |
+| `apps/api` | API NestJS principal para autenticación, organizaciones, equipos, Cody Rules, integraciones, permisos y orquestación de revisiones de código. |
+| `apps/web` | Aplicación web Next.js para el dashboard de Codus. |
 | `apps/worker` | Servicio en segundo plano para la ejecución de revisiones de código, procesamiento de colas, verificación de sugerencias, jobs de automatización y tareas de monitoreo. |
 | `apps/webhooks` | Servicio de ingestión de webhooks para eventos de GitHub, GitLab, Azure Repos, Bitbucket y Forgejo. |
-| `libs` | Módulos de dominio NestJS compartidos usados en todas las aplicaciones de Kodus. |
-| `packages/kodus-flow` | SDK para orquestación de agentes IA. |
-| `packages/kodus-common` | Paquete de abstracción de LLM compartido para proveedores de modelos. |
+| `libs` | Módulos de dominio NestJS compartidos usados en todas las aplicaciones de Codus. |
+| `packages/codus-flow` | SDK para orquestación de agentes IA. |
+| `packages/codus-common` | Paquete de abstracción de LLM compartido para proveedores de modelos. |
 
 Para instrucciones completas de configuración, sigue el [Quickstart local](https://docs.kodus.io/how_to_deploy/en/local_quickstart/orchestrator).
 
 ## Open Source vs. Teams vs. Enterprise
 
-| Característica | <img src="https://kodus.io/wp-content/uploads/2026/06/kody-community2-scaled.webp" alt="Kody Community" width="110" /><br>Community | <img src="https://kodus.io/wp-content/uploads/2026/06/kody-team-scaled.webp" alt="Kody Teams" width="110" /><br>Teams | <img src="https://kodus.io/wp-content/uploads/2026/06/kody-enterprise-scaled.webp" alt="Kody Enterprise" width="110" /><br>Enterprise |
+| Característica | <img src="https://kodus.io/wp-content/uploads/2026/06/cody-community2-scaled.webp" alt="Cody Community" width="110" /><br>Community | <img src="https://kodus.io/wp-content/uploads/2026/06/cody-team-scaled.webp" alt="Cody Teams" width="110" /><br>Teams | <img src="https://kodus.io/wp-content/uploads/2026/06/cody-enterprise-scaled.webp" alt="Cody Enterprise" width="110" /><br>Enterprise |
 | :--- | :---: | :---: | :---: |
 | Precio | Gratis | $10/dev mensual o $8/dev anual (+ tokens/dev) | Personalizado |
-| Hosting | Self-hosted **o** alojado por Kodus | Alojado por Kodus | Self-hosted **o** alojado por Kodus |
+| Hosting | Self-hosted **o** alojado por Codus | Alojado por Codus | Self-hosted **o** alojado por Codus |
 | Trae Tu Propia Clave (BYOK) | ✅ | ✅ | ✅ |
-| Uso de PR | PRs ilimitados usando tu propia API key | PRs ilimitados usando tu propia API key | PRs ilimitados usando la API key de Kodus AI Tokens |
+| Uso de PR | PRs ilimitados usando tu propia API key | PRs ilimitados usando tu propia API key | PRs ilimitados usando la API key de Codus AI Tokens |
 | Usuarios | Ilimitados | Ilimitados | Ilimitados |
-| Kody Rules | Hasta 10 | Ilimitadas | Ilimitadas |
+| Cody Rules | Hasta 10 | Ilimitadas | Ilimitadas |
 | Plugins activos | Hasta 3 | Ilimitados | Ilimitados |
-| Kody Learnings y Memory | ✅ | ✅ | ✅ |
+| Cody Learnings y Memory | ✅ | ✅ | ✅ |
 | Issues del Quality Radar | Ilimitados | Ilimitados | Ilimitados |
-| Cola prioritaria para Kody Agents | ❌ | ✅ | ✅ |
+| Cola prioritaria para Cody Agents | ❌ | ✅ | ✅ |
 | Métricas de ingeniería / Cockpit | ❌ | ✅ | ✅ |
 | SSO | ❌ | ❌ | ✅ |
 | RBAC + logs de auditoría + analítica | ❌ | ❌ | ✅ |
@@ -265,21 +265,21 @@ Para instrucciones completas de configuración, sigue el [Quickstart local](http
 
 | Recurso | Descripción |
 | --- | --- |
-| [Sitio web](https://kodus.io) | Conoce más sobre Kodus, las capacidades del producto y los precios. |
+| [Sitio web](https://kodus.io) | Conoce más sobre Codus, las capacidades del producto y los precios. |
 | [Documentación](https://docs.kodus.io) | Guías de configuración, docs del producto, uso del CLI e instrucciones de self-hosting. |
-| [Kodus Cloud](https://app.kodus.io) | Comienza a usar Kodus sin gestionar infraestructura. |
-| [Guía de Self-Host](https://docs.kodus.io/how_to_deploy/en/deploy_kodus/generic_vm) | Despliega Kodus en tu propio entorno. |
+| [Codus Cloud](https://app.kodus.io) | Comienza a usar Codus sin gestionar infraestructura. |
+| [Guía de Self-Host](https://docs.kodus.io/how_to_deploy/en/deploy_codus/generic_vm) | Despliega Codus en tu propio entorno. |
 | [Docs del CLI](https://docs.kodus.io/how_to_use/en/cli/overview) | Ejecuta revisiones de código con IA localmente, en CI/CD o dentro de agentes de codificación. |
-| [Comunidad de Discord](https://discord.gg/6WbWrRbsH7) | Haz preguntas, obtén ayuda de configuración y habla con el equipo de Kodus. |
+| [Comunidad de Discord](https://discord.gg/6WbWrRbsH7) | Haz preguntas, obtén ayuda de configuración y habla con el equipo de Codus. |
 | [Precios](https://kodus.io/pricing) | Compara las ediciones Community, Teams y Enterprise. |
-| [Agenda una llamada](https://cal.com/gabrielmalinosqui/30min) | Habla con el equipo de Kodus sobre configuración, self-hosting o necesidades enterprise. |
+| [Agenda una llamada](https://cal.com/gabrielmalinosqui/30min) | Habla con el equipo de Codus sobre configuración, self-hosting o necesidades enterprise. |
 
 
 
 ## Contribuir
 
 <p align="left">
-  <img src="https://kodus.io/wp-content/uploads/2026/06/kody-contributing-scaled.png" alt="Kody contribuyendo" width="230" />
+  <img src="https://kodus.io/wp-content/uploads/2026/06/cody-contributing-scaled.png" alt="Cody contribuyendo" width="230" />
 </p>
 
 Agradecemos contribuciones de todos los tamaños 🧡

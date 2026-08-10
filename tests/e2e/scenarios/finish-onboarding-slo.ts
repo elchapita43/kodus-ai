@@ -8,17 +8,17 @@ const log = logger("finish-onboarding-slo");
 /**
  * Onboarding SLO (issue #1452 matrix-gaps item 6).
  *
- * finish-onboarding runs the per-repo Kody-rules generation + repo-file sync
+ * finish-onboarding runs the per-repo Cody-rules generation + repo-file sync
  * SYNCHRONOUSLY inside the HTTP request. #1494 made that sync expensive (it now
  * calls the LLM), pushing the request past the cloud proxy's 60s read-timeout →
  * nginx 504 → the onboarding UI showed a spinner-then-error while the work
  * sometimes finished in the background. The shared finishOnboarding() e2e
- * helper INTENTIONALLY tolerates that (it polls kodyLearningStatus so every
+ * helper INTENTIONALLY tolerates that (it polls codyLearningStatus so every
  * other scenario survives a slow-but-eventually-consistent onboarding) — which
  * is exactly why no scenario measured the SLO itself. This one does the
  * opposite on purpose: a proxy-timeout status is a hard FAIL, and it also
  * asserts the two post-conditions nothing else checks — the ONBOARDING_REPO_
- * ANALYSIS path both flips kodyLearningStatus to `enabled` AND generates ≥1
+ * ANALYSIS path both flips codyLearningStatus to `enabled` AND generates ≥1
  * rule.
  *
  * Cloud-only: the 60s budget is the cloud reverse-proxy's read-timeout. A
@@ -28,7 +28,7 @@ const log = logger("finish-onboarding-slo");
 export const finishOnboardingSlo: Scenario = {
     id: "finish-onboarding-slo",
     title:
-        "finish-onboarding completes within the proxy window and enables Kody (no 504, rules generated)",
+        "finish-onboarding completes within the proxy window and enables Cody (no 504, rules generated)",
     priority: "P0",
     appliesTo: {
         target: ["cloud"],
@@ -39,11 +39,11 @@ export const finishOnboardingSlo: Scenario = {
     async run(ctx: RunContext) {
         ctx.assert(ctx.tenant, "scenario requires a tenant");
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
         // forceRecreate so the onboarding actually runs the analysis for THIS
         // run rather than short-circuiting on an already-onboarded repo.
-        const repo = await ctx.kodus.registerRepo(session, {
+        const repo = await ctx.codus.registerRepo(session, {
             forceRecreate: true,
         });
 
@@ -88,12 +88,12 @@ export const finishOnboardingSlo: Scenario = {
             );
         }
 
-        // Post-condition 1: kodyLearningStatus flips to `enabled`. The status
-        // write is the completion marker of generate-kody-rules; it can lag the
+        // Post-condition 1: codyLearningStatus flips to `enabled`. The status
+        // write is the completion marker of generate-cody-rules; it can lag the
         // 2xx briefly, so poll a short window.
         const learningEnabled = await pollUntil<boolean>(
             async () => {
-                const s = await readKodyLearningStatus(ctx, session).catch(
+                const s = await readCodyLearningStatus(ctx, session).catch(
                     () => undefined,
                 );
                 return s === "enabled" ? true : null;
@@ -102,23 +102,23 @@ export const finishOnboardingSlo: Scenario = {
         );
         ctx.assert(
             learningEnabled === true,
-            `kodyLearningStatus never reached "enabled" within 120s of a 2xx ` +
+            `codyLearningStatus never reached "enabled" within 120s of a 2xx ` +
                 `finish-onboarding — the analysis path did not complete (ONBOARDING_REPO_ANALYSIS).`,
         );
 
-        // Post-condition 2: ≥1 Kody rule generated. The ONBOARDING_REPO_ANALYSIS
+        // Post-condition 2: ≥1 Cody rule generated. The ONBOARDING_REPO_ANALYSIS
         // path is supposed to seed rules; a 0-rule "enabled" onboarding is the
         // silent half-failure no scenario caught.
         const ruleCount = await pollUntil<number>(
             async () => {
-                const c = await countOrgKodyRules(ctx, session).catch(() => 0);
+                const c = await countOrgCodyRules(ctx, session).catch(() => 0);
                 return c > 0 ? c : null;
             },
             { intervalSec: 5, timeoutSec: 120 },
         );
         ctx.assert(
             (ruleCount ?? 0) >= 1,
-            `finish-onboarding enabled Kody but generated 0 rules within 120s — ` +
+            `finish-onboarding enabled Cody but generated 0 rules within 120s — ` +
                 `the ONBOARDING_REPO_ANALYSIS rule-seeding produced nothing.`,
         );
 
@@ -127,18 +127,18 @@ export const finishOnboardingSlo: Scenario = {
             finishOnboardingMs: elapsedMs,
             withinProxyBudget: elapsedMs <= PROXY_BUDGET_MS,
             httpStatus: resp.status,
-            kodyLearningStatus: "enabled",
+            codyLearningStatus: "enabled",
             rulesGenerated: ruleCount,
         };
     },
 };
 
 interface PlatformConfigsResponse {
-    data?: { configValue?: { kodyLearningStatus?: string } };
-    configValue?: { kodyLearningStatus?: string };
+    data?: { configValue?: { codyLearningStatus?: string } };
+    configValue?: { codyLearningStatus?: string };
 }
 
-async function readKodyLearningStatus(
+async function readCodyLearningStatus(
     ctx: RunContext,
     session: { teamId: string; accessToken: string },
 ): Promise<string | undefined> {
@@ -152,18 +152,18 @@ async function readKodyLearningStatus(
     if (resp.status < 200 || resp.status >= 300) return undefined;
     const root = (resp.body ?? {}) as PlatformConfigsResponse;
     return (
-        root.data?.configValue?.kodyLearningStatus ??
-        root.configValue?.kodyLearningStatus
+        root.data?.configValue?.codyLearningStatus ??
+        root.configValue?.codyLearningStatus
     );
 }
 
-/** Count Kody rules for the org (defensive walk of the listing shape). */
-async function countOrgKodyRules(
+/** Count Cody rules for the org (defensive walk of the listing shape). */
+async function countOrgCodyRules(
     ctx: RunContext,
     session: { teamId: string; accessToken: string },
 ): Promise<number> {
     const resp = await http<any>(
-        `${ctx.target.apiBaseUrl}/kody-rules/find-by-organization-id`,
+        `${ctx.target.apiBaseUrl}/cody-rules/find-by-organization-id`,
         {
             headers: { Authorization: `Bearer ${session.accessToken}` },
             timeoutMs: 15_000,

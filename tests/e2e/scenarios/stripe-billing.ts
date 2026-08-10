@@ -33,7 +33,7 @@ interface CloudTenantEntry {
 }
 
 function findTenantPassword(): string | undefined {
-    const path = join(homedir(), ".kodus-dev", "cloud-tenants.json");
+    const path = join(homedir(), ".codus-dev", "cloud-tenants.json");
     if (!existsSync(path)) return undefined;
     try {
         const raw = readFileSync(path, "utf8");
@@ -97,7 +97,7 @@ export const stripeBilling: Scenario = {
             process.env.STRIPE_E2E_PASSWORD ?? findTenantPassword();
         ctx.assert(
             !!password,
-            "STRIPE_E2E_PASSWORD env not set and no e2e-stripe-checkout-free entry in ~/.kodus-dev/cloud-tenants.json — run `pnpm run cloud:setup-tenants` first",
+            "STRIPE_E2E_PASSWORD env not set and no e2e-stripe-checkout-free entry in ~/.codus-dev/cloud-tenants.json — run `pnpm run cloud:setup-tenants` first",
         );
 
         const result = await runSpec({

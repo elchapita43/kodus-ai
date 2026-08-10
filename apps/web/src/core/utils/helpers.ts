@@ -37,7 +37,7 @@ export function pathToApiUrl(
     let hostName = process.env.WEB_HOSTNAME_API;
     if (hostName === "localhost") {
         hostName =
-            process.env.GLOBAL_API_CONTAINER_NAME || "kodus_api";
+            process.env.GLOBAL_API_CONTAINER_NAME || "codus_api";
     }
     const port = process.env.WEB_PORT_API;
 
@@ -52,7 +52,7 @@ export function pathToApiUrl(
  * Build a URL for a backend upstream.
  *
  * Pass `{ internal: true }` when the target is on the same Docker /
- * Kubernetes network as us (`kodus_api:3001`, `kodus-service-billing:3992`,
+ * Kubernetes network as us (`codus_api:3001`, `codus-service-billing:3992`,
  * etc.) — then the function just assembles `http://host:port/path`.
  *
  * When `internal` is unset, the function falls back to a heuristic
@@ -201,14 +201,14 @@ export const codeReviewConfigRemovePropertiesNotInType = (
         "ideSyncDisableAction",
         "ignorePaths",
         "reviewOptions",
-        "kodusConfigFileOverridesWebPreferences",
+        "codusConfigFileOverridesWebPreferences",
         "pullRequestApprovalActive",
         "suggestionControl",
         "summary",
         "isRequestChangesActive",
-        "kodyRulesGeneratorEnabled",
-        "kodyLearningExcludedReviewers",
-        "kodyKnowledgeApproval",
+        "codyRulesGeneratorEnabled",
+        "codyLearningExcludedReviewers",
+        "codyKnowledgeApproval",
         "runOnDraft",
         "codeReviewVersion",
         "enableCommittableSuggestions",

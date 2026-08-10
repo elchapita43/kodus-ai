@@ -29,7 +29,7 @@
  *                                 (or API_GOOGLE_AI_API_KEY — script
  *                                 picks whichever is set).
  *   DISCORD_WEBHOOK_COMMUNITY     customer-facing #releases
- *                                 channel in the Kodus community
+ *                                 channel in the Codus community
  *                                 Discord. Falls back to
  *                                 DISCORD_WEBHOOK_SELFHOSTED (historical
  *                                 channel that received this content
@@ -291,7 +291,7 @@ async function generateCopy(
             ? 'Audience: cloud + self-hosted (default)'
             : `Audience: ${promotion.audience.join(' + ')}`;
     const prompt = [
-        'You write the Kodus public changelog. Follow this voice guide strictly:',
+        'You write the Codus public changelog. Follow this voice guide strictly:',
         '',
         voice,
         '',
@@ -320,7 +320,7 @@ async function generateCopy(
                   '',
                   'Use these to figure out the user-facing surface. Common mappings:',
                   '  apps/web -> dashboard / web app',
-                  '  apps/cli -> Kodus CLI',
+                  '  apps/cli -> Codus CLI',
                   '  apps/mcp-manager -> MCP integration',
                   '  apps/api / apps/worker / apps/webhooks -> backend (often dashboard)',
                   '  libs/code-review -> the code review engine (cross-cutting)',
@@ -613,7 +613,7 @@ async function polishPRsWithGemini(
     }));
 
     const prompt = [
-        'You write the Kodus public changelog. Follow this voice guide strictly:',
+        'You write the Codus public changelog. Follow this voice guide strictly:',
         '',
         voice,
         '',

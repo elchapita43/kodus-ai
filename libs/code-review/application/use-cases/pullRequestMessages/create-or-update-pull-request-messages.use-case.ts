@@ -17,7 +17,7 @@ import { IPullRequestMessages } from '@libs/code-review/domain/pullRequestMessag
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';
 import { ActionType } from '@libs/core/infrastructure/config/types/general/codeReviewSettingsLog.type';
 import { ConfigLevel } from '@libs/core/infrastructure/config/types/general/pullRequestMessages.type';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import {
     Action,
     ResourceType,
@@ -34,7 +34,7 @@ import {
     PARAMETERS_SERVICE_TOKEN,
 } from '@libs/organization/domain/parameters/contracts/parameters.service.contract';
 import { createLogger } from '@libs/core/log/logger';
-import { buildKodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/kodus-config-centralized-pr.builder';
+import { buildCodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/codus-config-centralized-pr.builder';
 
 @Injectable()
 export class CreateOrUpdatePullRequestMessagesUseCase implements IUseCase {
@@ -313,7 +313,7 @@ export class CreateOrUpdatePullRequestMessagesUseCase implements IUseCase {
 
         const pr =
             await this.centralizedConfigPrService.createMutationPullRequestIfEnabled(
-                buildKodusConfigCentralizedMutationRequest({
+                buildCodusConfigCentralizedMutationRequest({
                     centralizedConfigPrService: this.centralizedConfigPrService,
                     organizationAndTeamData: {
                         organizationId,
@@ -336,7 +336,7 @@ export class CreateOrUpdatePullRequestMessagesUseCase implements IUseCase {
                         'This pull request proposes a custom messages change in centralized config mode.',
                     commitMessage: `update custom messages for ${pullRequestMessages.repositoryId || 'global'}`,
                     sourceBranchPrefix:
-                        'kodus-centralized-config-custom-messages',
+                        'codus-centralized-config-custom-messages',
                     centralizedModeMessage:
                         'Centralized config is enabled. Custom messages change proposed through a pull request.',
                 }),
@@ -557,7 +557,7 @@ export class CreateOrUpdatePullRequestMessagesUseCase implements IUseCase {
         repositoryId?: string,
         _directoryId?: string,
     ): Promise<IPullRequestMessages> {
-        const { customMessages: defaultConfig } = getDefaultKodusConfigFile();
+        const { customMessages: defaultConfig } = getDefaultCodusConfigFile();
 
         // Get global configuration
         const globalEntity = await this.pullRequestMessagesService.findOne({

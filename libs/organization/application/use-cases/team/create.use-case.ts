@@ -9,7 +9,7 @@ import {
 import { TeamEntity } from '@libs/organization/domain/team/entities/team.entity';
 import { STATUS } from '@libs/core/infrastructure/config/types/database/status.type';
 import {
-    KodyLearningStatus,
+    CodyLearningStatus,
     PlatformConfigValue,
 } from '@libs/organization/domain/parameters/types/configValue.type';
 import { ParametersKey } from '@libs/core/domain/enums';
@@ -80,7 +80,7 @@ export class CreateTeamUseCase implements IUseCase {
         const initialStatus: PlatformConfigValue = {
             finishOnboard: false,
             finishProjectManagementConnection: false,
-            kodyLearningStatus: KodyLearningStatus.ENABLED,
+            codyLearningStatus: CodyLearningStatus.ENABLED,
         };
 
         return this.createOrUpdateParametersUseCase.execute(

@@ -30,7 +30,7 @@
                     "type": "string",
                     "enum": ["none", "replace", "concatenate"],
                     "default": "none",
-                    "description": "Defines how Kody updates the summary when new commits arrive."
+                    "description": "Defines how Cody updates the summary when new commits arrive."
                 }
             },
             "required": [
@@ -76,10 +76,10 @@
                     "default": true,
                     "description": "Enable code style checks during the review."
                 },
-                "kody_rules": {
+                "cody_rules": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Enable Kody rules checks during the review."
+                    "description": "Enable Cody rules checks during the review."
                 },
                 "refactoring": {
                     "type": "boolean",
@@ -120,7 +120,7 @@
             "required": [
                 "security",
                 "code_style",
-                "kody_rules",
+                "cody_rules",
                 "refactoring",
                 "error_handling",
                 "maintainability",
@@ -158,10 +158,10 @@
                     "default": "medium",
                     "description": "Filter for the severity level of suggestions."
                 },
-                "applyFiltersToKodyRules": {
+                "applyFiltersToCodyRules": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Whether to apply all filters (severity and quantity) to Kody Rules. When false, Kody Rules ignore all filters."
+                    "description": "Whether to apply all filters (severity and quantity) to Cody Rules. When false, Cody Rules ignore all filters."
                 },
                 "severityLimits": {
                     "type": "object",
@@ -237,7 +237,7 @@
         "showStatusFeedback": {
             "type": "boolean",
             "default": true,
-            "description": "Indicates whether Kody should send skip/error status feedback using emoji reactions or comments."
+            "description": "Indicates whether Cody should send skip/error status feedback using emoji reactions or comments."
         },
         "pullRequestApprovalActive": {
             "type": "boolean",

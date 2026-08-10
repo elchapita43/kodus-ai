@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs/promises';
 import path from 'path';
 import { gitService } from '../../services/git.service.js';
-import { KODUS_MARKER } from './install.js';
+import { CODUS_MARKER } from './install.js';
 import { exitWithCode } from '../../utils/cli-exit.js';
 import { cliError, cliInfo } from '../../utils/logger.js';
 import type { GlobalOptions } from '../../types/cli.js';
@@ -49,7 +49,7 @@ export async function uninstallAction(
             const payload = {
                 action: 'hook uninstall',
                 path: hookPath,
-                installedByKodus: content.includes(KODUS_MARKER),
+                installedByCodus: content.includes(CODUS_MARKER),
                 fileExists: true,
             };
             if (ctx.isAgent) {
@@ -69,10 +69,10 @@ export async function uninstallAction(
             return;
         }
 
-        if (!content.includes(KODUS_MARKER)) {
+        if (!content.includes(CODUS_MARKER)) {
             cliInfo(
                 chalk.yellow(
-                    'The pre-push hook was not installed by kodus. Skipping.',
+                    'The pre-push hook was not installed by codus. Skipping.',
                 ),
             );
             return;

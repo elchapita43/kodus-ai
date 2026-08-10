@@ -33,7 +33,7 @@ env:
     AWS_REGION: ${{ secrets.AWS_REGION }}
     IMAGE_TAG: ${{ github.event.inputs.image_tag || github.sha }}
     BUILDX_PLATFORMS: linux/arm64
-    BUILDX_CACHE_SCOPE: kodus-ai-arm64
+    BUILDX_CACHE_SCOPE: codus-ai-arm64
     # The runner is linux/amd64 but our images are pushed arm64-only.
     # Without this, Trivy tries to resolve a child manifest for its own
     # platform inside the manifest list and fails with "no child with
@@ -143,7 +143,7 @@ jobs:
                   # Durable registry build cache in GHCR (read by bake's
                   # CACHE_TYPE/CACHE_REF — see docker-bake.hcl). arm64-only tag.
                   CACHE_TYPE: registry
-                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/kodus-ai-buildcache:qa-arm64
+                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/codus-ai-buildcache:qa-arm64
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
                   API_TAGS: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_API
                       }}:${{ env.IMAGE_TAG }}
@@ -176,7 +176,7 @@ jobs:
             # ---- CVE scan -----------------------------------------------------
             # See selfhosted-build-push.yml for flag rationale. Advisory-only
             # (`exit-code: 0`) until backlog triage — flip to `1` to block.
-            - name: Trivy scan — kodus-ai-api
+            - name: Trivy scan — codus-ai-api
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_API
@@ -187,7 +187,7 @@ jobs:
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-webhooks
+            - name: Trivy scan — codus-ai-webhooks
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{
@@ -198,7 +198,7 @@ jobs:
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-worker
+            - name: Trivy scan — codus-ai-worker
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_WORKER
@@ -331,12 +331,12 @@ jobs:
 
             - name: Wait for every QA service to reach steady state
               env:
-                  CLUSTER: kodus-qa-orchestrator
+                  CLUSTER: codus-qa-orchestrator
               run: |
                   set -uo pipefail
                   # worker FIRST: it is the one the reviews actually need, and
                   # the one that rolls last. api/webhook are cheap to confirm.
-                  SERVICES="kodus-qa-orchestrator-worker kodus-qa-orchestrator-api kodus-qa-orchestrator-webhook"
+                  SERVICES="codus-qa-orchestrator-worker codus-qa-orchestrator-api codus-qa-orchestrator-webhook"
                   DEADLINE=$(( $(date +%s) + 30 * 60 ))
 
                   for SVC in $SERVICES; do
@@ -416,8 +416,8 @@ jobs:
                         - 'libs/code-review/**'
                         - 'libs/ee/codeBase/**'
                         - 'libs/ee/codeReview/**'
-                        - 'libs/ee/kodyRules/**'
-                        - 'libs/kodyRules/**'
+                        - 'libs/ee/codyRules/**'
+                        - 'libs/codyRules/**'
                         - 'libs/sandbox/**'
                         - 'libs/core/infrastructure/services/tokenTracking/**'
                         - 'apps/web/src/features/ee/byok/_data/curated-models.json'

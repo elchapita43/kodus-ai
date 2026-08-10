@@ -79,7 +79,7 @@ const getTranslationsForLanguageByCategory = <T extends keyof Translations>(
 };
 
 interface ReviewComment {
-    talkToKody: string;
+    talkToCody: string;
     feedback: string;
 }
 
@@ -96,7 +96,7 @@ interface PullRequestFinishSummaryMarkdown {
     withErrors?: string;
     /**
      * Short notice appended to the regular success copy when only
-     * auxiliary checks failed (e.g. the Kody Rules agent threw). Signals
+     * auxiliary checks failed (e.g. the Cody Rules agent threw). Signals
      * to the user *why* auto-approve was skipped despite the message
      * saying the review completed. Optional; the resolver falls back to
      * en-US when missing.

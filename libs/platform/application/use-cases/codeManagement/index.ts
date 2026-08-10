@@ -1,5 +1,5 @@
 import { BackfillAstGraphBuildUseCase } from './backfill-ast-graph-build.use-case';
-import { ChatWithKodyFromGitUseCase } from './chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from './chatWithCodyFromGit.use-case';
 import { CreateIntegrationUseCase } from './create-integration.use-case';
 import { CreatePRCodeReviewUseCase } from './create-prs-code-review.use-case';
 import { CreateRepositoriesUseCase } from './create-repositories';
@@ -26,7 +26,7 @@ export default [
     BackfillAstGraphBuildUseCase,
     GetRepositoriesUseCase,
     GetSelectedRepositoriesUseCase,
-    ChatWithKodyFromGitUseCase,
+    ChatWithCodyFromGitUseCase,
     ReceiveWebhookUseCase,
     GetPRsUseCase,
     CreatePRCodeReviewUseCase,

@@ -39,7 +39,7 @@ describe('CreateRepositoriesUseCase', () => {
                         uuid: 'r1',
                         astGraphStatus: 'pending',
                         defaultBranch: 'main',
-                        fullName: 'kodus/alpha',
+                        fullName: 'codus/alpha',
                         platform: 'github',
                     }),
             } as any,
@@ -53,7 +53,7 @@ describe('CreateRepositoriesUseCase', () => {
                 {
                     id: 'repo-1',
                     name: 'alpha',
-                    organizationName: 'kodus',
+                    organizationName: 'codus',
                     selected: true,
                 },
             ],
@@ -69,7 +69,7 @@ describe('CreateRepositoriesUseCase', () => {
                 {
                     id: 'repo-1',
                     name: 'alpha',
-                    organizationName: 'kodus',
+                    organizationName: 'codus',
                     selected: true,
                 },
             ],
@@ -212,7 +212,7 @@ describe('CreateRepositoriesUseCase', () => {
                     uuid: 'r',
                     astGraphStatus: 'ready',
                     defaultBranch: 'main',
-                    fullName: 'kodus/x',
+                    fullName: 'codus/x',
                     platform: 'github',
                     externalId: 'e',
                     name: 'x',
@@ -238,8 +238,8 @@ describe('CreateRepositoriesUseCase', () => {
             teamId: 'team-delta-a',
             type: 'replace',
             repositories: [
-                { id: 'repo-existing', name: 'alpha', organizationName: 'kodus' },
-                { id: 'repo-new', name: 'beta', organizationName: 'kodus' },
+                { id: 'repo-existing', name: 'alpha', organizationName: 'codus' },
+                { id: 'repo-new', name: 'beta', organizationName: 'codus' },
             ],
         });
 
@@ -263,7 +263,7 @@ describe('CreateRepositoriesUseCase', () => {
             teamId: 'team-delta-b',
             type: 'replace',
             repositories: [
-                { id: 'repo-existing', name: 'alpha', organizationName: 'kodus' },
+                { id: 'repo-existing', name: 'alpha', organizationName: 'codus' },
             ],
         });
 

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 /**
- * Cockpit revamp — index to keep the "Kodus Review" aggregations fast on
+ * Cockpit revamp — index to keep the "Codus Review" aggregations fast on
  * large multi-tenant orgs.
  *
  * Every impl-rate / category / severity / rules / feedback query filters

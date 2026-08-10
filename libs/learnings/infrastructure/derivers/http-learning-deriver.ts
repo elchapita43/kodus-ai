@@ -7,7 +7,7 @@ import { LearningDeriver } from '@libs/learnings/domain/interfaces/learning-deri
  *
  * Env:
  *   LEARNINGS_LLM_BASE_URL  (default https://api.openai.com/v1)
- *   LEARNINGS_LLM_API_KEY   (fallback: OPENAI_API_KEY, luego API_OPEN_AI_API_KEY del stack Kodus)
+ *   LEARNINGS_LLM_API_KEY   (fallback: OPENAI_API_KEY, luego API_OPEN_AI_API_KEY del stack Codus)
  *   LEARNINGS_LLM_MODEL     (default gpt-4o-mini)
  */
 export class HttpLearningDeriver implements LearningDeriver {

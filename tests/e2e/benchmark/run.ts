@@ -2,7 +2,7 @@
 //
 // For each recommended model (curated-models.json): point ONE QA benchmark
 // tenant's BYOK at the model, open the fixed 5-PR set (1 per repo) on the
-// shared kodus-e2e benchmark repos, wait for Kody to review each, and collect
+// shared codus-e2e benchmark repos, wait for Cody to review each, and collect
 // the findings. Sequential across models (single tenant, BYOK swapped) so the
 // lone webhook never cross-fires. Emits results.json:
 //   { model, pr: {repo, number, head, golden_comments, findings[] } }
@@ -20,7 +20,7 @@ import { http, ensureOk } from "../lib/http.js";
 import { logger } from "../lib/log.js";
 import { loadTier0Models, type BenchModel } from "./models.js";
 import { setByokConfig, testByok } from "./byok.js";
-import type { TargetContext, KodusSession } from "../lib/types.js";
+import type { TargetContext, CodusSession } from "../lib/types.js";
 
 const log = logger("bench");
 
@@ -32,7 +32,7 @@ const QA: TargetContext = {
 };
 
 interface BenchPR {
-    repo: string; // kodus-e2e/<name>
+    repo: string; // codus-e2e/<name>
     head: string;
     base: string;
     title: string;
@@ -40,11 +40,11 @@ interface BenchPR {
 }
 
 // Make `pnpm run benchmark:models` a true one-command: pull BYOK_* / GH_TEST_TOKEN
-// / ANTHROPIC_API_KEY from ~/.kodus-dev/config if they're not already in the
+// / ANTHROPIC_API_KEY from ~/.codus-dev/config if they're not already in the
 // env. Indent-tolerant (the config lines may be indented); never overrides an
 // env var the caller already set.
 function loadConfig(): void {
-    const path = join(homedir(), ".kodus-dev", "config");
+    const path = join(homedir(), ".codus-dev", "config");
     let text: string;
     try {
         text = readFileSync(path, "utf8");
@@ -71,7 +71,7 @@ function loadPRs(): BenchPR[] {
 // `pnpm run benchmark:models` is one command and never mutates the shared cloud
 // QA tenants; override via env for a one-off. signUp is idempotent (409-OK),
 // so first run creates it and later runs reuse it.
-async function getSession(): Promise<KodusSession> {
+async function getSession(): Promise<CodusSession> {
     // `||` (not `??`) so an EMPTY string falls through to the default too.
     // CI passes `${{ secrets.X }}` which is "" when the secret is unset, and
     // "" is not null/undefined → `??` would keep it → empty creds → 401. An
@@ -89,7 +89,7 @@ async function getSession(): Promise<KodusSession> {
 // (true = already onboarded for review). Empty/throws on a tenant with no
 // integration yet — callers treat that as "not onboarded".
 async function listOrgRepos(
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<Array<Record<string, unknown>>> {
     const resp = await http<{ data: Array<Record<string, unknown>> }>(
         `${QA.apiBaseUrl}/code-management/repositories/org?teamId=${encodeURIComponent(session.teamId)}`,
@@ -101,11 +101,11 @@ async function listOrgRepos(
 // Onboard the benchmark repos for review — but ONLY if they aren't already.
 // Re-running type:"replace" on a tenant that already has them deletes +
 // recreates the repo records and their webhooks, and the recreated state
-// stops firing reviews (webhook delivers 200 but Kody never reviews — observed
+// stops firing reviews (webhook delivers 200 but Cody never reviews — observed
 // repeatedly). So this is strictly idempotent: if every benchmark repo is
 // already `selected`, do nothing; the existing (working) webhooks stay intact.
 async function registerRepos(
-    session: KodusSession,
+    session: CodusSession,
     repoFullNames: string[],
 ): Promise<void> {
     const avail = await listOrgRepos(session);
@@ -144,7 +144,7 @@ async function registerRepos(
 // setup-tenants seeder does: trial → byok config → migrate-to-free. Idempotent:
 // 409 / "already" on a tenant that's already provisioned is success.
 async function ensureReviewLicense(
-    session: KodusSession,
+    session: CodusSession,
     seedModel: BenchModel,
 ): Promise<void> {
     const billing = `${QA.webBaseUrl.replace(/\/$/, "")}/api/proxy/billing`;
@@ -175,7 +175,7 @@ async function ensureReviewLicense(
 // so a re-run (CI nightly, local) never re-registers and never breaks the live
 // webhooks. Only a fresh tenant pays the full registerIntegration + register.
 async function ensureOnboarded(
-    session: KodusSession,
+    session: CodusSession,
     repoFullNames: string[],
 ): Promise<void> {
     let avail = await listOrgRepos(session);
@@ -240,7 +240,7 @@ async function ghGetJson<T>(url: string): Promise<T> {
 
 // Findings are INLINE review comments (pulls/{n}/comments). The "Code Review
 // Started/Completed" banners are ISSUE comments (summaries), NOT findings. Each
-// inline comment carries a kody badge — that marks it a finding, so we must NOT
+// inline comment carries a cody badge — that marks it a finding, so we must NOT
 // filter on the marker (an earlier bug dropped every finding). Strip the badge.
 async function collectFindings(repo: string, prNumber: number): Promise<string[]> {
     const body = await ghGetJson<{ body?: string }[]>(
@@ -248,11 +248,11 @@ async function collectFindings(repo: string, prNumber: number): Promise<string[]
     );
     return (body ?? [])
         .map((c) => (c.body ?? "").trim())
-        .filter((b) => b && !b.toLowerCase().startsWith("@kody"))
+        .filter((b) => b && !b.toLowerCase().startsWith("@cody"))
         .map((b) => b.replace(/^(?:\s*!\[[^\]]*\]\([^)]*\)\s*)+/i, "").trim());
 }
 
-// Wait for the EXPLICIT completion signal — Kody posts a "## Code Review
+// Wait for the EXPLICIT completion signal — Cody posts a "## Code Review
 // Completed! 🔥" issue comment when it finishes (verified on every reviewed
 // PR). This is deterministic: a slow model (e.g. Moonshot took 42min) just
 // waits longer; we never falsely declare "no review" on a blind timer (the old
@@ -285,9 +285,9 @@ async function waitForReviewOutcome(
             if (fresh.some((c) => /could not complete|review failed before/i.test(c.body ?? ""))) {
                 return "failed";
             }
-            // Kody posts ONE of two completion banners depending on findings:
+            // Cody posts ONE of two completion banners depending on findings:
             //   "## Code Review Completed! 🔥"   (issues found / standard)
-            //   "# Kody Review Complete … No issues were found"  (zero findings)
+            //   "# Cody Review Complete … No issues were found"  (zero findings)
             if (fresh.some((c) => /review complet(ed|e)\b/i.test(c.body ?? ""))) {
                 return "completed";
             }
@@ -312,7 +312,7 @@ async function collectFindingsStable(repo: string, prNumber: number): Promise<st
 
 type ModelOutcome = { ok: number; fail: number; results: unknown[] };
 
-// Open each PR, wait for Kody, collect findings, close. `prs` already carry the
+// Open each PR, wait for Cody, collect findings, close. `prs` already carry the
 // right repo names (shared fixtures in sequential mode, per-model copies in
 // parallel mode), so this is topology-agnostic.
 async function reviewOnePR(model: BenchModel, pr: BenchPR): Promise<{ ok: boolean; result: unknown }> {
@@ -322,16 +322,16 @@ async function reviewOnePR(model: BenchModel, pr: BenchPR): Promise<{ ok: boolea
     try {
         const openedAt = Date.now();
         opened = await provider.openPRFromBranches!({ head: pr.head, base: pr.base, title: `[bench] ${model.slug} ${repoShort}`, body: `Model benchmark: ${model.id}` });
-        // Wait for Kody's terminal marker (Completed / Could-Not-Complete /
+        // Wait for Cody's terminal marker (Completed / Could-Not-Complete /
         // timeout). A non-completed first attempt is retried ONCE via
-        // `@kody review`: a "Could Not Complete" is usually a transient model/
-        // provider error (Kody itself tells you to re-run), and a single flake
+        // `@cody review`: a "Could Not Complete" is usually a transient model/
+        // provider error (Cody itself tells you to re-run), and a single flake
         // would otherwise red the whole 25-review gate.
         let outcome = await waitForReviewOutcome(pr.repo, opened.number, openedAt - 5_000);
         let retried = false;
         if (outcome !== "completed") {
             retried = true;
-            log.info(`${model.slug} ${repoShort}: review ${outcome} — retrying once via @kody review (PR #${opened.number})`);
+            log.info(`${model.slug} ${repoShort}: review ${outcome} — retrying once via @cody review (PR #${opened.number})`);
             // GitHub comment `created_at` is second-precision, so `sinceMs` needs
             // the same -5s padding `openedAt` uses or a banner posted in the same
             // second would be filtered out (its timestamp truncates to .000 <
@@ -340,7 +340,7 @@ async function reviewOnePR(model: BenchModel, pr: BenchPR): Promise<{ ok: boolea
             // sleep 5s to push it outside the window, then pad.
             await sleep(5_000);
             const retryAt = Date.now() - 5_000;
-            await provider.postComment(opened.number, "@kody review").catch(() => {});
+            await provider.postComment(opened.number, "@cody review").catch(() => {});
             outcome = await waitForReviewOutcome(pr.repo, opened.number, retryAt);
         }
         const reviewed = outcome === "completed";
@@ -376,7 +376,7 @@ async function reviewPRs(
 // models on one tenant would clobber each other).
 async function runModelShared(
     model: BenchModel,
-    session: KodusSession,
+    session: CodusSession,
     prs: BenchPR[],
 ): Promise<ModelOutcome> {
     log.info(`=== model ${model.slug} (${model.id}) ===`);
@@ -393,7 +393,7 @@ const benchPassword = () =>
     process.env.BENCH_TENANT_PASSWORD || process.env.TEST_USER_PASSWORD || "E2eBench!a1b2c3d4";
 
 // PARALLEL mode: each model gets its OWN tenant + its OWN copy of the fixture
-// repos (kodus-e2e/<base>-<slug>), so no BYOK clobber and no shared-repo webhook
+// repos (codus-e2e/<base>-<slug>), so no BYOK clobber and no shared-repo webhook
 // collision — all 6 models run concurrently. Requires the isolated repos to
 // exist (provision-repos.ts).
 async function runModelIsolated(

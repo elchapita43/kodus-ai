@@ -68,12 +68,12 @@ export class ContextService {
             (await this.readFile(claudeMdPath)) ||
             (await this.readFile(dotClaudeMdPath));
 
-        // Read .kodus.md or .kodus/rules.md
-        const kodusMdPath = path.join(repoRoot, '.kodus.md');
-        const kodusRulesPath = path.join(repoRoot, '.kodus', 'rules.md');
-        context.kodusRules =
-            (await this.readFile(kodusMdPath)) ||
-            (await this.readFile(kodusRulesPath));
+        // Read .codus.md or .codus/rules.md
+        const codusMdPath = path.join(repoRoot, '.codus.md');
+        const codusRulesPath = path.join(repoRoot, '.codus', 'rules.md');
+        context.codusRules =
+            (await this.readFile(codusMdPath)) ||
+            (await this.readFile(codusRulesPath));
 
         // Read custom context file if specified
         if (customContextPath) {
@@ -104,9 +104,9 @@ export class ContextService {
             parts.push('');
         }
 
-        if (context.kodusRules) {
-            parts.push('=== Kodus Rules (.kodus.md) ===');
-            parts.push(context.kodusRules);
+        if (context.codusRules) {
+            parts.push('=== Codus Rules (.codus.md) ===');
+            parts.push(context.codusRules);
             parts.push('');
         }
 
@@ -138,8 +138,8 @@ export class ContextService {
             if (context.claudeRules) {
                 contextFiles.push('claude.md');
             }
-            if (context.kodusRules) {
-                contextFiles.push('.kodus.md');
+            if (context.codusRules) {
+                contextFiles.push('.codus.md');
             }
             if (context.customContext) {
                 contextFiles.push('custom context file');

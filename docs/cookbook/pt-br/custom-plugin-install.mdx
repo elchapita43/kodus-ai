@@ -1,17 +1,17 @@
 ---
 title: "Instalar plugins MCP personalizados"
-description: "Instruções passo a passo para conectar qualquer plugin personalizado do Model Context Protocol ao Kodus."
+description: "Instruções passo a passo para conectar qualquer plugin personalizado do Model Context Protocol ao Codus."
 icon: "plug"
 ---
 
 ## Por que plugins personalizados são importantes
 
-Plugins MCP personalizados permitem que seu time fundamente o Kody em sistemas internos — bases de conhecimento, dashboards de incidentes, mecanismos de políticas e muito mais. Uma vez instalados, cada interação com o Kody pode chamar essas ferramentas com dados em tempo real, de modo que os revisores param de copiar capturas de tela ou trechos desatualizados em pull requests.
+Plugins MCP personalizados permitem que seu time fundamente o Cody em sistemas internos — bases de conhecimento, dashboards de incidentes, mecanismos de políticas e muito mais. Uma vez instalados, cada interação com o Cody pode chamar essas ferramentas com dados em tempo real, de modo que os revisores param de copiar capturas de tela ou trechos desatualizados em pull requests.
 
-Este guia mostra o fluxo recomendado para qualquer plugin personalizado, seja um endpoint simples somente leitura (como o Kodus Docs MCP) ou um pipeline mais avançado com autenticação.
+Este guia mostra o fluxo recomendado para qualquer plugin personalizado, seja um endpoint simples somente leitura (como o Codus Docs MCP) ou um pipeline mais avançado com autenticação.
 
 <Callout icon="globe">
-  O Kodus suporta **apenas servidores MCP remotos** — isso significa que o plugin precisa ser acessível a partir da infraestrutura do Kodus. 
+  O Codus suporta **apenas servidores MCP remotos** — isso significa que o plugin precisa ser acessível a partir da infraestrutura do Codus. 
 </Callout>
 
 ---
@@ -24,7 +24,7 @@ Reúna estes detalhes antes de abrir o catálogo de Plugins:
 | ----- | -------------------- |
 | **URL pública** | Endpoint onde o manifesto MCP está hospedado (ex.: `https://acme-internal-tools.com/mcp`). |
 | **Protocolo** | Tipo de implementação MCP (HTTP ou SSE). |
-| **Hospedagem** | Deve ser um servidor remoto acessível pelo Kodus (sem localhost ou endpoints MCP locais). |
+| **Hospedagem** | Deve ser um servidor remoto acessível pelo Codus (sem localhost ou endpoints MCP locais). |
 | **Autenticação** | Se o plugin requer chaves de API, OAuth ou está aberto aos IPs do seu workspace. |
 | **Descrição / Logo** | Ajuda outros engenheiros a entenderem o que o plugin faz ao navegar pelo catálogo. |
 
@@ -33,11 +33,11 @@ Procurando servidores MCP remotos para experimentar?
 - [Smithery.ai](https://smithery.ai/) seleciona serviços MCP implantáveis além de um launcher fácil que pode ser direcionado à sua própria infraestrutura.
 - [Awesome Remote MCP Servers](https://github.com/sylviangth/awesome-remote-mcp-servers) lista endpoints mantidos pela comunidade cobrindo pesquisa em documentação, scanners de segurança e bots de fluxo de trabalho.
 
-## Instalar o plugin no Kodus
+## Instalar o plugin no Codus
 
 <iframe src="https://www.youtube.com/embed/rtBxGnb9nIs?si=z2538VqglaqBOpio" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen width="100%" height="500px"></iframe>
 
-1. Vá para **Configurações de Code Review → Plugins** (beta) no seu workspace do Kodus.
+1. Vá para **Configurações de Code Review → Plugins** (beta) no seu workspace do Codus.
 2. Clique em **Adicionar Plugin**.
 3. Preencha o formulário:
 
@@ -58,17 +58,17 @@ Procurando servidores MCP remotos para experimentar?
 
 ## Verificar a conexão
 
-1. Abra qualquer pull request onde o Kody está habilitado.
-2. Mencione `@kody` e inclua uma pergunta que force o plugin a responder.
+1. Abra qualquer pull request onde o Cody está habilitado.
+2. Mencione `@cody` e inclua uma pergunta que force o plugin a responder.
 
    ```
-   @kody você consegue buscar o checklist de implantação do nosso MCP e confirmar se feature flags são necessárias?
+   @cody você consegue buscar o checklist de implantação do nosso MCP e confirmar se feature flags são necessárias?
    ```
 
 3. No painel lateral, verifique a seção **Plugins**. Você deve ver uma chamada ao seu novo plugin. Se falhar, expanda o erro para inspecionar o código de status ou a mensagem de validação.
 
 <Info>
-  O Kodus Docs MCP (`https://docs.kodus.io/mcp`) é um teste rápido de sanidade — você pode instalá-lo primeiro para garantir que seu workspace consegue alcançar hosts externos.
+  O Codus Docs MCP (`https://docs.kodus.io/mcp`) é um teste rápido de sanidade — você pode instalá-lo primeiro para garantir que seu workspace consegue alcançar hosts externos.
 </Info>
 
 ---
@@ -78,5 +78,5 @@ Procurando servidores MCP remotos para experimentar?
 - [ ] O manifesto do plugin está hospedado e acessível.
 - [ ] O modelo de autenticação (se houver) está documentado e testado.
 - [ ] O plugin foi instalado via **Adicionar Plugin Personalizado** com a URL e headers corretos.
-- [ ] Um PR de exemplo comprovou que o Kody consegue chamar o plugin.
+- [ ] Um PR de exemplo comprovou que o Cody consegue chamar o plugin.
 - [ ] Os responsáveis sabem como monitorar e atualizar a integração.

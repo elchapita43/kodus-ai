@@ -5,7 +5,7 @@ import { ApiError } from '../../types/errors.js';
 import type { SessionApiEvent } from '../../types/session-events.js';
 import type { ISessionsApi } from './api.interface.js';
 
-const PENDING_FILE = '.kody/pending-events.jsonl';
+const PENDING_FILE = '.cody/pending-events.jsonl';
 const MAX_BUFFER_LINES = 1000;
 const ENDPOINT = '/cli/sessions/events';
 
@@ -19,7 +19,7 @@ async function getAuthToken(): Promise<string | null> {
 }
 
 function buildHeaders(token: string): Record<string, string> {
-    const isTeamKey = token.startsWith('kodus_');
+    const isTeamKey = token.startsWith('codus_');
     return isTeamKey
         ? { 'X-Team-Key': token }
         : { Authorization: `Bearer ${token}` };
@@ -114,7 +114,7 @@ export class RealSessionsApi implements ISessionsApi {
         const token = await getAuthToken();
 
         if (!token) {
-            if (process.env.KODUS_VERBOSE) {
+            if (process.env.CODUS_VERBOSE) {
                 console.log(
                     '[sessions] No auth token, skipping event:',
                     event.type,
@@ -140,7 +140,7 @@ export class RealSessionsApi implements ISessionsApi {
                 error.statusCode !== 429
             ) {
                 // 4xx — discard
-                if (process.env.KODUS_VERBOSE) {
+                if (process.env.CODUS_VERBOSE) {
                     console.error(
                         '[sessions] Discarding event due to client error:',
                         error.statusCode,

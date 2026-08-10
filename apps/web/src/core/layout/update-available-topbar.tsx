@@ -25,8 +25,8 @@ import { isSelfHosted } from "src/core/utils/self-hosted";
  *     unsets the dismissal automatically.
  */
 
-const RELEASES_URL = "https://github.com/kodustech/kodus-ai/releases";
-const DISMISS_KEY = "kodus.update-banner.dismissed-version";
+const RELEASES_URL = "https://github.com/elchapita43/codus-ai/releases";
+const DISMISS_KEY = "codus.update-banner.dismissed-version";
 
 type VersionData = {
     current: string;

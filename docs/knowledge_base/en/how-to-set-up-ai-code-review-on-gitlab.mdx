@@ -1,17 +1,17 @@
 ---
 title: "How to set up AI code review on GitLab"
-description: "Install and configure Kodus for GitLab projects to get automated AI code review on every merge request."
+description: "Install and configure Codus for GitLab projects to get automated AI code review on every merge request."
 ---
 
-Kodus integrates with GitLab via OAuth and webhooks. Once configured, merge requests are reviewed automatically.
+Codus integrates with GitLab via OAuth and webhooks. Once configured, merge requests are reviewed automatically.
 
 ## Steps
 
-1. **Create an account** at [kodus.io](https://kodus.io) or [self-host Kodus](/how_to_deploy/en/deploy_kodus/generic_vm)
+1. **Create an account** at [kodus.io](https://kodus.io) or [self-host Codus](/how_to_deploy/en/deploy_codus/generic_vm)
 2. **Connect GitLab** — authorize via OAuth during setup
 3. **Configure webhooks** — follow the guided setup to enable merge request events
-4. **Select projects** — choose which GitLab projects Kodus should review
-5. **Open a merge request** — Kodus reviews it automatically
+4. **Select projects** — choose which GitLab projects Codus should review
+5. **Open a merge request** — Codus reviews it automatically
 
 ## What you get
 
@@ -22,6 +22,6 @@ Kodus integrates with GitLab via OAuth and webhooks. Once configured, merge requ
 
 ## Custom configuration
 
-Drop a `kodus-config.yml` in your repo root to customize behavior per project.
+Drop a `codus-config.yml` in your repo root to customize behavior per project.
 
 For the full setup guide, see [GitLab OAuth](/how_to_deploy/en/platforms/gitlab/gitlab_oauth) and [GitLab Webhooks](/how_to_deploy/en/platforms/gitlab/gitlab_webhook).

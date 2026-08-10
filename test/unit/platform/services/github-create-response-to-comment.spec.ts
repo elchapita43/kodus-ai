@@ -107,7 +107,7 @@ describe('GithubService.createResponseToComment', () => {
             organizationId: 'org-uuid',
             teamId: 'team-uuid',
         },
-        repository: { id: 'repo-id', name: 'kodus-ai' },
+        repository: { id: 'repo-id', name: 'codus-ai' },
         prNumber: 42,
         inReplyToId: 1258376,
         body: 'Analyzing your request...',
@@ -119,7 +119,7 @@ describe('GithubService.createResponseToComment', () => {
         expect(createReplyMock).toHaveBeenCalledTimes(1);
         expect(createReplyMock).toHaveBeenCalledWith({
             owner: 'acme',
-            repo: 'kodus-ai',
+            repo: 'codus-ai',
             pull_number: 42,
             comment_id: 1258376,
             body: 'Analyzing your request...',

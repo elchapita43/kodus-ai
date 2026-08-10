@@ -487,7 +487,7 @@ export class GithubService
                 res = await this.authenticateWithToken(params);
             }
 
-            this.mcpManagerService?.createKodusMCPIntegration(
+            this.mcpManagerService?.createCodusMCPIntegration(
                 params.organizationAndTeamData.organizationId,
             );
 
@@ -928,7 +928,7 @@ export class GithubService
                 githubAuthDetail?.authMode === AuthMode.TOKEN && author?.name
                     ? {
                           name: author.name,
-                          email: author.email || 'kody@kodus.io',
+                          email: author.email || 'cody@kodus.io',
                       }
                     : undefined;
 
@@ -1005,8 +1005,8 @@ export class GithubService
             // GitHub's createTree fails atomically with GitRPC::BadObjectState
             // when any delete op targets a path that doesn't exist in
             // base_tree. Filter and retry once before giving up — this covers
-            // DB/repo drift (e.g., a directory group with kody-rules but no
-            // kodus-config.yml override never produced a config file on disk).
+            // DB/repo drift (e.g., a directory group with cody-rules but no
+            // codus-config.yml override never produced a config file on disk).
             let effectiveTreeItems = treeItems;
             let createdTreeSha: string;
             try {
@@ -3934,9 +3934,9 @@ This is an experimental feature that generates committable changes. Review the d
             codeBlock,
             experimentalWarning,
             copyPrompt,
-            this.formatSub(translations.talkToKody),
+            this.formatSub(translations.talkToCody),
             this.formatSub(translations.feedback) +
-                '<!-- kody-codereview -->&#8203;\n&#8203;',
+                '<!-- cody-codereview -->&#8203;\n&#8203;',
         ]
             .join('\n')
             .trim();
@@ -7346,10 +7346,10 @@ This is an experimental feature that generates committable changes. Review the d
                 TranslationsCategory.ReviewComment,
             );
 
-            commentBody += this.formatSub(translations.talkToKody) + '\n';
+            commentBody += this.formatSub(translations.talkToCody) + '\n';
             commentBody +=
                 this.formatSub(translations.feedback) +
-                '<!-- kody-codereview -->&#8203;\n&#8203;';
+                '<!-- cody-codereview -->&#8203;\n&#8203;';
         }
 
         return Promise.resolve(commentBody.trim());

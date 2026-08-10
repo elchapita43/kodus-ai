@@ -28,7 +28,7 @@ export interface PullRequestsFacets {
     needsAttention: number;
     // Reviewed PRs whose review errored.
     errored: number;
-    // PRs Kody was triggered on but skipped and never reviewed — every
+    // PRs Cody was triggered on but skipped and never reviewed — every
     // execution status='skipped' (no license, BYOK, manual/paused cadence,
     // ignored user). Sourced from automation_execution, the table that drives
     // the list, so awaiting = on-screen PRs still waiting for a first review.
@@ -148,7 +148,7 @@ export class GetPullRequestsFacetsUseCase implements IUseCase {
                               { authorEmail: email },
                           )
                         : Promise.resolve(0),
-                    // Awaiting = PRs Kody was triggered on but skipped and never
+                    // Awaiting = PRs Cody was triggered on but skipped and never
                     // reviewed (every execution status='skipped': no license,
                     // BYOK, manual/paused cadence, ignored user). Sourced from
                     // automation_execution — the same table that drives the list,

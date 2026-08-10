@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@nestjs/common';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import { ObservabilityService } from '@libs/core/log/observability.service';
 import { DocumentationSearchExaService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-exa.service';
@@ -30,7 +30,7 @@ export class SecurityAgentProvider extends BaseCodeReviewAgentProvider {
 
     protected getIdentity(): ReviewAgentIdentity {
         return {
-            name: 'kodus-security-review-agent',
+            name: 'codus-security-review-agent',
             description:
                 'Application security expert specialized in finding vulnerabilities, ' +
                 'auth issues, injection flaws, data exposure, and secrets in code changes. ' +

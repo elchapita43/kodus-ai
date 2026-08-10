@@ -17,7 +17,7 @@ describe('BugAgentProvider', () => {
 
     it('should have correct identity', () => {
         const identity = (agent as any).getIdentity();
-        expect(identity.name).toBe('kodus-bug-review-agent');
+        expect(identity.name).toBe('codus-bug-review-agent');
         expect(identity.description.toLowerCase()).toContain('bug');
         expect(identity.goal.toLowerCase()).toContain('bug');
         expect(identity.expertise.length).toBeGreaterThan(0);
@@ -46,7 +46,7 @@ describe('SecurityAgentProvider', () => {
 
     it('should have correct identity', () => {
         const identity = (agent as any).getIdentity();
-        expect(identity.name).toBe('kodus-security-review-agent');
+        expect(identity.name).toBe('codus-security-review-agent');
         expect(identity.description.toLowerCase()).toContain('security');
         expect(identity.goal.toLowerCase()).toContain('vulnerabilit');
     });
@@ -68,7 +68,7 @@ describe('PerformanceAgentProvider', () => {
 
     it('should have correct identity', () => {
         const identity = (agent as any).getIdentity();
-        expect(identity.name).toBe('kodus-performance-review-agent');
+        expect(identity.name).toBe('codus-performance-review-agent');
         expect(identity.description.toLowerCase()).toContain('performance');
         expect(identity.goal.toLowerCase()).toContain('performance');
     });

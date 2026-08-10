@@ -1,6 +1,6 @@
 # Infrastructure Queue Module
 
-This module manages the message broker integration (RabbitMQ) for the Kodus AI platform.
+This module manages the message broker integration (RabbitMQ) for the Codus AI platform.
 
 ## Architecture
 

@@ -1,6 +1,6 @@
 ---
 title: "Security-first review pipeline"
-description: "Set up Kody Rules focused on OWASP top 10, secrets detection, and secure coding patterns."
+description: "Set up Cody Rules focused on OWASP top 10, secrets detection, and secure coding patterns."
 icon: "shield-halved"
 ---
 
@@ -19,7 +19,7 @@ reviewOptions:
   security: true
 ```
 
-This gives you Kodus' built-in security checks. The rules below add your team's specific security policies on top.
+This gives you Codus' built-in security checks. The rules below add your team's specific security policies on top.
 
 ## Step 2 — Create OWASP-focused rules
 
@@ -93,17 +93,17 @@ Instructions:
 Create persistent conventions that apply everywhere:
 
 ```
-@kody remember: all user input must be validated and sanitized
+@cody remember: all user input must be validated and sanitized
 before use. Never trust client-side data.
 ```
 
 ```
-@kody remember: all API endpoints that handle sensitive data
+@cody remember: all API endpoints that handle sensitive data
 must use HTTPS only and include rate limiting.
 ```
 
 ```
-@kody remember: error messages must never expose stack traces,
+@cody remember: error messages must never expose stack traces,
 internal paths, or database details to the client.
 ```
 
@@ -111,7 +111,7 @@ internal paths, or database details to the client.
 
 For security rules, you want critical findings to block:
 
-1. Enable **Request Changes** in PR Workflow settings so Kody requests changes when critical issues are found
+1. Enable **Request Changes** in PR Workflow settings so Cody requests changes when critical issues are found
 2. Set security rules to **Critical** severity so they always surface above any severity filter
 3. Do NOT set a low `maxSuggestions` limit — security findings should never be suppressed
 
@@ -141,4 +141,4 @@ Instructions:
 - [ ] Request Changes enabled for critical findings
 - [ ] A test PR confirmed rules fire correctly
 
-For more on configuring rules, see [Kody Rules](/how_to_use/en/code_review/configs/kody_rules).
+For more on configuring rules, see [Cody Rules](/how_to_use/en/code_review/configs/cody_rules).

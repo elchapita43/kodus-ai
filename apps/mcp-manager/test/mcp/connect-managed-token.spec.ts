@@ -32,7 +32,7 @@ const authMethods = [
 ];
 
 function buildService() {
-    const kodusProvider = {
+    const codusProvider = {
         getAuthMethods: jest.fn().mockReturnValue(authMethods),
         getManagedConfig: jest.fn().mockReturnValue({
             id: INT,
@@ -54,7 +54,7 @@ function buildService() {
         ]),
     };
     const providerFactory = {
-        getProvider: jest.fn().mockReturnValue(kodusProvider),
+        getProvider: jest.fn().mockReturnValue(codusProvider),
     };
     const connectionRepository = {
         findOne: jest.fn().mockResolvedValue(null),
@@ -77,7 +77,7 @@ function buildService() {
         service,
         connectionRepository,
         integrationOAuthService,
-        kodusProvider,
+        codusProvider,
     };
 }
 
@@ -107,7 +107,7 @@ describe('McpService.connectManagedToken', () => {
         expect(result).toMatchObject({
             integrationId: INT,
             organizationId: ORG,
-            provider: 'kodusmcp',
+            provider: 'codusmcp',
             status: MCPConnectionStatus.ACTIVE,
             mcpUrl: 'https://mcp.atlassian.com/v1/mcp',
             appName: 'Atlassian Rovo',
@@ -125,9 +125,9 @@ describe('McpService.connectManagedToken', () => {
             service,
             connectionRepository,
             integrationOAuthService,
-            kodusProvider,
+            codusProvider,
         } = buildService();
-        kodusProvider.verifyManagedConnection.mockResolvedValue([]);
+        codusProvider.verifyManagedConnection.mockResolvedValue([]);
 
         await expect(
             service.connectManagedToken(ORG, INT, {
@@ -150,9 +150,9 @@ describe('McpService.connectManagedToken', () => {
             service,
             connectionRepository,
             integrationOAuthService,
-            kodusProvider,
+            codusProvider,
         } = buildService();
-        kodusProvider.verifyManagedConnection.mockRejectedValue(
+        codusProvider.verifyManagedConnection.mockRejectedValue(
             new Error('401 Unauthorized'),
         );
 

@@ -7,7 +7,7 @@ Code reviews typically focus on code quality — security, performance, style. B
 
 ## What it checks
 
-Kodus compares your PR diff against the task requirements and identifies:
+Codus compares your PR diff against the task requirements and identifies:
 
 - **Missing implementations** — acceptance criteria not covered in the code
 - **Partial implementations** — requirements only partially addressed
@@ -18,18 +18,18 @@ Kodus compares your PR diff against the task requirements and identifies:
 
 ### Automatic (default)
 
-With `business_logic: true` in your review options (enabled by default), Kodus automatically validates business rules during every PR review when a task management plugin is connected.
+With `business_logic: true` in your review options (enabled by default), Codus automatically validates business rules during every PR review when a task management plugin is connected.
 
 ### On-demand
 
 Comment on any PR with a link or inline spec:
 
 ```
-@kody -v business-logic https://kodustech.atlassian.net/browse/KC-1292
+@cody -v business-logic https://elchapita43.atlassian.net/browse/KC-1292
 ```
 
 ```
-@kody -v business-logic
+@cody -v business-logic
 Orders above $500 must issue cashback credits.
 Discount codes cannot be combined with loyalty rewards.
 Free shipping applies only to domestic orders.
@@ -63,6 +63,6 @@ Every finding includes the **exact quote** from the task that establishes the re
 
 - Tasks with explicit acceptance criteria get the most thorough validation
 - After fixing issues, rerun the command to confirm compliance
-- If the PR scope doesn't match the task, Kody flags a scope mismatch instead of speculating
+- If the PR scope doesn't match the task, Cody flags a scope mismatch instead of speculating
 
 For details, see [Business Logic Validation](/how_to_use/en/code_review/business_logic_validation).

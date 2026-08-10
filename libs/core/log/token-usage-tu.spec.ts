@@ -114,16 +114,16 @@ describe('deriveArea', () => {
         // system (SYSTEM_RUN_NAMES wins even over other rules)
         ['selectReviewMode', 'system'],
         ['generateCodeSuggestions', 'system'],
-        // kody rules — analysis, sharded classifiers, PR-level, generation, sync
-        ['kodyRulesAnalyzeCodeWithAI', 'kody_rules'],
-        ['classifierKodyRulesAnalyzeCodeWithAI', 'kody_rules'],
-        ['suggestionGenerationKodyRulesAnalyzeCodeWithAI', 'kody_rules'],
-        ['prLevelKodyRulesAnalyzer', 'kody_rules'],
-        ['generateKodyRules.generate', 'kody_rules'],
-        ['extractKodyRuleIdsFromContent', 'kody_rules'],
-        ['kodyRulesRecommendationFromSuggestions', 'kody_rules'],
-        ['kodyRulesFilesToRulesFastBatch', 'kody_rules'],
-        ['kodyMemoryResolution', 'kody_rules'],
+        // cody rules — analysis, sharded classifiers, PR-level, generation, sync
+        ['codyRulesAnalyzeCodeWithAI', 'cody_rules'],
+        ['classifierCodyRulesAnalyzeCodeWithAI', 'cody_rules'],
+        ['suggestionGenerationCodyRulesAnalyzeCodeWithAI', 'cody_rules'],
+        ['prLevelCodyRulesAnalyzer', 'cody_rules'],
+        ['generateCodyRules.generate', 'cody_rules'],
+        ['extractCodyRuleIdsFromContent', 'cody_rules'],
+        ['codyRulesRecommendationFromSuggestions', 'cody_rules'],
+        ['codyRulesFilesToRulesFastBatch', 'cody_rules'],
+        ['codyMemoryResolution', 'cody_rules'],
         // cross-file
         ['crossFileAnalyzeCodeWithAI', 'cross_file'],
         ['crossFileContextPlanner', 'cross_file'],
@@ -148,7 +148,7 @@ describe('deriveArea', () => {
         ['conversationAgent', 'conversation'],
         // everything else
         ['businessRulesVerify', 'other'],
-        ['kodus-web-search-fetcher', 'other'],
+        ['codus-web-search-fetcher', 'other'],
         ['documentationPlanner:src/index.ts', 'other'],
         ['commentCategorizer', 'other'],
         ['', 'other'],

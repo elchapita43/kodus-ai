@@ -68,7 +68,7 @@ describe('convertReviewToHunkContext', () => {
         // metadata becomes the closing tag.
         expect(
             rationale.endsWith(
-                '— Kody · severity error · security_vulnerability · sec/no-token-log',
+                '— Cody · severity error · security_vulnerability · sec/no-token-log',
             ),
         ).toBe(true);
         expect(auth.annotations[0]!.summary).toBe('ℹ consider const');
@@ -163,7 +163,7 @@ describe('convertReviewToHunkContext', () => {
             summary: '',
             issues: [],
         });
-        expect(context.summary).toBe('Kodus review: no findings.');
+        expect(context.summary).toBe('Codus review: no findings.');
         expect(context.files).toHaveLength(0);
     });
 
@@ -179,7 +179,7 @@ describe('convertReviewToHunkContext', () => {
             ],
         });
 
-        expect(context.summary).toContain('Kodus review: 4 findings');
+        expect(context.summary).toContain('Codus review: 4 findings');
         expect(context.summary).toContain('2 critical');
         expect(context.summary).toContain('1 warning');
         expect(context.summary).toContain('1 info');
@@ -213,7 +213,7 @@ describe('convertReviewToHunkContext', () => {
         // left over: the summary is a capped label, so anything it drops has to
         // survive here.
         expect(annotation.rationale).toBe(
-            `${longMessage} — Kody · severity error · bug`,
+            `${longMessage} — Cody · severity error · bug`,
         );
         expect(annotation.rationale).not.toContain('\n');
     });
@@ -426,20 +426,20 @@ describe('wrapCodeBlock', () => {
 });
 
 describe('extractMarkdownLinks', () => {
-    // Kody-rule findings arrive as `... [rule name](https://app.kodus.io/...)`,
+    // Cody-rule findings arrive as `... [rule name](https://app.kodus.io/...)`,
     // which used to wrap a 100-char URL through the middle of a sentence.
     const message =
-        'Kody rule violation: [Tratamento adequado de exce\u00e7\u00f5es\\.](https://app.kodus.io/settings/code-review/1/kody-rules/abc?teamId=xyz)';
+        'Cody rule violation: [Tratamento adequado de exce\u00e7\u00f5es\\.](https://app.kodus.io/settings/code-review/1/cody-rules/abc?teamId=xyz)';
 
     it('replaces a link with its label and returns the url', () => {
         const { text, links } = extractMarkdownLinks(message);
         expect(text).toBe(
-            'Kody rule violation: Tratamento adequado de exce\u00e7\u00f5es.',
+            'Cody rule violation: Tratamento adequado de exce\u00e7\u00f5es.',
         );
         expect(links).toEqual([
             {
                 label: 'Tratamento adequado de exce\u00e7\u00f5es.',
-                url: 'https://app.kodus.io/settings/code-review/1/kody-rules/abc?teamId=xyz',
+                url: 'https://app.kodus.io/settings/code-review/1/cody-rules/abc?teamId=xyz',
             },
         ]);
     });
@@ -483,7 +483,7 @@ describe('extractMarkdownLinks', () => {
 
         const annotation = context.files[0]!.annotations[0]!;
         expect(annotation.markup).toContain(
-            'https://app.kodus.io/settings/code-review/1/kody-rules/abc',
+            'https://app.kodus.io/settings/code-review/1/cody-rules/abc',
         );
         expect(annotation.markup).not.toContain('](');
         // A raw UUID rule id is noise next to the link, so it is dropped.

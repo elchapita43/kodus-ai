@@ -6,22 +6,22 @@ import type {
 } from '../../types/review.js';
 
 /**
- * Structured sidecar consumed by the bundled Kodus hunk extension
- * (`hunk-extension/kodus`).
+ * Structured sidecar consumed by the bundled Codus hunk extension
+ * (`hunk-extension/codus`).
  *
  * This is deliberately separate from the `--agent-context` payload: that one is
  * hunk's own inline-note schema and flattens severity down to a glyph inside a
  * prose string. The sidebar needs the fields back as data so it can group by
  * severity, count, and jump. Written to a tempfile and handed to the extension
- * through `KODUS_HUNK_FINDINGS`.
+ * through `CODUS_HUNK_FINDINGS`.
  */
-export interface KodusHunkFindings {
+export interface CodusHunkFindings {
     version: 1;
     summary?: string;
-    findings: KodusHunkFinding[];
+    findings: CodusHunkFinding[];
 }
 
-export interface KodusHunkFinding {
+export interface CodusHunkFinding {
     id: string;
     file: string;
     /** 1-based start line on the new side of the diff. */
@@ -38,8 +38,8 @@ const TITLE_MAX = 200;
 
 export function convertReviewToHunkFindings(
     result: ReviewResult,
-): KodusHunkFindings {
-    const findings: KodusHunkFinding[] = [];
+): CodusHunkFindings {
+    const findings: CodusHunkFinding[] = [];
 
     for (const [index, issue] of (result.issues ?? []).entries()) {
         const finding = toFinding(issue, index);
@@ -55,7 +55,7 @@ export function convertReviewToHunkFindings(
     };
 }
 
-function toFinding(issue: ReviewIssue, index: number): KodusHunkFinding | null {
+function toFinding(issue: ReviewIssue, index: number): CodusHunkFinding | null {
     if (!issue.file) {
         return null;
     }
@@ -73,7 +73,7 @@ function toFinding(issue: ReviewIssue, index: number): KodusHunkFinding | null {
     );
 
     return {
-        id: `kodus-${index}`,
+        id: `codus-${index}`,
         file: issue.file,
         line,
         endLine,
@@ -82,7 +82,7 @@ function toFinding(issue: ReviewIssue, index: number): KodusHunkFinding | null {
         // `Severity` type. Left unmapped they'd sort ahead of `critical` and
         // render an undefined glyph in the sidebar.
         severity: normalizeSeverity(issue.severity),
-        title: truncate(title ?? 'Kodus finding', TITLE_MAX),
+        title: truncate(title ?? 'Codus finding', TITLE_MAX),
         category: issue.category || undefined,
         ruleId: issue.ruleId || undefined,
     };

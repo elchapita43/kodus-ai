@@ -9,7 +9,7 @@ import { toast } from "@components/ui/toaster/use-toast";
 import { createOrUpdateParameter } from "@services/parameters/fetch";
 import { useOptionalParameterQuery } from "@services/parameters/hooks";
 import {
-    KodyLearningStatus,
+    CodyLearningStatus,
     ParametersConfigKey,
     type CentralizedConfigValue,
 } from "@services/parameters/types";
@@ -44,7 +44,7 @@ import { EnableCommittableSuggestions } from "./_components/enable-committable-s
 import { IgnorePaths } from "./_components/ignore-paths";
 import { IgnoredTitleKeywords } from "./_components/ignored-title-keywords";
 import { IsRequestChangesActive } from "./_components/is-request-changes-active";
-import { KodusConfigFileOverridesWebPreferences } from "./_components/kodus-config-file-overrides-web-preferences";
+import { CodusConfigFileOverridesWebPreferences } from "./_components/codus-config-file-overrides-web-preferences";
 import { LanguageSelector } from "./_components/language-selector";
 import { PullRequestApprovalActive } from "./_components/pull-request-approval-active";
 import { RunOnDraft } from "./_components/run-on-draft";
@@ -195,8 +195,8 @@ export default function General() {
     } = useFormState({ control: form.control });
 
     if (
-        platformConfig.kodyLearningStatus ===
-        KodyLearningStatus.GENERATING_CONFIG
+        platformConfig.codyLearningStatus ===
+        CodyLearningStatus.GENERATING_CONFIG
     ) {
         return <GeneratingConfig />;
     }
@@ -257,8 +257,8 @@ export default function General() {
                     </div>
                 )}
 
-                <div data-field-name="kodusConfigFileOverridesWebPreferences">
-                    <KodusConfigFileOverridesWebPreferences />
+                <div data-field-name="codusConfigFileOverridesWebPreferences">
+                    <CodusConfigFileOverridesWebPreferences />
                 </div>
                 <div data-field-name="pullRequestApprovalActive">
                     <PullRequestApprovalActive />

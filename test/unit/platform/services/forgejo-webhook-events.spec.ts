@@ -107,7 +107,7 @@ describe('ForgejoService.createPullRequestWebhook', () => {
         ).mockResolvedValue([
             {
                 id: '22',
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
             },
         ]);
     });

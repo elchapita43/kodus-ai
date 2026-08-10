@@ -11,7 +11,7 @@ export type IssueCategory =
     | "potential_issues"
     | "code_style"
     | "documentation_and_comments"
-    | "kody_rules"
+    | "cody_rules"
     | "breaking_changes";
 
 export type IssueListItem = {
@@ -24,7 +24,7 @@ export type IssueListItem = {
     title: string;
     uuid: string;
     prNumbers: string[];
-    kodyRule?: {
+    codyRule?: {
         number?: string;
         title?: string;
     } | null;
@@ -47,7 +47,7 @@ export type IssueItem = {
         id: string;
         name: string;
     };
-    kodyRule?: {
+    codyRule?: {
         number?: string;
         title?: string;
     } | null;

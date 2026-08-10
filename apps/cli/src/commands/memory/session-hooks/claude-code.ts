@@ -17,7 +17,7 @@ const VALID_HOOKS: Set<ClaudeCodeHookEvent> = new Set([
 
 export async function claudeCodeHookAction(hookName: string): Promise<void> {
     if (!VALID_HOOKS.has(hookName as ClaudeCodeHookEvent)) {
-        if (process.env.KODUS_VERBOSE === 'true') {
+        if (process.env.CODUS_VERBOSE === 'true') {
             console.error(`[decisions] unknown Claude Code hook: ${hookName}`);
         }
         return;

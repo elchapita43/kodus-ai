@@ -4,7 +4,7 @@ import { IntegrationOAuthService } from '../integrations/integration-oauth.servi
 import { IntegrationsService } from '../integrations/integrations.service';
 import { CustomProvider } from './custom/custom.provider';
 import { MCPProvider } from './interfaces/provider.interface';
-import { KodusMCPProvider } from './kodusMCP/kodus-mcp.provider';
+import { CodusMCPProvider } from './codusMCP/codus-mcp.provider';
 import { IntegrationDescriptionService } from './services/integration-description.service';
 
 export type ProviderType = string;
@@ -24,17 +24,17 @@ export class ProviderFactory {
 
     private initializeProviders(): void {
         const enabledProviders = this.configService
-            .get<string>('providers', 'kodusmcp,custom')
+            .get<string>('providers', 'codusmcp,custom')
             .split(',')
             .map((provider) => provider.trim())
             .filter(Boolean);
 
         for (const provider of enabledProviders) {
             switch (provider) {
-                case 'kodusmcp':
+                case 'codusmcp':
                     this.providers.set(
-                        'kodusmcp',
-                        new KodusMCPProvider(
+                        'codusmcp',
+                        new CodusMCPProvider(
                             this.integrationDescriptionService,
                             this.integrationOAuthService,
                         ),

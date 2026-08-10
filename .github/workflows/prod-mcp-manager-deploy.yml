@@ -1,6 +1,6 @@
 name: "MCP Manager: Production EC2 Deploy"
 
-# Ported 1:1 from kodustech/kodus-mcp-manager/.github/workflows/prod-ec2-deploy.yml
+# Ported 1:1 from elchapita43/codus-mcp-manager/.github/workflows/prod-ec2-deploy.yml
 # when that repo was merged into apps/mcp-manager. Keeps the SSH +
 # start-app.sh deploy pattern; the GitOps backend pipeline does not
 # (yet) own mcp-manager.
@@ -79,7 +79,7 @@ jobs:
             - name: Build, tag, and push image to Amazon ECR
               env:
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                  ECR_REPOSITORY: kodus-mcp-manager-prod
+                  ECR_REPOSITORY: codus-mcp-manager-prod
                   IMAGE_TAG_VERSION: ${{ steps.tag.outputs.image_tag }}
                   IMAGE_TAG_SHA: ${{ github.sha }}
                   # Authenticates @vscode/ripgrep's postinstall download via the
@@ -102,10 +102,10 @@ jobs:
             # Mirrors web-build-push-production.yml. Advisory-only (exit-code:0)
             # to match the existing posture; flip to "1" once CVE backlog is
             # triaged to block on CRITICAL/HIGH.
-            - name: Trivy scan — kodus-mcp-manager
+            - name: Trivy scan — codus-mcp-manager
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ${{ steps.login-ecr.outputs.registry }}/kodus-mcp-manager-prod:${{ steps.tag.outputs.image_tag }}
+                  image-ref: ${{ steps.login-ecr.outputs.registry }}/codus-mcp-manager-prod:${{ steps.tag.outputs.image_tag }}
                   format: "sarif"
                   output: "trivy-mcp-manager.sarif"
                   severity: "CRITICAL,HIGH"
@@ -152,7 +152,7 @@ jobs:
                   username: ${{ secrets.AWS_PROD_USERNAME }}
                   key: ${{ secrets.AWS_PROD_KEY_SSH }}
                   script: |
-                      cd ~/kodus-mcp-manager
+                      cd ~/codus-mcp-manager
                       ./start-app.sh prod ${{ needs.build_and_push_image.outputs.image_tag }} ${{ github.ref }}
 
             - name: Remove Github Actions IP from security group
@@ -173,7 +173,7 @@ jobs:
               with:
                   webhook: ${{ secrets.DISCORD_WEBHOOK_INTERNAL || secrets.DISCORD_WEBHOOK }}
                   status: ${{ job.status }}
-                  title: "Deploy Prod: kodus-mcp-manager"
+                  title: "Deploy Prod: codus-mcp-manager"
                   description: |
                       SHA: `${{ github.sha }}`
                       Triggered by: @${{ github.actor }}

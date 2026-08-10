@@ -104,7 +104,7 @@ describe('buildProviderFallbackWarning', () => {
             buildProviderFallbackWarning({
                 failedModel: 'main',
                 usedModel: 'fb',
-                agentName: 'kody-rules',
+                agentName: 'cody-rules',
             }),
         ]);
         expect(out).toHaveLength(1);

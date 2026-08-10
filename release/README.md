@@ -103,7 +103,7 @@ partners.
 
 One MDX entry per release, titled `Release X.Y.Z`. Committed to
 `docs/changelog/YYYY-MM-DD-selfhosted-X-Y-Z.mdx` by
-`kodus-changelog-bot`. The same content is posted to
+`codus-changelog-bot`. The same content is posted to
 `DISCORD_WEBHOOK_SELFHOSTED` (the channel cloud and self-hosted
 customers both follow).
 
@@ -148,7 +148,7 @@ warning). The MDX is still written so the catalog change is auditable.
 
 ### Setting an organization's release track
 
-Kodus staff control tracks via script (no admin UI). The script updates the
+Codus staff control tracks via script (no admin UI). The script updates the
 DB and mirrors the new value to PostHog group properties in one shot.
 
 Tracks are cumulative:
@@ -166,7 +166,7 @@ yarn feature-gate:set-track --org-id=<uuid> --track=alpha --env=.env.prod
 ```
 
 Default for every new org is `beta`. Stability customers get flipped to
-`stable`. Design partners and the Kodus dogfood org get `alpha`. PostHog
+`stable`. Design partners and the Codus dogfood org get `alpha`. PostHog
 flag conditions remain available for operational fine-tuning (rollout %,
 kill-switch, per-org overrides) on top of the track gate.
 

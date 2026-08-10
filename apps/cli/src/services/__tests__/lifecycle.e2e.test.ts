@@ -189,7 +189,7 @@ describe('Lifecycle E2E — full session flow', () => {
         }
 
         // Verify local state file was created on disk
-        const sessionsDir = path.join(tmpRepoRoot, '.kody', 'sessions');
+        const sessionsDir = path.join(tmpRepoRoot, '.cody', 'sessions');
         const localFile = path.join(sessionsDir, `${sessionId}.json`);
         const localContent = JSON.parse(await fs.readFile(localFile, 'utf-8'));
         expect(localContent.turnId).toBe(firstTurnId);
@@ -309,7 +309,7 @@ describe('Lifecycle E2E — stale session cleanup', () => {
     });
 
     it('sends synthetic session_end for stale sessions and cleans up files', async () => {
-        const sessionsDir = path.join(tmpRepoRoot, '.kody', 'sessions');
+        const sessionsDir = path.join(tmpRepoRoot, '.cody', 'sessions');
         await fs.mkdir(sessionsDir, { recursive: true });
 
         // Create two stale session files with old modification times
@@ -368,7 +368,7 @@ describe('Lifecycle E2E — stale session cleanup', () => {
     });
 
     it('does not clean up sessions that are still fresh', async () => {
-        const sessionsDir = path.join(tmpRepoRoot, '.kody', 'sessions');
+        const sessionsDir = path.join(tmpRepoRoot, '.cody', 'sessions');
         await fs.mkdir(sessionsDir, { recursive: true });
 
         // Create a fresh session file (just created, not stale)
@@ -453,7 +453,7 @@ describe('Lifecycle E2E — synthetic turn_start', () => {
         // synthetic turns to prevent dedup issues)
         const localFile = path.join(
             tmpRepoRoot,
-            '.kody',
+            '.cody',
             'sessions',
             `${sessionId}.json`,
         );

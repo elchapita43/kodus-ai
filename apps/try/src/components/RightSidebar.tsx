@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { PrInfo, ReviewIssue } from "@/lib/api";
 import { useSignupGate } from "./SignupGate";
 
-const KODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
+const CODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
 
 /**
  * The model the public-demo runs on. Kept in sync with
@@ -177,7 +177,7 @@ function ReviewModelCard() {
                 <div className="flex items-center gap-2 mb-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                        src={KODY_AVATAR_URL}
+                        src={CODY_AVATAR_URL}
                         alt=""
                         width={20}
                         height={20}
@@ -185,7 +185,7 @@ function ReviewModelCard() {
                     />
                     <div className="min-w-0">
                         <p className="text-sm text-[var(--text)] font-medium truncate">
-                            Kody, on {REVIEW_MODEL.label}
+                            Cody, on {REVIEW_MODEL.label}
                         </p>
                         <p className="text-[11px] font-mono text-[var(--text-dim)] truncate">
                             {REVIEW_MODEL.id}
@@ -194,7 +194,7 @@ function ReviewModelCard() {
                 </div>
 
                 <p className="text-[12px] text-[var(--text-muted)] leading-relaxed mb-3">
-                    Want sharper reviews? Run Kody on:
+                    Want sharper reviews? Run Cody on:
                 </p>
                 <ul className="space-y-1 mb-4">
                     {upgradeTo.map((m) => (

@@ -130,7 +130,7 @@ describe('BitbucketService.createResponseToComment', () => {
             organizationId: 'org-uuid',
             teamId: 'team-uuid',
         },
-        repository: { id: 'repo-uuid', name: 'kodus-ai' },
+        repository: { id: 'repo-uuid', name: 'codus-ai' },
         prNumber: 7,
         inReplyToId: 1258376,
         body: 'Analyzing your request...',

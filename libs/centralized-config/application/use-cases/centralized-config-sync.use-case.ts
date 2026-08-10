@@ -3,7 +3,7 @@ import {
     CENTRALIZED_CONFIG_SERVICE_TOKEN,
     IConfigFileMeta,
     ICentralizedConfigService,
-    IKodyRuleFileMeta,
+    ICodyRuleFileMeta,
 } from '@libs/centralized-config/domain/contracts/CentralizedConfigService.contract';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import { Inject, Injectable } from '@nestjs/common';
@@ -47,8 +47,8 @@ export class CentralizedConfigSyncUseCase {
             const actor = {
                 organizationId: organizationAndTeamData.organizationId,
                 source: 'sync' as const,
-                userEmail: 'kody@kodus.io',
-                userId: 'kody',
+                userEmail: 'cody@kodus.io',
+                userId: 'cody',
             };
 
             // Get the centralized config repository
@@ -64,9 +64,9 @@ export class CentralizedConfigSyncUseCase {
                     repository,
                 });
 
-            // Discover Kody rule files in the repository
+            // Discover Cody rule files in the repository
             const ruleFilesMeta =
-                await this.centralizedConfigService.discoverKodyRulesFiles({
+                await this.centralizedConfigService.discoverCodyRulesFiles({
                     organizationAndTeamData,
                     repository,
                 });
@@ -100,9 +100,9 @@ export class CentralizedConfigSyncUseCase {
                 };
             }
 
-            // Synchronize Kody rules
+            // Synchronize Cody rules
             const syncRulesResult =
-                await this.centralizedConfigService.synchronizeKodyRules({
+                await this.centralizedConfigService.synchronizeCodyRules({
                     organizationAndTeamData,
                     ruleFiles: ruleFilesMeta,
                     actor,
@@ -110,7 +110,7 @@ export class CentralizedConfigSyncUseCase {
 
             if (!syncRulesResult.success) {
                 this.logger.error({
-                    message: 'Failed to synchronize Kody rules',
+                    message: 'Failed to synchronize Cody rules',
                     context: CentralizedConfigSyncUseCase.name,
                     metadata: {
                         organizationAndTeamData,
@@ -120,13 +120,13 @@ export class CentralizedConfigSyncUseCase {
 
                 return {
                     success: false,
-                    message: `Failed to synchronize Kody rules: ${syncRulesResult.message}`,
+                    message: `Failed to synchronize Cody rules: ${syncRulesResult.message}`,
                 };
             }
 
-            // Remove stale Kody rules
+            // Remove stale Cody rules
             const cleanupRulesResult =
-                await this.centralizedConfigService.removeStaleKodyRules({
+                await this.centralizedConfigService.removeStaleCodyRules({
                     organizationAndTeamData,
                     ruleFiles: ruleFilesMeta,
                     actor,
@@ -134,7 +134,7 @@ export class CentralizedConfigSyncUseCase {
 
             if (!cleanupRulesResult.success) {
                 this.logger.error({
-                    message: 'Failed to remove stale Kody rules',
+                    message: 'Failed to remove stale Cody rules',
                     context: CentralizedConfigSyncUseCase.name,
                     metadata: {
                         organizationAndTeamData,
@@ -144,7 +144,7 @@ export class CentralizedConfigSyncUseCase {
 
                 return {
                     success: false,
-                    message: `Failed to remove stale Kody rules: ${cleanupRulesResult.message}`,
+                    message: `Failed to remove stale Cody rules: ${cleanupRulesResult.message}`,
                 };
             }
 
@@ -195,7 +195,7 @@ export class CentralizedConfigSyncUseCase {
 
     private mergeConfigScopes(
         configFiles: IConfigFileMeta[],
-        ruleFiles: IKodyRuleFileMeta[],
+        ruleFiles: ICodyRuleFileMeta[],
     ): IConfigFileMeta[] {
         const buildScopeKey = (scope: {
             repositoryId?: string;

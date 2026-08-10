@@ -163,7 +163,7 @@ export class OrgSettingsLogHandler {
             summary: {
                 deployFrequency: 'Deploy Frequency',
                 prCycleTime: 'PR Cycle Time',
-                kodySuggestions: 'Kody Suggestions',
+                codySuggestions: 'Cody Suggestions',
                 bugRatio: 'Bug Ratio',
                 prSize: 'PR Size',
             },

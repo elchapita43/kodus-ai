@@ -42,7 +42,7 @@ mkcert, manual browser interaction, and ~5min wall time.
 
 | Shape | Hosts | Cookie domain | Real-world analog |
 |---|---|---|---|
-| `kodus.lvh.me` (default) | `api.kodus.lvh.me` ↔ `app.kodus.lvh.me` | `.kodus.lvh.me` | SaaS (`.kodus.io`) — 3-label common parent |
+| `codus.lvh.me` (default) | `api.codus.lvh.me` ↔ `app.codus.lvh.me` | `.codus.lvh.me` | SaaS (`.kodus.io`) — 3-label common parent |
 | `web.scorpion.lvh.me` | `api.web.scorpion.lvh.me` ↔ `app.web.scorpion.lvh.me` | `.web.scorpion.lvh.me` | Dmitry self-hosted (`.web.scorpion.co`) — 4-label common parent |
 
 Switch via `SSO_E2E_DOMAIN=<shape> ./scripts/sso-e2e/run.sh`.
@@ -62,7 +62,7 @@ variant without TLS, instrument the controller with a `console.log`
 
 ### Keycloak session sticks across user-switches
 
-Logging out of Kodus does not log out of Keycloak. If the next user
+Logging out of Codus does not log out of Keycloak. If the next user
 clicks "Continue with SSO" and Keycloak sees a live session, it
 auto-asserts the previous user's identity — not what was typed. This
 manifests as "I'm logged in as the wrong user". Fix:
@@ -72,7 +72,7 @@ TOKEN=$(curl -sf -X POST http://localhost:8080/realms/master/protocol/openid-con
     -H "Content-Type: application/x-www-form-urlencoded" \
     -d "username=admin&password=admin&grant_type=password&client_id=admin-cli" \
     | python3 -c "import json,sys;print(json.load(sys.stdin)['access_token'],end='')")
-curl -s -X POST "http://localhost:8080/admin/realms/kodus-sso-e2e/logout-all" \
+curl -s -X POST "http://localhost:8080/admin/realms/codus-sso-e2e/logout-all" \
     -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -81,7 +81,7 @@ Or revoke the realm volume entirely: `docker compose down -v`.
 ### Web container needs `NODE_EXTRA_CA_CERTS`
 
 Server Components in `apps/web` make server-side fetches to
-`https://api.kodus.lvh.me` during SSR. Node's TLS stack rejects
+`https://api.codus.lvh.me` during SSR. Node's TLS stack rejects
 mkcert's self-signed CA by default. The compose mounts the host's
 mkcert root via `MKCERT_CAROOT_HOST` and points
 `NODE_EXTRA_CA_CERTS` at it. If you forget this, `/setup` and other
@@ -90,11 +90,11 @@ cause.
 
 ### Caddy network alias does double duty
 
-`api.kodus.lvh.me` resolves to `127.0.0.1` from the host (browser path)
+`api.codus.lvh.me` resolves to `127.0.0.1` from the host (browser path)
 and to the Caddy container IP from inside the docker network (SSR
 path, container-to-container). The compose `aliases` list under
 `caddy.networks` makes the latter work. Without it, the Web container
-tries `api.kodus.lvh.me` → resolves to its own loopback → ECONNREFUSED.
+tries `api.codus.lvh.me` → resolves to its own loopback → ECONNREFUSED.
 
 ### `active=false` keeps the front-end "Continue with SSO" button hidden
 
@@ -138,9 +138,9 @@ knows it's intentional. Always revert before commit.
   assemble the ACS in `libs/ee/sso/strategies/saml-auth.strategy.ts`.
   Re-run `bootstrap-keycloak.sh` to update the client.
 - **"client_not_found / Cannot_match_source_hash"** → SP issuer
-  (`saml-auth.strategy.ts: issuer || 'kodus-orchestrator'`) doesn't
-  match Keycloak `clientId`. Both must be `kodus-orchestrator`.
-- **Cookie domain shows `undefined` instead of `.kodus.lvh.me`** →
+  (`saml-auth.strategy.ts: issuer || 'codus-orchestrator'`) doesn't
+  match Keycloak `clientId`. Both must be `codus-orchestrator`.
+- **Cookie domain shows `undefined` instead of `.codus.lvh.me`** →
   `req.get('host')` is missing the port-stripped public host. Check
   Caddy's `header_up Host {host}` is preserved, or that
   `req.get('host')?.split(':')[0]` runs before passing to
@@ -156,7 +156,7 @@ third (e.g. `internal.acme.local`) requires:
 1. Append the wildcard to `mkcert -cert-file …` invocation in `run.sh`.
 2. Append the host pattern to the Caddy `app.X:443, app.Y:443 { … }`
    line in `Caddyfile`.
-3. Append the alias to `caddy.networks.kodus-backend-services.aliases`
+3. Append the alias to `caddy.networks.codus-backend-services.aliases`
    in `docker-compose.yml`.
 
 If you find yourself doing this often, consider promoting

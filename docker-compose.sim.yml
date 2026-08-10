@@ -6,9 +6,9 @@ services:
     # Using pre-baked images from scripts/docker/bake-local.sh
     #----------------------------------------------------------------
     api:
-        image: kodus-ai-api:local
+        image: codus-ai-api:local
         pull_policy: never
-        container_name: kodus_api_sim
+        container_name: codus_api_sim
         restart: unless-stopped
         env_file:
             - .env
@@ -20,12 +20,12 @@ services:
         ports:
             - '3331:3001'
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     worker:
-        image: kodus-ai-worker:local
+        image: codus-ai-worker:local
         pull_policy: never
-        container_name: kodus_worker_sim
+        container_name: codus_worker_sim
         restart: unless-stopped
         env_file:
             - .env
@@ -35,12 +35,12 @@ services:
             - NODE_ENV=production
             - COMPONENT_TYPE=worker
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     webhooks:
-        image: kodus-ai-webhook:local
+        image: codus-ai-webhook:local
         pull_policy: never
-        container_name: kodus_webhooks_sim
+        container_name: codus_webhooks_sim
         restart: unless-stopped
         env_file:
             - .env
@@ -52,8 +52,8 @@ services:
         ports:
             - '3333:3332'
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
 networks:
-    kodus-backend-services:
+    codus-backend-services:
         external: true

@@ -2,7 +2,7 @@ import * as amqp from 'amqplib';
 
 async function runStressTest(numMessages: number) {
     const connection = await amqp.connect(
-        'amqp://dev:devpass@localhost:5672/kodus-ai',
+        'amqp://dev:devpass@localhost:5672/codus-ai',
     );
     const channel = await connection.createChannel();
 

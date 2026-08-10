@@ -38,8 +38,8 @@ async function main() {
         process.env.RESEND_TEST_NAME ||
         recipientEmail!.split('@')[0] ||
         'Test User';
-    const orgName = process.env.RESEND_TEST_ORG || 'Kodus Test Organization';
-    const teamName = process.env.RESEND_TEST_TEAM || 'Kodus Test Team';
+    const orgName = process.env.RESEND_TEST_ORG || 'Codus Test Organization';
+    const teamName = process.env.RESEND_TEST_TEAM || 'Codus Test Team';
     const adminEmail =
         process.env.RESEND_TEST_ADMIN_EMAIL || recipientEmail!;
     const domain = process.env.RESEND_TEST_DOMAIN || 'acme.com';
@@ -110,7 +110,7 @@ async function main() {
         ),
     );
 
-    const ruleResults = await emailService.sendKodyRulesNotification(
+    const ruleResults = await emailService.sendCodyRulesNotification(
         [{ email: recipientEmail!, name: recipientName }],
         [
             'All public methods should have unit tests covering happy path and edge cases.',
@@ -126,19 +126,19 @@ async function main() {
             .map((f) => (f as PromiseRejectedResult).reason?.message)
             .join('; ');
         results.push({
-            name: 'kody-rules',
+            name: 'cody-rules',
             ok: false,
             detail: reasons || 'unknown',
         });
-        console.log(`  → kody-rules${' '.repeat(13)} ❌ ${reasons}`);
+        console.log(`  → cody-rules${' '.repeat(13)} ❌ ${reasons}`);
     } else {
         const ok = ruleResults[0] as PromiseFulfilledResult<{ id?: string }>;
         results.push({
-            name: 'kody-rules',
+            name: 'cody-rules',
             ok: true,
             detail: `id=${ok.value?.id ?? 'n/a'}`,
         });
-        console.log(`  → kody-rules${' '.repeat(13)} ✅ id=${ok.value?.id ?? 'n/a'}`);
+        console.log(`  → cody-rules${' '.repeat(13)} ✅ id=${ok.value?.id ?? 'n/a'}`);
     }
 
     await run('domain-verification', () =>
@@ -159,7 +159,7 @@ async function main() {
                 endDate: '2026-04-25',
                 numPRs: 42,
                 reviewedPRs: 42,
-                kodySuggestions: 188,
+                codySuggestions: 188,
                 suggestionsApplied: 73,
                 criticalIssues: 6,
                 bugRatio: 0.12,

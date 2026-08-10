@@ -516,7 +516,7 @@ export class E2BSandboxService implements ISandboxProvider {
         sandbox: Sandbox,
         unifiedDiff: string,
     ): Promise<void> {
-        const PATCH_PATH = '/tmp/kodus-cli.patch';
+        const PATCH_PATH = '/tmp/codus-cli.patch';
 
         try {
             await sandbox.files.write(PATCH_PATH, unifiedDiff);
@@ -538,8 +538,8 @@ export class E2BSandboxService implements ISandboxProvider {
         const result = await sandbox.commands.run(
             [
                 `cd ${REPO_DIR}`,
-                `git config user.email kodus-cli@kodus.local`,
-                `git config user.name 'Kodus CLI'`,
+                `git config user.email codus-cli@codus.local`,
+                `git config user.name 'Codus CLI'`,
                 `git apply --3way --whitespace=nowarn ${PATCH_PATH}`,
             ].join(' && '),
             { timeoutMs: TIMEOUTS.COMMAND_LONG_MS },

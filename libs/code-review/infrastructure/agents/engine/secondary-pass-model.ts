@@ -3,7 +3,7 @@ import {
     byokToVercelModel,
     getInternalModel,
 } from '@libs/llm/byok-to-vercel';
-import type { BYOKConfig } from '@kodus/kodus-common/llm';
+import type { BYOKConfig } from '@codus/codus-common/llm';
 
 /**
  * Model for the review's SECONDARY passes (dedup, severity classification,

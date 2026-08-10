@@ -9,8 +9,8 @@ import {
     CentralizedPrMetadata,
 } from '@libs/centralized-config/infrastructure/adapters/services/centralized-config-pr.service';
 import { DeleteByRepositoryOrDirectoryPullRequestMessagesUseCase } from '@libs/code-review/application/use-cases/pullRequestMessages/delete-by-repository-or-directory.use-case';
-import { buildKodyRuleCentralizedFilePath } from '@libs/centralized-config/utils/kody-rules-centralized-pr.builder';
-import { buildKodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/kodus-config-centralized-pr.builder';
+import { buildCodyRuleCentralizedFilePath } from '@libs/centralized-config/utils/cody-rules-centralized-pr.builder';
+import { buildCodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/codus-config-centralized-pr.builder';
 import { buildGroupFolderName } from '@libs/centralized-config/utils/path-encoder';
 import { ParametersKey } from '@libs/core/domain/enums';
 import { CodeReviewParameter } from '@libs/core/infrastructure/config/types/general/codeReviewConfig.type';
@@ -20,14 +20,14 @@ import { UserRequest } from '@libs/core/infrastructure/config/types/http/user-re
 import { RepositoryWithDirectoriesException } from '@libs/core/infrastructure/filters';
 import { AuditLogEvents } from '@libs/ee/codeReviewSettingsLog/events/audit-log.events';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
 import {
-    IKodyRule,
-    KodyRulesStatus,
-    KodyRulesType,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRulesStatus,
+    CodyRulesType,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import {
     IParametersService,
     PARAMETERS_SERVICE_TOKEN,
@@ -51,8 +51,8 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
 
         private readonly deletePullRequestMessagesUseCase: DeleteByRepositoryOrDirectoryPullRequestMessagesUseCase,
 
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
 
         @Inject(REQUEST)
         private readonly request: UserRequest,
@@ -227,7 +227,7 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
             !!directory.folders &&
             directory.folders.length > 0;
 
-        const baseRequest = buildKodusConfigCentralizedMutationRequest({
+        const baseRequest = buildCodusConfigCentralizedMutationRequest({
             centralizedConfigPrService: this.centralizedConfigPrService,
             organizationAndTeamData,
             repositoryId,
@@ -236,11 +236,11 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
                 : directory?.folders?.[0]?.path,
             folders: isDirectoryGroup ? directory?.folders : undefined,
             configFileContent: null,
-            title: `Remove Kodus config for ${repository.name}${directory ? ` (${directory.name ?? directory.folders?.[0]?.path ?? ''})` : ''}`,
+            title: `Remove Codus config for ${repository.name}${directory ? ` (${directory.name ?? directory.folders?.[0]?.path ?? ''})` : ''}`,
             description:
                 'This pull request proposes removing a code review scope configuration from centralized config.',
             commitMessage: `remove code review config for ${repository.name}`,
-            sourceBranchPrefix: 'kodus-centralized-config-delete',
+            sourceBranchPrefix: 'codus-centralized-config-delete',
             centralizedModeMessage:
                 'Centralized config is enabled. Code review settings removal proposed through a pull request.',
         });
@@ -280,8 +280,8 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
         organizationId: string;
         repositoryId: string;
         directoryId?: string;
-    }): Promise<Partial<IKodyRule>[]> {
-        const scopedRuleDocuments = await this.kodyRulesService.find({
+    }): Promise<Partial<ICodyRule>[]> {
+        const scopedRuleDocuments = await this.codyRulesService.find({
             organizationId: params.organizationId,
             rules: [
                 {
@@ -302,7 +302,7 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
 
         return scopedRuleDocuments
             .flatMap((entity) => entity?.rules ?? [])
-            .filter((rule): rule is Partial<IKodyRule> => {
+            .filter((rule): rule is Partial<ICodyRule> => {
                 if (!rule || rule.repositoryId !== params.repositoryId) {
                     return false;
                 }
@@ -316,7 +316,7 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
     }
 
     private getRuleDeleteFileChanges(
-        rulesForScope: Partial<IKodyRule>[],
+        rulesForScope: Partial<ICodyRule>[],
         repositoryFolder: string,
         groupFolderNamesByDirId: Map<string, string>,
     ): Array<{ path: string; operation: 'delete' }> {
@@ -327,11 +327,11 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
                 continue;
             }
 
-            const centralizedPath = buildKodyRuleCentralizedFilePath({
+            const centralizedPath = buildCodyRuleCentralizedFilePath({
                 centralizedConfigPrService: this.centralizedConfigPrService,
                 repositoryFolder,
                 rulesDirectory:
-                    rule.type === KodyRulesType.MEMORY ? 'memories' : 'review',
+                    rule.type === CodyRulesType.MEMORY ? 'memories' : 'review',
                 ruleContent: rule,
                 groupFolderName: rule.directoryId
                     ? groupFolderNamesByDirId.get(String(rule.directoryId))
@@ -610,11 +610,11 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
             repositoryId: repository.id,
         });
 
-        await this.kodyRulesService.updateRulesStatusByFilter(
+        await this.codyRulesService.updateRulesStatusByFilter(
             orgData.organizationId,
             repository.id,
             undefined,
-            KodyRulesStatus.DELETED,
+            CodyRulesStatus.DELETED,
         );
 
         const resolvedActor = this.resolveActor(actor);
@@ -650,11 +650,11 @@ export class DeleteRepositoryCodeReviewParameterUseCase {
             directoryId: directory.id,
         });
 
-        await this.kodyRulesService.updateRulesStatusByFilter(
+        await this.codyRulesService.updateRulesStatusByFilter(
             orgData.organizationId,
             repository.id,
             directory.id,
-            KodyRulesStatus.DELETED,
+            CodyRulesStatus.DELETED,
         );
 
         const resolvedActor = this.resolveActor(actor);

@@ -10,7 +10,7 @@ import {
 let tmpDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-session-hooks-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-session-hooks-'));
 });
 
 afterEach(async () => {
@@ -60,16 +60,16 @@ describe('installSessionHooks', () => {
         };
 
         expect(getCommand('SessionStart')).toBe(
-            'kodus decisions hooks claude-code session-start',
+            'codus decisions hooks claude-code session-start',
         );
         expect(getCommand('SessionEnd')).toBe(
-            'kodus decisions hooks claude-code session-end',
+            'codus decisions hooks claude-code session-end',
         );
         expect(getCommand('Stop')).toBe(
-            'kodus decisions hooks claude-code stop',
+            'codus decisions hooks claude-code stop',
         );
         expect(getCommand('UserPromptSubmit')).toBe(
-            'kodus decisions hooks claude-code user-prompt-submit',
+            'codus decisions hooks claude-code user-prompt-submit',
         );
     });
 
@@ -129,20 +129,20 @@ describe('installSessionHooks', () => {
         }>;
 
         expect(sessionStart[0].hooks[0].command).toBe(
-            'kodus decisions hooks cursor session-start',
+            'codus decisions hooks cursor session-start',
         );
     });
 });
 
 describe('removeSessionHooks', () => {
-    it('removes all kodus session hooks', async () => {
+    it('removes all codus session hooks', async () => {
         await installSessionHooks(tmpDir, 'claude-code');
         const result = await removeSessionHooks(tmpDir);
 
         expect(result.removed).toBe(true);
 
         const settings = await readSettings();
-        // hooks key should be gone (all entries were kodus)
+        // hooks key should be gone (all entries were codus)
         expect(settings.hooks).toBeUndefined();
     });
 
@@ -151,7 +151,7 @@ describe('removeSessionHooks', () => {
         expect(result.removed).toBe(false);
     });
 
-    it('returns removed=false when no kodus hooks present', async () => {
+    it('returns removed=false when no codus hooks present', async () => {
         await fs.mkdir(path.join(tmpDir, '.claude'), { recursive: true });
         await fs.writeFile(
             settingsPath(),
@@ -177,13 +177,13 @@ describe('removeSessionHooks', () => {
         expect(result.removed).toBe(false);
     });
 
-    it('preserves non-kodus hooks', async () => {
+    it('preserves non-codus hooks', async () => {
         await fs.mkdir(path.join(tmpDir, '.claude'), { recursive: true });
 
-        // Install kodus hooks first
+        // Install codus hooks first
         await installSessionHooks(tmpDir, 'claude-code');
 
-        // Add a non-kodus hook to SessionStart
+        // Add a non-codus hook to SessionStart
         const settings = await readSettings();
         const hooks = settings.hooks as Record<string, unknown[]>;
         const sessionStart = hooks['SessionStart'] as Array<{
@@ -196,7 +196,7 @@ describe('removeSessionHooks', () => {
         });
         await fs.writeFile(settingsPath(), JSON.stringify(settings, null, 2));
 
-        // Remove kodus hooks
+        // Remove codus hooks
         await removeSessionHooks(tmpDir);
 
         const after = await readSettings();

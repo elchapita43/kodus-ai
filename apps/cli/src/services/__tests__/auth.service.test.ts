@@ -65,27 +65,27 @@ function makeAuthResponse(overrides: Partial<AuthResponse> = {}): AuthResponse {
 
 describe('AuthService', () => {
     let authService: AuthService;
-    const originalKodusToken = process.env.KODUS_TOKEN;
-    const originalKodusTeamKey = process.env.KODUS_TEAM_KEY;
+    const originalCodusToken = process.env.CODUS_TOKEN;
+    const originalCodusTeamKey = process.env.CODUS_TEAM_KEY;
 
     beforeEach(() => {
         vi.clearAllMocks();
-        delete process.env.KODUS_TOKEN;
-        delete process.env.KODUS_TEAM_KEY;
+        delete process.env.CODUS_TOKEN;
+        delete process.env.CODUS_TEAM_KEY;
         authService = new AuthService();
     });
 
     afterAll(() => {
-        if (originalKodusToken === undefined) {
-            delete process.env.KODUS_TOKEN;
+        if (originalCodusToken === undefined) {
+            delete process.env.CODUS_TOKEN;
         } else {
-            process.env.KODUS_TOKEN = originalKodusToken;
+            process.env.CODUS_TOKEN = originalCodusToken;
         }
 
-        if (originalKodusTeamKey === undefined) {
-            delete process.env.KODUS_TEAM_KEY;
+        if (originalCodusTeamKey === undefined) {
+            delete process.env.CODUS_TEAM_KEY;
         } else {
-            process.env.KODUS_TEAM_KEY = originalKodusTeamKey;
+            process.env.CODUS_TEAM_KEY = originalCodusTeamKey;
         }
     });
 
@@ -138,8 +138,8 @@ describe('AuthService', () => {
     });
 
     describe('isAuthenticated', () => {
-        it('returns true when KODUS_TOKEN is set', async () => {
-            process.env.KODUS_TOKEN = 'ci-token';
+        it('returns true when CODUS_TOKEN is set', async () => {
+            process.env.CODUS_TOKEN = 'ci-token';
 
             const result = await authService.isAuthenticated();
 
@@ -147,8 +147,8 @@ describe('AuthService', () => {
             expect(mockLoadCredentials).not.toHaveBeenCalled();
         });
 
-        it('returns true when KODUS_TEAM_KEY is set', async () => {
-            process.env.KODUS_TEAM_KEY = 'kodus_env_key';
+        it('returns true when CODUS_TEAM_KEY is set', async () => {
+            process.env.CODUS_TEAM_KEY = 'codus_env_key';
 
             const result = await authService.isAuthenticated();
 
@@ -167,7 +167,7 @@ describe('AuthService', () => {
         it('returns true when teamKey exists (no credentials)', async () => {
             mockLoadCredentials.mockResolvedValue(null);
             mockLoadConfig.mockResolvedValue({
-                teamKey: 'kodus_abc123',
+                teamKey: 'codus_abc123',
             } as any);
 
             const result = await authService.isAuthenticated();
@@ -186,8 +186,8 @@ describe('AuthService', () => {
     });
 
     describe('getValidToken', () => {
-        it('returns KODUS_TOKEN from env when set', async () => {
-            process.env.KODUS_TOKEN = 'ci-token';
+        it('returns CODUS_TOKEN from env when set', async () => {
+            process.env.CODUS_TOKEN = 'ci-token';
 
             const token = await authService.getValidToken();
 
@@ -195,18 +195,18 @@ describe('AuthService', () => {
             expect(mockLoadCredentials).not.toHaveBeenCalled();
         });
 
-        it('returns KODUS_TEAM_KEY from env when set', async () => {
-            process.env.KODUS_TEAM_KEY = 'kodus_env_key';
+        it('returns CODUS_TEAM_KEY from env when set', async () => {
+            process.env.CODUS_TEAM_KEY = 'codus_env_key';
 
             const token = await authService.getValidToken();
 
-            expect(token).toBe('kodus_env_key');
+            expect(token).toBe('codus_env_key');
             expect(mockLoadCredentials).not.toHaveBeenCalled();
         });
 
-        it('prefers KODUS_TOKEN over KODUS_TEAM_KEY when both are set', async () => {
-            process.env.KODUS_TOKEN = 'ci-token';
-            process.env.KODUS_TEAM_KEY = 'kodus_env_key';
+        it('prefers CODUS_TOKEN over CODUS_TEAM_KEY when both are set', async () => {
+            process.env.CODUS_TOKEN = 'ci-token';
+            process.env.CODUS_TEAM_KEY = 'codus_env_key';
 
             const token = await authService.getValidToken();
 
@@ -217,18 +217,18 @@ describe('AuthService', () => {
         it('returns teamKey when no personal credentials exist', async () => {
             mockLoadCredentials.mockResolvedValue(null);
             mockLoadConfig.mockResolvedValue({
-                teamKey: 'kodus_team_key',
+                teamKey: 'codus_team_key',
             } as any);
             mockLoadCredentials.mockResolvedValue(null);
 
             const token = await authService.getValidToken();
 
-            expect(token).toBe('kodus_team_key');
+            expect(token).toBe('codus_team_key');
         });
 
         it('prefers accessToken when credentials and teamKey both exist', async () => {
             mockLoadConfig.mockResolvedValue({
-                teamKey: 'kodus_team_key',
+                teamKey: 'codus_team_key',
             } as any);
             const creds = makeCredentials({
                 expiresAt: Date.now() + 60 * 60 * 1000,
@@ -292,7 +292,7 @@ describe('AuthService', () => {
 
         it('falls back to teamKey when refresh fails and teamKey exists', async () => {
             mockLoadConfig.mockResolvedValue({
-                teamKey: 'kodus_team_key',
+                teamKey: 'codus_team_key',
             } as any);
             const expiredCreds = makeCredentials({
                 expiresAt: Date.now() - 1000,
@@ -304,7 +304,7 @@ describe('AuthService', () => {
 
             const token = await authService.getValidToken();
 
-            expect(token).toBe('kodus_team_key');
+            expect(token).toBe('codus_team_key');
             expect(mockClearCredentials).toHaveBeenCalled();
         });
 

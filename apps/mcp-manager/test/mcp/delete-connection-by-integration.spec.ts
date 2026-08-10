@@ -1,5 +1,5 @@
-// createMCPAdapter moved from @kodus/flow to @libs/mcp-server/mcp-adapter in the
-// ai-sdk migration (@kodus/flow was removed from the repo).
+// createMCPAdapter moved from @codus/flow to @libs/mcp-server/mcp-adapter in the
+// ai-sdk migration (@codus/flow was removed from the repo).
 jest.mock('@libs/mcp-server/mcp-adapter', () => ({
     createMCPAdapter: jest.fn(),
 }));
@@ -20,7 +20,7 @@ function buildService({ hasConnectionRow = true } = {}) {
               id: CONNECTION_PK,
               integrationId: INTEGRATION_ID,
               organizationId: ORG,
-              provider: 'kodusmcp',
+              provider: 'codusmcp',
           }
         : null;
 

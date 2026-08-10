@@ -69,7 +69,7 @@ export class SuggestionControlDto {
     groupingMode: string;
 
     @ApiProperty()
-    applyFiltersToKodyRules: boolean;
+    applyFiltersToCodyRules: boolean;
 
     @ApiProperty()
     limitationType: string;
@@ -133,7 +133,7 @@ export class CodeReviewConfigDataDto {
     showStatusFeedback: boolean;
 
     @ApiProperty()
-    kodusConfigFileOverridesWebPreferences: boolean;
+    codusConfigFileOverridesWebPreferences: boolean;
 
     @ApiProperty({ type: CodeReviewCadenceDto })
     reviewCadence: CodeReviewCadenceDto;
@@ -175,10 +175,10 @@ export class CodeReviewConfigDataDto {
     ideRulesSyncEnabled: boolean;
 
     @ApiProperty()
-    kodyRulesGeneratorEnabled: boolean;
+    codyRulesGeneratorEnabled: boolean;
 
     @ApiProperty({ type: [String], required: false })
-    kodyLearningExcludedReviewers?: string[];
+    codyLearningExcludedReviewers?: string[];
 
     @ApiProperty({ type: CustomMessagesDto })
     customMessages: CustomMessagesDto;
@@ -194,7 +194,7 @@ export class CodeReviewConfigDataDto {
         type: 'array',
         required: false,
         description:
-            'Sibling repositories Kody may consult during review (cross-repo context).',
+            'Sibling repositories Cody may consult during review (cross-repo context).',
         items: {
             type: 'object',
             properties: {

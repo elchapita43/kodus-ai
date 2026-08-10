@@ -1,15 +1,15 @@
 /**
  * Regression tests for the bot-comment filter inside
  * `CommentAnalysisService.processComments`. This filter is what stops
- * the rule-generator LLM from learning from Kody's own past reviews of
+ * the rule-generator LLM from learning from Cody's own past reviews of
  * the same repository — a self-feedback loop that surfaced on
  * 2026-05-20 when bitbucket onboarding kept producing the same
- * generated rule run after run because Kody's prior bitbucket
+ * generated rule run after run because Cody's prior bitbucket
  * suggestions were leaking through the filter.
  *
  * Two visible signatures across providers, both have to be matched:
- *   - `kody-codereview`    (github / gitlab / azure / forgejo)
- *   - `kody|code-review`   (bitbucket — uses a visible chip because
+ *   - `cody-codereview`    (github / gitlab / azure / forgejo)
+ *   - `cody|code-review`   (bitbucket — uses a visible chip because
  *                           bitbucket's Atlassian Markdown escapes
  *                           raw HTML comments, so the HTML-comment
  *                           marker the other providers use is
@@ -36,7 +36,7 @@ function longBody(prefix: string): string {
 }
 
 describe('CommentAnalysisService.processComments — bot-comment filter', () => {
-    it('drops bitbucket Kody suggestions (kody|code-review chip)', () => {
+    it('drops bitbucket Cody suggestions (cody|code-review chip)', () => {
         const svc = makeService();
 
         const out = svc.processComments([
@@ -49,11 +49,11 @@ describe('CommentAnalysisService.processComments — bot-comment filter', () => 
                         user: { id: 'u1', type: 'user' },
                     },
                     {
-                        id: 'kody-bb-1',
+                        id: 'cody-bb-1',
                         body: longBody(
-                            '`kody|code-review` `kody_rules` `severity-level|high`\n\nForbidden temporary marker TODO_REMOVE_ME appears in src/legacy/cleanup.ts',
+                            '`cody|code-review` `cody_rules` `severity-level|high`\n\nForbidden temporary marker TODO_REMOVE_ME appears in src/legacy/cleanup.ts',
                         ),
-                        user: { id: 'kody', type: 'user' },
+                        user: { id: 'cody', type: 'user' },
                     },
                 ],
                 reviewComments: [],
@@ -69,11 +69,11 @@ describe('CommentAnalysisService.processComments — bot-comment filter', () => 
             true,
         );
         expect(
-            allBodies.some((b) => b.includes('kody|code-review')),
+            allBodies.some((b) => b.includes('cody|code-review')),
         ).toBe(false);
     });
 
-    it('drops github/gitlab/azure Kody comments (kody-codereview HTML marker)', () => {
+    it('drops github/gitlab/azure Cody comments (cody-codereview HTML marker)', () => {
         const svc = makeService();
 
         const out = svc.processComments([
@@ -86,11 +86,11 @@ describe('CommentAnalysisService.processComments — bot-comment filter', () => 
                         user: { id: 'u2', type: 'user' },
                     },
                     {
-                        id: 'kody-gh-1',
+                        id: 'cody-gh-1',
                         body: longBody(
-                            'Avoid forbidden marker TODO_REMOVE_ME here.\n\n<!-- kody-codereview -->&#8203;',
+                            'Avoid forbidden marker TODO_REMOVE_ME here.\n\n<!-- cody-codereview -->&#8203;',
                         ),
-                        user: { id: 'kody', type: 'user' },
+                        user: { id: 'cody', type: 'user' },
                     },
                 ],
                 reviewComments: [],
@@ -103,7 +103,7 @@ describe('CommentAnalysisService.processComments — bot-comment filter', () => 
             true,
         );
         expect(
-            allBodies.some((b) => b.includes('kody-codereview')),
+            allBodies.some((b) => b.includes('cody-codereview')),
         ).toBe(false);
     });
 

@@ -142,12 +142,12 @@ export default {
         '^@/core/infrastructure/adapters/services/parameters\\.service$':
             '<rootDir>/libs/organization/infrastructure/adapters/services/parameters.service',
 
-        // KodyRules domain
-        '^@/core/domain/kodyRules/(.*)$': '<rootDir>/libs/kodyRules/domain/$1',
-        '^@/core/application/use-cases/kodyRules/(.*)$':
-            '<rootDir>/libs/kodyRules/application/use-cases/$1',
-        '^@/core/infrastructure/adapters/services/kodyRules/(.*)$':
-            '<rootDir>/libs/kodyRules/infrastructure/adapters/services/$1',
+        // CodyRules domain
+        '^@/core/domain/codyRules/(.*)$': '<rootDir>/libs/codyRules/domain/$1',
+        '^@/core/application/use-cases/codyRules/(.*)$':
+            '<rootDir>/libs/codyRules/application/use-cases/$1',
+        '^@/core/infrastructure/adapters/services/codyRules/(.*)$':
+            '<rootDir>/libs/codyRules/infrastructure/adapters/services/$1',
 
         // Code Review domain (was codeBase)
         '^@/core/domain/codeBase/(.*)$': '<rootDir>/libs/code-review/domain/$1',
@@ -201,8 +201,8 @@ export default {
             '<rootDir>/libs/core/log/loggerWrapper.service',
 
         // LLM (legacy alias)
-        '^@/llm$': '<rootDir>/packages/kodus-common/src/llm',
-        '^@/llm/(.*)$': '<rootDir>/packages/kodus-common/src/llm/$1',
+        '^@/llm$': '<rootDir>/packages/codus-common/src/llm',
+        '^@/llm/(.*)$': '<rootDir>/packages/codus-common/src/llm/$1',
 
         // Utils
         '^@/utils/json$': '<rootDir>/libs/common/utils/transforms/json',
@@ -227,7 +227,7 @@ export default {
             '<rootDir>/libs/platform/infrastructure/adapters/services/$1',
 
         // Enterprise Edition (ee) - specific mappings first
-        '^@/ee/kodyIssuesManagement/(.*)$':
+        '^@/ee/codyIssuesManagement/(.*)$':
             '<rootDir>/libs/issues/infrastructure/adapters/$1',
 
         // Enterprise Edition (ee) - generic fallback
@@ -240,8 +240,8 @@ export default {
         '^@/(.*)$': '<rootDir>/libs/$1',
         '^@libs/(.*)$': '<rootDir>/libs/$1',
         '^@apps/(.*)$': '<rootDir>/apps/$1/src',
-        '^@kodus/kodus-common/(.*)$': '<rootDir>/packages/kodus-common/src/$1',
-        '^@kodus/kodus-common$': '<rootDir>/packages/kodus-common/src',
+        '^@codus/codus-common/(.*)$': '<rootDir>/packages/codus-common/src/$1',
+        '^@codus/codus-common$': '<rootDir>/packages/codus-common/src',
     },
     transformIgnorePatterns: [
         // `jose` (used by apps/web's helpers.ts for JWT decoding) ships

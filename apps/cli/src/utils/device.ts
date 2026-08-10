@@ -10,12 +10,12 @@ interface DeviceData {
     tokenUpdatedAt?: string;
 }
 
-function getKodusDir(): string {
-    return path.join(os.homedir(), '.kodus');
+function getCodusDir(): string {
+    return path.join(os.homedir(), '.codus');
 }
 
 function getDeviceFile(): string {
-    return path.join(getKodusDir(), 'device.json');
+    return path.join(getCodusDir(), 'device.json');
 }
 
 const UUID_REGEX =
@@ -34,9 +34,9 @@ function isValidDeviceToken(value: unknown): value is string {
     return typeof value === 'string' && value.trim().length > 0;
 }
 
-async function ensureKodusDir(): Promise<void> {
+async function ensureCodusDir(): Promise<void> {
     try {
-        await fs.mkdir(getKodusDir(), { recursive: true, mode: 0o700 });
+        await fs.mkdir(getCodusDir(), { recursive: true, mode: 0o700 });
     } catch (error) {
         if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
             throw error;
@@ -45,7 +45,7 @@ async function ensureKodusDir(): Promise<void> {
 }
 
 async function writeDeviceData(data: DeviceData): Promise<void> {
-    await ensureKodusDir();
+    await ensureCodusDir();
     const tmpFile = `${getDeviceFile()}.${process.pid}.${Date.now()}.tmp`;
     await fs.writeFile(tmpFile, JSON.stringify(data, null, 2), {
         encoding: 'utf-8',

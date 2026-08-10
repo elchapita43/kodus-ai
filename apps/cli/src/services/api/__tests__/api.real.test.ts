@@ -50,14 +50,14 @@ describe('RealApi request headers', () => {
     });
 
     afterEach(() => {
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
         delete process.env.CF_ACCESS_CLIENT_ID;
         delete process.env.CF_ACCESS_CLIENT_SECRET;
         vi.unstubAllGlobals();
         vi.restoreAllMocks();
     });
 
-    it('includes X-Kodus-Device-Id and X-Kodus-Device-Token in API requests', async () => {
+    it('includes X-Codus-Device-Id and X-Codus-Device-Token in API requests', async () => {
         fetchMock.mockResolvedValue(
             new Response(
                 JSON.stringify({
@@ -83,10 +83,10 @@ describe('RealApi request headers', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [, options] = fetchMock.mock.calls[0];
-        expect(options.headers['X-Kodus-Device-Id']).toBe(
+        expect(options.headers['X-Codus-Device-Id']).toBe(
             '11111111-1111-4111-8111-111111111111',
         );
-        expect(options.headers['X-Kodus-Device-Token']).toBe(
+        expect(options.headers['X-Codus-Device-Token']).toBe(
             'device-token-123',
         );
     });
@@ -112,7 +112,7 @@ describe('RealApi request headers', () => {
                     status: 200,
                     headers: {
                         'Content-Type': 'application/json',
-                        'x-kodus-device-token': 'server-issued-token',
+                        'x-codus-device-token': 'server-issued-token',
                     },
                 },
             ),
@@ -182,7 +182,7 @@ describe('RealApi review.getPullRequestSuggestions', () => {
     });
 
     afterEach(() => {
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
         delete process.env.CF_ACCESS_CLIENT_ID;
         delete process.env.CF_ACCESS_CLIENT_SECRET;
         vi.unstubAllGlobals();
@@ -208,13 +208,13 @@ describe('RealApi review.getPullRequestSuggestions', () => {
         );
 
         const api = new RealApi();
-        await api.review.getPullRequestSuggestions('kodus_team_key', {
+        await api.review.getPullRequestSuggestions('codus_team_key', {
             prUrl: 'https://github.com/acme/repo/pull/1',
         });
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [, options] = fetchMock.mock.calls[0];
-        expect(options.headers['X-Team-Key']).toBe('kodus_team_key');
+        expect(options.headers['X-Team-Key']).toBe('codus_team_key');
         expect(options.headers.Authorization).toBeUndefined();
     });
 
@@ -271,7 +271,7 @@ describe('RealApi review.getPullRequestSuggestions', () => {
                 name: 'ApiError',
                 statusCode: 401,
                 message:
-                    'Authentication failed while fetching pull request suggestions. Run: kodus auth login or configure a valid team key.',
+                    'Authentication failed while fetching pull request suggestions. Run: codus auth login or configure a valid team key.',
             } satisfies Partial<ApiError>),
         );
     });
@@ -304,8 +304,8 @@ describe('RealApi config repository methods', () => {
                         {
                             id: 'repo-1',
                             name: 'cli',
-                            full_name: 'kodustech/cli',
-                            organizationName: 'kodustech',
+                            full_name: 'elchapita43/cli',
+                            organizationName: 'elchapita43',
                             selected: false,
                         },
                     ],
@@ -318,13 +318,13 @@ describe('RealApi config repository methods', () => {
         );
 
         const api = new RealApi();
-        await api.config.getAvailableRepositories('kodus_team_key');
+        await api.config.getAvailableRepositories('codus_team_key');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [url, options] = fetchMock.mock.calls[0];
         expect(url).toContain('/cli/config/repositories/available');
         expect(url).not.toContain('teamId=');
-        expect(options.headers['X-Team-Key']).toBe('kodus_team_key');
+        expect(options.headers['X-Team-Key']).toBe('codus_team_key');
         expect(options.headers.Authorization).toBeUndefined();
     });
 
@@ -346,13 +346,13 @@ describe('RealApi config repository methods', () => {
         );
 
         const api = new RealApi();
-        await api.config.addRepositories('kodus_team_key', ['repo-1']);
+        await api.config.addRepositories('codus_team_key', ['repo-1']);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [url, options] = fetchMock.mock.calls[0];
         expect(url).toContain('/cli/config/repositories');
         expect(options.method).toBe('POST');
-        expect(options.headers['X-Team-Key']).toBe('kodus_team_key');
+        expect(options.headers['X-Team-Key']).toBe('codus_team_key');
         expect(options.body).toBe(
             JSON.stringify({
                 repositoryIds: ['repo-1'],
@@ -368,8 +368,8 @@ describe('RealApi config repository methods', () => {
                         {
                             id: 'repo-1',
                             name: 'cli',
-                            full_name: 'kodustech/cli',
-                            organizationName: 'kodustech',
+                            full_name: 'elchapita43/cli',
+                            organizationName: 'elchapita43',
                             selected: true,
                         },
                     ],
@@ -382,13 +382,13 @@ describe('RealApi config repository methods', () => {
         );
 
         const api = new RealApi();
-        await api.config.getSelectedRepositories('kodus_team_key');
+        await api.config.getSelectedRepositories('codus_team_key');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [url, options] = fetchMock.mock.calls[0];
         expect(url).toContain('/cli/config/repositories/selected');
         expect(url).not.toContain('teamId=');
-        expect(options.headers['X-Team-Key']).toBe('kodus_team_key');
+        expect(options.headers['X-Team-Key']).toBe('codus_team_key');
     });
 
     it('lists teams with bearer auth for repository settings flows', async () => {
@@ -570,7 +570,7 @@ describe('RealApi config repository methods', () => {
         const api = new RealApi();
 
         await expect(
-            api.config.getAvailableRepositories('kodus_team_key'),
+            api.config.getAvailableRepositories('codus_team_key'),
         ).rejects.toEqual(
             expect.objectContaining({
                 name: 'ApiError',
@@ -606,7 +606,7 @@ describe('RealApi config repository methods', () => {
                 name: 'ApiError',
                 statusCode: 401,
                 message:
-                    'Repository configuration requires team-key auth. Run: kodus auth team-key --key <your-key>.',
+                    'Repository configuration requires team-key auth. Run: codus auth team-key --key <your-key>.',
             } satisfies Partial<ApiError>),
         );
     });
@@ -632,13 +632,13 @@ describe('RealApi config repository methods', () => {
         );
 
         const api = new RealApi();
-        await api.config.getRepositorySettings('kodus_team_key', 'repo-1');
+        await api.config.getRepositorySettings('codus_team_key', 'repo-1');
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         const [url, options] = fetchMock.mock.calls[0];
         expect(url).toContain('/cli/config/repositories/repo-1/settings');
         expect(options.method).toBeUndefined();
-        expect(options.headers['X-Team-Key']).toBe('kodus_team_key');
+        expect(options.headers['X-Team-Key']).toBe('codus_team_key');
         expect(options.headers.Authorization).toBeUndefined();
     });
 
@@ -661,13 +661,13 @@ describe('RealApi config repository methods', () => {
         const api = new RealApi();
 
         await expect(
-            api.config.getRepositorySettings('kodus_team_key', 'repo-1'),
+            api.config.getRepositorySettings('codus_team_key', 'repo-1'),
         ).rejects.toEqual(
             expect.objectContaining({
                 name: 'ApiError',
                 statusCode: 404,
                 message:
-                    'Repository settings are not available in this Kodus API environment. `config remote show`, `setup`, and `set` require the repository settings endpoint.',
+                    'Repository settings are not available in this Codus API environment. `config remote show`, `setup`, and `set` require the repository settings endpoint.',
             } satisfies Partial<ApiError>),
         );
     });
@@ -736,7 +736,7 @@ describe('RealApi review.analyze auth mode', () => {
     });
 
     afterEach(() => {
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
         delete process.env.CF_ACCESS_CLIENT_ID;
         delete process.env.CF_ACCESS_CLIENT_SECRET;
         vi.unstubAllGlobals();
@@ -787,7 +787,7 @@ describe('Cloudflare Access headers from config', () => {
     });
 
     afterEach(() => {
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
         delete process.env.CF_ACCESS_CLIENT_ID;
         delete process.env.CF_ACCESS_CLIENT_SECRET;
         vi.unstubAllGlobals();
@@ -805,7 +805,7 @@ describe('Cloudflare Access headers from config', () => {
 
     it('sends CF headers when config has cfAccessClientId and cfAccessClientSecret', async () => {
         configMocks.loadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc',
+            teamKey: 'codus_abc',
             teamName: 'Team',
             organizationName: 'Org',
             cfAccessClientId: 'cf-id-from-config',
@@ -835,7 +835,7 @@ describe('Cloudflare Access headers from config', () => {
 
     it('does not send CF headers when config has no CF fields', async () => {
         configMocks.loadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc',
+            teamKey: 'codus_abc',
             teamName: 'Team',
             organizationName: 'Org',
         });
@@ -859,7 +859,7 @@ describe('Cloudflare Access headers from config', () => {
 
     it('env vars take priority over config for CF headers', async () => {
         configMocks.loadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc',
+            teamKey: 'codus_abc',
             teamName: 'Team',
             organizationName: 'Org',
             cfAccessClientId: 'cf-id-from-config',
@@ -903,7 +903,7 @@ describe('API base URL from config', () => {
     });
 
     afterEach(() => {
-        delete process.env.KODUS_API_URL;
+        delete process.env.CODUS_API_URL;
         delete process.env.CF_ACCESS_CLIENT_ID;
         delete process.env.CF_ACCESS_CLIENT_SECRET;
         vi.unstubAllGlobals();
@@ -919,9 +919,9 @@ describe('API base URL from config', () => {
         );
     }
 
-    it('uses apiUrl from config when KODUS_API_URL env var is not set', async () => {
+    it('uses apiUrl from config when CODUS_API_URL env var is not set', async () => {
         configMocks.loadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc',
+            teamKey: 'codus_abc',
             teamName: 'Team',
             organizationName: 'Org',
             apiUrl: 'https://custom.example.com',
@@ -943,14 +943,14 @@ describe('API base URL from config', () => {
         expect(url).toMatch(/^https:\/\/custom\.example\.com\//);
     });
 
-    it('KODUS_API_URL env var takes priority over config apiUrl', async () => {
+    it('CODUS_API_URL env var takes priority over config apiUrl', async () => {
         configMocks.loadConfig.mockResolvedValue({
-            teamKey: 'kodus_abc',
+            teamKey: 'codus_abc',
             teamName: 'Team',
             organizationName: 'Org',
             apiUrl: 'https://from-config.example.com',
         });
-        process.env.KODUS_API_URL = 'https://from-env.example.com';
+        process.env.CODUS_API_URL = 'https://from-env.example.com';
         mockJsonResponse({
             fingerprint: 'fp',
             reviewsUsed: 0,
@@ -983,6 +983,6 @@ describe('API base URL from config', () => {
         await api.trial.getStatus('fp');
 
         const [url] = fetchMock.mock.calls[0];
-        expect(url).toMatch(/^https:\/\/api\.kodus\.io\//);
+        expect(url).toMatch(/^https:\/\/api\.codus\.io\//);
     });
 });

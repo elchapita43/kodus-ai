@@ -11,7 +11,7 @@
 #     macOS:  brew install 1password-cli
 #             For zero-friction signin, enable "Connect with 1Password CLI"
 #             in 1Password app → Settings → Developer.
-#   - Membership in the "Kodus Dev" 1Password vault.
+#   - Membership in the "Codus Dev" 1Password vault.
 #
 # First-time setup: scripts/env/README.md (section: Pulling values from 1Password)
 
@@ -20,7 +20,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 TEMPLATE="${REPO_ROOT}/.env.template"
 OUTPUT="${REPO_ROOT}/.env"
-VAULT="Kodus-Dev"
+VAULT="Codus-Dev"
 
 FORCE=0
 CHECK_ONLY=0

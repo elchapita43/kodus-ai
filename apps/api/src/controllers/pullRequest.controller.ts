@@ -214,7 +214,7 @@ export class PullRequestController implements OnApplicationShutdown {
     )
     @ApiOperation({
         summary: 'Awaiting-review PRs',
-        description: 'Open pull requests with no Kody review yet.',
+        description: 'Open pull requests with no Cody review yet.',
     })
     public async getAwaitingPullRequests(
         @Query('teamId') teamId?: string,
@@ -307,12 +307,12 @@ export class PullRequestController implements OnApplicationShutdown {
     @ApiOkResponse({ type: PullRequestSuggestionsResponseDto })
     @ApiUnauthorizedResponse({ description: 'Device limit reached' })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -325,8 +325,8 @@ export class PullRequestController implements OnApplicationShutdown {
         @Query('category') category?: string,
         @Headers('x-team-key') teamKey?: string,
         @Headers('authorization') authHeader?: string,
-        @Headers('x-kodus-device-id') deviceId?: string,
-        @Headers('x-kodus-device-token') deviceToken?: string,
+        @Headers('x-codus-device-id') deviceId?: string,
+        @Headers('x-codus-device-token') deviceToken?: string,
         @Headers('user-agent') userAgent?: string,
         @Res({ passthrough: true }) res?: any,
     ) {
@@ -355,12 +355,12 @@ export class PullRequestController implements OnApplicationShutdown {
     })
     @ApiCreatedResponse({ type: PullRequestSuggestionsResponseDto })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -373,8 +373,8 @@ export class PullRequestController implements OnApplicationShutdown {
         @Body('category') category?: string,
         @Headers('x-team-key') teamKey?: string,
         @Headers('authorization') authHeader?: string,
-        @Headers('x-kodus-device-id') deviceId?: string,
-        @Headers('x-kodus-device-token') deviceToken?: string,
+        @Headers('x-codus-device-id') deviceId?: string,
+        @Headers('x-codus-device-token') deviceToken?: string,
         @Headers('user-agent') userAgent?: string,
         @Res({ passthrough: true }) res?: any,
     ) {
@@ -403,12 +403,12 @@ export class PullRequestController implements OnApplicationShutdown {
     })
     @ApiOkResponse({ type: PullRequestSuggestionsResponseDto })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -421,8 +421,8 @@ export class PullRequestController implements OnApplicationShutdown {
         @Query('category') category?: string,
         @Headers('x-team-key') teamKey?: string,
         @Headers('authorization') authHeader?: string,
-        @Headers('x-kodus-device-id') deviceId?: string,
-        @Headers('x-kodus-device-token') deviceToken?: string,
+        @Headers('x-codus-device-id') deviceId?: string,
+        @Headers('x-codus-device-token') deviceToken?: string,
         @Headers('user-agent') userAgent?: string,
         @Res({ passthrough: true }) res?: any,
     ) {
@@ -474,8 +474,8 @@ export class PullRequestController implements OnApplicationShutdown {
         const bearerToken = authHeader?.replace(/^Bearer\s+/i, '');
         let organizationId: string | undefined;
 
-        // Route 1: Team CLI key (via x-team-key or Bearer kodus_...)
-        if (teamKey || bearerToken?.startsWith('kodus_')) {
+        // Route 1: Team CLI key (via x-team-key or Bearer codus_...)
+        if (teamKey || bearerToken?.startsWith('codus_')) {
             const key = teamKey || bearerToken;
             const teamData = await this.teamCliKeyService.validateKey(key);
             if (!teamData?.organization?.uuid) {
@@ -531,7 +531,7 @@ export class PullRequestController implements OnApplicationShutdown {
                 },
             );
             if (deviceResult?.deviceToken && res) {
-                res.setHeader('x-kodus-device-token', deviceResult.deviceToken);
+                res.setHeader('x-codus-device-token', deviceResult.deviceToken);
             }
         }
 

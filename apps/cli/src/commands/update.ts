@@ -9,13 +9,13 @@ import { resolveRemoteInstallInstructions } from '../utils/install-instructions.
 
 const require = createRequire(import.meta.url);
 const pkg = require('../../package.json');
-const PACKAGE_NAME = '@kodus/cli';
+const PACKAGE_NAME = '@codus/cli';
 const remoteInstall = resolveRemoteInstallInstructions();
 const SKILLS_REFRESH_HINT = chalk.dim(
     `\nTo refresh agent skills and integrations, run: ${remoteInstall.primary}\n`,
 );
 const SKILLS_CLI_FALLBACK = chalk.dim(
-    'CLI fallback for common local agent roots: kodus skills install | kodus skills resync\n',
+    'CLI fallback for common local agent roots: codus skills install | codus skills resync\n',
 );
 const SKILLS_REFRESH_FALLBACK = remoteInstall.fallback
     ? chalk.dim(`Installer fallback: ${remoteInstall.fallback}\n`)
@@ -104,13 +104,13 @@ export function getUpdateFailureHints(
 }
 
 export const updateCommand = new Command('update')
-    .description('Update the Kodus CLI to the latest version')
+    .description('Update the Codus CLI to the latest version')
     .action(async () => {
         const spinner = ora('Checking for updates...').start();
 
         try {
             const current = pkg.version;
-            const latest = await latestVersion('@kodus/cli');
+            const latest = await latestVersion('@codus/cli');
 
             if (current === latest) {
                 spinner.succeed(

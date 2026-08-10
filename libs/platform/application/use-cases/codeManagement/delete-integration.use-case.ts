@@ -13,7 +13,7 @@ import { AuthIntegrationService } from '@libs/integrations/infrastructure/adapte
 import { IntegrationService } from '@libs/integrations/infrastructure/adapters/services/integration.service';
 import { IntegrationConfigService } from '@libs/integrations/infrastructure/adapters/services/integrationConfig.service';
 import {
-    KODUS_ISSUES_INTEGRATION_ID,
+    CODUS_ISSUES_INTEGRATION_ID,
     MCPManagerService,
 } from '@libs/mcp-server/services/mcp-manager.service';
 import { CreateOrUpdateParametersUseCase } from '@libs/organization/application/use-cases/parameters/create-or-update-use-case';
@@ -65,7 +65,7 @@ export class DeleteIntegrationUseCase {
         // unsupported) host until re-installed.
         await this.mcpManagerService.deleteConnectionByIntegrationId(
             { organizationId: params.organizationId },
-            KODUS_ISSUES_INTEGRATION_ID,
+            CODUS_ISSUES_INTEGRATION_ID,
         );
 
         try {

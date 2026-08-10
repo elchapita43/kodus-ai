@@ -779,7 +779,7 @@ Return ONLY JSON:
         };
 
         const response = await input.toolCaller.callAgent(
-            `kodus-${input.params.skillName}-fetcher`,
+            `codus-${input.params.skillName}-fetcher`,
             prompt,
             agentOptions,
         );

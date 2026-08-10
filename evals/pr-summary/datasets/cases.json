@@ -81,9 +81,9 @@
     },
     {
         "caseId": "concatenate-rerun-dedup",
-        "description": "Re-run with CONCATENATE where the body already holds a previous kody summary block → old block is stripped, exactly one block survives (issue #1019).",
+        "description": "Re-run with CONCATENATE where the body already holds a previous cody summary block → old block is stripped, exactly one block survives (issue #1019).",
         "behaviour": "concatenate",
-        "existingBody": "Author notes: refactor only, no behaviour change.\n\n---\n\n<!-- kody-pr-summary:start -->\nOLD STALE SUMMARY FROM A PRIOR RUN\n<!-- kody-pr-summary:end -->",
+        "existingBody": "Author notes: refactor only, no behaviour change.\n\n---\n\n<!-- cody-pr-summary:start -->\nOLD STALE SUMMARY FROM A PRIOR RUN\n<!-- cody-pr-summary:end -->",
         "pr": {
             "number": 104,
             "title": "refactor: extract email templating into its own module",
@@ -132,10 +132,10 @@
     },
     {
         "caseId": "commit-replace-inplace",
-        "description": "New commit on an open PR, behaviourForNewCommits=REPLACE, body has an author note + a prior Kody block → the block is regenerated IN PLACE, author note kept, stale block content gone, still one block.",
+        "description": "New commit on an open PR, behaviourForNewCommits=REPLACE, body has an author note + a prior Cody block → the block is regenerated IN PLACE, author note kept, stale block content gone, still one block.",
         "mode": "commit",
         "behaviour": "replace",
-        "existingBody": "Author note: part of the Q3 billing epic.\n\n<!-- kody-pr-summary:start -->\nOLD_COMMIT_SUMMARY_FROM_LAST_PUSH\n<!-- kody-pr-summary:end -->",
+        "existingBody": "Author note: part of the Q3 billing epic.\n\n<!-- cody-pr-summary:start -->\nOLD_COMMIT_SUMMARY_FROM_LAST_PUSH\n<!-- cody-pr-summary:end -->",
         "pr": {
             "number": 201,
             "title": "feat: invoice PDF export",
@@ -158,10 +158,10 @@
     },
     {
         "caseId": "commit-concatenate-accumulate",
-        "description": "New commit on an open PR, behaviourForNewCommits=CONCATENATE, body has an author note + a prior Kody block → the new summary is appended INSIDE the block, keeping the prior summary, author note kept, still one block.",
+        "description": "New commit on an open PR, behaviourForNewCommits=CONCATENATE, body has an author note + a prior Cody block → the new summary is appended INSIDE the block, keeping the prior summary, author note kept, still one block.",
         "mode": "commit",
         "behaviour": "concatenate",
-        "existingBody": "Author note: incremental delivery, review per commit.\n\n<!-- kody-pr-summary:start -->\nOLD_COMMIT_SUMMARY_FROM_LAST_PUSH\n<!-- kody-pr-summary:end -->",
+        "existingBody": "Author note: incremental delivery, review per commit.\n\n<!-- cody-pr-summary:start -->\nOLD_COMMIT_SUMMARY_FROM_LAST_PUSH\n<!-- cody-pr-summary:end -->",
         "pr": {
             "number": 202,
             "title": "feat: add CSV export alongside PDF",
@@ -184,7 +184,7 @@
     },
     {
         "caseId": "commit-replace-no-prior-block",
-        "description": "New commit on an open PR, behaviourForNewCommits=REPLACE, body has an author note but NO prior Kody block → a fresh block is appended, author note kept, one block.",
+        "description": "New commit on an open PR, behaviourForNewCommits=REPLACE, body has an author note but NO prior Cody block → a fresh block is appended, author note kept, one block.",
         "mode": "commit",
         "behaviour": "replace",
         "existingBody": "Author note: first push had no summary yet.",

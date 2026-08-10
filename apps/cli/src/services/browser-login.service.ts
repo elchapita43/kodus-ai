@@ -11,7 +11,7 @@ const CALLBACK_HTML = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Kodus CLI authorized</title>
+<title>Codus CLI authorized</title>
 <style>
   body { font: 14px system-ui, sans-serif; padding: 4rem; text-align: center; color: #1f2937; }
   h1 { font-size: 1.25rem; }
@@ -20,7 +20,7 @@ const CALLBACK_HTML = `<!doctype html>
 </head>
 <body>
   <h1>You're all set</h1>
-  <p>The Kodus CLI received your authorization. You can close this tab.</p>
+  <p>The Codus CLI received your authorization. You can close this tab.</p>
 </body>
 </html>`;
 
@@ -76,7 +76,7 @@ export async function loginViaBrowser({
         // successful login until the timer naturally fires.
         const expiry = timeout<CallbackResult>(
             init.expiresIn * 1000,
-            'Authorization timed out. Run `kodus auth login` again.',
+            'Authorization timed out. Run `codus auth login` again.',
         );
         let callback: CallbackResult;
         try {
@@ -203,7 +203,7 @@ async function pollUntilTerminal(state: string): Promise<BrowserLoginResult> {
             response.status === 'not_found'
         ) {
             throw new Error(
-                `Authorization ${response.status}. Run \`kodus auth login\` again.`,
+                `Authorization ${response.status}. Run \`codus auth login\` again.`,
             );
         }
 

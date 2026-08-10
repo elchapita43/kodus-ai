@@ -9,7 +9,7 @@ import { ErrorClassification } from '@libs/core/workflow/domain/enums/error-clas
 import type { OutboxMessageModel } from './outbox-message.model';
 import type { InboxMessageModel } from './inbox-message.model';
 
-@Entity({ name: 'workflow_jobs', schema: 'kodus_workflow' })
+@Entity({ name: 'workflow_jobs', schema: 'codus_workflow' })
 @Index('IDX_workflow_jobs_status', ['status'])
 @Index('IDX_workflow_jobs_workflow_type', ['workflowType'])
 @Index('IDX_workflow_jobs_correlation_id', ['correlationId'])

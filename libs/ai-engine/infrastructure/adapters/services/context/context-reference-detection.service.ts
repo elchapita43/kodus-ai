@@ -7,7 +7,7 @@ import type {
     ContextRequirement,
 } from './context-pack';
 import { createLogger } from '@libs/core/log/logger';
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { Inject, Injectable } from '@nestjs/common';
 import {
     IPromptReferenceSyncError,
@@ -39,7 +39,7 @@ export interface ContextDetectionField {
 }
 
 export interface ContextReferenceDetectionParams {
-    entityType: 'kodyRule' | 'codeReviewConfig';
+    entityType: 'codyRule' | 'codeReviewConfig';
     entityId: string;
     fields: ContextDetectionField[];
     repositoryId?: string;
@@ -211,7 +211,7 @@ export class ContextReferenceDetectionService {
     }
 
     private async processFieldDetection(params: {
-        entityType: 'kodyRule' | 'codeReviewConfig';
+        entityType: 'codyRule' | 'codeReviewConfig';
         entityId: string;
         field: ContextDetectionField;
         repositoryId?: string;
@@ -255,12 +255,12 @@ export class ContextReferenceDetectionService {
               : entityId;
         const consumerKind: ContextConsumerKind =
             field.consumerKind ??
-            (entityType === 'kodyRule' ? 'prompt' : 'prompt_section');
+            (entityType === 'codyRule' ? 'prompt' : 'prompt_section');
         const consumerName =
             field.consumerName ?? (hasSuffix ? fieldKey : entityId);
         const requestDomain: ContextDomain =
             field.requestDomain ??
-            (entityType === 'kodyRule' ? ('code' as ContextDomain) : 'general');
+            (entityType === 'codyRule' ? ('code' as ContextDomain) : 'general');
         const taskIntent =
             field.taskIntent ?? `Process ${entityType} references`;
 
@@ -279,7 +279,7 @@ export class ContextReferenceDetectionService {
 
         const shouldAttemptDetection =
             this.hasLikelyExternalReferences(trimmedText) ||
-            entityType === 'kodyRule';
+            entityType === 'codyRule';
 
         if (shouldAttemptDetection) {
             const detection = await this.detectAndResolveReferences({
@@ -494,7 +494,7 @@ export class ContextReferenceDetectionService {
         text: string;
         path: string[];
         sourceType: any;
-        entityType: 'kodyRule' | 'codeReviewConfig';
+        entityType: 'codyRule' | 'codeReviewConfig';
         repositoryId?: string;
         repositoryName?: string;
         organizationAndTeamData: OrganizationAndTeamData;
@@ -529,7 +529,7 @@ export class ContextReferenceDetectionService {
                         ? 'instruction'
                         : 'rule',
                 detectionMode:
-                    params.entityType === 'kodyRule' ? 'rule' : 'prompt',
+                    params.entityType === 'codyRule' ? 'rule' : 'prompt',
                 byokConfig: params.byokConfig,
                 subscriptionStatus: params.subscriptionStatus,
             });
@@ -681,7 +681,7 @@ export class ContextReferenceDetectionService {
     }
 
     private async saveToContextOS(params: {
-        entityType: 'kodyRule' | 'codeReviewConfig';
+        entityType: 'codyRule' | 'codeReviewConfig';
         entityId: string;
         entityHash: string;
         requirements: ContextRequirement[];
@@ -738,7 +738,7 @@ export class ContextReferenceDetectionService {
             entityType,
             entityId,
             requirements,
-            origin: { kind: 'system', id: 'kody-system' },
+            origin: { kind: 'system', id: 'cody-system' },
             revisionId,
             parentReferenceId: previousReference?.uuid,
             knowledgeRefs: knowledgeRefs.length ? knowledgeRefs : undefined,

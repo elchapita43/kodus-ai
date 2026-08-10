@@ -18,7 +18,7 @@ type GateReason = {
 
 const DEFAULT_REASON: GateReason = {
     title: "Sign up to keep going",
-    body: "This action is part of the full Kodus product. Create a free account to unlock copy-for-LLM prompts, file viewed tracking, settings, and reviews on every PR.",
+    body: "This action is part of the full Codus product. Create a free account to unlock copy-for-LLM prompts, file viewed tracking, settings, and reviews on every PR.",
 };
 
 type SignupGateContextValue = {
@@ -126,7 +126,7 @@ function SignupGateModal({
                         {[
                             "Reviews on PRs of any size — no caps",
                             "Auto-reviews on every PR you open",
-                            "Your own Kody rules per repo",
+                            "Your own Cody rules per repo",
                             "GitHub, GitLab, Bitbucket, Azure DevOps",
                         ].map((perk) => (
                             <li

@@ -8,8 +8,8 @@ import { Client, Pool } from 'pg';
 
 import { createLogger } from '@libs/core/log/logger';
 
-const PG_CHANNEL = 'kodus_cross_process_events';
-const PG_TABLE = 'kodus_cross_process_events';
+const PG_CHANNEL = 'codus_cross_process_events';
+const PG_TABLE = 'codus_cross_process_events';
 
 /**
  * Resolve the SSL option to hand to the raw `pg.Client` for the LISTEN
@@ -106,9 +106,9 @@ const FORWARD_FLUSH_MAX_BATCH = 200;
  * IMPORTANT: this dedup is only WITHIN one process. Two API tasks each
  * have their own set — they both LISTEN, both poll, and both emit into
  * their own local EventEmitter2. That's expected: handlers subscribed
- * to those local events (e.g. KodyRulesSyncListener, the SSE endpoint)
+ * to those local events (e.g. CodyRulesSyncListener, the SSE endpoint)
  * must be idempotent across processes, and the ones that need
- * exclusivity already use `kodus_event_claims` for cross-process
+ * exclusivity already use `codus_event_claims` for cross-process
  * mutual exclusion.
  *
  * 10k ids ≈ ~90KB of memory; comfortably covers hours of steady-state
@@ -126,7 +126,7 @@ const DELIVERED_IDS_LRU_CAP = 10_000;
  *
  *   - `pull-request.closed` is emitted by the webhook PR handlers, which
  *     execute in the WORKER (the webhook queue consumer lives there),
- *     while its listeners — KodyRulesSyncListener (repo rule-file sync)
+ *     while its listeners — CodyRulesSyncListener (repo rule-file sync)
  *     and CentralizedConfigSyncListener — are registered in the API
  *     module tree. Result: PR-driven rule sync and centralized-config
  *     sync silently never ran on self-hosted.
@@ -136,14 +136,14 @@ const DELIVERED_IDS_LRU_CAP = 10_000;
  *     status only ever showed heartbeats.
  *
  * Registering the listener modules in the worker is not viable: the
- * KodyRules module graph deadlocks the worker's Nest boot (forwardRef
+ * CodyRules module graph deadlocks the worker's Nest boot (forwardRef
  * cycles), and the SSE consumer is an HTTP endpoint that must live in
  * the API regardless.
  */
 const FORWARDED_EVENTS = ['pull-request.closed', 'pr-execution.updated'];
 
 /** Marker stamped on re-emitted payloads so the forwarder never loops. */
-const BRIDGED_FLAG = '__kodusBridged';
+const BRIDGED_FLAG = '__codusBridged';
 
 interface BridgeEnvelope {
     instanceId: string;
@@ -161,7 +161,7 @@ interface BridgeEnvelope {
  * process's pid. Subscribe half: a dedicated LISTEN connection re-emits
  * incoming envelopes into the LOCAL bus, skipping the process's own
  * envelopes (pid guard) so monolithic deployments don't double-deliver.
- * Re-emitted payloads carry `__kodusBridged` so the forwarder ignores
+ * Re-emitted payloads carry `__codusBridged` so the forwarder ignores
  * them and nothing ping-pongs.
  *
  * Registered in WorkflowModule's shared providers — the one module both
@@ -177,7 +177,7 @@ export class CrossProcessEventsBridge implements OnModuleInit, OnModuleDestroy {
      * Nest instantiates this provider once PER IMPORTING MODULE CONTEXT —
      * observed live: two instances in the API process, meaning every local
      * event was forwarded twice (2 envelopes/merge) and every envelope was
-     * re-emitted twice (4 listener firings/merge → duplicated Kody Rules).
+     * re-emitted twice (4 listener firings/merge → duplicated Cody Rules).
      * Only the first constructed instance is active; the rest are inert.
      */
     private static primary: CrossProcessEventsBridge | null = null;
@@ -389,7 +389,7 @@ export class CrossProcessEventsBridge implements OnModuleInit, OnModuleDestroy {
             connectionTimeoutMillis: 10_000,
             keepAlive: true,
             keepAliveInitialDelayMillis: 10_000,
-            application_name: 'kodus-bridge-pool',
+            application_name: 'codus-bridge-pool',
             statement_timeout: 30_000,
             idle_in_transaction_session_timeout: 60_000,
         } as const;
@@ -752,7 +752,7 @@ export class CrossProcessEventsBridge implements OnModuleInit, OnModuleDestroy {
             // instance is fine — the lock lives on the DB, so all
             // API/worker tasks connected to the same DB share it.
             const lockRows = await this.runQuery<{ locked: boolean }>(
-                `SELECT pg_try_advisory_lock(hashtext('kodus-bridge-sweep')) AS locked`,
+                `SELECT pg_try_advisory_lock(hashtext('codus-bridge-sweep')) AS locked`,
             );
             if (!lockRows?.[0]?.locked) {
                 // Another instance is running the sweep — no-op.
@@ -764,7 +764,7 @@ export class CrossProcessEventsBridge implements OnModuleInit, OnModuleDestroy {
                 );
             } finally {
                 await this.runQuery(
-                    `SELECT pg_advisory_unlock(hashtext('kodus-bridge-sweep'))`,
+                    `SELECT pg_advisory_unlock(hashtext('codus-bridge-sweep'))`,
                 ).catch(() => undefined);
             }
         } catch (error) {
@@ -925,7 +925,7 @@ export class CrossProcessEventsBridge implements OnModuleInit, OnModuleDestroy {
             keepAlive: true,
             keepAliveInitialDelayMillis: 10_000,
             connectionTimeoutMillis: 10_000,
-            application_name: 'kodus-bridge-listener',
+            application_name: 'codus-bridge-listener',
             statement_timeout: 30_000,
             idle_in_transaction_session_timeout: 60_000,
         } as const;

@@ -24,7 +24,7 @@ describe('fetchPullRequestDiff', () => {
 
         const result = await fetchPullRequestDiff(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             {
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -40,9 +40,9 @@ describe('fetchPullRequestDiff', () => {
         expect(result.traces[0]).toMatchObject({
             capability: 'pr.diff.read',
             status: 'success',
-            toolName: 'KODUS_GET_PULL_REQUEST_DIFF',
+            toolName: 'CODUS_GET_PULL_REQUEST_DIFF',
         });
-        expect(callTool).toHaveBeenCalledWith('KODUS_GET_PULL_REQUEST_DIFF', {
+        expect(callTool).toHaveBeenCalledWith('CODUS_GET_PULL_REQUEST_DIFF', {
             organizationId: 'org-1',
             teamId: 'team-1',
             repositoryId: 'repo-1',
@@ -56,7 +56,7 @@ describe('fetchPullRequestDiff', () => {
 
         const result = await fetchPullRequestDiff(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             undefined,
             executionContext,
         );
@@ -116,7 +116,7 @@ describe('fetchPullRequestDiff', () => {
 
         const result = await fetchPullRequestDiff(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             {
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -139,7 +139,7 @@ describe('fetchPullRequestDiff', () => {
         // executeDeterministicTool unwraps ONE level, so extract receives
         // { content: [...] } directly. The old extractor looked at
         // root.result.content (one level too deep) and got nothing — which is
-        // exactly why KODUS_GET_PULL_REQUEST_DIFF came back empty in production.
+        // exactly why CODUS_GET_PULL_REQUEST_DIFF came back empty in production.
         const callTool = jest.fn<ToolCaller['callTool']>().mockResolvedValue({
             result: {
                 content: [
@@ -157,7 +157,7 @@ describe('fetchPullRequestDiff', () => {
 
         const result = await fetchPullRequestDiff(
             toolCaller,
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             {
                 organizationId: 'org-1',
                 teamId: 'team-1',

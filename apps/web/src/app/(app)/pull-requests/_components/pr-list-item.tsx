@@ -549,7 +549,7 @@ export const PrListItem = ({ group }: PrListItemProps) => {
                     </div>
                 </div>
 
-                {/* Reviews column: how many times Kody reviewed this PR and how
+                {/* Reviews column: how many times Cody reviewed this PR and how
                     recently — the core "is the review keeping up?" signal.
                     Labeled by the table header. */}
                 <div className="text-text-secondary flex min-w-0 flex-col gap-0.5 text-xs tabular-nums">
@@ -562,8 +562,8 @@ export const PrListItem = ({ group }: PrListItemProps) => {
                         </TooltipTrigger>
                         <TooltipContent className="text-xs">
                             {reviewCount === 1
-                                ? "1 Kody review on this PR"
-                                : `${reviewCount} Kody reviews on this PR`}
+                                ? "1 Cody review on this PR"
+                                : `${reviewCount} Cody reviews on this PR`}
                         </TooltipContent>
                     </Tooltip>
                     {latest.automationExecution?.createdAt && (

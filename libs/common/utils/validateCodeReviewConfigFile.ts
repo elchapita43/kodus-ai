@@ -4,19 +4,19 @@ import Ajv, { ErrorObject } from 'ajv';
 import * as yaml from 'js-yaml';
 
 import codereviewConfigSchema from '@libs/common/schemas/codereview.json';
-import { KodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
+import { CodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { CodeReviewParameter } from '@libs/core/infrastructure/config/types/general/codeReviewConfig.type';
 
-interface IValidateKodusConfigFileReturn {
+interface IValidateCodusConfigFileReturn {
     isValidConfigFile: boolean;
     validationErrors?: ErrorObject<string, Record<string, any>, unknown>[];
     errorMessages?: string;
     isDeprecated?: boolean;
 }
 
-export default function validateKodusConfigFile(
+export default function validateCodusConfigFile(
     configFile: any,
-): IValidateKodusConfigFileReturn {
+): IValidateCodusConfigFileReturn {
     if (!configFile) {
         return {
             isValidConfigFile: false,
@@ -84,14 +84,14 @@ export function isParameterValidInConfigFile(
     return !invalidParams.includes(parameterKey);
 }
 
-export function getDefaultKodusConfigFile(): Omit<KodusConfigFile, 'version'> {
-    const kodusConfigYMLfile = yaml.load(
-        fs.readFileSync('default-kodus-config.yml', 'utf8'),
-    ) as KodusConfigFile;
+export function getDefaultCodusConfigFile(): Omit<CodusConfigFile, 'version'> {
+    const codusConfigYMLfile = yaml.load(
+        fs.readFileSync('default-codus-config.yml', 'utf8'),
+    ) as CodusConfigFile;
 
-    const { version, ...kodusDefaultConfigFile } = kodusConfigYMLfile;
+    const { version, ...codusDefaultConfigFile } = codusConfigYMLfile;
 
-    return kodusDefaultConfigFile;
+    return codusDefaultConfigFile;
 }
 
 /**

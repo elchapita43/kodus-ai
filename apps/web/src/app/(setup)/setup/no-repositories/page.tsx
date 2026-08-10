@@ -4,7 +4,7 @@ import { redirect, useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "@components/ui/avatar";
 import { Button } from "@components/ui/button";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Page } from "@components/ui/page";
 import { useSuspenseGetCodeReviewParameter } from "@services/parameters/hooks";
 import { ArrowLeftIcon } from "lucide-react";
@@ -40,7 +40,7 @@ export default function App() {
                         </svg>
 
                         <p>
-                            Kodus has had a huge impact on our workflow by
+                            Codus has had a huge impact on our workflow by
                             saving us valuable time during PR reviews. It
                             consistently catches the small details that are easy
                             to miss, and the ability to set up custom rules
@@ -86,7 +86,7 @@ export default function App() {
                             <ul className="flex list-inside list-disc flex-col gap-2">
                                 <li>
                                     you don’t have the required permissions to
-                                    install Kodus in this organization
+                                    install Codus in this organization
                                 </li>
 
                                 <li>

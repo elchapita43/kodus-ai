@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cockpit — Kodus Review (mock)</title>
+<title>Cockpit — Codus Review (mock)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Overpass+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -209,7 +209,7 @@
 
     <!-- ============ TABS ============ -->
     <div class="tabs">
-        <button class="tab active" data-tab="review" onclick="switchTab('review')">Kodus Review</button>
+        <button class="tab active" data-tab="review" onclick="switchTab('review')">Codus Review</button>
         <button class="tab" data-tab="productivity" onclick="switchTab('productivity')">Productivity</button>
     </div>
 
@@ -260,7 +260,7 @@
         </div>
     </div>
 
-    <!-- ============ TAB: KODUS REVIEW ============ -->
+    <!-- ============ TAB: CODUS REVIEW ============ -->
     <div id="tab-review">
 
         <!-- weekly impl rate -->
@@ -310,7 +310,7 @@
                 <div class="section-head">
                     <div>
                         <h2>👎 by category</h2>
-                        <div class="hint">where the team disagrees with Kodus · click to drill down</div>
+                        <div class="hint">where the team disagrees with Codus · click to drill down</div>
                     </div>
                 </div>
                 <div class="chart-wrap"><canvas id="downvoteCatChart"></canvas></div>
@@ -326,11 +326,11 @@
             </div>
         </div>
 
-        <!-- kody rules -->
+        <!-- cody rules -->
         <div class="section">
             <div class="section-head">
                 <div>
-                    <h2>Kody Rules — health</h2>
+                    <h2>Cody Rules — health</h2>
                     <div class="hint">how each rule is performing · click a row to drill down</div>
                 </div>
                 <div class="filter-chips" id="ruleChips">
@@ -441,7 +441,7 @@ const mockSuggestions = {
             { sev: 'low', status: 'notimpl', title: 'Rename `data` to something more descriptive like `pullRequestPayload`.', file: 'libs/platformData/mappers/pr.mapper.ts', pr: '#1244', up: 0, down: 3 },
             { sev: 'low', status: 'notimpl', title: 'Prefer early return over nested else blocks.', file: 'apps/api/src/controllers/cockpit.controller.ts', pr: '#1240', up: 0, down: 2 },
             { sev: 'medium', status: 'impl', title: 'Extract the magic constant `86400` into `SECONDS_IN_DAY`.', file: 'libs/cockpit/services/period.helper.ts', pr: '#1233', up: 1, down: 0 },
-            { sev: 'low', status: 'notimpl', title: 'Sort imports by group (external, internal, relative).', file: 'libs/kodyRules/service.ts', pr: '#1230', up: 0, down: 4 },
+            { sev: 'low', status: 'notimpl', title: 'Sort imports by group (external, internal, relative).', file: 'libs/codyRules/service.ts', pr: '#1230', up: 0, down: 4 },
         ],
     },
     rule: {

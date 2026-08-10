@@ -41,10 +41,10 @@ describe('code review settings shell helpers', () => {
                     limitationType: createFormattedValue('pr'),
                     maxSuggestions: createFormattedValue(5),
                     severityLevelFilter: createFormattedValue('low'),
-                    applyFiltersToKodyRules: createFormattedValue(false),
+                    applyFiltersToCodyRules: createFormattedValue(false),
                 },
                 pullRequestApprovalActive: createFormattedValue(false),
-                kodusConfigFileOverridesWebPreferences:
+                codusConfigFileOverridesWebPreferences:
                     createFormattedValue(false),
                 isRequestChangesActive: createFormattedValue(false),
                 runOnDraft: createFormattedValue(true),

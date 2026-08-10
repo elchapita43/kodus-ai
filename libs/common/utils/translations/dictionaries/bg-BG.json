@@ -1,18 +1,18 @@
 {
     "reviewComment": {
-        "talkToKody": "Говорете с Kody, като споменете @kody",
-        "feedback": "Беше ли това предложение полезно? Реагирайте с 👍 или 👎, за да помогнете на Kody да се учи от това взаимодействие."
+        "talkToCody": "Говорете с Cody, като споменете @cody",
+        "feedback": "Беше ли това предложение полезно? Реагирайте с 👍 или 👎, за да помогнете на Cody да се учи от това взаимодействие."
     },
     "pullRequestFinishSummaryMarkdown": {
         "withComments": "## Прегледът на кода е завършен! 🔥\n\nПрегледът на кода беше успешно завършен въз основа на текущите ви конфигурации.\n\n",
-        "withoutComments": "# Прегледът на Kody е завършен\n**Страхотни новини!** 🎉\nНе бяха намерени проблеми, които да съответстват на текущите ви конфигурации за преглед.\n\nПродължавайте с отличната работа! 🚀",
-        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@kody review` on this PR to re-run the review.\n\n",
-        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@kody review` on this PR to retry once the issue is resolved.\n"
+        "withoutComments": "# Прегледът на Cody е завършен\n**Страхотни новини!** 🎉\nНе бяха намерени проблеми, които да съответстват на текущите ви конфигурации за преглед.\n\nПродължавайте с отличната работа! 🚀",
+        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@cody review` on this PR to re-run the review.\n\n",
+        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@cody review` on this PR to retry once the issue is resolved.\n"
     },
     "pullRequestSummaryMarkdown": {
-        "title": "Обобщение на PR (Коментар, създаден от [Kody](https://kodus.io) 🤖)",
+        "title": "Обобщение на PR (Коментар, създаден от [Cody](https://kodus.io) 🤖)",
         "codeReviewStarted": "Прегледът на кода започна! 🚀",
-        "description": "✋ Здравейте, екип! Вече разглеждам променените файлове и започвам прегледа, за да се уверя, че всичко е наред. Ако имате нужда от повече подробности, аз съм тук! [Kody](https://kodus.io)",
+        "description": "✋ Здравейте, екип! Вече разглеждам променените файлове и започвам прегледа, за да се уверя, че всичко е наред. Ако имате нужда от повече подробности, аз съм тук! [Cody](https://kodus.io)",
         "changedFiles": "📂 Променени файлове",
         "filesTable": [
             "Файл",
@@ -28,15 +28,15 @@
         "totalChanges": "Общо промени"
     },
     "configReviewMarkdown": {
-        "title": "Ръководство за Kody: Използване и конфигурация",
-        "interactingTitle": "Взаимодействие с Kody",
+        "title": "Ръководство за Cody: Използване и конфигурация",
+        "interactingTitle": "Взаимодействие с Cody",
         "requestReview": "Заявка за преглед",
-        "requestReviewDesc": "Помолете Kody да прегледа вашия PR ръчно, като добавите коментар с командата `@kody start-review` в корена на вашия PR.",
+        "requestReviewDesc": "Помолете Cody да прегледа вашия PR ръчно, като добавите коментар с командата `@cody start-review` в корена на вашия PR.",
         "validateBusinessLogic": "Валидирайте бизнес логиката",
-        "validateBusinessLogicDesc": "Помолете Kody да валидира вашия код срещу бизнес правила, като добавите коментар с командата `@kody -v business-logic`.",
+        "validateBusinessLogicDesc": "Помолете Cody да валидира вашия код срещу бизнес правила, като добавите коментар с командата `@cody -v business-logic`.",
         "provideFeedback": "Предоставяне на обратна връзка",
-        "provideFeedbackDesc": "Помогнете на Kody да се учи и подобрява, като реагирате на неговите коментари с 👍 за полезни предложения или 👎 ако са необходими подобрения.",
-        "configurationTitle": "Текуща конфигурация на Kody",
+        "provideFeedbackDesc": "Помогнете на Cody да се учи и подобрява, като реагирате на неговите коментари с 👍 за полезни предложения или 👎 ако са необходими подобрения.",
+        "configurationTitle": "Текуща конфигурация на Cody",
         "reviewOptionsTitle": "Опции за преглед",
         "reviewOptionsDesc": "Следните опции за преглед са активирани или деактивирани:",
         "tableOptions": "Опции",

@@ -1,26 +1,26 @@
 ---
 title: "Roles del Espacio de Trabajo"
-description: "Aprende sobre el control de acceso basado en roles (RBAC) en los espacios de trabajo de Kodus, incluyendo los diferentes roles de usuario y sus permisos."
+description: "Aprende sobre el control de acceso basado en roles (RBAC) en los espacios de trabajo de Codus, incluyendo los diferentes roles de usuario y sus permisos."
 ---
 
 <Note>
 **Miembros del Espacio de Trabajo vs. Licencias de PR**: Estos son completamente separados y no se afectan mutuamente.
 
-- **Miembros del Espacio de Trabajo**: Administradores que configuran los ajustes de Kodus (ilimitados)
-- **Licencias de PR**: Desarrolladores de tu organización de Git que reciben revisiones de Kody (según tu plan)
+- **Miembros del Espacio de Trabajo**: Administradores que configuran los ajustes de Codus (ilimitados)
+- **Licencias de PR**: Desarrolladores de tu organización de Git que reciben revisiones de Cody (según tu plan)
 </Note>
 
 ## Comprender las Licencias de PR
 
 Las licencias de PR se detectan automáticamente desde tus repositorios de Git en función de los desarrolladores que abrieron PRs en los últimos meses.
 
-**¿Por qué no aparece un desarrollador?** Si un desarrollador no aparece en tu recuento de licencias de PR, significa que Kody no está instalado en un repositorio donde ese desarrollador ha abierto PRs.
+**¿Por qué no aparece un desarrollador?** Si un desarrollador no aparece en tu recuento de licencias de PR, significa que Cody no está instalado en un repositorio donde ese desarrollador ha abierto PRs.
 
 **Ejemplo:** Puedes tener 1 administrador del espacio de trabajo gestionando la configuración, mientras 20 desarrolladores reciben revisiones automatizadas. Todos los planes incluyen PRs ilimitados — tu plan solo determina qué desarrolladores obtienen acceso a revisiones.
 
 ## Descripción General
 
-Los espacios de trabajo de Kodus admiten el **Control de Acceso Basado en Roles (RBAC)**, lo que te permite gestionar los permisos de usuario y los niveles de acceso dentro de tu organización. Cada miembro del espacio de trabajo puede tener asignado uno de cuatro roles distintos, cada uno con permisos y capacidades específicas.
+Los espacios de trabajo de Codus admiten el **Control de Acceso Basado en Roles (RBAC)**, lo que te permite gestionar los permisos de usuario y los niveles de acceso dentro de tu organización. Cada miembro del espacio de trabajo puede tener asignado uno de cuatro roles distintos, cada uno con permisos y capacidades específicas.
 
 ## Roles Disponibles
 
@@ -38,11 +38,11 @@ Cada rol proporciona diferentes niveles de acceso y capacidades dentro del espac
 
 ### Administrador de Repositorio (Repository Admin)
 
-**Acceso a la gestión de repositorios**. Ve todas las configuraciones, pull requests, issues, cockpit y plugins de toda la organización (solo lectura) y puede editar las configuraciones de revisión de código y las Kody Rules para los repositorios que tiene asignados.
+**Acceso a la gestión de repositorios**. Ve todas las configuraciones, pull requests, issues, cockpit y plugins de toda la organización (solo lectura) y puede editar las configuraciones de revisión de código y las Cody Rules para los repositorios que tiene asignados.
 
 ### Colaborador (Contributor)
 
-**Acceso de solo lectura** a toda la organización. Los Contributors pueden ver las configuraciones, las Kody Rules, los pull requests y los issues en todos los repositorios — sin necesidad de asignación a repositorios — pero no pueden editar nada. El cockpit, el uso de tokens, la facturación y la gestión de usuarios permanecen exclusivos de los administradores.
+**Acceso de solo lectura** a toda la organización. Los Contributors pueden ver las configuraciones, las Cody Rules, los pull requests y los issues en todos los repositorios — sin necesidad de asignación a repositorios — pero no pueden editar nada. El cockpit, el uso de tokens, la facturación y la gestión de usuarios permanecen exclusivos de los administradores.
 
 ## Matriz de Permisos por Rol
 
@@ -130,7 +130,7 @@ Habilita la unión automática para permitir que los usuarios con dominios de co
 
   <Accordion title="Un desarrollador no aparece en las licencias de PR">
     **Soluciones:**
-    - Verifica que Kody esté instalado en los repositorios donde este desarrollador abre PRs
+    - Verifica que Cody esté instalado en los repositorios donde este desarrollador abre PRs
     - Comprueba si el desarrollador ha abierto PRs en los últimos meses
     - Recuerda: las licencias de PR provienen de la actividad de Git, no de los miembros del espacio de trabajo
     - Asegúrate de que el webhook del repositorio esté correctamente configurado

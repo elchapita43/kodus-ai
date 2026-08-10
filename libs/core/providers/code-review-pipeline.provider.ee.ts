@@ -1,6 +1,6 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  */
 import { CodeReviewPipelineContext } from '@libs/code-review/pipeline/context/code-review-pipeline.context';
 import { CodeReviewPipelineObserver } from '@libs/code-review/infrastructure/observers/code-review-pipeline.observer';

@@ -22,30 +22,30 @@ TOTAL_PRS=${1:-20}
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 OWNER="ai-code-review-benchmark"
-MONGO_URI="mongodb://kodusdev:123456@localhost:27017/kodus_db?authSource=admin"
+MONGO_URI="mongodb://codusdev:123456@localhost:27017/codus_db?authSource=admin"
 
 echo "============================================================"
-echo "Kodus Code Review Benchmark"
+echo "Codus Code Review Benchmark"
 echo "============================================================"
 echo "PRs: $TOTAL_PRS | Owner: $OWNER"
 echo ""
 
 # ── Step 1: Clean state ──────────────────────────────────────────
 echo "▸ Step 1: Cleaning pipeline state..."
-docker exec db_postgres psql -U kodusdev -d kodus_db -c \
-  "DELETE FROM kodus_workflow.inbox_messages WHERE status = 'PROCESSING';" -q 2>/dev/null || true
-docker exec db_postgres psql -U kodusdev -d kodus_db -c \
-  "DELETE FROM kodus_workflow.outbox_messages WHERE status IN ('READY','PROCESSING','FAILED');" -q 2>/dev/null || true
-docker exec rabbitmq rabbitmqctl purge_queue -p kodus-ai workflow.jobs.code_review.queue 2>/dev/null || true
-docker exec rabbitmq rabbitmqctl purge_queue -p kodus-ai workflow.jobs.webhook.queue 2>/dev/null || true
+docker exec db_postgres psql -U codusdev -d codus_db -c \
+  "DELETE FROM codus_workflow.inbox_messages WHERE status = 'PROCESSING';" -q 2>/dev/null || true
+docker exec db_postgres psql -U codusdev -d codus_db -c \
+  "DELETE FROM codus_workflow.outbox_messages WHERE status IN ('READY','PROCESSING','FAILED');" -q 2>/dev/null || true
+docker exec rabbitmq rabbitmqctl purge_queue -p codus-ai workflow.jobs.code_review.queue 2>/dev/null || true
+docker exec rabbitmq rabbitmqctl purge_queue -p codus-ai workflow.jobs.webhook.queue 2>/dev/null || true
 echo "  ✓ Pipeline cleaned"
 
 # ── Step 2: Ensure worker is running ─────────────────────────────
 echo "▸ Step 2: Checking worker..."
-docker exec kodus_worker rm -rf /usr/src/app/node_modules/.cache/webpack 2>/dev/null || true
-WORKER_STATUS=$(docker inspect --format='{{.State.Status}}' kodus_worker 2>/dev/null || echo "missing")
+docker exec codus_worker rm -rf /usr/src/app/node_modules/.cache/webpack 2>/dev/null || true
+WORKER_STATUS=$(docker inspect --format='{{.State.Status}}' codus_worker 2>/dev/null || echo "missing")
 if [ "$WORKER_STATUS" != "running" ]; then
-  docker restart kodus_worker > /dev/null 2>&1 || true
+  docker restart codus_worker > /dev/null 2>&1 || true
   sleep 30
 fi
 echo "  ✓ Worker ready (status: $WORKER_STATUS)"
@@ -72,8 +72,8 @@ while [ $ELAPSED -lt $MAX_WAIT ]; do
   sleep $INTERVAL
   ELAPSED=$((ELAPSED + INTERVAL))
 
-  DONE=$(docker logs kodus_worker --since "$START_TIME" 2>&1 | grep -c "RequestChangesOrApproveStage.*Finished" || true)
-  ACTIVE=$(docker logs kodus_worker --since ${INTERVAL}s 2>&1 | grep -c "AGENT-TOOL\|AgentReviewStage" || true)
+  DONE=$(docker logs codus_worker --since "$START_TIME" 2>&1 | grep -c "RequestChangesOrApproveStage.*Finished" || true)
+  ACTIVE=$(docker logs codus_worker --since ${INTERVAL}s 2>&1 | grep -c "AGENT-TOOL\|AgentReviewStage" || true)
 
   echo "  ${ELAPSED}s: $DONE/$CREATED done, $ACTIVE active"
 
@@ -117,7 +117,7 @@ for (const pr of benchmark.prs) {
 const mongoCmd = (query) => {
   const escaped = query.replace(/'/g, \"'\\\\\\\"'\\\\\\\"'\");
   return execSync(
-    'docker exec mongodb mongosh -u kodusdev -p 123456 --authenticationDatabase admin kodus_db --quiet --eval \\'' + escaped + '\\'',
+    'docker exec mongodb mongosh -u codusdev -p 123456 --authenticationDatabase admin codus_db --quiet --eval \\'' + escaped + '\\'',
     { encoding: 'utf8', timeout: 30000 }
   ).trim();
 };
@@ -161,7 +161,7 @@ for (const repo of repos) {
       }
     }
 
-    const prInfo = { pr_title: bpr.title, head: bpr.head, repo: repo, tool: 'kodus' };
+    const prInfo = { pr_title: bpr.title, head: bpr.head, repo: repo, tool: 'codus' };
     results.all.push({ ...prInfo, issues: suggestions.all });
     results.issueOnly.push({ ...prInfo, issues: suggestions.issue });
     results.issueCritical.push({ ...prInfo, issues: suggestions.issueCritical });

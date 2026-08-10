@@ -1,6 +1,6 @@
 ---
 title: "Novita AI - Plataforma GPU Serverless"
-description: "Aprende cómo usar los modelos de Novita con Kodus"
+description: "Aprende cómo usar los modelos de Novita con Codus"
 icon: "server"
 ---
 
@@ -33,7 +33,7 @@ O sigue estos pasos:
 
 1. Ve a tu consola de Novita
 2. Haz clic en el botón "Manage API Keys" o ve a tu foto de perfil y haz clic en API Keys
-3. Haz clic en "Add New Key" y rellena con 'Kodus' o el nombre que prefieras
+3. Haz clic en "Add New Key" y rellena con 'Codus' o el nombre que prefieras
 4. Haz clic en "Confirm"
 5. Copia la clave de API y guárdala en un lugar seguro
 
@@ -47,9 +47,9 @@ Edita tu archivo `.env` y configura los ajustes principales. Para la **Integraci
 
 ```env
 # Core System Settings (update with your domains)
-WEB_HOSTNAME_API="kodus-api.yourdomain.com"    
+WEB_HOSTNAME_API="codus-api.yourdomain.com"    
 WEB_PORT_API=443                               
-NEXTAUTH_URL="https://kodus-web.yourdomain.com"
+NEXTAUTH_URL="https://codus-web.yourdomain.com"
 
 # Security Keys (generate with openssl commands above)
 WEB_NEXTAUTH_SECRET="your-generated-secret"
@@ -67,9 +67,9 @@ API_OPENAI_FORCE_BASE_URL="https://api.novita.ai/v3/openai"  # Novita API URL
 API_OPEN_AI_API_KEY="your-novita-api-key"                    # Your Novita API Key
 
 # Git Provider Webhooks (choose your provider)
-API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webhook"
-# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/gitlab/webhook"
-# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/bitbucket/webhook"
+API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/github/webhook"
+# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/gitlab/webhook"
+# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/bitbucket/webhook"
 ```
 
 <Note>
@@ -90,7 +90,7 @@ Para webhooks y acceso externo, configura Nginx:
 # Web App (port 3000)
 server {
     listen 80;
-    server_name kodus-web.yourdomain.com;
+    server_name codus-web.yourdomain.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -103,7 +103,7 @@ server {
 # API (port 3001)  
 server {
     listen 80;
-    server_name kodus-api.yourdomain.com;
+    server_name codus-api.yourdomain.com;
     location ~ ^/(github|gitlab|bitbucket|azure-repos)/webhook {
         proxy_pass http://localhost:3332;
         proxy_set_header Host $host;
@@ -132,7 +132,7 @@ docker-compose logs api worker | grep -i novita
 ```
 
 <Tip>
-  Para información detallada sobre la configuración de SSL, monitoreo y configuraciones avanzadas, consulta nuestra [guía de despliegue completa](https://docs.kodus.io/how_to_deploy/es/deploy_kodus/generic_vm).
+  Para información detallada sobre la configuración de SSL, monitoreo y configuraciones avanzadas, consulta nuestra [guía de despliegue completa](https://docs.kodus.io/how_to_deploy/es/deploy_codus/generic_vm).
 </Tip>
 
 ### Solución de problemas

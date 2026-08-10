@@ -91,19 +91,19 @@ function buildMongoUri(args: CliArgs): {
     db: string;
 } {
     if (args.mongoUri) {
-        return { uri: args.mongoUri, db: args.mongoDb ?? 'kodus_db' };
+        return { uri: args.mongoUri, db: args.mongoDb ?? 'codus_db' };
     }
     // Honors API_MG_DB_* exactly as set. Run inside the analytics
-    // worker container (`docker exec -it as_kodus_analytics_worker pnpm
+    // worker container (`docker exec -it as_codus_analytics_worker pnpm
     // analytics:seed-test ...`) so DNS resolves the in-network host.
     // From the host machine, override with --mongo-uri pointing at the
     // mapped port, e.g.
-    //   --mongo-uri "mongodb://kodusdev:123456@localhost:27117/kodus_db?authSource=admin"
+    //   --mongo-uri "mongodb://codusdev:123456@localhost:27117/codus_db?authSource=admin"
     const host = process.env.API_MG_DB_HOST ?? 'localhost';
     const port = process.env.API_MG_DB_PORT ?? '27017';
     const user = process.env.API_MG_DB_USERNAME ?? '';
     const pass = process.env.API_MG_DB_PASSWORD ?? '';
-    const db = args.mongoDb ?? process.env.API_MG_DB_DATABASE ?? 'kodus_db';
+    const db = args.mongoDb ?? process.env.API_MG_DB_DATABASE ?? 'codus_db';
     const auth = user && pass ? `${user}:${encodeURIComponent(pass)}@` : '';
     return {
         uri: `mongodb://${auth}${host}:${port}/${db}?authSource=admin`,

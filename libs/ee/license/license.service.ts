@@ -58,7 +58,7 @@ export class LicenseService implements ILicenseService {
     }
 
     /**
-     * Provision a Kodus-managed trial for the organization via billing.
+     * Provision a Codus-managed trial for the organization via billing.
      *
      * The trial used to be created only by the browser at the end of
      * onboarding; if that client-side call never ran (tab closed, network
@@ -219,7 +219,7 @@ export class LicenseService implements ILicenseService {
                     },
                 ],
                 editedBy: {
-                    email: 'system@kodus.ai', // Or some system identifier
+                    email: 'system@codus.ai', // Or some system identifier
                 },
                 userName: 'System Auto-Assign',
             });

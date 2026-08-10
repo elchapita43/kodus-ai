@@ -6,7 +6,7 @@
  * with Sonnet 4.6 as the LLM judge (N×M pairwise comparisons).
  *
  * Usage:
- *   npx tsx scripts/benchmark/judge.ts --candidates candidates.json [--tool kodus] [--output results/evaluations.json]
+ *   npx tsx scripts/benchmark/judge.ts --candidates candidates.json [--tool codus] [--output results/evaluations.json]
  *   npx tsx scripts/benchmark/judge.ts --help
  */
 
@@ -64,7 +64,7 @@ Usage:
 
 Options:
   --candidates <path>   Path to candidates.json (from extract.ts)
-  --tool <name>         Tool name for labeling results (default: "kodus")
+  --tool <name>         Tool name for labeling results (default: "codus")
   --output <path>       Output path (default: scripts/benchmark/results/evaluations.json)
   --help                Show this help
 `);
@@ -84,7 +84,7 @@ Options:
 
   return {
     candidatesPath: opts.candidates,
-    tool: opts.tool ?? "kodus",
+    tool: opts.tool ?? "codus",
     outputPath:
       opts.output ??
       resolve(__dirname, "results", "evaluations.json"),

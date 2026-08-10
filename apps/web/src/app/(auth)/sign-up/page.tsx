@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Link } from "@components/ui/link";
 import { Page } from "@components/ui/page";
 import { ScrollArea } from "@components/ui/scroll-area";
@@ -16,12 +16,12 @@ export default function RegisterPage() {
     return (
         <Page.Root className="mx-auto flex max-h-screen flex-row overflow-hidden p-6">
             <div className="bg-card-lv1 flex flex-10 flex-col justify-center gap-10 rounded-3xl p-12">
-                <SvgKodus className="h-8 min-h-8" />
+                <SvgCodus className="h-8 min-h-8" />
 
                 <div className="flex flex-1 flex-col justify-center gap-10">
                     <Heading variant="h1" className="text-[calc(3vh)]">
                         Join thousands of teams automating code reviews with
-                        Kody
+                        Cody
                     </Heading>
 
                     <div className="overflow-hidden rounded-3xl">

@@ -16,15 +16,15 @@ export type ForgotPasswordEmailProps = {
 
 export const forgotPasswordEmailMeta = {
     from: EMAIL_FROM.NOTIFICATIONS,
-    subject: 'Reset your Kodus password',
+    subject: 'Reset your Codus password',
 };
 
 function ForgotPasswordEmail({ resetLink }: ForgotPasswordEmailProps) {
     return (
-        <BrandLayout preview="Reset your Kodus password">
+        <BrandLayout preview="Reset your Codus password">
             <Heading style={baseHeading}>Reset your password</Heading>
             <Text style={baseText}>
-                We received a request to reset the password on your Kodus
+                We received a request to reset the password on your Codus
                 account. Click the button below to choose a new one.
             </Text>
             <Section style={{ margin: '24px 0' }}>

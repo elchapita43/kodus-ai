@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 // Handlers
-import { KodyRuleLogParams, KodyRulesLogHandler } from './kodyRulesLog.handler';
+import { CodyRuleLogParams, CodyRulesLogHandler } from './codyRulesLog.handler';
 import {
     CodeReviewConfigLogHandler,
     CodeReviewConfigLogParams,
@@ -55,7 +55,7 @@ export class CodeReviewSettingsLogService implements ICodeReviewSettingsLogServi
         private readonly codeReviewSettingsLogRepository: ICodeReviewSettingsLogRepository,
 
         private readonly permissionValidationService: PermissionValidationService,
-        private readonly kodyRulesLogHandler: KodyRulesLogHandler,
+        private readonly codyRulesLogHandler: CodyRulesLogHandler,
         private readonly codeReviewConfigLogHandler: CodeReviewConfigLogHandler,
         private readonly repositoriesLogHandler: RepositoriesLogHandler,
         private readonly integrationLogHandler: IntegrationLogHandler,
@@ -100,9 +100,9 @@ export class CodeReviewSettingsLogService implements ICodeReviewSettingsLogServi
         return this.codeReviewSettingsLogRepository.find(filter);
     }
 
-    // Kody Rules
-    public async registerKodyRulesLog(
-        params: KodyRuleLogParams,
+    // Cody Rules
+    public async registerCodyRulesLog(
+        params: CodyRuleLogParams,
     ): Promise<void> {
         const canAudit = await this.shouldAllowAuditLogs(
             params.organizationAndTeamData,
@@ -111,7 +111,7 @@ export class CodeReviewSettingsLogService implements ICodeReviewSettingsLogServi
             return;
         }
 
-        await this.kodyRulesLogHandler.logKodyRuleAction(params);
+        await this.codyRulesLogHandler.logCodyRuleAction(params);
     }
 
     // Code Review Config

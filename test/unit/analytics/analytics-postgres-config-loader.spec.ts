@@ -61,17 +61,17 @@ describe('analyticsPostgresConfigLoader', () => {
     it('cascades to API_PG_DB_* when ANALYTICS_PG_DB_HOST is unset (self-hosted)', () => {
         process.env.API_PG_DB_HOST = 'oltp.internal';
         process.env.API_PG_DB_PORT = '5432';
-        process.env.API_PG_DB_USERNAME = 'kodus';
-        process.env.API_PG_DB_PASSWORD = 'kodus';
-        process.env.API_PG_DB_DATABASE = 'kodus_db';
+        process.env.API_PG_DB_USERNAME = 'codus';
+        process.env.API_PG_DB_PASSWORD = 'codus';
+        process.env.API_PG_DB_DATABASE = 'codus_db';
 
         const cfg = load();
 
         expect(cfg.host).toBe('oltp.internal');
         expect(cfg.port).toBe(5432);
-        expect(cfg.username).toBe('kodus');
-        expect(cfg.password).toBe('kodus');
-        expect(cfg.database).toBe('kodus_db');
+        expect(cfg.username).toBe('codus');
+        expect(cfg.password).toBe('codus');
+        expect(cfg.database).toBe('codus_db');
         expect(cfg.schema).toBe('analytics');
     });
 
@@ -84,13 +84,13 @@ describe('analyticsPostgresConfigLoader', () => {
         process.env.ANALYTICS_PG_DB_HOST = '';
         process.env.ANALYTICS_PG_DB_USERNAME = '   ';
         process.env.API_PG_DB_HOST = 'oltp.internal';
-        process.env.API_PG_DB_USERNAME = 'kodus';
-        process.env.API_PG_DB_PASSWORD = 'kodus';
+        process.env.API_PG_DB_USERNAME = 'codus';
+        process.env.API_PG_DB_PASSWORD = 'codus';
 
         const cfg = load();
         expect(cfg.host).toBe('oltp.internal');
-        expect(cfg.username).toBe('kodus');
-        expect(cfg.password).toBe('kodus');
+        expect(cfg.username).toBe('codus');
+        expect(cfg.password).toBe('codus');
     });
 
     it('honors a custom schema override', () => {
@@ -119,11 +119,11 @@ describe('analyticsPostgresConfigLoader', () => {
     it('mixes ANALYTICS_PG_DB_USERNAME with API_PG_DB_PASSWORD when only one is set', () => {
         // Cascade is per-field: a partial override is allowed.
         process.env.ANALYTICS_PG_DB_USERNAME = 'analytics';
-        process.env.API_PG_DB_USERNAME = 'kodus';
-        process.env.API_PG_DB_PASSWORD = 'kodus_pw';
+        process.env.API_PG_DB_USERNAME = 'codus';
+        process.env.API_PG_DB_PASSWORD = 'codus_pw';
 
         const cfg = load();
         expect(cfg.username).toBe('analytics');
-        expect(cfg.password).toBe('kodus_pw');
+        expect(cfg.password).toBe('codus_pw');
     });
 });

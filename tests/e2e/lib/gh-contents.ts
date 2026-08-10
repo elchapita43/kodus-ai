@@ -162,7 +162,7 @@ export async function ghMergeChange(
     return { prNumber, branch };
 }
 
-// Close a PR (used for the init(syncOption=pr) coverage — Kodus opens a real
+// Close a PR (used for the init(syncOption=pr) coverage — Codus opens a real
 // initialization PR on the source repo; the scenario closes it after
 // asserting it exists).
 export async function ghClosePR(repo: string, prNumber: number): Promise<void> {
@@ -176,9 +176,9 @@ export async function ghClosePR(repo: string, prNumber: number): Promise<void> {
 }
 
 // Read-your-writes guards: the contents API is usually consistent, but the
-// tree/ref reads Kodus's sync performs can briefly lag a burst of PUTs. Wait
+// tree/ref reads Codus's sync performs can briefly lag a burst of PUTs. Wait
 // until the file is visible (and carries the expected content) before asking
-// Kodus to sync, so a stale tree never produces a phantom assertion failure.
+// Codus to sync, so a stale tree never produces a phantom assertion failure.
 export async function ghWaitFileContains(
     repo: string,
     path: string,
@@ -220,7 +220,7 @@ export async function ghWaitFileGone(
     );
 }
 
-// Newest-first list of open PRs. Used to locate the PR Kodus itself opened
+// Newest-first list of open PRs. Used to locate the PR Codus itself opened
 // (PENDING rule-mutation flow / init-pr) without depending on its branch
 // naming convention.
 export async function ghListOpenPRs(
@@ -241,7 +241,7 @@ export async function ghListOpenPRs(
 }
 
 // Merge an EXISTING PR by number (ghMergeChange merges only the PR it
-// created). Used to land the PRs Kodus opens for pending rule mutations.
+// created). Used to land the PRs Codus opens for pending rule mutations.
 export async function ghMergePRNumber(
     repo: string,
     prNumber: number,

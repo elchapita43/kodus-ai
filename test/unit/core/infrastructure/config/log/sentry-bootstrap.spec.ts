@@ -31,8 +31,8 @@ describe('setupSentry', () => {
             expect.objectContaining({
                 dsn: 'https://fake-dsn@s2315144.eu-fsn-3.betterstackdata.com/2315144',
                 environment: 'production',
-                release: 'kodus-orchestrator@production',
-                serverName: 'kodus-worker',
+                release: 'codus-orchestrator@production',
+                serverName: 'codus-worker',
             }),
         );
     });

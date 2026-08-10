@@ -40,9 +40,9 @@
         "description": "Enhancing documentation and clarity of comments."
     },
     {
-        "type": "kody_rules",
-        "name": "Kody Rules",
-        "description": "Suggestions that enforce the rules defined in the Kody configuration."
+        "type": "cody_rules",
+        "name": "Cody Rules",
+        "description": "Suggestions that enforce the rules defined in the Cody configuration."
     },
     {
         "type": "breaking_changes",

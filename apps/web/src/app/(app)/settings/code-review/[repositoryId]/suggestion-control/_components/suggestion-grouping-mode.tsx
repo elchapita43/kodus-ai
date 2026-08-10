@@ -35,7 +35,7 @@ export const SuggestionGroupingMode = () => {
             <div>
                 <Heading variant="h2">Suggestion grouping mode</Heading>
                 <span className="text-text-secondary text-sm">
-                    Define how Kody consolidates multiple suggestions in a
+                    Define how Cody consolidates multiple suggestions in a
                     single PR.
                 </span>
             </div>

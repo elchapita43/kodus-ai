@@ -13,7 +13,7 @@ const VALID_HOOKS: Set<CursorHookEvent> = new Set([
 
 export async function cursorHookAction(hookName: string): Promise<void> {
     if (!VALID_HOOKS.has(hookName as CursorHookEvent)) {
-        if (process.env.KODUS_VERBOSE === 'true') {
+        if (process.env.CODUS_VERBOSE === 'true') {
             console.error(`[decisions] unknown Cursor hook: ${hookName}`);
         }
         return;

@@ -8,11 +8,11 @@ import conversationVertexByok from './conversation-vertex-byok.js';
 import conversationAnthropicByok from './conversation-anthropic-byok.js';
 import commandReview from './command-review.js';
 import commandReviewFocus from './command-review-focus.js';
-import kodyRulesCreateAndApply from './kody-rules.js';
-import kodyRulesFileSync from './kody-rules-file-sync.js';
-import kodyRulesLifecycle from './kody-rules-lifecycle.js';
+import codyRulesCreateAndApply from './cody-rules.js';
+import codyRulesFileSync from './cody-rules-file-sync.js';
+import codyRulesLifecycle from './cody-rules-lifecycle.js';
 import ruleFileDetection from './rule-file-detection.js';
-import kodyRulesCoverage from './kody-rules-coverage.js';
+import codyRulesCoverage from './cody-rules-coverage.js';
 import licenseAttribution from './license-attribution.js';
 import onboardingWebhookRegistration from './onboarding-webhook-registration.js';
 import finishOnboardingSlo from './finish-onboarding-slo.js';
@@ -42,11 +42,11 @@ export const allScenarios: Record<string, Scenario> = {
     [commandReview.id]: commandReview,
     [commandReviewFocus.id]: commandReviewFocus,
     [cockpitAnalytics.id]: cockpitAnalytics,
-    [kodyRulesCreateAndApply.id]: kodyRulesCreateAndApply,
-    [kodyRulesFileSync.id]: kodyRulesFileSync,
-    [kodyRulesLifecycle.id]: kodyRulesLifecycle,
+    [codyRulesCreateAndApply.id]: codyRulesCreateAndApply,
+    [codyRulesFileSync.id]: codyRulesFileSync,
+    [codyRulesLifecycle.id]: codyRulesLifecycle,
     [ruleFileDetection.id]: ruleFileDetection,
-    [kodyRulesCoverage.id]: kodyRulesCoverage,
+    [codyRulesCoverage.id]: codyRulesCoverage,
     [licenseAttribution.id]: licenseAttribution,
     [perSeatLicenseToggle.id]: perSeatLicenseToggle,
     [prExecutionSse.id]: prExecutionSse,
@@ -84,11 +84,11 @@ export {
     conversationVertexByok,
     commandReview,
     commandReviewFocus,
-    kodyRulesCreateAndApply,
-    kodyRulesFileSync,
-    kodyRulesLifecycle,
+    codyRulesCreateAndApply,
+    codyRulesFileSync,
+    codyRulesLifecycle,
     ruleFileDetection,
-    kodyRulesCoverage,
+    codyRulesCoverage,
     licenseAttribution,
     onboardingWebhookRegistration,
     finishOnboardingSlo,

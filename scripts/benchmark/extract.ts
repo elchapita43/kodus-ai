@@ -4,7 +4,7 @@
  * Uses `gh` CLI for GitHub API access (no token needed — uses your existing gh auth).
  *
  * Usage:
- *   npx tsx scripts/benchmark/extract.ts --owner <org> [--tool kodus] [--output candidates.json]
+ *   npx tsx scripts/benchmark/extract.ts --owner <org> [--tool codus] [--output candidates.json]
  *   npx tsx scripts/benchmark/extract.ts --help
  */
 
@@ -37,7 +37,7 @@ Usage:
 
 Options:
   --owner <org>         GitHub org that owns the forked repos (required)
-  --tool <name>         Label for the review tool (default: "kodus")
+  --tool <name>         Label for the review tool (default: "codus")
   --output <path>       Output path (default: scripts/benchmark/candidates.json)
   --model <id>          Model for normalization (default: gemini-2.5-flash)
   --help                Show this help
@@ -66,7 +66,7 @@ normalize them into atomic issue statements.
 
   return {
     owner: opts.owner,
-    tool: opts.tool ?? "kodus",
+    tool: opts.tool ?? "codus",
     outputPath:
       opts.output ?? resolve(__dirname, "candidates.json"),
     model: opts.model ?? "gemini-2.5-flash",

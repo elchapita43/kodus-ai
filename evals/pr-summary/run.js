@@ -47,7 +47,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 dotenv.config({ path: path.join(__dirname, '../../.env.local'), override: true });
 if (process.env.HOME) {
-    dotenv.config({ path: path.join(process.env.HOME, '.kodus-dev/config'), override: true });
+    dotenv.config({ path: path.join(process.env.HOME, '.codus-dev/config'), override: true });
 }
 if (!process.env.API_CRYPTO_KEY) process.env.API_CRYPTO_KEY = '0'.repeat(64);
 
@@ -63,8 +63,8 @@ const GATE = !!args.gate;
 const DATASET = String(args.dataset || 'cases').replace(/\.json$/, '');
 const BEHAVIOUR_FILTER = args.behaviour ? String(args.behaviour) : null;
 
-const START = '<!-- kody-pr-summary:start -->';
-const END = '<!-- kody-pr-summary:end -->';
+const START = '<!-- cody-pr-summary:start -->';
+const END = '<!-- cody-pr-summary:end -->';
 const MOCK_SUMMARY = 'MOCK_GENERATED_SUMMARY_BODY';
 
 const { applyModelEnv } = require('../shared/tier0-models');
@@ -174,7 +174,7 @@ const BEHAVIOUR_ENUM = {
 
 const countBlocks = (s) => (s ? (s.match(new RegExp(START, 'g')) || []).length : 0);
 const blockContent = (s) => {
-    const m = s && s.match(/<!-- kody-pr-summary:start -->([\s\S]*?)<!-- kody-pr-summary:end -->/);
+    const m = s && s.match(/<!-- cody-pr-summary:start -->([\s\S]*?)<!-- cody-pr-summary:end -->/);
     return m ? m[1].trim() : '';
 };
 
@@ -249,13 +249,13 @@ async function runCase(c) {
         failures.push(`expected exactly 1 summary block, got ${countBlocks(finalDescription)}`);
     }
     if (exp.bodyPreserved === true) {
-        const author = (c.existingBody || '').split('\n').find((l) => l.trim() && !l.includes('kody-pr-summary'));
+        const author = (c.existingBody || '').split('\n').find((l) => l.trim() && !l.includes('cody-pr-summary'));
         if (author && !finalDescription.includes(author.trim())) {
             failures.push(`${c.behaviour} dropped the author-written description (expected it kept)`);
         }
     }
     if (exp.bodyPreserved === false && c.existingBody) {
-        const author = c.existingBody.split('\n').find((l) => l.trim() && !l.includes('kody-pr-summary'));
+        const author = c.existingBody.split('\n').find((l) => l.trim() && !l.includes('cody-pr-summary'));
         if (author && finalDescription.includes(author.trim())) {
             failures.push('REPLACE did not drop the existing author description');
         }

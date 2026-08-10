@@ -69,7 +69,7 @@ export function buildProviderFallbackWarning(params: {
 /**
  * Fold duplicate warnings across the per-agent fan-out. Without this the
  * end-review comment would render the same `PROMPT_COMPACTED` notice 4
- * times (bug + security + performance + kody-rules).
+ * times (bug + security + performance + cody-rules).
  *
  * Dedup key: (kind, modelName, contextWindowTokens). Within a group,
  * `detail` strings are deduped and comma-joined, and `agentName` is

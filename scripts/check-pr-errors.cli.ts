@@ -234,7 +234,7 @@ async function checkWorkflowJobs(
             completed_at,
             last_error,
             correlation_id
-        FROM kodus_workflow.workflow_jobs
+        FROM codus_workflow.workflow_jobs
         WHERE organization_id = $1
         AND (
             payload->>'pullRequestNumber' = $2
@@ -754,7 +754,7 @@ Examples:
 
     try {
         const mongoUri = buildMongoUri();
-        const dbName = process.env.API_MG_DB_DATABASE || 'kodus_db';
+        const dbName = process.env.API_MG_DB_DATABASE || 'codus_db';
 
         console.log(`Using env file: ${envPath}`);
         console.log(`Connecting to MongoDB (database: ${dbName})...`);

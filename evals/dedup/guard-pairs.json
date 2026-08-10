@@ -512,9 +512,9 @@
             }
         },
         {
-            "id": "gym78-authorize-suggestion-vs-kodyrule",
+            "id": "gym78-authorize-suggestion-vs-codyrule",
             "shouldMerge": true,
-            "note": "REAL cross-stream case from gym#78 line 11: a Security AI-suggestion and a Kody Rule both flag the missing [Authorize] on AparelhoController. Same bug, different streams — the cross-stream dedup must merge them (and keep the Kody Rule).",
+            "note": "REAL cross-stream case from gym#78 line 11: a Security AI-suggestion and a Cody Rule both flag the missing [Authorize] on AparelhoController. Same bug, different streams — the cross-stream dedup must merge them (and keep the Cody Rule).",
             "a": {
                 "oneSentenceSummary": "AparelhoController is missing an [Authorize] attribute",
                 "suggestionContent": "AparelhoController exposes create/read/update/delete endpoints without an [Authorize] attribute, leaving them publicly accessible while sibling controllers require authentication. Add [Authorize] at the controller level or limit [AllowAnonymous] to specifically intended public actions.",
@@ -529,9 +529,9 @@
             }
         },
         {
-            "id": "gym78-kodyrule-authorize-vs-pagination",
+            "id": "gym78-codyrule-authorize-vs-pagination",
             "shouldMerge": false,
-            "note": "REAL from gym#78: the [Authorize] Kody Rule vs a Performance suggestion (missing pagination) on the SAME file. Different bugs — the cross-stream dedup must NOT let the rule absorb an unrelated same-file suggestion.",
+            "note": "REAL from gym#78: the [Authorize] Cody Rule vs a Performance suggestion (missing pagination) on the SAME file. Different bugs — the cross-stream dedup must NOT let the rule absorb an unrelated same-file suggestion.",
             "a": {
                 "oneSentenceSummary": "AparelhoController exposes endpoints without [Authorize] (rule violation)",
                 "suggestionContent": "AparelhoController exposes GET/POST/PUT/DELETE endpoints without [Authorize], allowing any unauthenticated client to list, create, update, or logically delete gym equipment records. Add [Authorize] at the class level.",

@@ -118,7 +118,7 @@ describe('ForgejoService.createReviewComment id normalization', () => {
                 teamId: 'team-456',
             },
             repository: {
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 language: 'typescript',
             },
             prNumber: 42,
@@ -165,7 +165,7 @@ describe('ForgejoService.createReviewComment id normalization', () => {
                 teamId: 'team-456',
             },
             repository: {
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 language: 'typescript',
             },
             prNumber: 42,

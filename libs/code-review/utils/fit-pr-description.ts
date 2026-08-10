@@ -59,9 +59,9 @@ export const PR_DESCRIPTION_LIMITS: Partial<Record<PlatformType, number>> = {
 };
 
 const TRUNCATION_NOTICE =
-    '\n\n_…(truncated by Kody to fit the platform description size limit)_\n';
+    '\n\n_…(truncated by Cody to fit the platform description size limit)_\n';
 
-const SUMMARY_END_MARKER = '<!-- kody-pr-summary:end -->';
+const SUMMARY_END_MARKER = '<!-- cody-pr-summary:end -->';
 
 /**
  * Truncate a PR description to fit the per-platform limit, preserving
@@ -70,7 +70,7 @@ const SUMMARY_END_MARKER = '<!-- kody-pr-summary:end -->';
  *
  * Behaviour:
  *   1. If `description.length <= limit` → returns unchanged.
- *   2. If the description ends with `<!-- kody-pr-summary:end -->` →
+ *   2. If the description ends with `<!-- cody-pr-summary:end -->` →
  *      keeps the marker intact, slices content from the start, appends
  *      a truncation notice immediately before the marker.
  *   3. Otherwise → hard slice from the end, append the truncation

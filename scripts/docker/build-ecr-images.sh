@@ -8,9 +8,9 @@ ECR_REGISTRY="${ECR_REGISTRY:?missing ECR_REGISTRY (ex: 123.dkr.ecr.us-east-1.am
 TAG="${TAG:-$(git rev-parse HEAD)}"
 RELEASE_VERSION="${RELEASE_VERSION:-$TAG}"
 
-ECR_REPOSITORY_API="${ECR_REPOSITORY_API:-kodus-orchestrator-api}"
-ECR_REPOSITORY_WEBHOOKS="${ECR_REPOSITORY_WEBHOOKS:-kodus-orchestrator-webhook}"
-ECR_REPOSITORY_WORKER="${ECR_REPOSITORY_WORKER:-kodus-orchestrator-worker}"
+ECR_REPOSITORY_API="${ECR_REPOSITORY_API:-codus-orchestrator-api}"
+ECR_REPOSITORY_WEBHOOKS="${ECR_REPOSITORY_WEBHOOKS:-codus-orchestrator-webhook}"
+ECR_REPOSITORY_WORKER="${ECR_REPOSITORY_WORKER:-codus-orchestrator-worker}"
 
 echo "Building targets from $DOCKERFILE (tag=$TAG)"
 

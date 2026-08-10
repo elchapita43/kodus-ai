@@ -12,7 +12,7 @@ describe('CodeManagementService issue dispatch', () => {
     let integrationService: { findOne: jest.Mock };
 
     const orgTeam = { organizationId: 'org-1', teamId: 'team-1' };
-    const repository = { owner: 'kodustech', name: 'kodus-ai' };
+    const repository = { owner: 'elchapita43', name: 'codus-ai' };
 
     beforeEach(async () => {
         integrationService = { findOne: jest.fn() };

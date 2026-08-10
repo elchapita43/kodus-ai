@@ -8,11 +8,11 @@ import {
 
 import {
     CodeReviewConfigWithoutLLMProvider,
-    KodusConfigFile,
+    CodusConfigFile,
 } from './codeReview.type';
 
-export interface GetKodusConfigFileResponse {
-    kodusConfigFile: Omit<KodusConfigFile, 'version'> | null;
+export interface GetCodusConfigFileResponse {
+    codusConfigFile: Omit<CodusConfigFile, 'version'> | null;
     validationErrors: ErrorObject<string, Record<string, any>, unknown>[];
     isDeprecated?: boolean;
 }

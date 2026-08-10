@@ -22,7 +22,7 @@ const suggestionSchema = z.object({
     relevantLinesEnd: z.number().optional(),
     severity: z.enum(['critical', 'high', 'medium', 'low']).optional(), // V2 compat
     confidence: z.number().min(1).max(10).optional(), // 1-10: how confident the agent is in this finding
-    ruleUuid: z.string().optional(), // Kody Rules: UUID of the violated rule
+    ruleUuid: z.string().optional(), // Cody Rules: UUID of the violated rule
 });
 
 const _findingsSchema = z.object({

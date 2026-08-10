@@ -32,7 +32,7 @@ export const MinimumSeverityLevel = () => {
                         <OverrideIndicatorForm fieldName="suggestionControl.severityLevelFilter" />
                     </div>
                     <p className="text-text-secondary text-sm">
-                        Select the minimum severity level for Kody to post code
+                        Select the minimum severity level for Cody to post code
                         review suggestions
                     </p>
                 </div>
@@ -91,7 +91,7 @@ export const MinimumSeverityLevel = () => {
                                 </FormControl.Error>
 
                                 <FormControl.Helper>
-                                    Kody will provide suggestions with severity
+                                    Cody will provide suggestions with severity
                                     from{" "}
                                     <strong key={severityLevel.label}>
                                         {severityLevel.label}

@@ -26,7 +26,7 @@ if [ ! -f "$PRS_JSON" ]; then
   exit 1
 fi
 
-AUTHOR_NAME="${BENCHMARK_BUMP_AUTHOR_NAME:-Kodus Benchmark Bot}"
+AUTHOR_NAME="${BENCHMARK_BUMP_AUTHOR_NAME:-Codus Benchmark Bot}"
 AUTHOR_EMAIL="${BENCHMARK_BUMP_AUTHOR_EMAIL:-benchmark-bot@kodus.io}"
 
 if [ -n "${TOTAL_PRS:-}" ]; then

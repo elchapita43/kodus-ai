@@ -28,7 +28,7 @@ function ConfirmationEmail({
         <BrandLayout preview={`Confirm your email for ${organizationName}`}>
             <Heading style={baseHeading}>Confirm your email</Heading>
             <Text style={baseText}>
-                Welcome to <strong>{organizationName}</strong> on Kodus.
+                Welcome to <strong>{organizationName}</strong> on Codus.
                 Confirm your email to finish setting up your account.
             </Text>
             <Section style={{ margin: '24px 0' }}>

@@ -224,7 +224,7 @@ export class TokenUsageController {
     @ApiOperation({
         summary: 'Get token usage by process area',
         description:
-            'Return token usage aggregated by the area of the review process that spent it (review, kody_rules, cross_file, …).',
+            'Return token usage aggregated by the area of the review process that spent it (review, cody_rules, cross_file, …).',
     })
     @ApiOkResponse({ type: UsageByAreaResponseDto })
     async getUsageByArea(

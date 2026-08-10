@@ -10,7 +10,7 @@ export class McpConnectionDto {
     @ApiProperty({ example: 'int_456' })
     integrationId: string;
 
-    @ApiProperty({ example: 'kodusmcp' })
+    @ApiProperty({ example: 'codusmcp' })
     provider: string;
 
     @ApiProperty({ example: 'ACTIVE' })
@@ -76,7 +76,7 @@ export class McpToolDto {
     @ApiProperty({ example: 'Reads repository contents' })
     description: string;
 
-    @ApiProperty({ example: 'kodusmcp' })
+    @ApiProperty({ example: 'codusmcp' })
     provider: string;
 
     @ApiProperty({ example: false })
@@ -99,7 +99,7 @@ export class McpIntegrationDto {
     @ApiPropertyOptional({ example: 'GitHub' })
     appName?: string;
 
-    @ApiPropertyOptional({ example: 'kodusmcp' })
+    @ApiPropertyOptional({ example: 'codusmcp' })
     provider?: string;
 
     @ApiPropertyOptional({ example: 'https://logo.example.com' })
@@ -179,8 +179,8 @@ export class McpOAuthInitResponseDto {
     authUrl: string;
 }
 
-export class McpKodusIntegrationResponseDto {
-    @ApiProperty({ example: 'Kodus MCP integration created successfully' })
+export class McpCodusIntegrationResponseDto {
+    @ApiProperty({ example: 'Codus MCP integration created successfully' })
     message: string;
 
     @ApiProperty({ type: McpConnectionDto })

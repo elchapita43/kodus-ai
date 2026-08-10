@@ -90,7 +90,7 @@ async function pollUntilTerminal(
             response.status === 'not_found'
         ) {
             throw new Error(
-                `Authorization ${response.status}. Run \`kodus auth login --device-code\` again.`,
+                `Authorization ${response.status}. Run \`codus auth login --device-code\` again.`,
             );
         }
 

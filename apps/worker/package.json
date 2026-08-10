@@ -1,5 +1,5 @@
 {
-    "name": "@kodus/worker",
+    "name": "@codus/worker",
     "version": "0.0.1",
     "description": "Worker Microservice - Processes jobs from queue",
     "main": "dist/apps/worker/src/main.js",

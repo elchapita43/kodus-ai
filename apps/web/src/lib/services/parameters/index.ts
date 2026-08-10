@@ -12,8 +12,8 @@ export const PARAMETERS_PATHS = {
     UPDATE_CODE_REVIEW_PARAMETER_REPOSITORIES: pathToApiUrl(
         "/parameters/update-code-review-parameter-repositories",
     ),
-    GENERATE_KODUS_CONFIG_FILE: pathToApiUrl(
-        "/parameters/generate-kodus-config-file",
+    GENERATE_CODUS_CONFIG_FILE: pathToApiUrl(
+        "/parameters/generate-codus-config-file",
     ),
     DELETE_REPOSITORY_CODE_REVIEW_PARAMETER: pathToApiUrl(
         "/parameters/delete-repository-code-review-parameter",

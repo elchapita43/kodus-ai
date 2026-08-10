@@ -39,7 +39,7 @@ export const mcpManagerFetch = async <Data>(
         if (hostName === "localhost") {
             hostName =
                 process.env.GLOBAL_MCP_MANAGER_CONTAINER_NAME ||
-                "kodus-mcp-manager";
+                "codus-mcp-manager";
         }
         const port = process.env.WEB_PORT_MCP_MANAGER;
         url = createUrl(hostName, port, _url.toString(), { internal: true });

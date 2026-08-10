@@ -84,12 +84,12 @@ export class NotificationQueryService {
             read: boolean;
         }> = [
             {
-                event: 'kody_rules.generated',
+                event: 'cody_rules.generated',
                 criticality: Criticality.INFORMATIONAL,
-                category: 'kody_rules',
-                title: 'Kody rules generated',
-                body: 'Kody finished generating rules from your most recent reviews. Check them out and approve the ones you want active.',
-                ctaUrl: '/library/kody-rules',
+                category: 'cody_rules',
+                title: 'Cody rules generated',
+                body: 'Cody finished generating rules from your most recent reviews. Check them out and approve the ones you want active.',
+                ctaUrl: '/library/cody-rules',
                 read: false,
             },
             {
@@ -119,11 +119,11 @@ export class NotificationQueryService {
                 read: true,
             },
             {
-                event: 'kody_rules.generated',
+                event: 'cody_rules.generated',
                 criticality: Criticality.INFORMATIONAL,
-                category: 'kody_rules',
+                category: 'cody_rules',
                 title: 'Older rules batch',
-                body: 'A previous batch of generated Kody rules is still awaiting review.',
+                body: 'A previous batch of generated Cody rules is still awaiting review.',
                 read: true,
             },
         ];

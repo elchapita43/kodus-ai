@@ -1,18 +1,18 @@
 {
     "reviewComment": {
-        "talkToKody": "通过提及 @kody 与 Kody 交谈",
-        "feedback": "这个建议有帮助吗？通过对其做出 👍 或 👎 反应来帮助 Kody 从这次互动中学习。"
+        "talkToCody": "通过提及 @cody 与 Cody 交谈",
+        "feedback": "这个建议有帮助吗？通过对其做出 👍 或 👎 反应来帮助 Cody 从这次互动中学习。"
     },
     "pullRequestFinishSummaryMarkdown": {
         "withComments": "## 代码审查完成！ 🔥\n\n代码审查已根据您当前的配置成功完成。\n\n",
-        "withoutComments": "# Kody 审查完成\n**好消息！** 🎉\n未发现与您当前审查配置匹配的问题。\n\n继续保持出色的工作! 🚀",
-        "withErrors": "## 代码审查未能完成 ⚠️\n\n在生成建议之前，审查已失败。\n\n**原因：** {{errorMessage}}\n\n修复问题后，请在此 PR 中评论 `@kody review` 以重新运行审查。\n\n",
-        "partialErrorsNotice": "\n\n> ⚠️ 注意：本次运行中部分检查未能完成，因此跳过了自动批准（如果已启用）。请在 {{dashboardUrl}} 查看详情，问题解决后在此 PR 中评论 `@kody review` 以重新运行。\n"
+        "withoutComments": "# Cody 审查完成\n**好消息！** 🎉\n未发现与您当前审查配置匹配的问题。\n\n继续保持出色的工作! 🚀",
+        "withErrors": "## 代码审查未能完成 ⚠️\n\n在生成建议之前，审查已失败。\n\n**原因：** {{errorMessage}}\n\n修复问题后，请在此 PR 中评论 `@cody review` 以重新运行审查。\n\n",
+        "partialErrorsNotice": "\n\n> ⚠️ 注意：本次运行中部分检查未能完成，因此跳过了自动批准（如果已启用）。请在 {{dashboardUrl}} 查看详情，问题解决后在此 PR 中评论 `@cody review` 以重新运行。\n"
     },
     "pullRequestSummaryMarkdown": {
-        "title": "PR 摘要(评论由 [Kody](https://kodus.io) 创建 🤖)",
+        "title": "PR 摘要(评论由 [Cody](https://kodus.io) 创建 🤖)",
         "codeReviewStarted": "代码审查开始！ 🚀",
-        "description": "✋ 你好，团队！我已经在查看更改的文件并开始审查，以确保一切正常。如果您需要更多详细信息，我在这里！ [Kody](https://kodus.io)",
+        "description": "✋ 你好，团队！我已经在查看更改的文件并开始审查，以确保一切正常。如果您需要更多详细信息，我在这里！ [Cody](https://kodus.io)",
         "changedFiles": "📂 更改的文件",
         "filesTable": [
             "文件",
@@ -28,15 +28,15 @@
         "totalChanges": "总更改数"
     },
     "configReviewMarkdown": {
-        "title": "Kody 指南：使用和配置",
-        "interactingTitle": "与 Kody 互动",
+        "title": "Cody 指南：使用和配置",
+        "interactingTitle": "与 Cody 互动",
         "requestReview": "请求审查",
-        "requestReviewDesc": "通过在 PR 根目录添加带有 `@kody start-review` 命令的评论，请求 Kody 手动审查您的 PR。",
+        "requestReviewDesc": "通过在 PR 根目录添加带有 `@cody start-review` 命令的评论，请求 Cody 手动审查您的 PR。",
         "validateBusinessLogic": "验证业务逻辑",
-        "validateBusinessLogicDesc": "通过添加带有 `@kody -v business-logic` 命令的评论，请求 Kody 根据业务规则验证您的代码。",
+        "validateBusinessLogicDesc": "通过添加带有 `@cody -v business-logic` 命令的评论，请求 Cody 根据业务规则验证您的代码。",
         "provideFeedback": "提供反馈",
-        "provideFeedbackDesc": "通过对其评论做出反应，帮助 Kody 学习和改进，👍 表示有用的建议，👎 表示需要改进。",
-        "configurationTitle": "当前 Kody 配置",
+        "provideFeedbackDesc": "通过对其评论做出反应，帮助 Cody 学习和改进，👍 表示有用的建议，👎 表示需要改进。",
+        "configurationTitle": "当前 Cody 配置",
         "reviewOptionsTitle": "审查选项",
         "reviewOptionsDesc": "以下审查选项已启用或禁用：",
         "tableOptions": "选项",

@@ -1,7 +1,7 @@
 import { analyticsFetch, type AnalyticsParams } from "../utils";
 
 // ---------------------------------------------------------------------
-// "Kodus Review" tab — review-analytics endpoints (apps/api). Response
+// "Codus Review" tab — review-analytics endpoints (apps/api). Response
 // types mirror `libs/cockpit/domain/types.ts`.
 // ---------------------------------------------------------------------
 
@@ -22,8 +22,8 @@ export type ImplementationRateByCategoryRow = ImplementationRateBreakdown & {
 
 export type ImplementationRateBySeverityRow = ImplementationRateBreakdown & {
     severity: string;
-    // same counters excluding rule-driven suggestions (Kody Rules carry a
-    // user-defined severity, so they distort the Kodus calibration read).
+    // same counters excluding rule-driven suggestions (Cody Rules carry a
+    // user-defined severity, so they distort the Codus calibration read).
     nativeSent: number;
     nativeImplemented: number;
     nativeRate: number;
@@ -58,14 +58,14 @@ export type RepositoryHealthRow = {
     } | null;
 };
 
-export type KodyRuleHealthState =
+export type CodyRuleHealthState =
     | "healthy"
     | "noisy"
     | "ignored"
     | "stale"
     | "low_data";
 
-export type KodyRuleHealthRow = {
+export type CodyRuleHealthRow = {
     ruleId: string;
     title: string;
     severity: string | null;
@@ -73,7 +73,7 @@ export type KodyRuleHealthRow = {
     repositoryName: string | null;
     directoryId: string | null;
     directoryFolders: string[] | null;
-    state: KodyRuleHealthState;
+    state: CodyRuleHealthState;
     triggers: number;
     implemented: number;
     rate: number;
@@ -203,9 +203,9 @@ export const getRepositoriesHealth = (params: AnalyticsParams) =>
         { params, ...REVIEW_TAGS },
     );
 
-export const getKodyRulesHealth = (params: AnalyticsParams) =>
-    analyticsFetch<KodyRuleHealthRow[]>(
-        "/review-analytics/tables/kody-rules-health",
+export const getCodyRulesHealth = (params: AnalyticsParams) =>
+    analyticsFetch<CodyRuleHealthRow[]>(
+        "/review-analytics/tables/cody-rules-health",
         { params, ...REVIEW_TAGS },
     );
 

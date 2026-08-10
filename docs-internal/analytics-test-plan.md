@@ -1,6 +1,6 @@
 # Analytics Cockpit — Test Plan
 
-This document covers the test strategy for the `analytics-selfhosted` branch: the in-process cockpit + ingestion pipeline that replaces `kodus-service-analytics` + Airbyte + BigQuery.
+This document covers the test strategy for the `analytics-selfhosted` branch: the in-process cockpit + ingestion pipeline that replaces `codus-service-analytics` + Airbyte + BigQuery.
 
 Unit tests (Tier 1) live alongside the code in `test/unit/...` and run on every PR via CI; they're **not** covered here. This plan focuses on what we cannot mock away:
 
@@ -33,7 +33,7 @@ Before running any tier:
 - [ ] `docker-compose.dev.yml` and `docker-compose.override.yml` present
 - [ ] `.env` exists (copy from `.env.example` if needed)
 - [ ] All `as_*` containers up: `yarn docker:start`
-- [ ] `as_kodus_api` started after `API_ANALYTICS_ALLOW_TRIGGER=true` was added to the override (you may need to restart the API container once)
+- [ ] `as_codus_api` started after `API_ANALYTICS_ALLOW_TRIGGER=true` was added to the override (you may need to restart the API container once)
 - [ ] Mongo Atlas indexes (`{updatedAt:1, _id:1}` and `{createdAt:1}` on `pullRequests`) — for Tier 3+
 
 ---
@@ -120,7 +120,7 @@ Trade-offs of this choice:
    db.pullRequests.createIndex({ updatedAt: 1, _id: 1 }, { background: true });
    db.pullRequests.createIndex({ createdAt: 1 }, { background: true });
    ```
-6. `kodus-service-analytics`, Airbyte, and BigQuery still running in staging — they're the parity reference.
+6. `codus-service-analytics`, Airbyte, and BigQuery still running in staging — they're the parity reference.
 
 ### Test cases
 
@@ -195,7 +195,7 @@ Total: **75 comparisons**.
 Procedure:
 
 1. Call the new internal endpoint (returns from Postgres).
-2. Call the legacy `kodus-service-analytics` endpoint (returns from BigQuery).
+2. Call the legacy `codus-service-analytics` endpoint (returns from BigQuery).
 3. Diff the responses.
 
 **Pass thresholds**:
@@ -207,7 +207,7 @@ A separate script (`scripts/analytics/parity-vs-bq.ts`, to be added) automates c
 
 #### T3.6 — Visual chart comparison
 
-Open the cockpit web UI in staging with the PostHog flag `cockpit-internal-source=true` for one staging org. Compare each chart side-by-side with the legacy version (flag off, served by `kodus-service-analytics`).
+Open the cockpit web UI in staging with the PostHog flag `cockpit-internal-source=true` for one staging org. Compare each chart side-by-side with the legacy version (flag off, served by `codus-service-analytics`).
 
 Look for:
 
@@ -277,11 +277,11 @@ Expected on the next cron tick:
 
 ### Phases
 
-#### T4.1 — Dogfood (Kodus internal org, 1 week)
+#### T4.1 — Dogfood (Codus internal org, 1 week)
 
-Enable the PostHog flag `cockpit-internal-source = true` for the Kodus organization only.
+Enable the PostHog flag `cockpit-internal-source = true` for the Codus organization only.
 
-The Kodus team uses the cockpit normally for one week.
+The Codus team uses the cockpit normally for one week.
 
 Collect feedback:
 
@@ -310,7 +310,7 @@ Monitor weekly:
 
 After 14 days at 100% with no regressions:
 
-1. Stop the `kodus-service-analytics` deployment.
+1. Stop the `codus-service-analytics` deployment.
 2. Pause the Airbyte sync (Mongo → BigQuery).
 3. Snapshot and archive the BigQuery dataset.
 4. Remove the `cockpit-internal-source` feature flag (it's now always-on).
@@ -324,7 +324,7 @@ After 14 days at 100% with no regressions:
 ### Exit criteria for Tier 4
 
 - 14 days at 100% with no regressions.
-- No ongoing dependency on `kodus-service-analytics`, Airbyte, or BigQuery for cockpit features.
+- No ongoing dependency on `codus-service-analytics`, Airbyte, or BigQuery for cockpit features.
 - Documentation updated: `README_DEPLOY.md` reflects the new topology.
 
 ---
@@ -335,7 +335,7 @@ After 14 days at 100% with no regressions:
 
 - **Tier 2 manual checks** catch UI rendering bugs and developer-experience issues that automated assertions don't see (e.g. "the chart loads but the tooltip is unreadable").
 - **Tier 3 manual checks** are the difference between "the count matches" and "the metric is meaningful". A parity script can confirm `count(*) = count(*)` but cannot confirm "this number tells the user what they think it tells them".
-- **Tier 4 manual checks** are user-facing: support feedback, in-product analytics events, anecdotes from the Kodus team using their own dashboards.
+- **Tier 4 manual checks** are user-facing: support feedback, in-product analytics events, anecdotes from the Codus team using their own dashboards.
 
 Manual tests are **not** a substitute for automated coverage — they're a complement. Automated tests catch regressions at speed; manual tests catch the bugs that only appear when a human looks at the screen.
 
@@ -357,7 +357,7 @@ Time budget:
 | 2–3  | Tier 3 — migration + backfill staging on shared Postgres + 48h cron stable |
 | 4    | Tier 3 — parity vs. BigQuery (T3.5 manual) |
 | 5    | Production RDS analytics provisioned + production backfill |
-| 6    | T4.1 — dogfood Kodus, 1 week |
+| 6    | T4.1 — dogfood Codus, 1 week |
 | 7    | T4.2 — canary 5% |
 | 8    | T4.3 — 25% |
 | 9    | T4.3 — 50% |

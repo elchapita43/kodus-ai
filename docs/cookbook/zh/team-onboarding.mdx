@@ -1,12 +1,12 @@
 ---
 title: "新团队入门"
-description: "分步指南：为新团队设置 Kodus — 从连接代码库到教授首批约定。"
+description: "分步指南：为新团队设置 Codus — 从连接代码库到教授首批约定。"
 icon: "users-gear"
 ---
 
 ## 概述
 
-为新团队启动 Kodus 大约需要 30 分钟。本指南介绍完整设置，使您的团队从第一个 PR 开始就能获得价值。
+为新团队启动 Codus 大约需要 30 分钟。本指南介绍完整设置，使您的团队从第一个 PR 开始就能获得价值。
 
 ## 步骤 1 — 创建和配置工作区
 
@@ -20,7 +20,7 @@ icon: "users-gear"
 在自定义之前从合理的默认值开始：
 
 ```yaml
-# kodus-config.yml — 放入每个代码库根目录
+# codus-config.yml — 放入每个代码库根目录
 reviewOptions:
   bug: true
   security: true
@@ -29,7 +29,7 @@ reviewOptions:
 
 suggestionControl:
   severityLevelFilter: medium
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 
 automatedReviewActive: true
 ```
@@ -40,8 +40,8 @@ automatedReviewActive: true
 
 如果团队已经使用 Cursor、Copilot 或 Claude 规则：
 
-1. 前往**代码审查设置** → **Kody 规则**
-2. Kodus 检测 `.cursorrules`、`.github/copilot-instructions.md` 和 `.claude` 文件
+1. 前往**代码审查设置** → **Cody 规则**
+2. Codus 检测 `.cursorrules`、`.github/copilot-instructions.md` 和 `.claude` 文件
 3. 导入对代码审查有意义的规则
 
 这避免了从头重写规则。
@@ -51,26 +51,26 @@ automatedReviewActive: true
 不要试图在第一天就编码所有内容。从团队争论最多的 5 个约定开始：
 
 ```
-@kody remember: we use camelCase for variables and PascalCase for types.
+@cody remember: we use camelCase for variables and PascalCase for types.
 ```
 
 ```
-@kody remember: all API responses use the standard envelope format
+@cody remember: all API responses use the standard envelope format
 { data, error, meta }.
 ```
 
 ```
-@kody remember: we prefer composition over inheritance.
+@cody remember: we prefer composition over inheritance.
 Use interfaces and dependency injection.
 ```
 
 ```
-@kody remember: every public function must have JSDoc with
+@cody remember: every public function must have JSDoc with
 @param and @returns descriptions.
 ```
 
 ```
-@kody remember: database queries go through the repository layer only.
+@cody remember: database queries go through the repository layer only.
 No direct DB access from services or controllers.
 ```
 
@@ -100,13 +100,13 @@ URL 必须来自环境变量或配置文件。
 
 ## 步骤 6 — 连接任务管理（可选但推荐）
 
-在**设置** → **插件**中连接 Jira、Linear、Notion 或 ClickUp 以启用业务逻辑验证。这让 Kodus 检查 PR 是否实现了任务描述的内容。
+在**设置** → **插件**中连接 Jira、Linear、Notion 或 ClickUp 以启用业务逻辑验证。这让 Codus 检查 PR 是否实现了任务描述的内容。
 
 ## 步骤 7 — 运行试点 PR
 
 打开一个测试 PR 并验证：
 
-- [ ] Kodus 评论出现在 PR 上
+- [ ] Codus 评论出现在 PR 上
 - [ ] 建议相关且严重性适当
 - [ ] 自定义规则在应该触发时触发
 - [ ] 记忆反映在审查上下文中
@@ -118,13 +118,13 @@ URL 必须来自环境变量或配置文件。
 - 建议太多？→ 提高 `severityLevelFilter` 或降低 `maxSuggestions`
 - 规则太嘈杂？→ 缩小文件路径或添加排除
 - 遗漏重要模式？→ 添加新规则或记忆
-- 想要自动生成规则？→ 点击**生成 Kody 规则**从审查历史中获取建议
+- 想要自动生成规则？→ 点击**生成 Cody 规则**从审查历史中获取建议
 
 ## 提示
 
 - 第一天不要过度添加规则 — 从小处开始逐步增长
-- 让团队在正式化为规则之前通过对话自然地教 Kody
-- 前几个 PR 使用 `@kody start-review` 让团队看到 Kodus 的实际效果
-- 如果想审查 Kody 学到的内容，启用 LLM 生成记忆审批
+- 让团队在正式化为规则之前通过对话自然地教 Cody
+- 前几个 PR 使用 `@cody start-review` 让团队看到 Codus 的实际效果
+- 如果想审查 Cody 学到的内容，启用 LLM 生成记忆审批
 
 完整设置指南，请参阅[快速开始](/how_to_use/zh/quickstart)。

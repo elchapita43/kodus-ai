@@ -22,7 +22,7 @@ export interface GetCliLoginInfoResult {
 
 /**
  * Lets the web /cli/authorize page surface "you are about to authorize the
- * Kodus CLI on <macbook>; expires in 9 min". Pure read; never returns the
+ * Codus CLI on <macbook>; expires in 9 min". Pure read; never returns the
  * token or the redirect URI to avoid leaking those to the browser.
  */
 @Injectable()

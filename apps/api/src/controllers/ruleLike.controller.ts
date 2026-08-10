@@ -3,8 +3,8 @@ import { REQUEST } from '@nestjs/core';
 
 import { UserRequest } from '@libs/core/infrastructure/config/types/http/user-request.type';
 import { SetRuleFeedbackDto } from '../dtos/set-rule-feedback.dto';
-import { SetRuleLikeUseCase } from '../../../../libs/kodyRules/application/use-cases/rule-like/set-rule-like.use-case';
-import { RemoveRuleLikeUseCase } from '../../../../libs/kodyRules/application/use-cases/rule-like/remove-rule-like.use-case';
+import { SetRuleLikeUseCase } from '../../../../libs/codyRules/application/use-cases/rule-like/set-rule-like.use-case';
+import { RemoveRuleLikeUseCase } from '../../../../libs/codyRules/application/use-cases/rule-like/remove-rule-like.use-case';
 import {
     ApiBearerAuth,
     ApiBody,

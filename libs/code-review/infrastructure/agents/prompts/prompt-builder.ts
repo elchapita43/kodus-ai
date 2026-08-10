@@ -8,7 +8,7 @@
  * so the builders carry no `this` and are unit-testable.
  */
 import { FileChange } from '@libs/core/infrastructure/config/types/general/codeReview.type';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { convertTiptapJSONToText } from '@libs/common/utils/tiptap-json';
 
 import type {
@@ -75,7 +75,7 @@ export interface PromptAgentMeta {
     identity: ReviewAgentIdentity;
     /** Category-specific system-prompt chunk — from getCategoryPrompt(input). */
     categoryPrompt: string;
-    /** Fixed category label (bug/security/performance/kody_rules/generalist). */
+    /** Fixed category label (bug/security/performance/cody_rules/generalist). */
     categoryLabel: string;
     /** Labels this run may emit (generalist/mixed reviewers). */
     allowedLabels: Array<'bug' | 'security' | 'performance'>;
@@ -107,7 +107,7 @@ function resolvePromptOverrideText(value: unknown): string {
 }
 
 /**
- * Renders the user's per-review steering directive (`@kody review <directive>`)
+ * Renders the user's per-review steering directive (`@cody review <directive>`)
  * as a high-priority block at the top of the user prompt so the finder reads it
  * before the diffs. It RAISES depth on the named area; it must NOT suppress
  * concrete issues found elsewhere (priority, not filter). Empty when absent.
@@ -301,7 +301,7 @@ export function buildUserPrompt(input: ReviewAgentInput, meta: PromptAgentMeta):
             input.prBody,
         );
         const diffsSection = formatDiffs(input.changedFiles);
-        // The callGraph string from kodus-graph already starts with <CallGraph>
+        // The callGraph string from codus-graph already starts with <CallGraph>
         // and ends with </CallGraph> — wrapping it again produced nested duplicate
         // tags in the prompt.
         const callGraphSection = input.callGraph
@@ -731,7 +731,7 @@ function formatDiffs(
             .join('\n\n');
     }
 
-function formatMemoryRules(rules?: Partial<IKodyRule>[]): string {
+function formatMemoryRules(rules?: Partial<ICodyRule>[]): string {
         if (!rules?.length) return '';
 
         const formatted = rules

@@ -24,7 +24,7 @@ import {
 import { Commit } from '@libs/core/infrastructure/config/types/general/commit.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import { PipelineContext } from '@libs/core/infrastructure/pipeline/interfaces/pipeline-context.interface';
-import { IClusterizedSuggestion } from '@libs/kodyFineTuning/domain/interfaces/kodyFineTuning.interface';
+import { IClusterizedSuggestion } from '@libs/codyFineTuning/domain/interfaces/codyFineTuning.interface';
 import { ISuggestionByPR } from '@libs/platformData/domain/pullRequests/interfaces/pullRequests.interface';
 
 export type PullRequestType = {
@@ -69,13 +69,13 @@ export interface CodeReviewPipelineContext extends PipelineContext {
     userGitId?: string;
     /**
      * Free-text steering directive from a review command
-     * (`@kody review focus on the auth logic`). Threaded into the finder prompt
+     * (`@cody review focus on the auth logic`). Threaded into the finder prompt
      * as a high-priority focus block. Empty/undefined = a normal review.
      */
     reviewDirective?: string;
 
     /**
-     * HEAVY mode — opt-in per review (CLI `--heavy` or PR `@kody review
+     * HEAVY mode — opt-in per review (CLI `--heavy` or PR `@cody review
      * --heavy`). Runs an extra "what did you miss?" critic pass in the finder
      * for higher recall, at ~+1 finder pass of cost. Off by default.
      */
@@ -216,7 +216,7 @@ export interface CodeReviewPipelineContext extends PipelineContext {
     documentationQueryPlanByFile?: Record<string, DocumentationQueryPlanByFile>;
     documentationByFile?: Record<string, DocumentationItem[]>;
 
-    /** Graph JSON (nodes + edges) from kodus-graph parse, used by GraphContentFormatter for Tier 1 formatting */
+    /** Graph JSON (nodes + edges) from codus-graph parse, used by GraphContentFormatter for Tier 1 formatting */
     callGraphJson?: { nodes: any[]; edges: any[] };
 
     /** Sandbox handle kept alive for safeguard agent verification */
@@ -289,9 +289,9 @@ export interface DedupTraceGroupSummary {
 export interface DedupTraceSummary {
     status: 'skipped' | 'success' | 'empty-keep-all' | 'failed-keep-all';
     totalClassifiedCount: number;
-    kodyRulesSkippedCount: number;
-    nonKodyInputCount: number;
-    nonKodyOutputCount: number;
+    codyRulesSkippedCount: number;
+    nonCodyInputCount: number;
+    nonCodyOutputCount: number;
     finalOutputCount: number;
     uniqueCount: number;
     groupsCount: number;

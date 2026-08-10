@@ -34,7 +34,7 @@ function InviteEmail({
 }: InviteEmailProps) {
     return (
         <BrandLayout
-            preview={`Join ${teamName} on Kodus — invitation from ${inviterEmail}`}
+            preview={`Join ${teamName} on Codus — invitation from ${inviterEmail}`}
         >
             <Heading style={baseHeading}>
                 You&apos;re invited to join {teamName}
@@ -43,7 +43,7 @@ function InviteEmail({
             <Text style={baseText}>
                 <strong>{inviterEmail}</strong> invited you to join{' '}
                 <strong>{teamName}</strong> at <strong>{organizationName}</strong>{' '}
-                on Kodus.
+                on Codus.
             </Text>
             <Section style={{ margin: '24px 0' }}>
                 <Button href={inviteLink} style={baseButton}>

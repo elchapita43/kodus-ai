@@ -58,7 +58,7 @@ export class InboxMessageRepository implements IInboxMessageRepository {
         claimTimeoutMinutes: number = 150,
     ): Promise<InboxMessageModel | null> {
         const query = `
-            INSERT INTO "kodus_workflow"."inbox_messages"
+            INSERT INTO "codus_workflow"."inbox_messages"
                 ("messageId", "consumerId", "job_id", "status", "lockedBy", "lockedAt", "attempts", "createdAt", "updatedAt")
             VALUES
                 ($1, $2, $3, $4, $5, NOW(), 1, NOW(), NOW())
@@ -389,7 +389,7 @@ export class InboxMessageRepository implements IInboxMessageRepository {
         consumerId: string = 'default',
     ): Promise<boolean> {
         const query = `
-            SELECT status FROM "kodus_workflow"."inbox_messages"
+            SELECT status FROM "codus_workflow"."inbox_messages"
             WHERE "messageId" = $1 AND "consumerId" = $2
         `;
         const results = await manager.query(query, [messageId, consumerId]);
@@ -408,7 +408,7 @@ export class InboxMessageRepository implements IInboxMessageRepository {
         jobId?: string,
     ): Promise<void> {
         const query = `
-            INSERT INTO "kodus_workflow"."inbox_messages"
+            INSERT INTO "codus_workflow"."inbox_messages"
                 ("messageId", "consumerId", "job_id", "status", "processedAt", "createdAt", "updatedAt")
             VALUES
                 ($1, $2, $3, $4, NOW(), NOW(), NOW())

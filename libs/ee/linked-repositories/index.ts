@@ -2,7 +2,7 @@
  * Linked repositories / cross-repo review context.
  *
  * Enterprise Code — see `license_ee.md`. Lives under `libs/ee/` and is
- * subject to the Kodus Enterprise License (not AGPL).
+ * subject to the Codus Enterprise License (not AGPL).
  *
  * Teams / Enterprise plan gated at runtime via
  * `isTeamsOrEnterpriseTierAllowed`.

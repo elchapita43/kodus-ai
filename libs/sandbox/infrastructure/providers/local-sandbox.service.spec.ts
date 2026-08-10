@@ -55,9 +55,9 @@ describe('LocalSandboxService.buildAuthHeader', () => {
         it('uses the account username for classic app passwords', () => {
             expect(
                 decode(
-                    build(PlatformType.BITBUCKET, 'classicapppw', 'kodususer'),
+                    build(PlatformType.BITBUCKET, 'classicapppw', 'codususer'),
                 ),
-            ).toBe('kodususer:classicapppw');
+            ).toBe('codususer:classicapppw');
         });
 
         it('still works for an API token even when no username is provided', () => {
@@ -83,9 +83,9 @@ describe('LocalSandboxService sandbox file access', () => {
     };
 
     beforeEach(() => {
-        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kodus-sandbox-files-'));
+        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'codus-sandbox-files-'));
         outsideDir = fs.mkdtempSync(
-            path.join(os.tmpdir(), 'kodus-sandbox-outside-'),
+            path.join(os.tmpdir(), 'codus-sandbox-outside-'),
         );
         const svc = new LocalSandboxService({} as any);
         sandbox = (svc as any).buildSandboxFileAccess(dir);
@@ -116,11 +116,11 @@ describe('LocalSandboxService sandbox file access', () => {
         // otherwise-legitimate write. The path handed down must live under the
         // realpath-resolved root.
         const realRoot = fs.mkdtempSync(
-            path.join(os.tmpdir(), 'kodus-sandbox-real-'),
+            path.join(os.tmpdir(), 'codus-sandbox-real-'),
         );
         const linkRoot = path.join(
             os.tmpdir(),
-            'kodus-sandbox-link-' + path.basename(realRoot),
+            'codus-sandbox-link-' + path.basename(realRoot),
         );
         fs.symlinkSync(realRoot, linkRoot);
         try {
@@ -149,11 +149,11 @@ describe('LocalSandboxService sandbox file access', () => {
         // Behavioural black-box: the write must succeed and land in the real
         // tree even when the sandbox root is reached through a symlink.
         const realRoot = fs.mkdtempSync(
-            path.join(os.tmpdir(), 'kodus-sandbox-real-'),
+            path.join(os.tmpdir(), 'codus-sandbox-real-'),
         );
         const linkRoot = path.join(
             os.tmpdir(),
-            'kodus-sandbox-link-' + path.basename(realRoot),
+            'codus-sandbox-link-' + path.basename(realRoot),
         );
         fs.symlinkSync(realRoot, linkRoot);
         try {
@@ -177,15 +177,15 @@ describe('LocalSandboxService sandbox file access', () => {
         // symlinked target file be written through — the escape must still throw
         // and the outside secret must stay untouched.
         const realRoot = fs.mkdtempSync(
-            path.join(os.tmpdir(), 'kodus-sandbox-real-'),
+            path.join(os.tmpdir(), 'codus-sandbox-real-'),
         );
         const linkRoot = path.join(
             os.tmpdir(),
-            'kodus-sandbox-link-' + path.basename(realRoot),
+            'codus-sandbox-link-' + path.basename(realRoot),
         );
         fs.symlinkSync(realRoot, linkRoot);
         const secretDir = fs.mkdtempSync(
-            path.join(os.tmpdir(), 'kodus-sandbox-secret-'),
+            path.join(os.tmpdir(), 'codus-sandbox-secret-'),
         );
         const secret = path.join(secretDir, 'secret.txt');
         fs.writeFileSync(secret, 'secret');
@@ -392,8 +392,8 @@ onLinux('LocalSandboxService.openRepoWriteHandle (Linux openat)', () => {
     let svc: LocalSandboxService;
 
     beforeEach(() => {
-        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kodus-openat-'));
-        outsideDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kodus-openat-out-'));
+        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'codus-openat-'));
+        outsideDir = fs.mkdtempSync(path.join(os.tmpdir(), 'codus-openat-out-'));
         svc = new LocalSandboxService({} as any);
     });
 

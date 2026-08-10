@@ -3,7 +3,7 @@ import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
 
 const ACKNOWLEDGMENT_MESSAGES = {
     DEFAULT: 'Analyzing your request...',
-    MARKDOWN_SUFFIX: '<!-- kody-codereview -->\n&#8203;',
+    MARKDOWN_SUFFIX: '<!-- cody-codereview -->\n&#8203;',
 } as const;
 
 interface IPlatformResponsePolicy {

@@ -11,7 +11,7 @@ export interface FileDiff {
 export interface ProjectContext {
     cursorRules?: string;
     claudeRules?: string;
-    kodusRules?: string;
+    codusRules?: string;
     customContext?: string;
 }
 

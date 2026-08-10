@@ -58,7 +58,7 @@ export interface CliReviewConfig {
     fast?: boolean;
     /**
      * Free-text steering directive (the CLI equivalent of
-     * `@kody review focus on X`). When set, the finder concentrates its deepest
+     * `@cody review focus on X`). When set, the finder concentrates its deepest
      * analysis on the named area. Sanitized + capped via normalizeReviewDirective
      * before it reaches the prompt.
      */

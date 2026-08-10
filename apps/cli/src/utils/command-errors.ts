@@ -20,12 +20,12 @@ function getApiUnavailableMessage(error: Error): string | null {
         return null;
     }
 
-    const apiUrl = process.env.KODUS_API_URL?.trim() || 'the configured Kodus API';
+    const apiUrl = process.env.CODUS_API_URL?.trim() || 'the configured Codus API';
     const localHint = apiUrl.includes('localhost') || apiUrl.includes('127.0.0.1')
         ? ' If you are using the local API, make sure it is running.'
         : '';
 
-    return `Could not reach the Kodus API at ${apiUrl}.${localHint}`;
+    return `Could not reach the Codus API at ${apiUrl}.${localHint}`;
 }
 
 export class CommandError extends Error {

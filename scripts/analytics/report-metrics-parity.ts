@@ -79,7 +79,7 @@ async function main() {
         review.getReviewQualityByRuleGroup(q),
         review.getImplementationRateBySeverity(q),
         review.getImplementationRateByCategory(q),
-        review.getKodyRulesUsage(q),
+        review.getCodyRulesUsage(q),
         review.getReviewOperationalMetrics(q),
     ]);
 
@@ -173,7 +173,7 @@ async function main() {
             `  ${c.category.padEnd(28)} sent=${c.sent} (${(c.rate * 100).toFixed(0)}%)`,
         );
     }
-    console.log(`\nkody rules that triggered: ${rules.length}`);
+    console.log(`\ncody rules that triggered: ${rules.length}`);
     for (const r of rules.slice(0, 8)) {
         console.log(
             `  ${r.ruleId.slice(0, 8)} triggers=${r.triggers} impl=${(r.rate * 100).toFixed(0)}% 👎${r.thumbsDown}`,

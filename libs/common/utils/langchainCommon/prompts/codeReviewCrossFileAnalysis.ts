@@ -3,7 +3,7 @@ import z from 'zod';
 import { CodeReviewConfig } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 
 import { SeverityLevel } from '../../enums/severityLevel.enum';
-import { getDefaultKodusConfigFile } from '../../validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '../../validateCodeReviewConfigFile';
 import { getTextOrDefault, sanitizePromptText } from './prompt.helpers';
 
 export interface CrossFileContextForPrompt {
@@ -118,7 +118,7 @@ function formatMemoriesSection(
         return '';
     }
 
-    return `## Memories\n\nAdditional context from past learnings in Kody Rules format.\n\n${formattedMemories.join('\n\n')}`;
+    return `## Memories\n\nAdditional context from past learnings in Cody Rules format.\n\n${formattedMemories.join('\n\n')}`;
 }
 
 export const CrossFileAnalysisSchema = z.object({
@@ -149,7 +149,7 @@ export const prompt_codereview_cross_file_analysis = (
     payload: CrossFileAnalysisPayload,
 ) => {
     const overrides = payload?.v2PromptOverrides || {};
-    const defaults = getDefaultKodusConfigFile()?.v2PromptOverrides;
+    const defaults = getDefaultCodusConfigFile()?.v2PromptOverrides;
 
     const defaultSeverity = defaults?.severity?.flags;
 
@@ -172,7 +172,7 @@ export const prompt_codereview_cross_file_analysis = (
     );
     const memoriesBlock = formatMemoriesSection(payload?.memories);
 
-    const basePrompt = `You are Kody PR-Reviewer, a senior engineer specialized in understanding and reviewing code, with deep knowledge of how LLMs function. You are **context-aware** and prioritize **developer intent** over rigid rule-following.
+    const basePrompt = `You are Cody PR-Reviewer, a senior engineer specialized in understanding and reviewing code, with deep knowledge of how LLMs function. You are **context-aware** and prioritize **developer intent** over rigid rule-following.
 
 # Cross-File Code Analysis
 Analyze the following PR files for patterns that require multiple file context: duplicate implementations, inconsistent error handling, configuration drift, interface inconsistencies, and redundant operations.

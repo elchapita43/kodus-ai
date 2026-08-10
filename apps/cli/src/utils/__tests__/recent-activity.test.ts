@@ -38,7 +38,7 @@ describe('recent activity utils', () => {
 
     it('returns fallback line when there is no activity', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-recent-activity-test-'),
+            path.join(os.tmpdir(), 'codus-recent-activity-test-'),
         );
         tempDirs.push(home);
         const { loadRecentActivity, getRecentActivityLines } =
@@ -52,7 +52,7 @@ describe('recent activity utils', () => {
 
     it('records and reads recent commands in reverse chronological order', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-recent-activity-test-'),
+            path.join(os.tmpdir(), 'codus-recent-activity-test-'),
         );
         tempDirs.push(home);
         const {
@@ -66,17 +66,17 @@ describe('recent activity utils', () => {
 
         const entries = await loadRecentActivity();
         expect(entries).toHaveLength(2);
-        expect(entries[0]?.command).toBe('kodus auth status');
-        expect(entries[1]?.command).toBe('kodus review --fast');
+        expect(entries[0]?.command).toBe('codus auth status');
+        expect(entries[1]?.command).toBe('codus review --fast');
 
         const lines = await getRecentActivityLines(2);
-        expect(lines[0]).toMatch(/^kodus auth status - /);
-        expect(lines[1]).toMatch(/^kodus review --fast - /);
+        expect(lines[0]).toMatch(/^codus auth status - /);
+        expect(lines[1]).toMatch(/^codus review --fast - /);
     });
 
     it('redacts sensitive flag values when storing commands', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-recent-activity-test-'),
+            path.join(os.tmpdir(), 'codus-recent-activity-test-'),
         );
         tempDirs.push(home);
         const { recordRecentActivity, loadRecentActivity } =
@@ -86,10 +86,10 @@ describe('recent activity utils', () => {
             'auth',
             'team-key',
             '--key',
-            'kodus_secret_123',
+            'codus_secret_123',
         ]);
         const [entry] = await loadRecentActivity();
 
-        expect(entry?.command).toBe('kodus auth team-key --key [REDACTED]');
+        expect(entry?.command).toBe('codus auth team-key --key [REDACTED]');
     });
 });

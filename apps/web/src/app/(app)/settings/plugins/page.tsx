@@ -61,7 +61,7 @@ export default async function PluginsPage() {
                     </div>
 
                     <Page.Description>
-                        Connect Kody to external tools and APIs to enhance your
+                        Connect Cody to external tools and APIs to enhance your
                         code reviews with real-world context
                     </Page.Description>
                 </Page.TitleContainer>

@@ -1,9 +1,9 @@
 {
-  "name": "kodus-e2e",
+  "name": "codus-e2e",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "End-to-end quality gates for Kodus releases",
+  "description": "End-to-end quality gates for Codus releases",
   "scripts": {
     "scenario": "tsx cli/run-scenario.ts",
     "matrix": "tsx cli/run-matrix.ts",

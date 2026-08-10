@@ -36,7 +36,7 @@ import { PermissionValidationModule } from '@libs/ee/shared/permission-validatio
 import { CodeReviewConfigurationModule } from '@libs/code-review/modules/code-review-configuration.module';
 import { WorkflowModule } from '@libs/core/workflow/modules/workflow.module';
 import { IssuesModule } from '@libs/issues/issues.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { McpCoreModule } from '@libs/mcp-server/mcp-core.module';
 import { SandboxModule } from '@libs/sandbox/modules/sandbox.module';
 
@@ -62,7 +62,7 @@ import { SandboxModule } from '@libs/sandbox/modules/sandbox.module';
         forwardRef(() => CodebaseModule),
         forwardRef(() => AutomationModule),
         WorkflowModule.register({ type: 'webhook' }),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => IssuesModule),
         forwardRef(() => McpCoreModule),
         forwardRef(() => CodeReviewConfigurationModule),

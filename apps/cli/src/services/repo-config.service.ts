@@ -38,7 +38,7 @@ class RepoConfigService {
         if (!matchedRepository) {
             throw new CommandError(
                 'INVALID_INPUT',
-                `Repository '${repositoryRef}' was not found in the repositories available to this team. Check the git remote and Kodus provider connection.`,
+                `Repository '${repositoryRef}' was not found in the repositories available to this team. Check the git remote and Codus provider connection.`,
             );
         }
 
@@ -86,7 +86,7 @@ class RepoConfigService {
 
     private async loadTeamKeyConfig(): Promise<TeamKeyConfig> {
         return resolveTeamKeyAccess(
-            'Repository configuration requires team-key auth. Run: kodus auth team-key --key <your-key>.',
+            'Repository configuration requires team-key auth. Run: codus auth team-key --key <your-key>.',
         );
     }
 

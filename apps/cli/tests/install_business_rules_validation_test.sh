@@ -15,24 +15,24 @@ mkdir -p "$TMPDIR/work/.claude"
 mkdir -p "$TMPDIR/home"
 mkdir -p "$TMPDIR/mockbin"
 NPM_CALLS_LOG="$TMPDIR/npm_calls.log"
-KODUS_CALLS_LOG="$TMPDIR/kodus_calls.log"
+CODUS_CALLS_LOG="$TMPDIR/codus_calls.log"
 mkdir -p "$TMPDIR/work/.claude/commands"
 echo "legacy" > "$TMPDIR/work/.claude/commands/business-rules-validation.md"
 
-cat > "$TMPDIR/mockbin/kodus" <<'EOF'
+cat > "$TMPDIR/mockbin/codus" <<'EOF'
 #!/bin/sh
-printf "%s\n" "$*" >> "$KODUS_CALLS_LOG"
+printf "%s\n" "$*" >> "$CODUS_CALLS_LOG"
 if [ "${1:-}" = "--version" ]; then
-  echo "kodus 0.0.0-test"
+  echo "codus 0.0.0-test"
   exit 0
 fi
 
 if [ "${1:-}" = "skills" ] && [ "${2:-}" = "install" ]; then
   mkdir -p "$PWD/.claude/commands"
   rm -f "$PWD/.claude/commands/business-rules-validation.md"
-  cat > "$PWD/.claude/commands/kodus-business-rules-validation.md" <<'SKILL'
+  cat > "$PWD/.claude/commands/codus-business-rules-validation.md" <<'SKILL'
 ---
-name: kodus-business-rules-validation
+name: codus-business-rules-validation
 ---
 SKILL
   exit 0
@@ -40,7 +40,7 @@ fi
 
 exit 0
 EOF
-chmod +x "$TMPDIR/mockbin/kodus"
+chmod +x "$TMPDIR/mockbin/codus"
 
 cat > "$TMPDIR/mockbin/npm" <<EOF
 #!/bin/sh
@@ -51,10 +51,10 @@ chmod +x "$TMPDIR/mockbin/npm"
 
 (
   cd "$TMPDIR/work"
-  HOME="$TMPDIR/home" PATH="$TMPDIR/mockbin:$PATH" KODUS_CALLS_LOG="$KODUS_CALLS_LOG" ./install.sh >/dev/null
+  HOME="$TMPDIR/home" PATH="$TMPDIR/mockbin:$PATH" CODUS_CALLS_LOG="$CODUS_CALLS_LOG" ./install.sh >/dev/null
 )
 
-TARGET="$TMPDIR/work/.claude/commands/kodus-business-rules-validation.md"
+TARGET="$TMPDIR/work/.claude/commands/codus-business-rules-validation.md"
 if [ ! -f "$TARGET" ]; then
   echo "Expected $TARGET to exist after install."
   exit 1
@@ -65,19 +65,19 @@ if [ -f "$TMPDIR/work/.claude/commands/business-rules-validation.md" ]; then
   exit 1
 fi
 
-if ! grep -q "name: kodus-business-rules-validation" "$TARGET"; then
-  echo "Expected kodus-business-rules-validation command content in $TARGET."
+if ! grep -q "name: codus-business-rules-validation" "$TARGET"; then
+  echo "Expected codus-business-rules-validation command content in $TARGET."
   exit 1
 fi
 
-if [ ! -f "$NPM_CALLS_LOG" ] || ! grep -q '^install -g @kodus/cli$' "$NPM_CALLS_LOG"; then
-  echo "Expected npm to be called with: install -g @kodus/cli"
+if [ ! -f "$NPM_CALLS_LOG" ] || ! grep -q '^install -g @codus/cli$' "$NPM_CALLS_LOG"; then
+  echo "Expected npm to be called with: install -g @codus/cli"
   exit 1
 fi
 
-if [ ! -f "$KODUS_CALLS_LOG" ] || ! grep -q '^skills install$' "$KODUS_CALLS_LOG"; then
-  echo "Expected kodus to be called with: skills install"
+if [ ! -f "$CODUS_CALLS_LOG" ] || ! grep -q '^skills install$' "$CODUS_CALLS_LOG"; then
+  echo "Expected codus to be called with: skills install"
   exit 1
 fi
 
-echo "PASS: kodus-business-rules-validation command installed"
+echo "PASS: codus-business-rules-validation command installed"

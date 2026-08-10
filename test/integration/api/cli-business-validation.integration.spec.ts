@@ -170,7 +170,7 @@ describe('CLI business-validation integration', () => {
 
         mockTeamCliKeyService.validateKey.mockResolvedValue({
             team: { uuid: 'team-1', name: 'Platform Team' },
-            organization: { uuid: 'org-1', name: 'Kodus' },
+            organization: { uuid: 'org-1', name: 'Codus' },
         });
         mockRateLimiter.checkRateLimit.mockResolvedValue({
             allowed: true,
@@ -184,19 +184,19 @@ describe('CLI business-validation integration', () => {
             '## Business Rules Validation\n\nLooks good.',
         );
         mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
-            [{ id: 'repo-1', name: 'kodus-ai', organizationName: 'kodus-ai' }],
+            [{ id: 'repo-1', name: 'codus-ai', organizationName: 'codus-ai' }],
         );
     });
 
     it('executes provider flow when called with prUrl and taskId', async () => {
-        const prUrl = 'https://github.com/kodus-ai/kodus-ai/pull/42';
+        const prUrl = 'https://github.com/codus-ai/codus-ai/pull/42';
 
         mockCodeManagementService.getPullRequests.mockResolvedValue([
             {
                 number: 42,
                 prURL: prUrl,
                 body: 'Implements new business-validation endpoint.',
-                repositoryData: { id: 'repo-1', name: 'kodus-ai' },
+                repositoryData: { id: 'repo-1', name: 'codus-ai' },
                 head: { ref: 'feat/business-validation' },
                 base: { ref: 'main', repo: { defaultBranch: 'main' } },
             },
@@ -204,7 +204,7 @@ describe('CLI business-validation integration', () => {
 
         const result = await controller.businessValidation(
             { prUrl, taskId: 'KD-1234' },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
             undefined,
         );
@@ -215,7 +215,7 @@ describe('CLI business-validation integration', () => {
             prNumber: 42,
             prUrl,
             repositoryId: 'repo-1',
-            repositoryName: 'kodus-ai',
+            repositoryName: 'codus-ai',
             taskReference: 'KD-1234',
             result: '## Business Rules Validation\n\nLooks good.',
         });
@@ -228,7 +228,7 @@ describe('CLI business-validation integration', () => {
                 },
                 thread: 'vbl-thread-id',
                 prepareContext: expect.objectContaining({
-                    userQuestion: '@kody -v business-logic KD-1234',
+                    userQuestion: '@cody -v business-logic KD-1234',
                     taskId: 'KD-1234',
                     taskReference: 'KD-1234',
                     platformType: PlatformType.GITHUB,
@@ -237,7 +237,7 @@ describe('CLI business-validation integration', () => {
                     }),
                     repository: expect.objectContaining({
                         id: 'repo-1',
-                        name: 'kodus-ai',
+                        name: 'codus-ai',
                     }),
                 }),
             }),
@@ -248,7 +248,7 @@ describe('CLI business-validation integration', () => {
         mockCodeManagementService.getPullRequests.mockResolvedValue([
             {
                 number: 77,
-                prURL: 'https://github.com/kodus-ai/kodus-ai/pull/77',
+                prURL: 'https://github.com/codus-ai/codus-ai/pull/77',
                 body: 'Sync business rules validation through provider.',
                 head: { ref: 'feat/rules' },
                 base: { ref: 'main' },
@@ -259,9 +259,9 @@ describe('CLI business-validation integration', () => {
             {
                 prNumber: 77,
                 repositoryId: 'repo-1',
-                taskUrl: 'https://linear.app/kodus/issue/KD-77',
+                taskUrl: 'https://linear.app/codus/issue/KD-77',
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
             undefined,
         );
@@ -271,20 +271,20 @@ describe('CLI business-validation integration', () => {
             mode: 'pull_request',
             prNumber: 77,
             repositoryId: 'repo-1',
-            repositoryName: 'kodus-ai',
-            taskReference: 'https://linear.app/kodus/issue/KD-77',
+            repositoryName: 'codus-ai',
+            taskReference: 'https://linear.app/codus/issue/KD-77',
         });
         expect(mockCodeManagementService.getPullRequests).toHaveBeenCalledWith(
             expect.objectContaining({
-                repository: { id: 'repo-1', name: 'kodus-ai' },
+                repository: { id: 'repo-1', name: 'codus-ai' },
                 filters: { number: 77 },
             }),
         );
         expect(mockBusinessProvider.execute).toHaveBeenCalledWith(
             expect.objectContaining({
                 prepareContext: expect.objectContaining({
-                    taskUrl: 'https://linear.app/kodus/issue/KD-77',
-                    taskReference: 'https://linear.app/kodus/issue/KD-77',
+                    taskUrl: 'https://linear.app/codus/issue/KD-77',
+                    taskReference: 'https://linear.app/codus/issue/KD-77',
                 }),
             }),
         );
@@ -304,9 +304,9 @@ describe('CLI business-validation integration', () => {
             {
                 diff,
                 taskId: 'KD-1234',
-                repository: 'kodus-ai/kodus-ai',
+                repository: 'codus-ai/codus-ai',
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
             undefined,
         );
@@ -315,14 +315,14 @@ describe('CLI business-validation integration', () => {
             accepted: true,
             mode: 'local_diff',
             repositoryId: 'repo-1',
-            repositoryName: 'kodus-ai',
+            repositoryName: 'codus-ai',
             taskReference: 'KD-1234',
             result: '## Business Rules Validation\n\nLooks good.',
         });
 
         const providerPayload = mockBusinessProvider.execute.mock.calls[0][0];
         expect(providerPayload.prepareContext).toMatchObject({
-            userQuestion: '@kody -v business-logic KD-1234',
+            userQuestion: '@cody -v business-logic KD-1234',
             taskId: 'KD-1234',
             taskReference: 'KD-1234',
             pullRequestDescription:
@@ -330,7 +330,7 @@ describe('CLI business-validation integration', () => {
             prDiff: diff,
             repository: {
                 id: 'repo-1',
-                name: 'kodus-ai',
+                name: 'codus-ai',
             },
         });
         expect(providerPayload.prepareContext.pullRequest).toBeUndefined();
@@ -344,8 +344,8 @@ describe('CLI business-validation integration', () => {
 
         await expect(
             controller.businessValidation(
-                { prUrl: 'https://github.com/kodus-ai/kodus-ai/pull/42' },
-                'kodus_invalid_key',
+                { prUrl: 'https://github.com/codus-ai/codus-ai/pull/42' },
+                'codus_invalid_key',
                 undefined,
                 undefined,
             ),
@@ -364,16 +364,16 @@ describe('CLI business-validation integration', () => {
         mockCodeManagementService.getPullRequests.mockResolvedValue([
             {
                 number: 42,
-                prURL: 'https://github.com/kodus-ai/kodus-ai/pull/42',
+                prURL: 'https://github.com/codus-ai/codus-ai/pull/42',
                 body: 'Some description',
-                repositoryData: { id: 'repo-1', name: 'kodus-ai' },
+                repositoryData: { id: 'repo-1', name: 'codus-ai' },
             },
         ]);
 
         await expect(
             controller.businessValidation(
-                { prUrl: 'https://github.com/kodus-ai/kodus-ai/pull/42' },
-                'kodus_test_key',
+                { prUrl: 'https://github.com/codus-ai/codus-ai/pull/42' },
+                'codus_test_key',
                 undefined,
                 undefined,
             ),
@@ -388,7 +388,7 @@ describe('CLI business-validation integration', () => {
         await expect(
             controller.businessValidation(
                 { taskId: 'KD-0001' },
-                'kodus_test_key',
+                'codus_test_key',
                 undefined,
                 undefined,
             ),

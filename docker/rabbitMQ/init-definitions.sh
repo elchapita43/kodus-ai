@@ -32,8 +32,8 @@ ensure_vhost() {
 }
 
 echo "RabbitMQ iniciado. Criando v-hosts manualmente..."
-ensure_vhost kodus-ai
-ensure_vhost kodus-ast
+ensure_vhost codus-ai
+ensure_vhost codus-ast
 echo "V-hosts criados e permissões atribuídas com sucesso."
 
 # Traz o processo do RabbitMQ de volta para o primeiro plano

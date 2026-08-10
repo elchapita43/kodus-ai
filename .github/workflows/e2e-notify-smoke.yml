@@ -29,7 +29,7 @@ jobs:
                       passed: 67, total: 70, failed: 2, skipped: 1,
                       gatingFailures: [{ cell: "code-review-basic × cloud × github × paid", error: "Assertion failed: Review pipeline ran but produced 0 findings on PR #99 within 1500s." }],
                       advisoryFailures: [{ cell: "public-pr-demo × cloud × github × paid", error: "GET featured-reviews: HTTP 404" }],
-                      retriedCells: ["kody-rules-create-and-apply × cloud × gitlab × paid"],
+                      retriedCells: ["cody-rules-create-and-apply × cloud × gitlab × paid"],
                   };
                   const fmt = (l) => l.map((x) => `• \`${x.cell}\`\n  ${x.error}`).join("\n");
                   const out = [];

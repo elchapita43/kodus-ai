@@ -1,10 +1,10 @@
 ---
 title: GitLab OAuthアプリ（GitLabでサインイン）
-description: "Kodus のユーザー向けに「Sign in with GitLab」を有効にする GitLab OAuth App の作成手順。コードレビュー用の Webhook 連携とは別物です。"
+description: "Codus のユーザー向けに「Sign in with GitLab」を有効にする GitLab OAuth App の作成手順。コードレビュー用の Webhook 連携とは別物です。"
 icon: gitlab
 ---
 
-コードレビューの自動化に使用されるGitLab Webhookインテグレーションとは別に、ユーザーがGitLabでKodusにサインインできるようにしたい場合に使用します。
+コードレビューの自動化に使用されるGitLab Webhookインテグレーションとは別に、ユーザーがGitLabでCodusにサインインできるようにしたい場合に使用します。
 
 ## 前提条件
 
@@ -36,7 +36,7 @@ WEB_GITLAB_SCOPES="read_api read_user read_repository"
 
 ## ステップ4：.envへの認証情報の追加
 
-アプリを作成したら、GitLabから認証情報をコピーしてKodusの環境に追加します：
+アプリを作成したら、GitLabから認証情報をコピーしてCodusの環境に追加します：
 
 ```
 WEB_OAUTH_GITLAB_CLIENT_ID="your_client_id_here"

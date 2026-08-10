@@ -10,7 +10,7 @@ import { ConnectionString } from 'connection-string';
 import { DatabaseConnection } from '@libs/core/infrastructure/config/types';
 
 import { createLogger } from '@libs/core/log/logger';
-import { TokenTrackingHandler, BYOKConfig } from '@kodus/kodus-common/llm';
+import { TokenTrackingHandler, BYOKConfig } from '@codus/codus-common/llm';
 import { CallbackHandler as LangfuseCallbackHandler } from '@langfuse/langchain';
 import { shouldTrace } from './langfuse';
 import { deriveTu } from './token-usage-tu';
@@ -239,8 +239,8 @@ export class ObservabilityService implements OnModuleInit {
             this.configService.get<DatabaseConnection>('mongoDatabase');
 
         const finalName = serviceName
-            ? `kodus-${serviceName}`
-            : `kodus-${process.env.COMPONENT_TYPE || 'api'}`;
+            ? `codus-${serviceName}`
+            : `codus-${process.env.COMPONENT_TYPE || 'api'}`;
 
         if (!mongoConfig) {
             this.logger.warn({

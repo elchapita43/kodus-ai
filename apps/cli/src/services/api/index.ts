@@ -1,7 +1,7 @@
 import { RealApi } from './api.real.js';
 
 export type {
-    IKodusApi,
+    ICodusApi,
     IMemoryApi,
     IRulesApi,
     ISessionsApi,

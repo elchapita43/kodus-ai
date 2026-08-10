@@ -1,5 +1,5 @@
 /**
- * API clients for Kodus and GitHub/GitLab
+ * API clients for Codus and GitHub/GitLab
  */
 
 import axios, { AxiosInstance } from 'axios';
@@ -43,9 +43,9 @@ export interface TeamCliKey {
 }
 
 /**
- * Kodus API Client
+ * Codus API Client
  */
-export class KodusApiClient {
+export class CodusApiClient {
     private client: AxiosInstance;
     private accessToken?: string;
     private organizationId?: string;

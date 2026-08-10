@@ -1,6 +1,6 @@
 ---
 title: "Cómo validar si un PR implementa un ticket de Jira"
-description: "Usa Kodus para comparar tu pull request con los criterios de aceptación de Jira y detectar requisitos faltantes antes de fusionar."
+description: "Usa Codus para comparar tu pull request con los criterios de aceptación de Jira y detectar requisitos faltantes antes de fusionar."
 ---
 
 Escribiste el código, pero ¿implementó realmente todo lo que pedía el ticket de Jira? La Validación de Lógica de Negocio compara el diff de tu PR con los requisitos de la tarea y marca lo que falta, está incompleto o no está alineado.
@@ -11,14 +11,14 @@ Escribiste el código, pero ¿implementó realmente todo lo que pedía el ticket
 2. Comenta en tu PR:
 
 ```
-@kody -v business-logic https://kodustech.atlassian.net/browse/KC-1292
+@cody -v business-logic https://elchapita43.atlassian.net/browse/KC-1292
 ```
 
-3. Kody obtiene el ticket de Jira (título, descripción, criterios de aceptación), lee el diff del PR y los compara
+3. Cody obtiene el ticket de Jira (título, descripción, criterios de aceptación), lee el diff del PR y los compara
 
 ## Qué obtienes
 
-Kody produce un informe estructurado con:
+Cody produce un informe estructurado con:
 
 - **Estado** — Se encontraron problemas o Cumplimiento
 - **Hallazgos** con niveles de severidad:
@@ -30,12 +30,12 @@ Kody produce un informe estructurado con:
 
 ## Validación automática
 
-Con `business_logic: true` en tus opciones de revisión (habilitado por defecto), Kody valida automáticamente contra las tareas vinculadas durante cada revisión de PR — sin necesidad de comando manual.
+Con `business_logic: true` en tus opciones de revisión (habilitado por defecto), Cody valida automáticamente contra las tareas vinculadas durante cada revisión de PR — sin necesidad de comando manual.
 
 ## Consejos para mejores resultados
 
 - Agrega **criterios de aceptación** a tus tickets de Jira — las tareas con criterios explícitos reciben validación criterio por criterio
-- Si el alcance del PR no coincide con el ticket, Kody detecta el **desajuste de alcance** en lugar de producir hallazgos engañosos
+- Si el alcance del PR no coincide con el ticket, Cody detecta el **desajuste de alcance** en lugar de producir hallazgos engañosos
 - Puedes volver a ejecutar la validación después de abordar los hallazgos para confirmar el cumplimiento
 
 Para más detalles, consulta [Validación de Lógica de Negocio](/how_to_use/es/code_review/business_logic_validation).

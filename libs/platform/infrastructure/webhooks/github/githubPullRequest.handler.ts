@@ -4,7 +4,7 @@ import { EnqueueImplementationCheckUseCase } from '@libs/code-review/application
 import {
     hasReviewMarker,
     isForceReviewCommand,
-    isKodyMentionNonReview,
+    isCodyMentionNonReview,
     isReviewCommand,
     parseReviewDirective,
     isHeavyReviewCommand
@@ -15,7 +15,7 @@ import { PullRequestClosedEvent } from '@libs/core/domain/events/pull-request-cl
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     IWebhookEventHandler,
     IWebhookEventParams,
@@ -43,7 +43,7 @@ export class GitHubPullRequestHandler implements IWebhookEventHandler {
     constructor(
         private readonly savePullRequestUseCase: SavePullRequestUseCase,
         private readonly webhookContextService: WebhookContextService,
-        private readonly chatWithKodyFromGitUseCase: ChatWithKodyFromGitUseCase,
+        private readonly chatWithCodyFromGitUseCase: ChatWithCodyFromGitUseCase,
         private readonly codeManagement: CodeManagementService,
         private readonly generateIssuesFromPrClosedUseCase: GenerateIssuesFromPrClosedUseCase,
         private readonly eventEmitter: EventEmitter2,
@@ -311,7 +311,7 @@ export class GitHubPullRequestHandler implements IWebhookEventHandler {
                 // A best-effort heuristic now runs in the synchronize path by checking
                 // whether payload.before is still present in the PR commit list.
 
-                // If merged into default branch, trigger Kody Rules sync for main
+                // If merged into default branch, trigger Cody Rules sync for main
                 const merged = payload?.pull_request?.merged === true;
                 const baseRef = payload?.pull_request?.base?.ref;
 
@@ -373,7 +373,7 @@ export class GitHubPullRequestHandler implements IWebhookEventHandler {
                         }
                     } catch (e) {
                         this.logger.error({
-                            message: 'Failed to sync Kody Rules after PR merge',
+                            message: 'Failed to sync Cody Rules after PR merge',
                             context: GitHubPullRequestHandler.name,
                             error: e,
                             metadata: {
@@ -465,7 +465,7 @@ export class GitHubPullRequestHandler implements IWebhookEventHandler {
             // If it is a start-review command and does not have the review marker
             if (isStartCommand && !hasMarker) {
                 this.logger.log({
-                    message: `@kody start command detected in GitHub comment for PR#${pullRequest?.number}`,
+                    message: `@cody start command detected in GitHub comment for PR#${pullRequest?.number}`,
                     serviceName: GitHubPullRequestHandler.name,
                     metadata: {
                         prNumber,
@@ -616,9 +616,9 @@ export class GitHubPullRequestHandler implements IWebhookEventHandler {
                     event === 'issue_comment') &&
                 !hasMarker &&
                 !isStartCommand &&
-                isKodyMentionNonReview(comment.body)
+                isCodyMentionNonReview(comment.body)
             ) {
-                this.chatWithKodyFromGitUseCase.execute(params);
+                this.chatWithCodyFromGitUseCase.execute(params);
                 return;
             }
         } catch (error) {

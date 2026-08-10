@@ -145,7 +145,7 @@ describe('StaleReviewWatchdogCronProvider', () => {
             { uuid: 'stale-uuid-1' },
             expect.objectContaining({ status: AutomationStatus.ERROR }),
             expect.any(String),
-            'Kody Review Finished',
+            'Cody Review Finished',
         );
 
         expect(checksAdapter.updateCheckRun).toHaveBeenCalledWith(
@@ -172,7 +172,7 @@ describe('StaleReviewWatchdogCronProvider', () => {
             { uuid: 'stale-uuid-2' },
             expect.objectContaining({ status: AutomationStatus.ERROR }),
             expect.any(String),
-            'Kody Review Finished',
+            'Cody Review Finished',
         );
         expect(checksAdapter.updateCheckRun).not.toHaveBeenCalled();
     });

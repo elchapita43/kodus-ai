@@ -6,7 +6,7 @@ import { Card, CardHeader } from "@components/ui/card";
 import { Collapsible, CollapsibleContent } from "@components/ui/collapsible";
 import { FormControl } from "@components/ui/form-control";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Input } from "@components/ui/input";
 import { Link } from "@components/ui/link";
 import { Page } from "@components/ui/page";
@@ -180,7 +180,7 @@ export default function App() {
                             </Heading>
 
                             <p className="text-text-secondary text-sm">
-                                Tell us about your team to customize Kody for
+                                Tell us about your team to customize Cody for
                                 your workflows.
                             </p>
                         </div>

@@ -1,4 +1,4 @@
-import type { KodusSession, RunContext } from './types.js';
+import type { CodusSession, RunContext } from './types.js';
 import { http, ensureOk } from './http.js';
 import { pollUntil } from '../providers/base.js';
 
@@ -14,7 +14,7 @@ import { pollUntil } from '../providers/base.js';
  */
 export async function assertHealthyExecution(
     ctx: RunContext,
-    session: KodusSession,
+    session: CodusSession,
     prNumber: number,
 ): Promise<string> {
     // The execution row settles shortly after the completion comment is
@@ -99,7 +99,7 @@ export async function assertHealthyExecution(
  */
 export async function assertPersistedSuggestions(
     ctx: RunContext,
-    session: KodusSession,
+    session: CodusSession,
     prNumber: number,
 ): Promise<number> {
     const sent = await pollUntil<number>(

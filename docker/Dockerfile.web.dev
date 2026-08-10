@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-# Development stage for kodus-web (Next.js).
+# Development stage for codus-web (Next.js).
 #
 # The application code is provided at runtime via the bind mount declared
 # in docker-compose.dev.yml (./apps/web:/usr/src/app) and node_modules is

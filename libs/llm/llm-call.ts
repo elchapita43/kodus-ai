@@ -62,7 +62,7 @@ const generateText: typeof _aiSdkGenerateText = (async (
 ) => {
     const opts = args[0] as any;
     const ms =
-        opts?.__kodusHardTimeoutMs ??
+        opts?.__codusHardTimeoutMs ??
         (opts?.abortSignal
             ? LLM_CALL_TIMEOUT_MS // secondary calls already set timeoutSignal
             : AGENT_TIMEOUT_MS); // main call uses agent-level timeout

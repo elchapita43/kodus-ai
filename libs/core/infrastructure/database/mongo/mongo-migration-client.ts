@@ -45,7 +45,7 @@ export function buildMongoUri(): string {
 }
 
 export function mongoDatabaseName(): string {
-    return process.env.API_MG_DB_DATABASE ?? 'kodus';
+    return process.env.API_MG_DB_DATABASE ?? 'codus';
 }
 
 /**

@@ -1,7 +1,7 @@
-// Headless signup flow for Kodus self-hosted.
+// Headless signup flow for Codus self-hosted.
 //
 // Driven by tests/e2e/run-vm.sh (and run-local.sh). The selectors below are best-effort —
-// when the kodus-web UI changes, the FIRST place to look is the SELECTORS
+// when the codus-web UI changes, the FIRST place to look is the SELECTORS
 // block at the top of this file. We try a few common patterns (data-testid,
 // name, label, placeholder, role) so small UI tweaks don't break the test;
 // when none match, the script saves a screenshot to ./failure.png and the
@@ -12,7 +12,7 @@ import { applyWafBypass } from "./waf-bypass.mjs";
 import { writeFileSync } from "node:fs";
 
 const {
-    KODUS_WEB_URL = "http://localhost:3000",
+    CODUS_WEB_URL = "http://localhost:3000",
     TEST_USER_EMAIL,
     TEST_USER_PASSWORD,
 } = process.env;
@@ -22,10 +22,10 @@ if (!TEST_USER_EMAIL || !TEST_USER_PASSWORD) {
     process.exit(1);
 }
 
-// ---- Adjust these to match the actual kodus-web UI ----
+// ---- Adjust these to match the actual codus-web UI ----
 const SELECTORS = {
-    signupUrl: `${KODUS_WEB_URL}/sign-up`,
-    fallbackSignupUrl: `${KODUS_WEB_URL}/signup`,
+    signupUrl: `${CODUS_WEB_URL}/sign-up`,
+    fallbackSignupUrl: `${CODUS_WEB_URL}/signup`,
     name: [
         '[data-testid="signup-name"]',
         'input[name="name"]',
@@ -162,7 +162,7 @@ try {
     // Some apps split the form across steps (e.g. email first, then password).
     // We try to fill whatever is on-screen and submit; if the URL doesn't
     // change, we retry once more (handles a two-step form).
-    const name = "Kodus E2E";
+    const name = "Codus E2E";
     try { await fillFirst(page, SELECTORS.name, name); } catch { /* optional */ }
     await fillFirst(page, SELECTORS.email, TEST_USER_EMAIL);
     try { await fillFirst(page, SELECTORS.password, TEST_USER_PASSWORD); } catch { /* may be step 2 */ }

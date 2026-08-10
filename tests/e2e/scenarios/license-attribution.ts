@@ -10,39 +10,39 @@ import type { LicenseMode, RunContext, Scenario } from "../lib/types.js";
 // reviewed the latest changes".
 //
 // We deliberately use a different pair from `code-review-basic.ts` and
-// `kody-rules.ts` so the three scenarios can run in parallel without
+// `cody-rules.ts` so the three scenarios can run in parallel without
 // GitHub rejecting "second open PR for the same head→base".
 const FIXTURE_BRANCHES: Record<
     string,
     { head: string; base: string } | undefined
 > = {
     github: {
-        // Feature add in the tiny-url fixture repo (kodus-e2e/tiny-url):
+        // Feature add in the tiny-url fixture repo (codus-e2e/tiny-url):
         // /stats endpoint + per-code hit counter. ~30 lines, two files
-        // touched — meaty enough that Kody usually surfaces real findings
+        // touched — meaty enough that Cody usually surfaces real findings
         // (paid path observed ~10–11 min end-to-end on Kimi K2.6), but
         // still a realistic PR-sized change. Different head→base from
-        // code-review-basic and kody-rules so all three scenarios can
+        // code-review-basic and cody-rules so all three scenarios can
         // have open PRs simultaneously.
         head: "feature/add-stats",
         base: "main",
     },
     gitlab: {
-        // Same fixture mirrored to gitlab.com/kodus-e2e/tiny-url.
+        // Same fixture mirrored to gitlab.com/codus-e2e/tiny-url.
         head: "feature/add-stats",
         base: "main",
     },
     "azure-devops": {
-        // Same fixture mirrored to dev.azure.com/kodustech/kodus-e2e.
+        // Same fixture mirrored to dev.azure.com/elchapita43/codus-e2e.
         head: "feature/add-stats",
         base: "main",
     },
     bitbucket: {
-        // Same fixture mirrored to bitbucket.org/kodustech/tiny-url.
+        // Same fixture mirrored to bitbucket.org/elchapita43/tiny-url.
         head: "feature/add-stats",
         base: "main",
     },
-    // App-installed clone of tiny-url (kodus-e2e/tiny-url-app); same
+    // App-installed clone of tiny-url (codus-e2e/tiny-url-app); same
     // feature/add-stats branch carried over via the initial mirror.
     "github-app": {
         head: "feature/add-stats",
@@ -59,7 +59,7 @@ export const licenseAttribution: Scenario = {
         target: ["cloud", "self-hosted"],
         provider: ["github", "github-app", "gitlab", "azure-devops", "bitbucket"],
         // `license-free` deliberately excluded: in self-hosted mode there is
-        // NO state in which Kodus posts the "trial ended / BYOK / activate
+        // NO state in which Codus posts the "trial ended / BYOK / activate
         // plan" notice the scenario asserts on. SelfHostedLicenseService
         // returns either {valid:false} (no/invalid key → Community Edition,
         // reviews fire normally) or {valid:true, …} (licensed, may enforce
@@ -99,17 +99,17 @@ export const licenseAttribution: Scenario = {
             );
         }
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         // Self-hosted here only runs license-paid (expectReview); grant the
         // PR author a seat so licensed-mode enforcement doesn't skip it. The
         // cloud free/trial no-review tiers are unaffected (self-hosted-only).
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         // Tiers where the entitlement gate BLOCKS the LLM review. On
-        // cloud these tenants are "trial expired without BYOK" — Kody
+        // cloud these tenants are "trial expired without BYOK" — Cody
         // posts a "trial ended / activate plan" notification on the PR
         // instead of running the review pipeline. On self-hosted with
         // no license key (`license-free`), reviews stop similarly when
@@ -122,18 +122,18 @@ export const licenseAttribution: Scenario = {
             head: fixture!.head,
             base: fixture!.base,
             title: `[e2e] license-attribution ${ctx.license} ${ctx.runId.slice(0, 8)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId} to validate the license=${ctx.license} entitlement gate. Auto-closed by the scenario; branches are persistent fixtures and are not deleted.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId} to validate the license=${ctx.license} entitlement gate. Auto-closed by the scenario; branches are persistent fixtures and are not deleted.`,
         });
 
         try {
             // `paid`/`trial` paths get a 900s poll budget to cover the
             // slowest legitimate review (Kimi K2.6 on tiny-url measures
             // ~10–11 min end-to-end, with variance). Blocked paths only
-            // need to confirm Kody posted the license-block notice — that
+            // need to confirm Cody posted the license-block notice — that
             // shows up in seconds. A short window also keeps the false-
             // positive surface tight: a gate that fails open and starts
             // a review would still race the poll, but the longer the
-            // wait the more likely Kody will post the notice anyway.
+            // wait the more likely Cody will post the notice anyway.
             const pollWindow = expectReview ? 900 : 180;
             const review = await ctx.provider.pollForReview(
                 { number: pr.number },
@@ -154,7 +154,7 @@ export const licenseAttribution: Scenario = {
                 );
                 ctx.assert(
                     !sawLicenseNotice,
-                    `License=${ctx.license} should NOT trigger a trial/BYOK notice, but Kody posted one: ${JSON.stringify(review.licenseBlockedNotice)}`,
+                    `License=${ctx.license} should NOT trigger a trial/BYOK notice, but Cody posted one: ${JSON.stringify(review.licenseBlockedNotice)}`,
                 );
                 // Execution HEALTH: a licensed review that posts findings can
                 // still hide a crashed agent/stage (partial_error). Only the
@@ -163,17 +163,17 @@ export const licenseAttribution: Scenario = {
                 await assertHealthyExecution(ctx, session, pr.number);
             } else {
                 // Blocked tier — gate must stop the real review pipeline
-                // AND Kody should explain why with a notice on the PR.
+                // AND Cody should explain why with a notice on the PR.
                 // Bare silence (no review, no notice) is a different
                 // failure mode (webhook never arrived, pipeline crashed
                 // silently, filter regression) and we'd rather fail loud.
                 ctx.assert(
                     !sawRealReview,
-                    `Expected NO real review for license=${ctx.license} but Kody posted one: ${JSON.stringify(review)}`,
+                    `Expected NO real review for license=${ctx.license} but Cody posted one: ${JSON.stringify(review)}`,
                 );
                 ctx.assert(
                     sawLicenseNotice,
-                    `License=${ctx.license} should have triggered a trial-ended / BYOK / no-license notice from Kody, but the PR has no such comment after ${pollWindow}s. review=${JSON.stringify(review)}`,
+                    `License=${ctx.license} should have triggered a trial-ended / BYOK / no-license notice from Cody, but the PR has no such comment after ${pollWindow}s. review=${JSON.stringify(review)}`,
                 );
             }
 

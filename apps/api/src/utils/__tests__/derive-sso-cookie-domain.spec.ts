@@ -39,8 +39,8 @@ describe('deriveSsoCookieDomain', () => {
         it('derives .web.scorpion.co for deeply nested hosts under shared parent', () => {
             expect(
                 deriveSsoCookieDomain({
-                    apiHost: 'kodus-api-dev.web.scorpion.co',
-                    frontendUrl: 'https://kodus-dev.web.scorpion.co',
+                    apiHost: 'codus-api-dev.web.scorpion.co',
+                    frontendUrl: 'https://codus-dev.web.scorpion.co',
                     nodeEnv: 'production',
                 }),
             ).toBe('.web.scorpion.co');
@@ -101,13 +101,13 @@ describe('deriveSsoCookieDomain', () => {
         });
 
         it('returns undefined for unrelated hosts under .co.uk (only public-suffix labels in common)', () => {
-            // Edge case: kodus.co.uk + another.co.uk produces ["uk","co"] → 2 labels → ".co.uk".
+            // Edge case: codus.co.uk + another.co.uk produces ["uk","co"] → 2 labels → ".co.uk".
             // We accept this risk: in real deployments operators don't put API and frontend
             // on different registrable domains within the same multi-label public suffix.
             // Documenting here so the case is intentional, not forgotten.
             expect(
                 deriveSsoCookieDomain({
-                    apiHost: 'kodus.co.uk',
+                    apiHost: 'codus.co.uk',
                     frontendUrl: 'https://another.co.uk',
                     nodeEnv: 'production',
                 }),
@@ -175,8 +175,8 @@ describe('deriveSsoCookieDomain', () => {
         it('treats uppercase and lowercase hosts as equivalent', () => {
             expect(
                 deriveSsoCookieDomain({
-                    apiHost: 'API.KODUS.IO',
-                    frontendUrl: 'https://App.Kodus.io',
+                    apiHost: 'API.CODUS.IO',
+                    frontendUrl: 'https://App.Codus.io',
                     nodeEnv: 'production',
                 }),
             ).toBe('.kodus.io');

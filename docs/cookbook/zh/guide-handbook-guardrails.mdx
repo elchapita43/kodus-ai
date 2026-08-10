@@ -1,16 +1,16 @@
 ---
 title: "将您的最佳实践文档转变为审查护栏"
-description: "使用可选的 MCP 插件将您的工程手册转换为活的 Kody 规则。"
+description: "使用可选的 MCP 插件将您的工程手册转换为活的 Cody 规则。"
 icon: "shield-check"
 ---
 
 ## 为什么本指南很重要
 
-每个工程团队都有一个"最佳实践"文档。问题是 IDE 建议不读它,审查者忘记细微差别,文档慢慢失去权威性。本指南展示如何将您的手册转变为主动护栏,以便 Kody 自动执行这些规则,并在代码偏离时引用相关部分。
+每个工程团队都有一个"最佳实践"文档。问题是 IDE 建议不读它,审查者忘记细微差别,文档慢慢失去权威性。本指南展示如何将您的手册转变为主动护栏,以便 Cody 自动执行这些规则,并在代码偏离时引用相关部分。
 
 我们将重点关注两个构建块:
 
-- [Kody 规则](/how_to_use/zh/code_review/configs/kody_rules) – 将每个策略要点编码为确定性的文件级或 PR 级检查。
+- [Cody 规则](/how_to_use/zh/code_review/configs/cody_rules) – 将每个策略要点编码为确定性的文件级或 PR 级检查。
 - [自定义插件](/cookbook/zh/custom-plugin-install) – 当真相源存在于 Git 之外时,从远程 MCP 服务器获取标准。
 
 遵循流程,任何代码库都可以从"手册 PDF"演变为"活策略包"。
@@ -18,7 +18,7 @@ icon: "shield-check"
 
 ## 飞行前检查清单
 
-- 您有权编辑**代码审查设置 → Kody 规则**。
+- 您有权编辑**代码审查设置 → Cody 规则**。
 - 策略包位于代码库中(例如 `docs/engineering-standards.md`)。如果您的位于另一个路径,请相应调整。如果它位于 Notion、Confluence 或 Google Docs 中,计划通过远程 MCP 端点公开它。
 - 您知道哪些主题应该在文件级(控制器、配置)还是 PR 级(功能标志、推出叙述、架构)进行评估。
 
@@ -28,7 +28,7 @@ icon: "shield-check"
 
 ## 第 1 阶段 – 塑造规则友好的策略包
 
-1. 创建或重用 markdown 文件,例如 `docs/engineering-standards.md`。唯一的要求:Kody 必须能够通过 `@file:...` 引用它。
+1. 创建或重用 markdown 文件,例如 `docs/engineering-standards.md`。唯一的要求:Cody 必须能够通过 `@file:...` 引用它。
 2. 将内容组织成简短、可检查的要点:
 
 ```md
@@ -75,9 +75,9 @@ icon: "shield-check"
 </Callout>
 
 
-## 第 3 阶段 – 将部分转换为 Kody 规则
+## 第 3 阶段 – 将部分转换为 Cody 规则
 
-打开**代码审查设置 → Kody 规则**并将每个策略部分映射到适当的范围。
+打开**代码审查设置 → Cody 规则**并将每个策略部分映射到适当的范围。
 
 | 策略部分         | 规则类型     | 范围示例                     | 严重性 |
 | ---------------------- | ------------- | --------------------------------- | -------- |
@@ -117,26 +117,26 @@ icon: "shield-check"
 ```
 
 <Info>
-  规则已经理解变量(`fileDiff`、`pr_files_diff` 等)、文件引用和 MCP 调用。请参阅 [Kody 规则指南](/how_to_use/zh/code_review/configs/kody_rules)中的完整矩阵。
+  规则已经理解变量(`fileDiff`、`pr_files_diff` 等)、文件引用和 MCP 调用。请参阅 [Cody 规则指南](/how_to_use/zh/code_review/configs/cody_rules)中的完整矩阵。
 </Info>
 
 
 ## 第 4 阶段 – 通过 MCP 镜像外部标准(可选)
 
-有时手册(或其部分)必须保留在 Notion、Confluence、Google Docs 或其他系统中。您仍然可以将其输入 Kody:
+有时手册(或其部分)必须保留在 Notion、Confluence、Google Docs 或其他系统中。您仍然可以将其输入 Cody:
 
 1. 构建或采用公开 `listSections()` 和 `getSection(id)` 的远程 MCP 端点。
 2. 通过**添加自定义插件**安装它。按照[自定义插件指南](/cookbook/zh/custom-plugin-install)获取确切流程。
 3. 用 `@MCP:policy_pack.getSection({"id":"architecture"})` 替换 `@file` 引用。
 4. 在 MCP 服务器上缓存响应,以便多个规则在每次审查时共享负载。
 
-现在 Kody 执行相同的标准,无论文档位于何处。
+现在 Cody 执行相同的标准,无论文档位于何处。
 
 ## 第 5 阶段 – 测试、观察并保持活力
 
 <AccordionGroup>
   <Accordion title="种子验证 PR">
-    创建一个违反每个部分的一次性 PR。提及 @kody 并确保内联 + PR 级评论引用正确的要点。
+    创建一个违反每个部分的一次性 PR。提及 @cody 并确保内联 + PR 级评论引用正确的要点。
   </Accordion>
   <Accordion title="调整噪音和严重性">
     在推出期间,观察每个规则触发的频率。收紧文件 glob,添加排除项,或调整严重性,直到信号满足期望。
@@ -150,6 +150,6 @@ icon: "shield-check"
 
 - [ ] `docs/engineering-standards.md`(或 MCP 等效项)存在,带有可扫描的标记要点。
 - [ ] 每个规则通过 `@file` 或 `@MCP` 引用策略包,确保它读取最新文本。
-- [ ] 文件级和 PR 级 Kody 规则涵盖您的关键部分。
+- [ ] 文件级和 PR 级 Cody 规则涵盖您的关键部分。
 - [ ] 可选的 MCP 插件在需要时镜像非代码库标准。
 - [ ] 干运行 PR 在广泛推出之前确认了内联评论和 PR 摘要。

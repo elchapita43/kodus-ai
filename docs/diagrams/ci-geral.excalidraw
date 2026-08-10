@@ -1,7 +1,7 @@
 {
  "type": "excalidraw",
  "version": 2,
- "source": "kodus-ci-geral",
+ "source": "codus-ci-geral",
  "elements": [
   {
    "id": "jd5ksko14e",
@@ -29,14 +29,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "Kodus \u2014 Mapa GERAL dos workflows de CI/CD (por gatilho)",
+   "text": "Codus \u2014 Mapa GERAL dos workflows de CI/CD (por gatilho)",
    "fontSize": 22,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 22,
    "containerId": null,
-   "originalText": "Kodus \u2014 Mapa GERAL dos workflows de CI/CD (por gatilho)",
+   "originalText": "Codus \u2014 Mapa GERAL dos workflows de CI/CD (por gatilho)",
    "lineHeight": 1.25
   },
   {

@@ -16,7 +16,7 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@components/ui/tooltip";
-import { useKodyRulesCount } from "@services/kodyRules/hooks";
+import { useCodyRulesCount } from "@services/codyRules/hooks";
 import { FolderIcon } from "lucide-react";
 import { cn } from "src/core/utils/components";
 
@@ -57,14 +57,14 @@ export const PerDirectoryGroup = ({
         routes.map((route) => route.href),
         FormattedConfigLevel.DIRECTORY,
     );
-    const directoryKodyRulesCount = useKodyRulesCount(
+    const directoryCodyRulesCount = useCodyRulesCount(
         repository.id,
         group.id,
     );
     const resolvedOverrideCount =
         configOverrideCount +
         (customMessagesOverrideCount ?? 0) +
-        directoryKodyRulesCount;
+        directoryCodyRulesCount;
 
     const folders = group.folders ?? [];
     const primary = folders[0];
@@ -188,8 +188,8 @@ export const PerDirectoryGroup = ({
                                     customMessagesOverrideCount={
                                         customMessagesOverrideCount ?? 0
                                     }
-                                    kodyRulesOverrideCount={
-                                        directoryKodyRulesCount
+                                    codyRulesOverrideCount={
+                                        directoryCodyRulesCount
                                     }
                                 />
                             </SidebarMenuSubItem>

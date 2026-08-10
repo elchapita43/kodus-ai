@@ -35,7 +35,7 @@ export async function handleHook(
         await lifecycleService.dispatch(repoRoot, agent.agentType, event);
     } catch (error) {
         // Hooks must fail open — never block the agent.
-        if (process.env.KODUS_VERBOSE === 'true') {
+        if (process.env.CODUS_VERBOSE === 'true') {
             const message =
                 error instanceof Error ? error.message : String(error);
             console.error(`[decisions] hook error: ${message}`);

@@ -14,11 +14,11 @@ import { COCKPIT_DEVELOPER_PRODUCTIVITY_SERVICE_TOKEN } from '../domain/contract
 import { COCKPIT_REPORTS_SERVICE_TOKEN } from '../domain/contracts/cockpit-reports.service.contract';
 import { COCKPIT_REVIEW_ANALYTICS_SERVICE_TOKEN } from '../domain/contracts/cockpit-review-analytics.service.contract';
 import { REPORT_RECIPIENTS_SERVICE_TOKEN } from '../domain/contracts/report-recipients.service.contract';
-import { GetKodyRulesHealthUseCase } from '../application/use-cases/get-kody-rules-health.use-case';
+import { GetCodyRulesHealthUseCase } from '../application/use-cases/get-cody-rules-health.use-case';
 import { SendOrgReportUseCase } from '../application/use-cases/send-org-report.use-case';
 import { SendRepoReportUseCase } from '../application/use-cases/send-repo-report.use-case';
 import { ReportRecipientsService } from '../application/services/report-recipients.service';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { CockpitTierGuard } from '../infrastructure/guards/cockpit-tier.guard';
 import { CockpitCodeHealthService } from '../infrastructure/services/cockpit-code-health.service';
 import { CockpitDeveloperProductivityService } from '../infrastructure/services/cockpit-developer-productivity.service';
@@ -31,7 +31,7 @@ import { NotificationModule } from '@libs/notifications/modules/notification.mod
 
 /**
  * Entry point for the in-process cockpit — replaces the external
- * `kodus-service-analytics` deployment on both cloud and self-hosted.
+ * `codus-service-analytics` deployment on both cloud and self-hosted.
  * Queries go against `analytics.*` tables that the worker ingestion
  * pipeline keeps in sync with Mongo.
  */
@@ -46,7 +46,7 @@ import { NotificationModule } from '@libs/notifications/modules/notification.mod
         forwardRef(() => UserModule),
         forwardRef(() => OrganizationModule),
         forwardRef(() => NotificationModule),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => TeamModule),
         forwardRef(() => ParametersModule),
         forwardRef(() => IntegrationConfigModule),
@@ -71,7 +71,7 @@ import { NotificationModule } from '@libs/notifications/modules/notification.mod
             useExisting: CockpitCodeHealthService,
         },
         CockpitTierGuard,
-        GetKodyRulesHealthUseCase,
+        GetCodyRulesHealthUseCase,
         CockpitReportsService,
         ReportRecipientsService,
         {
@@ -96,7 +96,7 @@ import { NotificationModule } from '@libs/notifications/modules/notification.mod
         COCKPIT_REVIEW_ANALYTICS_SERVICE_TOKEN,
         COCKPIT_CODE_HEALTH_SERVICE_TOKEN,
         CockpitTierGuard,
-        GetKodyRulesHealthUseCase,
+        GetCodyRulesHealthUseCase,
         SendOrgReportUseCase,
         SendRepoReportUseCase,
     ],

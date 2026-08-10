@@ -1,10 +1,10 @@
-# Gap-analysis do harness — Kodus vs estado da arte
+# Gap-analysis do harness — Codus vs estado da arte
 
 > **Método.** Cruzamento entre (1) leitura do nosso código (harness do agente de code review) e (2) deep research sobre arquitetura de harness de agentes (papers + blogs, 2024–2026), com verificação adversarial de cada claim (3 votos; claims refutadas foram descartadas).
 >
 > **Marcação:** **[verificado]** = claim sobreviveu à verificação 3-voto; **[refutado]** = claim foi morta e **não** é usada como suporte; **[inferido]** = mapeamento do gap deduzido da descrição do nosso harness, não re-verificado contra o código nesta etapa (mas confirmado em leitura de código anterior).
 >
-> **Caveat dominante (ler antes dos números):** quase nenhuma fonte é benchmark de *PR code review*. As evidências vêm de domínios vizinhos — issue-resolution (SWE-bench), QA multi-hop, detecção de vulnerabilidade/static-analysis. **Os padrões transferem; os percentuais não.** Trate os ganhos como direcionais, não como delta previsto para o Kodus. Vários são preprints em benchmark próprio.
+> **Caveat dominante (ler antes dos números):** quase nenhuma fonte é benchmark de *PR code review*. As evidências vêm de domínios vizinhos — issue-resolution (SWE-bench), QA multi-hop, detecção de vulnerabilidade/static-analysis. **Os padrões transferem; os percentuais não.** Trate os ganhos como direcionais, não como delta previsto para o Codus. Vários são preprints em benchmark próprio.
 
 ---
 
@@ -14,7 +14,7 @@ Ordenado por ROI (impacto × reuso de infra que já temos):
 
 1. **Grafo de código consultável dentro do loop** — maior ROI: a infra (índice AST nodes/edges em banco) **já existe**, só não está exposta ao agente.
 2. **Verify com prova executável/simbólica** — gap com respaldo peer-reviewed e bônus de robustez para BYOK; sandbox E2B já existe.
-3. **Memória que aprende de falhas (não só de sucesso), recuperável no loop** — reposiciona o Kody Fine-Tuning de filtro pós-geração para guardrail recuperável.
+3. **Memória que aprende de falhas (não só de sucesso), recuperável no loop** — reposiciona o Cody Fine-Tuning de filtro pós-geração para guardrail recuperável.
 4. **Camada crítica/judge sobre a saída + self-consistency cross-model** — FP-reducer documentado; complementa (não substitui) o item 2.
 
 Nota de tempero: reabrir o trio temático Bug/Security/Perf **não** é claramente a jogada (ver "O que NÃO fazer").
@@ -54,7 +54,7 @@ Nota de tempero: reabrir o trio temático Bug/Security/Perf **não** é claramen
 
 - **O que o estado da arte mostra:**
   - ReasoningBank (ICLR): memória **recuperável em runtime** que destila estratégias de **sucessos E falhas** num loop fechado retrieve → extract → consolidate; falhas viram **guardrails preventivos**. Supera agentes sem memória em **+4.6% (SWE-bench-Verified)** e **+8.3% (WebArena)**. **[verificado]**
-- **Nosso estado (código):** **temos aprendizado** (e ele alimenta o agente via Kody Rules / IDE-sync / memory rules). Mas o componente que usa feedback de outcome — **Kody Fine-Tuning** — é:
+- **Nosso estado (código):** **temos aprendizado** (e ele alimenta o agente via Cody Rules / IDE-sync / memory rules). Mas o componente que usa feedback de outcome — **Cody Fine-Tuning** — é:
   - um **filtro pós-geração** (cluster k-means → KEEP/DISCARD por similaridade);
   - alimentado **principalmente por sucesso** (`IMPLEMENTED` + reações 👍/👎) — **não destila falhas/ignorados** em guardrail;
   - roda **só no engine EE/legacy** (não no agent path default), **opt-in**, exige ≥ 50 sugestões. **[inferido]**
@@ -78,7 +78,7 @@ Nota de tempero: reabrir o trio temático Bug/Security/Perf **não** é claramen
 
 - **Não tratar o trio temático Bug/Security/Perf como "o" caminho.** A claim de que role-specialized review trios são padrão SOTA reconhecido foi **refutada** (1-2). O que é validado é **decompor + localizar bem + um revisor/crítico** — ou seja, investir em **localização (Gap 1)** e **crítico/verify (Gaps 2/4)**, não necessariamente em mais agentes temáticos.
 - **Não confiar em confidence de LLM como verificação.** É a abordagem que a literatura supera (Gap 2).
-- **Não citar números de outros domínios como delta previsto do Kodus.** São direcionais (ver caveat no topo).
+- **Não citar números de outros domínios como delta previsto do Codus.** São direcionais (ver caveat no topo).
 
 ---
 

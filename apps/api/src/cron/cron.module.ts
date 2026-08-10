@@ -8,7 +8,7 @@ import { NullChecksAdapter } from '@libs/core/infrastructure/pipeline/services/n
 import { DistributedLockService } from '@libs/core/workflow/infrastructure/distributed-lock.service';
 import { IntegrationConfigModule } from '@libs/integrations/modules/config.module';
 import { IntegrationModule } from '@libs/integrations/modules/integrations.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { ParametersModule } from '@libs/organization/modules/parameters.module';
 import { TeamModule } from '@libs/organization/modules/team.module';
 import { CliReviewModule } from '@libs/cli-review/cli-review.module';
@@ -26,7 +26,7 @@ import { GithubChecksService } from '@libs/platform/infrastructure/adapters/serv
 import { CheckIfPRCanBeApprovedCronProvider } from './CheckIfPRCanBeApproved.cron';
 import { ClassifyOrphanedSessionsCronProvider } from './classifyOrphanedSessions.cron';
 import { CodeReviewFeedbackCronProvider } from './codeReviewFeedback.cron';
-import { KodyLearningCronProvider } from './kodyLearning.cron';
+import { CodyLearningCronProvider } from './codyLearning.cron';
 import { SpendLimitAlertCronProvider } from './spendLimitAlert.cron';
 import { SSOTestSessionCleanupCronProvider } from './ssoTestSessionCleanup.cron';
 import { StaleReviewWatchdogCronProvider } from './staleReviewWatchdog.cron';
@@ -44,7 +44,7 @@ import { SSOModule } from '@libs/ee/sso/sso.module';
         GithubModule,
         ForgejoModule,
         PullRequestMessagesModule,
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => CodebaseModule),
         IntegrationModule,
         IntegrationConfigModule,
@@ -56,7 +56,7 @@ import { SSOModule } from '@libs/ee/sso/sso.module';
         CheckIfPRCanBeApprovedCronProvider,
         ClassifyOrphanedSessionsCronProvider,
         CodeReviewFeedbackCronProvider,
-        KodyLearningCronProvider,
+        CodyLearningCronProvider,
         SSOTestSessionCleanupCronProvider,
         SpendLimitAlertCronProvider,
         StaleReviewWatchdogCronProvider,

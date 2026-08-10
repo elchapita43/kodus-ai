@@ -115,5 +115,5 @@ export function generateFixPromptAll(
 }
 
 export function getQuickFixEmptyMessage(): string {
-    return 'No auto-fixable issues found. Try `kodus review --interactive` to inspect issues or run `kodus review` to see the full report.';
+    return 'No auto-fixable issues found. Try `codus review --interactive` to inspect issues or run `codus review` to see the full report.';
 }

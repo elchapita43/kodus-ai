@@ -37,11 +37,11 @@ const REQUIRED_WHITELIST_KEYS = [
     // The bug from production. Must always be in the whitelist or
     // the toggle-off action never reaches the backend.
     "ideSyncDisableAction",
-    "kodyRulesGeneratorEnabled",
+    "codyRulesGeneratorEnabled",
     // Denylist of git reviewers to exclude from past-review learning. Must be
     // whitelisted or the picker's selection never reaches the backend.
-    "kodyLearningExcludedReviewers",
-    "kodyKnowledgeApproval",
+    "codyLearningExcludedReviewers",
+    "codyKnowledgeApproval",
 ] as const;
 
 describe("codeReviewConfigRemovePropertiesNotInType expectedKeys whitelist", () => {

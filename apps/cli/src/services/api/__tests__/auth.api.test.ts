@@ -51,7 +51,7 @@ describe('RealAuthApi', () => {
         const requestWithRetry = vi.fn();
         const api = new RealAuthApi(requestWithRetry);
 
-        await expect(api.verify('kodus_team_key')).resolves.toEqual({
+        await expect(api.verify('codus_team_key')).resolves.toEqual({
             valid: false,
         });
         expect(requestWithRetry).not.toHaveBeenCalled();

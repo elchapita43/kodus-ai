@@ -18,8 +18,8 @@ import { AuthIntegrationModel } from '../../../../integrations/infrastructure/ad
 import { IntegrationModel } from '../../../../integrations/infrastructure/adapters/repositories/schemas/integration.model';
 import { IntegrationConfigModel } from '../../../../integrations/infrastructure/adapters/repositories/schemas/integrationConfig.model';
 import { IssuesModel } from '../../../../issues/infrastructure/adapters/repositories/schemas/issues.model';
-import { SuggestionEmbeddedModel } from '../../../../kodyFineTuning/infrastructure/adapters/repositories/schemas/suggestionEmbedded.model';
-import { KodyRulesModel } from '../../../../kodyRules/infrastructure/adapters/repositories/schemas/kodyRules.model';
+import { SuggestionEmbeddedModel } from '../../../../codyFineTuning/infrastructure/adapters/repositories/schemas/suggestionEmbedded.model';
+import { CodyRulesModel } from '../../../../codyRules/infrastructure/adapters/repositories/schemas/codyRules.model';
 import { GlobalParametersModel } from '../../../../organization/infrastructure/adapters/repositories/schemas/global-parameters.model';
 import { OrganizationModel } from '../../../../organization/infrastructure/adapters/repositories/schemas/organization.model';
 import { OrganizationParametersModel } from '../../../../organization/infrastructure/adapters/repositories/schemas/organizationParameters.model';
@@ -71,7 +71,7 @@ export const ENTITIES = [
     AutomationExecutionModel,
     ProfileConfigModel,
     IntegrationModel,
-    KodyRulesModel,
+    CodyRulesModel,
     SSOConfigModel,
     SSOTestSessionModel,
     ProfileModel,

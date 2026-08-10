@@ -1,18 +1,18 @@
 ---
 title: "本地快速开始"
-description: "在本地计算机上运行 Kodus — API、Worker、Webhooks、Web UI 和所有依赖项，一条命令全部启动。"
+description: "在本地计算机上运行 Codus — API、Worker、Webhooks、Web UI 和所有依赖项，一条命令全部启动。"
 icon: "laptop"
 ---
 
 <Note>
-  本指南用于本地开发目的。对于生产部署，请参阅[部署 Kodus](/how_to_deploy/zh/deploy_kodus/generic_vm) 指南。
+  本指南用于本地开发目的。对于生产部署，请参阅[部署 Codus](/how_to_deploy/zh/deploy_codus/generic_vm) 指南。
 </Note>
 
 <Note>
   本地开发使用 `API_CLOUD_MODE=false` 运行 — 与自托管实例相同的模式 —
   这意味着到 `telemetry.kodus.io` 的每日匿名心跳默认启用。如果您不希望
-  本地实验出现在集群中,请在 `.env` 中设置 `KODUS_TELEMETRY_DISABLED=true`。
-  请参阅 [匿名遥测](/how_to_deploy/zh/deploy_kodus/telemetry) 了解发送
+  本地实验出现在集群中,请在 `.env` 中设置 `CODUS_TELEMETRY_DISABLED=true`。
+  请参阅 [匿名遥测](/how_to_deploy/zh/deploy_codus/telemetry) 了解发送
   内容和检查方式。
 </Note>
 
@@ -31,8 +31,8 @@ icon: "laptop"
       要进行快速自动设置，请使用我们的设置脚本：
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
-      cd kodus-ai
+      git clone https://github.com/elchapita43/codus-ai.git
+      cd codus-ai
       pnpm run setup
       ```
 
@@ -77,7 +77,7 @@ icon: "laptop"
       ### 1. 克隆仓库
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
+      git clone https://github.com/elchapita43/codus-ai.git
       ```
 
       ### 2. 安装依赖项
@@ -124,7 +124,7 @@ icon: "laptop"
       创建所需的 Docker 网络：
 
       ```bash
-      docker network create kodus-backend-services || true
+      docker network create codus-backend-services || true
       docker network create shared-network || true
       ```
 
@@ -138,10 +138,10 @@ icon: "laptop"
 
       此命令启动：
 
-      - Kodus API
+      - Codus API
       - Worker（异步任务）
       - Webhooks 服务
-      - Kodus Web 应用程序
+      - Codus Web 应用程序
       - PostgreSQL 数据库
       - MongoDB 数据库
       - RabbitMQ
@@ -223,7 +223,7 @@ pnpm run dev:health-check
 ```
 
 此综合健康检查验证：
-- ✅ **服务**：Kodus API、Worker、Webhooks、Web、PostgreSQL、MongoDB、RabbitMQ
+- ✅ **服务**：Codus API、Worker、Webhooks、Web、PostgreSQL、MongoDB、RabbitMQ
 - 🔌 **端口可用性**：Web（3000）、API（3001）、PostgreSQL（5432）、MongoDB（27017）、RabbitMQ（5672/15672）
 - 🗄️ **数据库设置**：迁移和种子数据
 - 🌐 **API 端点**：健康端点和基本连接
@@ -261,16 +261,16 @@ sudo usermod -aG docker $USER
 **网络创建错误：**
 ```bash
 # 检查网络是否已存在
-docker network ls | grep kodus
+docker network ls | grep codus
 # 如果需要，删除冲突的网络
-docker network rm kodus-backend-services shared-network
+docker network rm codus-backend-services shared-network
 ```
 
 ### 常见问题
 
 **端口冲突：**
 - 确保端口 3000（Web）、3001（API）、5432（PostgreSQL）、27017（MongoDB）和 5672/15672（RabbitMQ）可用
-- 在启动 Kodus 之前停止使用这些端口的其他服务
+- 在启动 Codus 之前停止使用这些端口的其他服务
 
 **环境变量未加载：**
 - 验证项目根目录中存在 `.env` 文件

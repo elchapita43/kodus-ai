@@ -6,7 +6,7 @@ import {
 } from '@libs/core/workflow/domain/contracts/outbox-message.repository.contract';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     SANDBOX_INVALIDATE_ROUTING_KEY,
     SandboxInvalidatePayload,
@@ -98,7 +98,7 @@ describe('GitHubPullRequestHandler', () => {
                     useValue: webhookContextService,
                 },
                 {
-                    provide: ChatWithKodyFromGitUseCase,
+                    provide: ChatWithCodyFromGitUseCase,
                     useValue: {},
                 },
                 {

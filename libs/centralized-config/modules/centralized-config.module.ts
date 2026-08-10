@@ -3,7 +3,7 @@ import { ContextReferenceModule } from '@libs/code-review/modules/contextReferen
 import { PromptsModule } from '@libs/code-review/modules/prompts.module';
 import { PullRequestMessagesModule } from '@libs/code-review/modules/pullRequestMessages.module';
 import { IntegrationConfigModule } from '@libs/integrations/modules/config.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { OrganizationParametersModule } from '@libs/organization/modules/organizationParameters.module';
 import { ParametersModule } from '@libs/organization/modules/parameters.module';
 import { PlatformModule } from '@libs/platform/modules/platform.module';
@@ -24,7 +24,7 @@ import { CodeReviewConfigurationModule } from '@libs/code-review/modules/code-re
         forwardRef(() => OrganizationParametersModule),
         forwardRef(() => CodebaseModule),
         forwardRef(() => PlatformModule),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => PromptsModule),
         forwardRef(() => ContextReferenceModule),
         forwardRef(() => PullRequestMessagesModule),

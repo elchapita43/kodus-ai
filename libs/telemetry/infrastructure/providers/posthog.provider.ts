@@ -9,7 +9,7 @@ import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/
  * NestJS DI token for the PostHog provider. Consumers inject the
  * interface via `@Inject(POSTHOG_PROVIDER_TOKEN) posthog: IPostHogProvider`
  * so the concrete class can be swapped in tests without rewriting every
- * call site (see kody rule "Inject services and repositories via DI
+ * call site (see cody rule "Inject services and repositories via DI
  * tokens, not by class").
  */
 export const POSTHOG_PROVIDER_TOKEN = Symbol.for('PostHogProvider');

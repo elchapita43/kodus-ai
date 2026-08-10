@@ -26,7 +26,7 @@ export class QueryDto {
     })
     pageSize = 50;
 
-    @ApiPropertyOptional({ example: 'kodusmcp' })
+    @ApiPropertyOptional({ example: 'codusmcp' })
     @IsString()
     @IsOptional()
     provider: string;

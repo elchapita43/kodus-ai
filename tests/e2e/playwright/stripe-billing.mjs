@@ -171,7 +171,7 @@ async function completeStripeCheckout(page) {
     // customer_email isn't pre-set. Fill if present.
     const email = page.locator('input#email, input[name="email"]').first();
     if (await email.count()) {
-        await email.fill("kodus-e2e@kodus.io");
+        await email.fill("codus-e2e@kodus.io");
     }
 
     // Opt OUT of Link "Save my information for faster checkout". When it's on,
@@ -207,7 +207,7 @@ async function completeStripeCheckout(page) {
     // attribute which is stable across locales.
     const nameField = page.locator('input[autocomplete="cc-name"], input#billingName').first();
     if (await nameField.count()) {
-        await nameField.fill("Kodus E2E");
+        await nameField.fill("Codus E2E");
     }
     const zip = page.locator('input[autocomplete="postal-code"], input#billingPostalCode').first();
     if (await zip.count()) {
@@ -607,11 +607,11 @@ async function subFlow3Cancel(ctx, email, deps, sub) {
         await page.goto(portalUrl, { waitUntil: "domcontentloaded" });
         // cancelInStripePortal throws if the Portal-side cancel didn't
         // register (no redirect + no scheduled banner). The
-        // Stripe-side state IS the assertion — Kodus exposes only the
+        // Stripe-side state IS the assertion — Codus exposes only the
         // valid/active/expired/canceled state via /validate-org-license
         // (no cancel_at_period_end field), so we don't try to read the
         // intermediate "scheduled to cancel" state from the API.
-        // The webhook → Kodus tier flip happens at period end and is
+        // The webhook → Codus tier flip happens at period end and is
         // covered by sub-flow #4 (migrate-to-free for the test-mode
         // shortcut path).
         await cancelInStripePortal(page);

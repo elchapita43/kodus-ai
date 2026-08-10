@@ -202,7 +202,7 @@ function looksLikeValidationSummary(value: string): boolean {
     return (
         normalized.includes('business rules validation') ||
         normalized.includes(
-            'analysis performed by kodus ai business rules validator',
+            'analysis performed by codus ai business rules validator',
         ) ||
         /^#{1,6}\s+\S+/m.test(value) ||
         /\*\*status:\*\*/i.test(value)

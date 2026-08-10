@@ -337,7 +337,7 @@ export function buildAgentTools(
                         }
                         return tagged;
                     } catch (err) {
-                        // Kody rule: never swallow — the agent sees the string,
+                        // Cody rule: never swallow — the agent sees the string,
                         // operators need the log (repo + pattern for tracing).
                         logger.warn({
                             message: `[LINKED-REPO] grep failed in ${linked.repository}: ${err instanceof Error ? err.message : String(err)}`,
@@ -1239,7 +1239,7 @@ fi
     }
 
     // readReference — cross-repo file reading via GitHub API. Required for
-    // kody rules that reference files in other repositories (e.g.
+    // cody rules that reference files in other repositories (e.g.
     // `@file:org/design-system/docs/pattern.md`). Sandbox-based `readFile`
     // only sees the current PR's repo, so without this tool the agent has
     // no way to fetch externally-referenced files.
@@ -1383,7 +1383,7 @@ fi
 
     // ── Call Graph lookup tool (EXP: stance + graph) ────────────────
     // On-demand caller/callee lookup, backed by the runtime callGraph string
-    // (kodus-graph). The STANCE prompt gives the agent a REASON to pull it:
+    // (codus-graph). The STANCE prompt gives the agent a REASON to pull it:
     // proving a change fulfills its intent "everywhere it touches" requires
     // checking callers/implementations. Parsed by ←/→ markers.
     if (callGraph && callGraph.trim().length > 0) {

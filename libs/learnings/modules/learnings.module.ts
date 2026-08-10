@@ -11,8 +11,8 @@ import { ListLearningsUseCase } from '@libs/learnings/application/use-cases/list
 import { SupersedeLearningUseCase } from '@libs/learnings/application/use-cases/supersede-learning.use-case';
 import { LEARNINGS_REPOSITORY_TOKEN } from '@libs/learnings/domain/contracts/learnings.repository';
 import { LearningDeriver } from '@libs/learnings/domain/interfaces/learning-deriver.interface';
-import { SUGGESTION_EMBEDDED_REPOSITORY_TOKEN } from '@libs/kodyFineTuning/domain/suggestionEmbedded/contracts/suggestionEmbedded.repository.contract';
-import { SuggestionEmbeddedModule } from '@libs/kodyFineTuning/suggestionEmbedded.module';
+import { SUGGESTION_EMBEDDED_REPOSITORY_TOKEN } from '@libs/codyFineTuning/domain/suggestionEmbedded/contracts/suggestionEmbedded.repository.contract';
+import { SuggestionEmbeddedModule } from '@libs/codyFineTuning/suggestionEmbedded.module';
 
 import { LearningsDeriverConsumer } from '../infrastructure/consumers/learnings-deriver.consumer';
 import { HttpLearningDeriver } from '../infrastructure/derivers/http-learning-deriver';

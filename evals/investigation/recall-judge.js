@@ -8,7 +8,7 @@
  *   claude    → Anthropic native   (API_/BYOK_ANTHROPIC_API_KEY, ANTHROPIC_API_KEY)
  *   gpt / oN  → OpenAI chat         (BYOK_/API_OPEN_AI_API_KEY, OPENAI_API_KEY)
  *   gemini    → Google AI Studio    (BYOK_GOOGLE_API_KEY, API_GOOGLE_AI_API_KEY, GEMINI_API_KEY)
- * Keys resolve from env, then .env.local/.env, then ~/.kodus-dev/config.
+ * Keys resolve from env, then .env.local/.env, then ~/.codus-dev/config.
  *
  * The judge is load-bearing (every recall/dedup number the gate depends on comes
  * from it), so JUDGE_MODEL is validated against Sonnet on a labeled agreement set
@@ -78,7 +78,7 @@ function findKeyInText(text, envNames) {
 }
 
 // Resolve the API key for a given model's provider: process.env → .env files →
-// ~/.kodus-dev/config, in env-name priority order.
+// ~/.codus-dev/config, in env-name priority order.
 function loadKeyForModel(model) {
     const envNames = PROVIDER_KEY_ENVS[providerFor(model)];
 
@@ -89,7 +89,7 @@ function loadKeyForModel(model) {
     const files = [
         path.join(__dirname, '..', '..', '.env.local'),
         path.join(__dirname, '..', '..', '.env'),
-        path.join(os.homedir(), '.kodus-dev', 'config'),
+        path.join(os.homedir(), '.codus-dev', 'config'),
     ];
     for (const file of files) {
         try {

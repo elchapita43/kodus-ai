@@ -15,8 +15,8 @@ describe('ObservabilityService Mongo exporter toggle', () => {
     }
 
     const baseDbConfig = {
-        url: 'mongodb://localhost:27017/kodus',
-        database: 'kodus',
+        url: 'mongodb://localhost:27017/codus',
+        database: 'codus',
     } as any;
 
     it('includes mongodb exporter config by default', () => {
@@ -24,7 +24,7 @@ describe('ObservabilityService Mongo exporter toggle', () => {
         const service = buildService();
 
         const cfg = (service as any).createObservabilityConfig(baseDbConfig, {
-            serviceName: 'kodus-worker',
+            serviceName: 'codus-worker',
             enableCollections: true,
         });
 
@@ -37,7 +37,7 @@ describe('ObservabilityService Mongo exporter toggle', () => {
         const service = buildService();
 
         const cfg = (service as any).createObservabilityConfig(baseDbConfig, {
-            serviceName: 'kodus-worker',
+            serviceName: 'codus-worker',
             enableCollections: true,
         });
 
@@ -53,7 +53,7 @@ describe('ObservabilityService Mongo exporter toggle', () => {
             const cfg = (service as any).createObservabilityConfig(
                 baseDbConfig,
                 {
-                    serviceName: 'kodus-worker',
+                    serviceName: 'codus-worker',
                     enableCollections: true,
                 },
             );
@@ -67,7 +67,7 @@ describe('ObservabilityService Mongo exporter toggle', () => {
         const service = buildService();
 
         const cfg = (service as any).createObservabilityConfig(baseDbConfig, {
-            serviceName: 'kodus-worker',
+            serviceName: 'codus-worker',
             enableCollections: true,
         });
 

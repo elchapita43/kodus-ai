@@ -54,7 +54,7 @@ export class ObservabilitySystem {
     constructor(config: Partial<ObservabilityConfig> = {}) {
         this.config = {
             enabled: config.enabled ?? true,
-            serviceName: config.serviceName || 'kodus-ai',
+            serviceName: config.serviceName || 'codus-ai',
             environment: config.environment || 'development',
             logging: {
                 level: config.logging?.level || 'info',
@@ -62,7 +62,7 @@ export class ObservabilitySystem {
             },
             telemetry: {
                 enabled: config.telemetry?.enabled ?? true,
-                serviceName: config.serviceName || 'kodus-ai',
+                serviceName: config.serviceName || 'codus-ai',
                 sampling: config.telemetry?.sampling || {
                     rate: 1.0,
                     strategy: 'probabilistic' as const,
@@ -706,8 +706,8 @@ export class ObservabilitySystem {
                 const mongoConfig = {
                     connectionString:
                         this.config.mongodb.connectionString ||
-                        'mongodb://localhost:27017/kodus',
-                    database: this.config.mongodb.database || 'kodus',
+                        'mongodb://localhost:27017/codus',
+                    database: this.config.mongodb.database || 'codus',
                     collections: {
                         logs:
                             this.config.mongodb.collections?.logs ||
@@ -830,14 +830,14 @@ export class ObservabilitySystem {
     private setupErrorProcessors(): void {
         // Idempotent guard to avoid multiple handler registrations
         const anyProcess = process as any;
-        if (anyProcess.__kodusObsHandlersInstalled) {
+        if (anyProcess.__codusObsHandlersInstalled) {
             this.logger.debug({
                 message: 'Error processors already configured',
                 context: this.constructor.name,
             });
             return;
         }
-        anyProcess.__kodusObsHandlersInstalled = true;
+        anyProcess.__codusObsHandlersInstalled = true;
 
         // Capture uncaught exceptions
         process.on('uncaughtException', (error) => {

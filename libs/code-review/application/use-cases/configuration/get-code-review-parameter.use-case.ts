@@ -31,7 +31,7 @@ import {
 } from '@libs/core/infrastructure/config/types/general/codeReviewConfig.type';
 import {
     buildDefaultGlobalCodeReviewConfig,
-    getDefaultKodusConfigFile,
+    getDefaultCodusConfigFile,
 } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { CodeReviewConfigWithoutLLMProvider } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { PromptSourceType } from '@libs/ai-engine/domain/prompt/interfaces/promptExternalReference.interface';
@@ -185,7 +185,7 @@ export class GetCodeReviewParameterUseCase {
         organizationAndTeamData: OrganizationAndTeamData,
         configValue: IParameters<ParametersKey.CODE_REVIEW_CONFIG>['configValue'],
     ): Promise<FormattedGlobalCodeReviewConfig> {
-        const defaultConfig = getDefaultKodusConfigFile();
+        const defaultConfig = getDefaultCodusConfigFile();
         const formattedDefaultConfig = this.formatDefaultConfig(defaultConfig);
 
         let formattedGlobalConfig = this.formatLevel(
@@ -214,12 +214,12 @@ export class GetCodeReviewParameterUseCase {
                 };
 
                 const repoFile =
-                    await this.codeBaseConfigService.getKodusConfigFile({
+                    await this.codeBaseConfigService.getCodusConfigFile({
                         organizationAndTeamData,
                         repository,
                         overrideConfig:
                             repo.configs
-                                ?.kodusConfigFileOverridesWebPreferences ??
+                                ?.codusConfigFileOverridesWebPreferences ??
                             false,
                     });
 
@@ -256,7 +256,7 @@ export class GetCodeReviewParameterUseCase {
                             dir.folders.length > 0;
 
                         const directoryFile =
-                            await this.codeBaseConfigService.getKodusConfigFile(
+                            await this.codeBaseConfigService.getCodusConfigFile(
                                 {
                                     organizationAndTeamData,
                                     repository,
@@ -268,9 +268,9 @@ export class GetCodeReviewParameterUseCase {
                                           }),
                                     overrideConfig:
                                         dir.configs
-                                            ?.kodusConfigFileOverridesWebPreferences ??
+                                            ?.codusConfigFileOverridesWebPreferences ??
                                         repo.configs
-                                            ?.kodusConfigFileOverridesWebPreferences ??
+                                            ?.codusConfigFileOverridesWebPreferences ??
                                         false,
                                 },
                             );

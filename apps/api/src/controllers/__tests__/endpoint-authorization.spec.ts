@@ -63,7 +63,7 @@ const INTENTIONALLY_UNGATED = new Set<string>([
     'organization.controller.ts#getOrganizationName', // org name for caller's org
     'organization.controller.ts#getOrganizationLanguage', // org language for caller's org
     'organization.controller.ts#getReleaseTrack', // release-track flag for caller's org
-    'kodyRules.controller.ts#findLibraryKodyRulesWithFeedback', // kody-rules library is all-roles
+    'codyRules.controller.ts#findLibraryCodyRulesWithFeedback', // cody-rules library is all-roles
     'license.controller.ts#orgStatus', // org license status; sibling /status is owner-gated
     'license.controller.ts#requestTrialExtension', // any trial org member can ask for more trial reviews (low-stakes; forwards to Discord)
     'team.controller.ts#list', // list of org teams (read)

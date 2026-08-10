@@ -10,7 +10,7 @@ export interface SendReportResult {
 }
 
 export interface CockpitLinkOptions {
-    /** Cockpit tab, e.g. 'kodus-review'. */
+    /** Cockpit tab, e.g. 'codus-review'. */
     tab?: string;
     /** Window start (YYYY-MM-DD) — lands the cockpit on the report's period. */
     start?: string;

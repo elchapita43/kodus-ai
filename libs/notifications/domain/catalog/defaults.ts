@@ -80,10 +80,10 @@ export const EVENT_DEFAULTS: Readonly<
         defaultChannels: new Set([NotificationChannel.EMAIL]),
         icon: 'zap',
     },
-    [NotificationEvent.KODY_RULES_GENERATED]: {
+    [NotificationEvent.CODY_RULES_GENERATED]: {
         criticality: Criticality.INFORMATIONAL,
-        category: 'kody_rules',
-        label: 'Kody Rules Generated',
+        category: 'cody_rules',
+        label: 'Cody Rules Generated',
         defaultChannels: new Set([
             NotificationChannel.EMAIL,
             NotificationChannel.IN_APP,
@@ -145,7 +145,7 @@ export const EVENT_DEFAULTS: Readonly<
 
     [NotificationEvent.IDE_RULES_SYNCED]: {
         criticality: Criticality.INFORMATIONAL,
-        category: 'kody_rules',
+        category: 'cody_rules',
         label: 'IDE Rules Synced',
         defaultChannels: new Set([
             NotificationChannel.EMAIL,
@@ -155,7 +155,7 @@ export const EVENT_DEFAULTS: Readonly<
     },
     [NotificationEvent.IDE_RULES_SYNC_FAILED]: {
         criticality: Criticality.TRANSACTIONAL,
-        category: 'kody_rules',
+        category: 'cody_rules',
         label: 'IDE Rule Sync Failed',
         defaultChannels: new Set([
             NotificationChannel.EMAIL,
@@ -273,11 +273,11 @@ export const EVENT_DEFAULTS: Readonly<
         defaultRoles: [Role.OWNER],
     },
 
-    // ── Kody Rules (file reference validation) ────────────────
+    // ── Cody Rules (file reference validation) ────────────────
 
     [NotificationEvent.RULE_FILE_REFERENCES_INVALID]: {
         criticality: Criticality.TRANSACTIONAL,
-        category: 'kody_rules',
+        category: 'cody_rules',
         label: 'Rule File References Invalid',
         defaultChannels: new Set([
             NotificationChannel.EMAIL,
@@ -317,7 +317,7 @@ export const CRITICALITY_LABELS: Record<Criticality, string> = {
 export const CATEGORY_LABELS: Record<string, string> = {
     auth: 'Auth',
     team: 'Team',
-    kody_rules: 'Kody Rules',
+    cody_rules: 'Cody Rules',
     sso: 'SSO',
     cockpit: 'Cockpit',
     billing: 'Billing',

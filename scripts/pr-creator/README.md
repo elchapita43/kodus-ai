@@ -1,6 +1,6 @@
-# Kodus Test PR Creator
+# Codus Test PR Creator
 
-Script para criar PRs de teste em múltiplas plataformas (GitHub, GitLab, Bitbucket, Azure DevOps) usando as integrações da Kodus.
+Script para criar PRs de teste em múltiplas plataformas (GitHub, GitLab, Bitbucket, Azure DevOps) usando as integrações da Codus.
 
 ## Pré-requisitos
 
@@ -30,10 +30,10 @@ npm install
 ### Exportar variáveis de ambiente
 
 ```bash
-# Kodus
-export KODUS_URL="https://api.kodus.ai"
-export KODUS_EMAIL="seu@email.com"
-export KODUS_PASSWORD="sua-senha"
+# Codus
+export CODUS_URL="https://api.codus.ai"
+export CODUS_EMAIL="seu@email.com"
+export CODUS_PASSWORD="sua-senha"
 
 # Configurações dos PRs
 export TOTAL_PRS="10"                      # Total de PRs a criar
@@ -65,7 +65,7 @@ node create-test-prs.mjs
 
 ## Como funciona
 
-1. **Login na Kodus** → Obtém token de acesso
+1. **Login na Codus** → Obtém token de acesso
 2. **Busca informações do usuário** → Org e times disponíveis
 3. **Lista repositórios** → Para cada time configurado
 4. **Pega tokens** → Das variáveis de ambiente (prioridade) ou 1Password (fallback)
@@ -106,9 +106,9 @@ O script busca tokens nesta ordem:
 
 | Variável                | Padrão                 | Descrição                                              |
 | ----------------------- | ---------------------- | ------------------------------------------------------ |
-| `KODUS_URL`             | `https://api.kodus.ai` | URL da API da Kodus                                    |
-| `KODUS_EMAIL`           | _obrigatório_          | Email da conta Kodus                                   |
-| `KODUS_PASSWORD`        | _obrigatório_          | Senha da conta Kodus                                   |
+| `CODUS_URL`             | `https://api.codus.ai` | URL da API da Codus                                    |
+| `CODUS_EMAIL`           | _obrigatório_          | Email da conta Codus                                   |
+| `CODUS_PASSWORD`        | _obrigatório_          | Senha da conta Codus                                   |
 | `TOTAL_PRS`             | `10`                   | Total de PRs a criar                                   |
 | `TARGET_BRANCH`         | `main`                 | Branch de destino                                      |
 | `SOURCE_BRANCH_PATTERN` | undefined              | Filtro de branches (ex: `feature/`)                    |
@@ -148,8 +148,8 @@ op item create --category=password \
 eval $(op signin)
 
 # Configurar variáveis
-export KODUS_EMAIL="admin@kodus.ai"
-export KODUS_PASSWORD="minha-senha"
+export CODUS_EMAIL="admin@codus.ai"
+export CODUS_PASSWORD="minha-senha"
 export TOTAL_PRS="5"
 export TARGET_BRANCH="main"
 
@@ -186,11 +186,11 @@ export SYNC_FORKS=false
 ## Saída esperada
 
 ```
-🚀 Kodus PR Creator
+🚀 Codus PR Creator
 
 🔐 Logging in...
-👤 Logged in as: admin@kodus.ai
-🏢 Organization: Kodus (04bd288b-595a-4ee1-87cd-8bbbdc312b3c)
+👤 Logged in as: admin@codus.ai
+🏢 Organization: Codus (04bd288b-595a-4ee1-87cd-8bbbdc312b3c)
 
 📋 Found 3 teams (limit: 10)
 
@@ -214,8 +214,8 @@ export SYNC_FORKS=false
       ✓ Fork synced successfully
 📝 Creating GitHub PR for myuser/react: feature/auth → main
    ✅ PR created: https://github.com/myuser/react/pull/123
-📝 Creating GitLab MR for kodus/backend: feature/api → main
-   ✅ MR created: https://gitlab.com/kodus/backend/-/merge_requests/45
+📝 Creating GitLab MR for codus/backend: feature/api → main
+   ✅ MR created: https://gitlab.com/codus/backend/-/merge_requests/45
 
 ✨ Done!
 ```

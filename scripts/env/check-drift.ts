@@ -13,26 +13,26 @@ const REPO_ROOT = join(__dirname, '..', '..');
 
 type Target = { name: string; generated: string; committed: string };
 
-const tmp = mkdtempSync(join(tmpdir(), 'kodus-env-drift-'));
+const tmp = mkdtempSync(join(tmpdir(), 'codus-env-drift-'));
 
 execSync(`ts-node ${join(__dirname, 'generate.ts')}`, {
     cwd: REPO_ROOT,
-    env: { ...process.env, KODUS_ENV_OUT_DIR: tmp },
+    env: { ...process.env, CODUS_ENV_OUT_DIR: tmp },
     stdio: 'inherit',
 });
 
-// Local drift check — only repos that live inside kodus-ai are checked here.
-// The kodus-installer drift check runs in CI (env-sync-release.yml) against
-// the actual kodus-installer repo state.
+// Local drift check — only repos that live inside codus-ai are checked here.
+// The codus-installer drift check runs in CI (env-sync-release.yml) against
+// the actual codus-installer repo state.
 const targets: Target[] = [
     {
-        name: 'kodus-ai/.env.example',
-        generated: join(REPO_ROOT, '.env-preview', 'kodus-ai.env.example'),
+        name: 'codus-ai/.env.example',
+        generated: join(REPO_ROOT, '.env-preview', 'codus-ai.env.example'),
         committed: join(REPO_ROOT, '.env.example'),
     },
     {
-        name: 'kodus-ai/.env.template',
-        generated: join(REPO_ROOT, '.env-preview', 'kodus-ai.env.template'),
+        name: 'codus-ai/.env.template',
+        generated: join(REPO_ROOT, '.env-preview', 'codus-ai.env.template'),
         committed: join(REPO_ROOT, '.env.template'),
     },
     {

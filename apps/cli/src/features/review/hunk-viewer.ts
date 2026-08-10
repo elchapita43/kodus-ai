@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import chalk from 'chalk';
-import { resolveKodusExtensionDir, runHunk } from '../../utils/hunk.js';
+import { resolveCodusExtensionDir, runHunk } from '../../utils/hunk.js';
 import { cliDebug, isCliVerboseMode } from '../../utils/logger.js';
 import { convertReviewToHunkContext } from './hunk-context.js';
 import { convertReviewToHunkFindings } from './hunk-findings.js';
@@ -31,7 +31,7 @@ export interface ReviewScopeOptions {
 }
 
 /**
- * Translate `kodus review` scoping options into the equivalent hunk invocation.
+ * Translate `codus review` scoping options into the equivalent hunk invocation.
  *
  * hunk understands the same shapes git does — `hunk diff <range>`,
  * `hunk show <ref>`, `--staged`, and a trailing `-- <pathspec...>` — so every
@@ -96,7 +96,7 @@ export function buildHunkArgs(
     if (extensionDir) {
         // `--extension` is explicit user intent as far as hunk is concerned, so
         // it loads with no trust prompt. Safe here: the path is ours, inside
-        // the installed @kodus/cli package, never anything from the repo under
+        // the installed @codus/cli package, never anything from the repo under
         // review.
         args.push('--extension', extensionDir);
     }
@@ -121,8 +121,8 @@ export async function openReviewInHunk(
 ): Promise<{ exitCode: number }> {
     const context = convertReviewToHunkContext(options.result);
     const runId = randomUUID();
-    const contextPath = path.join(os.tmpdir(), `kodus-review-${runId}.json`);
-    const findingsPath = path.join(os.tmpdir(), `kodus-findings-${runId}.json`);
+    const contextPath = path.join(os.tmpdir(), `codus-review-${runId}.json`);
+    const findingsPath = path.join(os.tmpdir(), `codus-findings-${runId}.json`);
 
     await fs.writeFile(contextPath, JSON.stringify(context, null, 2), 'utf-8');
 
@@ -136,7 +136,7 @@ export async function openReviewInHunk(
         'utf-8',
     );
 
-    const extensionDir = resolveKodusExtensionDir();
+    const extensionDir = resolveCodusExtensionDir();
 
     if (isCliVerboseMode()) {
         const totalAnnotations = context.files.reduce(
@@ -175,13 +175,13 @@ export async function openReviewInHunk(
             if (!extensionDir) {
                 cliDebug(
                     chalk.dim(
-                        '[verbose] hunk: Kodus sidebar extension not found on disk; skipping --extension',
+                        '[verbose] hunk: Codus sidebar extension not found on disk; skipping --extension',
                     ),
                 );
             }
         }
         return await runHunk(args, {
-            execa: { env: { KODUS_HUNK_FINDINGS: findingsPath } },
+            execa: { env: { CODUS_HUNK_FINDINGS: findingsPath } },
         });
     } finally {
         if (options.keepContextOnExit) {

@@ -19,7 +19,7 @@ export const ruleFileReferencesInvalidEmailMeta = (params: {
     invalidCount: number;
 }) => ({
     from: EMAIL_FROM.NOTIFICATIONS,
-    subject: `${params.invalidCount} Kody ${
+    subject: `${params.invalidCount} Cody ${
         params.invalidCount === 1 ? 'rule has' : 'rules have'
     } broken file references — ${params.repoName}`,
 });
@@ -38,7 +38,7 @@ function RuleFileReferencesInvalidEmail({
                 invalidCount === 1 ? 'rule has' : 'rules have'
             } a broken file reference in ${repoName}.`}>
             <Heading style={baseHeading}>
-                Kody rule file references are broken
+                Cody rule file references are broken
             </Heading>
             <Text style={baseText}>
                 <strong>{invalidCount}</strong>{' '}
@@ -63,7 +63,7 @@ function RuleFileReferencesInvalidEmail({
                 ) : null}
             </Section>
             <Text style={mutedText}>
-                You can edit the rule&apos;s file path in the Kody Rules
+                You can edit the rule&apos;s file path in the Cody Rules
                 settings, or remove the rule if it&apos;s no longer
                 relevant.
             </Text>

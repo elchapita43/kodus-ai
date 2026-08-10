@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const SESSIONS_HOOK_PREFIX = 'kodus decisions hooks cursor';
+const SESSIONS_HOOK_PREFIX = 'codus decisions hooks cursor';
 
 type JsonObject = Record<string, unknown>;
 
@@ -20,7 +20,7 @@ function isRecord(value: unknown): value is JsonObject {
 }
 
 function isSessionsHookCommand(command: string): boolean {
-    return command.includes('kodus decisions hooks');
+    return command.includes('codus decisions hooks');
 }
 
 async function readCursorHooksConfig(
@@ -72,7 +72,7 @@ function upsertHook(
         return false;
     }
 
-    // Replace existing kodus sessions hook if present
+    // Replace existing codus sessions hook if present
     for (const entry of entries) {
         if (isSessionsHookCommand(entry.command)) {
             entry.command = command;

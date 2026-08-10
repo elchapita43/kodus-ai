@@ -44,7 +44,7 @@ export interface GateEvent {
 }
 
 export interface FindingProvenance {
-    /** Which finder produced it (bug/security/performance/generalist/kody-rules…). */
+    /** Which finder produced it (bug/security/performance/generalist/cody-rules…). */
     readonly agent: string;
     /** Which pass of the pipeline it was born in. */
     readonly pass: 'initial' | 'coverage-recovery' | 'second-chance' | 'synthesis';

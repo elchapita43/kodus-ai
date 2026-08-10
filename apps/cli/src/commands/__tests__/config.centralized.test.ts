@@ -55,7 +55,7 @@ describe('config centralized command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockCentralizedConfigService.getStatus.mockResolvedValue({
             enabled: true,
-            repository: { id: 'repo-1', name: 'kodustech/cli' },
+            repository: { id: 'repo-1', name: 'elchapita43/cli' },
         });
 
         await configCentralizedStatusAction();
@@ -65,7 +65,7 @@ describe('config centralized command', () => {
             .join('\n');
 
         expect(output).toContain('Centralized config is enabled.');
-        expect(output).toContain('Repository: kodustech/cli (repo-1)');
+        expect(output).toContain('Repository: elchapita43/cli (repo-1)');
     });
 
     it('prints status as json when requested', async () => {
@@ -94,20 +94,20 @@ describe('config centralized command', () => {
             repository: {
                 id: 'repo-1',
                 name: 'cli',
-                organizationName: 'kodustech',
-                full_name: 'kodustech/cli',
+                organizationName: 'elchapita43',
+                full_name: 'elchapita43/cli',
             },
         });
 
         await configCommand.parseAsync(
-            ['centralized', 'init', 'kodustech/cli'],
+            ['centralized', 'init', 'elchapita43/cli'],
             {
                 from: 'user',
             },
         );
 
         expect(mockCentralizedConfigService.init).toHaveBeenCalledWith({
-            repository: 'kodustech/cli',
+            repository: 'elchapita43/cli',
             syncOption: 'pr',
         });
     });
@@ -119,20 +119,20 @@ describe('config centralized command', () => {
             repository: {
                 id: 'repo-1',
                 name: 'cli',
-                organizationName: 'kodustech',
-                full_name: 'kodustech/cli',
+                organizationName: 'elchapita43',
+                full_name: 'elchapita43/cli',
             },
         });
 
         await configCommand.parseAsync(
-            ['centralized', 'init', 'kodustech/cli', '--sync-option', 'manual'],
+            ['centralized', 'init', 'elchapita43/cli', '--sync-option', 'manual'],
             {
                 from: 'user',
             },
         );
 
         expect(mockCentralizedConfigService.init).toHaveBeenCalledWith({
-            repository: 'kodustech/cli',
+            repository: 'elchapita43/cli',
             syncOption: 'manual',
         });
     });
@@ -195,16 +195,16 @@ describe('config centralized command', () => {
         mockCentralizedConfigService.init.mockResolvedValue({
             success: true,
             message: 'Centralized config initialized',
-            prUrl: 'https://github.com/kodustech/cli/pull/1',
+            prUrl: 'https://github.com/elchapita43/cli/pull/1',
             repository: {
                 id: 'repo-1',
                 name: 'cli',
-                organizationName: 'kodustech',
-                full_name: 'kodustech/cli',
+                organizationName: 'elchapita43',
+                full_name: 'elchapita43/cli',
             },
         });
 
-        await configCentralizedInitAction('kodustech/cli', {
+        await configCentralizedInitAction('elchapita43/cli', {
             syncOption: 'pr',
         });
 
@@ -212,9 +212,9 @@ describe('config centralized command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain('Centralized config initialized');
-        expect(output).toContain('Repository: kodustech/cli');
+        expect(output).toContain('Repository: elchapita43/cli');
         expect(output).toContain(
-            'Pull request: https://github.com/kodustech/cli/pull/1',
+            'Pull request: https://github.com/elchapita43/cli/pull/1',
         );
     });
 
@@ -224,7 +224,7 @@ describe('config centralized command', () => {
             .mockImplementation(() => {});
 
         await expect(
-            configCentralizedInitAction('kodustech/cli', {
+            configCentralizedInitAction('elchapita43/cli', {
                 syncOption: 'invalid' as 'pr',
             }),
         ).rejects.toMatchObject({

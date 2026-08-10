@@ -59,7 +59,7 @@ class ReviewOptionsDto {
 
     @IsBoolean()
     @IsOptional()
-    kody_rules?: boolean;
+    cody_rules?: boolean;
 
     @IsBoolean()
     @IsOptional()
@@ -151,7 +151,7 @@ class SuggestionControlConfigDto {
 
     @IsOptional()
     @IsBoolean()
-    applyFiltersToKodyRules?: boolean;
+    applyFiltersToCodyRules?: boolean;
 
     @IsOptional()
     @ValidateNested()
@@ -336,7 +336,7 @@ class CustomMessagesDto {
     errorReviewMessage?: CustomMessagesErrorReviewMessageDto;
 }
 
-class KodyKnowledgeApprovalDto {
+class CodyKnowledgeApprovalDto {
     @IsBoolean()
     enabled: boolean;
 }
@@ -429,7 +429,7 @@ class CodeReviewConfigWithoutLLMProviderDto {
 
     @IsOptional()
     @IsBoolean()
-    kodusConfigFileOverridesWebPreferences?: boolean;
+    codusConfigFileOverridesWebPreferences?: boolean;
 
     @IsOptional()
     @IsBoolean()
@@ -452,17 +452,17 @@ class CodeReviewConfigWithoutLLMProviderDto {
 
     @IsOptional()
     @IsBoolean()
-    kodyRulesGeneratorEnabled?: boolean;
+    codyRulesGeneratorEnabled?: boolean;
 
     @IsOptional()
     @IsArray()
     @IsString({ each: true })
-    kodyLearningExcludedReviewers?: string[];
+    codyLearningExcludedReviewers?: string[];
 
     @IsOptional()
     @ValidateNested()
-    @Type(() => KodyKnowledgeApprovalDto)
-    kodyKnowledgeApproval?: KodyKnowledgeApprovalDto;
+    @Type(() => CodyKnowledgeApprovalDto)
+    codyKnowledgeApproval?: CodyKnowledgeApprovalDto;
 
     @IsOptional()
     @ValidateNested()
@@ -522,7 +522,7 @@ class CodeReviewConfigWithoutLLMProviderDto {
     @ApiPropertyOptional({
         type: [LinkedRepositoryDto],
         description:
-            'Sibling repositories Kody may grep/read during review for cross-boundary checks.',
+            'Sibling repositories Cody may grep/read during review for cross-boundary checks.',
     })
     linkedRepositories?: LinkedRepositoryDto[];
 }

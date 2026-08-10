@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommentManagerService } from '@libs/code-review/infrastructure/adapters/services/commentManager.service';
 import { PARAMETERS_SERVICE_TOKEN } from '@libs/organization/domain/parameters/contracts/parameters.service.contract';
 import { MessageTemplateProcessor } from '@libs/code-review/infrastructure/adapters/services/messageTemplateProcessor.service';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { ObservabilityService } from '@libs/core/log/observability.service';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import { CodeManagementService } from '@libs/platform/infrastructure/adapters/services/codeManagement.service';

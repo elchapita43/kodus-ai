@@ -197,7 +197,7 @@ export const ByokAdvancedSettings = ({
                                             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                                                 <span>
                                                     Paste the options directly
-                                                    — Kodus wraps them under
+                                                    — Codus wraps them under
                                                     the active provider's
                                                     namespace automatically.
                                                 </span>

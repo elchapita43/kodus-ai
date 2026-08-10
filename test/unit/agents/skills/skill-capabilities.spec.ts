@@ -7,16 +7,16 @@ describe('skill-capabilities', () => {
     it('resolves concrete tool names from capabilities using registry and allowed-tools', () => {
         const result = resolveCapabilityToolSelection({
             capabilities: ['pr.metadata.read', 'pr.diff.read'],
-            allowedTools: ['KODUS_GET_PULL_REQUEST'],
+            allowedTools: ['CODUS_GET_PULL_REQUEST'],
             registeredTools: [
-                'KODUS_GET_PULL_REQUEST',
-                'KODUS_GET_PULL_REQUEST_DIFF',
+                'CODUS_GET_PULL_REQUEST',
+                'CODUS_GET_PULL_REQUEST_DIFF',
             ],
             toolMode: 'any',
         });
 
         expect(result.toolByCapability['pr.metadata.read']).toBe(
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
         );
         expect(result.toolByCapability['pr.diff.read']).toBeUndefined();
         expect(result.missingCapabilities).toEqual(['pr.diff.read']);
@@ -26,7 +26,7 @@ describe('skill-capabilities', () => {
     it('requires all tool-backed capabilities when policy is all', () => {
         const result = resolveCapabilityToolSelection({
             capabilities: ['pr.metadata.read', 'pr.diff.read'],
-            registeredTools: ['KODUS_GET_PULL_REQUEST'],
+            registeredTools: ['CODUS_GET_PULL_REQUEST'],
             toolMode: 'all',
         });
 
@@ -61,7 +61,7 @@ describe('skill-capabilities', () => {
                 'pr.diff.read': ['overrideTool'],
             });
 
-            expect(result.tools).toEqual(['KODUS_GET_PULL_REQUEST_DIFF']);
+            expect(result.tools).toEqual(['CODUS_GET_PULL_REQUEST_DIFF']);
             expect(result.unknownCapabilities).toHaveLength(0);
         });
 

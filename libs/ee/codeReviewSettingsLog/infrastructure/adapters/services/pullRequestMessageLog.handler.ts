@@ -4,7 +4,7 @@ import {
     BaseLogParams,
     ChangedDataToExport,
 } from './unifiedLog.handler';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { PullRequestMessageStatus } from '@libs/core/infrastructure/config/types/general/pullRequestMessages.type';
 import {
     ActionType,
@@ -12,7 +12,7 @@ import {
 } from '@libs/core/infrastructure/config/types/general/codeReviewSettingsLog.type';
 
 function getDefaultMessages() {
-    const defaults = getDefaultKodusConfigFile();
+    const defaults = getDefaultCodusConfigFile();
     return {
         start: defaults.customMessages?.startReviewMessage?.content ?? '',
         end: defaults.customMessages?.endReviewMessage?.content ?? '',

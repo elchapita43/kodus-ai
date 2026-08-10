@@ -1,9 +1,9 @@
 ---
 title: "Detección de Archivos de Reglas"
-description: "Detecta e importa automáticamente tus archivos de reglas existentes de herramientas de codificación con IA populares para mejorar las capacidades de revisión de código de Kody con los estándares de codificación establecidos de tu equipo."
+description: "Detecta e importa automáticamente tus archivos de reglas existentes de herramientas de codificación con IA populares para mejorar las capacidades de revisión de código de Cody con los estándares de codificación establecidos de tu equipo."
 ---
 
-Kodus puede sincronizar e importar automáticamente tus archivos de reglas del IDE existentes para mejorar la revisión de código de Kody con los estándares de codificación y preferencias establecidas de tu equipo.
+Codus puede sincronizar e importar automáticamente tus archivos de reglas del IDE existentes para mejorar la revisión de código de Cody con los estándares de codificación y preferencias establecidas de tu equipo.
 
 <Frame caption="Habilita la sincronización automática de reglas del repositorio en tu configuración">
   <img src="/images/sync-rules.png" />
@@ -11,11 +11,11 @@ Kodus puede sincronizar e importar automáticamente tus archivos de reglas del I
 
 ## ¿Qué es la Detección de Archivos de Reglas?
 
-La Detección de Archivos de Reglas detecta e importa automáticamente archivos de configuración de herramientas y asistentes de codificación con IA populares en tu repositorio. Esto garantiza que Kody entienda y respete tus estándares de codificación existentes sin necesidad de configuración manual.
+La Detección de Archivos de Reglas detecta e importa automáticamente archivos de configuración de herramientas y asistentes de codificación con IA populares en tu repositorio. Esto garantiza que Cody entienda y respete tus estándares de codificación existentes sin necesidad de configuración manual.
 
 ## Archivos de Reglas Soportados
 
-Kodus detecta e importa automáticamente los siguientes patrones de archivos de reglas:
+Codus detecta e importa automáticamente los siguientes patrones de archivos de reglas:
 
 ### Cursor
 - `.cursorrules` - Archivo principal de reglas de Cursor (heredado)
@@ -48,7 +48,7 @@ Kodus detecta e importa automáticamente los siguientes patrones de archivos de 
 
 ### Reglas Genéricas/Internas
 - `.rules/**/*` - Directorio de reglas genéricas
-- `.kody/rules/**` y `rules/**/*.md` - Reglas específicas de Kody (consulta [Reglas de Repositorio](/how_to_use/es/code_review/configs/repository_rules) — se importan literalmente, sin reescritura por LLM)
+- `.cody/rules/**` y `rules/**/*.md` - Reglas específicas de Cody (consulta [Reglas de Repositorio](/how_to_use/es/code_review/configs/repository_rules) — se importan literalmente, sin reescritura por LLM)
 - `docs/coding-standards/**/*` - Estándares de codificación basados en documentación
 
 ### Detalles de la detección
@@ -63,52 +63,52 @@ Kodus detecta e importa automáticamente los siguientes patrones de archivos de 
 ### Configuración Inicial
 1. **Habilitar Sincronización Automática**: Activa la opción "Auto-sincronizar reglas del repositorio" en tu configuración
 2. **Modal de Primera Sincronización**: Aparecerá un modal preguntando si deseas sincronizar por primera vez
-3. **Escaneo del Repositorio**: Al confirmar, Kodus escanea todo tu repositorio en busca de archivos de reglas soportados
-4. **Generación de Reglas**: Un LLM procesa los archivos encontrados y crea automáticamente las Kody Rules correspondientes. Excepción: los archivos de plantilla `.kody/rules/**` y `rules/**/*.md` se importan **literalmente** — sin conversión por LLM — preservando instrucciones, ejemplos e identificadores tal como se escribieron. Si uno de esos archivos no sigue la plantilla (frontmatter ausente o inválido, o sin `title`), vuelve a la ruta del LLM
+3. **Escaneo del Repositorio**: Al confirmar, Codus escanea todo tu repositorio en busca de archivos de reglas soportados
+4. **Generación de Reglas**: Un LLM procesa los archivos encontrados y crea automáticamente las Cody Rules correspondientes. Excepción: los archivos de plantilla `.cody/rules/**` y `rules/**/*.md` se importan **literalmente** — sin conversión por LLM — preservando instrucciones, ejemplos e identificadores tal como se escribieron. Si uno de esos archivos no sigue la plantilla (frontmatter ausente o inválido, o sin `title`), vuelve a la ruta del LLM
 
 ### Sincronización Continua
 - **Actualizaciones Automáticas**: La sincronización ocurre automáticamente cuando se cierra un Pull Request
 - **Cambios de Archivos Detectados**: 
-  - **Nuevos archivos de reglas** → Crea nuevas Kody Rules
-  - **Archivos de reglas modificados** → Actualiza las Kody Rules existentes  
-  - **Archivos de reglas eliminados** → Elimina las Kody Rules correspondientes
+  - **Nuevos archivos de reglas** → Crea nuevas Cody Rules
+  - **Archivos de reglas modificados** → Actualiza las Cody Rules existentes  
+  - **Archivos de reglas eliminados** → Elimina las Cody Rules correspondientes
 
 ### Sincronización Manual (Interruptor Deshabilitado)
 
 Puedes sincronizar archivos de reglas individuales sin habilitar la sincronización automática:
 
-1. Agrega `@kody-sync` en cualquier parte de tu archivo de regla
+1. Agrega `@cody-sync` en cualquier parte de tu archivo de regla
 2. Haz commit del cambio
-3. Kody sincronizará solo ese archivo específico
+3. Cody sincronizará solo ese archivo específico
 
 Esto te permite sincronizar selectivamente reglas sin habilitar la sincronización automática para todos los archivos.
 
-### Excluir un archivo (`@kody-ignore`)
+### Excluir un archivo (`@cody-ignore`)
 
-Para mantener un archivo de reglas/guía en tu repositorio pero evitar que Kody lo convierta en Kody Rules, agrega `@kody-ignore` en cualquier parte del archivo:
+Para mantener un archivo de reglas/guía en tu repositorio pero evitar que Cody lo convierta en Cody Rules, agrega `@cody-ignore` en cualquier parte del archivo:
 
-1. Agrega `@kody-ignore` en cualquier parte del archivo de reglas (sin distinguir mayúsculas)
+1. Agrega `@cody-ignore` en cualquier parte del archivo de reglas (sin distinguir mayúsculas)
 2. Haz commit del cambio
 
-En la siguiente sincronización Kody **omitirá** ese archivo **y eliminará las Kody Rules creadas a partir de él**. Las reglas vuelven automáticamente si más adelante quitas el marcador `@kody-ignore` (o agregas `@kody-sync`). Úsalo para mantener documentos de estilo interno como un `CLAUDE.md` o `AGENTS.md` sin que se conviertan en reglas aplicadas en la revisión.
+En la siguiente sincronización Cody **omitirá** ese archivo **y eliminará las Cody Rules creadas a partir de él**. Las reglas vuelven automáticamente si más adelante quitas el marcador `@cody-ignore` (o agregas `@cody-sync`). Úsalo para mantener documentos de estilo interno como un `CLAUDE.md` o `AGENTS.md` sin que se conviertan en reglas aplicadas en la revisión.
 
 <Warning>
-Si editas manualmente una Kody Rule que fue creada desde un archivo de regla del IDE, tus cambios serán sobreescritos la próxima vez que el archivo correspondiente sea modificado y sincronizado.
+Si editas manualmente una Cody Rule que fue creada desde un archivo de regla del IDE, tus cambios serán sobreescritos la próxima vez que el archivo correspondiente sea modificado y sincronizado.
 </Warning>
 
 ## Verificar sincronización y evaluación de reglas (self-hosted)
 
 En despliegues self-hosted los logs de la API llevan marcadores grep-ables para depurar:
 
-- `[kody-rules-sync]` — resumen por ejecución: qué archivos se importaron, se omitieron (con el motivo) o se eliminaron.
-- `[kody-rules-eval]` — traza de evaluación por archivo durante una revisión: exactamente qué reglas (uuid + título) se seleccionaron para el prompt de cada archivo revisado.
+- `[cody-rules-sync]` — resumen por ejecución: qué archivos se importaron, se omitieron (con el motivo) o se eliminaron.
+- `[cody-rules-eval]` — traza de evaluación por archivo durante una revisión: exactamente qué reglas (uuid + título) se seleccionaron para el prompt de cada archivo revisado.
 
 ```bash
-docker logs kodus_api 2>&1 | grep "kody-rules-sync"
-docker logs kodus_api 2>&1 | grep "kody-rules-eval"
+docker logs codus_api 2>&1 | grep "cody-rules-sync"
+docker logs codus_api 2>&1 | grep "cody-rules-eval"
 ```
 
-Si una regla aparece activa en la UI pero nunca sale en `[kody-rules-eval]` para los archivos que esperas, revisa su glob de **Path** — una regla solo se ejecuta sobre archivos que coincidan con su ruta.
+Si una regla aparece activa en la UI pero nunca sale en `[cody-rules-eval]` para los archivos que esperas, revisa su glob de **Path** — una regla solo se ejecuta sobre archivos que coincidan con su ruta.
 
 ## Límites de reglas
 

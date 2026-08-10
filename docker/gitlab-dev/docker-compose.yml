@@ -1,19 +1,19 @@
 # Self-hosted GitLab fixture for local development testing of the GitLab
 # integration. See ../../scripts/gitlab-dev/run.sh for the orchestrator
 # that boots this compose, bootstraps a test project + PAT, and prints
-# the connection info to register in Kodus.
+# the connection info to register in Codus.
 #
 # Topology:
 #   GitLab UI/API   →  http://gitlab.lvh.me:8929   (from host + browser)
-#                      http://kodus-gitlab-dev      (from sibling containers
-#                                                    on kodus-backend-services)
+#                      http://codus-gitlab-dev      (from sibling containers
+#                                                    on codus-backend-services)
 #
 # lvh.me wildcard-resolves to 127.0.0.1, so the GitLab `external_url`
 # below is reachable from both the host and the browser without any
-# /etc/hosts edits. We join the same docker network the Kodus API runs
-# on (`kodus-backend-services`) so:
-#   - GitLab can POST webhooks to http://kodus-api:3001/gitlab/webhook
-#   - the API can clone/fetch via http://kodus-gitlab-dev (no port hop)
+# /etc/hosts edits. We join the same docker network the Codus API runs
+# on (`codus-backend-services`) so:
+#   - GitLab can POST webhooks to http://codus-api:3001/gitlab/webhook
+#   - the API can clone/fetch via http://codus-gitlab-dev (no port hop)
 #
 # First boot is slow (gitlab-ce reconfigures on every container start —
 # typically 2-5 minutes on a warm volume, longer on a cold one). The
@@ -33,10 +33,10 @@ services:
         #                                    (notes may omit action and
         #                                    discussion_id)
         image: ${GITLAB_IMAGE:-gitlab/gitlab-ce:latest}
-        container_name: kodus-gitlab-dev
+        container_name: codus-gitlab-dev
         # The hostname must match `external_url` so internal links,
         # clone URLs, and webhook UIs render consistently. Containers
-        # on the same network resolve `kodus-gitlab-dev` to this box
+        # on the same network resolve `codus-gitlab-dev` to this box
         # via docker DNS; the host reaches the same instance via the
         # published port on gitlab.lvh.me:8929.
         hostname: gitlab.lvh.me
@@ -56,7 +56,7 @@ services:
                 sidekiq['max_concurrency'] = 10
                 prometheus_monitoring['enable'] = false
                 # Allow webhooks to local/private addresses so GitLab
-                # will actually POST to http://kodus-api:3001 (which
+                # will actually POST to http://codus-api:3001 (which
                 # resolves to a docker-internal IP). Without this,
                 # the webhook UI accepts the URL but every delivery
                 # silently fails with "URL is blocked". Harmless when
@@ -66,14 +66,14 @@ services:
             # Seed an initial root password so bootstrap.sh doesn't
             # have to shell into the container to scrape it out of
             # /etc/gitlab/initial_root_password. Local-only test value.
-            GITLAB_ROOT_PASSWORD: "KodusDev!2026"
+            GITLAB_ROOT_PASSWORD: "CodusDev!2026"
         volumes:
             - gitlab-config:/etc/gitlab
             - gitlab-logs:/var/log/gitlab
             - gitlab-data:/var/opt/gitlab
         shm_size: "256m"
         networks:
-            kodus-backend-services:
+            codus-backend-services:
                 aliases:
                     - gitlab.lvh.me
 
@@ -83,6 +83,6 @@ volumes:
     gitlab-data:
 
 networks:
-    kodus-backend-services:
+    codus-backend-services:
         external: true
-        name: kodus-backend-services
+        name: codus-backend-services

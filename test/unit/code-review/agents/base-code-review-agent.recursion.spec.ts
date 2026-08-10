@@ -128,7 +128,7 @@ class TestAgent extends BaseCodeReviewAgentProvider {
 
     protected getIdentity(): ReviewAgentIdentity {
         return {
-            name: 'kodus-test-agent',
+            name: 'codus-test-agent',
             description: 'test',
             goal: 'test',
             expertise: ['test'],
@@ -161,7 +161,7 @@ function makeFile(name: string, patchChars: number): FileChange {
 const BASE_INPUT_FIELDS = {
     organizationAndTeamData: { organizationId: 'org-1', teamId: 'team-1' },
     prNumber: 42,
-    repositoryFullName: 'kodus/test',
+    repositoryFullName: 'codus/test',
     languageResultPrompt: 'en',
     remoteCommands: undefined,
     // 'deep' skips the aggressive filter / tiering branch so the chunking

@@ -10,7 +10,7 @@ import {
 /**
  * Fixtures reproduce the field report: a docblock region where one line was
  * inserted, so the hunk holds a single added (`+`) line surrounded by context
- * lines. The customer's two Kody notes landed on:
+ * lines. The customer's two Cody notes landed on:
  *   - new_line 1032 (the added line)   → survived rebase (control)
  *   - new_line 1035 (a context line)   → lost its Resolve control (bug)
  * Content is generic; only the diff shape mirrors the real case.

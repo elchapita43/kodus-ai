@@ -11,9 +11,9 @@
  *     pnpm run cloud:setup-tenants
  *
  * Idempotent: signUp() returns silently on 409, integration POST
- * upserts in place, repo registration is idempotent on the Kodus side.
+ * upserts in place, repo registration is idempotent on the Codus side.
  *
- * Output: ~/.kodus-dev/cloud-tenants.json — one JSON object per
+ * Output: ~/.codus-dev/cloud-tenants.json — one JSON object per
  * tenant with email/password/organizationId/teamId. Read by the
  * matrix runner in lib/runner.ts:resolveTenantForCell.
  *
@@ -39,7 +39,7 @@ import {
     CLOUD_TENANTS,
     type TenantSpec,
 } from "../../lib/cloud-tenant-registry.js";
-import type { KodusSession, TargetContext } from "../../lib/types.js";
+import type { CodusSession, TargetContext } from "../../lib/types.js";
 
 const QA_WEB_URL =
     process.env.CLOUD_WEB_URL?.replace(/\/$/, "") ?? "https://qa.web.kodus.io";
@@ -51,7 +51,7 @@ const QA_API_BASE_URL =
     process.env.CLOUD_API_URL?.replace(/\/$/, "") ??
     `${QA_WEB_URL}/api/proxy/api`;
 
-const CREDS_FILE = join(homedir(), ".kodus-dev", "cloud-tenants.json");
+const CREDS_FILE = join(homedir(), ".codus-dev", "cloud-tenants.json");
 
 // Shared password for all seeded tenants. Stored in plaintext in the
 // gitignored creds file — fine for QA, never use for prod.
@@ -117,12 +117,12 @@ function targetForCloud(): TargetContext {
 // calls `/api/proxy/billing/trial` separately (likely from the post-
 // signup setup wizard our HTTP path skips). Without that call the
 // tenant has no subscription at all and `validate-org-license`
-// returns 400 — which Kodus's pipeline treats as "no license",
+// returns 400 — which Codus's pipeline treats as "no license",
 // equivalent to `free` for the license-attribution gate.
 //
 // Tier handling per matrix label:
 //   - `free`            → leave subscription empty (= "trial expired,
-//                          no BYOK"). Gate blocks; Kody posts the
+//                          no BYOK"). Gate blocks; Cody posts the
 //                          trial-ended notice.
 //   - `community-byok`  → leave subscription empty BUT configure BYOK
 //                          (`/organization-parameters/create-or-update`
@@ -140,7 +140,7 @@ function targetForCloud(): TargetContext {
 //                          dedicated stripe-checkout scenario, not here.
 async function ensureLicenseTier(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     tenant: TenantSpec,
 ): Promise<boolean> {
     if (tenant.license === "free") return true;
@@ -269,13 +269,13 @@ async function ensureLicenseTier(
 // no real key is reachable.
 async function configureByok(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<boolean> {
     const apiKey = process.env.API_OPEN_AI_API_KEY;
     if (!apiKey) {
         console.log(
             "  [warn] community-byok skipped: API_OPEN_AI_API_KEY not set in env. " +
-                "Configure it in ~/.kodus-dev/config or scripts/e2e/.env before running.",
+                "Configure it in ~/.codus-dev/config or scripts/e2e/.env before running.",
         );
         return false;
     }
@@ -310,7 +310,7 @@ async function configureByok(
 
 async function connectProvider(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
     tenant: TenantSpec,
 ): Promise<{
     integrationConnected: boolean;
@@ -366,7 +366,7 @@ async function connectProvider(
             throw err;
         }
     }
-    // finish-onboarding triggers generateKodyRulesUseCase, which can
+    // finish-onboarding triggers generateCodyRulesUseCase, which can
     // run >60s — enough for QA's nginx gateway to time out with 504
     // even though the server-side work keeps going to completion. Treat
     // the 504 as soft success: the request landed, the LLM step will

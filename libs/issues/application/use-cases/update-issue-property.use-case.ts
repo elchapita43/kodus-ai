@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';
 import { IssueStatus } from '@libs/core/infrastructure/config/types/general/issues.type';
 import { LabelType } from '@libs/common/utils/codeManagement/labels';
@@ -13,7 +13,7 @@ import {
 import { AuthorizationService } from '@libs/identity/infrastructure/adapters/services/permissions/authorization.service';
 import { ISSUES_SERVICE_TOKEN } from '@libs/issues/domain/contracts/issues.service.contract';
 import { IssuesEntity } from '@libs/issues/domain/entities/issues.entity';
-import { KodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/kodyIssuesManagement.service';
+import { CodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/codyIssuesManagement.service';
 import { IssuesService } from '@libs/issues/infrastructure/adapters/service/issues.service';
 
 @Injectable()
@@ -22,8 +22,8 @@ export class UpdateIssuePropertyUseCase implements IUseCase {
         @Inject(ISSUES_SERVICE_TOKEN)
         private readonly issuesService: IssuesService,
 
-        @Inject(KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
-        private readonly kodyIssuesManagementService: KodyIssuesManagementService,
+        @Inject(CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
+        private readonly codyIssuesManagementService: CodyIssuesManagementService,
 
         @Inject(REQUEST)
         private readonly request: Request & {
@@ -54,7 +54,7 @@ export class UpdateIssuePropertyUseCase implements IUseCase {
             repoIds: [issue.repository.id],
         });
 
-        await this.kodyIssuesManagementService.clearIssuesCache(
+        await this.codyIssuesManagementService.clearIssuesCache(
             issue.organizationId,
         );
 

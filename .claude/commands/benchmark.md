@@ -7,7 +7,7 @@ description: Run the code review benchmark pipeline — create PRs, extract resu
 
 ## Overview
 
-Evaluates Kodus code review quality against golden comments from withmartian/code-review-benchmark.
+Evaluates Codus code review quality against golden comments from withmartian/code-review-benchmark.
 
 **Dataset:** 50 PRs, 136 golden comments, 5 repos (Sentry, Grafana, Cal.com, Discourse, Keycloak)
 
@@ -44,7 +44,7 @@ Parse arguments after `/benchmark`:
 
 After running, tell the user to wait for reviews to finish and check progress:
 ```bash
-docker logs 1cf0a7d802e5_kodus_worker --since 30s 2>&1 | grep -c AGENT
+docker logs 1cf0a7d802e5_codus_worker --since 30s 2>&1 | grep -c AGENT
 ```
 When it returns 0 for two checks in a row, reviews are done.
 
@@ -129,8 +129,8 @@ This forks from `ai-code-review-evaluation`, pushes all branches, and generates 
 
 ## Interpreting Scores
 
-- **Precision** — Of all issues Kodus flagged, what % were real bugs?
-- **Recall** — Of all known bugs, what % did Kodus find?
+- **Precision** — Of all issues Codus flagged, what % were real bugs?
+- **Recall** — Of all known bugs, what % did Codus find?
 - **F1** — Harmonic mean. Balanced score.
 
 Context: Top tools on this benchmark score F1 0.15-0.30. Recall of 0.20+ is competitive.
@@ -139,9 +139,9 @@ Context: Top tools on this benchmark score F1 0.15-0.30. Recall of 0.20+ is comp
 
 | Problem | Fix |
 |---------|-----|
-| Worker not processing | Check `docker logs` for errors, clean inbox: `DELETE FROM kodus_workflow.inbox_messages WHERE status = 'PROCESSING'` |
+| Worker not processing | Check `docker logs` for errors, clean inbox: `DELETE FROM codus_workflow.inbox_messages WHERE status = 'PROCESSING'` |
 | RabbitMQ disk alarm | `docker exec rabbitmq rabbitmqctl set_disk_free_limit "1GB"` |
-| Sandboxes filling disk | `docker exec worker rm -rf /tmp/kodus-sandbox-*` |
+| Sandboxes filling disk | `docker exec worker rm -rf /tmp/codus-sandbox-*` |
 | 401 from Sonnet judge | Check `API_ANTHROPIC_API_KEY` in `.env` — the script loads it automatically |
 | PRs not created | Some branches may already have open PRs — script skips those |
 | Wrong PR mapping | Extraction matches by branch name (`headBranchRef`), not PR number |

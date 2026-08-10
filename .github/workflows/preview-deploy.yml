@@ -77,7 +77,7 @@ jobs:
               id: url
               run: |
                   PR_NUM="${{ github.event.pull_request.number }}"
-                  API_URL="https://kodus-ai-kodus-ai-pr-${PR_NUM}.up.railway.app"
+                  API_URL="https://codus-ai-codus-ai-pr-${PR_NUM}.up.railway.app"
                   echo "api_url=$API_URL" >> $GITHUB_OUTPUT
                   echo "Backend URL: $API_URL"
 

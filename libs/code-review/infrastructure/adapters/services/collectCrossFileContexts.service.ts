@@ -5,7 +5,7 @@ import {
     ParserType,
     PromptRole,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 

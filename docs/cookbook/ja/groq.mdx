@@ -1,6 +1,6 @@
 ---
 title: "Groq Cloud - 超高速推論"
-description: "GroqのモデルをKodusで使用する方法"
+description: "GroqのモデルをCodusで使用する方法"
 icon: "bolt"
 ---
 
@@ -35,7 +35,7 @@ Groq CloudはOpenAI互換のAPIで高速なLLM推論を提供します。速度�
 2. サインインするかアカウントを作成する
 3. 上部ナビゲーションの「API Keys」に移動する
 4. 「Create API Key」ボタンをクリックする
-5. 「Kodus」または説明的な名前を付ける
+5. 「Codus」または説明的な名前を付ける
 6. APIキーをコピーして安全な場所に保存する
 
 <Info>
@@ -52,9 +52,9 @@ Groq CloudはOpenAI互換のAPIで高速なLLM推論を提供します。速度�
 
 ```env
 # コアシステム設定（ドメインを更新してください）
-WEB_HOSTNAME_API="kodus-api.yourdomain.com"    
+WEB_HOSTNAME_API="codus-api.yourdomain.com"    
 WEB_PORT_API=443                               
-NEXTAUTH_URL="https://kodus-web.yourdomain.com"
+NEXTAUTH_URL="https://codus-web.yourdomain.com"
 
 # セキュリティキー（上記のopensslコマンドで生成）
 WEB_NEXTAUTH_SECRET="your-generated-secret"
@@ -72,9 +72,9 @@ API_OPENAI_FORCE_BASE_URL="https://api.groq.com/openai/v1"   # Groq API URL
 API_OPEN_AI_API_KEY="your-groq-api-key"                      # Your Groq API Key
 
 # Gitプロバイダーのウェブフック（プロバイダーを選択）
-API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webhook"
-# または API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/gitlab/webhook"
-# または GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/bitbucket/webhook"
+API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/github/webhook"
+# または API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/gitlab/webhook"
+# または GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/bitbucket/webhook"
 ```
 
 <Note>
@@ -95,7 +95,7 @@ API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webh
 # Webアプリ（ポート3000）
 server {
     listen 80;
-    server_name kodus-web.yourdomain.com;
+    server_name codus-web.yourdomain.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -108,7 +108,7 @@ server {
 # API（ポート3001）  
 server {
     listen 80;
-    server_name kodus-api.yourdomain.com;
+    server_name codus-api.yourdomain.com;
     location ~ ^/(github|gitlab|bitbucket|azure-repos)/webhook {
         proxy_pass http://localhost:3332;
         proxy_set_header Host $host;
@@ -137,7 +137,7 @@ docker-compose logs api worker | grep -i groq
 ```
 
 <Tip>
-  SSLセットアップ、監視、高度な設定の詳細については、[完全なデプロイガイド](https://docs.kodus.io/how_to_deploy/ja/deploy_kodus/generic_vm) を参照してください。
+  SSLセットアップ、監視、高度な設定の詳細については、[完全なデプロイガイド](https://docs.kodus.io/how_to_deploy/ja/deploy_codus/generic_vm) を参照してください。
 </Tip>
 
 ### トラブルシューティング

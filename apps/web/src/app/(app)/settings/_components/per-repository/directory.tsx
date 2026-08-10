@@ -16,7 +16,7 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@components/ui/tooltip";
-import { useKodyRulesCount } from "@services/kodyRules/hooks";
+import { useCodyRulesCount } from "@services/codyRules/hooks";
 import { cn } from "src/core/utils/components";
 
 import { useCodeReviewRouteParams } from "../../_hooks";
@@ -53,14 +53,14 @@ export const PerDirectory = ({
         routes.map((route) => route.href),
         FormattedConfigLevel.DIRECTORY,
     );
-    const directoryKodyRulesCount = useKodyRulesCount(
+    const directoryCodyRulesCount = useCodyRulesCount(
         repository.id,
         directory.id,
     );
     const resolvedOverrideCount =
         configOverrideCount +
         (customMessagesOverrideCount ?? 0) +
-        directoryKodyRulesCount;
+        directoryCodyRulesCount;
 
     return (
         <Collapsible
@@ -137,8 +137,8 @@ export const PerDirectory = ({
                                     customMessagesOverrideCount={
                                         customMessagesOverrideCount ?? 0
                                     }
-                                    kodyRulesOverrideCount={
-                                        directoryKodyRulesCount
+                                    codyRulesOverrideCount={
+                                        directoryCodyRulesCount
                                     }
                                 />
                             </SidebarMenuSubItem>

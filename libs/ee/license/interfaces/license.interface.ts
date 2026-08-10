@@ -113,7 +113,7 @@ export interface ILicenseService {
     ): Promise<boolean>;
 
     /**
-     * Atomically consume one Kodus-funded trial review credit.
+     * Atomically consume one Codus-funded trial review credit.
      *
      * @param organizationAndTeamData Organization ID and team ID.
      * @param usageKey Optional idempotency key for the reviewed PR.
@@ -124,7 +124,7 @@ export interface ILicenseService {
     ): Promise<ConsumeTrialReviewCreditResult>;
 
     /**
-     * Provision a Kodus-managed trial for the organization.
+     * Provision a Codus-managed trial for the organization.
      *
      * Idempotent: the billing service returns 409 when a license already
      * exists, which is treated as success. Returns true when a trial is in

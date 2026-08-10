@@ -11,7 +11,7 @@ describe('buildBusinessRulesAnalysisPrompt', () => {
             userLanguage: 'en-US',
             taskQuality: 'COMPLETE',
             taskContext:
-                'Task ID: 15604\n\nTitle: Kody rules por time\n\nDescription: Review billing lookup by team.',
+                'Task ID: 15604\n\nTitle: Cody rules por time\n\nDescription: Review billing lookup by team.',
             prDiff: '',
             prBody: '',
         } as BusinessRulesContext);
@@ -69,8 +69,8 @@ describe('buildBusinessRulesAnalysisPrompt', () => {
             taskContext: 'Task context',
             taskContextNormalized: {
                 id: 'KC-1441',
-                title: 'Kody rules por time',
-                links: ['https://kodustech.atlassian.net/browse/KC-1441'],
+                title: 'Cody rules por time',
+                links: ['https://elchapita43.atlassian.net/browse/KC-1441'],
             },
             prDiff: 'diff --git a/file.ts b/file.ts',
             prBody: 'PR body',
@@ -78,7 +78,7 @@ describe('buildBusinessRulesAnalysisPrompt', () => {
 
         expect(prompt).toContain('TASK_LINKS:');
         expect(prompt).toContain(
-            'https://kodustech.atlassian.net/browse/KC-1441',
+            'https://elchapita43.atlassian.net/browse/KC-1441',
         );
     });
 
@@ -127,17 +127,17 @@ describe('buildBusinessRulesAnalysisPrompt', () => {
             userLanguage: 'en-US',
             taskQuality: 'PARTIAL',
             taskContext:
-                'Task ID: KC-1441\nTitle: Team-scoped rules\nLinks:\n- https://kodustech.atlassian.net/browse/KC-1441.',
+                'Task ID: KC-1441\nTitle: Team-scoped rules\nLinks:\n- https://elchapita43.atlassian.net/browse/KC-1441.',
             prDiff: 'diff --git a/file.ts b/file.ts',
             prBody: 'PR body',
         } as BusinessRulesContext);
 
         expect(prompt).toContain('TASK: KC-1441 — Team-scoped rules');
         expect(prompt).toContain(
-            'TASK_LINKS:\nhttps://kodustech.atlassian.net/browse/KC-1441',
+            'TASK_LINKS:\nhttps://elchapita43.atlassian.net/browse/KC-1441',
         );
         expect(prompt).toContain(
-            'TASK_LINKS:\nhttps://kodustech.atlassian.net/browse/KC-1441\n\nACCEPTANCE_CRITERIA:',
+            'TASK_LINKS:\nhttps://elchapita43.atlassian.net/browse/KC-1441\n\nACCEPTANCE_CRITERIA:',
         );
     });
 });

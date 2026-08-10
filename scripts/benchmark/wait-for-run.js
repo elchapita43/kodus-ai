@@ -48,13 +48,13 @@ function buildStatus(entries) {
     const processedPairs = new Set(
         getProcessedPairs(enriched).map((item) => makeRepositoryPrKey(item)),
     );
-    // A PR is "settled" once its pipeline reaches the "Kody Review Finished"
+    // A PR is "settled" once its pipeline reaches the "Cody Review Finished"
     // stage — success OR error. Errored PRs (e.g. agent hit step limit) never
     // become "processed" (success-only), so without this the waiter would
     // block until timeout on a PR that is already terminal.
     const settledPairs = new Set(
         getLatestExecutionStageRows(enriched)
-            .filter((row) => row.stageName === 'Kody Review Finished')
+            .filter((row) => row.stageName === 'Cody Review Finished')
             .map((row) =>
                 makeRepositoryPrKey({
                     repositoryId: row.repositoryId,
@@ -164,7 +164,7 @@ async function main() {
                 status.summary.settled - status.summary.processed;
             if (!args.quiet) {
                 process.stdout.write(
-                    `[benchmark:${runName}] completed: all ${status.summary.mapped} mapped PRs reached "Kody Review Finished" (${status.summary.processed} success, ${errored} error).\n`,
+                    `[benchmark:${runName}] completed: all ${status.summary.mapped} mapped PRs reached "Cody Review Finished" (${status.summary.processed} success, ${errored} error).\n`,
                 );
             }
             process.exit(0);

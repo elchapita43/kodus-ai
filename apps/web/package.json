@@ -1,15 +1,15 @@
 {
-    "name": "kodus-web",
+    "name": "codus-web",
     "version": "1.0.0",
-    "description": "Kodus Web Application - Open Source Development Platform",
+    "description": "Codus Web Application - Open Source Development Platform",
     "keywords": [
-        "kodus",
+        "codus",
         "web",
         "development",
         "platform",
-        "kody"
+        "cody"
     ],
-    "author": "Kodus Tech",
+    "author": "Codus Tech",
     "packageManager": "pnpm@11.9.0",
     "scripts": {
         "start:dev": "next dev --turbopack --port 3000",
@@ -25,7 +25,7 @@
         "docker:build": "docker compose -f ../../docker-compose.dev.yml build web",
         "docker:start": "docker compose -f ../../docker-compose.dev.yml up web",
         "docker:clean": "docker compose -f ../../docker-compose.dev.yml down",
-        "docker:clean-cache": "docker volume rm kodus-ai_web_node_modules_cache kodus-ai_web_next_cache 2>/dev/null || true",
+        "docker:clean-cache": "docker volume rm codus-ai_web_node_modules_cache codus-ai_web_next_cache 2>/dev/null || true",
         "docker:reset": "pnpm docker:clean && pnpm docker:start"
     },
     "dependencies": {

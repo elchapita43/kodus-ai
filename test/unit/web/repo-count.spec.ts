@@ -1,8 +1,8 @@
 import {
     repoCountKey,
     resolveRepoCount,
-    type KodyRuleRepositoryCount,
-} from "../../../apps/web/src/core/utils/kody-rules/repo-count";
+    type CodyRuleRepositoryCount,
+} from "../../../apps/web/src/core/utils/cody-rules/repo-count";
 
 describe("repoCountKey", () => {
     it("keys repository-level rules under the repo id alone", () => {
@@ -28,7 +28,7 @@ describe("repoCountKey", () => {
 });
 
 describe("resolveRepoCount", () => {
-    const counts: KodyRuleRepositoryCount[] = [
+    const counts: CodyRuleRepositoryCount[] = [
         { repositoryId: "repo-1", directoryId: null, count: 4 },
         { repositoryId: "repo-1", directoryId: "dir-9", count: 2 },
         { repositoryId: "repo-2", directoryId: null, count: 7 },

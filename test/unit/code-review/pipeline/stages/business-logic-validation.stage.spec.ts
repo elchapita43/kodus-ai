@@ -317,7 +317,7 @@ describe('BusinessLogicValidationStage', () => {
                     id: 'atlassian-rovo-default',
                     name: 'Atlassian Rovo',
                     appName: 'Atlassian Rovo',
-                    provider: 'kodusmcp',
+                    provider: 'codusmcp',
                     active: true,
                     isConnected: false,
                 },

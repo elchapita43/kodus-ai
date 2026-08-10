@@ -8,7 +8,7 @@ let tmpDir: string;
 let hooksDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-git-hooks-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-git-hooks-'));
     hooksDir = path.join(tmpDir, '.git', 'hooks');
     await fs.mkdir(hooksDir, { recursive: true });
 });
@@ -34,12 +34,12 @@ describe('gitHooksService.install', () => {
             'utf-8',
         );
         expect(prepareContent).toContain('#!/bin/sh');
-        expect(prepareContent).toContain('kodus-session-hooks');
-        expect(prepareContent).toContain('Kody-Checkpoint');
+        expect(prepareContent).toContain('codus-session-hooks');
+        expect(prepareContent).toContain('Cody-Checkpoint');
 
         const postContent = await fs.readFile(hookPath('post-commit'), 'utf-8');
-        expect(postContent).toContain('kodus-session-hooks');
-        expect(postContent).toContain('kodus sessions hooks claude-code stop');
+        expect(postContent).toContain('codus-session-hooks');
+        expect(postContent).toContain('codus sessions hooks claude-code stop');
     });
 
     it('hooks are executable', async () => {
@@ -61,7 +61,7 @@ describe('gitHooksService.install', () => {
         expect(result.alreadyInstalled).toContain('post-commit');
     });
 
-    it('appends to existing non-kodus hook', async () => {
+    it('appends to existing non-codus hook', async () => {
         const existing = '#!/bin/sh\necho "existing hook"\n';
         await fs.writeFile(hookPath('prepare-commit-msg'), existing);
 
@@ -72,33 +72,33 @@ describe('gitHooksService.install', () => {
             'utf-8',
         );
         expect(content).toContain('echo "existing hook"');
-        expect(content).toContain('kodus-session-hooks');
+        expect(content).toContain('codus-session-hooks');
     });
 });
 
 describe('gitHooksService.uninstall', () => {
-    it('removes kodus sections from hooks', async () => {
+    it('removes codus sections from hooks', async () => {
         await gitHooksService.install(hooksDir);
         const result = await gitHooksService.uninstall(hooksDir);
 
         expect(result.removed).toContain('prepare-commit-msg');
         expect(result.removed).toContain('post-commit');
 
-        // Hooks with only kodus content should be deleted
+        // Hooks with only codus content should be deleted
         await expect(
             fs.access(hookPath('prepare-commit-msg')),
         ).rejects.toThrow();
         await expect(fs.access(hookPath('post-commit'))).rejects.toThrow();
     });
 
-    it('preserves non-kodus content when removing', async () => {
+    it('preserves non-codus content when removing', async () => {
         const existing = '#!/bin/sh\necho "custom"\n';
         await fs.writeFile(hookPath('prepare-commit-msg'), existing);
 
         // Install (appends)
         await gitHooksService.install(hooksDir);
 
-        // Uninstall (removes only kodus section)
+        // Uninstall (removes only codus section)
         await gitHooksService.uninstall(hooksDir);
 
         const content = await fs.readFile(
@@ -106,7 +106,7 @@ describe('gitHooksService.uninstall', () => {
             'utf-8',
         );
         expect(content).toContain('echo "custom"');
-        expect(content).not.toContain('kodus-session-hooks');
+        expect(content).not.toContain('codus-session-hooks');
     });
 
     it('returns empty removed array when hooks do not exist', async () => {

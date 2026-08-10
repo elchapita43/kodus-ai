@@ -17,7 +17,7 @@ import {
 import { CodeReviewConfigLogHandler } from './infrastructure/adapters/services/codeReviewConfigLog.handler';
 import { CodeReviewSettingsLogService } from './infrastructure/adapters/services/codeReviewSettingsLog.service';
 import { IntegrationLogHandler } from './infrastructure/adapters/services/integrationLog.handler';
-import { KodyRulesLogHandler } from './infrastructure/adapters/services/kodyRulesLog.handler';
+import { CodyRulesLogHandler } from './infrastructure/adapters/services/codyRulesLog.handler';
 import { PullRequestMessagesLogHandler } from './infrastructure/adapters/services/pullRequestMessageLog.handler';
 import { RepositoriesLogHandler } from './infrastructure/adapters/services/repositoriesLog.handler';
 import { UnifiedLogHandler } from './infrastructure/adapters/services/unifiedLog.handler';
@@ -52,7 +52,7 @@ import { AuditLogListener } from './listeners/audit-log.listener';
         },
         CodeReviewConfigLogHandler,
         IntegrationLogHandler,
-        KodyRulesLogHandler,
+        CodyRulesLogHandler,
         PullRequestMessagesLogHandler,
         RepositoriesLogHandler,
         UnifiedLogHandler,

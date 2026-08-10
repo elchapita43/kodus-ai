@@ -1,18 +1,18 @@
 {
     "reviewComment": {
-        "talkToKody": "Promluvte si s Kody zmíněním @kody",
-        "feedback": "Byl tento návrh užitečný? Reagujte s 👍 nebo 👎, aby se Kody mohl z této interakce učit."
+        "talkToCody": "Promluvte si s Cody zmíněním @cody",
+        "feedback": "Byl tento návrh užitečný? Reagujte s 👍 nebo 👎, aby se Cody mohl z této interakce učit."
     },
     "pullRequestFinishSummaryMarkdown": {
         "withComments": "## Kontrola kódu dokončena! 🔥\n\nKontrola kódu byla úspěšně dokončena na základě vašich aktuálních konfigurací.\n\n",
-        "withoutComments": "# Kontrola Kody dokončena\n**Skvělé zprávy!** 🎉\nNebyly nalezeny žádné problémy, které by odpovídaly vašim aktuálním konfiguracím kontroly.\n\nPokračujte v skvělé práci! 🚀",
-        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@kody review` on this PR to re-run the review.\n\n",
-        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@kody review` on this PR to retry once the issue is resolved.\n"
+        "withoutComments": "# Kontrola Cody dokončena\n**Skvělé zprávy!** 🎉\nNebyly nalezeny žádné problémy, které by odpovídaly vašim aktuálním konfiguracím kontroly.\n\nPokračujte v skvělé práci! 🚀",
+        "withErrors": "## Code Review Could Not Complete ⚠️\n\nThe review failed before suggestions could be generated.\n\n**Reason:** {{errorMessage}}\n\nAfter fixing the issue, comment `@cody review` on this PR to re-run the review.\n\n",
+        "partialErrorsNotice": "\n\n> ⚠️ Note: some checks couldn't be completed in this run, so auto-approval (when enabled) was skipped. Check the details at {{dashboardUrl}} and then comment `@cody review` on this PR to retry once the issue is resolved.\n"
     },
     "pullRequestSummaryMarkdown": {
-        "title": "Souhrn PR (Komentář vytvořený [Kody](https://kodus.io) 🤖)",
+        "title": "Souhrn PR (Komentář vytvořený [Cody](https://kodus.io) 🤖)",
         "codeReviewStarted": "Kontrola kódu zahájena! 🚀",
-        "description": "✋ Ahoj, týme! Už se dívám na změněné soubory a začínám kontrolu, abych se ujistil, že je vše v pořádku. Pokud potřebujete více podrobností, jsem tady! [Kody](https://kodus.io)",
+        "description": "✋ Ahoj, týme! Už se dívám na změněné soubory a začínám kontrolu, abych se ujistil, že je vše v pořádku. Pokud potřebujete více podrobností, jsem tady! [Cody](https://kodus.io)",
         "changedFiles": "📂 Změněné soubory",
         "filesTable": [
             "Soubor",
@@ -28,15 +28,15 @@
         "totalChanges": "Celkem změn"
     },
     "configReviewMarkdown": {
-        "title": "Průvodce Kody: Použití a konfigurace",
-        "interactingTitle": "Interakce s Kody",
+        "title": "Průvodce Cody: Použití a konfigurace",
+        "interactingTitle": "Interakce s Cody",
         "requestReview": "Požádat o kontrolu",
-        "requestReviewDesc": "Požádejte Kody, aby ručně zkontroloval váš PR přidáním komentáře s příkazem `@kody start-review` do kořene vašeho PR.",
+        "requestReviewDesc": "Požádejte Cody, aby ručně zkontroloval váš PR přidáním komentáře s příkazem `@cody start-review` do kořene vašeho PR.",
         "validateBusinessLogic": "Ověřit obchodní logiku",
-        "validateBusinessLogicDesc": "Požádejte Kody, aby ověřil váš kód proti obchodním pravidlům přidáním komentáře s příkazem `@kody -v business-logic`.",
+        "validateBusinessLogicDesc": "Požádejte Cody, aby ověřil váš kód proti obchodním pravidlům přidáním komentáře s příkazem `@cody -v business-logic`.",
         "provideFeedback": "Poskytnout zpětnou vazbu",
-        "provideFeedbackDesc": "Pomozte Kody učit se a zlepšovat tím, že budete reagovat na jeho komentáře s 👍 pro užitečné návrhy nebo 👎 pokud jsou potřeba vylepšení.",
-        "configurationTitle": "Aktuální konfigurace Kody",
+        "provideFeedbackDesc": "Pomozte Cody učit se a zlepšovat tím, že budete reagovat na jeho komentáře s 👍 pro užitečné návrhy nebo 👎 pokud jsou potřeba vylepšení.",
+        "configurationTitle": "Aktuální konfigurace Cody",
         "reviewOptionsTitle": "Možnosti kontroly",
         "reviewOptionsDesc": "Následující možnosti kontroly jsou povoleny nebo zakázány:",
         "tableOptions": "Možnosti",

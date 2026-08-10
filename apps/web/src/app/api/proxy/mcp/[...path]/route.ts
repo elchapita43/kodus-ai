@@ -10,7 +10,7 @@ function resolveMcpUpstream(path: string, search: string): string {
     if (hostName === "localhost") {
         hostName =
             process.env.GLOBAL_MCP_MANAGER_CONTAINER_NAME ||
-            "kodus-mcp-manager";
+            "codus-mcp-manager";
     }
     const port = process.env.WEB_PORT_MCP_MANAGER;
     return createUrl(hostName, port, path + search, { internal: true });

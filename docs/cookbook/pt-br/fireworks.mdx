@@ -1,6 +1,6 @@
 ---
 title: "Fireworks AI - Plataforma de Inferência Rápida"
-description: "Aprenda a usar os modelos do Fireworks AI com o Kodus"
+description: "Aprenda a usar os modelos do Fireworks AI com o Codus"
 icon: "fire"
 ---
 
@@ -34,7 +34,7 @@ Ou siga estas etapas:
 1. Visite [app.fireworks.ai](https://app.fireworks.ai) e crie uma conta ou entre
 2. Após fazer login, navegue até a página **API Keys** nas configurações da sua conta
 3. Clique no botão **"Create API Key"**
-4. Dê à sua chave um nome descritivo (ex.: 'Kodus' ou qualquer nome que preferir)
+4. Dê à sua chave um nome descritivo (ex.: 'Codus' ou qualquer nome que preferir)
 5. Clique em **"Create"** para gerar a chave
 6. Copie a chave de API imediatamente e salve em um local seguro — você não poderá vê-la novamente
 
@@ -52,9 +52,9 @@ Edite seu arquivo `.env` e configure as definições principais. Para **Integra�
 
 ```env
 # Core System Settings (update with your domains)
-WEB_HOSTNAME_API="kodus-api.yourdomain.com"    
+WEB_HOSTNAME_API="codus-api.yourdomain.com"    
 WEB_PORT_API=443                               
-NEXTAUTH_URL="https://kodus-web.yourdomain.com"
+NEXTAUTH_URL="https://codus-web.yourdomain.com"
 
 # Security Keys (generate with openssl commands above)
 WEB_NEXTAUTH_SECRET="your-generated-secret"
@@ -72,9 +72,9 @@ API_OPENAI_FORCE_BASE_URL="https://api.fireworks.ai/inference/v1"               
 API_OPEN_AI_API_KEY="your-fireworks-api-key"                                       # Your Fireworks AI API Key
 
 # Git Provider Webhooks (choose your provider)
-API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webhook"
-# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/gitlab/webhook"
-# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/bitbucket/webhook"
+API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/github/webhook"
+# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/gitlab/webhook"
+# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/bitbucket/webhook"
 ```
 
 <Note>
@@ -95,7 +95,7 @@ Para webhooks e acesso externo, configure o Nginx:
 # Web App (port 3000)
 server {
     listen 80;
-    server_name kodus-web.yourdomain.com;
+    server_name codus-web.yourdomain.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -108,7 +108,7 @@ server {
 # API (port 3001)  
 server {
     listen 80;
-    server_name kodus-api.yourdomain.com;
+    server_name codus-api.yourdomain.com;
     location ~ ^/(github|gitlab|bitbucket|azure-repos)/webhook {
         proxy_pass http://localhost:3332;
         proxy_set_header Host $host;
@@ -137,7 +137,7 @@ docker-compose logs api worker | grep -i fireworks
 ```
 
 <Tip>
-  Para informações detalhadas sobre configuração de SSL, monitoramento e configurações avançadas, consulte nosso [guia completo de implantação](https://docs.kodus.io/how_to_deploy/pt-br/deploy_kodus/generic_vm).
+  Para informações detalhadas sobre configuração de SSL, monitoramento e configurações avançadas, consulte nosso [guia completo de implantação](https://docs.kodus.io/how_to_deploy/pt-br/deploy_codus/generic_vm).
 </Tip>
 
 ### Solução de Problemas

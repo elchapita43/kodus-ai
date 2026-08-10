@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-# Multi-stage production build for kodus-web (Next.js)
+# Multi-stage production build for codus-web (Next.js)
 # Used for both cloud production and QA builds.
 #
 # Build context: the monorepo root (NOT apps/web).

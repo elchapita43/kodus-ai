@@ -10,12 +10,12 @@ import { Switch } from "@components/ui/switch";
 import { toast } from "@components/ui/toaster/use-toast";
 import { useAsyncAction } from "@hooks/use-async-action";
 import { useReactQueryInvalidateQueries } from "@hooks/use-invalidate-queries";
-import { KODY_RULES_PATHS } from "@services/kodyRules";
+import { CODY_RULES_PATHS } from "@services/codyRules";
 import {
-    getImportedKodyRulesCount,
+    getImportedCodyRulesCount,
     syncIDERules,
-} from "@services/kodyRules/fetch";
-import { useSuspenseKodyRulesCheckSyncStatus } from "@services/kodyRules/hooks";
+} from "@services/codyRules/fetch";
+import { useSuspenseCodyRulesCheckSyncStatus } from "@services/codyRules/hooks";
 import { PARAMETERS_PATHS } from "@services/parameters";
 import { createOrUpdateCodeReviewParameter } from "@services/parameters/fetch";
 import {
@@ -44,7 +44,7 @@ export const GenerateRulesOptions = () => {
     const { repositoryId } = useCodeReviewRouteParams();
     const { invalidateQueries, generateQueryKey } =
         useReactQueryInvalidateQueries();
-    const syncStatus = useSuspenseKodyRulesCheckSyncStatus({
+    const syncStatus = useSuspenseCodyRulesCheckSyncStatus({
         teamId,
         repositoryId,
     });
@@ -58,11 +58,11 @@ export const GenerateRulesOptions = () => {
         { loading: isLoadingGenerateFromPastReviewsToggle },
     ] = useAsyncAction(async () => {
         try {
-            const newValue = !config?.kodyRulesGeneratorEnabled?.value;
+            const newValue = !config?.codyRulesGeneratorEnabled?.value;
 
             const mutationResult = await createOrUpdateCodeReviewParameter(
                 {
-                    kodyRulesGeneratorEnabled: newValue,
+                    codyRulesGeneratorEnabled: newValue,
                 },
                 teamId,
                 repositoryId,
@@ -88,7 +88,7 @@ export const GenerateRulesOptions = () => {
             });
 
             invalidateQueries({
-                queryKey: generateQueryKey(KODY_RULES_PATHS.CHECK_SYNC_STATUS, {
+                queryKey: generateQueryKey(CODY_RULES_PATHS.CHECK_SYNC_STATUS, {
                     params: { teamId, repositoryId },
                 }),
             });
@@ -107,12 +107,12 @@ export const GenerateRulesOptions = () => {
             // First time this repo's generator is enabled, the backend seeds its
             // rules from the last 3 months of closed PRs (the weekly cron only
             // looks at the last week). Let the user know it's running.
-            if (syncStatus.kodyRulesGeneratorEnabledFirstTime && newValue) {
+            if (syncStatus.codyRulesGeneratorEnabledFirstTime && newValue) {
                 toast({
                     variant: "info",
                     title: "We're analyzing your past PRs",
                     description:
-                        "Kody is reviewing the last 3 months of closed PRs to draft rules. This may take a few minutes; generated rules will appear on this page.",
+                        "Cody is reviewing the last 3 months of closed PRs to draft rules. This may take a few minutes; generated rules will appear on this page.",
                 });
 
                 invalidateQueries({
@@ -147,7 +147,7 @@ export const GenerateRulesOptions = () => {
                 // ("keep") and don't bother showing the modal.
                 let ideSyncDisableAction: DisableIdeSyncAction = "keep";
                 if (newValue === false && repositoryId) {
-                    const counts = await getImportedKodyRulesCount({
+                    const counts = await getImportedCodyRulesCount({
                         repositoryId,
                     });
 
@@ -196,7 +196,7 @@ export const GenerateRulesOptions = () => {
 
                 invalidateQueries({
                     queryKey: generateQueryKey(
-                        KODY_RULES_PATHS.CHECK_SYNC_STATUS,
+                        CODY_RULES_PATHS.CHECK_SYNC_STATUS,
                         { params: { teamId, repositoryId } },
                     ),
                 });
@@ -211,24 +211,24 @@ export const GenerateRulesOptions = () => {
                 });
 
                 // Toggle off → backend may have flipped imported rules to
-                // DELETED or PAUSED. The Kody Rules tab caches its rule
+                // DELETED or PAUSED. The Cody Rules tab caches its rule
                 // list separately, so without these invalidations the
                 // user sees stale rows until they manually refresh.
                 invalidateQueries({
                     queryKey: generateQueryKey(
-                        KODY_RULES_PATHS.FIND_BY_ORGANIZATION_ID_AND_FILTER,
+                        CODY_RULES_PATHS.FIND_BY_ORGANIZATION_ID_AND_FILTER,
                         { params: { repositoryId } },
                     ),
                 });
                 invalidateQueries({
                     queryKey: generateQueryKey(
-                        KODY_RULES_PATHS.GET_INHERITED_RULES,
+                        CODY_RULES_PATHS.GET_INHERITED_RULES,
                         { params: { teamId, repositoryId } },
                     ),
                 });
                 invalidateQueries({
                     queryKey: generateQueryKey(
-                        KODY_RULES_PATHS.COUNT_IMPORTED_KODY_RULES,
+                        CODY_RULES_PATHS.COUNT_IMPORTED_CODY_RULES,
                         { params: { repositoryId } },
                     ),
                 });
@@ -255,7 +255,7 @@ export const GenerateRulesOptions = () => {
         });
 
     const enabledCount = [
-        config?.kodyRulesGeneratorEnabled?.value,
+        config?.codyRulesGeneratorEnabled?.value,
         config?.ideRulesSyncEnabled?.value,
     ].filter(Boolean).length;
 
@@ -279,7 +279,7 @@ export const GenerateRulesOptions = () => {
 
                                 <Section.Content>
                                     <Section.Description>
-                                        When enabled, Kody will automatically
+                                        When enabled, Cody will automatically
                                         import rule files{" "}
                                         <InlineCode className="bg-card-lv1">
                                             (.cursorrules, CLAUDE.md, etc...)
@@ -325,7 +325,7 @@ export const GenerateRulesOptions = () => {
                                 </Section.Header>
 
                                 <Section.Content className="text-text-secondary text-sm font-normal">
-                                    Kody will analyse closed PRs and suggest
+                                    Cody will analyse closed PRs and suggest
                                     rules automatically.
                                 </Section.Content>
                             </Section.Root>
@@ -334,7 +334,7 @@ export const GenerateRulesOptions = () => {
                                 decorative
                                 loading={isLoadingGenerateFromPastReviewsToggle}
                                 checked={
-                                    config?.kodyRulesGeneratorEnabled?.value
+                                    config?.codyRulesGeneratorEnabled?.value
                                 }
                             />
                         </div>
@@ -342,12 +342,12 @@ export const GenerateRulesOptions = () => {
                 </Card>
             </Button>
 
-            {config?.kodyRulesGeneratorEnabled?.value && (
+            {config?.codyRulesGeneratorEnabled?.value && (
                 <ExcludedReviewersPicker
                     teamId={teamId}
                     repositoryId={repositoryId}
                     initialExcluded={
-                        config?.kodyLearningExcludedReviewers?.value ?? []
+                        config?.codyLearningExcludedReviewers?.value ?? []
                     }
                     canEdit={canEdit}
                 />

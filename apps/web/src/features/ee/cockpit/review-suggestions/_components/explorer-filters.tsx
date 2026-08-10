@@ -20,7 +20,7 @@ const CATEGORIES = [
     "refactoring",
     "code_style",
     "documentation_and_comments",
-    "kody_rules",
+    "cody_rules",
     "breaking_changes",
     "bug",
     "cross_file",

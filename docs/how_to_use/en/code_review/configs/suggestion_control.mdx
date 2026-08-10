@@ -1,16 +1,16 @@
 ---
 title: "Review Filters"
-description: "Control how much feedback Kody posts in your PRs."
+description: "Control how much feedback Cody posts in your PRs."
 ---
 
-Review filters decide **which** of Kody's findings actually get posted. You'll find them under
+Review filters decide **which** of Cody's findings actually get posted. You'll find them under
 **Settings → Code Review → the repository → Review filters**, and they can be set at the global,
 repository, or directory level — see
 [Config Inheritance & Overrides](/how_to_use/en/code_review/configs/inheritance_overrides).
 
 ## Minimum severity level
 
-Kody assigns a severity to every suggestion and only posts the ones at or above the level you
+Cody assigns a severity to every suggestion and only posts the ones at or above the level you
 pick. The default is **Medium**.
 
 | Level | What it covers |
@@ -26,28 +26,28 @@ pick. The default is **Medium**.
   See [Reduce code review noise](/knowledge_base/en/how-to-reduce-code-review-noise).
 </Tip>
 
-## Apply filters to Kody Rules
+## Apply filters to Cody Rules
 
 A toggle, **off by default**.
 
-- **Off** — [Kody Rules](/how_to_use/en/code_review/configs/kody_rules) findings **bypass** the
+- **Off** — [Cody Rules](/how_to_use/en/code_review/configs/cody_rules) findings **bypass** the
   severity filter. A rule your team wrote is always reported, whatever severity it lands on.
-- **On** — Kody Rules go through the same severity filter as every other suggestion.
+- **On** — Cody Rules go through the same severity filter as every other suggestion.
 
-Leave it off unless your rules are producing more noise than signal. The whole point of a Kody
+Leave it off unless your rules are producing more noise than signal. The whole point of a Cody
 Rule is that your team already decided it matters.
 
 <Note>
-  In `kodus-config.yml` these two settings live under `suggestionControl`:
+  In `codus-config.yml` these two settings live under `suggestionControl`:
 
   ```yaml
   suggestionControl:
       severityLevelFilter: 'medium' # low | medium | high | critical
-      applyFiltersToKodyRules: false
+      applyFiltersToCodyRules: false
   ```
 
   Remember that the file is only read once you enable
-  `kodusConfigFileOverridesWebPreferences` — see
+  `codusConfigFileOverridesWebPreferences` — see
   [General](/how_to_use/en/code_review/configs/general).
 </Note>
 
@@ -61,5 +61,5 @@ Review filters are a blunt instrument. When you need something more targeted:
   isn't useful.
 - **Directory-level config** — apply stricter or looser filters per folder in a monorepo.
   See [Directory Level Config](/how_to_use/en/code_review/configs/directory_level).
-- **Kody Rules** — encode what your team actually cares about, so the signal comes from your
+- **Cody Rules** — encode what your team actually cares about, so the signal comes from your
   standards instead of generic advice.

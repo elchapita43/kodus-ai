@@ -23,11 +23,11 @@ export type OrchestratorInputComputed = Pick<
     | 'heavy'
     | 'linkedRepoAccess'
 > & {
-    // Review-ready kody rules computed by the stage: long rules swapped for
-    // their validated summaries (KodyRuleSummaryService). Optional so callers
+    // Review-ready cody rules computed by the stage: long rules swapped for
+    // their validated summaries (CodyRuleSummaryService). Optional so callers
     // without the service (specs, degraded paths) fall back to the raw config
     // rules — the context itself is never mutated (it is frozen).
-    kodyRules?: OrchestratorInput['kodyRules'];
+    codyRules?: OrchestratorInput['codyRules'];
     // Learnings activos del repo (memoria por proyecto), listos para el prompt.
     learnings?: string[];
 };
@@ -36,7 +36,7 @@ export type OrchestratorInputComputed = Pick<
  * Maps the pipeline context (+ stage-computed locals) into the agent
  * OrchestratorInput. Extracted as a PURE function so the context→input wiring is
  * unit-testable without standing up the whole AgentReviewStage — notably that
- * `reviewDirective` (from `@kody review <directive>`) actually reaches the
+ * `reviewDirective` (from `@cody review <directive>`) actually reaches the
  * finder, an optional field that no typecheck would flag if a refactor silently
  * dropped it. Keep this the single place that builds the input.
  */
@@ -59,7 +59,7 @@ export function buildOrchestratorInput(
             '',
         languageResultPrompt:
             context.codeReviewConfig?.languageResultPrompt || 'en-US',
-        memoryRules: context.codeReviewConfig?.kodyMemoryRules,
+        memoryRules: context.codeReviewConfig?.codyMemoryRules,
         learnings: computed.learnings,
         v2PromptOverrides: context.codeReviewConfig?.v2PromptOverrides,
         generationMain:
@@ -73,9 +73,9 @@ export function buildOrchestratorInput(
             sha: c.sha,
             message: c.commit?.message ?? '',
         })),
-        // Free-text steering directive from `@kody review <directive>`.
+        // Free-text steering directive from `@cody review <directive>`.
         reviewDirective: context.reviewDirective,
-        kodyRules: computed.kodyRules ?? context.codeReviewConfig?.kodyRules,
+        codyRules: computed.codyRules ?? context.codeReviewConfig?.codyRules,
         reviewOptions: computed.reviewOptions,
         onAgentProgress: computed.onAgentProgress,
         gitHubToken: computed.gitHubToken,
@@ -87,7 +87,7 @@ export function buildOrchestratorInput(
         callGraph: computed.callGraph,
         callGraphJson: context.callGraphJson,
         reviewMode: context.codeReviewConfig?.reviewMode || 'normal',
-        // HEAVY mode — opt-in per review (CLI `--heavy` / PR `@kody review
+        // HEAVY mode — opt-in per review (CLI `--heavy` / PR `@cody review
         // --heavy`), gated to the alpha release track by the stage. The stage
         // resolves the requested flag AND the feature gate into `computed.heavy`;
         // this reads only that so the gate can't be bypassed here.

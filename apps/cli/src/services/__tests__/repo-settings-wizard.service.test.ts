@@ -95,7 +95,7 @@ describe('repositorySettingsWizardService', () => {
             'Choose the review behaviors you want for this repository.',
         );
         expect(output).toContain(
-            'Kody automatically reviews pull requests when they are opened or updated.',
+            'Cody automatically reviews pull requests when they are opened or updated.',
         );
         expect(output).toContain(
             'Automatically approves the pull request when the review finishes without issues.',
@@ -112,14 +112,14 @@ describe('repositorySettingsWizardService', () => {
             'Examples: yarn.lock, package-lock.json, .env, **/*.json',
         );
         expect(output).toContain(
-            'Kody skips the review when the pull request title matches one of these patterns.',
+            'Cody skips the review when the pull request title matches one of these patterns.',
         );
         expect(output).toContain(
-            'Additional base branches that Kody should review against.',
+            'Additional base branches that Cody should review against.',
         );
         expect(output).toContain('Current base branches: main');
         expect(output).toContain(
-            'Kody skips the review when the pull request title matches one of these patterns.',
+            'Cody skips the review when the pull request title matches one of these patterns.',
         );
         expect(output).toContain('Current ignored title patterns: wip*');
         expect(mockCheckbox).toHaveBeenCalledTimes(2);

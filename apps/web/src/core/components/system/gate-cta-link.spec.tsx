@@ -26,7 +26,7 @@ describe("GateCtaLink", () => {
     it("renders a custom label and href when given", () => {
         render(
             <GateCtaLink
-                feature="kody_rules"
+                feature="cody_rules"
                 label="See plans"
                 href="/pricing"
             />,

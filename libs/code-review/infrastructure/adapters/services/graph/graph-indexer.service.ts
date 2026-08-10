@@ -7,9 +7,9 @@ import {
 } from '@libs/code-review/domain/contracts/RepositoryService.contract';
 import { AstGraphRepository } from '../../repositories/astGraph.repository';
 import { AstGraphStatus } from '../../repositories/schemas/repository.model';
-import { KodusGraphCli } from './kodus-graph-cli';
+import { CodusGraphCli } from './codus-graph-cli';
 
-const GRAPH_DIR = '.kodus-graph';
+const GRAPH_DIR = '.codus-graph';
 const GRAPH_PATH = `${GRAPH_DIR}/graph.json`;
 
 const READ_FILE_TIMEOUT_MS = 600_000;
@@ -51,7 +51,7 @@ export class GraphIndexerService {
         private readonly astGraphRepo: AstGraphRepository,
         @Inject(REPOSITORY_SERVICE_TOKEN)
         private readonly repositoryService: IRepositoryService,
-        private readonly cli: KodusGraphCli,
+        private readonly cli: CodusGraphCli,
     ) {}
 
     /**
@@ -80,7 +80,7 @@ export class GraphIndexerService {
             const installStart = Date.now();
             await this.cli.install(sandbox);
             this.logger.log({
-                message: `[AST-GRAPH] kodus-graph installed (${Date.now() - installStart}ms)`,
+                message: `[AST-GRAPH] codus-graph installed (${Date.now() - installStart}ms)`,
                 context: GraphIndexerService.name,
                 metadata: { repositoryId },
             });
@@ -201,7 +201,7 @@ export class GraphIndexerService {
             const installStart = Date.now();
             await this.cli.install(sandbox);
             this.logger.log({
-                message: `[AST-GRAPH] kodus-graph installed (${Date.now() - installStart}ms)`,
+                message: `[AST-GRAPH] codus-graph installed (${Date.now() - installStart}ms)`,
                 context: GraphIndexerService.name,
                 metadata: { repositoryId },
             });
@@ -307,7 +307,7 @@ export class GraphIndexerService {
         }
 
         if (!rawJson || rawJson.length === 0) {
-            throw new Error('kodus-graph parse produced empty output file');
+            throw new Error('codus-graph parse produced empty output file');
         }
 
         const graphData = JSON.parse(rawJson);

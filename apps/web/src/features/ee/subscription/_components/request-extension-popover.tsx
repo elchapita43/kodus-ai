@@ -112,7 +112,7 @@ export const RequestExtensionPopover = ({
                         <Textarea
                             id="trial-ext-message"
                             rows={3}
-                            placeholder="What are you evaluating Kodus for?"
+                            placeholder="What are you evaluating Codus for?"
                             value={message}
                             onChange={(event) => setMessage(event.target.value)}
                         />

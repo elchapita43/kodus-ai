@@ -1,6 +1,6 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  */
 
 import { createLogger } from '@libs/core/log/logger';
@@ -128,7 +128,7 @@ export class CodeReviewHandlerService {
                     .catch(() => undefined),
                 // Real engineering team size from the connected git org — the
                 // strongest lead-scoring signal, and only reachable here since
-                // Kodus holds the per-org git installation auth. Deferred via
+                // Codus holds the per-org git installation auth. Deferred via
                 // `Promise.resolve().then` so even a synchronous throw becomes a
                 // caught rejection and never drops the milestone telemetry.
                 Promise.resolve()
@@ -185,9 +185,9 @@ export class CodeReviewHandlerService {
         lastExecutionData?: any, // Data from the last successful execution
         correlationId?: string,
         parentSignal?: AbortSignal,
-        // Free-text steering directive from `@kody review <directive>`.
+        // Free-text steering directive from `@cody review <directive>`.
         reviewDirective?: string,
-        // `@kody review --heavy` — extra critic pass in the finder.
+        // `@cody review --heavy` — extra critic pass in the finder.
         heavy?: boolean,
     ) {
         let initialContext: CodeReviewPipelineContext;
@@ -256,7 +256,7 @@ export class CodeReviewHandlerService {
             // is NOT a usable fallback here: stages that fail without throwing
             // never update it, so it still holds whatever the pipeline set at
             // startup — which is how a failed review ended up reported as
-            // "Kody Review Finished / Error / Pipeline started" (#1568).
+            // "Cody Review Finished / Error / Pipeline started" (#1568).
             const failureReason =
                 result.lastReviewError?.friendlyMessage ||
                 describePipelineError(

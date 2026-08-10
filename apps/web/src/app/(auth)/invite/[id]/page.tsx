@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Page } from "@components/ui/page";
 import { getInviteData } from "src/lib/auth/fetchers";
 
@@ -26,7 +26,7 @@ export default async function InvitePage({
         return (
             <Page.Root className="flex h-full w-full flex-col items-center overflow-auto py-20">
                 <div className="flex w-[90%] flex-1 flex-col items-center justify-center gap-10 md:max-w-[500px]">
-                    <SvgKodus className="h-8" />
+                    <SvgCodus className="h-8" />
                     <Heading variant="h2" className="text-center">
                         Invalid or expired invitation
                     </Heading>
@@ -43,11 +43,11 @@ export default async function InvitePage({
         <Page.Root className="flex h-full w-full flex-col items-center overflow-auto py-20">
             <div className="flex w-[90%] flex-1 flex-col items-center justify-center gap-10 md:max-w-[500px]">
                 <Page.Header className="flex w-full flex-col items-center gap-10">
-                    <SvgKodus className="h-8" />
+                    <SvgCodus className="h-8" />
 
                     <div className="flex flex-col items-center gap-2">
                         <Heading variant="h2" className="text-center">
-                            Welcome to Kodus!
+                            Welcome to Codus!
                         </Heading>
 
                         <p className="text-text-secondary text-center text-sm">

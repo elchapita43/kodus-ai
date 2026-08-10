@@ -373,12 +373,12 @@ jobs:
                   # by bake's CACHE_TYPE/CACHE_REF variables (see docker-bake.hcl).
                   # Multi-arch tag — this job builds amd64+arm64.
                   CACHE_TYPE: registry
-                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/kodus-ai-buildcache:selfhosted
-                  API_TAGS: ghcr.io/${{ github.repository_owner }}/kodus-ai-api:${{ needs.plan-release.outputs.rc_version }}
-                  WEBHOOKS_TAGS: ghcr.io/${{ github.repository_owner }}/kodus-ai-webhook:${{ needs.plan-release.outputs.rc_version }}
-                  WORKER_TAGS: ghcr.io/${{ github.repository_owner }}/kodus-ai-worker:${{ needs.plan-release.outputs.rc_version }}
-                  WEB_TAGS: ghcr.io/${{ github.repository_owner }}/kodus-ai-web:${{ needs.plan-release.outputs.rc_version }}
-                  MCP_MANAGER_TAGS: ghcr.io/${{ github.repository_owner }}/kodus-mcp-manager:${{ needs.plan-release.outputs.rc_version }}
+                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/codus-ai-buildcache:selfhosted
+                  API_TAGS: ghcr.io/${{ github.repository_owner }}/codus-ai-api:${{ needs.plan-release.outputs.rc_version }}
+                  WEBHOOKS_TAGS: ghcr.io/${{ github.repository_owner }}/codus-ai-webhook:${{ needs.plan-release.outputs.rc_version }}
+                  WORKER_TAGS: ghcr.io/${{ github.repository_owner }}/codus-ai-worker:${{ needs.plan-release.outputs.rc_version }}
+                  WEB_TAGS: ghcr.io/${{ github.repository_owner }}/codus-ai-web:${{ needs.plan-release.outputs.rc_version }}
+                  MCP_MANAGER_TAGS: ghcr.io/${{ github.repository_owner }}/codus-mcp-manager:${{ needs.plan-release.outputs.rc_version }}
               run: |
                   set -euo pipefail
                   docker buildx bake -f docker-bake.hcl \
@@ -387,50 +387,50 @@ jobs:
                     --set *.platform=linux/amd64,linux/arm64 \
                     --push
 
-            - name: Trivy scan — kodus-ai-api
+            - name: Trivy scan — codus-ai-api
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-ai-api:${{ needs.plan-release.outputs.rc_version }}
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-ai-api:${{ needs.plan-release.outputs.rc_version }}
                   format: "sarif"
                   output: "trivy-api.sarif"
                   severity: "CRITICAL,HIGH"
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-webhook
+            - name: Trivy scan — codus-ai-webhook
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-ai-webhook:${{ needs.plan-release.outputs.rc_version }}
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-ai-webhook:${{ needs.plan-release.outputs.rc_version }}
                   format: "sarif"
                   output: "trivy-webhook.sarif"
                   severity: "CRITICAL,HIGH"
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-worker
+            - name: Trivy scan — codus-ai-worker
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-ai-worker:${{ needs.plan-release.outputs.rc_version }}
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-ai-worker:${{ needs.plan-release.outputs.rc_version }}
                   format: "sarif"
                   output: "trivy-worker.sarif"
                   severity: "CRITICAL,HIGH"
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-web
+            - name: Trivy scan — codus-ai-web
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-ai-web:${{ needs.plan-release.outputs.rc_version }}
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-ai-web:${{ needs.plan-release.outputs.rc_version }}
                   format: "sarif"
                   output: "trivy-web.sarif"
                   severity: "CRITICAL,HIGH"
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-mcp-manager
+            - name: Trivy scan — codus-mcp-manager
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-mcp-manager:${{ needs.plan-release.outputs.rc_version }}
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-mcp-manager:${{ needs.plan-release.outputs.rc_version }}
                   format: "sarif"
                   output: "trivy-mcp-manager.sarif"
                   severity: "CRITICAL,HIGH"
@@ -468,7 +468,7 @@ jobs:
         with:
             # rc_version (the DOCKER tag, e.g. 2.1.16-rc.68) — NOT rc_tag
             # (the GIT tag, selfhosted-2.1.16-rc.68). The images are pushed
-            # as :<rc_version>; since kodus-installer#21 the droplet compose
+            # as :<rc_version>; since codus-installer#21 the droplet compose
             # actually pins IMAGE_TAG, so passing the git tag makes every
             # pull 404 ("manifest not found", all 5 cells, run 27021899293).
             image_tag: ${{ needs.plan-release.outputs.rc_version }}
@@ -566,7 +566,7 @@ jobs:
                       pkg.version = process.env.NEW_VERSION;
                       fs.writeFileSync(path, JSON.stringify(pkg, null, 4) + '\n');
                   "
-                  git config user.name "kodus-release-bot"
+                  git config user.name "codus-release-bot"
                   git config user.email "actions@kodus.io"
                   git add apps/cli/package.json
                   git commit -m "chore(cli): bump version to $NEW_VERSION"
@@ -624,7 +624,7 @@ jobs:
                     || echo "RC tag ${RC_TAG} already gone"
 
     env-sync-installer:
-        name: Sync .env.example to kodus-installer
+        name: Sync .env.example to codus-installer
         needs:
             - plan-release
             - promote
@@ -638,7 +638,7 @@ jobs:
         # publish: the selfhosted-X.Y.Z tag pushed by GITHUB_TOKEN above
         # would not fire env-sync-release.yml's `push: tags` trigger.
         # Invoke it explicitly so .env.example + schema-vars.sh in
-        # kodus-installer get regenerated for every self-hosted release.
+        # codus-installer get regenerated for every self-hosted release.
         uses: ./.github/workflows/env-sync-release.yml
         with:
             tag: ${{ needs.plan-release.outputs.release_tag }}

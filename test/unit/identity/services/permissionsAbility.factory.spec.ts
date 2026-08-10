@@ -83,25 +83,25 @@ const abilityChecks = [
         }),
     },
     {
-        label: 'read kody rules global',
+        label: 'read cody rules global',
         action: Action.Read,
-        resource: subject(ResourceType.KodyRules, {
+        resource: subject(ResourceType.CodyRules, {
             organizationId: ORG_ID,
             repoId: 'global',
         }),
     },
     {
-        label: 'delete kody rules assigned repo',
+        label: 'delete cody rules assigned repo',
         action: Action.Delete,
-        resource: subject(ResourceType.KodyRules, {
+        resource: subject(ResourceType.CodyRules, {
             organizationId: ORG_ID,
             repoId: ASSIGNED_REPO_ID,
         }),
     },
     {
-        label: 'update kody rules global',
+        label: 'update cody rules global',
         action: Action.Update,
-        resource: subject(ResourceType.KodyRules, {
+        resource: subject(ResourceType.CodyRules, {
             organizationId: ORG_ID,
             repoId: 'global',
         }),

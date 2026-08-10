@@ -40,7 +40,7 @@ export function ReviewLoading({
                             className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)]"
                             style={{
                                 animation:
-                                    "kodus-pulse-ring 1.6s cubic-bezier(0.21,0.6,0.35,1) infinite",
+                                    "codus-pulse-ring 1.6s cubic-bezier(0.21,0.6,0.35,1) infinite",
                             }}
                         />
                         <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--accent)]" />

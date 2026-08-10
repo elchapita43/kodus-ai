@@ -19,7 +19,7 @@ type ToolConfig = {
  * registered into the legacy flow-engine orchestration via `orchestration.createTool`.
  *
  * Sandbox is captured by closure — `ToolContext` does not propagate `userContext`
- * down to tools, so each `@kody` request creates its own ephemeral orchestration
+ * down to tools, so each `@cody` request creates its own ephemeral orchestration
  * with tools wired to that request's sandbox instance.
  *
  * NullSandbox path: when `sandbox.type === 'null'`, this returns `[]`. The

@@ -1,5 +1,5 @@
 import { ExecuteCliReviewUseCase } from '../execute-cli-review.use-case';
-import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { CodyRulesStatus } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
 
 /**
@@ -46,12 +46,12 @@ function createMocks() {
         find: jest.fn().mockResolvedValue([{ uuid: 'ta-1' }]),
     };
 
-    const kodyRulesService = {
+    const codyRulesService = {
         findByOrganizationId: jest.fn().mockResolvedValue(null),
     };
 
-    const kodyRulesValidationService = {
-        filterKodyRules: jest.fn().mockReturnValue({
+    const codyRulesValidationService = {
+        filterCodyRules: jest.fn().mockReturnValue({
             standardRules: [],
             memoryRules: [],
         }),
@@ -77,8 +77,8 @@ function createMocks() {
         parametersService as any,
         automationExecutionService as any,
         teamAutomationService as any,
-        kodyRulesService as any,
-        kodyRulesValidationService as any,
+        codyRulesService as any,
+        codyRulesValidationService as any,
         pipelineObserver as any,
     );
 
@@ -90,8 +90,8 @@ function createMocks() {
         parametersService,
         automationExecutionService,
         teamAutomationService,
-        kodyRulesService,
-        kodyRulesValidationService,
+        codyRulesService,
+        codyRulesValidationService,
         pipelineObserver,
     };
 }
@@ -101,7 +101,7 @@ function makeRule(overrides: Record<string, any> = {}) {
         uuid: 'rule-1',
         title: 'Test Rule',
         rule: 'Do not use var',
-        status: KodyRulesStatus.ACTIVE,
+        status: CodyRulesStatus.ACTIVE,
         severity: 'high',
         repositoryId: 'global',
         ...overrides,
@@ -460,12 +460,12 @@ describe('ExecuteCliReviewUseCase', () => {
             expect(result.config).toBeDefined();
         });
 
-        it('should load kody rules and filter by resolved repositoryId', async () => {
+        it('should load cody rules and filter by resolved repositoryId', async () => {
             const {
                 useCase,
                 parametersService,
-                kodyRulesService,
-                kodyRulesValidationService,
+                codyRulesService,
+                codyRulesValidationService,
             } = createMocks();
 
             const globalRule = makeRule({
@@ -493,13 +493,13 @@ describe('ExecuteCliReviewUseCase', () => {
                 }),
             });
 
-            kodyRulesService.findByOrganizationId.mockResolvedValue({
+            codyRulesService.findByOrganizationId.mockResolvedValue({
                 toObject: () => ({
                     rules: [globalRule, repoRule],
                 }),
             });
 
-            kodyRulesValidationService.filterKodyRules.mockReturnValue({
+            codyRulesValidationService.filterCodyRules.mockReturnValue({
                 standardRules: [globalRule, repoRule],
                 memoryRules: [],
             });
@@ -511,9 +511,9 @@ describe('ExecuteCliReviewUseCase', () => {
 
             expect(result.repositoryId).toBe('123');
             expect(result.repositoryName).toBe('my-repo');
-            expect(result.config.kodyRules).toHaveLength(2);
+            expect(result.config.codyRules).toHaveLength(2);
             expect(
-                kodyRulesValidationService.filterKodyRules,
+                codyRulesValidationService.filterCodyRules,
             ).toHaveBeenCalledWith([globalRule, repoRule], '123');
         });
 
@@ -521,8 +521,8 @@ describe('ExecuteCliReviewUseCase', () => {
             const {
                 useCase,
                 parametersService,
-                kodyRulesService,
-                kodyRulesValidationService,
+                codyRulesService,
+                codyRulesValidationService,
             } = createMocks();
 
             parametersService.findByKey.mockResolvedValue({
@@ -540,7 +540,7 @@ describe('ExecuteCliReviewUseCase', () => {
                 }),
             });
 
-            kodyRulesService.findByOrganizationId.mockResolvedValue({
+            codyRulesService.findByOrganizationId.mockResolvedValue({
                 toObject: () => ({ rules: [] }),
             });
 
@@ -552,7 +552,7 @@ describe('ExecuteCliReviewUseCase', () => {
             expect(result.repositoryId).toBe('global');
             expect(result.repositoryName).toBeNull();
             expect(
-                kodyRulesValidationService.filterKodyRules,
+                codyRulesValidationService.filterCodyRules,
             ).toHaveBeenCalledWith([], 'global');
         });
 
@@ -583,7 +583,7 @@ describe('ExecuteCliReviewUseCase', () => {
         };
 
         it('should use global repositoryId in trial mode', async () => {
-            const { useCase, pipelineStrategy, kodyRulesService } =
+            const { useCase, pipelineStrategy, codyRulesService } =
                 createMocks();
 
             // Mock pipeline execution to return a valid cliResponse
@@ -608,9 +608,9 @@ describe('ExecuteCliReviewUseCase', () => {
                 isTrialMode: true,
             });
 
-            // In trial mode, should NOT load kody rules
+            // In trial mode, should NOT load cody rules
             expect(
-                kodyRulesService.findByOrganizationId,
+                codyRulesService.findByOrganizationId,
             ).not.toHaveBeenCalled();
             expect(result.issues).toHaveLength(0);
 
@@ -621,8 +621,8 @@ describe('ExecuteCliReviewUseCase', () => {
             const {
                 useCase,
                 parametersService,
-                kodyRulesService,
-                kodyRulesValidationService,
+                codyRulesService,
+                codyRulesValidationService,
             } = createMocks();
 
             parametersService.findByKey.mockResolvedValue({
@@ -640,13 +640,13 @@ describe('ExecuteCliReviewUseCase', () => {
                 }),
             });
 
-            kodyRulesService.findByOrganizationId.mockResolvedValue({
+            codyRulesService.findByOrganizationId.mockResolvedValue({
                 toObject: () => ({
                     rules: [makeRule({ repositoryId: 'repo-555' })],
                 }),
             });
 
-            kodyRulesValidationService.filterKodyRules.mockReturnValue({
+            codyRulesValidationService.filterCodyRules.mockReturnValue({
                 standardRules: [makeRule({ repositoryId: 'repo-555' })],
                 memoryRules: [],
             });
@@ -660,7 +660,7 @@ describe('ExecuteCliReviewUseCase', () => {
                 .mockImplementation(async (context: any) => {
                     // Verify the context has the correct repositoryId
                     expect(context.repository.id).toBe('repo-555');
-                    expect(context.codeReviewConfig.kodyRules).toHaveLength(1);
+                    expect(context.codeReviewConfig.codyRules).toHaveLength(1);
 
                     return {
                         cliResponse: {
@@ -683,13 +683,13 @@ describe('ExecuteCliReviewUseCase', () => {
 
             expect(result.issues).toHaveLength(1);
             expect(
-                kodyRulesValidationService.filterKodyRules,
+                codyRulesValidationService.filterCodyRules,
             ).toHaveBeenCalledWith(expect.any(Array), 'repo-555');
 
             mockExecute.mockRestore();
         });
 
-        it('forwards config.focus to context.reviewDirective (CLI @kody review focus), sanitized', async () => {
+        it('forwards config.focus to context.reviewDirective (CLI @cody review focus), sanitized', async () => {
             const { useCase, parametersService } = createMocks();
             parametersService.findByKey.mockResolvedValue(null);
 

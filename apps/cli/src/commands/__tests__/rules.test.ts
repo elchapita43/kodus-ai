@@ -48,7 +48,7 @@ describe('rules command actions', () => {
         const output = logSpy.mock.calls
             .map((call) => call.join(' '))
             .join('\n');
-        expect(output).toContain('Kody Rule created successfully.');
+        expect(output).toContain('Cody Rule created successfully.');
         expect(output).toContain('Rule UUID: rule-1');
         expect(output).toContain('Repository ID: global');
         expect(mockRulesService.createRule).toHaveBeenCalledWith(
@@ -104,7 +104,7 @@ describe('rules command actions', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            'Kody Rule change proposed through centralized pull request.',
+            'Cody Rule change proposed through centralized pull request.',
         );
         expect(output).toContain('PR URL: https://example.com/pr/123');
         expect(output).toContain('PR Number: 123');

@@ -3,7 +3,7 @@
  *
  * This use case deletes the integration, auth integration, integration config
  * (repositories), and webhooks — but does NOT touch code_review_config,
- * pull request messages, or kody rules.
+ * pull request messages, or cody rules.
  *
  * Tested across all 4 platforms (GitHub, GitLab, Bitbucket, Azure Repos)
  * with both OAuth and Token auth modes where applicable.

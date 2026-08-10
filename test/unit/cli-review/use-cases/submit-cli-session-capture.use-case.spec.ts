@@ -10,7 +10,7 @@ const organizationAndTeamData = {
 const captureInput = {
     branch: 'feat/auth',
     sha: 'a1b2c3d4',
-    orgRepo: 'kodustech/cli',
+    orgRepo: 'elchapita43/cli',
     agent: 'codex' as const,
     event: 'stop' as const,
     signals: {

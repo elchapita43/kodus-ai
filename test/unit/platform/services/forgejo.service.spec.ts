@@ -6,9 +6,9 @@
  * - Forgejo uses the ForgejoClient SDK with axios API calls requiring owner/repo in the URL
  * - Forgejo webhook handler uses `full_name` as the repository name to match saved config
  *
- * The repository name is always in "owner/repo" format (e.g., "kodustech/kodus-ai"):
- * - Webhook payload: payload.repository.full_name = "kodustech/kodus-ai"
- * - Saved config: name = "kodustech/kodus-ai"
+ * The repository name is always in "owner/repo" format (e.g., "elchapita43/codus-ai"):
+ * - Webhook payload: payload.repository.full_name = "elchapita43/codus-ai"
+ * - Saved config: name = "elchapita43/codus-ai"
  */
 
 import { extractOwnerAndRepo } from '../../../../libs/common/utils/helpers';
@@ -28,11 +28,11 @@ jest.mock('@libs/core/log/logger', () => ({
 describe('Forgejo Service', () => {
     describe('extractOwnerAndRepo helper', () => {
         it('should extract owner and repo from full name', () => {
-            const result = extractOwnerAndRepo('kodustech/kodus-ai');
+            const result = extractOwnerAndRepo('elchapita43/codus-ai');
 
             expect(result).toEqual({
-                owner: 'kodustech',
-                repo: 'kodus-ai',
+                owner: 'elchapita43',
+                repo: 'codus-ai',
             });
         });
 
@@ -46,7 +46,7 @@ describe('Forgejo Service', () => {
         });
 
         it('should return null when only short name is provided', () => {
-            const result = extractOwnerAndRepo('kodus-ai');
+            const result = extractOwnerAndRepo('codus-ai');
 
             expect(result).toBeNull();
         });
@@ -81,8 +81,8 @@ describe('Forgejo Service', () => {
                 number: 3,
                 repository: {
                     id: 22,
-                    name: 'kodus-ai', // Short name
-                    full_name: 'kodustech/kodus-ai', // Full name with owner
+                    name: 'codus-ai', // Short name
+                    full_name: 'elchapita43/codus-ai', // Full name with owner
                 },
             };
 
@@ -90,7 +90,7 @@ describe('Forgejo Service', () => {
 
             expect(repo).toEqual({
                 id: '22',
-                name: 'kodustech/kodus-ai', // Should be the full name
+                name: 'elchapita43/codus-ai', // Should be the full name
             });
         });
 
@@ -98,7 +98,7 @@ describe('Forgejo Service', () => {
             const webhookPayload = {
                 repository: {
                     id: 22,
-                    name: 'kodus-ai',
+                    name: 'codus-ai',
                     // full_name is missing
                 },
             };
@@ -107,7 +107,7 @@ describe('Forgejo Service', () => {
 
             expect(repo).toEqual({
                 id: '22',
-                name: 'kodus-ai',
+                name: 'codus-ai',
             });
         });
     });
@@ -125,39 +125,39 @@ describe('Forgejo Service', () => {
         it('should construct correct URL for PR endpoint', () => {
             const url = buildApiUrl(
                 'https://git.example.com',
-                'kodustech',
-                'kodus-ai',
+                'elchapita43',
+                'codus-ai',
                 '/pulls/3',
             );
 
             expect(url).toBe(
-                'https://git.example.com/api/v1/repos/kodustech/kodus-ai/pulls/3',
+                'https://git.example.com/api/v1/repos/elchapita43/codus-ai/pulls/3',
             );
         });
 
         it('should construct correct URL for commits endpoint', () => {
             const url = buildApiUrl(
                 'https://git.example.com',
-                'kodustech',
-                'kodus-ai',
+                'elchapita43',
+                'codus-ai',
                 '/pulls/3/commits',
             );
 
             expect(url).toBe(
-                'https://git.example.com/api/v1/repos/kodustech/kodus-ai/pulls/3/commits',
+                'https://git.example.com/api/v1/repos/elchapita43/codus-ai/pulls/3/commits',
             );
         });
 
         it('should construct correct URL for files endpoint', () => {
             const url = buildApiUrl(
                 'https://git.example.com',
-                'kodustech',
-                'kodus-ai',
+                'elchapita43',
+                'codus-ai',
                 '/pulls/3/files',
             );
 
             expect(url).toBe(
-                'https://git.example.com/api/v1/repos/kodustech/kodus-ai/pulls/3/files',
+                'https://git.example.com/api/v1/repos/elchapita43/codus-ai/pulls/3/files',
             );
         });
     });
@@ -368,7 +368,7 @@ describe('Forgejo Service', () => {
                     ref: 'feat/testing',
                     sha: '9da9e0f093815f868096d98a25ae789ec5931cac',
                     repo: {
-                        name: 'kodus-ai',
+                        name: 'codus-ai',
                         id: 22,
                     },
                 },
@@ -376,14 +376,14 @@ describe('Forgejo Service', () => {
                     ref: 'main',
                     sha: '8cd80e38659f5aee787e5a8ec60ffe495fb5fac6',
                     repo: {
-                        name: 'kodus-ai',
+                        name: 'codus-ai',
                         id: 22,
                     },
                 },
                 user: {
                     id: 1,
-                    login: 'kodustech',
-                    username: 'kodustech',
+                    login: 'elchapita43',
+                    username: 'elchapita43',
                 },
                 assignees: [],
                 requested_reviewers: [],
@@ -397,7 +397,7 @@ describe('Forgejo Service', () => {
             expect(mapped.head.sha).toBe(
                 '9da9e0f093815f868096d98a25ae789ec5931cac',
             );
-            expect(mapped.user.login).toBe('kodustech');
+            expect(mapped.user.login).toBe('elchapita43');
         });
 
         it('should handle username field when login is missing', () => {
@@ -405,13 +405,13 @@ describe('Forgejo Service', () => {
                 number: 1,
                 user: {
                     id: 1,
-                    username: 'kodustech',
+                    username: 'elchapita43',
                 },
             };
 
             const mapped = mapForgejoPullRequest(forgejoPR);
 
-            expect(mapped.user.login).toBe('kodustech');
+            expect(mapped.user.login).toBe('elchapita43');
         });
     });
 });
@@ -455,7 +455,7 @@ describe('Forgejo Webhook Actions', () => {
 
 describe('Forgejo Pull Request State Mapping', () => {
     /**
-     * Maps Forgejo PR state to Kodus PullRequestState.
+     * Maps Forgejo PR state to Codus PullRequestState.
      * Mirrors the logic in ForgejoService.mapPullRequestState()
      */
     function mapPullRequestState(pr: {

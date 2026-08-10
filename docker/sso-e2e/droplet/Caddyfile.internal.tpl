@@ -33,7 +33,7 @@
 
 app.${BASE} {
     tls internal
-    reverse_proxy kodus-web-prod:3000 {
+    reverse_proxy codus-web-prod:3000 {
         import proxy_common
     }
 }

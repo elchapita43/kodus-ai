@@ -1,4 +1,4 @@
-# Kodus feature catalog — single source of truth for feature lifecycle.
+# Codus feature catalog — single source of truth for feature lifecycle.
 #
 # - `key`: the PostHog feature flag key the runtime calls (e.g. `agent-review`).
 # - `stage`: lifecycle. draft | concept | alpha | beta | general-availability.

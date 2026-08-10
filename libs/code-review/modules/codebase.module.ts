@@ -10,22 +10,22 @@ import { CodeReviewPipelineModule } from '@libs/code-review/pipeline/code-review
 import { TokenChunkingModule } from '@libs/core/infrastructure/services/tokenChunking/tokenChunking.module';
 import CodeBaseConfigService from '@libs/ee/codeBase/codeBaseConfig.service';
 import {
-    KODY_RULES_ANALYSIS_SERVICE_TOKEN,
-    KodyRulesAnalysisService,
-} from '@libs/ee/codeBase/kodyRulesAnalysis.service';
+    CODY_RULES_ANALYSIS_SERVICE_TOKEN,
+    CodyRulesAnalysisService,
+} from '@libs/ee/codeBase/codyRulesAnalysis.service';
 import {
-    KODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
-    KodyRulesPrLevelAnalysisService,
-} from '@libs/ee/codeBase/kodyRulesPrLevelAnalysis.service';
+    CODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
+    CodyRulesPrLevelAnalysisService,
+} from '@libs/ee/codeBase/codyRulesPrLevelAnalysis.service';
 import { FileReviewModule } from '@libs/ee/codeReview/fileReviewContextPreparation/fileReview.module';
 import { LicenseModule } from '@libs/ee/license/license.module';
 import { PermissionValidationModule } from '@libs/ee/shared/permission-validation.module';
 import { IntegrationConfigCoreModule } from '@libs/integrations/modules/config-core.module';
 import { IntegrationCoreModule } from '@libs/integrations/modules/integrations-core.module';
-import { KodyFineTuningService } from '@libs/kodyFineTuning/infrastructure/adapters/services/kodyFineTuning.service';
-import { KodyFineTuningContextModule } from '@libs/kodyFineTuning/kodyFineTuningContext.module';
-import { SuggestionEmbeddedModule } from '@libs/kodyFineTuning/suggestionEmbedded.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyFineTuningService } from '@libs/codyFineTuning/infrastructure/adapters/services/codyFineTuning.service';
+import { CodyFineTuningContextModule } from '@libs/codyFineTuning/codyFineTuningContext.module';
+import { SuggestionEmbeddedModule } from '@libs/codyFineTuning/suggestionEmbedded.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { GlobalParametersModule } from '@libs/organization/modules/global-parameters.module';
 import { ParametersModule } from '@libs/organization/modules/parameters.module';
 import { TeamModule } from '@libs/organization/modules/team.module';
@@ -77,13 +77,13 @@ import { DocumentationContextModule } from './documentation-context.module';
         forwardRef(() => ParametersModule),
         forwardRef(() => PlatformModule),
         forwardRef(() => TeamModule),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => PullRequestsModule),
         forwardRef(() => SuggestionEmbeddedModule),
         forwardRef(() => CodeReviewFeedbackModule),
         forwardRef(() => FileReviewModule),
         forwardRef(() => CodeReviewPipelineModule),
-        forwardRef(() => KodyFineTuningContextModule),
+        forwardRef(() => CodyFineTuningContextModule),
         forwardRef(() => GlobalParametersModule),
         forwardRef(() => TokenChunkingModule),
         forwardRef(() => LicenseModule),
@@ -117,12 +117,12 @@ import { DocumentationContextModule } from './documentation-context.module';
             useClass: CommentManagerService,
         },
         {
-            provide: KODY_RULES_ANALYSIS_SERVICE_TOKEN,
-            useClass: KodyRulesAnalysisService,
+            provide: CODY_RULES_ANALYSIS_SERVICE_TOKEN,
+            useClass: CodyRulesAnalysisService,
         },
         {
-            provide: KODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
-            useClass: KodyRulesPrLevelAnalysisService,
+            provide: CODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
+            useClass: CodyRulesPrLevelAnalysisService,
         },
         {
             provide: COLLECT_CROSS_FILE_CONTEXTS_SERVICE_TOKEN,
@@ -142,7 +142,7 @@ import { DocumentationContextModule } from './documentation-context.module';
         },
         CodeAnalysisOrchestrator,
         CodeReviewHandlerService,
-        KodyFineTuningService,
+        CodyFineTuningService,
         CommentAnalysisService,
         MessageTemplateProcessor,
         pipelineProvider,
@@ -154,14 +154,14 @@ import { DocumentationContextModule } from './documentation-context.module';
         LLM_ANALYSIS_SERVICE_TOKEN,
         COMMENT_MANAGER_SERVICE_TOKEN,
         CODE_BASE_CONFIG_SERVICE_TOKEN,
-        KODY_RULES_ANALYSIS_SERVICE_TOKEN,
-        KODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
+        CODY_RULES_ANALYSIS_SERVICE_TOKEN,
+        CODY_RULES_PR_LEVEL_ANALYSIS_SERVICE_TOKEN,
         COLLECT_CROSS_FILE_CONTEXTS_SERVICE_TOKEN,
         CROSS_FILE_ANALYSIS_SERVICE_TOKEN,
         SUGGESTION_SERVICE_TOKEN,
         SandboxModule,
         CodeAnalysisOrchestrator,
-        KodyFineTuningService,
+        CodyFineTuningService,
         CodeReviewHandlerService,
         CommentAnalysisService,
         MessageTemplateProcessor,

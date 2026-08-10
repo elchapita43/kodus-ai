@@ -10081,7 +10081,7 @@
                                 {
                                     "disabled": false,
                                     "description": {
-                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                         "type": "text/plain"
                                     },
                                     "key": "category",
@@ -10214,7 +10214,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -10357,7 +10357,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -10500,7 +10500,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -10643,7 +10643,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -10786,7 +10786,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -10945,7 +10945,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                 "type": "text/plain"
                                             },
                                             "key": "category",
@@ -11079,7 +11079,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "category",
@@ -11223,7 +11223,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "category",
@@ -11367,7 +11367,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "category",
@@ -11511,7 +11511,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "category",
@@ -11655,7 +11655,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,kody_rules,breaking_changes,bug,performance,cross_file)",
+                                                        "content": " (This can only be one of performance_and_optimization,security,error_handling,refactoring,maintainability,potential_issues,code_style,documentation_and_comments,cody_rules,breaking_changes,bug,performance,cross_file)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "category",
@@ -12444,7 +12444,7 @@
             ]
         },
         {
-            "name": "kody-rules",
+            "name": "cody-rules",
             "description": "",
             "item": [
                 {
@@ -12462,7 +12462,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "create-or-update"
                                     ],
                                     "host": [
@@ -12509,7 +12509,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "create-or-update"
                                             ],
                                             "host": [
@@ -12566,7 +12566,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "create-or-update"
                                             ],
                                             "host": [
@@ -12623,7 +12623,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "create-or-update"
                                             ],
                                             "host": [
@@ -12680,7 +12680,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "create-or-update"
                                             ],
                                             "host": [
@@ -12737,7 +12737,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "create-or-update"
                                             ],
                                             "host": [
@@ -12811,7 +12811,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "find-by-organization-id"
                                     ],
                                     "host": [
@@ -12845,7 +12845,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-by-organization-id"
                                             ],
                                             "host": [
@@ -12889,7 +12889,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-by-organization-id"
                                             ],
                                             "host": [
@@ -12933,7 +12933,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-by-organization-id"
                                             ],
                                             "host": [
@@ -12977,7 +12977,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-by-organization-id"
                                             ],
                                             "host": [
@@ -13021,7 +13021,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-by-organization-id"
                                             ],
                                             "host": [
@@ -13077,12 +13077,12 @@
                             "request": {
                                 "name": "Get rules limit status",
                                 "description": {
-                                    "content": "Return the current kody rules limit usage.",
+                                    "content": "Return the current cody rules limit usage.",
                                     "type": "text/plain"
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "limits"
                                     ],
                                     "host": [
@@ -13116,7 +13116,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "limits"
                                             ],
                                             "host": [
@@ -13160,7 +13160,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "limits"
                                             ],
                                             "host": [
@@ -13204,7 +13204,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "limits"
                                             ],
                                             "host": [
@@ -13248,7 +13248,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "limits"
                                             ],
                                             "host": [
@@ -13292,7 +13292,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "limits"
                                             ],
                                             "host": [
@@ -13353,7 +13353,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "suggestions"
                                     ],
                                     "host": [
@@ -13397,7 +13397,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "suggestions"
                                             ],
                                             "host": [
@@ -13451,7 +13451,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "suggestions"
                                             ],
                                             "host": [
@@ -13505,7 +13505,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "suggestions"
                                             ],
                                             "host": [
@@ -13559,7 +13559,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "suggestions"
                                             ],
                                             "host": [
@@ -13613,7 +13613,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "suggestions"
                                             ],
                                             "host": [
@@ -13684,7 +13684,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "find-rules-in-organization-by-filter"
                                     ],
                                     "host": [
@@ -13755,7 +13755,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-rules-in-organization-by-filter"
                                             ],
                                             "host": [
@@ -13836,7 +13836,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-rules-in-organization-by-filter"
                                             ],
                                             "host": [
@@ -13917,7 +13917,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-rules-in-organization-by-filter"
                                             ],
                                             "host": [
@@ -13998,7 +13998,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-rules-in-organization-by-filter"
                                             ],
                                             "host": [
@@ -14079,7 +14079,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "find-rules-in-organization-by-filter"
                                             ],
                                             "host": [
@@ -14177,7 +14177,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "delete-rule-in-organization-by-id"
                                     ],
                                     "host": [
@@ -14221,7 +14221,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "delete-rule-in-organization-by-id"
                                             ],
                                             "host": [
@@ -14275,7 +14275,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "delete-rule-in-organization-by-id"
                                             ],
                                             "host": [
@@ -14329,7 +14329,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "delete-rule-in-organization-by-id"
                                             ],
                                             "host": [
@@ -14383,7 +14383,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "delete-rule-in-organization-by-id"
                                             ],
                                             "host": [
@@ -14437,7 +14437,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "delete-rule-in-organization-by-id"
                                             ],
                                             "host": [
@@ -14494,7 +14494,7 @@
                     ]
                 },
                 {
-                    "name": "find-library-kody-rules",
+                    "name": "find-library-cody-rules",
                     "description": "",
                     "item": [
                         {
@@ -14508,8 +14508,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "find-library-kody-rules"
+                                        "cody-rules",
+                                        "find-library-cody-rules"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -14634,8 +14634,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules"
+                                                "cody-rules",
+                                                "find-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -14752,8 +14752,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules"
+                                                "cody-rules",
+                                                "find-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -14870,8 +14870,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules"
+                                                "cody-rules",
+                                                "find-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -14988,8 +14988,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules"
+                                                "cody-rules",
+                                                "find-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15106,8 +15106,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules"
+                                                "cody-rules",
+                                                "find-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15227,7 +15227,7 @@
                     ]
                 },
                 {
-                    "name": "find-library-kody-rules-with-feedback",
+                    "name": "find-library-cody-rules-with-feedback",
                     "description": "",
                     "item": [
                         {
@@ -15241,8 +15241,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "find-library-kody-rules-with-feedback"
+                                        "cody-rules",
+                                        "find-library-cody-rules-with-feedback"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -15375,8 +15375,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-with-feedback"
+                                                "cody-rules",
+                                                "find-library-cody-rules-with-feedback"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15501,8 +15501,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-with-feedback"
+                                                "cody-rules",
+                                                "find-library-cody-rules-with-feedback"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15627,8 +15627,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-with-feedback"
+                                                "cody-rules",
+                                                "find-library-cody-rules-with-feedback"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15753,8 +15753,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-with-feedback"
+                                                "cody-rules",
+                                                "find-library-cody-rules-with-feedback"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -15879,8 +15879,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-with-feedback"
+                                                "cody-rules",
+                                                "find-library-cody-rules-with-feedback"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16008,7 +16008,7 @@
                     ]
                 },
                 {
-                    "name": "find-library-kody-rules-buckets",
+                    "name": "find-library-cody-rules-buckets",
                     "description": "",
                     "item": [
                         {
@@ -16017,13 +16017,13 @@
                             "request": {
                                 "name": "List library buckets",
                                 "description": {
-                                    "content": "Return available kody rules buckets.",
+                                    "content": "Return available cody rules buckets.",
                                     "type": "text/plain"
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "find-library-kody-rules-buckets"
+                                        "cody-rules",
+                                        "find-library-cody-rules-buckets"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -16048,8 +16048,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-buckets"
+                                                "cody-rules",
+                                                "find-library-cody-rules-buckets"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16084,8 +16084,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-buckets"
+                                                "cody-rules",
+                                                "find-library-cody-rules-buckets"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16120,8 +16120,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-buckets"
+                                                "cody-rules",
+                                                "find-library-cody-rules-buckets"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16156,8 +16156,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-buckets"
+                                                "cody-rules",
+                                                "find-library-cody-rules-buckets"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16192,8 +16192,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-library-kody-rules-buckets"
+                                                "cody-rules",
+                                                "find-library-cody-rules-buckets"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16231,7 +16231,7 @@
                     ]
                 },
                 {
-                    "name": "find-recommended-kody-rules",
+                    "name": "find-recommended-cody-rules",
                     "description": "",
                     "item": [
                         {
@@ -16245,8 +16245,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "find-recommended-kody-rules"
+                                        "cody-rules",
+                                        "find-recommended-cody-rules"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -16289,8 +16289,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-recommended-kody-rules"
+                                                "cody-rules",
+                                                "find-recommended-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16343,8 +16343,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-recommended-kody-rules"
+                                                "cody-rules",
+                                                "find-recommended-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16397,8 +16397,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-recommended-kody-rules"
+                                                "cody-rules",
+                                                "find-recommended-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16451,8 +16451,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-recommended-kody-rules"
+                                                "cody-rules",
+                                                "find-recommended-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16505,8 +16505,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "find-recommended-kody-rules"
+                                                "cody-rules",
+                                                "find-recommended-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16562,7 +16562,7 @@
                     ]
                 },
                 {
-                    "name": "add-library-kody-rules",
+                    "name": "add-library-cody-rules",
                     "description": "",
                     "item": [
                         {
@@ -16576,8 +16576,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "add-library-kody-rules"
+                                        "cody-rules",
+                                        "add-library-cody-rules"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -16623,8 +16623,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "add-library-kody-rules"
+                                                "cody-rules",
+                                                "add-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16680,8 +16680,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "add-library-kody-rules"
+                                                "cody-rules",
+                                                "add-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16737,8 +16737,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "add-library-kody-rules"
+                                                "cody-rules",
+                                                "add-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16794,8 +16794,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "add-library-kody-rules"
+                                                "cody-rules",
+                                                "add-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16851,8 +16851,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "add-library-kody-rules"
+                                                "cody-rules",
+                                                "add-library-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -16911,7 +16911,7 @@
                     ]
                 },
                 {
-                    "name": "generate-kody-rules",
+                    "name": "generate-cody-rules",
                     "description": "",
                     "item": [
                         {
@@ -16925,8 +16925,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "generate-kody-rules"
+                                        "cody-rules",
+                                        "generate-cody-rules"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -16972,8 +16972,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "generate-kody-rules"
+                                                "cody-rules",
+                                                "generate-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17029,8 +17029,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "generate-kody-rules"
+                                                "cody-rules",
+                                                "generate-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17086,8 +17086,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "generate-kody-rules"
+                                                "cody-rules",
+                                                "generate-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17143,8 +17143,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "generate-kody-rules"
+                                                "cody-rules",
+                                                "generate-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17200,8 +17200,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "generate-kody-rules"
+                                                "cody-rules",
+                                                "generate-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17260,7 +17260,7 @@
                     ]
                 },
                 {
-                    "name": "change-status-kody-rules",
+                    "name": "change-status-cody-rules",
                     "description": "",
                     "item": [
                         {
@@ -17274,8 +17274,8 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
-                                        "change-status-kody-rules"
+                                        "cody-rules",
+                                        "change-status-cody-rules"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -17321,8 +17321,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "change-status-kody-rules"
+                                                "cody-rules",
+                                                "change-status-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17378,8 +17378,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "change-status-kody-rules"
+                                                "cody-rules",
+                                                "change-status-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17435,8 +17435,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "change-status-kody-rules"
+                                                "cody-rules",
+                                                "change-status-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17492,8 +17492,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "change-status-kody-rules"
+                                                "cody-rules",
+                                                "change-status-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17549,8 +17549,8 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
-                                                "change-status-kody-rules"
+                                                "cody-rules",
+                                                "change-status-cody-rules"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -17623,7 +17623,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "check-sync-status"
                                     ],
                                     "host": [
@@ -17676,7 +17676,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "check-sync-status"
                                             ],
                                             "host": [
@@ -17729,7 +17729,7 @@
                                             "value": "application/json"
                                         }
                                     ],
-                                    "body": "{\n  \"statusCode\": \"<number>\",\n  \"type\": \"<string>\",\n  \"data\": {\n    \"ideRulesSyncEnabledFirstTime\": \"<boolean>\",\n    \"kodyRulesGeneratorEnabledFirstTime\": \"<boolean>\"\n  }\n}",
+                                    "body": "{\n  \"statusCode\": \"<number>\",\n  \"type\": \"<string>\",\n  \"data\": {\n    \"ideRulesSyncEnabledFirstTime\": \"<boolean>\",\n    \"codyRulesGeneratorEnabledFirstTime\": \"<boolean>\"\n  }\n}",
                                     "cookie": [],
                                     "_postman_previewlanguage": "json"
                                 },
@@ -17739,7 +17739,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "check-sync-status"
                                             ],
                                             "host": [
@@ -17802,7 +17802,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "check-sync-status"
                                             ],
                                             "host": [
@@ -17865,7 +17865,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "check-sync-status"
                                             ],
                                             "host": [
@@ -17928,7 +17928,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "check-sync-status"
                                             ],
                                             "host": [
@@ -18008,7 +18008,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "sync-ide-rules"
                                     ],
                                     "host": [
@@ -18042,7 +18042,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "sync-ide-rules"
                                             ],
                                             "host": [
@@ -18076,7 +18076,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "sync-ide-rules"
                                             ],
                                             "host": [
@@ -18120,7 +18120,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "sync-ide-rules"
                                             ],
                                             "host": [
@@ -18164,7 +18164,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "sync-ide-rules"
                                             ],
                                             "host": [
@@ -18208,7 +18208,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "sync-ide-rules"
                                             ],
                                             "host": [
@@ -18269,7 +18269,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "fast-sync-ide-rules"
                                     ],
                                     "host": [
@@ -18303,7 +18303,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "fast-sync-ide-rules"
                                             ],
                                             "host": [
@@ -18347,7 +18347,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "fast-sync-ide-rules"
                                             ],
                                             "host": [
@@ -18391,7 +18391,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "fast-sync-ide-rules"
                                             ],
                                             "host": [
@@ -18435,7 +18435,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "fast-sync-ide-rules"
                                             ],
                                             "host": [
@@ -18479,7 +18479,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "fast-sync-ide-rules"
                                             ],
                                             "host": [
@@ -18540,7 +18540,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "pending-ide-rules"
                                     ],
                                     "host": [
@@ -18593,7 +18593,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "pending-ide-rules"
                                             ],
                                             "host": [
@@ -18656,7 +18656,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "pending-ide-rules"
                                             ],
                                             "host": [
@@ -18719,7 +18719,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "pending-ide-rules"
                                             ],
                                             "host": [
@@ -18782,7 +18782,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "pending-ide-rules"
                                             ],
                                             "host": [
@@ -18845,7 +18845,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "pending-ide-rules"
                                             ],
                                             "host": [
@@ -18925,7 +18925,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "import-fast-ide-rules"
                                     ],
                                     "host": [
@@ -18972,7 +18972,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "import-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19029,7 +19029,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "import-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19086,7 +19086,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "import-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19143,7 +19143,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "import-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19200,7 +19200,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "import-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19274,7 +19274,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "review-fast-ide-rules"
                                     ],
                                     "host": [
@@ -19321,7 +19321,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "review-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19378,7 +19378,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "review-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19435,7 +19435,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "review-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19492,7 +19492,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "review-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19549,7 +19549,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "review-fast-ide-rules"
                                             ],
                                             "host": [
@@ -19623,7 +19623,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "inherited-rules"
                                     ],
                                     "host": [
@@ -19685,7 +19685,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "inherited-rules"
                                             ],
                                             "host": [
@@ -19757,7 +19757,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "inherited-rules"
                                             ],
                                             "host": [
@@ -19829,7 +19829,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "inherited-rules"
                                             ],
                                             "host": [
@@ -19901,7 +19901,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "inherited-rules"
                                             ],
                                             "host": [
@@ -19973,7 +19973,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "inherited-rules"
                                             ],
                                             "host": [
@@ -20062,7 +20062,7 @@
                                 },
                                 "url": {
                                     "path": [
-                                        "kody-rules",
+                                        "cody-rules",
                                         "resync-ide-rules"
                                     ],
                                     "host": [
@@ -20096,7 +20096,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "resync-ide-rules"
                                             ],
                                             "host": [
@@ -20130,7 +20130,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "resync-ide-rules"
                                             ],
                                             "host": [
@@ -20174,7 +20174,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "resync-ide-rules"
                                             ],
                                             "host": [
@@ -20218,7 +20218,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "resync-ide-rules"
                                             ],
                                             "host": [
@@ -20262,7 +20262,7 @@
                                     "originalRequest": {
                                         "url": {
                                             "path": [
-                                                "kody-rules",
+                                                "cody-rules",
                                                 "resync-ide-rules"
                                             ],
                                             "host": [
@@ -25026,7 +25026,7 @@
                                             "value": "application/json"
                                         }
                                     ],
-                                    "body": "{\n  \"statusCode\": \"<number>\",\n  \"type\": \"<string>\",\n  \"data\": {\n    \"automatedReviewActive\": \"<boolean>\",\n    \"kodusConfigFileOverridesWebPreferences\": \"<boolean>\",\n    \"reviewCadence\": {\n      \"type\": \"<string>\",\n      \"timeWindow\": \"<number>\",\n      \"pushesToTrigger\": \"<number>\"\n    },\n    \"pullRequestApprovalActive\": \"<boolean>\",\n    \"isRequestChangesActive\": \"<boolean>\",\n    \"runOnDraft\": \"<boolean>\",\n    \"ignorePaths\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ignoredTitleKeywords\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseBranches\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enableCommittableSuggestions\": \"<boolean>\",\n    \"codeReviewVersion\": \"<string>\",\n    \"reviewOptions\": {\n      \"bug\": \"<boolean>\",\n      \"performance\": \"<boolean>\",\n      \"security\": \"<boolean>\",\n      \"cross_file\": \"<boolean>\"\n    },\n    \"suggestionControl\": {\n      \"groupingMode\": \"<string>\",\n      \"applyFiltersToKodyRules\": \"<boolean>\",\n      \"limitationType\": \"<string>\",\n      \"maxSuggestions\": \"<number>\",\n      \"severityLevelFilter\": \"<string>\",\n      \"severityLimits\": {\n        \"low\": \"<number>\",\n        \"medium\": \"<number>\",\n        \"high\": \"<number>\",\n        \"critical\": \"<number>\"\n      }\n    },\n    \"summary\": {\n      \"generatePRSummary\": \"<boolean>\",\n      \"behaviourForNewCommits\": \"<string>\",\n      \"behaviourForExistingDescription\": \"<string>\",\n      \"customInstructions\": \"<string>\"\n    },\n    \"ideRulesSyncEnabled\": \"<boolean>\",\n    \"kodyRulesGeneratorEnabled\": \"<boolean>\",\n    \"customMessages\": {\n      \"globalSettings\": {\n        \"hideComments\": \"<boolean>\",\n        \"suggestionCopyPrompt\": \"<boolean>\"\n      },\n      \"startReviewMessage\": {\n        \"status\": \"<string>\",\n        \"content\": \"<string>\"\n      },\n      \"endReviewMessage\": {\n        \"status\": \"<string>\",\n        \"content\": \"<string>\"\n      }\n    },\n    \"v2PromptOverrides\": {\n      \"key_0\": \"string\",\n      \"key_1\": true\n    }\n  }\n}",
+                                    "body": "{\n  \"statusCode\": \"<number>\",\n  \"type\": \"<string>\",\n  \"data\": {\n    \"automatedReviewActive\": \"<boolean>\",\n    \"codusConfigFileOverridesWebPreferences\": \"<boolean>\",\n    \"reviewCadence\": {\n      \"type\": \"<string>\",\n      \"timeWindow\": \"<number>\",\n      \"pushesToTrigger\": \"<number>\"\n    },\n    \"pullRequestApprovalActive\": \"<boolean>\",\n    \"isRequestChangesActive\": \"<boolean>\",\n    \"runOnDraft\": \"<boolean>\",\n    \"ignorePaths\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ignoredTitleKeywords\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"baseBranches\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enableCommittableSuggestions\": \"<boolean>\",\n    \"codeReviewVersion\": \"<string>\",\n    \"reviewOptions\": {\n      \"bug\": \"<boolean>\",\n      \"performance\": \"<boolean>\",\n      \"security\": \"<boolean>\",\n      \"cross_file\": \"<boolean>\"\n    },\n    \"suggestionControl\": {\n      \"groupingMode\": \"<string>\",\n      \"applyFiltersToCodyRules\": \"<boolean>\",\n      \"limitationType\": \"<string>\",\n      \"maxSuggestions\": \"<number>\",\n      \"severityLevelFilter\": \"<string>\",\n      \"severityLimits\": {\n        \"low\": \"<number>\",\n        \"medium\": \"<number>\",\n        \"high\": \"<number>\",\n        \"critical\": \"<number>\"\n      }\n    },\n    \"summary\": {\n      \"generatePRSummary\": \"<boolean>\",\n      \"behaviourForNewCommits\": \"<string>\",\n      \"behaviourForExistingDescription\": \"<string>\",\n      \"customInstructions\": \"<string>\"\n    },\n    \"ideRulesSyncEnabled\": \"<boolean>\",\n    \"codyRulesGeneratorEnabled\": \"<boolean>\",\n    \"customMessages\": {\n      \"globalSettings\": {\n        \"hideComments\": \"<boolean>\",\n        \"suggestionCopyPrompt\": \"<boolean>\"\n      },\n      \"startReviewMessage\": {\n        \"status\": \"<string>\",\n        \"content\": \"<string>\"\n      },\n      \"endReviewMessage\": {\n        \"status\": \"<string>\",\n        \"content\": \"<string>\"\n      }\n    },\n    \"v2PromptOverrides\": {\n      \"key_0\": \"string\",\n      \"key_1\": true\n    }\n  }\n}",
                                     "cookie": [],
                                     "_postman_previewlanguage": "json"
                                 },
@@ -25215,14 +25215,14 @@
                     ]
                 },
                 {
-                    "name": "generate-kodus-config-file",
+                    "name": "generate-codus-config-file",
                     "description": "",
                     "item": [
                         {
                             "id": "ea5e43e7-779e-47bb-ac72-429f38e31edf",
-                            "name": "Generate Kodus config file",
+                            "name": "Generate Codus config file",
                             "request": {
-                                "name": "Generate Kodus config file",
+                                "name": "Generate Codus config file",
                                 "description": {
                                     "content": "Return a YAML config file for the repository/team.",
                                     "type": "text/plain"
@@ -25230,7 +25230,7 @@
                                 "url": {
                                     "path": [
                                         "parameters",
-                                        "generate-kodus-config-file"
+                                        "generate-codus-config-file"
                                     ],
                                     "host": [
                                         "{{baseUrl}}"
@@ -25292,7 +25292,7 @@
                                         "url": {
                                             "path": [
                                                 "parameters",
-                                                "generate-kodus-config-file"
+                                                "generate-codus-config-file"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -25364,7 +25364,7 @@
                                         "url": {
                                             "path": [
                                                 "parameters",
-                                                "generate-kodus-config-file"
+                                                "generate-codus-config-file"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -25436,7 +25436,7 @@
                                         "url": {
                                             "path": [
                                                 "parameters",
-                                                "generate-kodus-config-file"
+                                                "generate-codus-config-file"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -25508,7 +25508,7 @@
                                         "url": {
                                             "path": [
                                                 "parameters",
-                                                "generate-kodus-config-file"
+                                                "generate-codus-config-file"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -25580,7 +25580,7 @@
                                         "url": {
                                             "path": [
                                                 "parameters",
-                                                "generate-kodus-config-file"
+                                                "generate-codus-config-file"
                                             ],
                                             "host": [
                                                 "{{baseUrl}}"
@@ -26731,7 +26731,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                 "type": "text/plain"
                                             },
                                             "key": "key",
@@ -26775,7 +26775,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "key",
@@ -26829,7 +26829,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "key",
@@ -26883,7 +26883,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "key",
@@ -26937,7 +26937,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "key",
@@ -26991,7 +26991,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,kody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
+                                                        "content": "(Required)  (This can only be one of category_workitems_type,timezone_config,review_mode_config,cody_fine_tuning_config,auto_join_config,byok_config,cockpit_metrics_visibility,dry_run_limit,auto_license_assignment,code_review_preset)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "key",
@@ -41012,7 +41012,7 @@
                                         {
                                             "disabled": false,
                                             "description": {
-                                                "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                 "type": "text/plain"
                                             },
                                             "key": "resource",
@@ -41065,7 +41065,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "resource",
@@ -41128,7 +41128,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "resource",
@@ -41191,7 +41191,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "resource",
@@ -41254,7 +41254,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "resource",
@@ -41317,7 +41317,7 @@
                                                 {
                                                     "disabled": false,
                                                     "description": {
-                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,kody_rules)",
+                                                        "content": "(Required)  (This can only be one of all,pull_requests,issues,cockpit,billing,code_review_settings,issues_settings,git_settings,user_settings,organization_settings,plugin_settings,logs,cody_rules)",
                                                         "type": "text/plain"
                                                     },
                                                     "key": "resource",
@@ -51700,10 +51700,10 @@
     ],
     "info": {
         "_postman_id": "1e03d190-4bde-4b63-80f6-617ae4d296b0",
-        "name": "Kodus API",
+        "name": "Codus API",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": {
-            "content": "Public API for the Kodus platform.",
+            "content": "Public API for the Codus platform.",
             "type": "text/plain"
         }
     },

@@ -249,7 +249,7 @@ describe('CreateSandboxStage', () => {
             // Invoke cleanup — should call release, not kill
             await result.sandboxHandle.cleanup();
             // Review flow shrinks the idle window to 30s (REVIEW_IDLE_TIMEOUT_MS)
-            // so the sandbox pauses fast when no @kody arrives.
+            // so the sandbox pauses fast when no @cody arrives.
             expect(mockLeaseManager.release).toHaveBeenCalledWith(
                 'test-lease-id',
                 { idleMs: 30_000 },

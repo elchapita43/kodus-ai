@@ -21,9 +21,9 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@components/ui/tooltip";
-import { useKodyRulesCount } from "@services/kodyRules/hooks";
+import { useCodyRulesCount } from "@services/codyRules/hooks";
 import type { useSuspenseGetParameterPlatformConfigs } from "@services/parameters/hooks";
-import { KodyLearningStatus } from "@services/parameters/types";
+import { CodyLearningStatus } from "@services/parameters/types";
 import { usePermission } from "@services/permissions/hooks";
 import { Action, ResourceType } from "@services/permissions/types";
 import { useCustomMessagesOverrideCountsByRepository } from "@services/pull-request-messages/hooks";
@@ -74,7 +74,7 @@ const RepositoryCollapsibleItem = ({
             shouldFetchRepositoryCounts,
         );
 
-    const repositoryKodyRulesCount = useKodyRulesCount(
+    const repositoryCodyRulesCount = useCodyRulesCount(
         repository.id,
         undefined,
         shouldFetchRepositoryCounts,
@@ -110,7 +110,7 @@ const RepositoryCollapsibleItem = ({
     const overrideCount =
         repositoryConfigOverrideCount +
         repositoryCustomMessagesOverrideCount +
-        repositoryKodyRulesCount +
+        repositoryCodyRulesCount +
         nestedDirectoryOverrideCount;
 
     return (
@@ -183,8 +183,8 @@ const RepositoryCollapsibleItem = ({
                                         customMessagesOverrideCount={
                                             repositoryCustomMessagesOverrideCount
                                         }
-                                        kodyRulesOverrideCount={
-                                            repositoryKodyRulesCount
+                                        codyRulesOverrideCount={
+                                            repositoryCodyRulesCount
                                         }
                                     />
                                 </SidebarMenuSubItem>
@@ -304,8 +304,8 @@ export const PerRepository = ({
                         }}
                         disabled={
                             !canCreate ||
-                            platformConfig.configValue.kodyLearningStatus ===
-                                KodyLearningStatus.GENERATING_CONFIG
+                            platformConfig.configValue.codyLearningStatus ===
+                                CodyLearningStatus.GENERATING_CONFIG
                         }>
                         <Plus />
                     </Button>

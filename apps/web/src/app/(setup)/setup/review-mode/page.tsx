@@ -111,7 +111,7 @@ export default function ReviewSetupPage() {
                     <div className="flex flex-col gap-4">
                         <Heading variant="h2">Minimum severity level</Heading>
                         <span className="text-text-secondary text-sm">
-                            Kody will only post suggestions from this severity
+                            Cody will only post suggestions from this severity
                             and higher.
                         </span>
 

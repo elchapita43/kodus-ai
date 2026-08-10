@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GraphIndexerService } from '@libs/code-review/infrastructure/adapters/services/graph/graph-indexer.service';
-import { KodusGraphCli } from '@libs/code-review/infrastructure/adapters/services/graph/kodus-graph-cli';
+import { CodusGraphCli } from '@libs/code-review/infrastructure/adapters/services/graph/codus-graph-cli';
 import { AstGraphRepository } from '@libs/code-review/infrastructure/adapters/repositories/astGraph.repository';
 import {
     IRepositoryService,
@@ -105,7 +105,7 @@ describe('GraphIndexerService', () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 GraphIndexerService,
-                KodusGraphCli,
+                CodusGraphCli,
                 { provide: AstGraphRepository, useValue: mockAstGraphRepo },
                 {
                     provide: REPOSITORY_SERVICE_TOKEN,
@@ -118,7 +118,7 @@ describe('GraphIndexerService', () => {
     });
 
     describe('fullBuild', () => {
-        it('should install kodus-graph then parse the repo', async () => {
+        it('should install codus-graph then parse the repo', async () => {
             await service.fullBuild({
                 repositoryId: REPO_ID,
                 sandbox: mockSandbox,
@@ -130,18 +130,18 @@ describe('GraphIndexerService', () => {
                 cmd.includes('bun install'),
             );
             const parseIdx = findRunIndex(mockSandbox, (cmd) =>
-                cmd.includes('kodus-graph parse --all'),
+                cmd.includes('codus-graph parse --all'),
             );
 
             expect(installIdx).toBeGreaterThanOrEqual(0);
             expect(parseIdx).toBeGreaterThan(installIdx);
-            expect(runCmd(mockSandbox, installIdx)).toContain('kodus-graph');
+            expect(runCmd(mockSandbox, installIdx)).toContain('codus-graph');
         });
 
-        it('should find preinstalled kodus-graph through the Bun global bin path', async () => {
+        it('should find preinstalled codus-graph through the Bun global bin path', async () => {
             mockSandbox.run
                 .mockResolvedValueOnce({
-                    stdout: '/home/node/.bun/bin/kodus-graph\n0.3.0',
+                    stdout: '/home/node/.bun/bin/codus-graph\n0.3.0',
                     stderr: '',
                     exitCode: 0,
                 })
@@ -155,7 +155,7 @@ describe('GraphIndexerService', () => {
 
             const checkCmd = runCmd(mockSandbox, 0);
             expect(checkCmd).toContain('export PATH="$HOME/.bun/bin:$PATH"');
-            expect(checkCmd).toContain('which kodus-graph');
+            expect(checkCmd).toContain('which codus-graph');
             expect(
                 mockSandbox.run.mock.calls.some((call) =>
                     (call[0] as string).includes('bun install'),
@@ -163,7 +163,7 @@ describe('GraphIndexerService', () => {
             ).toBe(false);
             expect(
                 findRunIndex(mockSandbox, (cmd) =>
-                    cmd.includes('kodus-graph parse --all'),
+                    cmd.includes('codus-graph parse --all'),
                 ),
             ).toBeGreaterThan(0);
         });
@@ -193,7 +193,7 @@ describe('GraphIndexerService', () => {
             });
 
             const parseIdx = findRunIndex(customSandbox, (cmd) =>
-                cmd.includes('kodus-graph parse --all'),
+                cmd.includes('codus-graph parse --all'),
             );
             const parseCmd = runCmd(customSandbox, parseIdx);
             expect(parseCmd).toContain('cd /workspace/my-repo');
@@ -268,7 +268,7 @@ describe('GraphIndexerService', () => {
                     sandbox: mockSandbox,
                     headSha: HEAD_SHA,
                 }),
-            ).rejects.toThrow('kodus-graph parse --all failed');
+            ).rejects.toThrow('codus-graph parse --all failed');
 
             expect(mockRepositoryRepo.updateGraphStatus).toHaveBeenCalledWith(
                 REPO_ID,
@@ -310,7 +310,7 @@ describe('GraphIndexerService', () => {
                     sandbox: mockSandbox,
                     headSha: HEAD_SHA,
                 }),
-            ).rejects.toThrow('kodus-graph install failed');
+            ).rejects.toThrow('codus-graph install failed');
 
             expect(mockRepositoryRepo.updateGraphStatus).toHaveBeenCalledWith(
                 REPO_ID,
@@ -340,7 +340,7 @@ describe('GraphIndexerService', () => {
         const changedFiles = ['src/foo.ts', 'src/bar.ts'];
         const newSha = 'new-sha-789';
 
-        it('should pass changed files to kodus-graph parse --files', async () => {
+        it('should pass changed files to codus-graph parse --files', async () => {
             await service.incrementalUpdate({
                 repositoryId: REPO_ID,
                 sandbox: mockSandbox,
@@ -349,7 +349,7 @@ describe('GraphIndexerService', () => {
             });
 
             const parseIdx = findRunIndex(mockSandbox, (cmd) =>
-                cmd.includes('kodus-graph parse --files'),
+                cmd.includes('codus-graph parse --files'),
             );
             expect(parseIdx).toBeGreaterThanOrEqual(0);
 
@@ -411,7 +411,7 @@ describe('GraphIndexerService', () => {
                     changedFiles,
                     newSha,
                 }),
-            ).rejects.toThrow('kodus-graph parse --files failed');
+            ).rejects.toThrow('codus-graph parse --files failed');
 
             const failedCalls =
                 mockRepositoryRepo.updateGraphStatus.mock.calls.filter(
@@ -433,7 +433,7 @@ describe('GraphIndexerService', () => {
             });
 
             const parseIdx = findRunIndex(customSandbox, (cmd) =>
-                cmd.includes('kodus-graph parse --files'),
+                cmd.includes('codus-graph parse --files'),
             );
             const parseCmd = runCmd(customSandbox, parseIdx);
             expect(parseCmd).toContain('cd /workspace/project');

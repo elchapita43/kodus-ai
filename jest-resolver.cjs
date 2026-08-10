@@ -1,6 +1,6 @@
 /**
  * Custom Jest resolver that handles ESM-style .js imports to .ts files
- * This is needed because the local TS packages (e.g. kodus-common) use .js
+ * This is needed because the local TS packages (e.g. codus-common) use .js
  * extensions in imports (ESM style) but we want Jest to resolve them to the
  * corresponding .ts files
  */

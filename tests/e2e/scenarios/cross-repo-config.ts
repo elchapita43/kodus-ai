@@ -36,8 +36,8 @@ export const crossRepoConfig: Scenario = {
             'scenario requires a tenant (set CLOUD_TENANT_*_EMAIL or SH_TENANT_EMAIL)',
         );
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
         const baseUrl = ctx.target.apiBaseUrl;
         const teamId = session.teamId;
         const auth = {

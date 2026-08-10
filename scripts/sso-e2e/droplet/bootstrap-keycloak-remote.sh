@@ -3,17 +3,17 @@
 #
 # Runs ON THE DROPLET (provision.sh ships it over via SSH). Reaches
 # Keycloak through the public Caddy URL so the SAML metadata that
-# bootstrap-kodus-sso.sh later extracts already uses the public
+# bootstrap-codus-sso.sh later extracts already uses the public
 # hostnames the API/web will redirect through.
 #
 # Inputs (env or args):
 #   KC_BASE_URL            https://kc.<IP>.sslip.io       (required)
 #   KC_ADMIN_PASSWORD      admin password                 (required)
 #   API_BASE_URL           https://api.<IP>.sslip.io      (required — used in ACS URL)
-#   ORG_ID                 Kodus org id (optional first pass; second pass after Kodus signup)
-#   REALM                  default: kodus-sso-e2e
-#   CLIENT_ID              default: kodus-orchestrator
-#   USER_EMAIL             default: sso-user@kodus-test.com
+#   ORG_ID                 Codus org id (optional first pass; second pass after Codus signup)
+#   REALM                  default: codus-sso-e2e
+#   CLIENT_ID              default: codus-orchestrator
+#   USER_EMAIL             default: sso-user@codus-test.com
 #   USER_PASSWORD          default: TestSso!2026
 #
 # Outputs (printed as JSON to stdout):
@@ -27,9 +27,9 @@ KC_BASE_URL="${KC_BASE_URL:?missing KC_BASE_URL}"
 KC_ADMIN_PASSWORD="${KC_ADMIN_PASSWORD:?missing KC_ADMIN_PASSWORD}"
 API_BASE_URL="${API_BASE_URL:?missing API_BASE_URL}"
 ORG_ID="${ORG_ID:-*}"
-REALM="${REALM:-kodus-sso-e2e}"
-CLIENT_ID="${CLIENT_ID:-kodus-orchestrator}"
-USER_EMAIL="${USER_EMAIL:-sso-user@kodus-test.com}"
+REALM="${REALM:-codus-sso-e2e}"
+CLIENT_ID="${CLIENT_ID:-codus-orchestrator}"
+USER_EMAIL="${USER_EMAIL:-sso-user@codus-test.com}"
 USER_PASSWORD="${USER_PASSWORD:-TestSso!2026}"
 
 # Wait for Keycloak to come up behind Caddy. ACME issuance on a freshly
@@ -146,7 +146,7 @@ else
     echo "==> user ${USER_EMAIL} exists" >&2
 fi
 
-# 4. IdP descriptor (entry point + signing cert) for Kodus SSO config.
+# 4. IdP descriptor (entry point + signing cert) for Codus SSO config.
 ENTRY_POINT="${KC_BASE_URL}/realms/${REALM}/protocol/saml"
 IDP_ISSUER="${KC_BASE_URL}/realms/${REALM}"
 # Extract the SAML signing cert from the realm's SAML descriptor XML
@@ -155,7 +155,7 @@ IDP_ISSUER="${KC_BASE_URL}/realms/${REALM}"
 # Keycloak 26.5 sometimes uses a dedicated SAML signing key that isn't
 # the same as the first RS256 SIG key returned by /keys. Parsing it
 # from the descriptor matches what KC actually advertises as its SAML
-# signing certificate to any SP — which is what Kodus's SAML strategy
+# signing certificate to any SP — which is what Codus's SAML strategy
 # needs to validate signatures.
 CERT=$(curl -sfk "${KC_BASE_URL}/realms/${REALM}/protocol/saml/descriptor" \
     | python3 -c "

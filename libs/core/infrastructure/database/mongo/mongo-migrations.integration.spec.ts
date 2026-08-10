@@ -19,9 +19,9 @@ import {
     dropTokenUsageIndexes,
 } from './token-usage/ensure-indexes';
 import { backfillTokenUsageTu } from './token-usage/backfill-tu';
-import { migrateKodyRulesOriginRequestType } from './kody-rules/migrate-origin-request-type';
+import { migrateCodyRulesOriginRequestType } from './cody-rules/migrate-origin-request-type';
 
-const TEST_DB = 'kodus_migration_it';
+const TEST_DB = 'codus_migration_it';
 const TELEMETRY = 'observability_telemetry';
 
 let client: MongoClient | null = null;
@@ -164,10 +164,10 @@ describe('token-usage migration (integration)', () => {
     });
 });
 
-describe('kody-rules migration (integration)', () => {
+describe('cody-rules migration (integration)', () => {
     it('remaps legacy origin/requestType and is idempotent', async () => {
         if (!available) return;
-        const c = db.collection('kodyRules');
+        const c = db.collection('codyRules');
         await c.deleteMany({});
         await c.insertOne({
             organizationId: 'org-it',
@@ -180,7 +180,7 @@ describe('kody-rules migration (integration)', () => {
             ],
         });
 
-        const first = await migrateKodyRulesOriginRequestType(db);
+        const first = await migrateCodyRulesOriginRequestType(db);
         expect(first.docsUpdated).toBe(1);
         expect(first.rulesMigrated).toBe(4); // a,b,c,d change; e untouched
 
@@ -194,7 +194,7 @@ describe('kody-rules migration (integration)', () => {
         expect(byUuid.d.requestType).toBe('create');
         expect(byUuid.e.origin).toBe('manual');
 
-        const second = await migrateKodyRulesOriginRequestType(db);
+        const second = await migrateCodyRulesOriginRequestType(db);
         expect(second.rulesMigrated).toBe(0); // idempotent
     });
 });

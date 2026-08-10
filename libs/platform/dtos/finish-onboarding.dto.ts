@@ -17,7 +17,7 @@ export class FinishOnboardingDTO {
 
     @IsOptional()
     @IsString()
-    @ApiPropertyOptional({ example: 'kodus-ai' })
+    @ApiPropertyOptional({ example: 'codus-ai' })
     repositoryName?: string;
 
     @IsOptional()

@@ -37,7 +37,7 @@ export const RunOnDraft = () => {
                             </div>
 
                             <p className="text-text-secondary text-sm">
-                                If enabled, Kody will run automated code reviews
+                                If enabled, Cody will run automated code reviews
                                 on draft Pull Requests and provide feedback,
                                 even if the Pull Request is not ready for
                                 review.

@@ -17,7 +17,7 @@ type MockTransport = {
 
 function makeMetrics(version = '1.2.3') {
     return {
-        kodus: {
+        codus: {
             version,
             deployment: 'docker' as const,
             uptime_hours: 5,
@@ -40,7 +40,7 @@ function makeMetrics(version = '1.2.3') {
             suggestions_applied: 0,
         },
         config: {
-            kody_rules_enabled: true,
+            cody_rules_enabled: true,
             agent_review_repos_pct: 0,
             integrations: ['github', 'slack'],
         },
@@ -265,7 +265,7 @@ describe('SelfHostedBeaconService', () => {
                 schema_version: 1,
                 instance_id: '44444444-4444-4444-8444-444444444444',
                 sent_at: expect.any(String),
-                kodus: expect.any(Object),
+                codus: expect.any(Object),
                 runtime: expect.any(Object),
                 usage_7d: expect.any(Object),
                 config: expect.any(Object),

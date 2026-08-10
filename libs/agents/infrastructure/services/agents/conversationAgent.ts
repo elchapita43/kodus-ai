@@ -1,4 +1,4 @@
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { type Tool, type LanguageModel } from 'ai';
 import { Inject, Injectable, Optional } from '@nestjs/common';
 
@@ -59,7 +59,7 @@ interface ConversationThread {
 }
 
 /**
- * Conversation agent ("chat with Kody") rebuilt on the Vercel AI SDK.
+ * Conversation agent ("chat with Cody") rebuilt on the Vercel AI SDK.
  *
  * Replaces the former flow-engine orchestration (createOrchestration +
  * REACT planner + createMCPAdapter + createTool + callAgent) with a thin
@@ -88,7 +88,7 @@ export class ConversationAgentProvider {
         private readonly observabilityService: ObservabilityService,
         private readonly mcpManagerService?: MCPManagerService,
         @Optional() private readonly byokErrorCounter?: ByokErrorCounter,
-        // Conversation record (kodus-agent-sessions). Optional so callers that
+        // Conversation record (codus-agent-sessions). Optional so callers that
         // don't bind it (tests, lean wirings) still construct the agent.
         @Optional()
         @Inject(CONVERSATION_STORE_TOKEN)
@@ -168,7 +168,7 @@ export class ConversationAgentProvider {
         // Whether the memory tool is actually available — gates the mandatory
         // memory bootstrap in the prompt (see buildUserPrompt). MCP offline ->
         // no tool -> don't command the model to call something that isn't there.
-        const hasMemoryTool = 'KODUS_FIND_MEMORIES' in mcp.tools;
+        const hasMemoryTool = 'CODUS_FIND_MEMORIES' in mcp.tools;
 
         // Single runtime: the conversation runs as an AgentSpec on the harness
         // AiSdkAgentRunner — the SAME loop/policies/observability seam as the
@@ -299,7 +299,7 @@ export class ConversationAgentProvider {
                     ? CONVERSATION_PROVIDER_ERROR_MESSAGE
                     : CONVERSATION_FALLBACK_MESSAGE);
 
-            // Persist the exchange to `kodus-agent-sessions` (best-effort —
+            // Persist the exchange to `codus-agent-sessions` (best-effort —
             // never blocks the reply). Records the turn even when it fell back,
             // so the conversation record captures failed turns too. Keyed by the
             // caller's thread id; the user turn is the RAW prompt (not the
@@ -376,7 +376,7 @@ export class ConversationAgentProvider {
 
     /**
      * Append the user/assistant exchange to the conversation record
-     * (`kodus-agent-sessions`) keyed by the thread id. Best-effort and fully
+     * (`codus-agent-sessions`) keyed by the thread id. Best-effort and fully
      * isolated: the store swallows its own errors, and this wrapper guards the
      * no-store / no-thread-id cases so a record failure can never affect the
      * reply that was already produced.
@@ -468,7 +468,7 @@ export class ConversationAgentProvider {
 
     private buildSystemPrompt(userLanguage: string): string {
         return [
-            'You are Kodus, an intelligent conversation agent for user interactions.',
+            'You are Codus, an intelligent conversation agent for user interactions.',
             'Goal: engage in natural, helpful conversations while respecting the user language preference.',
             '',
             'LANGUAGE REQUIREMENTS (NON-NEGOTIABLE):',
@@ -519,7 +519,7 @@ export class ConversationAgentProvider {
         const toolLines: string[] = [];
         if (hasMemoryTool) {
             toolLines.push(
-                `- KODUS_FIND_MEMORIES — look up the user's prior context/preferences when the question would benefit from it. Payload: ${JSON.stringify(memoryPayload)}`,
+                `- CODUS_FIND_MEMORIES — look up the user's prior context/preferences when the question would benefit from it. Payload: ${JSON.stringify(memoryPayload)}`,
             );
         }
         if (sandbox && sandbox.type !== 'null') {
@@ -580,7 +580,7 @@ export class ConversationAgentProvider {
         if (original?.suggestionText) {
             lines.push(
                 '',
-                '### Original Kody suggestion (under discussion)',
+                '### Original Cody suggestion (under discussion)',
                 ...(original.suggestionFilePath
                     ? [`File: ${original.suggestionFilePath}`]
                     : []),

@@ -1,32 +1,32 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const KODY_CHECKPOINT_MARKER = '# kodus-session-hooks';
-const KODY_CHECKPOINT_END_MARKER = '# /kodus-session-hooks';
+const CODY_CHECKPOINT_MARKER = '# codus-session-hooks';
+const CODY_CHECKPOINT_END_MARKER = '# /codus-session-hooks';
 
 const PREPARE_COMMIT_MSG_SCRIPT = `
-${KODY_CHECKPOINT_MARKER}
-# Add Kody-Checkpoint trailer to commit messages
-KODY_SESSION_DIR="$(git rev-parse --git-common-dir 2>/dev/null)/kody-sessions"
-if [ -d "$KODY_SESSION_DIR" ]; then
-  ACTIVE_SESSION=$(ls -t "$KODY_SESSION_DIR"/*.json 2>/dev/null | head -1)
+${CODY_CHECKPOINT_MARKER}
+# Add Cody-Checkpoint trailer to commit messages
+CODY_SESSION_DIR="$(git rev-parse --git-common-dir 2>/dev/null)/cody-sessions"
+if [ -d "$CODY_SESSION_DIR" ]; then
+  ACTIVE_SESSION=$(ls -t "$CODY_SESSION_DIR"/*.json 2>/dev/null | head -1)
   if [ -n "$ACTIVE_SESSION" ]; then
     SESSION_ID=$(basename "$ACTIVE_SESSION" .json)
     SHORT_ID=$(echo "$SESSION_ID" | cut -c1-12)
-    if ! grep -q "Kody-Checkpoint:" "$1" 2>/dev/null; then
+    if ! grep -q "Cody-Checkpoint:" "$1" 2>/dev/null; then
       echo "" >> "$1"
-      echo "Kody-Checkpoint: $SHORT_ID" >> "$1"
+      echo "Cody-Checkpoint: $SHORT_ID" >> "$1"
     fi
   fi
 fi
-${KODY_CHECKPOINT_END_MARKER}
+${CODY_CHECKPOINT_END_MARKER}
 `.trimStart();
 
 const POST_COMMIT_SCRIPT = `
-${KODY_CHECKPOINT_MARKER}
-# Notify kodus of git commit for checkpoint condensation
-kodus sessions hooks claude-code stop 2>/dev/null &
-${KODY_CHECKPOINT_END_MARKER}
+${CODY_CHECKPOINT_MARKER}
+# Notify codus of git commit for checkpoint condensation
+codus sessions hooks claude-code stop 2>/dev/null &
+${CODY_CHECKPOINT_END_MARKER}
 `.trimStart();
 
 class GitHooksService {
@@ -70,7 +70,7 @@ class GitHooksService {
     }
 
     /**
-     * Remove kodus session hooks from prepare-commit-msg and post-commit.
+     * Remove codus session hooks from prepare-commit-msg and post-commit.
      */
     async uninstall(hooksDir: string): Promise<{ removed: string[] }> {
         const removed: string[] = [];
@@ -107,7 +107,7 @@ class GitHooksService {
             }
         }
 
-        if (existing.includes(KODY_CHECKPOINT_MARKER)) {
+        if (existing.includes(CODY_CHECKPOINT_MARKER)) {
             return { hookPath, alreadyInstalled: true };
         }
 
@@ -137,13 +137,13 @@ class GitHooksService {
             return false;
         }
 
-        if (!content.includes(KODY_CHECKPOINT_MARKER)) {
+        if (!content.includes(CODY_CHECKPOINT_MARKER)) {
             return false;
         }
 
         const lines = content.split('\n');
         const startIdx = lines.findIndex(
-            (line) => line.trim() === KODY_CHECKPOINT_MARKER,
+            (line) => line.trim() === CODY_CHECKPOINT_MARKER,
         );
         if (startIdx === -1) {
             return false;
@@ -151,7 +151,7 @@ class GitHooksService {
 
         const endIdx = lines.findIndex(
             (line, idx) =>
-                idx > startIdx && line.trim() === KODY_CHECKPOINT_END_MARKER,
+                idx > startIdx && line.trim() === CODY_CHECKPOINT_END_MARKER,
         );
 
         const filtered =

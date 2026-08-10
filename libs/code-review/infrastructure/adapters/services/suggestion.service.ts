@@ -1,5 +1,5 @@
 import { createLogger } from '@libs/core/log/logger';
-import { BYOKConfig, LLMModelProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, LLMModelProvider } from '@codus/codus-common/llm';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { IAIAnalysisService } from '@libs/code-review/domain/contracts/AIAnalysisService.contract';
@@ -48,7 +48,7 @@ import {
     DocumentationContextItem,
     Repository,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { PullRequestReviewComment } from '@libs/platform/domain/platformIntegrations/types/codeManagement/pullRequests.type';
 import { CodeManagementService } from '@libs/platform/infrastructure/adapters/services/codeManagement.service';
 import { PullRequestsEntity } from '@libs/platformData/domain/pullRequests/entities/pullRequests.entity';
@@ -252,7 +252,7 @@ export class SuggestionService implements ISuggestionService {
         byokConfig: BYOKConfig,
         crossFileSnippets?: CrossFileContextSnippet[],
         remoteCommands?: RemoteCommands,
-        memories?: Array<Partial<IKodyRule>>,
+        memories?: Array<Partial<ICodyRule>>,
         externalReferences?: unknown[],
         externalReferenceErrors?: unknown[] | string,
         getFreshCloneParams?: () => Promise<CreateSandboxParams>,
@@ -558,12 +558,12 @@ export class SuggestionService implements ISuggestionService {
     }
 
     /**
-     * Determina se deve aplicar filtros às Kody Rules
+     * Determina se deve aplicar filtros às Cody Rules
      */
-    private shouldApplyFiltersToKodyRules(
+    private shouldApplyFiltersToCodyRules(
         suggestionControl: SuggestionControlConfig,
     ): boolean {
-        return suggestionControl.applyFiltersToKodyRules === true;
+        return suggestionControl.applyFiltersToCodyRules === true;
     }
 
     private async applyFiltersToSuggestions(
@@ -595,17 +595,17 @@ export class SuggestionService implements ISuggestionService {
         );
     }
 
-    private getPrimaryBrokenKodyRuleId(suggestion: any): string | null {
-        const brokenKodyRulesIds = suggestion?.brokenKodyRulesIds;
+    private getPrimaryBrokenCodyRuleId(suggestion: any): string | null {
+        const brokenCodyRulesIds = suggestion?.brokenCodyRulesIds;
 
         if (
-            !Array.isArray(brokenKodyRulesIds) ||
-            brokenKodyRulesIds.length < 1
+            !Array.isArray(brokenCodyRulesIds) ||
+            brokenCodyRulesIds.length < 1
         ) {
             return null;
         }
 
-        const primaryRuleId = brokenKodyRulesIds[0];
+        const primaryRuleId = brokenCodyRulesIds[0];
 
         if (typeof primaryRuleId !== 'string' || !primaryRuleId.trim()) {
             return null;
@@ -614,8 +614,8 @@ export class SuggestionService implements ISuggestionService {
         return primaryRuleId;
     }
 
-    private shouldClusterKodySuggestionByRuleId(suggestion: any): boolean {
-        if (this.normalizeLabel(suggestion?.label) !== 'kody_rules') {
+    private shouldClusterCodySuggestionByRuleId(suggestion: any): boolean {
+        if (this.normalizeLabel(suggestion?.label) !== 'cody_rules') {
             return false;
         }
 
@@ -623,22 +623,22 @@ export class SuggestionService implements ISuggestionService {
             return false;
         }
 
-        return !!this.getPrimaryBrokenKodyRuleId(suggestion);
+        return !!this.getPrimaryBrokenCodyRuleId(suggestion);
     }
 
-    private clusterKodySuggestionsByRuleIdForFullMode(
+    private clusterCodySuggestionsByRuleIdForFullMode(
         suggestions: any[],
     ): any[] {
         const groupedByRule = new Map<string, any[]>();
         const nonClusterableSuggestions: any[] = [];
 
         for (const suggestion of suggestions) {
-            if (!this.shouldClusterKodySuggestionByRuleId(suggestion)) {
+            if (!this.shouldClusterCodySuggestionByRuleId(suggestion)) {
                 nonClusterableSuggestions.push(suggestion);
                 continue;
             }
 
-            const primaryRuleId = this.getPrimaryBrokenKodyRuleId(suggestion);
+            const primaryRuleId = this.getPrimaryBrokenCodyRuleId(suggestion);
 
             if (!primaryRuleId) {
                 nonClusterableSuggestions.push(suggestion);
@@ -678,10 +678,10 @@ export class SuggestionService implements ISuggestionService {
             const problemDescription =
                 parentSuggestion?.oneSentenceSummary ||
                 parentSuggestion?.suggestionContent ||
-                'This Kody Rule issue appears in multiple locations.';
+                'This Cody Rule issue appears in multiple locations.';
 
             const actionStatement =
-                'Please fix this Kody Rule violation in all listed locations.';
+                'Please fix this Cody Rule violation in all listed locations.';
 
             clusteredSuggestions.push({
                 ...parentSuggestion,
@@ -736,7 +736,7 @@ export class SuggestionService implements ISuggestionService {
 
         if (groupingMode === GroupingModeSuggestions.FULL) {
             refinedSuggestions =
-                this.clusterKodySuggestionsByRuleIdForFullMode(
+                this.clusterCodySuggestionsByRuleIdForFullMode(
                     refinedSuggestions,
                 );
         }
@@ -820,14 +820,14 @@ export class SuggestionService implements ISuggestionService {
         discardedSuggestionsBySeverityOrQuantity: any[];
     }> {
         try {
-            const hasKodyRules = suggestions.some((s) => {
+            const hasCodyRules = suggestions.some((s) => {
                 const normalizedLabel = this.normalizeLabel(s.label);
-                return normalizedLabel === 'kody_rules';
+                return normalizedLabel === 'cody_rules';
             });
 
-            if (hasKodyRules) {
+            if (hasCodyRules) {
                 this.logger.log({
-                    message: `✅ Kody Rules detected for PR#${prNumber} - using enhanced control logic`,
+                    message: `✅ Cody Rules detected for PR#${prNumber} - using enhanced control logic`,
                     context: SuggestionService.name,
                     metadata: {
                         totalSuggestions: suggestions.length,
@@ -835,14 +835,14 @@ export class SuggestionService implements ISuggestionService {
                             original: s.label,
                             normalized: this.normalizeLabel(s.label),
                         })),
-                        applyFiltersToKodyRules:
-                            suggestionControl.applyFiltersToKodyRules,
+                        applyFiltersToCodyRules:
+                            suggestionControl.applyFiltersToCodyRules,
                         organizationAndTeamData,
                         prNumber,
                     },
                 });
 
-                return this.prioritizeSuggestionsWithKodyRulesControl(
+                return this.prioritizeSuggestionsWithCodyRulesControl(
                     organizationAndTeamData,
                     suggestionControl,
                     prNumber,
@@ -876,7 +876,7 @@ export class SuggestionService implements ISuggestionService {
         }
     }
 
-    private async prioritizeSuggestionsWithKodyRulesControl(
+    private async prioritizeSuggestionsWithCodyRulesControl(
         organizationAndTeamData: OrganizationAndTeamData,
         suggestionControl: SuggestionControlConfig,
         prNumber: number,
@@ -886,17 +886,17 @@ export class SuggestionService implements ISuggestionService {
         prioritizedSuggestions: any[];
         discardedSuggestionsBySeverityOrQuantity: any[];
     }> {
-        const shouldApplyFiltersToKodyRules =
-            this.shouldApplyFiltersToKodyRules(suggestionControl);
+        const shouldApplyFiltersToCodyRules =
+            this.shouldApplyFiltersToCodyRules(suggestionControl);
 
-        // Se deve aplicar filtros às Kody Rules, processa TODAS as sugestões juntas
-        if (shouldApplyFiltersToKodyRules) {
+        // Se deve aplicar filtros às Cody Rules, processa TODAS as sugestões juntas
+        if (shouldApplyFiltersToCodyRules) {
             this.logger.log({
-                message: `Applying ALL filters to ALL suggestions (including Kody Rules) for PR#${prNumber}`,
+                message: `Applying ALL filters to ALL suggestions (including Cody Rules) for PR#${prNumber}`,
                 context: SuggestionService.name,
                 metadata: {
                     totalSuggestions: suggestions.length,
-                    applyFiltersToKodyRules: true,
+                    applyFiltersToCodyRules: true,
                     organizationAndTeamData,
                     prNumber,
                 },
@@ -911,37 +911,37 @@ export class SuggestionService implements ISuggestionService {
             );
         }
 
-        // Se NÃO deve aplicar filtros às Kody Rules, separa e processa diferenciadamente
-        let kodyRulesSuggestions = suggestions.filter((s) => {
+        // Se NÃO deve aplicar filtros às Cody Rules, separa e processa diferenciadamente
+        let codyRulesSuggestions = suggestions.filter((s) => {
             const normalizedLabel = this.normalizeLabel(s.label);
-            return normalizedLabel === 'kody_rules';
+            return normalizedLabel === 'cody_rules';
         });
         const normalSuggestions = suggestions.filter((s) => {
             const normalizedLabel = this.normalizeLabel(s.label);
-            return normalizedLabel !== 'kody_rules';
+            return normalizedLabel !== 'cody_rules';
         });
 
         this.logger.log({
-            message: `Separating suggestions for PR#${prNumber} - Kody Rules exempt from filters`,
+            message: `Separating suggestions for PR#${prNumber} - Cody Rules exempt from filters`,
             context: SuggestionService.name,
             metadata: {
                 totalSuggestions: suggestions.length,
-                kodyRulesCount: kodyRulesSuggestions.length,
+                codyRulesCount: codyRulesSuggestions.length,
                 normalSuggestionsCount: normalSuggestions.length,
-                kodyRulesLabels: kodyRulesSuggestions.map((s) => ({
+                codyRulesLabels: codyRulesSuggestions.map((s) => ({
                     original: s.label,
                     normalized: this.normalizeLabel(s.label),
                 })),
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
                 organizationAndTeamData,
                 prNumber,
             },
         });
 
         if (suggestionControl.groupingMode === GroupingModeSuggestions.FULL) {
-            kodyRulesSuggestions =
-                this.clusterKodySuggestionsByRuleIdForFullMode(
-                    kodyRulesSuggestions,
+            codyRulesSuggestions =
+                this.clusterCodySuggestionsByRuleIdForFullMode(
+                    codyRulesSuggestions,
                 );
         }
 
@@ -962,27 +962,27 @@ export class SuggestionService implements ISuggestionService {
             );
         }
 
-        // Processa Kody Rules SEM filtros - todas passam
-        if (kodyRulesSuggestions.length > 0) {
+        // Processa Cody Rules SEM filtros - todas passam
+        if (codyRulesSuggestions.length > 0) {
             // PERF: Mutar in-place ao invés de criar novos objetos
-            for (const s of kodyRulesSuggestions) {
+            for (const s of codyRulesSuggestions) {
                 s.priorityStatus = PriorityStatus.PRIORITIZED;
                 s.deliveryStatus = DeliveryStatus.NOT_SENT;
             }
-            allPrioritized.push(...kodyRulesSuggestions);
+            allPrioritized.push(...codyRulesSuggestions);
         }
 
         this.logger.log({
-            message: `Suggestions processed with Kody Rules control for PR#${prNumber}`,
+            message: `Suggestions processed with Cody Rules control for PR#${prNumber}`,
             context: SuggestionService.name,
             metadata: {
                 totalPrioritized: allPrioritized.length,
                 totalDiscarded: allDiscarded.length,
-                kodyRulesPrioritized: allPrioritized.filter(
-                    (s) => this.normalizeLabel(s.label) === 'kody_rules',
+                codyRulesPrioritized: allPrioritized.filter(
+                    (s) => this.normalizeLabel(s.label) === 'cody_rules',
                 ).length,
-                kodyRulesDiscarded: allDiscarded.filter(
-                    (s) => this.normalizeLabel(s.label) === 'kody_rules',
+                codyRulesDiscarded: allDiscarded.filter(
+                    (s) => this.normalizeLabel(s.label) === 'cody_rules',
                 ).length,
                 organizationAndTeamData,
                 prNumber,
@@ -1171,7 +1171,7 @@ export class SuggestionService implements ISuggestionService {
         });
 
         const categoryPriority = {
-            kody_rules: 1,
+            cody_rules: 1,
             breaking_changes: 2,
             security: 3,
             potential_issues: 4,
@@ -1708,7 +1708,7 @@ export class SuggestionService implements ISuggestionService {
         suggestion: Partial<CodeSuggestion>,
     ): Promise<number> {
         const categoryWeights = {
-            kody_rules: 100,
+            cody_rules: 100,
             breaking_changes: 100,
             security: 50,
             potential_issues: 40,
@@ -1917,7 +1917,7 @@ export class SuggestionService implements ISuggestionService {
                         oneSentenceSummary: suggestion.oneSentenceSummary,
                         label: suggestion.label as LabelType,
                         severity: suggestion.severity as SeverityLevel,
-                        brokenKodyRulesIds: suggestion.brokenKodyRulesIds || [],
+                        brokenCodyRulesIds: suggestion.brokenCodyRulesIds || [],
                         priorityStatus: PriorityStatus.PRIORITIZED, // Default para PR level
                         deliveryStatus: result.deliveryStatus as DeliveryStatus,
                         comment: result.codeReviewFeedbackData

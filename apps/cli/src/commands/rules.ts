@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { rulesService } from '../services/rules.service.js';
 import type {
-    KodyRule,
-    KodyRuleScope,
-    KodyRuleSeverity,
+    CodyRule,
+    CodyRuleScope,
+    CodyRuleSeverity,
 } from '../types/rules.js';
 import { exitWithCode } from '../utils/cli-exit.js';
 import { normalizeCommandError } from '../utils/command-errors.js';
@@ -15,8 +15,8 @@ export type RulesCreateOptions = {
     title: string;
     rule: string;
     repoId?: string;
-    severity?: KodyRuleSeverity;
-    scope?: KodyRuleScope;
+    severity?: CodyRuleSeverity;
+    scope?: CodyRuleScope;
     path?: string;
     json?: boolean;
 };
@@ -26,8 +26,8 @@ export type RulesUpdateOptions = {
     repoId?: string;
     title?: string;
     rule?: string;
-    severity?: KodyRuleSeverity;
-    scope?: KodyRuleScope;
+    severity?: CodyRuleSeverity;
+    scope?: CodyRuleScope;
     path?: string;
     json?: boolean;
 };
@@ -38,7 +38,7 @@ export type RulesViewOptions = {
     json?: boolean;
 };
 
-function printRule(rule: KodyRule, fallbackRepositoryId = 'global'): void {
+function printRule(rule: CodyRule, fallbackRepositoryId = 'global'): void {
     cliInfo(`Rule UUID: ${rule.uuid}`);
     cliInfo(`Repository ID: ${rule.repositoryId ?? fallbackRepositoryId}`);
     cliInfo(`Rule Title: ${rule.title}`);
@@ -55,11 +55,11 @@ function printRule(rule: KodyRule, fallbackRepositoryId = 'global'): void {
 }
 
 function printRuleList(
-    rules: KodyRule[],
+    rules: CodyRule[],
     fallbackRepositoryId = 'global',
 ): void {
     if (rules.length === 0) {
-        cliInfo(chalk.yellow('No Kody Rules found.'));
+        cliInfo(chalk.yellow('No Cody Rules found.'));
         return;
     }
 
@@ -92,7 +92,7 @@ export async function rulesCreateAction(
         if (isCentralizedPrResponseTypeGuard(createdRule)) {
             cliInfo(
                 chalk.green(
-                    'Kody Rule change proposed through centralized pull request.',
+                    'Cody Rule change proposed through centralized pull request.',
                 ),
             );
             if (createdRule.message) {
@@ -107,7 +107,7 @@ export async function rulesCreateAction(
             return;
         }
 
-        cliInfo(chalk.green('Kody Rule created successfully.'));
+        cliInfo(chalk.green('Cody Rule created successfully.'));
         printRule(createdRule, options.repoId ?? 'global');
     } catch (error) {
         const normalized = normalizeCommandError(error);
@@ -138,7 +138,7 @@ export async function rulesUpdateAction(
         if (isCentralizedPrResponseTypeGuard(updatedRule)) {
             cliInfo(
                 chalk.green(
-                    'Kody Rule change proposed through centralized pull request.',
+                    'Cody Rule change proposed through centralized pull request.',
                 ),
             );
             if (updatedRule.message) {
@@ -153,7 +153,7 @@ export async function rulesUpdateAction(
             return;
         }
 
-        cliInfo(chalk.green('Kody Rule updated successfully.'));
+        cliInfo(chalk.green('Cody Rule updated successfully.'));
         printRule(updatedRule, options.repoId ?? 'global');
     } catch (error) {
         const normalized = normalizeCommandError(error);
@@ -185,12 +185,12 @@ export async function rulesViewAction(
 }
 
 export const rulesCommand = new Command('rules')
-    .description('Create, update, and view Kody Rules')
+    .description('Create, update, and view Cody Rules')
     .showHelpAfterError();
 
 rulesCommand
     .command('create')
-    .description('Create a new Kody Rule')
+    .description('Create a new Cody Rule')
     .requiredOption('--title <title>', 'Rule title')
     .requiredOption('--rule <rule>', 'Rule content/description')
     .option('--repo-id <id>', 'Repository ID for the rule', 'global')
@@ -206,7 +206,7 @@ rulesCommand
 
 rulesCommand
     .command('update')
-    .description('Update an existing Kody Rule')
+    .description('Update an existing Cody Rule')
     .requiredOption('--uuid <uuid>', 'Rule UUID to update')
     .option('--repo-id <id>', 'Updated rule repository ID')
     .option('--title <title>', 'Updated rule title')
@@ -222,7 +222,7 @@ rulesCommand
 
 rulesCommand
     .command('view')
-    .description('View Kody Rules')
+    .description('View Cody Rules')
     .option('--uuid <uuid>', 'Rule UUID to fetch')
     .option('--repo-id <id>', 'Repository ID to filter rules')
     .option('--json', 'Output rules as JSON')

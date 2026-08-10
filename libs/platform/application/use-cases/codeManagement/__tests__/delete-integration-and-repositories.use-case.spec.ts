@@ -5,7 +5,7 @@
  * 1. Deletes integration + auth + integration config + webhooks (via DeleteIntegrationUseCase)
  * 2. Clears repositories from code_review_config parameter
  * 3. Deletes pull request messages for each repository
- * 4. Inactivates kody rules for each repository
+ * 4. Inactivates cody rules for each repository
  *
  * Tested across all 4 platforms (GitHub, GitLab, Bitbucket, Azure Repos)
  * with both OAuth and Token auth modes where applicable.
@@ -29,7 +29,7 @@ import {
     MOCK_CODE_REVIEW_CONFIG,
     createMockParametersService,
     createMockPullRequestMessagesService,
-    createMockKodyRulesService,
+    createMockCodyRulesService,
     createMockCreateOrUpdateParametersUseCase,
 } from './shared-delete-mocks';
 
@@ -43,7 +43,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
     let mockPullRequestMessagesService: ReturnType<
         typeof createMockPullRequestMessagesService
     >;
-    let mockKodyRulesService: ReturnType<typeof createMockKodyRulesService>;
+    let mockCodyRulesService: ReturnType<typeof createMockCodyRulesService>;
 
     const executeParams = {
         organizationId: MOCK_ORG_ID,
@@ -58,14 +58,14 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
         mockCreateOrUpdateParametersUseCase =
             createMockCreateOrUpdateParametersUseCase();
         mockPullRequestMessagesService = createMockPullRequestMessagesService();
-        mockKodyRulesService = createMockKodyRulesService();
+        mockCodyRulesService = createMockCodyRulesService();
 
         useCase = new (DeleteIntegrationAndRepositoriesUseCase as any)(
             mockDeleteIntegrationUseCase,
             mockParametersService,
             mockCreateOrUpdateParametersUseCase,
             mockPullRequestMessagesService,
-            mockKodyRulesService,
+            mockCodyRulesService,
         );
     });
 
@@ -123,15 +123,15 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
         }
     }
 
-    function assertKodyRulesInactivatedForAllRepos() {
+    function assertCodyRulesInactivatedForAllRepos() {
         for (const repo of MOCK_REPOSITORIES) {
             expect(
-                mockKodyRulesService.updateRulesStatusByFilter,
+                mockCodyRulesService.updateRulesStatusByFilter,
             ).toHaveBeenCalledWith(
                 MOCK_ORG_ID,
                 repo.id,
                 undefined,
-                expect.anything(), // KodyRulesStatus.DELETED
+                expect.anything(), // CodyRulesStatus.DELETED
             );
         }
     }
@@ -140,7 +140,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
         assertDeleteIntegrationUseCaseCalled();
         assertRepositoriesClearedFromConfig();
         assertPullRequestMessagesDeletedForAllRepos();
-        assertKodyRulesInactivatedForAllRepos();
+        assertCodyRulesInactivatedForAllRepos();
     }
 
     // ═══════════════════════════════════════════════════════
@@ -150,7 +150,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
         describe('OAuth - installation exists on GitHub', () => {
             beforeEach(() => setupWithRepositories());
 
-            it('should perform full cleanup: integration, configs, PR messages, and kody rules', async () => {
+            it('should perform full cleanup: integration, configs, PR messages, and cody rules', async () => {
                 await useCase.execute(executeParams);
                 assertFullCleanupCompleted();
             });
@@ -171,7 +171,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
 
@@ -197,7 +197,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
     });
@@ -228,7 +228,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
 
@@ -254,7 +254,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
     });
@@ -285,7 +285,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
     });
@@ -316,7 +316,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
 
                 assertRepositoriesClearedFromConfig();
                 assertPullRequestMessagesDeletedForAllRepos();
-                assertKodyRulesInactivatedForAllRepos();
+                assertCodyRulesInactivatedForAllRepos();
             });
         });
     });
@@ -331,12 +331,12 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
             await useCase.execute(executeParams);
 
             assertDeleteIntegrationUseCaseCalled();
-            // PR messages and kody rules should not be called since no repos
+            // PR messages and cody rules should not be called since no repos
             expect(
                 mockPullRequestMessagesService.deleteByFilter,
             ).not.toHaveBeenCalled();
             expect(
-                mockKodyRulesService.updateRulesStatusByFilter,
+                mockCodyRulesService.updateRulesStatusByFilter,
             ).not.toHaveBeenCalled();
         });
 
@@ -350,7 +350,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
                 mockPullRequestMessagesService.deleteByFilter,
             ).not.toHaveBeenCalled();
             expect(
-                mockKodyRulesService.updateRulesStatusByFilter,
+                mockCodyRulesService.updateRulesStatusByFilter,
             ).not.toHaveBeenCalled();
         });
 
@@ -371,9 +371,9 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
             ).toHaveBeenCalledTimes(3);
         });
 
-        it('should continue cleanup even if inactivating kody rules for one repo fails', async () => {
+        it('should continue cleanup even if inactivating cody rules for one repo fails', async () => {
             setupWithRepositories();
-            mockKodyRulesService.updateRulesStatusByFilter
+            mockCodyRulesService.updateRulesStatusByFilter
                 .mockResolvedValueOnce({}) // repo-1 succeeds
                 .mockRejectedValueOnce(new Error('DB error')) // repo-2 fails
                 .mockResolvedValueOnce({}); // repo-3 succeeds
@@ -384,7 +384,7 @@ describe('DeleteIntegrationAndRepositoriesUseCase', () => {
             assertDeleteIntegrationUseCaseCalled();
             // All 3 repos should have been attempted
             expect(
-                mockKodyRulesService.updateRulesStatusByFilter,
+                mockCodyRulesService.updateRulesStatusByFilter,
             ).toHaveBeenCalledTimes(3);
         });
     });

@@ -62,7 +62,7 @@ export default async function IntegrationsPage() {
                     <HelpCircleIcon />
 
                     <AlertTitle>
-                        Connect tools so Kody can assist you!
+                        Connect tools so Cody can assist you!
                     </AlertTitle>
 
                     <AlertDescription>
@@ -75,7 +75,7 @@ export default async function IntegrationsPage() {
                             We also recommend connecting a communication tool.
                             It will enable you to:
                             <li className="mt-4">
-                                Interact directly with Kody from your favorite
+                                Interact directly with Cody from your favorite
                                 tool;
                             </li>
                             <li>

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Provision the per-tenant cloud GitHub fixture repos used by the E2E
 # matrix. Each cloud GitHub PAT tenant runs on its OWN repo (1 org : 1
-# repo) so a single PR webhook never fans out across multiple Kodus orgs
+# repo) so a single PR webhook never fans out across multiple Codus orgs
 # — the root cause of the flaky "review pipeline never started" failures
 # on cloud × github cells. See tests/e2e/cli/cloud/setup-tenants.ts.
 #
@@ -11,11 +11,11 @@
 #
 # Required env:
 #   GH_TEST_TOKEN        PAT with `repo` + repo-creation rights in the
-#                        target org (kodus-e2e). Same token the matrix uses.
+#                        target org (codus-e2e). Same token the matrix uses.
 # Optional env:
 #   BASE_REPO            owner/name to mirror content from
-#                        (default: ${GH_TEST_REPO_CLOUD:-kodus-e2e/tiny-url-cloud})
-#   REPO_OWNER           org/user to create repos under (default: kodus-e2e)
+#                        (default: ${GH_TEST_REPO_CLOUD:-codus-e2e/tiny-url-cloud})
+#   REPO_OWNER           org/user to create repos under (default: codus-e2e)
 #   REPO_VISIBILITY      private | public (default: private)
 #
 # Usage:
@@ -27,8 +27,8 @@ FORCE_CONTENT=0
 [ "${1:-}" = "--force-content" ] && FORCE_CONTENT=1
 
 : "${GH_TEST_TOKEN:?set GH_TEST_TOKEN (PAT with repo + create rights in the target org)}"
-BASE_REPO="${BASE_REPO:-${GH_TEST_REPO_CLOUD:-kodus-e2e/tiny-url-cloud}}"
-REPO_OWNER="${REPO_OWNER:-kodus-e2e}"
+BASE_REPO="${BASE_REPO:-${GH_TEST_REPO_CLOUD:-codus-e2e/tiny-url-cloud}}"
+REPO_OWNER="${REPO_OWNER:-codus-e2e}"
 REPO_VISIBILITY="${REPO_VISIBILITY:-private}"
 API="https://api.github.com"
 AUTH=(-H "Authorization: Bearer ${GH_TEST_TOKEN}" -H "Accept: application/vnd.github+json")

@@ -13,7 +13,7 @@
  * `send` exercises the same code path the cron will run in production,
  * including the `last_sent_day` dedupe (so a second `pnpm run telemetry:send`
  * the same UTC day will short-circuit without sending). Use the
- * `KODUS_TELEMETRY_FORCE` env var (or pass `--force`) to bypass the
+ * `CODUS_TELEMETRY_FORCE` env var (or pass `--force`) to bypass the
  * dedupe for testing.
  */
 import 'dotenv/config';
@@ -51,7 +51,7 @@ async function main(): Promise<void> {
     const send = args.has('--send');
     const force =
         args.has('--force') ||
-        /^(1|true|yes|on)$/i.test(process.env.KODUS_TELEMETRY_FORCE ?? '');
+        /^(1|true|yes|on)$/i.test(process.env.CODUS_TELEMETRY_FORCE ?? '');
 
     const ctx = await NestFactory.createApplicationContext(
         TelemetryCliModule,

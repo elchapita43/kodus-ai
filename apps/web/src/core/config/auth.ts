@@ -101,7 +101,7 @@ const authOptions: NextAuthConfig = {
         process.env.NEXTAUTH_SECRET ??
         process.env.AUTH_SECRET ??
         (process.env.NODE_ENV !== "production"
-            ? "kodus-web-dev-insecure-secret"
+            ? "codus-web-dev-insecure-secret"
             : undefined),
     pages: { signIn: "/sign-in", error: "/error" },
     callbacks: {

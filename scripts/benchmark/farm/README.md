@@ -22,9 +22,9 @@ branch's *source* and builds the **compiled artifact** (`node dist/…`, via
 ## Model
 
 A farm **slot** (`a`, `perf-v2`, …) = a self-hosted instance named `bench-<slot>`
-→ droplet `kodus-selfhosted-bench-<slot>` (covered by the existing
-`kodus-selfhosted-*` destroy safety prefix). State / SSH keys / secrets all reuse
-`scripts/selfhosted/` (`~/.kodus-dev/config`, `DIGITALOCEAN_TOKEN`).
+→ droplet `codus-selfhosted-bench-<slot>` (covered by the existing
+`codus-selfhosted-*` destroy safety prefix). State / SSH keys / secrets all reuse
+`scripts/selfhosted/` (`~/.codus-dev/config`, `DIGITALOCEAN_TOKEN`).
 
 Each concurrent slot needs its **own forked repo-set** (5 repos × 10 PRs) — the
 webhook on a repo can only point at one droplet. See `project_matrix_repo_independence`.

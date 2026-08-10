@@ -158,7 +158,7 @@ export const TrialCreditsSummary = ({
                         {byok
                             ? "You're all set — reviews are unlimited"
                             : showCredits
-                              ? "You're trying Kody for free"
+                              ? "You're trying Cody for free"
                               : "You're on a Team trial"}
                     </p>
                     <p className="text-text-secondary mt-1 text-sm">

@@ -18,7 +18,7 @@ const MOCK_DEFAULT_MESSAGES = {
 };
 
 jest.mock('@libs/common/utils/validateCodeReviewConfigFile', () => ({
-    getDefaultKodusConfigFile: () => ({ ...MOCK_DEFAULT_MESSAGES }),
+    getDefaultCodusConfigFile: () => ({ ...MOCK_DEFAULT_MESSAGES }),
 }));
 
 describe('PullRequestMessagesLogHandler', () => {

@@ -9,7 +9,7 @@
  * Default output:  ./.env.reconciled  (review before replacing .env)
  *
  * What it does:
- *   1. Snapshots the source verbatim to ~/kodus-env-snapshot-<ts>.env
+ *   1. Snapshots the source verbatim to ~/codus-env-snapshot-<ts>.env
  *      so nothing can ever be silently lost.
  *   2. Reads every var from the schema and emits a new .env where:
  *        - If you already have the key with a non-empty value → keep yours.
@@ -37,7 +37,7 @@ import { flatten, parseSchema, SchemaItem } from './parse-schema';
 const REPO_ROOT = join(__dirname, '..', '..');
 const SCHEMA_PATH = join(REPO_ROOT, '.env.schema');
 
-// Known historic renames in the kodus-ai schema. New canonical name → list of
+// Known historic renames in the codus-ai schema. New canonical name → list of
 // older names whose value should migrate forward. Order matters: first found
 // non-empty old value wins. Add to this list any time you rename a key in
 // the schema.
@@ -109,7 +109,7 @@ function main(): void {
     // ── 1. Snapshot ──────────────────────────────────────────────────────
     const snapshotPath = join(
         homedir(),
-        `kodus-env-snapshot-${timestamp()}.env`,
+        `codus-env-snapshot-${timestamp()}.env`,
     );
     writeFileSync(snapshotPath, readFileSync(source, 'utf-8'));
 

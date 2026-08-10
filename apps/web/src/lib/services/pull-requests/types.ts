@@ -162,7 +162,7 @@ export interface PullRequestExecution {
         sent: number;
         // Held back by the review config/priority rules ('not_sent').
         filtered: number;
-        // Kody tried to post but couldn't ('failed'/'failed_lines_mismatch').
+        // Cody tried to post but couldn't ('failed'/'failed_lines_mismatch').
         failed?: number;
         // Superseded by a newer suggestion ('replaced').
         replaced?: number;

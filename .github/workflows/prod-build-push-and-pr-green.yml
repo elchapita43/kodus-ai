@@ -27,7 +27,7 @@ env:
     IMAGE_TAG: ${{ github.event.inputs.image_tag || github.event.release.tag_name ||
         github.sha }}
     BUILDX_PLATFORMS: linux/arm64
-    BUILDX_CACHE_SCOPE: kodus-ai-arm64
+    BUILDX_CACHE_SCOPE: codus-ai-arm64
     # The runner is linux/amd64 but our images are pushed arm64-only.
     # Without this, Trivy tries to resolve a child manifest for its own
     # platform inside the manifest list and fails with "no child with
@@ -130,7 +130,7 @@ jobs:
             - name: Debug infra token
               run: |
                   curl -sS -H "Authorization: token ${{ steps.infra_token.outputs.token }}" \
-                    https://api.github.com/repos/kodustech/kodus-infra | jq '{full_name, permissions}'
+                    https://api.github.com/repos/elchapita43/codus-infra | jq '{full_name, permissions}'
 
             - name: Checkout code
               uses: actions/checkout@v6.0.2
@@ -174,7 +174,7 @@ jobs:
                   # Durable registry build cache in GHCR (read by bake's
                   # CACHE_TYPE/CACHE_REF — see docker-bake.hcl). arm64-only tag.
                   CACHE_TYPE: registry
-                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/kodus-ai-buildcache:prod-arm64
+                  CACHE_REF: ghcr.io/${{ github.repository_owner }}/codus-ai-buildcache:prod-arm64
                   ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
                   API_TAGS: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_API
                       }}:${{ env.IMAGE_TAG }}
@@ -196,7 +196,7 @@ jobs:
             # See selfhosted-build-push.yml for the rationale behind the
             # Trivy flags. `exit-code: 0` keeps findings advisory — flip
             # to `1` once the current backlog of CVEs is triaged.
-            - name: Trivy scan — kodus-ai-api
+            - name: Trivy scan — codus-ai-api
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_API
@@ -207,7 +207,7 @@ jobs:
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-webhooks
+            - name: Trivy scan — codus-ai-webhooks
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{
@@ -218,7 +218,7 @@ jobs:
                   ignore-unfixed: true
                   exit-code: "0"
 
-            - name: Trivy scan — kodus-ai-worker
+            - name: Trivy scan — codus-ai-worker
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                   image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_WORKER

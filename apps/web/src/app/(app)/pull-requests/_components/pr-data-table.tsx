@@ -155,7 +155,7 @@ export const PrDataTable = ({
                     <TooltipContent
                         side="bottom"
                         className="text-xs normal-case">
-                        How many times Kody reviewed this PR and how recently.
+                        How many times Cody reviewed this PR and how recently.
                     </TooltipContent>
                 </Tooltip>
                 <Tooltip>

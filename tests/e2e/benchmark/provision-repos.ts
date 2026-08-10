@@ -2,7 +2,7 @@
 //
 // The parallel benchmark needs each model to own its OWN copy of the 5 fixture
 // repos (so 6 tenants never collide on a shared repo's single-owner webhook).
-// This script creates `kodus-e2e/<base>-<modelSlug>` for every (base × model)
+// This script creates `codus-e2e/<base>-<modelSlug>` for every (base × model)
 // and pushes just the two branches each benchmark PR needs (head + base) — the
 // rest of the fixture's 75 branches are irrelevant.
 //
@@ -21,7 +21,7 @@ import { join } from "node:path";
 import { readFileSync } from "node:fs";
 import { loadTier0Models } from "./models.js";
 
-const ORG = "kodus-e2e";
+const ORG = "codus-e2e";
 const TOKEN = process.env.GH_TEST_TOKEN || process.env.GH_DEV_TOKEN;
 if (!TOKEN) throw new Error("GH_TEST_TOKEN not set");
 

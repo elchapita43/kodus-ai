@@ -89,7 +89,7 @@ class CentralizedConfigService {
         if (selectedRepositories.length === 0) {
             throw new CommandError(
                 'INVALID_INPUT',
-                'No selected repositories found in Kodus. Run `kodus config remote add <owner/repo>` first.',
+                'No selected repositories found in Codus. Run `codus config remote add <owner/repo>` first.',
             );
         }
 
@@ -113,7 +113,7 @@ class CentralizedConfigService {
             if (!matched) {
                 throw new CommandError(
                     'INVALID_INPUT',
-                    `Repository '${resolvedRef}' is not selected in Kodus. Use kodus config remote list to check selected repositories.`,
+                    `Repository '${resolvedRef}' is not selected in Codus. Use codus config remote list to check selected repositories.`,
                 );
             }
 
@@ -123,7 +123,7 @@ class CentralizedConfigService {
         if (!(process.stdin.isTTY && process.stdout.isTTY)) {
             throw new CommandError(
                 'INVALID_INPUT',
-                'Repository is required in non-interactive mode. Use: `kodus config centralized init <owner/repo> --sync-option <pr|manual>`.',
+                'Repository is required in non-interactive mode. Use: `codus config centralized init <owner/repo> --sync-option <pr|manual>`.',
             );
         }
 
@@ -188,7 +188,7 @@ class CentralizedConfigService {
 
     private async requireTeamKey(): Promise<string> {
         const { teamKey } = await resolveTeamKeyAccess(
-            'Centralized config commands require team-key auth. Run: kodus auth team-key --key <your-key>.',
+            'Centralized config commands require team-key auth. Run: codus auth team-key --key <your-key>.',
         );
 
         return teamKey;

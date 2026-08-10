@@ -58,7 +58,7 @@ describe('McpServerService', () => {
                 id: 1,
                 method: 'tools/call',
                 params: {
-                    name: 'KODUS_LIST_REPOSITORIES',
+                    name: 'CODUS_LIST_REPOSITORIES',
                     arguments: {
                         organizationId: 'org-1',
                         teamId: 'team-1',
@@ -76,7 +76,7 @@ describe('McpServerService', () => {
                     method: 'POST',
                     path: '/mcp',
                     jsonrpcMethod: 'tools/call',
-                    toolName: 'KODUS_LIST_REPOSITORIES',
+                    toolName: 'CODUS_LIST_REPOSITORIES',
                     organizationId: 'org-1',
                     teamId: 'team-1',
                 }),
@@ -92,7 +92,7 @@ describe('McpServerService', () => {
                     path: '/mcp',
                     statusCode: 200,
                     jsonrpcMethod: 'tools/call',
-                    toolName: 'KODUS_LIST_REPOSITORIES',
+                    toolName: 'CODUS_LIST_REPOSITORIES',
                     organizationId: 'org-1',
                     teamId: 'team-1',
                     latencyMs: expect.any(Number),
@@ -139,7 +139,7 @@ describe('McpServerService', () => {
                     id: 1,
                     method: 'tools/call',
                     params: {
-                        name: 'KODUS_LIST_REPOSITORIES',
+                        name: 'CODUS_LIST_REPOSITORIES',
                         arguments: {
                             organizationId: 'org-1',
                             teamId: 'team-1',
@@ -157,7 +157,7 @@ describe('McpServerService', () => {
                     method: 'POST',
                     path: '/mcp',
                     jsonrpcMethod: 'tools/call',
-                    toolName: 'KODUS_LIST_REPOSITORIES',
+                    toolName: 'CODUS_LIST_REPOSITORIES',
                     organizationId: 'org-1',
                     teamId: 'team-1',
                 }),

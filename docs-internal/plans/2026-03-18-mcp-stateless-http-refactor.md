@@ -4,7 +4,7 @@
 
 **Goal:** Replace the current in-memory stateful MCP HTTP server with a stateless Streamable HTTP implementation that works correctly behind multiple ECS/EC2 instances behind a load balancer.
 
-**Architecture:** The Kodus internal MCP flow already carries tenant and authorization context outside MCP transport session state. The refactor will remove `Map`-based session affinity from `libs/mcp-server`, create a fresh `McpServer` and `StreamableHTTPServerTransport` per POST request, and return `405` for unsupported `GET`/`DELETE` paths in stateless mode. Shared concerns such as tool registration and MCP HTTP response headers will be isolated in reusable helpers to keep the implementation maintainable and symmetric across both MCP entrypoints.
+**Architecture:** The Codus internal MCP flow already carries tenant and authorization context outside MCP transport session state. The refactor will remove `Map`-based session affinity from `libs/mcp-server`, create a fresh `McpServer` and `StreamableHTTPServerTransport` per POST request, and return `405` for unsupported `GET`/`DELETE` paths in stateless mode. Shared concerns such as tool registration and MCP HTTP response headers will be isolated in reusable helpers to keep the implementation maintainable and symmetric across both MCP entrypoints.
 
 **Tech Stack:** NestJS, TypeScript, `@modelcontextprotocol/sdk`, Jest, Streamable HTTP
 

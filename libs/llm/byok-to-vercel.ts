@@ -1,7 +1,7 @@
 /**
  * Maps BYOKConfig to a Vercel AI SDK LanguageModel.
  *
- * This adapter converts the Kodus BYOK configuration (provider + apiKey + model)
+ * This adapter converts the Codus BYOK configuration (provider + apiKey + model)
  * into a Vercel AI SDK model instance that supports native function calling.
  */
 import type { LanguageModel } from 'ai';
@@ -16,12 +16,12 @@ import {
     anthropicCompatibleRootURL,
     BYOKConfig,
     BYOKProvider,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { decrypt } from '@libs/common/utils/crypto';
 
 /**
  * Build a Vercel AI SDK model from a base64-encoded Google Service Account
- * JSON. Mirrors `packages/kodus-common/src/llm/providerAdapters/vertexAdapter.ts`
+ * JSON. Mirrors `packages/codus-common/src/llm/providerAdapters/vertexAdapter.ts`
  * so self-hosted deployments using the same `API_VERTEX_AI_API_KEY` env var
  * format (base64 SA JSON) work on both the v2 engine and the v5 agent.
  *
@@ -269,7 +269,7 @@ export function byokToVercelModel(
         //   `API_OPENAI_FORCE_BASE_URL` / `API_VERTEX_AI_API_KEY`) so the
         //   customer's own keys from .env drive the main model, the same way
         //   `getInternalModel` does for helper calls.
-        // Cloud (managed/trial): fall back to Kodus's bundled Gemini default
+        // Cloud (managed/trial): fall back to Codus's bundled Gemini default
         //   (`DEFAULT_MODEL.model` → v5 agent-first uses
         //   gemini-3.1-pro-preview-customtools; legacy v2 stays on
         //   gemini-2.5-pro via `LLMModelProvider` enum in llmAnalysis.service).

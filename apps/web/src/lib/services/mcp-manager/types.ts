@@ -5,7 +5,7 @@ export enum MCP_CONNECTION_STATUS {
     PENDING = "PENDING",
 }
 
-export const KODUS_ISSUES_INTEGRATION_ID = "kodus-issues-default";
+export const CODUS_ISSUES_INTEGRATION_ID = "codus-issues-default";
 
 export type CustomMCPPlugin = {
     id: string;

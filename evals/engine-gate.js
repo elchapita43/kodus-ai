@@ -127,15 +127,15 @@ function preflight({ strictCoverage }) {
         'evals/investigation/compare-recall.js',
         'evals/investigation/agent-provider.js',
         'evals/promotion/run-eval.js',
-        'evals/kody-rules/real-agent.js',
-        'evals/kody-rules/github-cases.json',
+        'evals/cody-rules/real-agent.js',
+        'evals/cody-rules/github-cases.json',
         'evals/anchoring/anchor-eval.js',
         'evals/pr-summary/run.js',
         'evals/pr-summary/datasets/cases.json',
         'evals/dedup/run.js',
         'evals/dedup/dedup-runner.js',
         'libs/code-review/infrastructure/agents/providers/generalist-agent.provider.ts',
-        'libs/code-review/infrastructure/agents/providers/kody-rules-agent.provider.ts',
+        'libs/code-review/infrastructure/agents/providers/cody-rules-agent.provider.ts',
         'libs/code-review/infrastructure/agents/core/core-agent-loop.adapter.ts',
         'libs/code-review/infrastructure/agents/engine/dedup-prompt.ts',
         'libs/llm/byok-to-vercel.ts',
@@ -160,14 +160,14 @@ function preflight({ strictCoverage }) {
     if (dedupCases > 0) ok.push(`dedup datasets=${dedupCases}`);
     else warnings.push('dedup datasets missing; dedup is not reproducible from a clean checkout');
 
-    const kodyCasesFile = path.join(ROOT, 'evals/kody-rules/github-cases.json');
-    if (fs.existsSync(kodyCasesFile)) {
+    const codyCasesFile = path.join(ROOT, 'evals/cody-rules/github-cases.json');
+    if (fs.existsSync(codyCasesFile)) {
         try {
-            const cases = readJson(kodyCasesFile);
-            if (Array.isArray(cases) && cases.length > 0) ok.push(`kody-rules cases=${cases.length}`);
-            else fatal.push('kody-rules github-cases.json is empty or not an array');
+            const cases = readJson(codyCasesFile);
+            if (Array.isArray(cases) && cases.length > 0) ok.push(`cody-rules cases=${cases.length}`);
+            else fatal.push('cody-rules github-cases.json is empty or not an array');
         } catch (error) {
-            fatal.push(`kody-rules github-cases.json is invalid JSON: ${error.message}`);
+            fatal.push(`cody-rules github-cases.json is invalid JSON: ${error.message}`);
         }
     }
 

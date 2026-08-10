@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import { cn } from "src/core/utils/components";
 
-const repository = "kodustech/kodus-ai";
+const repository = "elchapita43/codus-ai";
 const repositoryUrl = `https://github.com/${repository}`;
 const localStorageKey = "hide-github-stars-on-navbar";
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000;

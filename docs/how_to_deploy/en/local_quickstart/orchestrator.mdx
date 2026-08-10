@@ -1,12 +1,12 @@
 ---
 title: "Local Quickstart"
-description: "Get Kodus running on your local machine — API, Worker, Webhooks, Web UI, and all dependencies in one command."
+description: "Get Codus running on your local machine — API, Worker, Webhooks, Web UI, and all dependencies in one command."
 icon: "laptop"
 ---
 
 <Note>
   This guide is for local development purposes. For production deployment,
-  please refer to the [Deploy Kodus](/how_to_deploy/en/deploy_kodus/generic_vm)
+  please refer to the [Deploy Codus](/how_to_deploy/en/deploy_codus/generic_vm)
   guide.
 </Note>
 
@@ -14,8 +14,8 @@ icon: "laptop"
   Local dev runs with `API_CLOUD_MODE=false`, which is the same mode as a
   self-hosted instance — and which means the daily anonymous heartbeat to
   `telemetry.kodus.io` is enabled by default. If you don't want your local
-  experiments showing up in the fleet, set `KODUS_TELEMETRY_DISABLED=true`
-  in your `.env`. See [Anonymous Telemetry](/how_to_deploy/en/deploy_kodus/telemetry)
+  experiments showing up in the fleet, set `CODUS_TELEMETRY_DISABLED=true`
+  in your `.env`. See [Anonymous Telemetry](/how_to_deploy/en/deploy_codus/telemetry)
   for what is sent and how to inspect it.
 </Note>
 
@@ -28,7 +28,7 @@ icon: "laptop"
 - LLM API Keys
 
 <Note>
-  kodus-ai is a pnpm workspace — `pnpm-lock.yaml` is the only lockfile in the repo. npm and yarn
+  codus-ai is a pnpm workspace — `pnpm-lock.yaml` is the only lockfile in the repo. npm and yarn
   are not supported for local development.
 </Note>
 
@@ -39,8 +39,8 @@ icon: "laptop"
       For a quick and automated setup, use our setup script:
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
-      cd kodus-ai
+      git clone https://github.com/elchapita43/codus-ai.git
+      cd codus-ai
       pnpm run setup
       ```
 
@@ -92,7 +92,7 @@ icon: "laptop"
       ### 1. Clone the repository
 
       ```bash
-      git clone https://github.com/kodustech/kodus-ai.git
+      git clone https://github.com/elchapita43/codus-ai.git
       ```
 
       ### 2. Install dependencies
@@ -139,7 +139,7 @@ Select one mode and fill your .env before starting the services.
       Create the required Docker networks:
 
       ```bash
-      docker network create kodus-backend-services || true
+      docker network create codus-backend-services || true
       docker network create shared-network || true
       ```
 
@@ -153,10 +153,10 @@ Select one mode and fill your .env before starting the services.
 
       This command starts:
 
-      - Kodus API
+      - Codus API
       - Worker (async jobs)
       - Webhooks service
-      - Kodus Web Application
+      - Codus Web Application
       - PostgreSQL database
       - MongoDB database
       - RabbitMQ
@@ -238,7 +238,7 @@ pnpm run dev:health-check
 ```
 
 This comprehensive health check validates:
-- ✅ **Services**: Kodus API, Worker, Webhooks, Web, PostgreSQL, MongoDB, RabbitMQ
+- ✅ **Services**: Codus API, Worker, Webhooks, Web, PostgreSQL, MongoDB, RabbitMQ
 - 🔌 **Port availability**: Web (3000), API (3001), PostgreSQL (5432), MongoDB (27017), RabbitMQ (5672/15672)
 - 🗄️ **Database setup**: Migrations and seed data
 - 🌐 **API endpoints**: Health endpoints and basic connectivity
@@ -276,16 +276,16 @@ sudo usermod -aG docker $USER
 **Network creation errors:**
 ```bash
 # Check if networks already exist
-docker network ls | grep kodus
+docker network ls | grep codus
 # Remove conflicting networks if needed
-docker network rm kodus-backend-services shared-network
+docker network rm codus-backend-services shared-network
 ```
 
 ### Common Issues
 
 **Port conflicts:**
 - Ensure ports 3000 (Web), 3001 (API), 5432 (PostgreSQL), 27017 (MongoDB), and 5672/15672 (RabbitMQ) are available
-- Stop other services using these ports before starting Kodus
+- Stop other services using these ports before starting Codus
 
 **Environment variables not loading:**
 - Verify your `.env` file exists in the project root

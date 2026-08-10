@@ -3,7 +3,7 @@ import {
     ParserType,
     PromptRole,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectDataSource } from '@nestjs/typeorm';

@@ -8,7 +8,7 @@ export type AuthModeSummary = {
 };
 
 export async function getAuthModeSummary(): Promise<AuthModeSummary> {
-    const envToken = process.env.KODUS_TOKEN?.trim();
+    const envToken = process.env.CODUS_TOKEN?.trim();
     if (envToken) {
         return {
             mode: 'token',
@@ -17,7 +17,7 @@ export async function getAuthModeSummary(): Promise<AuthModeSummary> {
         };
     }
 
-    const envTeamKey = process.env.KODUS_TEAM_KEY?.trim();
+    const envTeamKey = process.env.CODUS_TEAM_KEY?.trim();
     if (envTeamKey) {
         return {
             mode: 'team-key',

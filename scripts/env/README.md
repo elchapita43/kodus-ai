@@ -1,6 +1,6 @@
 # Environment variables
 
-All env vars in Kodus flow from **one file**: the `.env.schema` at the
+All env vars in Codus flow from **one file**: the `.env.schema` at the
 repo root. Everything else — `.env.example`, `.env.template`, the docs
 page, the installer template, and your local `.env` — is **generated**
 from it. You never hand-edit a generated file; you edit the schema (or
@@ -12,10 +12,10 @@ your personal `.env.local`) and let the tooling do the rest.
      ▼
 pnpm run env:apply
      │
-     ├─→ kodus-ai/.env.example                       (this repo, OSS / external contributors)
-     ├─→ kodus-ai/.env.template                      (1Password injection template, this repo)
+     ├─→ codus-ai/.env.example                       (this repo, OSS / external contributors)
+     ├─→ codus-ai/.env.template                      (1Password injection template, this repo)
      ├─→ docs/_snippets/env-vars-generated.mdx        (this repo, embedded in Mintlify site)
-     └─→ kodus-installer/.env.example                 (cross-repo, CI-only on release)
+     └─→ codus-installer/.env.example                 (cross-repo, CI-only on release)
 
 .env.template  ──▶  pnpm run env:pull  ──▶  .env  (gitignored, per-dev)
 ```
@@ -25,8 +25,8 @@ pnpm run env:apply
 | You are… | Do this |
 | --- | --- |
 | 🌍 **External / OSS contributor** | `cp .env.example .env`, fill the required values by hand. No 1Password needed. → [details](#oss--external-contributors) |
-| 🧑‍💻 **Kodus dev, first time** | Install the 1Password CLI, get vault access, `pnpm run env:pull`. → [setup](#one-time-setup) |
-| 🧑‍💻 **Kodus dev, day-to-day** | `pnpm run env:pull` whenever the schema changed (a git hook reminds you after `git pull`). |
+| 🧑‍💻 **Codus dev, first time** | Install the 1Password CLI, get vault access, `pnpm run env:pull`. → [setup](#one-time-setup) |
+| 🧑‍💻 **Codus dev, day-to-day** | `pnpm run env:pull` whenever the schema changed (a git hook reminds you after `git pull`). |
 | ✏️ **Adding / changing a var** | Edit `.env.schema` → `pnpm run env:apply` → commit schema + generated files. → [guide](#adding-a-new-env-var) |
 | 🔑 **Adding / rotating a secret** | Vault item in 1Password + `@sensitive` entry in the schema. → [guide](#adding-a-new-secret) |
 | 🛠 **Personal tweak** (ngrok URL, port, `LOG_LEVEL=debug`) | Put it in `.env.local` — wins over `.env`, survives `env:pull`, never committed. → [cascade](#the-cascade--which-value-wins) |
@@ -45,7 +45,7 @@ pnpm run env:apply
 
 | Kind of value | Lives in | Why |
 | --- | --- | --- |
-| Real secrets (LLM keys, JWT, OAuth client secrets, etc.) | **1Password** (`Kodus-Dev` vault) | Vary per env, need access control, must be rotatable |
+| Real secrets (LLM keys, JWT, OAuth client secrets, etc.) | **1Password** (`Codus-Dev` vault) | Vary per env, need access control, must be rotatable |
 | Normal config (ports, URLs, log levels, queue tuning, crons) | **`.env.schema`** (literal default) | Same value for every dev — versioned in git, single source of truth |
 | Local-docker fixtures (`API_PG_DB_PASSWORD=123456`, `RABBITMQ_DEFAULT_PASS=devpass`) | **`.env.schema`** (literal default) | Marked `@sensitive` for typing, but value is public; everyone uses the same. The generator keeps them literal in the template |
 | Personal overrides (your preferred port, tunnel URL, `LOG_LEVEL=debug`) | **`.env.local`** (gitignored) | Wins over `.env`. Not committed, not pulled, doesn't touch the schema |
@@ -76,7 +76,7 @@ otherwise.
 ## Internal devs: pulling from 1Password
 
 Internal devs materialize their local `.env` from `.env.template` —
-secrets resolve from the **`Kodus-Dev`** 1Password vault. No more "what
+secrets resolve from the **`Codus-Dev`** 1Password vault. No more "what
 value does Gabriel have in his `.env`?".
 
 ### One-time setup
@@ -90,7 +90,7 @@ value does Gabriel have in his `.env`?".
    **"Integrate with 1Password CLI"**.
 
    Otherwise: `op signin`.
-3. **Ask an admin to add you to the `Kodus-Dev` vault.**
+3. **Ask an admin to add you to the `Codus-Dev` vault.**
 4. **Verify:**
    ```bash
    pnpm run env:pull:check
@@ -117,7 +117,7 @@ changed in the latest pull or branch switch, so you don't forget to run
 - **`op` not signed in** — see the desktop-integration step above, or
   `op signin`.
 - **"vault not accessible"** — ask an admin to add your account to
-  `Kodus-Dev`.
+  `Codus-Dev`.
 - **"unresolved reference"** — the item or `password` field is missing
   in the vault. The error message names the exact `op://...` ref;
   create it, then re-run.
@@ -158,7 +158,7 @@ those.
    ```env
    # Short description of what this controls.
    # @optional @sensitive
-   # kodus: audience=both
+   # codus: audience=both
    API_NEW_FEATURE_KEY=
    ```
 3. Add the value to your local `.env` to test.
@@ -179,7 +179,7 @@ doesn't declare (coverage check).
    `./scripts/env/bootstrap-vault.sh` which is idempotent and will
    create the new item alongside the existing ones:
    ```bash
-   op item create --vault "Kodus-Dev" --title "MY_NEW_KEY" \
+   op item create --vault "Codus-Dev" --title "MY_NEW_KEY" \
        --category "Password" password="<value>"
    ```
    (We use the `Password` category, not `API Credential`, because the
@@ -193,7 +193,7 @@ empty string, which silently breaks `@required` consumers.
 ### Rotating a secret
 
 Edit the item's `password` field in 1Password (UI or
-`op item edit "MY_KEY" --vault "Kodus-Dev" password="<new>"`). Each
+`op item edit "MY_KEY" --vault "Codus-Dev" password="<new>"`). Each
 dev runs `pnpm run env:pull` to pick up the new value.
 
 ### Renaming or removing a var
@@ -203,7 +203,7 @@ The dead var disappears from all generated outputs automatically.
 
 ### Different default for self-hosted
 
-Add `installer-default="..."` on the `kodus:` line. The cloud
+Add `installer-default="..."` on the `codus:` line. The cloud
 template keeps the original; the installer gets the override.
 
 ### Multi-line secrets (PEM keys, certs, etc.)
@@ -222,7 +222,7 @@ To store a PEM correctly:
 ```bash
 # collapse a PEM into one line with literal \n, then store it
 awk 'NR>1{printf "\\n"} {printf "%s", $0}' key.pem | \
-    op item edit "API_GITHUB_PRIVATE_KEY" --vault "Kodus-Dev" "password=-"
+    op item edit "API_GITHUB_PRIVATE_KEY" --vault "Codus-Dev" "password=-"
 ```
 
 The app un-escapes `\n` at read time (see
@@ -232,14 +232,14 @@ it injects cleanly and the app guards on the missing value.
 
 ## Schema syntax
 
-Each var entry has a description, varlock decorators, Kodus metadata,
+Each var entry has a description, varlock decorators, Codus metadata,
 and `name=default`:
 
 ```env
 # What the var does and why it matters.
 # @required @sensitive @type=url
-# kodus: audience=both installer-default="kodus_db"
-API_PG_DB_DATABASE=kodus_db
+# codus: audience=both installer-default="codus_db"
+API_PG_DB_DATABASE=codus_db
 ```
 
 ### Standard varlock decorators
@@ -248,19 +248,19 @@ API_PG_DB_DATABASE=kodus_db
 - `@sensitive` (treat as secret in tooling)
 - `@type=<port|url|email|number|boolean|cron|enum(a,b,c)>`
 
-### Kodus metadata (custom)
+### Codus metadata (custom)
 
-- `kodus: audience=<value[,value]>` — `cloud`, `self-hosted`, `both`,
+- `codus: audience=<value[,value]>` — `cloud`, `self-hosted`, `both`,
   `self-hosted-enterprise`. Combinations allowed (e.g.
   `cloud,self-hosted-enterprise`).
-- `kodus: installer-default="<value>"` — different default for the
-  installer template (e.g. `kodus-api` vs `kodus_api` containers).
-- `kodus: installer-comment=true` — the var appears commented-out in
+- `codus: installer-default="<value>"` — different default for the
+  installer template (e.g. `codus-api` vs `codus_api` containers).
+- `codus: installer-comment=true` — the var appears commented-out in
   the installer template (opt-in feature).
 
 ### Audience semantics
 
-| audience | kodus-ai/.env.example | installer/.env.example | docs badge |
+| audience | codus-ai/.env.example | installer/.env.example | docs badge |
 | --- | --- | --- | --- |
 | `cloud` | ✅ | ❌ | ☁️ Cloud |
 | `self-hosted` | ❌ | ✅ active | 🏠 Self-hosted |
@@ -281,7 +281,7 @@ API_PG_DB_DATABASE=kodus_db
 | `pnpm run env:doctor` | Flag missing required values in your local `.env` |
 | `pnpm run env:audit` | Build review CSV at `.env-preview/review.csv` |
 
-`pnpm run env:apply` does NOT touch `kodus-installer/.env.example` — that
+`pnpm run env:apply` does NOT touch `codus-installer/.env.example` — that
 is cross-repo and only regenerated by CI on release tag.
 
 ## Vault convention
@@ -297,7 +297,7 @@ the **`password`** field. So `API_OPEN_AI_API_KEY` looks like:
 The template references it as:
 
 ```env
-API_OPEN_AI_API_KEY="op://Kodus-Dev/API_OPEN_AI_API_KEY/password"
+API_OPEN_AI_API_KEY="op://Codus-Dev/API_OPEN_AI_API_KEY/password"
 ```
 
 To list every item the vault needs right now:
@@ -321,7 +321,7 @@ Runs on every PR that touches `.env.schema`, `.env.example`, or
 
 1. **Drift** — fails if `pnpm run env:apply` produces different generated
    files than what the PR committed.
-2. **Coverage** — fails if code references a Kodus-shaped env var that
+2. **Coverage** — fails if code references a Codus-shaped env var that
    the schema doesn't declare (with an allowlist for CLI-only vars,
    test fixtures, and false positives in
    `scripts/env/check-coverage.ts`).
@@ -330,12 +330,12 @@ Required check on `main` once the workflow is registered.
 
 ### `env-sync-release.yml`
 
-Runs on release tag (`v*`). Regenerates `kodus-installer/.env.example`
-from the current schema and opens a PR in `kodustech/kodus-installer`
+Runs on release tag (`v*`). Regenerates `codus-installer/.env.example`
+from the current schema and opens a PR in `elchapita43/codus-installer`
 if there's drift.
 
 Requires `CROSS_REPO_PAT` secret (PAT with `repo` scope on
-`kodustech/kodus-installer`).
+`elchapita43/codus-installer`).
 
 ## How the installer template stays in sync
 
@@ -343,16 +343,16 @@ The installer is the only output that lives outside this monorepo, so
 it has its own sync flow:
 
 ```
-kodus-ai release tag (v2.x.y) pushed
+codus-ai release tag (v2.x.y) pushed
   └─ env-sync-release.yml triggers
-       ├─ checks out kodus-installer
+       ├─ checks out codus-installer
        ├─ runs `pnpm run ts-node scripts/env/generate.ts --apply --installer
-       │                       --installer-out=../kodus-installer/.env.example`
-       ├─ if .env.example changed → opens PR in kodus-installer
+       │                       --installer-out=../codus-installer/.env.example`
+       ├─ if .env.example changed → opens PR in codus-installer
        └─ maintainer approves PR (matches release tag)
 ```
 
-A maintainer of `kodus-installer` reviews the auto-generated PR before
+A maintainer of `codus-installer` reviews the auto-generated PR before
 merging — it's never auto-merged, so a human sanity-checks each
 release.
 

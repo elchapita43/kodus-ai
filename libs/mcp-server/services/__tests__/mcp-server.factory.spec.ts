@@ -43,7 +43,7 @@ describe('McpServerFactory', () => {
 
     it('caches tool metadata so schemas are transformed only once', async () => {
         const tool = {
-            name: 'KODUS_LIST_REPOSITORIES',
+            name: 'CODUS_LIST_REPOSITORIES',
             description: 'List repositories',
             inputSchema: { type: 'object', properties: {} },
             outputSchema: { type: 'object', properties: {} },
@@ -74,7 +74,7 @@ describe('McpServerFactory', () => {
         toShapeMock.mockImplementationOnce(() => undefined);
 
         const tool = {
-            name: 'KODUS_LIST_REPOSITORIES',
+            name: 'CODUS_LIST_REPOSITORIES',
             description: 'List repositories',
             inputSchema: { type: 'object', properties: {} },
             outputSchema: { type: 'object', properties: {} },
@@ -91,7 +91,7 @@ describe('McpServerFactory', () => {
         );
 
         await expect(factory.create()).rejects.toThrow(
-            'Invalid input schema for MCP tool: KODUS_LIST_REPOSITORIES',
+            'Invalid input schema for MCP tool: CODUS_LIST_REPOSITORIES',
         );
     });
 });

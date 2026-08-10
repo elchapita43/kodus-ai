@@ -5,7 +5,7 @@ Main backend. Exposes all business logic via REST. Producer only (never consumes
 ## What Agents Get Wrong
 
 - Controllers are thin: business logic goes in **use cases**, not controllers
-- Auth has multiple methods: JWT, CLI keys (`Bearer kodus_*`), OAuth, SAML SSO. Public endpoints use `@Public()` decorator
+- Auth has multiple methods: JWT, CLI keys (`Bearer codus_*`), OAuth, SAML SSO. Public endpoints use `@Public()` decorator
 - Authorization uses `@CheckPolicies()` + `PolicyGuard`, not custom guards. Repo-level checks use `checkRepoPermissions()` with `repo.key` from query/body
 - Request context comes from `@Inject(REQUEST)` — use `request.user.organization.uuid` for tenant isolation
 - Database migrations live in `libs/core/src/infrastructure/migrations`, not inside the API app

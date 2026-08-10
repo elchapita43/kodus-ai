@@ -6,7 +6,7 @@ import {
     ParserType,
     PromptRole,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';
 
@@ -43,7 +43,7 @@ import {
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 import { BYOKPromptRunnerService } from '@libs/core/infrastructure/services/tokenTracking/byokPromptRunner.service';
 import { ObservabilityService } from '@libs/core/log/observability.service';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import { SafeguardPipelineService } from './safeguardPipeline.service';
 
 export const LLM_ANALYSIS_SERVICE_TOKEN = Symbol.for('LLMAnalysisService');
@@ -363,7 +363,7 @@ export class LLMAnalysisService implements IAIAnalysisService {
             } as ContextAugmentationsMap,
             contextPack: context?.sharedContextPack as ContextPack | undefined,
             crossFileSnippets: context?.crossFileSnippets,
-            memories: context?.codeReviewConfig?.kodyMemoryRules || [],
+            memories: context?.codeReviewConfig?.codyMemoryRules || [],
             documentationContext: context?.documentationContext || [],
         };
 
@@ -580,7 +580,7 @@ export class LLMAnalysisService implements IAIAnalysisService {
         byokConfig: BYOKConfig,
         crossFileSnippets?: CrossFileContextSnippet[],
         remoteCommands?: RemoteCommands,
-        memories?: Array<Partial<IKodyRule>>,
+        memories?: Array<Partial<ICodyRule>>,
         externalReferences?: unknown[],
         externalReferenceErrors?: unknown[] | string,
         getFreshCloneParams?: () => Promise<CreateSandboxParams>,

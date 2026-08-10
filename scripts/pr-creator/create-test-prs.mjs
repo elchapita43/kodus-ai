@@ -7,9 +7,9 @@ import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
 
 const CONFIG = {
-    kodusUrl: process.env.KODUS_URL || 'https://api.kodus.ai',
-    email: process.env.KODUS_EMAIL,
-    password: process.env.KODUS_PASSWORD,
+    codusUrl: process.env.CODUS_URL || 'https://api.codus.ai',
+    email: process.env.CODUS_EMAIL,
+    password: process.env.CODUS_PASSWORD,
     totalPRs: parseInt(process.env.TOTAL_PRS || '10'),
     totalPRsPerAccount: parseInt(
         process.env.TOTAL_PRS_PER_ACCOUNT || process.env.TOTAL_PRS || '10',
@@ -43,7 +43,7 @@ let bitbucketReposCache = {};
 let authTokens = {};
 
 async function loadAccounts() {
-    const envPath = process.env.KODUS_ACCOUNTS_FILE;
+    const envPath = process.env.CODUS_ACCOUNTS_FILE;
     const accountsPath = envPath
         ? path.resolve(process.cwd(), envPath)
         : DEFAULT_ACCOUNTS_FILE;
@@ -576,8 +576,8 @@ async function runTargeted(targetedPRs) {
 }
 
 async function main() {
-    console.log('🚀 Kodus PR Creator\n');
-    console.log(`🔗 API URL: ${CONFIG.kodusUrl}\n`);
+    console.log('🚀 Codus PR Creator\n');
+    console.log(`🔗 API URL: ${CONFIG.codusUrl}\n`);
 
     // Check for targeted PRs config first
     const targetedPRs = await loadTargetedPRs();
@@ -598,7 +598,7 @@ async function main() {
         : [{ email: CONFIG.email, password: CONFIG.password }];
 
     if (!accountsToRun[0].email || !accountsToRun[0].password) {
-        console.error('❌ KODUS_EMAIL and KODUS_PASSWORD are required');
+        console.error('❌ CODUS_EMAIL and CODUS_PASSWORD are required');
         process.exit(1);
     }
 
@@ -624,7 +624,7 @@ async function main() {
 
 async function login(email, password) {
     console.log('🔐 Logging in...');
-    const response = await fetch(`${CONFIG.kodusUrl}/auth/login`, {
+    const response = await fetch(`${CONFIG.codusUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -655,7 +655,7 @@ async function getUserInfo(accessToken) {
         throw new Error('No access token provided');
     }
 
-    const response = await fetch(`${CONFIG.kodusUrl}/user/info`, {
+    const response = await fetch(`${CONFIG.codusUrl}/user/info`, {
         headers: { Authorization: `Bearer ${accessToken}` },
     });
 
@@ -681,7 +681,7 @@ async function getUserInfo(accessToken) {
 }
 
 async function getRepositories(accessToken, teamId, organizationId) {
-    const url = new URL(`${CONFIG.kodusUrl}/code-management/repositories/org`);
+    const url = new URL(`${CONFIG.codusUrl}/code-management/repositories/org`);
     url.searchParams.set('teamId', teamId);
     if (organizationId) {
         url.searchParams.set('organizationSelected', organizationId);
@@ -1512,8 +1512,8 @@ async function closeAllPRs(repo, platform, token) {
 }
 
 async function createPR(pr, token) {
-    const prTitle = `Kodus Test PR - ${Date.now()}`;
-    const prBody = 'Test PR created by Kodus PR Creator script';
+    const prTitle = `Codus Test PR - ${Date.now()}`;
+    const prBody = 'Test PR created by Codus PR Creator script';
 
     try {
         switch (pr.platform) {

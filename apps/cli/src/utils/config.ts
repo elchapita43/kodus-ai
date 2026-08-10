@@ -3,7 +3,7 @@ import path from 'path';
 import os from 'os';
 
 function getConfigDir(): string {
-    return path.join(os.homedir(), '.kodus');
+    return path.join(os.homedir(), '.codus');
 }
 
 function getConfigFile(): string {

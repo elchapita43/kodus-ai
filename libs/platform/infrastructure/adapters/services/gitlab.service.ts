@@ -49,7 +49,7 @@ import { MCPManagerService } from '@libs/mcp-server/services/mcp-manager.service
 import { ICodeManagementService } from '@libs/platform/domain/platformIntegrations/interfaces/code-management.interface';
 
 import { createLogger } from '@libs/core/log/logger';
-import { hasKodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
+import { hasCodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 import { getCodeReviewBadge } from '@libs/common/utils/codeManagement/codeReviewBadge';
 import { getLabelShield } from '@libs/common/utils/codeManagement/labels';
 import { getSeverityLevelShield } from '@libs/common/utils/codeManagement/severityLevel';
@@ -633,7 +633,7 @@ export class GitlabService implements Omit<
                 gitlabAuthDetail.authMode === AuthMode.TOKEN && author?.name
                     ? {
                           authorName: author.name,
-                          authorEmail: author.email || 'kody@kodus.io',
+                          authorEmail: author.email || 'cody@kodus.io',
                       }
                     : undefined;
 
@@ -778,7 +778,7 @@ export class GitlabService implements Omit<
             author?.name
                 ? {
                       authorName: author.name,
-                      authorEmail: author.email || 'kody@kodus.io',
+                      authorEmail: author.email || 'cody@kodus.io',
                   }
                 : {},
         );
@@ -903,7 +903,7 @@ export class GitlabService implements Omit<
                 res = await this.authenticateWithToken(params);
             }
 
-            this.mcpManagerService?.createKodusMCPIntegration(
+            this.mcpManagerService?.createCodusMCPIntegration(
                 params.organizationAndTeamData.organizationId,
             );
 
@@ -1767,7 +1767,7 @@ export class GitlabService implements Omit<
     private formatDeploymentTypeFromDeploy(workflows) {
         return {
             type: 'deployment',
-            madeBy: 'Kody',
+            madeBy: 'Cody',
             value: {
                 workflows: workflows.flatMap((repo) =>
                     repo.productionWorkflows.map((workflow) => ({
@@ -2217,9 +2217,9 @@ export class GitlabService implements Omit<
             actionStatement,
             codeBlock,
             copyPrompt,
-            this.formatSub(translations.talkToKody),
+            this.formatSub(translations.talkToCody),
             this.formatSub(translations.feedback) +
-                '<!-- kody-codereview -->&#8203;\n&#8203;',
+                '<!-- cody-codereview -->&#8203;\n&#8203;',
         ]
             .join('\n')
             .trim();
@@ -4073,7 +4073,7 @@ export class GitlabService implements Omit<
                     const firstDiscussionComment = discussion.notes[0];
                     return (
                         firstDiscussionComment.resolvable &&
-                        !hasKodyMarker(firstDiscussionComment.body)
+                        !hasCodyMarker(firstDiscussionComment.body)
                     );
                 })
                 .map((discussion) => {
@@ -4347,7 +4347,7 @@ export class GitlabService implements Omit<
                 TranslationsCategory.ReviewComment,
             );
 
-            commentBody += this.formatSub(translations.talkToKody) + '\n';
+            commentBody += this.formatSub(translations.talkToCody) + '\n';
             commentBody += this.formatSub(translations.feedback);
         }
 

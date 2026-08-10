@@ -45,12 +45,12 @@ async function main() {
         console.log("⚠️  Nenhum PR aberto encontrado, prosseguindo para criar um novo.");
     }
 
-    console.log("\n🚀 Criando PR NOVO (Isso vai disparar os Webhooks da Kodus!)...");
+    console.log("\n🚀 Criando PR NOVO (Isso vai disparar os Webhooks da Codus!)...");
     try {
         const createCmd = `gh api repos/${repo}/pulls -X POST -f title="Test Review: ${head}" -f body="Automated PR for agent trace testing" -f head="${head}" -f base="${base}"`;
         const result = JSON.parse(execSync(createCmd, { encoding: 'utf-8' }));
         console.log(`✅ NOVO PR CRIADO! URL: ${result.html_url}`);
-        console.log(`🕒 Aguarde uns minutos. A Kodus recebeu o Webhook e o Agente está trabalhando neste PR agora mesmo no seu backend.`);
+        console.log(`🕒 Aguarde uns minutos. A Codus recebeu o Webhook e o Agente está trabalhando neste PR agora mesmo no seu backend.`);
     } catch (e) {
         console.error("❌ Erro ao criar o novo PR:", e.message);
         if (e.stdout) console.error("Detalhes:", e.stdout.toString());

@@ -1,5 +1,5 @@
 import { TokenChunkingService } from '@libs/core/infrastructure/services/tokenChunking/tokenChunking.service';
-import { LLMModelProvider, MODEL_STRATEGIES } from '@kodus/kodus-common/llm';
+import { LLMModelProvider, MODEL_STRATEGIES } from '@codus/codus-common/llm';
 
 // Mock logger
 jest.mock('@libs/core/log/logger', () => ({

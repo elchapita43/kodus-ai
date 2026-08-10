@@ -1,7 +1,7 @@
 import {
     anthropicCompatibleRootURL,
     BYOKProvider,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { ProviderService } from '@libs/core/infrastructure/services/providers/provider.service';
 import { createLogger } from '@libs/core/log/logger';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -558,7 +558,7 @@ export class TestByokConnectionUseCase {
                         latencyMs: Date.now() - start,
                         httpStatus: 200,
                         message:
-                            'STS credentials work but Bedrock ListFoundationModels returned 403. Kodus can still call models if the InvokeModel permission is granted — this is usually fine.',
+                            'STS credentials work but Bedrock ListFoundationModels returned 403. Codus can still call models if the InvokeModel permission is granted — this is usually fine.',
                     };
                 }
                 return this.buildBedrockError(
@@ -804,8 +804,8 @@ export class TestByokConnectionUseCase {
                 code: 'unknown',
                 ...base,
                 message: status
-                    ? `The provider returned HTTP ${status} and Kodus couldn't classify the error. See the provider message below for details.`
-                    : 'Kodus reached the provider but couldn\'t classify the response. See the provider message below.',
+                    ? `The provider returned HTTP ${status} and Codus couldn't classify the error. See the provider message below for details.`
+                    : 'Codus reached the provider but couldn\'t classify the response. See the provider message below.',
             };
         }
 

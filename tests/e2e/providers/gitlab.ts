@@ -287,7 +287,7 @@ export class GitLabProvider extends BaseProvider {
             {
                 method: "POST",
                 headers: this.headers(),
-                body: { body: "@kody review" },
+                body: { body: "@cody review" },
             },
         );
         ensureOk(resp, "gitlab:triggerReview");
@@ -314,13 +314,13 @@ export class GitLabProvider extends BaseProvider {
                     if (n.created_at <= opts.sinceIso) return false;
                     if (opts.triggerId && String(n.id) === opts.triggerId) return false;
                     const body = n.body ?? "";
-                    if (body.toLowerCase().startsWith("@kody")) return false;
+                    if (body.toLowerCase().startsWith("@cody")) return false;
                     // Drop "Started!" placeholder but keep "Complete!" — the
-                    // latter is a valid mechanics signal even when Kody
+                    // latter is a valid mechanics signal even when Cody
                     // found no inline findings.
                     if (
-                        body.includes("<!-- kody-codereview") &&
-                        !body.includes("kody-codereview-completed")
+                        body.includes("<!-- cody-codereview") &&
+                        !body.includes("cody-codereview-completed")
                     ) {
                         return false;
                     }

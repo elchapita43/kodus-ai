@@ -1,6 +1,6 @@
 import type { PrInfo } from "./api";
 
-const PREFIX = "kodus-review:";
+const PREFIX = "codus-review:";
 
 export type ReviewSnapshot = {
     pr: PrInfo;

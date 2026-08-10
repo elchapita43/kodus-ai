@@ -43,12 +43,12 @@ export async function collectServerEvidence(
     if (!host || !key) return;
 
     // Resolve container names from the droplet instead of hardcoding them —
-    // the API container is NOT named `kodus-api` on the installer compose
-    // (every prior artifact's server-kodus-api-*.log held only "No such
-    // container: kodus-api", which is how the registerRepo-400 runs shipped
+    // the API container is NOT named `codus-api` on the installer compose
+    // (every prior artifact's server-codus-api-*.log held only "No such
+    // container: codus-api", which is how the registerRepo-400 runs shipped
     // with no API log at all). Fall back to the known worker/webhook names
     // if discovery fails.
-    let containers = ['kodus-worker-prod', 'kodus-webhooks-prod'];
+    let containers = ['codus-worker-prod', 'codus-webhooks-prod'];
     try {
         const { stdout } = await execFileAsync(
             'ssh',
@@ -60,7 +60,7 @@ export async function collectServerEvidence(
                 '-o',
                 'ConnectTimeout=10',
                 `root@${host}`,
-                `docker ps --format '{{.Names}}' | grep -ai kodus || true`,
+                `docker ps --format '{{.Names}}' | grep -ai codus || true`,
             ],
             { timeout: 20_000, maxBuffer: 1024 * 1024 },
         );
@@ -73,13 +73,13 @@ export async function collectServerEvidence(
         // discovery is best-effort; the fallback list still covers the
         // worker/webhook logs that have always resolved
     }
-    // Covers both kody-rules scenarios and the code-review pipeline: the
+    // Covers both cody-rules scenarios and the code-review pipeline: the
     // review path (webhook received → automation → pipeline stages → comment
     // posting) is what a code-review-basic timeout needs to explain whether
     // the product ran at all and where it stopped. Bitbucket/webhook terms
     // surface a webhook that never arrived vs a pipeline that crashed.
     const grepFilter =
-        'kody-rules-sync|kody-rules-eval|KodyRulesSync|CrossProcess|ERROR|error -|Failed|' +
+        'cody-rules-sync|cody-rules-eval|CodyRulesSync|CrossProcess|ERROR|error -|Failed|' +
         'CodeReview|ReviewOrchestrator|CommentManager|CodeReviewPipeline|CodeReviewAgent|' +
         'Webhook|webhook|Automation|automation|Bitbucket|bitbucket';
 

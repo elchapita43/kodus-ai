@@ -2,12 +2,12 @@ import * as fs from 'fs/promises';
 import * as os from 'os';
 import * as path from 'path';
 
-const SANDBOX_PREFIX = 'kodus-sandbox-';
+const SANDBOX_PREFIX = 'codus-sandbox-';
 
 /**
  * Check if a sandboxId refers to a local sandbox directory.
  * Returns true only for direct children of os.tmpdir() whose basename
- * starts with 'kodus-sandbox-'.
+ * starts with 'codus-sandbox-'.
  */
 export function isLocalSandboxPath(
     sandboxId: string | null | undefined,

@@ -4,12 +4,12 @@ description: |
     self-hosted full-no-sso run, after applying:
       - per-seat-license-toggle teardown (clears install-wide license to
         invalid → self-hosted CE mode, so the next cell isn't blocked)
-      - kody-rules ruleInstruction reframed as a mechanical static check
+      - cody-rules ruleInstruction reframed as a mechanical static check
         so the LLM doesn't excuse fixture markers as "intentional"
 
     Exercises:
       - github × license-paid:  per-seat (runs B1 teardown) +
-        kody-rules (B2 wording test)
+        cody-rules (B2 wording test)
       - gitlab × license-paid:  code-review-basic FIRST (proves B1
         teardown left the next cell unblocked)
       - bitbucket × license-paid: onboarding-webhook + code-review-basic
@@ -29,7 +29,7 @@ description: |
 scenarios:
     - code-review-basic
     - onboarding-webhook-registration
-    - kody-rules-create-and-apply
+    - cody-rules-create-and-apply
     - license-attribution
     - per-seat-license-toggle
 

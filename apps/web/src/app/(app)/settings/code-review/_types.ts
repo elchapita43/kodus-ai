@@ -55,7 +55,7 @@ type SuggestionControlConfig = {
     limitationType: LimitationType;
     maxSuggestions: number;
     severityLevelFilter: SeverityLevel;
-    applyFiltersToKodyRules: boolean;
+    applyFiltersToCodyRules: boolean;
     severityLimits?: {
         low: number;
         medium: number;
@@ -87,11 +87,11 @@ export type CodeReviewGlobalConfig = {
     summary: CodeReviewSummary;
     suggestionControl?: SuggestionControlConfig;
     pullRequestApprovalActive: boolean;
-    kodusConfigFileOverridesWebPreferences: boolean;
+    codusConfigFileOverridesWebPreferences: boolean;
     isRequestChangesActive: boolean;
-    kodyRulesGeneratorEnabled?: boolean;
-    kodyLearningExcludedReviewers?: string[];
-    kodyKnowledgeApproval?: {
+    codyRulesGeneratorEnabled?: boolean;
+    codyLearningExcludedReviewers?: string[];
+    codyKnowledgeApproval?: {
         enabled: boolean;
     };
     runOnDraft: boolean;

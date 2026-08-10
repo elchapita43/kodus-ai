@@ -26,4 +26,4 @@ farm_ssh "$SLOT" "cd '$REMOTE_SRC' 2>/dev/null && docker compose -f docker-compo
 
 echo
 dim "── worker log (last 20 lines) ──"
-farm_ssh "$SLOT" "docker logs kodus_worker_bench --tail 20 2>/dev/null || echo '(worker not running)'"
+farm_ssh "$SLOT" "docker logs codus_worker_bench --tail 20 2>/dev/null || echo '(worker not running)'"

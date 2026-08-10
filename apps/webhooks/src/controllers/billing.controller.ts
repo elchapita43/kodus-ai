@@ -18,7 +18,7 @@ import { NotificationEvent } from '@libs/notifications/domain/catalog/events';
  */
 type WebhookRequest = Request & { rawBody?: Buffer };
 
-const SIGNATURE_HEADER = 'x-kodus-signature';
+const SIGNATURE_HEADER = 'x-codus-signature';
 
 interface PaymentFailedBody {
     organizationId?: string;
@@ -37,7 +37,7 @@ interface TrialExpiringBody {
 }
 
 /**
- * Receives outbound notifications from kodus-service-billing.
+ * Receives outbound notifications from codus-service-billing.
  *
  * The billing service signs the raw request body with HMAC-SHA256
  * keyed by `API_BILLING_WEBHOOK_SECRET`. Invalid / missing signatures
@@ -128,7 +128,7 @@ export class BillingController {
     }
 
     /**
-     * Verifies the X-Kodus-Signature header against the raw request
+     * Verifies the X-Codus-Signature header against the raw request
      * body using HMAC-SHA256 with the shared secret. Constant-time
      * comparison so timing attacks can't enumerate valid bytes.
      */

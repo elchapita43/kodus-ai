@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@nestjs/common';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import { ObservabilityService } from '@libs/core/log/observability.service';
 import { DocumentationSearchExaService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-exa.service';
@@ -30,7 +30,7 @@ export class PerformanceAgentProvider extends BaseCodeReviewAgentProvider {
 
     protected getIdentity(): ReviewAgentIdentity {
         return {
-            name: 'kodus-performance-review-agent',
+            name: 'codus-performance-review-agent',
             description:
                 'Performance engineering expert specialized in finding N+1 queries, ' +
                 'unnecessary loops, memory leaks, missing caching opportunities, ' +

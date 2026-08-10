@@ -10,7 +10,7 @@ describe('isLocalSandboxPath', () => {
     it('accepts a valid local sandbox path', () => {
         const tmpDir = os.tmpdir();
         expect(
-            isLocalSandboxPath(path.join(tmpDir, 'kodus-sandbox-abc123')),
+            isLocalSandboxPath(path.join(tmpDir, 'codus-sandbox-abc123')),
         ).toBe(true);
     });
 
@@ -24,14 +24,14 @@ describe('isLocalSandboxPath', () => {
     });
 
     it('rejects path outside tmpdir', () => {
-        expect(isLocalSandboxPath('/var/kodus-sandbox-abc')).toBe(false);
+        expect(isLocalSandboxPath('/var/codus-sandbox-abc')).toBe(false);
     });
 
     it('rejects path traversal', () => {
         const tmpDir = os.tmpdir();
         expect(
             isLocalSandboxPath(
-                path.join(tmpDir, 'kodus-sandbox-abc', '..', '..', 'etc'),
+                path.join(tmpDir, 'codus-sandbox-abc', '..', '..', 'etc'),
             ),
         ).toBe(false);
     });
@@ -45,7 +45,7 @@ describe('isLocalSandboxPath', () => {
         const tmpDir = os.tmpdir();
         expect(
             isLocalSandboxPath(
-                path.join(tmpDir, 'kodus-sandbox-abc', 'subdir'),
+                path.join(tmpDir, 'codus-sandbox-abc', 'subdir'),
             ),
         ).toBe(false);
     });
@@ -56,7 +56,7 @@ describe('deleteLocalSandbox', () => {
 
     beforeEach(async () => {
         tmpDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-sandbox-test-'),
+            path.join(os.tmpdir(), 'codus-sandbox-test-'),
         );
     });
 

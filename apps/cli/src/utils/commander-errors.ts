@@ -14,14 +14,14 @@ function matchQuotedValue(
 
 function getProgramName(args: string[]): string {
     if (args.length === 0) {
-        return 'kodus';
+        return 'codus';
     }
 
     if (args[0] === 'config') {
-        return 'kodus config';
+        return 'codus config';
     }
 
-    return `kodus ${args[0]}`;
+    return `codus ${args[0]}`;
 }
 
 function formatConfigShortcutMisuse(args: string[]): string | null {
@@ -47,8 +47,8 @@ function formatConfigShortcutMisuse(args: string[]): string | null {
 
     return [
         "The '-r, --remote' shortcut only adds a repository.",
-        `Use \`kodus config -r ${target}\` to add it.`,
-        `Use \`kodus config remote setup ${target}\` to run onboarding.`,
+        `Use \`codus config -r ${target}\` to add it.`,
+        `Use \`codus config remote setup ${target}\` to run onboarding.`,
     ].join('\n');
 }
 
@@ -63,7 +63,7 @@ function formatUnknownCommand(args: string[], message?: string): string {
 
     if (args[0] === 'config') {
         lines.push(
-            'For repository settings, use `kodus config remote <command>`.',
+            'For repository settings, use `codus config remote <command>`.',
         );
     }
 

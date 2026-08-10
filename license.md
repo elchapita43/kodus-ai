@@ -1,6 +1,6 @@
 # License
 
-Kodus is available under a **dual license** model:
+Codus is available under a **dual license** model:
 
 - **Open Source License (AGPL-3.0):**  
   All source code **except** files or directories marked as "enterprise edition" is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).

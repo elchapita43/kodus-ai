@@ -27,14 +27,14 @@ function MemberRemovedEmail({
 }: MemberRemovedEmailProps) {
     return (
         <BrandLayout
-            preview={`You've been removed from ${organizationName} on Kodus`}>
+            preview={`You've been removed from ${organizationName} on Codus`}>
             <Heading style={baseHeading}>You&apos;ve been removed</Heading>
             <Text style={baseText}>
                 Hi {removedUserName},
             </Text>
             <Text style={baseText}>
                 You have been removed from <strong>{organizationName}</strong>{' '}
-                on Kodus by {removedBy}. You no longer have access to that
+                on Codus by {removedBy}. You no longer have access to that
                 organization&apos;s projects or settings.
             </Text>
             <Text style={mutedText}>

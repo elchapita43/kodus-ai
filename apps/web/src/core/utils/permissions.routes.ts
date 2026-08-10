@@ -29,7 +29,7 @@ export const resourceRoutes: Partial<Record<ResourceType, string[]>> = {
     ],
     [ResourceType.Billing]: ["/settings/subscription/*", "/choose-plan"],
     // `/review-suggestions` is the cockpit's suggestions explorer (a drill-down
-    // from the Kodus Review tab), so it shares the Cockpit resource gate.
+    // from the Codus Review tab), so it shares the Cockpit resource gate.
     [ResourceType.Cockpit]: ["/cockpit/*", "/review-suggestions"],
     [ResourceType.PullRequests]: ["/pull-requests/*"],
     [ResourceType.CliReview]: ["/cli-reviews/*"],

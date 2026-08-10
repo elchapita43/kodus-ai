@@ -489,7 +489,7 @@ export class PullRequestIngestionService {
             for (const s of file.suggestions ?? []) {
                 // `id` is only populated once a suggestion is actually
                 // delivered (posted as a PR comment). Drafts that never
-                // leave Kody (`deliveryStatus !== 'sent'`) are id-less
+                // leave Cody (`deliveryStatus !== 'sent'`) are id-less
                 // and every cockpit query filters by `sent` anyway, so
                 // dropping them at ingestion is lossless. Skipping here
                 // instead of letting the NOT NULL constraint fire saves
@@ -510,7 +510,7 @@ export class PullRequestIngestionService {
                         "suggestion_id", "organizationId", "pullRequestId",
                         "repositoryId", "filePath", "label", "severity",
                         "suggestionDeliveryStatus", "suggestionImplementationStatus",
-                        "suggestionCreatedAt", "brokenKodyRulesIds", "raw"
+                        "suggestionCreatedAt", "brokenCodyRulesIds", "raw"
                      ) VALUES (
                         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12::jsonb
                      )
@@ -518,7 +518,7 @@ export class PullRequestIngestionService {
                         "suggestionDeliveryStatus" = EXCLUDED."suggestionDeliveryStatus",
                         "suggestionImplementationStatus" = EXCLUDED."suggestionImplementationStatus",
                         "suggestionCreatedAt" = EXCLUDED."suggestionCreatedAt",
-                        "brokenKodyRulesIds" = EXCLUDED."brokenKodyRulesIds",
+                        "brokenCodyRulesIds" = EXCLUDED."brokenCodyRulesIds",
                         "raw" = EXCLUDED."raw"`,
                     [
                         s.id,
@@ -531,8 +531,8 @@ export class PullRequestIngestionService {
                         s.deliveryStatus ?? null,
                         implStatus,
                         createdAt,
-                        Array.isArray(s.brokenKodyRulesIds)
-                            ? s.brokenKodyRulesIds
+                        Array.isArray(s.brokenCodyRulesIds)
+                            ? s.brokenCodyRulesIds
                             : null,
                         JSON.stringify(s),
                     ],

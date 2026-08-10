@@ -103,7 +103,7 @@ describe('BitbucketController', () => {
                 headers: { 'x-event-key': 'pullrequest:comment_created' },
                 body: {
                     pullrequest: { id: 1 },
-                    comment: { content: { raw: '@kody review' } },
+                    comment: { content: { raw: '@cody review' } },
                 },
             };
 
@@ -119,7 +119,7 @@ describe('BitbucketController', () => {
                 event: 'pullrequest:comment_created',
                 payload: {
                     pullrequest: { id: 1 },
-                    comment: { content: { raw: '@kody review' } },
+                    comment: { content: { raw: '@cody review' } },
                     isDataCenterEvent: false,
                 },
             });

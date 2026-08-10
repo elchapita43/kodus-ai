@@ -115,11 +115,11 @@ jobs:
             - name: Checkout monorepo
               uses: actions/checkout@v6.0.2
 
-            - name: Checkout kodus-installer (used by provisioning script)
+            - name: Checkout codus-installer (used by provisioning script)
               uses: actions/checkout@v6.0.2
               with:
-                  repository: kodustech/kodus-installer
-                  path: kodus-installer
+                  repository: elchapita43/codus-installer
+                  path: codus-installer
                   token: ${{ secrets.RELEASE_BOT_TOKEN }}
 
             - name: Setup Node
@@ -148,7 +148,7 @@ jobs:
                   IMAGE_TAG: ${{ inputs.image_tag }}
                   SOURCE_MATRIX_FILE: ${{ inputs.matrix_file }}
                   LICENSE_MODE: ${{ matrix.cell.license }}
-                  KODUS_INSTALLER_PATH: ${{ github.workspace }}/kodus-installer
+                  CODUS_INSTALLER_PATH: ${{ github.workspace }}/codus-installer
                   TEST_VM_PROVIDER: digitalocean
                   TEST_KEEP_RUNNING: ${{ inputs.keep_running && '1' || '0' }}
 
@@ -213,9 +213,9 @@ jobs:
                   # conversation-vertex-byok). Each auto-skips when its secret is
                   # unset. VERTEX_MODEL must be enabled in the SA project's Vertex
                   # AI Model Garden; `global` serves the bare-id Claude models.
-                  # conversation-vertex-byok additionally needs a NON-Kody GitHub
-                  # account token (login without "kody"/"kodus", PR R/W on the
-                  # fixture repo) AND a kodus-common release carrying the v2
+                  # conversation-vertex-byok additionally needs a NON-Cody GitHub
+                  # account token (login without "cody"/"codus", PR R/W on the
+                  # fixture repo) AND a codus-common release carrying the v2
                   # adapter fix — until that release it runs red, not skip.
                   VERTEX_SA_JSON: ${{ secrets.VERTEX_SA_JSON }}
                   VERTEX_REGION: global
@@ -239,7 +239,7 @@ jobs:
                   # (layer 3). Only on github cells — cockpit-analytics is
                   # github-only (appliesTo), so other providers would just run
                   # an idle analytics worker. Requires the worker-analytics
-                  # service in the kodus-installer compose (shipped together).
+                  # service in the codus-installer compose (shipped together).
                   ANALYTICS_WORKER: ${{ matrix.cell.provider == 'github' && '1' || '' }}
                   ANALYTICS_WORKER_EXPECTED: ${{ matrix.cell.provider == 'github' && '1' || '' }}
               run: |
@@ -257,22 +257,22 @@ jobs:
                   # path unset so run-matrix --skip-missing-tokens skips the
                   # scenario instead of crashing on a 0-byte file.
                   if [ -n "${SH_LICENSE_KEY_SEATS1:-}" ]; then
-                      mkdir -p "$HOME/.kodus-dev"
-                      printf '%s' "$SH_LICENSE_KEY_SEATS1" > "$HOME/.kodus-dev/license-seats1.jwt"
-                      export SH_LICENSE_KEY_PATH="$HOME/.kodus-dev/license-seats1.jwt"
+                      mkdir -p "$HOME/.codus-dev"
+                      printf '%s' "$SH_LICENSE_KEY_SEATS1" > "$HOME/.codus-dev/license-seats1.jwt"
+                      export SH_LICENSE_KEY_PATH="$HOME/.codus-dev/license-seats1.jwt"
                   fi
 
-                  # Materialize ~/.kodus-dev/config for the SSO E2E scenarios.
+                  # Materialize ~/.codus-dev/config for the SSO E2E scenarios.
                   # sso-cookie-domain / sso-multi-user shell out to
                   # scripts/sso-e2e/droplet/provision.sh → selfhosted/provision.sh,
-                  # which — finding no ~/.kodus-dev/config — runs the INTERACTIVE
+                  # which — finding no ~/.codus-dev/config — runs the INTERACTIVE
                   # setup.sh and aborts in ~1s on the non-TTY runner. Writing the
                   # config from the secrets we already pass lets the script find a
                   # ready config instead. Plain values (not op:// refs) skip the
                   # 1Password resolver in _common.sh. Harmless for non-SSO cells
                   # (nothing else reads it). Written to the file directly (never
                   # echoed) so secret values don't hit the log.
-                  mkdir -p "$HOME/.kodus-dev"
+                  mkdir -p "$HOME/.codus-dev"
                   {
                       echo "DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN:-}"
                       echo "SH_LICENSE_KEY=${SH_LICENSE_KEY_PAID:-}"
@@ -280,9 +280,9 @@ jobs:
                       echo "API_OPEN_AI_API_KEY=${API_OPEN_AI_API_KEY:-}"
                       echo "API_OPENAI_FORCE_BASE_URL=${API_OPENAI_FORCE_BASE_URL:-}"
                       echo "API_LLM_PROVIDER_MODEL=${API_LLM_PROVIDER_MODEL:-}"
-                      echo "KODUS_INSTALLER_PATH=${KODUS_INSTALLER_PATH:-}"
-                  } > "$HOME/.kodus-dev/config"
-                  chmod 600 "$HOME/.kodus-dev/config"
+                      echo "CODUS_INSTALLER_PATH=${CODUS_INSTALLER_PATH:-}"
+                  } > "$HOME/.codus-dev/config"
+                  chmod 600 "$HOME/.codus-dev/config"
 
                   SOURCE="tests/e2e/${SOURCE_MATRIX_FILE}"
                   if [ ! -f "$SOURCE" ]; then

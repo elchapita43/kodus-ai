@@ -56,7 +56,7 @@ export class RealReviewApi implements IReviewApi {
         metrics?: GitMetrics,
         onProgress?: (status: string) => void,
     ): Promise<ReviewResult> {
-        const isTeamKey = accessToken.startsWith('kodus_');
+        const isTeamKey = accessToken.startsWith('codus_');
 
         const authHeaders: Record<string, string> = isTeamKey
             ? { 'X-Team-Key': accessToken }
@@ -79,7 +79,7 @@ export class RealReviewApi implements IReviewApi {
                 method: 'POST',
                 headers: {
                     ...authHeaders,
-                    'X-Kodus-Async': '1',
+                    'X-Codus-Async': '1',
                 },
                 body: JSON.stringify({
                     diff,
@@ -187,7 +187,7 @@ export class RealReviewApi implements IReviewApi {
 
         const queryString = query.toString();
         const endpoint = `/pull-requests/suggestions${queryString ? `?${queryString}` : ''}`;
-        const isTeamKey = accessToken.startsWith('kodus_');
+        const isTeamKey = accessToken.startsWith('codus_');
 
         return this.requester<PullRequestSuggestionsResponse>(endpoint, {
             headers: {
@@ -207,7 +207,7 @@ export class RealReviewApi implements IReviewApi {
             diff?: string;
         },
     ): Promise<BusinessValidationResponse> {
-        const isTeamKey = accessToken.startsWith('kodus_');
+        const isTeamKey = accessToken.startsWith('codus_');
         const body: Record<string, unknown> = {};
 
         if (params.repository) {

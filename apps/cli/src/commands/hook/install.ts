@@ -17,7 +17,7 @@ import {
     normalizeCommandError,
 } from '../../utils/command-errors.js';
 
-const KODUS_MARKER = '# kodus-hook';
+const CODUS_MARKER = '# codus-hook';
 
 function generateHookScript(failOn: string, fast: boolean): string {
     const flags: string[] = [];
@@ -31,18 +31,18 @@ function generateHookScript(failOn: string, fast: boolean): string {
     const reviewFlags = flags.join(' ');
 
     return `#!/bin/sh
-${KODUS_MARKER} — installed by kodus CLI
-# To uninstall: kodus hook uninstall
+${CODUS_MARKER} — installed by codus CLI
+# To uninstall: codus hook uninstall
 
-# Skip hook if KODUS_SKIP_HOOK is set
-if [ -n "$KODUS_SKIP_HOOK" ]; then
+# Skip hook if CODUS_SKIP_HOOK is set
+if [ -n "$CODUS_SKIP_HOOK" ]; then
   exit 0
 fi
 
-# Check if kodus is available
-if ! command -v kodus >/dev/null 2>&1; then
-  echo "Warning: kodus CLI not found. Skipping pre-push review."
-  echo "Install: yarn global add @kodus/cli"
+# Check if codus is available
+if ! command -v codus >/dev/null 2>&1; then
+  echo "Warning: codus CLI not found. Skipping pre-push review."
+  echo "Install: yarn global add @codus/cli"
   exit 0
 fi
 
@@ -70,7 +70,7 @@ while read local_ref local_sha remote_ref remote_sha; do
   fi
 
   # Review changes not yet on the remote
-  if ! kodus review --branch "\${remote}/\${branch_name}" ${reviewFlags}; then
+  if ! codus review --branch "\${remote}/\${branch_name}" ${reviewFlags}; then
     exit 1
   fi
 done
@@ -113,8 +113,8 @@ export async function installAction(
             // File doesn't exist
         }
 
-        const isKodusHook = existingContent
-            ? existingContent.includes(KODUS_MARKER)
+        const isCodusHook = existingContent
+            ? existingContent.includes(CODUS_MARKER)
             : false;
 
         if (options.dryRun) {
@@ -125,7 +125,7 @@ export async function installAction(
                 fast,
                 hasExistingHook: !!existingContent,
                 wouldPromptForOverwrite:
-                    !!existingContent && !isKodusHook && !options.force,
+                    !!existingContent && !isCodusHook && !options.force,
             };
 
             if (ctx.isAgent) {
@@ -146,7 +146,7 @@ export async function installAction(
         }
 
         if (existingContent) {
-            if (!isKodusHook && !options.force) {
+            if (!isCodusHook && !options.force) {
                 const overwrite = await confirm({
                     message: 'A pre-push hook already exists. Overwrite it?',
                     default: false,
@@ -171,8 +171,8 @@ export async function installAction(
         cliInfo(chalk.dim(`  Fail on: ${failOn}`));
         cliInfo(chalk.dim(`  Fast mode: ${fast ? 'yes' : 'no'}`));
         cliInfo('');
-        cliInfo(chalk.dim('Skip with: KODUS_SKIP_HOOK=1 git push'));
-        cliInfo(chalk.dim('Remove with: kodus hook uninstall'));
+        cliInfo(chalk.dim('Skip with: CODUS_SKIP_HOOK=1 git push'));
+        cliInfo(chalk.dim('Remove with: codus hook uninstall'));
     } catch (error) {
         const normalized = normalizeCommandError(error);
         if (ctx.isAgent) {
@@ -188,4 +188,4 @@ export async function installAction(
     }
 }
 
-export { KODUS_MARKER, generateHookScript };
+export { CODUS_MARKER, generateHookScript };

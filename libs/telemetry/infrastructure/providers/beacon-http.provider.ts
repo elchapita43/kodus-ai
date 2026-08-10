@@ -10,7 +10,7 @@ export interface IBeaconHttpProvider {
     isDisabled(): boolean;
     send(
         payload: Record<string, unknown>,
-        kodusVersion: string,
+        codusVersion: string,
     ): Promise<boolean>;
 }
 
@@ -19,7 +19,7 @@ export interface IBeaconHttpProvider {
  * pre-built payload to the receiver and surface only "did it land" — the
  * caller decides what to do on failure.
  *
- * Opt-out is the only knob: `KODUS_TELEMETRY_DISABLED=1` (also accepts
+ * Opt-out is the only knob: `CODUS_TELEMETRY_DISABLED=1` (also accepts
  * `true`/`yes`/`on`, case-insensitive). Read on every call so operators can
  * flip it at runtime without restarting the worker.
  */
@@ -28,7 +28,7 @@ export class BeaconHttpProvider implements IBeaconHttpProvider {
     private readonly logger = createLogger(BeaconHttpProvider.name);
 
     isDisabled(): boolean {
-        const value = process.env.KODUS_TELEMETRY_DISABLED;
+        const value = process.env.CODUS_TELEMETRY_DISABLED;
         if (!value) {
             return false;
         }
@@ -37,7 +37,7 @@ export class BeaconHttpProvider implements IBeaconHttpProvider {
 
     async send(
         payload: Record<string, unknown>,
-        kodusVersion: string,
+        codusVersion: string,
     ): Promise<boolean> {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
@@ -47,7 +47,7 @@ export class BeaconHttpProvider implements IBeaconHttpProvider {
                 body: JSON.stringify(payload),
                 headers: {
                     'Content-Type': 'application/json',
-                    'User-Agent': `kodus-self-hosted/${kodusVersion}`,
+                    'User-Agent': `codus-self-hosted/${codusVersion}`,
                 },
                 method: 'POST',
                 signal: controller.signal,
@@ -79,6 +79,6 @@ export class BeaconHttpProvider implements IBeaconHttpProvider {
     }
 
     private endpoint(): string {
-        return process.env.KODUS_TELEMETRY_ENDPOINT?.trim() || DEFAULT_ENDPOINT;
+        return process.env.CODUS_TELEMETRY_ENDPOINT?.trim() || DEFAULT_ENDPOINT;
     }
 }

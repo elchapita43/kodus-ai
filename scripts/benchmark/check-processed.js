@@ -34,7 +34,7 @@ FROM automation_execution ae
 JOIN code_review_execution cre
   ON cre.automation_execution_id = ae.uuid
 WHERE ae."pullRequestNumber" = ${prNumber}
-  AND cre.stage_name = 'Kody Review Finished'
+  AND cre.stage_name = 'Cody Review Finished'
   AND cre.status = 'success';
 `;
             const result = Number(psqlEval(sql));

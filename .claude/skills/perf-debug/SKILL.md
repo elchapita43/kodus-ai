@@ -1,11 +1,11 @@
 ---
 name: perf-debug
-description: End-to-end front→back performance debugging for the Kodus web app. Use when a screen is slow, blank, looping, or you need to trace a UI perf problem down to the API query. Drives Playwright/Chrome MCP to open + measure the screen, then reads the API use-case/repository and the DB (Postgres/Mongo indexes, explain) to find and fix the root cause, verifying live.
+description: End-to-end front→back performance debugging for the Codus web app. Use when a screen is slow, blank, looping, or you need to trace a UI perf problem down to the API query. Drives Playwright/Chrome MCP to open + measure the screen, then reads the API use-case/repository and the DB (Postgres/Mongo indexes, explain) to find and fix the root cause, verifying live.
 ---
 
 # Perf debug (front → back)
 
-Repeatable loop for resolving Kodus web performance problems, from the rendered
+Repeatable loop for resolving Codus web performance problems, from the rendered
 screen down to the DB query. Built from real sessions on the token-usage,
 pull-requests, settings and cockpit screens.
 
@@ -39,15 +39,15 @@ pull-requests, settings and cockpit screens.
 
 6. **Understand the query** — read `apps/api/src/controllers/*` →
    `libs/**/use-cases` → repository. Then hit the DB directly:
-   - Postgres: `docker exec kodus_api printenv API_PG_DB_PASSWORD`, then
-     `docker exec -e PGPASSWORD=… db_postgres psql -U kodusdev -d kodus_db`.
+   - Postgres: `docker exec codus_api printenv API_PG_DB_PASSWORD`, then
+     `docker exec -e PGPASSWORD=… db_postgres psql -U codusdev -d codus_db`.
      Check `pg_indexes` for the table; look for OFFSET-in-loop, uncached
      `COUNT(*)`, N+1 (`relations:[...]` on a to-one is a JOIN, not N+1).
-   - Mongo: `docker exec mongodb mongosh "mongodb://kodusdev:<pass>@localhost:27017/<db>?authSource=admin"`.
+   - Mongo: `docker exec mongodb mongosh "mongodb://codusdev:<pass>@localhost:27017/<db>?authSource=admin"`.
      `db.<coll>.getIndexes()` (watch for **partial indexes** matching the
      filter), `.explain("executionStats")` — compare `totalKeysExamined` vs
      `nReturned`. See the `mongodb-query-optimizer` skill for deeper analysis.
-   - Kodus DB is generally **well-indexed**; the real backend wins are usually
+   - Codus DB is generally **well-indexed**; the real backend wins are usually
      algorithmic (keyset vs OFFSET) or caching — and only reproduce at prod
      scale (dev DB is tiny), so prepare the patch and validate in staging.
 
@@ -73,7 +73,7 @@ pull-requests, settings and cockpit screens.
   usually an effect that navigates with the value it depends on in its deps.
 - **Cache masks slow loads** — the token-usage `$facet` is ~7s cold / ~400ms
   cached; bust the cache (uncached filter combo) to observe the real load.
-- **Healthcheck false-unhealthy** — `kodus_web` pings `/` (404 post-Next16) so
+- **Healthcheck false-unhealthy** — `codus_web` pings `/` (404 post-Next16) so
   it shows "unhealthy" while working.
 
 ## Reference

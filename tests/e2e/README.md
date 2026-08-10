@@ -1,6 +1,6 @@
 # E2E quality gates
 
-End-to-end validation suite for Kodus releases. Exercises the product against real Git providers and real environments, in both **cloud** and **self-hosted** targets.
+End-to-end validation suite for Codus releases. Exercises the product against real Git providers and real environments, in both **cloud** and **self-hosted** targets.
 
 ## Why this exists
 
@@ -25,7 +25,7 @@ tests/e2e/
 │   └── azure-devops.ts
 ├── scenarios/             Test scenarios (what we validate)
 │   ├── code-review-basic.ts
-│   ├── kody-rules.ts
+│   ├── cody-rules.ts
 │   ├── license-attribution.ts
 │   └── upgrade.ts
 ├── provisioning/          How we get a target ready
@@ -37,10 +37,10 @@ tests/e2e/
 ├── playwright/            UI-driving headless browser flows
 │   ├── signup.mjs
 │   ├── ui-smoke.mjs
-│   └── kody-rules.mjs
+│   └── cody-rules.mjs
 ├── lib/                   Shared runtime
 │   ├── types.ts           Target, Provider, License, Scenario, Result types
-│   ├── onboarding.ts      Kodus-side: login + register integration + add repo
+│   ├── onboarding.ts      Codus-side: login + register integration + add repo
 │   ├── runner.ts          Executes scenario(s) × matrix, emits evidence
 │   ├── evidence.ts        JSON + Markdown evidence formatter
 │   └── log.ts             Color logging
@@ -73,7 +73,7 @@ The suite ships with 37 automated tests organized in three layers — all run in
 | Layer | Files | Tests | What it proves |
 |---|---|---|---|
 | Unit (deterministic) | `lib/__tests__/applies-to.test.ts`, `evidence.test.ts`, `scenarios.test.ts`, `matrix-loader.test.ts`, `providers.test.ts` | 32 | Filter logic, matrix YAML schema, evidence format, scenario catalog, provider factory |
-| Integration — GitHub (happy path + negative path) | `lib/__tests__/integration.test.ts` | 2 | Runner executes onboarding + trigger + poll against mock Kodus + GitHub HTTP servers, parses JWT, asserts expected endpoints were called |
+| Integration — GitHub (happy path + negative path) | `lib/__tests__/integration.test.ts` | 2 | Runner executes onboarding + trigger + poll against mock Codus + GitHub HTTP servers, parses JWT, asserts expected endpoints were called |
 | Integration — multi-provider | `lib/__tests__/integration-providers.test.ts` | 3 | Same as above but for GitLab, Bitbucket, Azure DevOps — each provider's actual `triggerReviewOnExistingPR` / `pollForReview` / `repoRef` / auth code is exercised against a per-provider mock |
 
 Plus the **dry-run** mode (`npm run dry-run`) walks the entire 33-cell P0 matrix in <1s, validating that `appliesTo` filtering, cell expansion, evidence emission, and exit codes are all wired correctly.
@@ -83,7 +83,7 @@ What this does NOT cover (requires real infra):
 - Real provider authentication (real PATs, app passwords)
 - Real droplet provisioning via DigitalOcean/Hetzner
 - Real Cloudflare tunnel
-- Real Kodus stack boot via `install.sh`
+- Real Codus stack boot via `install.sh`
 - Real webhook delivery from provider → tunnel → API
 - Real license key validation
 - Real cloud tenant entitlement
@@ -119,10 +119,10 @@ pnpm run e2e:matrix matrix/full.yml
 | `TARGET_BASE_URL` | URL of the API to test against | Always |
 | `TARGET_WEB_URL` | URL of the dashboard | Always |
 | `TARGET_TUNNEL_URL` | Public tunnel URL for webhooks (self-hosted only) | `target=self-hosted` |
-| `GH_TEST_TOKEN` | GitHub PAT, `repo` + `admin:repo_hook`. Must be a token whose FIRST org is `kodus-e2e` (a fine-grained PAT with resource owner `kodus-e2e`, Repository access = All repositories) — the Kodus integration binds to `orgs[0]` (github.service.ts), so a personal token whose first org is `kodustech` binds the wrong org. | `provider=github` |
-| `GH_REPO_ADMIN_TOKEN` | Token with org Administration on `kodus-e2e` (create + delete repos). Used ONLY by `trial-managed-review` to mint/delete its throwaway repo per run; everything else stays on `GH_TEST_TOKEN`. Falls back to `GH_TEST_TOKEN` if unset (a single fully-privileged token also works). | `scenario=trial-managed-review` |
+| `GH_TEST_TOKEN` | GitHub PAT, `repo` + `admin:repo_hook`. Must be a token whose FIRST org is `codus-e2e` (a fine-grained PAT with resource owner `codus-e2e`, Repository access = All repositories) — the Codus integration binds to `orgs[0]` (github.service.ts), so a personal token whose first org is `elchapita43` binds the wrong org. | `provider=github` |
+| `GH_REPO_ADMIN_TOKEN` | Token with org Administration on `codus-e2e` (create + delete repos). Used ONLY by `trial-managed-review` to mint/delete its throwaway repo per run; everything else stays on `GH_TEST_TOKEN`. Falls back to `GH_TEST_TOKEN` if unset (a single fully-privileged token also works). | `scenario=trial-managed-review` |
 | `GH_TEST_REPO` | GitHub test repo `owner/repo` | `provider=github` |
-| `CENTRALIZED_CONFIG_TEST_REPO` (+ `_CLOUD`) | Writable centralized-config source repo `owner/repo`, per target (self-hosted: `kodus-e2e/kodus-config-e2e`, cloud: `kodus-e2e/kodus-config-e2e-cloud`) — the scenario seeds it via the GitHub API each run | scenario `centralized-config-sync` (else it skips) |
+| `CENTRALIZED_CONFIG_TEST_REPO` (+ `_CLOUD`) | Writable centralized-config source repo `owner/repo`, per target (self-hosted: `codus-e2e/codus-config-e2e`, cloud: `codus-e2e/codus-config-e2e-cloud`) — the scenario seeds it via the GitHub API each run | scenario `centralized-config-sync` (else it skips) |
 | `GL_TEST_TOKEN` | GitLab PAT, `api` + `write_repository` | `provider=gitlab` |
 | `GL_TEST_REPO` | GitLab project path | `provider=gitlab` |
 | `BB_TEST_USER`, `BB_TEST_APP_PASSWORD` | Bitbucket app password | `provider=bitbucket` |
@@ -150,7 +150,7 @@ The release workflow uploads these as artifacts.
 
 1. Create `scenarios/<name>.ts` exporting a `Scenario` object.
 2. Declare the matrix axes it applies to (`appliesTo: { target, provider, license }`).
-3. Implement `run(ctx)` using `ctx.provider`, `ctx.kodus`, `ctx.assert`.
+3. Implement `run(ctx)` using `ctx.provider`, `ctx.codus`, `ctx.assert`.
 4. Add it to `matrix/fast.yml` or `matrix/full.yml`.
 
 ## Adding a new provider

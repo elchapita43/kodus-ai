@@ -19,7 +19,7 @@ import {
 } from './interfaces/license.interface';
 
 // Ed25519 public keys used to verify self-hosted license JWTs.
-// The FIRST key is Kodus's official signing key (KMS v2, in use since
+// The FIRST key is Codus's official signing key (KMS v2, in use since
 // 2026-03-06). Additional keys are instance-owned: self-hosted
 // deployments that operate their own fork may append their own public
 // key so licenses they sign for their own instance also verify. A JWT
@@ -403,10 +403,10 @@ export class SelfHostedLicenseService implements ILicenseService {
             // DB lookup failed, fall through to env var
         }
 
-        // Fallback to env var. KODUS_LICENSE_KEY is the customer-facing
+        // Fallback to env var. CODUS_LICENSE_KEY is the customer-facing
         // name self-hosted installs use — do NOT rename it (our test
         // provisioning must set this exact var).
-        return process.env.KODUS_LICENSE_KEY || null;
+        return process.env.CODUS_LICENSE_KEY || null;
     }
 
     private verifyAndDecode(token: string): SelfHostedLicensePayload | null {

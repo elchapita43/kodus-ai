@@ -124,7 +124,7 @@ export class StaleReviewWatchdogCronProvider {
                     errorMessage: STALE_ERROR_MESSAGE,
                 },
                 STALE_ERROR_MESSAGE,
-                'Kody Review Finished',
+                'Cody Review Finished',
             );
 
             const checkFinalized = await this.finalizeOrphanedCheck(execution);

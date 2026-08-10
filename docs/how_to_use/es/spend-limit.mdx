@@ -6,17 +6,17 @@ description: "Recibe alertas a medida que tu gasto en modelos BYOK se acerca a u
 El límite mensual de gasto vigila cuánto estás gastando en tus **modelos BYOK** y notifica a los Owners de tu organización a medida que ese gasto se acerca a un tope que tú defines. Es una señal de aviso temprano, no un freno.
 
 <Warning>
-  **Esto es una notificación, no un tope. Kodus nunca bloquea ni pausa las revisiones cuando se alcanza el límite.** El gasto sigue acumulándose en la cuenta de tu proveedor más allá del 100%. Para detener el gasto de verdad, configura un límite duro en el panel de **tu proveedor de modelos** (OpenAI, Anthropic, Google, etc.) — es lo único que puede imponerlo. Trata el límite de Kodus como un aviso para que el tope del proveedor nunca sea una sorpresa.
+  **Esto es una notificación, no un tope. Codus nunca bloquea ni pausa las revisiones cuando se alcanza el límite.** El gasto sigue acumulándose en la cuenta de tu proveedor más allá del 100%. Para detener el gasto de verdad, configura un límite duro en el panel de **tu proveedor de modelos** (OpenAI, Anthropic, Google, etc.) — es lo único que puede imponerlo. Trata el límite de Codus como un aviso para que el tope del proveedor nunca sea una sorpresa.
 </Warning>
 
 ## Qué mide
 
-- **Solo modelos BYOK.** El gasto se mide sobre los modelos que configuraste en [Bring Your Own Key](/how_to_use/es/byok) — las claves que pagas directamente a tu proveedor. Los modelos que Kodus ejecuta por su cuenta no cuentan.
+- **Solo modelos BYOK.** El gasto se mide sobre los modelos que configuraste en [Bring Your Own Key](/how_to_use/es/byok) — las claves que pagas directamente a tu proveedor. Los modelos que Codus ejecuta por su cuenta no cuentan.
 - **Valorado a las tarifas actuales, por modelo.** Los tokens de cada modelo se valoran a la tarifa actual de ese modelo. No hay snapshot — si el precio de un modelo cambia (actualización del catálogo o edición manual), el uso de ese modelo en lo que va de mes se recalcula con la nueva tarifa. Cambiar de modelo no revalora el modelo que usabas antes.
 - **Por mes natural (UTC).** La ventana va del día 1 del mes al día 1 del siguiente. El uso se reinicia a $0 automáticamente al comenzar cada mes — no hay nada que reiniciar a mano.
 
 <Info>
-  Para que la cifra refleje solo a Kodus, recomendamos que la **clave de API que le das a Kodus se use exclusivamente con Kodus**. Si esa misma clave también alimenta otras herramientas, el uso en tu proveedor — y cualquier estimación basada en él — mezcla ambos.
+  Para que la cifra refleje solo a Codus, recomendamos que la **clave de API que le das a Codus se use exclusivamente con Codus**. Si esa misma clave también alimenta otras herramientas, el uso en tu proveedor — y cualquier estimación basada en él — mezcla ambos.
 </Info>
 
 ## Cómo configurarlo
@@ -29,11 +29,11 @@ El límite está en la pantalla de BYOK, debajo de tus modelos Main y Fallback.
   </Step>
 
   <Step title="Revisa los precios de los modelos">
-    Cada modelo configurado muestra su precio por token — **input, output, cache read, cache write** — como **$ / 1M tokens**. Una etiqueta **Catalog** significa que Kodus encontró el precio automáticamente; una etiqueta **Manual** significa que lo introdujiste tú.
+    Cada modelo configurado muestra su precio por token — **input, output, cache read, cache write** — como **$ / 1M tokens**. Una etiqueta **Catalog** significa que Codus encontró el precio automáticamente; una etiqueta **Manual** significa que lo introdujiste tú.
   </Step>
 
   <Step title="Corrige cualquier modelo sin precio">
-    Un modelo con la etiqueta **No price** no pudo valorarse automáticamente (modelo personalizado o no catalogado). Introduce sus precios por token desde la página de precios de tu proveedor. No puedes habilitar el límite hasta que todos los modelos tengan precio — no se puede medir el gasto de un modelo que Kodus no sabe valorar.
+    Un modelo con la etiqueta **No price** no pudo valorarse automáticamente (modelo personalizado o no catalogado). Introduce sus precios por token desde la página de precios de tu proveedor. No puedes habilitar el límite hasta que todos los modelos tengan precio — no se puede medir el gasto de un modelo que Codus no sabe valorar.
   </Step>
 
   <Step title="Fija el límite mensual y habilítalo">
@@ -45,7 +45,7 @@ El límite está en la pantalla de BYOK, debajo de tus modelos Main y Fallback.
 
 <AccordionGroup>
   <Accordion title="Precio de catálogo vs. manual">
-    Kodus busca cada modelo en un catálogo público de precios y rellena lo que encuentra (**Catalog**). Si el catálogo está mal o no tiene el modelo, introduce las tarifas por token correctas — la etiqueta cambia a **Manual** y se usan tus valores.
+    Codus busca cada modelo en un catálogo público de precios y rellena lo que encuentra (**Catalog**). Si el catálogo está mal o no tiene el modelo, introduce las tarifas por token correctas — la etiqueta cambia a **Manual** y se usan tus valores.
   </Accordion>
 
   <Accordion title="Volver de un precio manual al de catálogo">
@@ -59,7 +59,7 @@ El límite está en la pantalla de BYOK, debajo de tus modelos Main y Fallback.
 
 ## Alertas
 
-Una vez habilitado, Kodus revisa tu gasto acumulado del mes aproximadamente **una vez por hora** y notifica a los **Owners** de tu organización por **email y en el centro de notificaciones de la app** a medida que cruzas cada umbral:
+Una vez habilitado, Codus revisa tu gasto acumulado del mes aproximadamente **una vez por hora** y notifica a los **Owners** de tu organización por **email y en el centro de notificaciones de la app** a medida que cruzas cada umbral:
 
 | Umbral | Qué recibes |
 | --- | --- |
@@ -85,8 +85,8 @@ El gasto es una **estimación**. Se deriva de los tokens que usaron tus revision
   <Card title="Mantén los precios exactos" icon="tags">
     Contrasta los precios del catálogo con la página de precios de tu proveedor y corrige los que estén desviados. Los planes de suscripción o tarifa plana especialmente no cuadran con el precio por token del catálogo.
   </Card>
-  <Card title="Usa la clave solo con Kodus" icon="key">
-    Una clave dedicada significa que el uso que Kodus ve es el uso que Kodus causó — nada más infla la cifra.
+  <Card title="Usa la clave solo con Codus" icon="key">
+    Una clave dedicada significa que el uso que Codus ve es el uso que Codus causó — nada más infla la cifra.
   </Card>
 </CardGroup>
 
@@ -102,7 +102,7 @@ El gasto es una **estimación**. Se deriva de los tokens que usaron tus revision
   </Accordion>
 
   <Accordion title="¿Qué cuenta para el gasto?">
-    Solo el uso de tokens en tus modelos **BYOK**, valorado a las tarifas actuales mostradas en la pantalla de BYOK. Los modelos alojados por Kodus no cuentan.
+    Solo el uso de tokens en tus modelos **BYOK**, valorado a las tarifas actuales mostradas en la pantalla de BYOK. Los modelos alojados por Codus no cuentan.
   </Accordion>
 
   <Accordion title="¿Cuándo se reinicia el gasto?">

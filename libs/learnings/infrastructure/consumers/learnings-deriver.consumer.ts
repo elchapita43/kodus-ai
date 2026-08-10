@@ -19,7 +19,7 @@ interface StageCompletedEvent {
 
 /**
  * Consume stage.completed.* del pipeline de code-review y deriva learnings
- * del resultado de la review (PR con findings de Kody/CodeRabbit).
+ * del resultado de la review (PR con findings de Cody/CodeRabbit).
  *
  * HARD RULE: este handler NUNCA rompe el pipeline — todo va en try/catch,
  * siempre ACK, y ante cualquier dato faltante simplemente se saltea.

@@ -1,4 +1,4 @@
-import { BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKProvider } from '@codus/codus-common/llm';
 
 // Encryption is irrelevant to the validation/fallback logic we want to
 // pin down — we just need a deterministic, reversible stand-in so we can

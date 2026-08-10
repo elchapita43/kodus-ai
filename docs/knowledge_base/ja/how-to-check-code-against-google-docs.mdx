@@ -3,7 +3,7 @@ title: "Google Docsの仕様に対してコードを確認する方法"
 description: "Google Docsに記載された仕様に対してプルリクエストの実装を検証します。"
 ---
 
-製品の仕様や要件はGoogle Docsに記載されていることが多いです。Kodusはドキュメントのコンテンツを取得し、PRのdiffと比較して実装が仕様と一致していることを確認できます。
+製品の仕様や要件はGoogle Docsに記載されていることが多いです。Codusはドキュメントのコンテンツを取得し、PRのdiffと比較して実装が仕様と一致していることを確認できます。
 
 ## 動作方法
 
@@ -12,14 +12,14 @@ description: "Google Docsに記載された仕様に対してプルリクエス�
 3. PRにコメントします：
 
 ```
-@kody -v business-logic https://docs.google.com/document/d/1abc123/edit
+@cody -v business-logic https://docs.google.com/document/d/1abc123/edit
 ```
 
-4. Kodyはドキュメントを取得し、要件を抽出して、PRのdiffと比較します
+4. Codyはドキュメントを取得し、要件を抽出して、PRのdiffと比較します
 
 ## 得られるもの
 
-Kodyは構造化された検証レポートを作成します：
+Codyは構造化された検証レポートを作成します：
 
 - **重要度を持つ調査結果**：MUST_FIX、SUGGESTION、またはINFO
 - **要件のトレーサビリティ** — 各調査結果はGoogle Docからのテキストを引用
@@ -31,7 +31,7 @@ Kodyは構造化された検証レポートを作成します：
 - 仕様コンテンツをインラインで貼り付けることもできます：
 
 ```
-@kody -v business-logic
+@cody -v business-logic
 ## 要件
 1. "admin"ロールを持つユーザーは任意のコメントを削除できます
 2. ユーザーは24時間以内に自分のコメントのみ編集できます

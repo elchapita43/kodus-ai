@@ -68,7 +68,7 @@ const routes = [
     { label: "Review Filters", href: "suggestion-control" },
     { label: "Custom Prompts", href: "custom-prompts" },
     { label: "PR Summary", href: "pr-summary" },
-    { label: "Kody Rules", href: "kody-rules" },
+    { label: "Cody Rules", href: "cody-rules" },
     { label: "Custom Messages", href: "custom-messages" },
     // Cross-repo context (#1576): relationships are directional and
     // repo-scoped by design (a global default would link EVERY repo to the

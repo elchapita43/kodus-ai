@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { MagicModalPortal } from "@components/ui/magic-modal";
 import {
     getOrganizationId,
@@ -88,7 +88,7 @@ export default async function Layout(props: React.PropsWithChildren) {
                         <div className="bg-background relative min-h-screen">
                             <div className="border-primary-dark bg-card-lv1 fixed inset-x-0 top-0 z-50 flex h-16 items-center gap-4 border-b-2 px-6">
                                 <Link href="/">
-                                    <SvgKodus className="text-text-primary h-8 max-w-max" />
+                                    <SvgCodus className="text-text-primary h-8 max-w-max" />
                                 </Link>
 
                                 <div className="ml-auto flex items-center gap-4">

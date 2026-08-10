@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 
 import { ILearningsRepository } from '@libs/learnings/domain/contracts/learnings.repository';
-import { ISuggestionEmbeddedRepository } from '@libs/kodyFineTuning/domain/suggestionEmbedded/contracts/suggestionEmbedded.repository.contract';
+import { ISuggestionEmbeddedRepository } from '@libs/codyFineTuning/domain/suggestionEmbedded/contracts/suggestionEmbedded.repository.contract';
 import {
     ILearning,
     LearningKind,

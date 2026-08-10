@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tear down the GitLab dev fixture and remove its volumes + bootstrap
 # artefacts. The dev backing services (postgres/mongo/rabbit) and the
-# `kodus-backend-services` network are left untouched.
+# `codus-backend-services` network are left untouched.
 
 set -euo pipefail
 

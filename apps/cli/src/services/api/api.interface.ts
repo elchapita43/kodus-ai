@@ -21,11 +21,11 @@ import type {
     TrialReviewResult,
 } from '../../types/review.js';
 import type {
-    CreateKodyRuleRequest,
-    KodyRule,
-    KodyRuleMutationResult,
-    UpdateKodyRuleRequest,
-    ViewKodyRulesRequest,
+    CreateCodyRuleRequest,
+    CodyRule,
+    CodyRuleMutationResult,
+    UpdateCodyRuleRequest,
+    ViewCodyRulesRequest,
 } from '../../types/rules.js';
 import type { SessionApiEvent } from '../../types/session-events.js';
 import type { TrialStatus } from '../../types/trial.js';
@@ -167,20 +167,20 @@ export interface ISessionsApi {
 export interface IRulesApi {
     createRule(
         accessToken: string,
-        payload: CreateKodyRuleRequest,
-    ): Promise<KodyRuleMutationResult>;
+        payload: CreateCodyRuleRequest,
+    ): Promise<CodyRuleMutationResult>;
     updateRule(
         accessToken: string,
         ruleId: string,
-        payload: UpdateKodyRuleRequest,
-    ): Promise<KodyRuleMutationResult>;
+        payload: UpdateCodyRuleRequest,
+    ): Promise<CodyRuleMutationResult>;
     viewRules(
         accessToken: string,
-        query?: ViewKodyRulesRequest,
-    ): Promise<KodyRule[]>;
+        query?: ViewCodyRulesRequest,
+    ): Promise<CodyRule[]>;
 }
 
-export interface IKodusApi {
+export interface ICodusApi {
     auth: IAuthApi;
     config: IConfigApi;
     review: IReviewApi;

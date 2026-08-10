@@ -57,7 +57,7 @@ describe('GitlabController', () => {
                 headers: { 'x-gitlab-event': 'Note Hook' },
                 body: {
                     object_kind: 'note',
-                    object_attributes: { note: '@kody review' },
+                    object_attributes: { note: '@cody review' },
                 },
             };
 
@@ -76,7 +76,7 @@ describe('GitlabController', () => {
                 event: 'Note Hook',
                 payload: {
                     object_kind: 'note',
-                    object_attributes: { note: '@kody review' },
+                    object_attributes: { note: '@cody review' },
                 },
             });
         });

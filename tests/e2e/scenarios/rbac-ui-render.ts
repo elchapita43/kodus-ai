@@ -110,13 +110,13 @@ export const rbacUiRender: Scenario = {
         // allow-side render assertions need a fully onboarded org, not just
         // the signed-up one setupRbacOrg returns. Onboard it as the owner
         // (same flow code-review-basic uses).
-        const ownerSession = await ctx.kodus.login({
+        const ownerSession = await ctx.codus.login({
             email: ownerEmail,
             password: RBAC_PASSWORD,
         });
-        await ctx.kodus.registerIntegration(ownerSession);
-        const repo = await ctx.kodus.registerRepo(ownerSession);
-        await ctx.kodus.finishOnboarding(ownerSession, repo);
+        await ctx.codus.registerIntegration(ownerSession);
+        const repo = await ctx.codus.registerRepo(ownerSession);
+        await ctx.codus.finishOnboarding(ownerSession, repo);
 
         const code = await new Promise<number>((done) => {
             const child = spawn("node", ["rbac-ui-render.mjs"], {

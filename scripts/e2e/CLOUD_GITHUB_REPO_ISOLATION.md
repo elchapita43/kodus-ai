@@ -3,7 +3,7 @@
 ## Why
 
 On cloud, every license tier (`paid`, `free`, `trial`, `community-byok`,
-the two `stripe-checkout` tenants) is a **separate Kodus organization**.
+the two `stripe-checkout` tenants) is a **separate Codus organization**.
 They all used to share **one** GitHub fixture repo (`tiny-url-cloud`).
 
 The GitHub PAT webhook is a bare `POST /github/webhook` with no per-org
@@ -43,13 +43,13 @@ Code wiring (already merged with this doc):
 
 ## One-time rollout (live steps — need the QA/GitHub creds)
 
-1. **Provision the repos** (PAT with create rights in `kodus-e2e`):
+1. **Provision the repos** (PAT with create rights in `codus-e2e`):
    ```
    GH_TEST_TOKEN=<pat> ./scripts/e2e/provision-cloud-github-repos.sh
    ```
    Creates the six `tiny-url-cloud-{paid,free,trial,community,stripe-free,stripe-trial}`
    repos, mirroring content from `GH_TEST_REPO_CLOUD` (default
-   `kodus-e2e/tiny-url-cloud`).
+   `codus-e2e/tiny-url-cloud`).
 
 2. **Re-seed tenants** so each connects its dedicated repo. The
    `/code-management/repositories` call uses `type:"replace"`, which
@@ -57,14 +57,14 @@ Code wiring (already merged with this doc):
    ```
    pnpm run cloud:setup-tenants
    ```
-   This rewrites `~/.kodus-dev/cloud-tenants.json` with `repoFullName` per
+   This rewrites `~/.codus-dev/cloud-tenants.json` with `repoFullName` per
    tenant.
 
 3. **Refresh the CI secret** — the cloud matrix restores
-   `~/.kodus-dev/cloud-tenants.json` from the `CLOUD_TENANTS_JSON` secret
+   `~/.codus-dev/cloud-tenants.json` from the `CLOUD_TENANTS_JSON` secret
    (it does NOT re-seed), so push the new file up:
    ```
-   gh secret set CLOUD_TENANTS_JSON < ~/.kodus-dev/cloud-tenants.json
+   gh secret set CLOUD_TENANTS_JSON < ~/.codus-dev/cloud-tenants.json
    ```
 
 4. **Re-run** the cloud matrix — `github × *` cells are now deterministic.

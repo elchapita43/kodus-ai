@@ -1,6 +1,6 @@
-export const DEFAULT_PR_TITLE = 'Kodus automated changes';
+export const DEFAULT_PR_TITLE = 'Codus automated changes';
 export const DEFAULT_COMMIT_MESSAGE = 'chore: update files';
-export const DEFAULT_SOURCE_BRANCH_PREFIX = 'kodus-pr';
+export const DEFAULT_SOURCE_BRANCH_PREFIX = 'codus-pr';
 
 export function buildDefaultSourceBranchName(): string {
     return `${DEFAULT_SOURCE_BRANCH_PREFIX}-${Date.now()}`;
@@ -12,11 +12,11 @@ export function buildDefaultSourceBranchName(): string {
 export const EMPTY_REPO_DEFAULT_BRANCH = 'main';
 export const EMPTY_REPO_SEED_PATH = 'README.md';
 export const EMPTY_REPO_SEED_COMMIT_MESSAGE =
-    'Initialize repository for Kodus centralized config';
+    'Initialize repository for Codus centralized config';
 export const EMPTY_REPO_SEED_CONTENT = [
-    '# Kodus centralized configuration',
+    '# Codus centralized configuration',
     '',
-    'This repository stores the centralized Kodus code review configuration.',
-    'It was initialized automatically by Kodus.',
+    'This repository stores the centralized Codus code review configuration.',
+    'It was initialized automatically by Codus.',
     '',
 ].join('\n');

@@ -1,11 +1,11 @@
 ---
 title: "Github FGPAT Token"
-description: "Generate the GitHub Fine-Grained PAT Kody needs for code review, including how to unblock access to your organization's repositories."
+description: "Generate the GitHub Fine-Grained PAT Cody needs for code review, including how to unblock access to your organization's repositories."
 ---
 
 ## Introduction to FGPAT
 
-To enable Kody to perform automatic Code Reviews, you need to generate a Fine-Grained Personal Access Token (FGPAT) in GitHub. This token allows Kody to securely access your repositories and perform code analysis in a controlled manner.
+To enable Cody to perform automatic Code Reviews, you need to generate a Fine-Grained Personal Access Token (FGPAT) in GitHub. This token allows Cody to securely access your repositories and perform code analysis in a controlled manner.
 
 ## Check Fine-Grained Access Permissions
 
@@ -16,7 +16,7 @@ By default, a Fine-Grained PAT may not have access to your organization’s cont
 1. You must be the organization owner.
 1. Go to your organization's settings in GitHub:
    - You can use this URL replacing with your org name: <small>https://github.com/organizations/YOUR_ORG_NAME/settings/personal-access-tokens)</small>.
-1. Under **Fine-Grained Personal Access Tokens**, select **"Allow access via fine-grained personal access tokens"** to enable secure access for Kody.
+1. Under **Fine-Grained Personal Access Tokens**, select **"Allow access via fine-grained personal access tokens"** to enable secure access for Cody.
 
 ## Generating the FGPAT (Fine-Grained Personal Access Token)
 
@@ -52,7 +52,7 @@ Follow these steps to set up the token correctly:
 
 5. **Set up the new token with the following specifications**:
 
-   - **Token Name**: Choose an easily identifiable name, such as `kody_code_review`.
+   - **Token Name**: Choose an easily identifiable name, such as `cody_code_review`.
    - **Expiration Date**: If possible, select a long expiration date, preferably at least 180 days.
    - **Resource Owner**: Ensure the organization is set as the token owner, as the team’s repositories are under the organization.
    - **Repository Access**: Select **All repositories** to allow the token access to all repositories.
@@ -71,8 +71,8 @@ Follow these steps to set up the token correctly:
 
 6. **Finalize and save the token**:
    - After setting up the permissions, click on `Generate token`.
-   - Make sure to copy the generated token and store it securely, as you’ll need it to configure Kody.
+   - Make sure to copy the generated token and store it securely, as you’ll need it to configure Cody.
 
-## Adding the Token to Kody
+## Adding the Token to Cody
 
-After generating the token, paste it in the Kody configuration screen for automation setup. The modal will open automatically as soon as you attempt to enable automation.
+After generating the token, paste it in the Cody configuration screen for automation setup. The modal will open automatically as soon as you attempt to enable automation.

@@ -40,9 +40,9 @@ ENV_FILE="$REPO_DIR/.env"
 RESULTS_DIR="$SCRIPT_DIR/results"
 SUMMARY_FILE="$RESULTS_DIR/sweep-summary.txt"
 
-API="${KODUS_API_URL:-http://localhost:3001}"
-EMAIL="${KODUS_BENCH_EMAIL:-benchmark@kodus.io}"
-PASSWORD="${KODUS_BENCH_PASSWORD:-Kodus@2024}"
+API="${CODUS_API_URL:-http://localhost:3001}"
+EMAIL="${CODUS_BENCH_EMAIL:-benchmark@kodus.io}"
+PASSWORD="${CODUS_BENCH_PASSWORD:-Codus@2024}"
 
 # ─── Model matrix ───────────────────────────────────────────────────────
 # Pipe-separated: label | provider | model | baseURL | apiKeyEnvVar [| maxInputTokens]
@@ -199,7 +199,7 @@ verify_byok() {
 wait_for_reviews() {
   local worker zeros n started
   worker=$(docker ps --format '{{.Names}}' | grep worker | head -1)
-  worker="${worker:-kodus_worker}"
+  worker="${worker:-codus_worker}"
   echo "  waiting for reviews (worker=$worker)..."
 
   # Phase 1 — wait for the first AGENT activity to appear (≤ 10 min).

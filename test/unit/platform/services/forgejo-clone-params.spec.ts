@@ -93,18 +93,18 @@ describe('ForgejoService.getCloneParams', () => {
             },
             repository: {
                 id: 'repo-789',
-                name: 'kodus-ai',
-                fullName: 'kodustech/kodus-ai',
+                name: 'codus-ai',
+                fullName: 'elchapita43/codus-ai',
                 defaultBranch: 'main',
             },
         });
 
         expect(params).toEqual({
-            url: 'https://git.example.com/kodustech/kodus-ai.git',
+            url: 'https://git.example.com/elchapita43/codus-ai.git',
             provider: PlatformType.FORGEJO,
             organizationId: 'org-123',
             repositoryId: 'repo-789',
-            repositoryName: 'kodus-ai',
+            repositoryName: 'codus-ai',
             branch: 'main',
             auth: {
                 type: 'oauth',
@@ -123,12 +123,12 @@ describe('ForgejoService.getCloneParams', () => {
             },
             repository: {
                 id: 'repo-789',
-                name: 'kodustech/kodus-ai',
+                name: 'elchapita43/codus-ai',
                 defaultBranch: 'main',
             },
         });
 
-        expect(params.url).toBe('https://git.example.com/kodustech/kodus-ai.git');
-        expect(params.repositoryName).toBe('kodus-ai');
+        expect(params.url).toBe('https://git.example.com/elchapita43/codus-ai.git');
+        expect(params.repositoryName).toBe('codus-ai');
     });
 });

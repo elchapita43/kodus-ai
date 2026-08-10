@@ -3,7 +3,7 @@
  * E2B integration test for CodebaseSearchService.
  *
  * Tests the REAL production CodebaseSearchService against a real E2B sandbox
- * with the kodus-ai codebase, using known symbols with verifiable counts.
+ * with the codus-ai codebase, using known symbols with verifiable counts.
  *
  * Run:
  *   npx tsx test/integration/code-review/services/codebaseSearch.e2b.ts
@@ -60,7 +60,7 @@ async function main() {
             { timeoutMs: 120_000, user: 'root' },
         );
 
-        console.log('Cloning kodus-ai repo (shallow)...');
+        console.log('Cloning codus-ai repo (shallow)...');
         const token = process.env.GITHUB_TOKEN || '';
         const authHeader = token
             ? `AUTHORIZATION: Basic ${Buffer.from(`x-access-token:${token}`).toString('base64')}`
@@ -71,7 +71,7 @@ async function main() {
             [
                 `git init ${REPO_DIR}`,
                 `cd ${REPO_DIR}`,
-                `git ${authArg} fetch --depth=1 https://github.com/kodustech/kodus-ai.git refs/heads/main:main`,
+                `git ${authArg} fetch --depth=1 https://github.com/elchapita43/codus-ai.git refs/heads/main:main`,
                 `git checkout main`,
             ].join(' && '),
             { timeoutMs: 120_000 },
@@ -209,7 +209,7 @@ async function main() {
                 'bitbucket.service',
                 'fetch-changed-files.stage',
                 'pullRequestManager.service',
-                'kody-rules-validation.service',
+                'cody-rules-validation.service',
             ];
             for (const name of knownConsumers) {
                 const found = [...foundFiles].some((f) => f.includes(name));

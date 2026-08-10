@@ -8,7 +8,7 @@ import { runMatrix } from "../runner.js";
 import { resolveScenarios } from "../../scenarios/index.js";
 import {
     json,
-    kodusRoutes,
+    codusRoutes,
     startMockServer,
     type ReviewWindow,
     type RouteHandler,
@@ -20,11 +20,11 @@ const TEAM_ID = "team-uuid-789";
 
 /**
  * Runs a single self-hosted × <provider> × license-paid scenario against a
- * fully mocked Kodus + provider HTTP surface. Returns the runner outcome so
+ * fully mocked Codus + provider HTTP surface. Returns the runner outcome so
  * each provider-specific test can assert on it.
  *
  * Each provider integration test is essentially identical structurally — the
- * provider routes differ but the Kodus side, env var setup, fetch
+ * provider routes differ but the Codus side, env var setup, fetch
  * redirection, and runner invocation are the same. The differences live
  * inside `providerRoutes` and `fetchRedirect`.
  */
@@ -37,15 +37,15 @@ async function runScenarioAgainstMocks(opts: {
     status: string;
     errorMessage?: string;
     evidence: Record<string, unknown>;
-    kodusRequests: Array<{ method: string; path: string }>;
+    codusRequests: Array<{ method: string; path: string }>;
     providerRequests: Array<{ method: string; path: string }>;
 }> {
-    const kodusServer = await startMockServer(
-        kodusRoutes({
+    const codusServer = await startMockServer(
+        codusRoutes({
             orgId: ORG_ID,
             teamId: TEAM_ID,
             repoId: 8888,
-            repoFullName: opts.providerEnv.REPO_FULL_NAME ?? "kodus/fixture",
+            repoFullName: opts.providerEnv.REPO_FULL_NAME ?? "codus/fixture",
             repoName: "fixture",
         }),
     );
@@ -56,10 +56,10 @@ async function runScenarioAgainstMocks(opts: {
     const originalFetch = global.fetch;
 
     try {
-        process.env.TARGET_BASE_URL = kodusServer.baseUrl;
-        process.env.TARGET_WEB_URL = kodusServer.baseUrl;
+        process.env.TARGET_BASE_URL = codusServer.baseUrl;
+        process.env.TARGET_WEB_URL = codusServer.baseUrl;
         process.env.TARGET_TUNNEL_URL = "https://dummy.trycloudflare.com";
-        process.env.SH_TENANT_EMAIL = "test@kodus.test";
+        process.env.SH_TENANT_EMAIL = "test@codus.test";
         process.env.SH_TENANT_PASSWORD = "secret123";
         // Collapse the production waits — the mocks answer instantly, so every
         // second spent here is dead time. Without these this file alone ran
@@ -92,7 +92,7 @@ async function runScenarioAgainstMocks(opts: {
             status: result?.status ?? "no-result",
             errorMessage: result?.errorMessage,
             evidence: (result?.evidence ?? {}) as Record<string, unknown>,
-            kodusRequests: kodusServer.requests.map((r) => ({
+            codusRequests: codusServer.requests.map((r) => ({
                 method: r.method,
                 path: r.path,
             })),
@@ -104,7 +104,7 @@ async function runScenarioAgainstMocks(opts: {
     } finally {
         global.fetch = originalFetch;
         process.env = originalEnv;
-        await kodusServer.close();
+        await codusServer.close();
         await providerServer.close();
         rmSync(artifactRoot, { recursive: true, force: true });
     }
@@ -114,7 +114,7 @@ async function runScenarioAgainstMocks(opts: {
 
 test("integration: GitLab — runner drives MR review through provider abstraction", async () => {
     const reviewWindow: ReviewWindow = { triggeredAt: "" };
-    const PROJECT_PATH = "kodusqa/fixture";
+    const PROJECT_PATH = "codusqa/fixture";
     const MR_IID = 7;
 
     const result = await runScenarioAgainstMocks({
@@ -172,9 +172,9 @@ test("integration: GitLab — runner drives MR review through provider abstracti
                     const created = new Date().toISOString();
                     json(res, 201, {
                         id: 5555,
-                        body: "@kody review",
+                        body: "@cody review",
                         created_at: created,
-                        author: { id: 1, username: "kodus-bot" },
+                        author: { id: 1, username: "codus-bot" },
                         system: false,
                     });
                 },
@@ -189,9 +189,9 @@ test("integration: GitLab — runner drives MR review through provider abstracti
                     json(res, 200, [
                         {
                             id: 5556,
-                            body: "Kody (mock) found 1 issue in this MR.",
+                            body: "Cody (mock) found 1 issue in this MR.",
                             created_at: responseTime,
-                            author: { id: 1, username: "kodus-bot" },
+                            author: { id: 1, username: "codus-bot" },
                             system: false,
                         },
                     ]);
@@ -225,13 +225,13 @@ test("integration: GitLab — runner drives MR review through provider abstracti
 
 test("integration: Bitbucket — runner drives PR review through provider abstraction", async () => {
     const reviewWindow: ReviewWindow = { triggeredAt: "" };
-    const WORKSPACE_SLUG = "kodusqa/fixture";
+    const WORKSPACE_SLUG = "codusqa/fixture";
     const PR_ID = 11;
 
     const result = await runScenarioAgainstMocks({
         cell: { target: "self-hosted", provider: "bitbucket", license: "license-paid" },
         providerEnv: {
-            BB_TEST_USER: "kodus-bot",
+            BB_TEST_USER: "codus-bot",
             BB_TEST_APP_PASSWORD: "secret-app-pw",
             BB_TEST_REPO: WORKSPACE_SLUG,
             BB_TEST_PR_ID: String(PR_ID),
@@ -316,9 +316,9 @@ test("integration: Bitbucket — runner drives PR review through provider abstra
                     const created = new Date().toISOString();
                     json(res, 201, {
                         id: 4001,
-                        content: { raw: "@kody review" },
+                        content: { raw: "@cody review" },
                         created_on: created,
-                        user: { uuid: "{user}", display_name: "kodus-bot" },
+                        user: { uuid: "{user}", display_name: "codus-bot" },
                     });
                 },
             },
@@ -333,9 +333,9 @@ test("integration: Bitbucket — runner drives PR review through provider abstra
                         values: [
                             {
                                 id: 4002,
-                                content: { raw: "Kody (mock) flagged 2 issues." },
+                                content: { raw: "Cody (mock) flagged 2 issues." },
                                 created_on: responseTime,
-                                user: { uuid: "{user}", display_name: "kodus-bot" },
+                                user: { uuid: "{user}", display_name: "codus-bot" },
                             },
                         ],
                     });
@@ -367,8 +367,8 @@ test("integration: Bitbucket — runner drives PR review through provider abstra
 
 test("integration: Azure DevOps — runner drives PR review through provider abstraction", async () => {
     const reviewWindow: ReviewWindow = { triggeredAt: "" };
-    const ORG = "kodus-org";
-    const PROJECT = "kodus-project";
+    const ORG = "codus-org";
+    const PROJECT = "codus-project";
     const REPO = "fixture-repo";
     const PR_ID = 23;
     const REPO_GUID = "az-repo-uuid-1";
@@ -443,7 +443,7 @@ test("integration: Azure DevOps — runner drives PR review through provider abs
                         comments: [
                             {
                                 id: 9001,
-                                content: "@kody review",
+                                content: "@cody review",
                                 publishedDate: created,
                             },
                         ],
@@ -465,13 +465,13 @@ test("integration: Azure DevOps — runner drives PR review through provider abs
                                 comments: [
                                     {
                                         id: 9001,
-                                        content: "@kody review",
+                                        content: "@cody review",
                                         publishedDate: reviewWindow.triggeredAt,
                                     },
                                     {
                                         id: 9002,
                                         content:
-                                            "Kody (mock) found 3 issues in this PR.",
+                                            "Cody (mock) found 3 issues in this PR.",
                                         publishedDate: responseTime,
                                     },
                                 ],

@@ -8,7 +8,7 @@ name: "Code-review evals (replay suite)"
 # - pull_request from a branch in this repo
 #                                 → harness preflight + finder-recall gate on TWO
 #                                   FAST models (gpt-5.4 + gemini-3-flash) +
-#                                   kody-rules & anchoring (advisory). Fast and
+#                                   cody-rules & anchoring (advisory). Fast and
 #                                   reliable so it doesn't drag day-to-day PRs.
 # - pull_request from a fork      → harness preflight only. GitHub does not
 #                                   expose secrets to fork PRs.
@@ -45,9 +45,9 @@ on:
             - "libs/code-review/**"
             - "libs/agent-harness/**"
             - "libs/ee/codeReview/**"
-            - "libs/ee/kodyRules/**"
-            - "libs/kodyRules/**"
-            - "packages/kodus-flow/**"
+            - "libs/ee/codyRules/**"
+            - "libs/codyRules/**"
+            - "packages/codus-flow/**"
             - "apps/web/src/features/ee/byok/_data/curated-models.json"
             - "evals/**"
     pull_request:
@@ -55,9 +55,9 @@ on:
             - "libs/code-review/**"
             - "libs/agent-harness/**"
             - "libs/ee/codeReview/**"
-            - "libs/ee/kodyRules/**"
-            - "libs/kodyRules/**"
-            - "packages/kodus-flow/**"
+            - "libs/ee/codyRules/**"
+            - "libs/codyRules/**"
+            - "packages/codus-flow/**"
             - "apps/web/src/features/ee/byok/_data/curated-models.json"
             - "evals/**"
 
@@ -172,10 +172,10 @@ jobs:
                   if-no-files-found: ignore
                   retention-days: 14
 
-    pr-kody-rules-gate:
+    pr-cody-rules-gate:
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
         needs: harness
-        name: "PR kody-rules · ${{ matrix.model }}"
+        name: "PR cody-rules · ${{ matrix.model }}"
         runs-on: ubuntu-latest
         timeout-minutes: 30
         strategy:
@@ -201,7 +201,7 @@ jobs:
 
                   export const environment = devEnvironment;
                   EOF
-            - name: Run kody-rules gate
+            - name: Run cody-rules gate
               env:
                   BYOK_OPENAI_API_KEY: ${{ secrets.BYOK_OPENAI_API_KEY }}
                   BYOK_ANTHROPIC_API_KEY: ${{ secrets.BYOK_ANTHROPIC_API_KEY }}
@@ -209,7 +209,7 @@ jobs:
                   BYOK_MOONSHOT_API_KEY: ${{ secrets.BYOK_MOONSHOT_API_KEY }}
                   BYOK_ZHIPU_API_KEY: ${{ secrets.BYOK_ZHIPU_API_KEY }}
               # Tests the SHIPPED sharded path: behavioral-shipped.js drives the
-              # real judgeKodyRulesSharded (its actual prompts) against real PR
+              # real judgeCodyRulesSharded (its actual prompts) against real PR
               # diffs with a real model. This replaced real-agent.js, which drove
               # the old AGENTIC provider — obsolete since the #1449 rewrite, and
               # it now crashes (the sharded execute() needs a real prompt runner,
@@ -220,12 +220,12 @@ jobs:
               # than the old agentic loop (which swung 72%→47%). gpt-5.4-mini
               # measured 100% (43/43) locally. Set --gate=<floor> once a few CI
               # runs confirm the number is stable per model.
-              run: node evals/kody-rules/behavioral-shipped.js --dataset=github-cases --model=${{ matrix.model }} --temp=0
+              run: node evals/cody-rules/behavioral-shipped.js --dataset=github-cases --model=${{ matrix.model }} --temp=0
 
-    pr-kody-rules-atoms:
+    pr-cody-rules-atoms:
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
         needs: harness
-        name: "PR kody-rules atoms · gpt-5.4-mini"
+        name: "PR cody-rules atoms · gpt-5.4-mini"
         runs-on: ubuntu-latest
         timeout-minutes: 30
         steps:
@@ -248,7 +248,7 @@ jobs:
               env:
                   BYOK_OPENAI_API_KEY: ${{ secrets.BYOK_OPENAI_API_KEY }}
               # CONVENTION-rule coverage the mechanical github-cases can't give:
-              # drives the REAL KodyRulesAgentProvider.execute() end-to-end
+              # drives the REAL CodyRulesAgentProvider.execute() end-to-end
               # (atomic decomposition from the FROZEN rails-convention-atoms.json
               # fixture — no generation calls in CI — T0 detector sweep, shard
               # judge, mapAgentFindings) over the 27-file Rails analog PR with
@@ -259,7 +259,7 @@ jobs:
               # Reference band (gpt-5.4-mini, measured): 74-89% deliverable
               # (file-level + PR-scope). Gate once the case set grows enough to
               # damp the variance.
-              run: pnpm run eval:kody-rules:atoms
+              run: pnpm run eval:cody-rules:atoms
 
     pr-anchoring-canary:
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
@@ -359,7 +359,7 @@ jobs:
     # only a real failure/cancel trips it.
     pr-evals-gate:
         if: always() && github.event_name == 'pull_request'
-        needs: [harness, pr-finder-gate, pr-kody-rules-gate, pr-anchoring-canary, pr-summary-gate]
+        needs: [harness, pr-finder-gate, pr-cody-rules-gate, pr-anchoring-canary, pr-summary-gate]
         name: "PR evals gate"
         runs-on: ubuntu-latest
         timeout-minutes: 2
@@ -368,13 +368,13 @@ jobs:
               env:
                   R_HARNESS: ${{ needs.harness.result }}
                   R_FINDER: ${{ needs.pr-finder-gate.result }}
-                  R_KODY: ${{ needs.pr-kody-rules-gate.result }}
+                  R_CODY: ${{ needs.pr-cody-rules-gate.result }}
                   R_ANCHOR: ${{ needs.pr-anchoring-canary.result }}
                   R_SUMMARY: ${{ needs.pr-summary-gate.result }}
               run: |
-                  echo "harness=$R_HARNESS finder=$R_FINDER kody=$R_KODY anchoring=$R_ANCHOR summary=$R_SUMMARY"
+                  echo "harness=$R_HARNESS finder=$R_FINDER cody=$R_CODY anchoring=$R_ANCHOR summary=$R_SUMMARY"
                   failed=0
-                  for r in "$R_HARNESS" "$R_FINDER" "$R_KODY" "$R_ANCHOR" "$R_SUMMARY"; do
+                  for r in "$R_HARNESS" "$R_FINDER" "$R_CODY" "$R_ANCHOR" "$R_SUMMARY"; do
                       if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
                           failed=1
                       fi

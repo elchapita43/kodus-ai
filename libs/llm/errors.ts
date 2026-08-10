@@ -1,5 +1,5 @@
 /**
- * Errors emitted by kodus' agent pipeline (not the LLM provider) when a
+ * Errors emitted by codus' agent pipeline (not the LLM provider) when a
  * preflight check determines the configured model cannot possibly handle
  * the review.
  *

@@ -20,7 +20,7 @@ describe('TeamCliKeyController', () => {
 
     beforeEach(() => {
         teamCliKeyService = {
-            generateKey: jest.fn().mockResolvedValue('kodus_secret'),
+            generateKey: jest.fn().mockResolvedValue('codus_secret'),
             findByTeamId: jest.fn().mockResolvedValue([
                 {
                     uuid: 'key-1',
@@ -75,7 +75,7 @@ describe('TeamCliKeyController', () => {
             cliKeyConfig,
         );
         expect(result).toEqual({
-            key: 'kodus_secret',
+            key: 'codus_secret',
             message: 'Save this key securely. It will not be shown again.',
         });
         expect(eventEmitter.emit).toHaveBeenCalled();

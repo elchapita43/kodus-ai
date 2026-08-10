@@ -10,7 +10,7 @@ type VersionData = {
     hasUpdate: boolean;
 };
 
-const RELEASES_URL = "https://github.com/kodustech/kodus-ai/releases/latest";
+const RELEASES_URL = "https://github.com/elchapita43/codus-ai/releases/latest";
 
 export const VERSION_QUERY = {
     queryKey: ["app-version"],

@@ -1,7 +1,7 @@
 import { recoverRuleUuid } from '@libs/code-review/infrastructure/agents/collaborators/finding-mapper';
 
 /**
- * Regression guard for #1170: the kody_rules agent dropped an otherwise
+ * Regression guard for #1170: the cody_rules agent dropped an otherwise
  * correct suggestion because the LLM echoed the rule's 36-char UUID with a
  * single dropped character. recoverRuleUuid maps such a near-miss back to
  * the one known rule it unambiguously refers to.

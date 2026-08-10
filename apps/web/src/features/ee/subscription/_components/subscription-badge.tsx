@@ -83,7 +83,7 @@ const SubscriptionTrial = () => {
     const total = trialReviewCredits?.total;
 
     // With BYOK the reviews are unlimited because the user pays their own AI
-    // key — NOT because Kodus covers them. So drop the "free / on us" framing
+    // key — NOT because Codus covers them. So drop the "free / on us" framing
     // and just call it "Reviews".
     const reviews = byok
         ? {

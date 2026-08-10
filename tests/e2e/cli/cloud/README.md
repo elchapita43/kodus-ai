@@ -5,7 +5,7 @@ matrix smoke runs against. Each tenant is single-provider and
 single-tier so it mirrors the self-hosted isolation pattern.
 
 Use `setup-tenants.ts` once (or after a QA reset). Credentials are
-written to `~/.kodus-dev/cloud-tenants.json` (gitignored, chmod 600)
+written to `~/.codus-dev/cloud-tenants.json` (gitignored, chmod 600)
 and consumed by `tests/e2e/lib/runner.ts:resolveTenantForCell` on
 cloud cells.
 
@@ -22,18 +22,18 @@ helpers the self-hosted matrix uses (`signUp`, `login`,
 
 | Email                       | Tier  | Provider     | Repo                                          |
 | --------------------------- | ----- | ------------ | --------------------------------------------- |
-| e2e-paid-gh@kodus.io        | paid  | GitHub       | kodus-e2e/tiny-url                            |
-| e2e-free-gh@kodus.io        | free  | GitHub       | kodus-e2e/tiny-url                            |
-| e2e-trial-gh@kodus.io       | trial | GitHub       | kodus-e2e/tiny-url                            |
-| e2e-paid-gl@kodus.io        | paid  | GitLab       | kodus-e2e/tiny-url                            |
-| e2e-paid-bb@kodus.io        | paid  | Bitbucket    | kodustech/tiny-url                            |
-| e2e-paid-az@kodus.io        | paid  | Azure DevOps | kodustech/kodus-e2e/tiny-url                  |
+| e2e-paid-gh@kodus.io        | paid  | GitHub       | codus-e2e/tiny-url                            |
+| e2e-free-gh@kodus.io        | free  | GitHub       | codus-e2e/tiny-url                            |
+| e2e-trial-gh@kodus.io       | trial | GitHub       | codus-e2e/tiny-url                            |
+| e2e-paid-gl@kodus.io        | paid  | GitLab       | codus-e2e/tiny-url                            |
+| e2e-paid-bb@kodus.io        | paid  | Bitbucket    | elchapita43/tiny-url                            |
+| e2e-paid-az@kodus.io        | paid  | Azure DevOps | elchapita43/codus-e2e/tiny-url                  |
 
 Repos are shared across tiers of the same provider — license tier is
 per-org on cloud, so each tier needs its own organization, but
-webhook deliveries on a single repo can be disambiguated by Kodus per
+webhook deliveries on a single repo can be disambiguated by Codus per
 integration (App installation id for GitHub, PAT integration uuid
-for the others). One downside: `generateKodyRulesUseCase` at
+for the others). One downside: `generateCodyRulesUseCase` at
 finish-onboarding reads PR history regardless of which org is
 onboarding, so rules generated for tier B can be shaped by traffic
 from tier A. Acceptable for the QA matrix where the
@@ -54,8 +54,8 @@ license-attribution and per-seat gates are the real signal.
    tenant's `repoFullName` is patched into the provider's env override
    (`GH_TEST_REPO` etc.) for the duration of this step.
 5. **Finish onboarding** via `POST /code-management/finish-onboarding`
-   — triggers Kody-rules generation (uses LLM tokens).
-6. **Persist** to `~/.kodus-dev/cloud-tenants.json`.
+   — triggers Cody-rules generation (uses LLM tokens).
+6. **Persist** to `~/.codus-dev/cloud-tenants.json`.
 
 ## Usage
 
@@ -76,7 +76,7 @@ Env overrides:
 ## Prerequisites
 
 * `qa.web.kodus.io` reachable
-* Provider tokens in `~/.kodus-dev/config` (same as self-hosted matrix)
+* Provider tokens in `~/.codus-dev/config` (same as self-hosted matrix)
 * Fixture repos exist with the expected branches (`feature/add-stats`,
   `refactor/use-map-storage`, etc.) — see `tests/e2e/scenarios/*.ts`
   for the per-scenario branch pairs
@@ -87,7 +87,7 @@ Env overrides:
   tenant
 * `registerIntegration` — POST upserts in place; rotates the token
   if a different one is configured
-* `registerRepo` — Kodus is idempotent here; safe to re-run
+* `registerRepo` — Codus is idempotent here; safe to re-run
 * `finishOnboarding` — POST can be re-issued; LLM rule-gen will run
   again but writes idempotently
 
@@ -106,6 +106,6 @@ into `ensureLicenseTier` in `setup-tenants.ts`.
 
 `lib/runner.ts:resolveTenantForCell` still expects credentials via
 env vars (`CLOUD_TENANT_PAID_EMAIL`, etc.). It needs to be taught to
-read from `~/.kodus-dev/cloud-tenants.json` keyed by
+read from `~/.codus-dev/cloud-tenants.json` keyed by
 `(provider, license)` so the matrix can drive multiple cloud cells
 without setting six env-var pairs.

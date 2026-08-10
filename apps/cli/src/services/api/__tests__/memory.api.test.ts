@@ -14,13 +14,13 @@ describe('RealMemoryApi', () => {
                 source: 'test',
                 memory: 'important note',
             },
-            'kodus_team_key',
+            'codus_team_key',
         );
 
         expect(request).toHaveBeenCalledWith('/cli/memory/captures', {
             method: 'POST',
             headers: {
-                'X-Team-Key': 'kodus_team_key',
+                'X-Team-Key': 'codus_team_key',
             },
             body: JSON.stringify({
                 source: 'test',

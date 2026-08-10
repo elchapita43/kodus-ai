@@ -10,7 +10,7 @@ description: |
     scenarios within a day).
 
     NOT coverage: gitlab/bitbucket/azure, trial/free licensing,
-    kody-rules, rbac etc. stay on Friday's fast.yml, which gates the
+    cody-rules, rbac etc. stay on Friday's fast.yml, which gates the
     self-hosted release build.
 
 scenarios:

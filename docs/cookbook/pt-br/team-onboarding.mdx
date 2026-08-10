@@ -1,12 +1,12 @@
 ---
 title: "Integração de um novo time"
-description: "Guia passo a passo para configurar o Kodus para um novo time — desde a conexão de repositórios até o ensino das primeiras convenções."
+description: "Guia passo a passo para configurar o Codus para um novo time — desde a conexão de repositórios até o ensino das primeiras convenções."
 icon: "users-gear"
 ---
 
 ## Visão geral
 
-Colocar um novo time em funcionamento com o Kodus leva cerca de 30 minutos. Este guia percorre a configuração completa para que seu time extraia valor desde o primeiro PR.
+Colocar um novo time em funcionamento com o Codus leva cerca de 30 minutos. Este guia percorre a configuração completa para que seu time extraia valor desde o primeiro PR.
 
 ## Passo 1 — Crie e configure o workspace
 
@@ -20,7 +20,7 @@ Colocar um novo time em funcionamento com o Kodus leva cerca de 30 minutos. Este
 Comece com padrões sensatos antes de personalizar:
 
 ```yaml
-# kodus-config.yml — coloque este arquivo na raiz de cada repositório
+# codus-config.yml — coloque este arquivo na raiz de cada repositório
 reviewOptions:
   bug: true
   security: true
@@ -29,7 +29,7 @@ reviewOptions:
 
 suggestionControl:
   severityLevelFilter: medium
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 
 automatedReviewActive: true
 ```
@@ -40,8 +40,8 @@ Isso fornece revisões automatizadas com um limite razoável de sugestões. Ajus
 
 Se o seu time já usa regras do Cursor, Copilot ou Claude:
 
-1. Vá para **Configurações de Code Review** → **Kody Rules**
-2. O Kodus detecta arquivos `.cursorrules`, `.github/copilot-instructions.md` e `.claude`
+1. Vá para **Configurações de Code Review** → **Cody Rules**
+2. O Codus detecta arquivos `.cursorrules`, `.github/copilot-instructions.md` e `.claude`
 3. Importe os que fazem sentido para revisão de código
 
 Isso evita ter que reescrever regras do zero.
@@ -51,26 +51,26 @@ Isso evita ter que reescrever regras do zero.
 Não tente codificar tudo no primeiro dia. Comece com as 5 convenções sobre as quais seu time mais discute:
 
 ```
-@kody remember: we use camelCase for variables and PascalCase for types.
+@cody remember: we use camelCase for variables and PascalCase for types.
 ```
 
 ```
-@kody remember: all API responses use the standard envelope format
+@cody remember: all API responses use the standard envelope format
 { data, error, meta }.
 ```
 
 ```
-@kody remember: we prefer composition over inheritance.
+@cody remember: we prefer composition over inheritance.
 Use interfaces and dependency injection.
 ```
 
 ```
-@kody remember: every public function must have JSDoc with
+@cody remember: every public function must have JSDoc with
 @param and @returns descriptions.
 ```
 
 ```
-@kody remember: database queries go through the repository layer only.
+@cody remember: database queries go through the repository layer only.
 No direct DB access from services or controllers.
 ```
 
@@ -102,13 +102,13 @@ URLs must come from environment variables or config files.
 
 ## Passo 6 — Conecte a gestão de tarefas (opcional, mas recomendado)
 
-Conecte Jira, Linear, Notion ou ClickUp em **Configurações** → **Plugins** para habilitar a validação de lógica de negócio. Isso permite que o Kodus verifique se os PRs implementam o que as tarefas descrevem.
+Conecte Jira, Linear, Notion ou ClickUp em **Configurações** → **Plugins** para habilitar a validação de lógica de negócio. Isso permite que o Codus verifique se os PRs implementam o que as tarefas descrevem.
 
 ## Passo 7 — Execute um PR piloto
 
 Abra um PR de teste e verifique:
 
-- [ ] Os comentários do Kodus aparecem no PR
+- [ ] Os comentários do Codus aparecem no PR
 - [ ] As sugestões são relevantes e com a severidade correta
 - [ ] Suas regras personalizadas disparam quando deveriam
 - [ ] As Memories são refletidas no contexto de revisão
@@ -120,13 +120,13 @@ Após uma semana de revisões, consulte o time:
 - Há sugestões demais? → Aumente `severityLevelFilter` ou reduza `maxSuggestions`
 - As regras estão gerando muito ruído? → Restrinja os caminhos de arquivo ou adicione exclusões
 - Faltam padrões importantes? → Adicione novas regras ou Memories
-- Quer regras geradas automaticamente? → Clique em **Gerar Kody Rules** para obter sugestões do histórico de revisões
+- Quer regras geradas automaticamente? → Clique em **Gerar Cody Rules** para obter sugestões do histórico de revisões
 
 ## Dicas
 
 - Não sobrecarregue com regras no primeiro dia — comece pequeno e expanda
-- Deixe o time ensinar o Kody naturalmente por meio de conversas antes de formalizar como regras
-- Use `@kody start-review` nos primeiros PRs para que o time veja o Kodus em ação
-- Habilite a aprovação de memórias geradas por LLM se quiser revisar o que o Kody aprende
+- Deixe o time ensinar o Cody naturalmente por meio de conversas antes de formalizar como regras
+- Use `@cody start-review` nos primeiros PRs para que o time veja o Codus em ação
+- Habilite a aprovação de memórias geradas por LLM se quiser revisar o que o Cody aprende
 
 Para o guia completo de configuração, consulte [Início Rápido](/how_to_use/pt-br/quickstart).

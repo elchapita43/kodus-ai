@@ -37,7 +37,7 @@ Internal hostname used: `process.env.WEB_HOSTNAME_API` and `process.env.WEB_PORT
 | apps/web/src/lib/services/integrations/integrationConfig/index.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
 | apps/web/src/lib/services/issues/fetch.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
 | apps/web/src/lib/services/issues/hooks.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
-| apps/web/src/lib/services/kodyRules/index.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
+| apps/web/src/lib/services/codyRules/index.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
 | apps/web/src/lib/services/mcp-manager/utils.ts | server | createUrl | None — keep direct env read, add `import 'server-only'` to helper |
 | apps/web/src/lib/services/organizationParameters/index.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |
 | apps/web/src/lib/services/organizations/index.ts | server | pathToApiUrl | None — keep direct env read, add `import 'server-only'` to helper |

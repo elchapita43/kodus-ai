@@ -1,4 +1,4 @@
-const PREFIX = "kodus-review-viewed:";
+const PREFIX = "codus-review-viewed:";
 
 type ViewedMap = Record<string, boolean>;
 

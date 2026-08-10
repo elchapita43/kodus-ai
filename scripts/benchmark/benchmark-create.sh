@@ -63,7 +63,7 @@ RUNS_DIR="$SCRIPT_DIR/runs"
 BENCHMARK_OWNER="${BENCHMARK_OWNER:-ai-code-review-benchmark}"
 mkdir -p "$RUNS_DIR"
 WORKER=$(docker ps --format '{{.Names}}' | grep worker | head -1)
-WORKER="${WORKER:-kodus_worker}"
+WORKER="${WORKER:-codus_worker}"
 BASE_ENV_FILE="${BASE_ENV_FILE:-.env}"
 
 if [[ "$BASE_ENV_FILE" = /* ]]; then
@@ -77,7 +77,7 @@ if [ ! -f "$SOURCE_ENV_FILE" ]; then
   exit 1
 fi
 
-RUNTIME_ENV_FILE="/tmp/kodus-benchmark-${RUN_NAME}.env"
+RUNTIME_ENV_FILE="/tmp/codus-benchmark-${RUN_NAME}.env"
 
 echo "============================================================"
 echo "Benchmark — Create PRs"
@@ -88,15 +88,15 @@ echo ""
 
 # Clean pipeline + MongoDB benchmark PRs
 echo "▸ Cleaning pipeline..."
-docker exec db_postgres psql -U kodusdev -d kodus_db -c \
-  "DELETE FROM kodus_workflow.inbox_messages WHERE status = 'PROCESSING';" -q 2>/dev/null || true
-docker exec db_postgres psql -U kodusdev -d kodus_db -c \
-  "DELETE FROM kodus_workflow.outbox_messages WHERE status IN ('READY','PROCESSING','FAILED');" -q 2>/dev/null || true
-docker exec rabbitmq rabbitmqctl purge_queue -p kodus-ai workflow.jobs.code_review.queue 2>/dev/null || true
-docker exec rabbitmq rabbitmqctl purge_queue -p kodus-ai workflow.jobs.webhook.queue 2>/dev/null || true
+docker exec db_postgres psql -U codusdev -d codus_db -c \
+  "DELETE FROM codus_workflow.inbox_messages WHERE status = 'PROCESSING';" -q 2>/dev/null || true
+docker exec db_postgres psql -U codusdev -d codus_db -c \
+  "DELETE FROM codus_workflow.outbox_messages WHERE status IN ('READY','PROCESSING','FAILED');" -q 2>/dev/null || true
+docker exec rabbitmq rabbitmqctl purge_queue -p codus-ai workflow.jobs.code_review.queue 2>/dev/null || true
+docker exec rabbitmq rabbitmqctl purge_queue -p codus-ai workflow.jobs.webhook.queue 2>/dev/null || true
 
 # Delete ALL PRs from MongoDB to avoid stale data matching
-DELETED=$(docker exec mongodb mongosh -u kodusdev -p 123456 --authenticationDatabase admin kodus_db --quiet --eval \
+DELETED=$(docker exec mongodb mongosh -u codusdev -p 123456 --authenticationDatabase admin codus_db --quiet --eval \
   "var r = db.pullRequests.deleteMany({}); print(r.deletedCount)" 2>/dev/null || echo 0)
 echo "  ✓ Pipeline cleaned (removed $DELETED PRs from MongoDB)"
 

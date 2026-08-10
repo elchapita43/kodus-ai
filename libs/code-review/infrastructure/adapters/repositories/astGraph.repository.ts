@@ -6,7 +6,7 @@ import { AstNodeModel } from './schemas/astNode.model';
 import { AstEdgeModel } from './schemas/astEdge.model';
 
 // ---------------------------------------------------------------------------
-// JSON interfaces matching kodus-graph's GraphInputSchema (snake_case)
+// JSON interfaces matching codus-graph's GraphInputSchema (snake_case)
 // ---------------------------------------------------------------------------
 
 export interface GraphNodeJson {

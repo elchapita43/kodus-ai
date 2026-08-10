@@ -114,7 +114,7 @@ async function main() {
             status: user.status,
             sub: user.sub,
             organizationId: user.organizationId,
-            iss: 'kodus-orchestrator',
+            iss: 'codus-orchestrator',
             aud: 'web',
         };
 

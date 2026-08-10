@@ -6,7 +6,7 @@ import {
 import {
     ICentralizedConfigService,
     IConfigFileMeta,
-    IKodyRuleFileMeta,
+    ICodyRuleFileMeta,
 } from '@libs/centralized-config/domain/contracts/CentralizedConfigService.contract';
 import { ParametersKey } from '@libs/core/domain/enums';
 import { IntegrationConfigKey } from '@libs/core/domain/enums/Integration-config-key.enum';
@@ -18,9 +18,9 @@ import {
     INTEGRATION_CONFIG_SERVICE_TOKEN,
 } from '@libs/integrations/domain/integrationConfigs/contracts/integration-config.service.contracts';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
 import { CreateOrUpdateParametersUseCase } from '@libs/organization/application/use-cases/parameters/create-or-update-use-case';
 import {
     IParametersService,
@@ -35,7 +35,7 @@ import {
     IPullRequestMessagesService,
     PULL_REQUEST_MESSAGES_SERVICE_TOKEN,
 } from '@libs/code-review/domain/pullRequestMessages/contracts/pullRequestMessages.service.contract';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import {
     buildGroupFolderName,
     parseGroupFolderName,
@@ -43,23 +43,23 @@ import {
 import { Inject, Injectable } from '@nestjs/common';
 import path from 'path';
 import { CustomMessageConfig } from 'apps/web/src/lib/services/pull-request-messages/types';
-import { KodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
+import { CodusConfigFile } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { DeepPartial } from 'typeorm';
-import { CreateOrUpdateKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/create-or-update.use-case';
-import { DeleteRuleInOrganizationByIdKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/delete-rule-in-organization-by-id.use-case';
+import { CreateOrUpdateCodyRulesUseCase } from '@libs/codyRules/application/use-cases/create-or-update.use-case';
+import { DeleteRuleInOrganizationByIdCodyRulesUseCase } from '@libs/codyRules/application/use-cases/delete-rule-in-organization-by-id.use-case';
 import {
-    IKodyRule,
-    KodyRuleCentralizedStatus,
-    kodyRuleSchema,
-    kodyRulesExampleSchema,
-    kodyRulesInheritanceSchema,
-    KodyRulesScope,
-    KodyRulesOrigin,
-    KodyRulesStatus,
-    KodyRulesType,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRuleCentralizedStatus,
+    codyRuleSchema,
+    codyRulesExampleSchema,
+    codyRulesInheritanceSchema,
+    CodyRulesScope,
+    CodyRulesOrigin,
+    CodyRulesStatus,
+    CodyRulesType,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import * as yaml from 'js-yaml';
-import { KodyRuleSeverity } from '@libs/ee/kodyRules/dtos/create-kody-rule.dto';
+import { CodyRuleSeverity } from '@libs/ee/codyRules/dtos/create-cody-rule.dto';
 import z from 'zod';
 import { TreeItem } from '@libs/core/infrastructure/config/types/general/tree.type';
 
@@ -83,10 +83,10 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         private readonly pullRequestMessagesService: IPullRequestMessagesService,
         @Inject(CODE_BASE_CONFIG_SERVICE_TOKEN)
         private readonly codeBaseConfigService: ICodeBaseConfigService,
-        private readonly createOrUpdateKodyRulesUseCase: CreateOrUpdateKodyRulesUseCase,
-        private readonly deleteRuleInOrganizationByIdKodyRulesUseCase: DeleteRuleInOrganizationByIdKodyRulesUseCase,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
+        private readonly createOrUpdateCodyRulesUseCase: CreateOrUpdateCodyRulesUseCase,
+        private readonly deleteRuleInOrganizationByIdCodyRulesUseCase: DeleteRuleInOrganizationByIdCodyRulesUseCase,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
     ) {}
 
     async validateCentralizedConfig(params: {
@@ -193,9 +193,9 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             (item, resolvedRepoIds) => {
                 const fileName = path.basename(item.path);
 
-                if (fileName !== 'kodus-config.yml') return null;
+                if (fileName !== 'codus-config.yml') return null;
 
-                if (item.path.includes('/.kody-rules/')) return null;
+                if (item.path.includes('/.cody-rules/')) return null;
 
                 const dirName = path.dirname(item.path);
                 if (dirName === '.') return {}; // Global config
@@ -215,7 +215,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                 const remainder = directorySegments.slice(1);
 
-                // Repository root config: {repo}/kodus-config.yml
+                // Repository root config: {repo}/codus-config.yml
                 if (remainder.length === 0) {
                     return {
                         repositoryId: repoId,
@@ -223,14 +223,14 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     };
                 }
 
-                // Directory group: {repo}/{encoded-paths}/kodus-config.yml
+                // Directory group: {repo}/{encoded-paths}/codus-config.yml
                 // The encoded folder name is a single segment (paths joined by &).
                 if (remainder.length === 1) {
                     const decoded = parseGroupFolderName(remainder[0]);
                     if (!decoded) {
                         this.logger.warn({
                             message:
-                                'Skipping kodus-config.yml — folder name is not a valid directory group',
+                                'Skipping codus-config.yml — folder name is not a valid directory group',
                             context: CentralizedConfigService.name,
                             metadata: {
                                 organizationAndTeamData,
@@ -252,7 +252,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                 this.logger.warn({
                     message:
-                        'Skipping kodus-config.yml at unsupported nested path',
+                        'Skipping codus-config.yml at unsupported nested path',
                     context: CentralizedConfigService.name,
                     metadata: {
                         organizationAndTeamData,
@@ -277,7 +277,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             params;
 
         try {
-            const file = await this.codeBaseConfigService.getKodusConfigFile({
+            const file = await this.codeBaseConfigService.getCodusConfigFile({
                 organizationAndTeamData,
                 repository,
                 directoryPath: dir,
@@ -352,7 +352,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                     let configFile;
 
-                    if (!this.isKodyRulesScope(configFileMeta)) {
+                    if (!this.isCodyRulesScope(configFileMeta)) {
                         configFile = await this.fetchConfigFile({
                             organizationAndTeamData,
                             repository: centralizedRepository,
@@ -360,7 +360,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                         });
                     }
 
-                    if (!configFile && !this.isKodyRulesScope(configFileMeta)) {
+                    if (!configFile && !this.isCodyRulesScope(configFileMeta)) {
                         this.logger.warn({
                             message:
                                 'Config file not found or could not be fetched',
@@ -377,7 +377,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     }
 
                     let configToSave = {};
-                    let configForMessages = {} as KodusConfigFile;
+                    let configForMessages = {} as CodusConfigFile;
 
                     if (configFile) {
                         const { customMessages: _, ...restOfConfig } =
@@ -385,7 +385,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                         configToSave = restOfConfig;
                         configForMessages = configFile;
                     } else {
-                        // We know it's a KodyRulesScope missing a file here
+                        // We know it's a CodyRulesScope missing a file here
                         this.logger.log({
                             message:
                                 'Creating empty config placeholder for centralized rules scope',
@@ -841,7 +841,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         });
     }
 
-    private isKodyRulesScope(configFileMeta: IConfigFileMeta): boolean {
+    private isCodyRulesScope(configFileMeta: IConfigFileMeta): boolean {
         const centralizedDirectoryPath =
             configFileMeta.centralizedDirectoryPath;
 
@@ -849,7 +849,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             return false;
         }
 
-        return /(^|\/)\.kody-rules\/(review|memories)(\/|$)/.test(
+        return /(^|\/)\.cody-rules\/(review|memories)(\/|$)/.test(
             centralizedDirectoryPath,
         );
     }
@@ -887,7 +887,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
     //#region Custom Messages Sync Helpers
     private async syncCustomMessages(
-        configFile: KodusConfigFile,
+        configFile: CodusConfigFile,
         configFileMeta: IConfigFileMeta,
         organizationAndTeamData: OrganizationAndTeamData,
         centralizedRepository: { name: string; id: string },
@@ -1126,7 +1126,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         customMessagesFromFile: DeepPartial<CustomMessageConfig>,
     ): Promise<CustomMessageConfig> {
         // Get the default custom messages
-        const { customMessages: defaultMessages } = getDefaultKodusConfigFile();
+        const { customMessages: defaultMessages } = getDefaultCodusConfigFile();
 
         // Get existing parent configs to merge with
         const parentMessages = await this.getResolvedParentCustomMessages(
@@ -1293,7 +1293,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             !merged.globalSettings?.hideComments ||
             !merged.globalSettings?.suggestionCopyPrompt
         ) {
-            const defaultConfigFile = getDefaultKodusConfigFile();
+            const defaultConfigFile = getDefaultCodusConfigFile();
             defaultConfigs = defaultConfigFile?.customMessages;
 
             if (!defaultConfigs) {
@@ -1489,14 +1489,14 @@ export class CentralizedConfigService implements ICentralizedConfigService {
     }
     //#endregion
 
-    //#region Kody Rules Sync Helpers
-    async discoverKodyRulesFiles(params: {
+    //#region Cody Rules Sync Helpers
+    async discoverCodyRulesFiles(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { name: string; id: string };
-    }): Promise<IKodyRuleFileMeta[]> {
+    }): Promise<ICodyRuleFileMeta[]> {
         const { organizationAndTeamData, repository } = params;
 
-        const ruleFilePaths = await this.scanRepositoryTree<IKodyRuleFileMeta>(
+        const ruleFilePaths = await this.scanRepositoryTree<ICodyRuleFileMeta>(
             organizationAndTeamData,
             repository,
             (item, resolvedRepoIds) => {
@@ -1507,16 +1507,16 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                 const dirName = path.dirname(item.path);
 
-                let ruleType: KodyRulesType;
-                if (dirName.includes('.kody-rules/memories')) {
-                    ruleType = KodyRulesType.MEMORY;
-                } else if (dirName.includes('.kody-rules/review')) {
-                    ruleType = KodyRulesType.STANDARD;
+                let ruleType: CodyRulesType;
+                if (dirName.includes('.cody-rules/memories')) {
+                    ruleType = CodyRulesType.MEMORY;
+                } else if (dirName.includes('.cody-rules/review')) {
+                    ruleType = CodyRulesType.STANDARD;
                 } else {
-                    if (dirName.includes('.kody-rules')) {
+                    if (dirName.includes('.cody-rules')) {
                         this.logger.warn({
                             message:
-                                'Skipping YAML under .kody-rules/ that is not inside review/ or memories/. Move the file into review/ for code review rules or memories/ for memories.',
+                                'Skipping YAML under .cody-rules/ that is not inside review/ or memories/. Move the file into review/ for code review rules or memories/ for memories.',
                             context: CentralizedConfigService.name,
                             metadata: {
                                 organizationAndTeamData,
@@ -1528,11 +1528,11 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                 }
 
                 const pathSegments = dirName.split('/');
-                const kodyRulesIndex = pathSegments.indexOf('.kody-rules');
+                const codyRulesIndex = pathSegments.indexOf('.cody-rules');
 
                 if (
-                    kodyRulesIndex === -1 ||
-                    pathSegments.length < kodyRulesIndex + 2
+                    codyRulesIndex === -1 ||
+                    pathSegments.length < codyRulesIndex + 2
                 ) {
                     return null;
                 }
@@ -1542,11 +1542,11 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                 let directoryPaths: string[] | undefined;
                 let centralizedDirectoryPath: string;
                 const rulesSubdir =
-                    ruleType === KodyRulesType.MEMORY ? 'memories' : 'review';
+                    ruleType === CodyRulesType.MEMORY ? 'memories' : 'review';
 
-                if (kodyRulesIndex === 0) {
+                if (codyRulesIndex === 0) {
                     // Global rules
-                    centralizedDirectoryPath = `.kody-rules/${rulesSubdir}`;
+                    centralizedDirectoryPath = `.cody-rules/${rulesSubdir}`;
                 } else {
                     // Repository/Directory-group rules
                     const repoName = pathSegments[0];
@@ -1563,11 +1563,11 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                     const directorySegments = pathSegments.slice(
                         1,
-                        kodyRulesIndex,
+                        codyRulesIndex,
                     );
 
                     if (directorySegments.length === 0) {
-                        centralizedDirectoryPath = `${repoName}/.kody-rules/${rulesSubdir}`;
+                        centralizedDirectoryPath = `${repoName}/.cody-rules/${rulesSubdir}`;
                     } else if (directorySegments.length === 1) {
                         const decoded = parseGroupFolderName(
                             directorySegments[0],
@@ -1575,7 +1575,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                         if (!decoded) {
                             this.logger.warn({
                                 message:
-                                    'Skipping Kody rule — group folder is not a valid path encoding',
+                                    'Skipping Cody rule — group folder is not a valid path encoding',
                                 context: CentralizedConfigService.name,
                                 metadata: {
                                     organizationAndTeamData,
@@ -1590,11 +1590,11 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                             p.startsWith('/') ? p : `/${p}`,
                         );
                         directoryPath = directoryPaths[0];
-                        centralizedDirectoryPath = `${repoName}/${directorySegments[0]}/.kody-rules/${rulesSubdir}`;
+                        centralizedDirectoryPath = `${repoName}/${directorySegments[0]}/.cody-rules/${rulesSubdir}`;
                     } else {
                         this.logger.warn({
                             message:
-                                'Skipping Kody rule at unsupported nested path',
+                                'Skipping Cody rule at unsupported nested path',
                             context: CentralizedConfigService.name,
                             metadata: {
                                 organizationAndTeamData,
@@ -1618,13 +1618,13 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             },
         );
 
-        return this.sortKodyRuleFiles(ruleFilePaths);
+        return this.sortCodyRuleFiles(ruleFilePaths);
     }
 
-    private sortKodyRuleFiles(
-        ruleFiles: IKodyRuleFileMeta[],
-    ): IKodyRuleFileMeta[] {
-        const getPriority = (ruleFile: IKodyRuleFileMeta) => {
+    private sortCodyRuleFiles(
+        ruleFiles: ICodyRuleFileMeta[],
+    ): ICodyRuleFileMeta[] {
+        const getPriority = (ruleFile: ICodyRuleFileMeta) => {
             if (!ruleFile.repositoryId) {
                 return 0; // Global
             }
@@ -1654,11 +1654,11 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         });
     }
 
-    async fetchKodyRuleFile(params: {
+    async fetchCodyRuleFile(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { name: string; id: string };
         filePath: string;
-    }): Promise<DeepPartial<IKodyRule> | null> {
+    }): Promise<DeepPartial<ICodyRule> | null> {
         const { organizationAndTeamData, repository, filePath } = params;
 
         try {
@@ -1695,7 +1695,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         } catch (error) {
             this.logger.error({
                 message:
-                    'Error fetching centralized Kody rule file from repository',
+                    'Error fetching centralized Cody rule file from repository',
                 context: CentralizedConfigService.name,
                 metadata: {
                     organizationAndTeamData,
@@ -1709,9 +1709,9 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         }
     }
 
-    async synchronizeKodyRules(params: {
+    async synchronizeCodyRules(params: {
         organizationAndTeamData: OrganizationAndTeamData;
-        ruleFiles: IKodyRuleFileMeta[];
+        ruleFiles: ICodyRuleFileMeta[];
         actor: {
             organizationId: string;
             source: 'web' | 'sync' | 'cli';
@@ -1760,7 +1760,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             const directoryIdCache = new Map<string, string>();
 
             const existingRulesEntity =
-                await this.kodyRulesService.findByOrganizationId(
+                await this.codyRulesService.findByOrganizationId(
                     organizationAndTeamData.organizationId,
                 );
 
@@ -1771,8 +1771,8 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                 string,
                 {
                     uuid: string;
-                    status?: KodyRulesStatus;
-                    origin?: KodyRulesOrigin;
+                    status?: CodyRulesStatus;
+                    origin?: CodyRulesOrigin;
                     updatedAt?: Date;
                 }
             >();
@@ -1800,9 +1800,9 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                 }
 
                 const currentIsDeleted =
-                    currentMapped.status === KodyRulesStatus.DELETED;
+                    currentMapped.status === CodyRulesStatus.DELETED;
                 const nextIsDeleted =
-                    existingRule.status === KodyRulesStatus.DELETED;
+                    existingRule.status === CodyRulesStatus.DELETED;
 
                 // Prefer non-deleted rules for the same source path to avoid creating duplicates.
                 if (currentIsDeleted && !nextIsDeleted) {
@@ -1836,7 +1836,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
             for (const ruleFileMeta of ruleFiles) {
                 try {
-                    const ruleContent = await this.fetchKodyRuleFile({
+                    const ruleContent = await this.fetchCodyRuleFile({
                         organizationAndTeamData,
                         repository: centralizedRepository,
                         filePath: ruleFileMeta.ruleFilePath,
@@ -1864,7 +1864,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     // folder (multiple paths), ensure the corresponding group
                     // exists in DB with the exact path set before resolving
                     // its id. This is what creates groups for rule-only
-                    // folders (no kodus-config.yml at the group level).
+                    // folders (no codus-config.yml at the group level).
                     if (
                         ruleFileMeta.directoryPaths &&
                         ruleFileMeta.directoryPaths.length > 0 &&
@@ -1959,7 +1959,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     }
 
                     const compliantRule =
-                        this.ensureKodyRuleCompliance(ruleContent);
+                        this.ensureCodyRuleCompliance(ruleContent);
 
                     if (!compliantRule) {
                         failureDetails.push({
@@ -1984,14 +1984,14 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     // it as a repo-file sync.
                     const existingStatus = existingMatch?.status;
                     const isExistingApproved =
-                        existingStatus === KodyRulesStatus.ACTIVE ||
-                        existingStatus === KodyRulesStatus.PAUSED;
+                        existingStatus === CodyRulesStatus.ACTIVE ||
+                        existingStatus === CodyRulesStatus.PAUSED;
                     const resolvedStatus =
                         existingStatus && !isExistingApproved
                             ? existingStatus
                             : enabled === false
-                              ? KodyRulesStatus.PAUSED
-                              : KodyRulesStatus.ACTIVE;
+                              ? CodyRulesStatus.PAUSED
+                              : CodyRulesStatus.ACTIVE;
 
                     const ruleDto = {
                         ...ruleFields,
@@ -2002,14 +2002,14 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                         directoryId,
                         centralizedConfig: {
                             path: ruleFileMeta.path,
-                            status: KodyRuleCentralizedStatus.SYNCED,
+                            status: CodyRuleCentralizedStatus.SYNCED,
                         },
                         origin:
                             existingMatch?.origin ??
-                            KodyRulesOrigin.REPO_FILE_SYNC,
+                            CodyRulesOrigin.REPO_FILE_SYNC,
                     };
 
-                    await this.createOrUpdateKodyRulesUseCase.execute(
+                    await this.createOrUpdateCodyRulesUseCase.execute(
                         ruleDto,
                         organizationAndTeamData.organizationId,
                         actor,
@@ -2027,7 +2027,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                     });
 
                     this.logger.error({
-                        message: 'Error syncing individual Kody rule file',
+                        message: 'Error syncing individual Cody rule file',
                         context: CentralizedConfigService.name,
                         metadata: {
                             organizationAndTeamData,
@@ -2040,8 +2040,8 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
             const hasFailures = failureDetails.length > 0;
             const message = hasFailures
-                ? `Kody rules sync incomplete — synced ${syncedCount}, failed ${failureDetails.length}`
-                : `Kody rules synchronized successfully. Synced: ${syncedCount}, Failed: 0`;
+                ? `Cody rules sync incomplete — synced ${syncedCount}, failed ${failureDetails.length}`
+                : `Cody rules synchronized successfully. Synced: ${syncedCount}, Failed: 0`;
 
             if (failureDetails.length > 0) {
                 this.logger.warn({
@@ -2077,7 +2077,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             };
         } catch (error) {
             this.logger.error({
-                message: 'Error synchronizing Kody rules',
+                message: 'Error synchronizing Cody rules',
                 context: CentralizedConfigService.name,
                 metadata: {
                     organizationAndTeamData,
@@ -2088,7 +2088,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
             return {
                 success: false,
-                message: 'Error synchronizing Kody rules',
+                message: 'Error synchronizing Cody rules',
                 failureDetails: [
                     {
                         file: 'general',
@@ -2102,8 +2102,8 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         }
     }
 
-    private ensureKodyRuleCompliance(ruleContent: any) {
-        const result = kodyRuleSchema
+    private ensureCodyRuleCompliance(ruleContent: any) {
+        const result = codyRuleSchema
             .pick({
                 title: true,
                 rule: true,
@@ -2115,12 +2115,12 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             })
             .extend({
                 severity: z
-                    .enum(KodyRuleSeverity)
-                    .default(KodyRuleSeverity.MEDIUM),
-                examples: z.array(kodyRulesExampleSchema).default([]),
+                    .enum(CodyRuleSeverity)
+                    .default(CodyRuleSeverity.MEDIUM),
+                examples: z.array(codyRulesExampleSchema).default([]),
                 path: z.string().default('**/*'),
-                scope: z.enum(KodyRulesScope).default(KodyRulesScope.FILE),
-                inheritance: kodyRulesInheritanceSchema.default({
+                scope: z.enum(CodyRulesScope).default(CodyRulesScope.FILE),
+                inheritance: codyRulesInheritanceSchema.default({
                     inheritable: true,
                     include: [],
                     exclude: [],
@@ -2132,9 +2132,9 @@ export class CentralizedConfigService implements ICentralizedConfigService {
         return result.success ? result.data : null;
     }
 
-    async removeStaleKodyRules(params: {
+    async removeStaleCodyRules(params: {
         organizationAndTeamData: OrganizationAndTeamData;
-        ruleFiles: IKodyRuleFileMeta[];
+        ruleFiles: ICodyRuleFileMeta[];
         actor: {
             organizationId: string;
             source: 'sync' | 'web' | 'cli';
@@ -2150,14 +2150,14 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
         try {
             const existingEntity =
-                await this.kodyRulesService.findByOrganizationId(
+                await this.codyRulesService.findByOrganizationId(
                     organizationAndTeamData.organizationId,
                 );
 
             if (!existingEntity) {
                 return {
                     success: true,
-                    message: 'No existing Kody rules to check for staleness',
+                    message: 'No existing Cody rules to check for staleness',
                 };
             }
 
@@ -2179,7 +2179,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             if (currentSourcePaths.size === 0 && centralizedRuleCount > 0) {
                 this.logger.warn({
                     message:
-                        'Skipping stale Kody rule removal: discovery returned zero rule files but centralized rules exist — refusing to wipe (likely a failed read)',
+                        'Skipping stale Cody rule removal: discovery returned zero rule files but centralized rules exist — refusing to wipe (likely a failed read)',
                     context: CentralizedConfigService.name,
                     metadata: {
                         organizationAndTeamData,
@@ -2189,7 +2189,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                 return {
                     success: true,
                     message:
-                        'Skipped stale Kody rule removal (empty-discovery guard)',
+                        'Skipped stale Cody rule removal (empty-discovery guard)',
                     removedRuleCount: 0,
                 };
             }
@@ -2208,7 +2208,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                 if (!currentSourcePaths.has(sourcePath)) {
                     try {
-                        await this.deleteRuleInOrganizationByIdKodyRulesUseCase.execute(
+                        await this.deleteRuleInOrganizationByIdCodyRulesUseCase.execute(
                             rule.uuid,
                             actor,
                         );
@@ -2217,7 +2217,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
                         this.logger.log({
                             message:
-                                'Marked stale centralized Kody rule as deleted',
+                                'Marked stale centralized Cody rule as deleted',
                             context: CentralizedConfigService.name,
                             metadata: {
                                 organizationAndTeamData,
@@ -2228,7 +2228,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
                         });
                     } catch (error) {
                         this.logger.error({
-                            message: 'Error marking stale Kody rule as deleted',
+                            message: 'Error marking stale Cody rule as deleted',
                             context: CentralizedConfigService.name,
                             metadata: {
                                 organizationAndTeamData,
@@ -2243,8 +2243,8 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
             const message =
                 removedCount > 0
-                    ? `Removed ${removedCount} stale Kody rules`
-                    : 'No stale Kody rules to remove';
+                    ? `Removed ${removedCount} stale Cody rules`
+                    : 'No stale Cody rules to remove';
 
             this.logger.log({
                 message,
@@ -2262,7 +2262,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
             };
         } catch (error) {
             this.logger.error({
-                message: 'Error removing stale Kody rules',
+                message: 'Error removing stale Cody rules',
                 context: CentralizedConfigService.name,
                 metadata: {
                     organizationAndTeamData,
@@ -2273,7 +2273,7 @@ export class CentralizedConfigService implements ICentralizedConfigService {
 
             return {
                 success: false,
-                message: 'Error removing stale Kody rules',
+                message: 'Error removing stale Cody rules',
             };
         }
     }

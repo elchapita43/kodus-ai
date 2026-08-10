@@ -1,12 +1,12 @@
 # Secondary-pass BYOK readiness
 
 **Goal:** route dedup / severity / format through **client BYOK** (not platform
-`gpt-5.4-mini`), keeping Kodus keys only for **trial/demo**, **embeddings**, and **Exa**.
+`gpt-5.4-mini`), keeping Codus keys only for **trial/demo**, **embeddings**, and **Exa**.
 
 **Last live run:** 2026-07-09 · smoke set (3 PRs / 8 findings) · single run each
 (not N≥4 — treat as directional, not final ship gate).
 
-## Keep on Kodus keys
+## Keep on Codus keys
 
 | Path | Why |
 |---|---|

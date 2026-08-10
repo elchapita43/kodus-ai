@@ -16,34 +16,34 @@ const mockLoadConfig = vi.mocked(loadConfig);
 const mockLoadCredentials = vi.mocked(loadCredentials);
 
 describe('getAuthModeSummary', () => {
-    const originalKodusToken = process.env.KODUS_TOKEN;
-    const originalKodusTeamKey = process.env.KODUS_TEAM_KEY;
+    const originalCodusToken = process.env.CODUS_TOKEN;
+    const originalCodusTeamKey = process.env.CODUS_TEAM_KEY;
 
     beforeEach(() => {
         vi.clearAllMocks();
-        delete process.env.KODUS_TOKEN;
-        delete process.env.KODUS_TEAM_KEY;
+        delete process.env.CODUS_TOKEN;
+        delete process.env.CODUS_TEAM_KEY;
         mockLoadConfig.mockResolvedValue(null);
         mockLoadCredentials.mockResolvedValue(null);
     });
 
     afterEach(() => {
-        if (originalKodusToken === undefined) {
-            delete process.env.KODUS_TOKEN;
+        if (originalCodusToken === undefined) {
+            delete process.env.CODUS_TOKEN;
         } else {
-            process.env.KODUS_TOKEN = originalKodusToken;
+            process.env.CODUS_TOKEN = originalCodusToken;
         }
 
-        if (originalKodusTeamKey === undefined) {
-            delete process.env.KODUS_TEAM_KEY;
+        if (originalCodusTeamKey === undefined) {
+            delete process.env.CODUS_TEAM_KEY;
         } else {
-            process.env.KODUS_TEAM_KEY = originalKodusTeamKey;
+            process.env.CODUS_TEAM_KEY = originalCodusTeamKey;
         }
     });
 
     it('reports env token as the active auth mode', async () => {
-        process.env.KODUS_TOKEN = 'eyJ.mock.token';
-        process.env.KODUS_TEAM_KEY = 'kodus_env_key';
+        process.env.CODUS_TOKEN = 'eyJ.mock.token';
+        process.env.CODUS_TEAM_KEY = 'codus_env_key';
         mockLoadCredentials.mockResolvedValue({
             accessToken: 'stored-access',
             refreshToken: 'stored-refresh',
@@ -52,8 +52,8 @@ describe('getAuthModeSummary', () => {
         });
         mockLoadConfig.mockResolvedValue({
             teamKey: 'stored-team-key',
-            teamName: 'Kody Copilot',
-            organizationName: 'Kodus',
+            teamName: 'Cody Copilot',
+            organizationName: 'Codus',
         });
 
         await expect(getAuthModeSummary()).resolves.toEqual({
@@ -64,7 +64,7 @@ describe('getAuthModeSummary', () => {
     });
 
     it('reports env team key when no env token is set', async () => {
-        process.env.KODUS_TEAM_KEY = 'kodus_env_key';
+        process.env.CODUS_TEAM_KEY = 'codus_env_key';
         mockLoadCredentials.mockResolvedValue({
             accessToken: 'stored-access',
             refreshToken: 'stored-refresh',
@@ -97,8 +97,8 @@ describe('getAuthModeSummary', () => {
     it('reports stored team key when no bearer auth exists', async () => {
         mockLoadConfig.mockResolvedValue({
             teamKey: 'stored-team-key',
-            teamName: 'Kody Copilot',
-            organizationName: 'Kodus',
+            teamName: 'Cody Copilot',
+            organizationName: 'Codus',
         });
 
         await expect(getAuthModeSummary()).resolves.toEqual({

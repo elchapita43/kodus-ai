@@ -71,7 +71,7 @@ export const AutomatedReviewActive = () => {
                                         <OverrideIndicatorForm fieldName="automatedReviewActive" />
                                     </div>
                                     <p className="text-text-secondary text-sm">
-                                        Whenever a Pull Request is opened, Kody
+                                        Whenever a Pull Request is opened, Cody
                                         will automatically review the code,
                                         highlighting improvements, issues, and
                                         suggestions to ensure code quality.
@@ -81,7 +81,7 @@ export const AutomatedReviewActive = () => {
                                         When disabled, you can manually start
                                         the review by using the command{" "}
                                         <InlineCode>
-                                            @kody start-review
+                                            @cody start-review
                                         </InlineCode>{" "}
                                         in the Pull Request comments.
                                     </p>
@@ -107,7 +107,7 @@ export const AutomatedReviewActive = () => {
                                                 <OverrideIndicatorForm fieldName="reviewCadence.type" />
                                             </div>
                                             <FormControl.Helper className="text-text-secondary mt-0 mb-2 text-xs">
-                                                Decide how Kody should run
+                                                Decide how Cody should run
                                                 follow-up reviews after the
                                                 first one.
                                             </FormControl.Helper>
@@ -168,7 +168,7 @@ export const AutomatedReviewActive = () => {
                                                         Only run when you
                                                         comment{" "}
                                                         <InlineCode>
-                                                            @kody start-review
+                                                            @cody start-review
                                                         </InlineCode>
                                                     </>
                                                 )}

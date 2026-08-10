@@ -2,7 +2,7 @@ import {
     anthropicCompatibleRootURL,
     BYOKProvider,
     getAdapter,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 
 // Encryption is irrelevant here — deterministic reversible stand-in so
 // byokToVercelModel can decrypt the stored key without a real crypto env.

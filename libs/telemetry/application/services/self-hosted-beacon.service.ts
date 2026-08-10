@@ -37,7 +37,7 @@ export interface ISelfHostedBeaconService {
 /**
  * Orchestrator for the self-hosted heartbeat. Handles:
  *
- *   - opt-out resolution (`KODUS_TELEMETRY_DISABLED`, `DO_NOT_TRACK`)
+ *   - opt-out resolution (`CODUS_TELEMETRY_DISABLED`, `DO_NOT_TRACK`)
  *   - daily dedupe via `last_sent_day` in `global_parameters[telemetry_state]`
  *   - best-effort multi-worker dedupe via `in_flight_day`
  *   - lazy creation + persistence of `instance_id`
@@ -111,7 +111,7 @@ export class SelfHostedBeaconService implements ISelfHostedBeaconService {
 
             const ok = await this.transport.send(
                 payload,
-                metrics.kodus.version,
+                metrics.codus.version,
             );
 
             if (ok) {

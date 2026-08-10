@@ -4,7 +4,7 @@ import { ensureLicenseSeat } from "../lib/onboarding.js";
 import { assertHealthyExecution } from "../lib/execution-health.js";
 
 // Mirrors command-review, but posts a steering directive after the command
-// (`@kody review focus on ...`). What's under test is the NEW directive path:
+// (`@cody review focus on ...`). What's under test is the NEW directive path:
 // the trailing free-text must (1) not break command detection across providers
 // (the parser/handler changes are the regression risk) and (2) still trigger a
 // review. Prompt-level steering itself is covered by unit tests; here we guard
@@ -28,7 +28,7 @@ const DIRECTIVE = "focus on the map-based storage logic and its lookups";
 export const commandReviewFocus: Scenario = {
     id: "command-review-focus",
     title:
-        "Kody re-reviews a PR after `@kody review <directive>` (focus steering) and the trailing text doesn't break the command",
+        "Cody re-reviews a PR after `@cody review <directive>` (focus steering) and the trailing text doesn't break the command",
     priority: "P1",
     appliesTo: {
         target: ["cloud", "self-hosted"],
@@ -43,10 +43,10 @@ export const commandReviewFocus: Scenario = {
         );
 
         const baseUrl = ctx.target.apiBaseUrl;
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         const fixture = FIXTURE_BRANCHES[ctx.provider.name];
@@ -86,7 +86,7 @@ export const commandReviewFocus: Scenario = {
             head: fixture!.head,
             base: fixture!.base,
             title: `[e2e] command-review-focus ${ctx.runId.slice(0, 8)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId}. Auto-review disabled — the review can only come from the @kody review command (with a focus directive) this scenario posts below.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId}. Auto-review disabled — the review can only come from the @cody review command (with a focus directive) this scenario posts below.`,
         });
 
         try {
@@ -102,7 +102,7 @@ export const commandReviewFocus: Scenario = {
                 preCommandSnapshot.issueComments +
                 preCommandSnapshot.reviews;
 
-            const command = `@kody review ${DIRECTIVE}`;
+            const command = `@cody review ${DIRECTIVE}`;
             const sinceIso = new Date().toISOString();
             await ctx.provider.postComment(pr.number, command);
 

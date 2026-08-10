@@ -1,7 +1,7 @@
 /**
  * AST graph backfill — SQL-only.
  *
- * Why this exists: `kodus-graph` is built per-repo at the moment a repo
+ * Why this exists: `codus-graph` is built per-repo at the moment a repo
  * is selected (CreateRepositoriesUseCase). Self-hosted operators
  * upgrading from a release that predates the AST graph have repos in
  * `integration_configs` (configKey = 'repositories') without a
@@ -11,11 +11,11 @@
  * needs one.
  *
  * The script writes ONLY to Postgres — `repositories`,
- * `kodus_workflow.workflow_jobs`, `kodus_workflow.outbox_messages` —
+ * `codus_workflow.workflow_jobs`, `codus_workflow.outbox_messages` —
  * inside a transaction per repo. The existing **outbox relay** (which
  * runs in the worker) picks each row up and publishes to RabbitMQ.
  * That means the script does NOT need to talk to Rabbit, NestJS, or
- * any of kodus-ai's modules — it stays trivially small and avoids the
+ * any of codus-ai's modules — it stays trivially small and avoids the
  * webpack TDZ pitfalls of bootstrapping the full app.
  *
  * Idempotency:
@@ -104,7 +104,7 @@ function envOrThrow(name: string): string {
 }
 
 function buildClient(): Client {
-    // Mirror the same precedence kodus-ai's loader uses: a full
+    // Mirror the same precedence codus-ai's loader uses: a full
     // DATABASE_URL / API_PG_DB_URL wins over individual vars. Self-hosted
     // installs typically set the individual vars, but managed-Postgres
     // setups (Supabase / RDS / Neon) hand you a single connection string.
@@ -263,7 +263,7 @@ async function main() {
                         };
 
                         await client.query(
-                            `INSERT INTO kodus_workflow.workflow_jobs (
+                            `INSERT INTO codus_workflow.workflow_jobs (
                                 uuid, "correlationId", "workflowType", "handlerType",
                                 payload, status, priority, "retryCount", "maxRetries",
                                 "organizationId", "teamId"
@@ -298,7 +298,7 @@ async function main() {
                         };
 
                         await client.query(
-                            `INSERT INTO kodus_workflow.outbox_messages (
+                            `INSERT INTO codus_workflow.outbox_messages (
                                 job_id, exchange, "routingKey", payload, status, attempts
                             ) VALUES (
                                 $1, 'workflow.exchange',

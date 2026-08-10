@@ -929,21 +929,21 @@ describe('CreateFileCommentsStage', () => {
             );
         });
 
-        it('should save all discarded suggestions to database when all suggestions are discarded by kody-fine-tuning', async () => {
+        it('should save all discarded suggestions to database when all suggestions are discarded by cody-fine-tuning', async () => {
             const discardedSuggestions = [
                 {
                     id: 's1',
                     relevantFile: 'test.ts',
                     severity: 'medium',
                     suggestionContent: 'Update this pattern',
-                    priorityStatus: 'discarded-by-kody-fine-tuning',
+                    priorityStatus: 'discarded-by-cody-fine-tuning',
                 },
                 {
                     id: 's2',
                     relevantFile: 'test.ts',
                     severity: 'high',
                     suggestionContent: 'Fix this issue',
-                    priorityStatus: 'discarded-by-kody-fine-tuning',
+                    priorityStatus: 'discarded-by-cody-fine-tuning',
                 },
             ] as any[];
 
@@ -984,7 +984,7 @@ describe('CreateFileCommentsStage', () => {
             expect(unusedSuggestions).toHaveLength(2);
             expect(
                 unusedSuggestions.every(
-                    (s) => s.priorityStatus === 'discarded-by-kody-fine-tuning',
+                    (s) => s.priorityStatus === 'discarded-by-cody-fine-tuning',
                 ),
             ).toBe(true);
         });
@@ -1175,7 +1175,7 @@ describe('CreateFileCommentsStage', () => {
                     relevantFile: 'test.ts',
                     severity: 'high',
                     suggestionContent: 'Fix 4',
-                    priorityStatus: 'discarded-by-kody-fine-tuning',
+                    priorityStatus: 'discarded-by-cody-fine-tuning',
                 },
             ] as any[];
 
@@ -1224,7 +1224,7 @@ describe('CreateFileCommentsStage', () => {
                 'discarded-by-safeguard',
             );
             expect(unusedSuggestions[3].priorityStatus).toBe(
-                'discarded-by-kody-fine-tuning',
+                'discarded-by-cody-fine-tuning',
             );
         });
     });

@@ -8,7 +8,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}🚀 Kodus AI - Setup Script${NC}"
+echo -e "${BLUE}🚀 Codus AI - Setup Script${NC}"
 echo -e "${BLUE}===============================${NC}"
 echo ""
 
@@ -129,7 +129,7 @@ echo -e "${GREEN}✅ Security keys generated and configured!${NC}"
 echo ""
 
 echo -e "${YELLOW}🐳 Setting up Docker networks...${NC}"
-docker network create kodus-backend-services 2>/dev/null || echo -e "${YELLOW}ℹ️  Network kodus-backend-services already exists${NC}"
+docker network create codus-backend-services 2>/dev/null || echo -e "${YELLOW}ℹ️  Network codus-backend-services already exists${NC}"
 docker network create shared-network 2>/dev/null || echo -e "${YELLOW}ℹ️  Network shared-network already exists${NC}"
 echo -e "${GREEN}✅ Docker networks configured!${NC}"
 echo ""

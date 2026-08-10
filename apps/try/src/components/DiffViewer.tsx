@@ -35,7 +35,7 @@ export function DiffViewer({
     collapsed?: Record<string, boolean>;
     onToggleCollapsed?: (path: string) => void;
     /** When the review is still in progress, show shimmer skeletons
-     *  in each file's suggestion slot so the user feels Kody working
+     *  in each file's suggestion slot so the user feels Cody working
      *  the file rather than staring at a flat diff. */
     isReviewing?: boolean;
 }) {
@@ -239,7 +239,7 @@ function FileBlock({
             {/* While the review is still running, drop a shimmer card
                 in the suggestion slot so the file doesn't read "clean"
                 prematurely. Goes away the moment real suggestions land
-                (or stays empty if Kody decided there's nothing). */}
+                (or stays empty if Cody decided there's nothing). */}
             {!collapsed && isReviewing && issues.length === 0 && (
                 <div className="border-t border-[var(--border)] bg-[var(--bg-2)]/40 p-4">
                     <SuggestionSkeleton />
@@ -317,18 +317,18 @@ function SuggestionSkeleton() {
             aria-hidden
         >
             <div className="flex items-center gap-3 px-4 py-2.5 border-b border-[var(--border)]/60">
-                <span className="kodus-skeleton w-3 h-3 rounded-full" />
-                <span className="kodus-skeleton h-3 w-28 rounded" />
-                <span className="kodus-skeleton h-3 w-14 rounded ml-auto" />
+                <span className="codus-skeleton w-3 h-3 rounded-full" />
+                <span className="codus-skeleton h-3 w-28 rounded" />
+                <span className="codus-skeleton h-3 w-14 rounded ml-auto" />
             </div>
             <div className="px-4 py-3 space-y-2">
                 <div className="flex items-center gap-2">
-                    <span className="kodus-skeleton w-4 h-4 rounded-full" />
-                    <span className="kodus-skeleton h-3 w-20 rounded" />
+                    <span className="codus-skeleton w-4 h-4 rounded-full" />
+                    <span className="codus-skeleton h-3 w-20 rounded" />
                 </div>
-                <span className="kodus-skeleton block h-3 w-full rounded" />
-                <span className="kodus-skeleton block h-3 w-5/6 rounded" />
-                <span className="kodus-skeleton block h-3 w-2/3 rounded" />
+                <span className="codus-skeleton block h-3 w-full rounded" />
+                <span className="codus-skeleton block h-3 w-5/6 rounded" />
+                <span className="codus-skeleton block h-3 w-2/3 rounded" />
             </div>
         </div>
     );

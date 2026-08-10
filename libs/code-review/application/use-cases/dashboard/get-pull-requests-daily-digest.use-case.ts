@@ -22,13 +22,13 @@ import { resolveDashboardRepositoryScope } from './utils/team-repository-scope.u
 export interface PullRequestsDailyDigest {
     // ISO start-of-day (UTC) the digest is scoped to.
     date: string;
-    // Distinct PRs that had a Kody review today.
+    // Distinct PRs that had a Cody review today.
     reviewedToday: number;
     // Of today's reviewed PRs, how many delivered at least one critical/high.
     needsAttention: number;
     // Distinct PRs whose review errored (error / partial_error) today.
     erroredToday: number;
-    // PRs opened today, still open, with no Kody review yet.
+    // PRs opened today, still open, with no Cody review yet.
     awaitingReview: number;
 }
 
@@ -141,7 +141,7 @@ export class GetPullRequestsDailyDigestUseCase implements IUseCase {
                 }
             }
 
-            // 3. Awaiting review: PRs Kody was triggered on today but skipped and
+            // 3. Awaiting review: PRs Cody was triggered on today but skipped and
             //    never reviewed — every execution today was status='skipped' (no
             //    license, BYOK, manual/paused cadence, ignored user). Sourced
             //    from automation_execution (the table that drives the list), so

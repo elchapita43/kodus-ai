@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate an Excalidraw diagram of the current Kodus code-review harness."""
+"""Generate an Excalidraw diagram of the current Codus code-review harness."""
 import json, os
 
 elements = []
@@ -98,7 +98,7 @@ PROVIDER= "#ffc9c9"   # red    - providers
 DETAIL  = "#f1f3f5"   # gray   - callouts
 
 # ============ TITLE ============
-free_text("title", 380, -120, "Kodus — Code Review Harness (atual)", 30)
+free_text("title", 380, -120, "Codus — Code Review Harness (atual)", 30)
 free_text("subtitle", 380, -78,
           "webhook → job → pipeline (shared stages → engine branch → shared post) → posting",
           15, "#495057")
@@ -169,11 +169,11 @@ for i, (eid, label) in enumerate(agent_stages):
 
 # 3 agents callout
 box("agents", agx - 10, ay2 + 6, W + 40, 120,
-    "3 specialized agents (+ Kody Rules)\n\n"
+    "3 specialized agents (+ Cody Rules)\n\n"
     "🐞 Bug — logic, edge cases, races, nulls\n"
     "🔒 Security — authz, injection, secrets\n"
     "⚡ Performance — N+1, leaks, hot paths\n"
-    "📏 Kody Rules — custom org rules",
+    "📏 Cody Rules — custom org rules",
     DETAIL, stroke="#6741d9", fontsize=12, style="dashed")
 arrow("ag_to_agents", "ag_rev", "agents", color="#6741d9", dashed=True)
 
@@ -183,7 +183,7 @@ free_text("hdr_ee", eex, fork_y + 16, "EE ENGINE  (legacy / opt-in)", 14, "#e859
 ee_stages = [
     ("ee_gate", "9 · FileContextGate\nneed cross-file context?"),
     ("ee_ctx",  "10 · CollectCrossFileContext\nE2B sandbox search"),
-    ("ee_ft",   "11 · KodyFineTuning\nrule clustering"),
+    ("ee_ft",   "11 · CodyFineTuning\nrule clustering"),
     ("ee_pr",   "12 · ProcessFilesPrLevelReview"),
     ("ee_file", "13 · ProcessFilesReview (file-level)"),
 ]
@@ -253,7 +253,7 @@ for i, (eid, label, fill) in enumerate(legend):
     box(eid, lx, ly + i * 34, 220, 26, label, fill, fontsize=12)
 
 out = {
-    "type": "excalidraw", "version": 2, "source": "kodus-harness-gen",
+    "type": "excalidraw", "version": 2, "source": "codus-harness-gen",
     "elements": elements,
     "appState": {"gridSize": None, "viewBackgroundColor": "#ffffff"},
     "files": {},

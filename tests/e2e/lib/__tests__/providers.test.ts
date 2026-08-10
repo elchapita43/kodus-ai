@@ -67,7 +67,7 @@ test("makeProvider bitbucket constructs with required env", () => {
             assert.equal(p.name, "bitbucket");
             assert.equal(p.integrationType, "BITBUCKET");
             assert.equal(p.webhookPath, "/bitbucket/webhook");
-            // BitbucketProvider routes app-password auth through Kodus's
+            // BitbucketProvider routes app-password auth through Codus's
             // AuthMode.TOKEN branch (the backend doesn't know "app-password"
             // as a mode; sending it bypasses authenticateWithToken entirely).
             assert.equal(p.authMode(), "token");
@@ -81,9 +81,9 @@ test("makeProvider azure-devops constructs with required env", () => {
     withEnv(
         {
             AZ_TEST_TOKEN: "az-pat",
-            AZ_TEST_ORG: "kodusorg",
-            AZ_TEST_PROJECT: "kodusproj",
-            AZ_TEST_REPO: "kodus-fixture",
+            AZ_TEST_ORG: "codusorg",
+            AZ_TEST_PROJECT: "codusproj",
+            AZ_TEST_REPO: "codus-fixture",
         },
         () => {
             const p = makeProvider("azure-devops");
@@ -92,7 +92,7 @@ test("makeProvider azure-devops constructs with required env", () => {
             assert.equal(p.webhookPath, "/azure-repos/webhook");
             assert.equal(p.authMode(), "token");
             assert.equal(p.authToken(), "az-pat");
-            // Kodus lowercases the platformType "AZURE_REPOS" for gitTool.
+            // Codus lowercases the platformType "AZURE_REPOS" for gitTool.
             assert.equal(p.licenseGitTool(), "azure_repos");
         },
     );
@@ -146,7 +146,7 @@ test("makeProvider github-app constructs and uses oauth + installation_id", () =
     withEnv(
         {
             GH_TEST_TOKEN: "gh-pat",
-            GH_APP_TEST_REPO: "kodus-e2e/tiny-url-app",
+            GH_APP_TEST_REPO: "codus-e2e/tiny-url-app",
             GH_APP_INSTALLATION_ID: "134164671",
         },
         () => {

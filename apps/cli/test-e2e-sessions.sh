@@ -8,8 +8,8 @@
 #
 # O que testa:
 #   1. Hooks não bloqueiam (cada comando retorna rápido)
-#   2. Local state (.kody/sessions/) criado no TurnStart, limpo no SessionEnd
-#   3. Buffering (.kody/pending-events.jsonl) quando API unreachable
+#   2. Local state (.cody/sessions/) criado no TurnStart, limpo no SessionEnd
+#   3. Buffering (.cody/pending-events.jsonl) quando API unreachable
 # ---------------------------------------------------------------------------
 
 set -euo pipefail
@@ -18,7 +18,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
 SESSION_ID="test-e2e-$(date +%s)"
-TRANSCRIPT_PATH="/tmp/kodus-test-transcript-${SESSION_ID}.jsonl"
+TRANSCRIPT_PATH="/tmp/codus-test-transcript-${SESSION_ID}.jsonl"
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -47,8 +47,8 @@ TRANSCRIPT
 echo "  Transcript: $TRANSCRIPT_PATH"
 echo "  Session ID: $SESSION_ID"
 
-rm -f "$REPO_ROOT/.kody/pending-events.jsonl"
-rm -f "$REPO_ROOT/.kody/sessions/${SESSION_ID}.json"
+rm -f "$REPO_ROOT/.cody/pending-events.jsonl"
+rm -f "$REPO_ROOT/.cody/sessions/${SESSION_ID}.json"
 
 NODE="node ./dist/index.js"
 
@@ -87,22 +87,22 @@ else
 fi
 
 # Check local state
-if [ -f "$REPO_ROOT/.kody/sessions/${SESSION_ID}.json" ]; then
-  TURN_ID=$(python3 -c "import json; print(json.load(open('$REPO_ROOT/.kody/sessions/${SESSION_ID}.json'))['turnId'])" 2>/dev/null || echo "")
+if [ -f "$REPO_ROOT/.cody/sessions/${SESSION_ID}.json" ]; then
+  TURN_ID=$(python3 -c "import json; print(json.load(open('$REPO_ROOT/.cody/sessions/${SESSION_ID}.json'))['turnId'])" 2>/dev/null || echo "")
   if [ -n "$TURN_ID" ]; then
     pass "Local state saved: turnId=$TURN_ID"
   else
     fail "Local state has no turnId"
   fi
 
-  T_PATH=$(python3 -c "import json; print(json.load(open('$REPO_ROOT/.kody/sessions/${SESSION_ID}.json'))['transcriptPath'])" 2>/dev/null || echo "")
+  T_PATH=$(python3 -c "import json; print(json.load(open('$REPO_ROOT/.cody/sessions/${SESSION_ID}.json'))['transcriptPath'])" 2>/dev/null || echo "")
   if [ "$T_PATH" = "$TRANSCRIPT_PATH" ]; then
     pass "Transcript path saved correctly"
   else
     fail "Transcript path mismatch: $T_PATH"
   fi
 else
-  fail "Local state NOT created at .kody/sessions/${SESSION_ID}.json"
+  fail "Local state NOT created at .cody/sessions/${SESSION_ID}.json"
 fi
 
 # ---------------------------------------------------------------------------
@@ -141,7 +141,7 @@ section "6. SessionEnd"
 
 run_hook session-end "{\"session_id\":\"${SESSION_ID}\",\"transcript_path\":\"${TRANSCRIPT_PATH}\"}"
 
-if [ ! -f "$REPO_ROOT/.kody/sessions/${SESSION_ID}.json" ]; then
+if [ ! -f "$REPO_ROOT/.cody/sessions/${SESSION_ID}.json" ]; then
   pass "Local state cleaned up on session-end"
 else
   fail "Local state still exists after session-end"
@@ -151,24 +151,24 @@ fi
 section "7. Buffering (network error simulation)"
 # ---------------------------------------------------------------------------
 
-echo -e "${DIM}  Simulating unreachable API with KODUS_API_URL=http://localhost:1${NC}"
+echo -e "${DIM}  Simulating unreachable API with CODUS_API_URL=http://localhost:1${NC}"
 
 BUFFER_SESSION="test-buffer-$(date +%s)"
-rm -f "$REPO_ROOT/.kody/pending-events.jsonl"
+rm -f "$REPO_ROOT/.cody/pending-events.jsonl"
 
-KODUS_API_URL=http://localhost:1 bash -c "echo '{\"session_id\":\"${BUFFER_SESSION}\",\"transcript_path\":\"${TRANSCRIPT_PATH}\"}' | $NODE decisions hooks claude-code session-start" 2>/dev/null || true
+CODUS_API_URL=http://localhost:1 bash -c "echo '{\"session_id\":\"${BUFFER_SESSION}\",\"transcript_path\":\"${TRANSCRIPT_PATH}\"}' | $NODE decisions hooks claude-code session-start" 2>/dev/null || true
 
 sleep 2
 
-if [ -f "$REPO_ROOT/.kody/pending-events.jsonl" ]; then
-  BUFFER_COUNT=$(wc -l < "$REPO_ROOT/.kody/pending-events.jsonl" | tr -d ' ')
+if [ -f "$REPO_ROOT/.cody/pending-events.jsonl" ]; then
+  BUFFER_COUNT=$(wc -l < "$REPO_ROOT/.cody/pending-events.jsonl" | tr -d ' ')
   pass "Events buffered: $BUFFER_COUNT event(s) in pending-events.jsonl"
 
   echo -e "${DIM}  Buffered events:${NC}"
   while IFS= read -r line; do
     EVENT_TYPE=$(python3 -c "import sys,json; print(json.load(sys.stdin).get('type','?'))" <<< "$line" 2>/dev/null || echo "?")
     echo -e "  ${DIM}  - ${EVENT_TYPE}${NC}"
-  done < "$REPO_ROOT/.kody/pending-events.jsonl"
+  done < "$REPO_ROOT/.cody/pending-events.jsonl"
 else
   fail "No buffer file created — events lost on network error!"
 fi
@@ -178,9 +178,9 @@ section "Cleanup"
 # ---------------------------------------------------------------------------
 
 rm -f "$TRANSCRIPT_PATH"
-rm -f "$REPO_ROOT/.kody/pending-events.jsonl"
-rm -f "$REPO_ROOT/.kody/sessions/${SESSION_ID}.json"
-rm -f "$REPO_ROOT/.kody/sessions/${BUFFER_SESSION}.json"
+rm -f "$REPO_ROOT/.cody/pending-events.jsonl"
+rm -f "$REPO_ROOT/.cody/sessions/${SESSION_ID}.json"
+rm -f "$REPO_ROOT/.cody/sessions/${BUFFER_SESSION}.json"
 pass "Temp files removed"
 
 # ---------------------------------------------------------------------------

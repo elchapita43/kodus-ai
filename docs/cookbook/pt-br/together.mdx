@@ -1,6 +1,6 @@
 ---
 title: "Together AI - Modelos Open Source"
-description: "Aprenda a usar os modelos do Together AI com o Kodus"
+description: "Aprenda a usar os modelos do Together AI com o Codus"
 icon: "users"
 ---
 
@@ -35,7 +35,7 @@ Ou siga estas etapas:
 2. No painel principal, role até a seção "Manage Account"
 3. No cartão "API Keys", clique no botão "Manage Keys"
 4. Clique no botão "Add Key"
-5. Dê um nome como 'Kodus' ou qualquer nome descritivo
+5. Dê um nome como 'Codus' ou qualquer nome descritivo
 6. Copie sua chave de API e você está pronto para começar!
 
 <Info>
@@ -52,9 +52,9 @@ Edite seu arquivo `.env` e configure as definições principais. Para **Integra�
 
 ```env
 # Core System Settings (update with your domains)
-WEB_HOSTNAME_API="kodus-api.yourdomain.com"    
+WEB_HOSTNAME_API="codus-api.yourdomain.com"    
 WEB_PORT_API=443                               
-NEXTAUTH_URL="https://kodus-web.yourdomain.com"
+NEXTAUTH_URL="https://codus-web.yourdomain.com"
 
 # Security Keys (generate with openssl commands above)
 WEB_NEXTAUTH_SECRET="your-generated-secret"
@@ -72,9 +72,9 @@ API_OPENAI_FORCE_BASE_URL="https://api.together.xyz/v1"             # Together A
 API_OPEN_AI_API_KEY="your-together-api-key"                         # Your Together AI API Key
 
 # Git Provider Webhooks (choose your provider)
-API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webhook"
-# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/gitlab/webhook"
-# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/bitbucket/webhook"
+API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/github/webhook"
+# or API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/gitlab/webhook"
+# or GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/bitbucket/webhook"
 ```
 
 <Note>
@@ -95,7 +95,7 @@ Para webhooks e acesso externo, configure o Nginx:
 # Web App (port 3000)
 server {
     listen 80;
-    server_name kodus-web.yourdomain.com;
+    server_name codus-web.yourdomain.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -108,7 +108,7 @@ server {
 # API (port 3001)  
 server {
     listen 80;
-    server_name kodus-api.yourdomain.com;
+    server_name codus-api.yourdomain.com;
     location ~ ^/(github|gitlab|bitbucket|azure-repos)/webhook {
         proxy_pass http://localhost:3332;
         proxy_set_header Host $host;
@@ -137,7 +137,7 @@ docker-compose logs api worker | grep -i together
 ```
 
 <Tip>
-  Para informações detalhadas sobre configuração de SSL, monitoramento e configurações avançadas, consulte nosso [guia completo de implantação](https://docs.kodus.io/how_to_deploy/pt-br/deploy_kodus/generic_vm).
+  Para informações detalhadas sobre configuração de SSL, monitoramento e configurações avançadas, consulte nosso [guia completo de implantação](https://docs.kodus.io/how_to_deploy/pt-br/deploy_codus/generic_vm).
 </Tip>
 
 ### Solução de Problemas

@@ -204,7 +204,7 @@ const run = async () => {
     if (!getVal('ruleId')) {
         const rulesRes = await request(
             'GET',
-            `${baseUrl}/kody-rules/find-by-organization-id`,
+            `${baseUrl}/cody-rules/find-by-organization-id`,
             {
                 headers: { ...authHeader, Accept: 'application/json' },
             },

@@ -1,6 +1,6 @@
 ---
 title: "Novita AI - サーバーレスGPUプラットフォーム"
-description: "NovitaのモデルをKodusで使用する方法"
+description: "NovitaのモデルをCodusで使用する方法"
 icon: "server"
 ---
 
@@ -33,7 +33,7 @@ Novitaは、AIのためのサーバーレスインフラストラクチャプラ
 
 1. Novitaコンソールに移動する
 2. 「Manage API Keys」ボタンをクリックするか、プロフィール画像からAPIキーをクリックする
-3. 「Add New Key」をクリックして「Kodus」または任意の名前を入力する
+3. 「Add New Key」をクリックして「Codus」または任意の名前を入力する
 4. 「Confirm」をクリックする
 5. APIキーをコピーして安全な場所に保存する
 
@@ -47,9 +47,9 @@ Novitaは、AIのためのサーバーレスインフラストラクチャプラ
 
 ```env
 # コアシステム設定（ドメインを更新してください）
-WEB_HOSTNAME_API="kodus-api.yourdomain.com"    
+WEB_HOSTNAME_API="codus-api.yourdomain.com"    
 WEB_PORT_API=443                               
-NEXTAUTH_URL="https://kodus-web.yourdomain.com"
+NEXTAUTH_URL="https://codus-web.yourdomain.com"
 
 # セキュリティキー（上記のopensslコマンドで生成）
 WEB_NEXTAUTH_SECRET="your-generated-secret"
@@ -67,9 +67,9 @@ API_OPENAI_FORCE_BASE_URL="https://api.novita.ai/v3/openai"  # Novita API URL
 API_OPEN_AI_API_KEY="your-novita-api-key"                    # Your Novita API Key
 
 # Gitプロバイダーのウェブフック（プロバイダーを選択）
-API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webhook"
-# または API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/gitlab/webhook"
-# または GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/bitbucket/webhook"
+API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/github/webhook"
+# または API_GITLAB_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/gitlab/webhook"
+# または GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK="https://codus-api.yourdomain.com/bitbucket/webhook"
 ```
 
 <Note>
@@ -90,7 +90,7 @@ API_GITHUB_CODE_MANAGEMENT_WEBHOOK="https://kodus-api.yourdomain.com/github/webh
 # Webアプリ（ポート3000）
 server {
     listen 80;
-    server_name kodus-web.yourdomain.com;
+    server_name codus-web.yourdomain.com;
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -103,7 +103,7 @@ server {
 # API（ポート3001）  
 server {
     listen 80;
-    server_name kodus-api.yourdomain.com;
+    server_name codus-api.yourdomain.com;
     location ~ ^/(github|gitlab|bitbucket|azure-repos)/webhook {
         proxy_pass http://localhost:3332;
         proxy_set_header Host $host;
@@ -132,7 +132,7 @@ docker-compose logs api worker | grep -i novita
 ```
 
 <Tip>
-  SSLセットアップ、監視、高度な設定の詳細については、[完全なデプロイガイド](https://docs.kodus.io/how_to_deploy/ja/deploy_kodus/generic_vm) を参照してください。
+  SSLセットアップ、監視、高度な設定の詳細については、[完全なデプロイガイド](https://docs.kodus.io/how_to_deploy/ja/deploy_codus/generic_vm) を参照してください。
 </Tip>
 
 ### トラブルシューティング

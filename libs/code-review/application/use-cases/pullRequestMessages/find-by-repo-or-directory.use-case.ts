@@ -8,7 +8,7 @@ import {
 } from '@libs/code-review/domain/pullRequestMessages/contracts/pullRequestMessages.service.contract';
 import { PullRequestMessagesEntity } from '@libs/code-review/domain/pullRequestMessages/entities/pullRequestMessages.entity';
 import { deepDifference, deepMerge } from '@libs/common/utils/deep';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import {
     FormattedConfig,
     FormattedConfigLevel,
@@ -17,7 +17,7 @@ import {
 import { ConfigLevel } from '@libs/core/infrastructure/config/types/general/pullRequestMessages.type';
 
 type CustomMessagesConfig = ReturnType<
-    typeof getDefaultKodusConfigFile
+    typeof getDefaultCodusConfigFile
 >['customMessages'];
 
 export type FormattedCustomMessagesConfig =
@@ -51,7 +51,7 @@ export class FindByRepositoryOrDirectoryIdPullRequestMessagesUseCase {
             }
 
             const { customMessages: defaultConfig } =
-                getDefaultKodusConfigFile();
+                getDefaultCodusConfigFile();
 
             const globalEntity = await this.pullRequestMessagesService.findOne({
                 organizationId,

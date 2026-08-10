@@ -21,7 +21,7 @@ import { AstGraphIncrementalJobProcessor } from '@libs/code-review/workflow/ast-
 import { CliReviewJobProcessorService } from '@libs/cli-review/workflow/cli-review-job-processor.service';
 
 // App-level timeouts MUST be strictly less than the broker's consumer_timeout
-// (7200000ms / 2h in prod — see envs/aws/prod/rabbitmq-ec2.tfvars in kodus-infra).
+// (7200000ms / 2h in prod — see envs/aws/prod/rabbitmq-ec2.tfvars in codus-infra).
 // The margin lets the app run its cleanup chain (catch → update FAILED →
 // releaseLock → throw → errorHandler.republish → channel.ack) BEFORE the broker
 // kills the channel, which would otherwise leave the message unacked and only

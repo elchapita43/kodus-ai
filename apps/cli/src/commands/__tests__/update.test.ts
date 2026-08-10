@@ -9,7 +9,7 @@ describe('update command helpers', () => {
     it('uses npm by default', () => {
         expect(resolveGlobalInstallInstruction(undefined)).toEqual({
             command: 'npm',
-            args: ['install', '-g', '@kodus/cli@latest'],
+            args: ['install', '-g', '@codus/cli@latest'],
         });
     });
 
@@ -18,7 +18,7 @@ describe('update command helpers', () => {
             resolveGlobalInstallInstruction('pnpm/10.0.0 npm/? node/v22.0.0'),
         ).toEqual({
             command: 'pnpm',
-            args: ['add', '-g', '@kodus/cli@latest'],
+            args: ['add', '-g', '@codus/cli@latest'],
         });
     });
 
@@ -27,14 +27,14 @@ describe('update command helpers', () => {
             resolveGlobalInstallInstruction('yarn/1.22.22 npm/? node/v22.0.0'),
         ).toEqual({
             command: 'yarn',
-            args: ['global', 'add', '@kodus/cli@latest'],
+            args: ['global', 'add', '@codus/cli@latest'],
         });
     });
 
     it('uses bun when detected', () => {
         expect(resolveGlobalInstallInstruction('bun/1.2.0')).toEqual({
             command: 'bun',
-            args: ['add', '-g', '@kodus/cli@latest'],
+            args: ['add', '-g', '@codus/cli@latest'],
         });
     });
 
@@ -42,17 +42,17 @@ describe('update command helpers', () => {
         expect(
             formatInstallInstruction({
                 command: 'pnpm',
-                args: ['add', '-g', '@kodus/cli@latest'],
+                args: ['add', '-g', '@codus/cli@latest'],
             }),
-        ).toBe('pnpm add -g @kodus/cli@latest');
+        ).toBe('pnpm add -g @codus/cli@latest');
     });
 
     it('adds registry diagnostics when package lookup fails', () => {
         const hints = getUpdateFailureHints(
-            'Package `@kodus/cli` could not be found',
+            'Package `@codus/cli` could not be found',
             {
                 command: 'npm',
-                args: ['install', '-g', '@kodus/cli@latest'],
+                args: ['install', '-g', '@codus/cli@latest'],
             },
             'https://registry.internal.example',
         );
@@ -67,7 +67,7 @@ describe('update command helpers', () => {
             'spawn npm ENOENT',
             {
                 command: 'npm',
-                args: ['install', '-g', '@kodus/cli@latest'],
+                args: ['install', '-g', '@codus/cli@latest'],
             },
             undefined,
         );

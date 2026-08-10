@@ -1,7 +1,7 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 
-import { LLMModule } from '@kodus/kodus-common/llm';
+import { LLMModule } from '@codus/codus-common/llm';
 
 import { AnalyticsWarehouseModule } from '@libs/ee/analytics-warehouse';
 import { AutomationModule } from '@libs/automation/modules/automation.module';

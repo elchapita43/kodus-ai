@@ -40,7 +40,7 @@ const FIXTURE_BRANCHES: Record<
 //
 // Inputs:
 //   SH_LICENSE_KEY_PATH   file containing the seats=1 JWT to activate
-//                          (defaults to ~/.kodus-dev/license-seats1.jwt)
+//                          (defaults to ~/.codus-dev/license-seats1.jwt)
 //
 // We deliberately do NOT consume `SH_LICENSE_KEY` directly because we want
 // the dev to keep the key in a chmod-600 file, not in their shell env.
@@ -48,7 +48,7 @@ const FIXTURE_BRANCHES: Record<
 // Cross-provider: the scenario reads `userGitId` from
 // `provider.currentUserId()` and the gitTool string from
 // `provider.licenseGitTool()`. Each provider returns the exact id format
-// Kodus stores as `pullRequest.user.id` in the webhook handler:
+// Codus stores as `pullRequest.user.id` in the webhook handler:
 //   * github / gitlab: numeric id from /user (stringified)
 //   * bitbucket: uuid from /2.0/user with `{}` stripped (sanitizeUUID)
 //   * azure-devops: authenticatedUser.id GUID from connectionData
@@ -83,7 +83,7 @@ export const perSeatLicenseToggle: Scenario = {
 
         const jwtPath =
             process.env.SH_LICENSE_KEY_PATH ??
-            `${process.env.HOME}/.kodus-dev/license-seats1.jwt`;
+            `${process.env.HOME}/.codus-dev/license-seats1.jwt`;
         const licenseJwt = readFileSync(jwtPath, "utf-8")
             .replace(/\s+/g, "");
         ctx.assert(
@@ -91,10 +91,10 @@ export const perSeatLicenseToggle: Scenario = {
             `License JWT at ${jwtPath} does not look like a 3-part token`,
         );
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
 
         const authHeader = {
             Authorization: `Bearer ${session.accessToken}`,
@@ -117,7 +117,7 @@ export const perSeatLicenseToggle: Scenario = {
             `License activate returned valid=false: ${activate.raw.slice(0, 300)}`,
         );
 
-        // Resolve the PAT user's id in the exact format Kodus stores on the
+        // Resolve the PAT user's id in the exact format Codus stores on the
         // webhook payload (per-provider; see Provider.currentUserId comment).
         const userId = await ctx.provider.currentUserId();
         ctx.assert(
@@ -317,7 +317,7 @@ async function runReviewPhase(
             );
             // Adherence: "no review comment" alone is a weak negative — a lost
             // or mis-routed webhook produces the same silence. Require the
-            // POSITIVE block signal (Kody's 👎 from validate-prerequisites'
+            // POSITIVE block signal (Cody's 👎 from validate-prerequisites'
             // USER_NOT_LICENSED path) so the assertion proves the seat gate
             // actually fired. By now we've already polled the full review
             // budget with no review, so the 👎 (posted within seconds of the

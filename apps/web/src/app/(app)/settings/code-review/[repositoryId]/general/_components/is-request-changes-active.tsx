@@ -40,7 +40,7 @@ export const IsRequestChangesActive = () => {
                                 </div>
 
                                 <p className="text-text-secondary text-sm">
-                                    When Kody completes an automated code review
+                                    When Cody completes an automated code review
                                     and finds critical issues, it will
                                     automatically change the status of it's Pull
                                     Request Review to 'Request Changes'.

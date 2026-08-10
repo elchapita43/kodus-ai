@@ -18,7 +18,7 @@ describe('GetCodeReviewParameterUseCase', () => {
         };
 
         mockCodeBaseConfigService = {
-            getKodusConfigFile: jest.fn(),
+            getCodusConfigFile: jest.fn(),
         };
 
         mockAuthorizationService = {
@@ -87,7 +87,7 @@ describe('GetCodeReviewParameterUseCase', () => {
             }),
         });
 
-        mockCodeBaseConfigService.getKodusConfigFile.mockImplementation(
+        mockCodeBaseConfigService.getCodusConfigFile.mockImplementation(
             async ({ directoryPath }: { directoryPath?: string }) => {
                 if (directoryPath === 'broken/path') {
                     throw new Error('directory config failed');

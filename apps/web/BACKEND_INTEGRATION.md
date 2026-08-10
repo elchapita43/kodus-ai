@@ -19,11 +19,11 @@ import { convertTiptapJSONToText } from "./utils/tiptap-json-to-text";
 
 // Quando receber o prompt do banco de dados (vem como JSON string):
 const promptFromDB =
-    '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Analyze "},{"type":"mcpMention","attrs":{"app":"kodus","tool":"kodus_list_commits"}},{"type":"text","text":" for bugs"}]}]}';
+    '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Analyze "},{"type":"mcpMention","attrs":{"app":"codus","tool":"codus_list_commits"}},{"type":"text","text":" for bugs"}]}]}';
 
 // Converter para texto antes de enviar ao LLM:
 const promptText = convertTiptapJSONToText(promptFromDB);
-// Resultado: "Analyze @mcp<kodus|kodus_list_commits> for bugs"
+// Resultado: "Analyze @mcp<codus|codus_list_commits> for bugs"
 
 // Agora pode enviar promptText para o LLM
 sendToLLM(promptText);
@@ -83,7 +83,7 @@ Os tokens são preservados no formato:
 
 Exemplo:
 
-- `@mcp<kodus|kodus_list_commits>`
+- `@mcp<codus|codus_list_commits>`
 - `@mcp<jira|search_issues>`
 
 ## Implementação Backend (JavaScript/TypeScript puro)

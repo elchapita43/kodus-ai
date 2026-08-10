@@ -8,7 +8,7 @@ import {
 } from '../interfaces/checks-adapter.interface';
 import { ChecksAdapterFactory } from './checks-adapter.factory';
 import {
-    KODY_CHECK_RUN_NAME,
+    CODY_CHECK_RUN_NAME,
     PipelineChecksService,
     checkStageMap,
 } from './pipeline-checks.service';
@@ -86,7 +86,7 @@ describe('PipelineChecksService', () => {
                 repository: { owner: 'owner', name: 'repo' },
                 headSha: 'test-sha',
                 status: CheckStatus.IN_PROGRESS,
-                name: KODY_CHECK_RUN_NAME,
+                name: CODY_CHECK_RUN_NAME,
                 output: {
                     title: checkStageMap[stageName].title,
                     summary: checkStageMap[stageName].summary,
@@ -110,7 +110,7 @@ describe('PipelineChecksService', () => {
                 organizationAndTeamData: mockContext.organizationAndTeamData,
                 repository: { owner: 'owner', name: 'repo' },
                 headSha: 'test-sha',
-                name: KODY_CHECK_RUN_NAME,
+                name: CODY_CHECK_RUN_NAME,
             });
             expect(checksAdapter.updateCheckRun).toHaveBeenCalledWith({
                 checkRunId: 'existing-check-id',

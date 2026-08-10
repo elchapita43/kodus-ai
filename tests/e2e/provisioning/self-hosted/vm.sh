@@ -2,13 +2,13 @@
 # Self-hosted E2E provisioning + matrix runner.
 #
 # Provisions an ephemeral cloud VM (DigitalOcean by default, Hetzner with
-# TEST_VM_PROVIDER=hetzner), installs the Kodus stack from kodus-installer at
+# TEST_VM_PROVIDER=hetzner), installs the Codus stack from codus-installer at
 # the requested image tag, sets the license key, signs up a test user, exposes
 # webhooks via a Cloudflare quick tunnel, then exec's the matrix runner.
 #
 # Required env (or tests/e2e/.env in this repo):
 #   IMAGE_TAG              Tag to test (e.g. selfhosted-1.42.0-rc.1)
-#   KODUS_INSTALLER_PATH   Path to a local checkout of kodus-installer
+#   CODUS_INSTALLER_PATH   Path to a local checkout of codus-installer
 #   DIGITALOCEAN_TOKEN     DO API token (default provider)
 #       OR
 #   TEST_VM_PROVIDER=hetzner + HCLOUD_TOKEN
@@ -209,14 +209,14 @@ ssh_vm() {
 # ---------- preflight ----------
 log "Preflight (provider VM: $TEST_VM_PROVIDER, image: $IMAGE_TAG, matrix: $MATRIX_FILE)"
 for c in curl jq ssh rsync openssl node; do require_cmd "$c"; done
-require_env KODUS_INSTALLER_PATH
+require_env CODUS_INSTALLER_PATH
 case "$TEST_VM_PROVIDER" in
     digitalocean) require_env DIGITALOCEAN_TOKEN ;;
     hetzner)      require_env HCLOUD_TOKEN ;;
 esac
 
-if [ ! -d "$KODUS_INSTALLER_PATH" ]; then
-    err "KODUS_INSTALLER_PATH=$KODUS_INSTALLER_PATH does not exist"
+if [ ! -d "$CODUS_INSTALLER_PATH" ]; then
+    err "CODUS_INSTALLER_PATH=$CODUS_INSTALLER_PATH does not exist"
     exit 1
 fi
 
@@ -233,19 +233,19 @@ case "$LICENSE_MODE" in
         ;;
 esac
 
-TEST_USER_EMAIL="${TEST_USER_EMAIL:-kodus-qa-$(date +%s)@kodusqa.io}"
+TEST_USER_EMAIL="${TEST_USER_EMAIL:-codus-qa-$(date +%s)@codusqa.io}"
 TEST_USER_PASSWORD="${TEST_USER_PASSWORD:-$(openssl rand -base64 18 | tr -d '=+/' | head -c 24)Aa1!}"
 RUN_ID="$(date +%Y%m%d-%H%M%S)-$RANDOM"
 
 # ---------- ssh key ----------
 log "Generating temporary SSH key..."
-LOCAL_SSH_KEY="$(mktemp -t kodus-e2e-key-XXXXXX)"
+LOCAL_SSH_KEY="$(mktemp -t codus-e2e-key-XXXXXX)"
 rm -f "$LOCAL_SSH_KEY"
-ssh-keygen -t ed25519 -N "" -C "kodus-e2e-$RUN_ID" -f "$LOCAL_SSH_KEY" >/dev/null
+ssh-keygen -t ed25519 -N "" -C "codus-e2e-$RUN_ID" -f "$LOCAL_SSH_KEY" >/dev/null
 PUBKEY="$(cat "${LOCAL_SSH_KEY}.pub")"
 
 log "Uploading SSH key to $TEST_VM_PROVIDER..."
-provision_ssh_key "kodus-e2e-$RUN_ID" "$PUBKEY"
+provision_ssh_key "codus-e2e-$RUN_ID" "$PUBKEY"
 
 # ---------- provision ----------
 log "Creating server..."
@@ -263,11 +263,11 @@ runcmd:
   - systemctl enable --now docker
   - curl -fsSL -o /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
   - chmod +x /usr/local/bin/cloudflared
-  - touch /var/lib/cloud/instance/kodus-ready
+  - touch /var/lib/cloud/instance/codus-ready
 CLOUDINIT
 )
 
-provision_server "kodus-e2e-$RUN_ID" "$USER_DATA"
+provision_server "codus-e2e-$RUN_ID" "$USER_DATA"
 ok "Server $SERVER_ID at $SERVER_IP"
 
 # ---------- wait for SSH + cloud-init ----------
@@ -280,24 +280,24 @@ done
 
 log "Waiting for cloud-init to finish..."
 ssh_vm "cloud-init status --wait" >/dev/null
-ssh_vm "test -f /var/lib/cloud/instance/kodus-ready" || { err "cloud-init failed"; exit 1; }
+ssh_vm "test -f /var/lib/cloud/instance/codus-ready" || { err "cloud-init failed"; exit 1; }
 
-# ---------- transfer kodus-installer ----------
-log "Transferring kodus-installer from $KODUS_INSTALLER_PATH to VM..."
-ssh_vm "mkdir -p /opt/kodus-installer"
+# ---------- transfer codus-installer ----------
+log "Transferring codus-installer from $CODUS_INSTALLER_PATH to VM..."
+ssh_vm "mkdir -p /opt/codus-installer"
 rsync -az --delete \
     -e "ssh -i $LOCAL_SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR" \
     --exclude='.git/' --exclude='node_modules/' --exclude='.env' \
     --exclude='tests/e2e/.env' --exclude='.env.e2e-backup.*' \
-    "$KODUS_INSTALLER_PATH/" "root@$SERVER_IP:/opt/kodus-installer/"
-ssh_vm "chmod +x /opt/kodus-installer/scripts/*.sh"
+    "$CODUS_INSTALLER_PATH/" "root@$SERVER_IP:/opt/codus-installer/"
+ssh_vm "chmod +x /opt/codus-installer/scripts/*.sh"
 ok "Installer transferred"
 
 # ---------- start cloudflared tunnel ----------
 log "Starting cloudflared quick tunnel for :3332..."
-ssh_vm "cat >/etc/systemd/system/kodus-tunnel.service <<'UNIT'
+ssh_vm "cat >/etc/systemd/system/codus-tunnel.service <<'UNIT'
 [Unit]
-Description=cloudflared quick tunnel for Kodus webhooks
+Description=cloudflared quick tunnel for Codus webhooks
 After=network-online.target
 [Service]
 ExecStart=/usr/local/bin/cloudflared tunnel --url http://localhost:3332 --no-autoupdate --logfile /var/log/cloudflared.log
@@ -306,7 +306,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 UNIT
 systemctl daemon-reload
-systemctl enable --now kodus-tunnel.service"
+systemctl enable --now codus-tunnel.service"
 
 log "Waiting for tunnel URL..."
 for i in $(seq 1 30); do
@@ -319,11 +319,11 @@ ok "Tunnel: $SERVER_TUNNEL_URL"
 
 # ---------- write .env on VM ----------
 log "Writing .env on VM..."
-ssh_vm "cd /opt/kodus-installer && cp .env.example .env && ./scripts/generate-secrets.sh" >/dev/null
+ssh_vm "cd /opt/codus-installer && cp .env.example .env && ./scripts/generate-secrets.sh" >/dev/null
 
 ssh_vm bash -s <<REMOTE
 set -e
-cd /opt/kodus-installer
+cd /opt/codus-installer
 env_set() {
     local k=\$1 v=\$2
     if grep -qE "^\${k}=" .env; then
@@ -339,8 +339,8 @@ env_set API_LOG_LEVEL "info"
 # Point the web's server-side API calls (next-auth authorize → /auth/login,
 # used by rbac-frontend-routes / rbac-ui-render) at the compose SERVICE name
 # `api`, which Docker DNS always resolves on the shared network regardless of
-# container_name. The old literal `kodus-api` matched neither the service
-# (`api`) nor the actual container (`kodus_api` once GLOBAL_API_CONTAINER_NAME
+# container_name. The old literal `codus-api` matched neither the service
+# (`api`) nor the actual container (`codus_api` once GLOBAL_API_CONTAINER_NAME
 # is set), so authorize() got ENOTFOUND → returned null → the next-auth login
 # 302'd with no session → both RBAC web scenarios failed on self-hosted only
 # (cloud passes: it reaches the API over the public URL, not a docker host).
@@ -361,7 +361,7 @@ env_set GLOBAL_AZURE_REPOS_CODE_MANAGEMENT_WEBHOOK "$SERVER_TUNNEL_URL/azure-rep
 # Bitbucket Cloud rate-limits per-endpoint at ~16-60 req/min. The prod
 # default (400ms ≈ 150/min) and even 800ms (≈75/min) sit ABOVE that ceiling,
 # so under the e2e load — 6 scenarios each re-onboarding (~72 calls to
-# generate kody rules) + the runner's own calls, all on ONE shared test
+# generate cody rules) + the runner's own calls, all on ONE shared test
 # account — the worker's Bitbucket calls (getDefaultBranch, getLanguage-
 # Repository, …) start returning 429 "Rate limit exceeded", which surfaces
 # as NO_REPOSITORIES / 400 on the next scenario. Confirmed in worker logs
@@ -391,7 +391,7 @@ env_set ANALYTICS_CLASSIFIER_DISABLED "true"
 # The notifications module hard-requires this (ConfigService.getOrThrow).
 # Set a dummy so the app boots — emails won't actually send.
 env_set RESEND_API_KEY "${RESEND_API_KEY:-disabled-for-dev}"
-# LLM provider config — required for Kodus to actually review PRs in the
+# LLM provider config — required for Codus to actually review PRs in the
 # matrix. Caller must provide these via env (no hardcoded fallback).
 if [ -n "${API_OPEN_AI_API_KEY:-}" ]; then
     env_set API_OPEN_AI_API_KEY "${API_OPEN_AI_API_KEY:-}"
@@ -406,14 +406,14 @@ REMOTE
 
 if [ -n "$LICENSE_KEY_TO_INJECT" ]; then
     log "Injecting license key (mode=$LICENSE_MODE)..."
-    ssh_vm "cd /opt/kodus-installer && grep -qE '^API_KODUS_LICENSE_KEY=' .env \
-            && sed -i 's|^API_KODUS_LICENSE_KEY=.*|API_KODUS_LICENSE_KEY=$LICENSE_KEY_TO_INJECT|' .env \
-            || echo 'API_KODUS_LICENSE_KEY=$LICENSE_KEY_TO_INJECT' >> .env"
+    ssh_vm "cd /opt/codus-installer && grep -qE '^API_CODUS_LICENSE_KEY=' .env \
+            && sed -i 's|^API_CODUS_LICENSE_KEY=.*|API_CODUS_LICENSE_KEY=$LICENSE_KEY_TO_INJECT|' .env \
+            || echo 'API_CODUS_LICENSE_KEY=$LICENSE_KEY_TO_INJECT' >> .env"
 fi
 
 # ---------- boot ----------
 log "Booting stack..."
-ssh_vm "cd /opt/kodus-installer && ./scripts/install.sh"
+ssh_vm "cd /opt/codus-installer && ./scripts/install.sh"
 
 log "Waiting for services to respond..."
 HEALTH_FAILED=()
@@ -430,28 +430,28 @@ done
 
 if [ ${#HEALTH_FAILED[@]} -gt 0 ]; then
     err "Health check failed for: ${HEALTH_FAILED[*]}"
-    ssh_vm "cd /opt/kodus-installer && docker compose logs api kodus-web worker webhooks --tail 80 --no-color" || true
+    ssh_vm "cd /opt/codus-installer && docker compose logs api codus-web worker webhooks --tail 80 --no-color" || true
     exit 1
 fi
 
 # ---------- signup ----------
 log "Creating test user via /auth/signUp..."
 SIGNUP_PAYLOAD=$(jq -nc \
-    --arg name "Kodus E2E" \
+    --arg name "Codus E2E" \
     --arg email "$TEST_USER_EMAIL" \
     --arg pass "$TEST_USER_PASSWORD" \
     '{name:$name, email:$email, password:$pass}')
 SIGNUP_CODE=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
     -d "$SIGNUP_PAYLOAD" \
-    -o /tmp/kodus-signup.json -w "%{http_code}" \
+    -o /tmp/codus-signup.json -w "%{http_code}" \
     "http://$SERVER_IP:3001/auth/signUp" 2>&1 || echo "ERR")
 if [[ ! "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]]; then
     SIGNUP_CODE=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
         -d "$SIGNUP_PAYLOAD" \
-        -o /tmp/kodus-signup.json -w "%{http_code}" \
+        -o /tmp/codus-signup.json -w "%{http_code}" \
         "http://$SERVER_IP:3001/auth/signup" 2>&1 || echo "ERR")
 fi
-[[ "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]] || { err "Signup failed: HTTP $SIGNUP_CODE  body=$(cat /tmp/kodus-signup.json 2>/dev/null | head -c 400)"; exit 1; }
+[[ "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]] || { err "Signup failed: HTTP $SIGNUP_CODE  body=$(cat /tmp/codus-signup.json 2>/dev/null | head -c 400)"; exit 1; }
 ok "Signed up $TEST_USER_EMAIL"
 
 # ---------- exec matrix runner ----------
@@ -475,7 +475,7 @@ export TEST_TIMEOUT_REVIEW
 
 # --skip-missing-tokens: drop (not fail) scenarios whose prerequisites are
 # absent. In CI the per-seat-license-toggle scenario needs a seats=1 license
-# JWT at ~/.kodus-dev/license-seats1.jwt that only exists on a dev laptop —
+# JWT at ~/.codus-dev/license-seats1.jwt that only exists on a dev laptop —
 # without the flag it crashes with ENOENT and reds the whole cell. The
 # matrix YAML already documents this scenario as "skipped automatically when
 # SH_LICENSE_KEY_PATH isn't available"; the flag is what makes that true.
@@ -492,11 +492,11 @@ set -e
 
 # Dump the API + review-worker logs from the droplet into evidence/. The SSH
 # key is ephemeral (discarded with the runner), so this is the only chance to
-# see WHY a scenario failed on the server side — e.g. whether the kody-rules
+# see WHY a scenario failed on the server side — e.g. whether the cody-rules
 # agent actually received the rule. Best-effort: never fail the run on this.
 PROV="${TARGET_FILTER_PROVIDER:-unknown}"
 mkdir -p "$E2E_ROOT/evidence"
-ssh_vm "cd /opt/kodus-installer && docker compose logs api kodus-web worker webhooks --tail 2000 --no-color" \
+ssh_vm "cd /opt/codus-installer && docker compose logs api codus-web worker webhooks --tail 2000 --no-color" \
     > "$E2E_ROOT/evidence/droplet-logs-${PROV}.txt" 2>&1 \
     && ok "Captured droplet logs → evidence/droplet-logs-${PROV}.txt" \
     || warn "Could not capture droplet logs"

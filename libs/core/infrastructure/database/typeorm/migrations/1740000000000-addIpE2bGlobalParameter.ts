@@ -16,7 +16,7 @@ export class AddIpE2bGlobalParameter1740000000000 implements MigrationInterface 
                         RENAME TO "global_parameters_configkey_enum_old";
 
                         CREATE TYPE "public"."global_parameters_configkey_enum" AS ENUM(
-                            'kody_fine_tuning_config',
+                            'cody_fine_tuning_config',
                             'code_review_max_files',
                             'ignore_paths_global',
                             'ip_e2b'
@@ -43,7 +43,7 @@ export class AddIpE2bGlobalParameter1740000000000 implements MigrationInterface 
                         AND enumtypid = (SELECT oid FROM pg_type WHERE typname = 'global_parameters_configkey_enum')
                     ) THEN
                         CREATE TYPE "public"."global_parameters_configkey_enum_old" AS ENUM(
-                            'kody_fine_tuning_config',
+                            'cody_fine_tuning_config',
                             'code_review_max_files',
                             'ignore_paths_global'
                         );

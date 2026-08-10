@@ -6,7 +6,7 @@
  * collaborators don't have to import their vocabulary from the God class they
  * were extracted from (no type cycle).
  *
- * These are code-review domain shapes (changedFiles, kodyRules, remoteCommands,
+ * These are code-review domain shapes (changedFiles, codyRules, remoteCommands,
  * coverage…), NOT harness primitives — the harness must never depend on them.
  *
  * `ReviewAgentInput` is composed from cohesive sub-interfaces (ISP): each
@@ -20,10 +20,10 @@ import {
     FileChange,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { RemoteCommands } from '@libs/code-review/infrastructure/adapters/services/collectCrossFileContexts.service';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 import type { LanguageModel } from 'ai';
-import { BYOKProvider, BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKProvider, BYOKConfig } from '@codus/codus-common/llm';
 import type { LangfuseTelemetryMetadata } from '@libs/core/log/langfuse';
 import type { ReasoningEffort } from '@libs/llm/reasoning-options';
 
@@ -126,7 +126,7 @@ export interface ToolingContext {
     gitHubToken?: string;
     /** Pre-computed call graph for changed functions. Generated once, shared across agents. */
     callGraph?: string;
-    /** Structured AST graph JSON (nodes + edges) produced by kodus-graph.
+    /** Structured AST graph JSON (nodes + edges) produced by codus-graph.
      *  Used by the priority scorer to measure in-PR file centrality when
      *  tiered coverage is active. Safe to omit — the scorer falls back to
      *  a neutral structural weight of 1.0 when missing. */
@@ -142,7 +142,7 @@ export interface ToolingContext {
 /** Review behavior + rules the agent applies. */
 export interface ReviewRuleConfig {
     languageResultPrompt: string;
-    memoryRules?: Partial<IKodyRule>[];
+    memoryRules?: Partial<ICodyRule>[];
     /**
      * Learnings activos del repositorio (memoria por proyecto): convenciones,
      * decisiones y preferencias que el equipo validó (feedback humano o
@@ -150,8 +150,8 @@ export interface ReviewRuleConfig {
      * review respete lo aprendido. (Feature Learnings 2026-08.)
      */
     learnings?: string[];
-    /** Kody rules passed through so findings tagged with ruleUuid can be cross-referenced. */
-    kodyRules?: Partial<IKodyRule>[];
+    /** Cody rules passed through so findings tagged with ruleUuid can be cross-referenced. */
+    codyRules?: Partial<ICodyRule>[];
     v2PromptOverrides?: CodeReviewConfig['v2PromptOverrides'];
     generationMain?: string;
     /** Categories allowed for this run when using a mixed/generalist reviewer. */
@@ -202,13 +202,13 @@ export interface FitConfig {
      *  self-contained CLI flow). */
     skipHeavyPasses?: boolean;
     /** HEAVY mode — run an EXTRA critic pass in the finder for more recall
-     *  (opt-in per review via CLI `--heavy` or PR `@kody review --heavy`). */
+     *  (opt-in per review via CLI `--heavy` or PR `@cody review --heavy`). */
     heavy?: boolean;
     /** When true, run recovery + second-chance but skip ONLY the
      *  synthesis-rescue pass. The rescue pass re-words the same finding
      *  with different language, which is fine for open-ended bug review
      *  but produces duplicate comments for explicit-rule agents like
-     *  kody-rules. */
+     *  cody-rules. */
     skipSynthesisRescue?: boolean;
 }
 
@@ -260,7 +260,7 @@ export interface ReviewAgentInput
     commits?: Array<{ sha: string; message: string }>;
     /**
      * Optional per-review steering directive supplied by the user at trigger
-     * time (e.g. `@kody review focus on the auth logic`). Free text. When set,
+     * time (e.g. `@cody review focus on the auth logic`). Free text. When set,
      * it renders as a high-priority `<ReviewFocus>` block at the top of the user
      * prompt so the finder concentrates depth on the named area WITHOUT
      * suppressing concrete issues found elsewhere. (PR #1417.)
@@ -312,7 +312,7 @@ export interface AgentLoopInput {
     model: LanguageModel;
     systemPrompt: string;
     userPrompt: string;
-    agentName?: string; // e.g. 'kodus-bug-review-agent' — used as Langfuse observation name
+    agentName?: string; // e.g. 'codus-bug-review-agent' — used as Langfuse observation name
     telemetryMetadata?: LangfuseTelemetryMetadata;
     maxSteps?: number;
     onStepFinish?: (event: any) => void;
@@ -335,7 +335,7 @@ export interface AgentLoopInput {
     /** When true, skip recovery/rescue/second-chance passes. Used by rule-checking agents that don't benefit from open-ended exploration. */
     skipHeavyPasses?: boolean;
     /** HEAVY mode — run an EXTRA critic pass in the finder for more recall
-     *  (opt-in per review via CLI `--heavy` or PR `@kody review --heavy`). */
+     *  (opt-in per review via CLI `--heavy` or PR `@cody review --heavy`). */
     heavy?: boolean;
     /** Gated A/B knob (default off): wrap readFile so a range-less read of a
      *  large file returns a symbol outline + expand hint instead of dumping the

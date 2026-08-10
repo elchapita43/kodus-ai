@@ -1,9 +1,9 @@
 ---
-title: "Kodus CLI"
+title: "Codus CLI"
 description: "Revisão de código com IA, validação de negócio e fluxos de trabalho com agentes — direto do seu terminal."
 ---
 
-O Kodus CLI revisa suas alterações de código diretamente do terminal — detectando bugs, problemas de segurança e violações de estilo antes que cheguem a um pull request. É o mesmo mecanismo do Kodus que funciona nos seus PRs, mas apontado para sua árvore de trabalho, diff staged, branch ou commit.
+O Codus CLI revisa suas alterações de código diretamente do terminal — detectando bugs, problemas de segurança e violações de estilo antes que cheguem a um pull request. É o mesmo mecanismo do Codus que funciona nos seus PRs, mas apontado para sua árvore de trabalho, diff staged, branch ou commit.
 
 ## Para quem é
 
@@ -14,9 +14,9 @@ O Kodus CLI revisa suas alterações de código diretamente do terminal — dete
 
 ## Como parece
 
-Executar `kodus review` em uma alteração da árvore de trabalho produz um relatório estruturado: arquivos afetados, problemas agrupados por severidade, correções sugeridas que você pode visualizar e aplicar, e um código de saída seguro para scripts.
+Executar `codus review` em uma alteração da árvore de trabalho produz um relatório estruturado: arquivos afetados, problemas agrupados por severidade, correções sugeridas que você pode visualizar e aplicar, e um código de saída seguro para scripts.
 
-<img src="/images/kodus_cli_review.jpg" alt="AI code review in your CLI"/>
+<img src="/images/codus_cli_review.jpg" alt="AI code review in your CLI"/>
 
 No modo `--prompt-only`, a mesma revisão se torna texto compacto e estruturado otimizado para um agente de IA analisar e agir.
 
@@ -33,15 +33,15 @@ No modo `--prompt-only`, a mesma revisão se torna texto compacto e estruturado 
     Alimente a saída de `--prompt-only` no Claude Code, Cursor ou Windsurf para loops autônomos de revisão e correção.
   </Card>
   <Card title="Hook Pre-Push" icon="shield-check">
-    Bloqueie pushes em problemas acima de um limite de severidade com `kodus hook install`.
+    Bloqueie pushes em problemas acima de um limite de severidade com `codus hook install`.
   </Card>
   <Card title="Sugestões de PR" icon="code-pull-request">
-    Busque as sugestões do Kody em um pull request aberto sem sair do terminal.
+    Busque as sugestões do Cody em um pull request aberto sem sair do terminal.
   </Card>
   <Card title="Validação de Negócio" icon="clipboard-check">
     Valide que um diff local satisfaz os critérios de aceitação de uma tarefa antes de fazer merge.
   </Card>
-  <Card title="Kody Rules" icon="scale-balanced">
+  <Card title="Cody Rules" icon="scale-balanced">
     Crie, atualize e revise regras de equipe que a IA aplica durante cada revisão.
   </Card>
 </CardGroup>
@@ -56,13 +56,13 @@ No modo `--prompt-only`, a mesma revisão se torna texto compacto e estruturado 
 | Tamanho máximo de diff por arquivo | 500 KB   | 500 KB                   |
 | Conteúdo máximo por arquivo | 2 MB            | 2 MB                     |
 
-Os limites de trial são redefinidos diariamente. Execute `kodus auth status` para verificar seu uso atual.
+Os limites de trial são redefinidos diariamente. Execute `codus auth status` para verificar seu uso atual.
 
-## CLI vs Kodus Web
+## CLI vs Codus Web
 
-O CLI e o painel web do Kodus compartilham o mesmo mecanismo de revisão, regras e configurações de repositório. Use o CLI quando quiser revisões **antes de o PR existir** — em uma branch local, um diff staged ou dentro de um loop de agente. Use o painel web para revisões de PR, métricas e configuração em nível de equipe.
+O CLI e o painel web do Codus compartilham o mesmo mecanismo de revisão, regras e configurações de repositório. Use o CLI quando quiser revisões **antes de o PR existir** — em uma branch local, um diff staged ou dentro de um loop de agente. Use o painel web para revisões de PR, métricas e configuração em nível de equipe.
 
-As alterações feitas via `kodus config repo` e `kodus rules` se aplicam a ambas as superfícies.
+As alterações feitas via `codus config repo` e `codus rules` se aplicam a ambas as superfícies.
 
 ## Próximos Passos
 
@@ -77,7 +77,7 @@ As alterações feitas via `kodus config repo` e `kodus rules` se aplicam a amba
     Configure loops autônomos de revisão e correção com agentes de programação.
   </Card>
   <Card title="Self-Hosted" icon="server" href="self_hosted">
-    Conecte o CLI à sua própria instância do Kodus.
+    Conecte o CLI à sua própria instância do Codus.
   </Card>
   <Card title="Solução de Problemas" icon="life-ring" href="troubleshooting">
     Erros comuns, códigos de saída e como depurar.

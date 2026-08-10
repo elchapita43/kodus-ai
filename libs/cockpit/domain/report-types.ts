@@ -15,7 +15,7 @@ export interface WeeklyImplementedPoint {
 }
 
 /**
- * Review quality for one origin group (rule-driven vs Kodus-native). The
+ * Review quality for one origin group (rule-driven vs Codus-native). The
  * report leads with `implementationRate` (robust, large base) and treats
  * thumbs as a secondary "are people liking it?" signal.
  */
@@ -37,7 +37,7 @@ export interface FeedbackGroup {
 export interface RuleGroupFeedback {
     totalVotes: number;
     hasEnoughVotes: boolean;
-    kodyRules: FeedbackGroup;
+    codyRules: FeedbackGroup;
     general: FeedbackGroup;
 }
 
@@ -50,7 +50,7 @@ export interface CategoryQualityRow {
     thumbsDown: number;
 }
 
-/** Health state for a Kody Rule — same taxonomy as the cockpit rules table. */
+/** Health state for a Cody Rule — same taxonomy as the cockpit rules table. */
 export type RuleHealthState =
     | 'healthy'
     | 'noisy'
@@ -58,7 +58,7 @@ export type RuleHealthState =
     | 'low_data'
     | 'stale';
 
-/** One Kody Rule's health in the period (rules that actually triggered). */
+/** One Cody Rule's health in the period (rules that actually triggered). */
 export interface RuleHealthRow {
     ruleId: string;
     title: string;
@@ -88,7 +88,7 @@ export interface RepoReportSection {
     feedback: RuleGroupFeedback;
     /** Implementation + 👍/👎 broken out per suggestion category. */
     categories: CategoryQualityRow[];
-    /** Kody Rules that triggered in this repo this period, worst-health first. */
+    /** Cody Rules that triggered in this repo this period, worst-health first. */
     rules: RuleHealthRow[];
     /** Attention-worthy rules beyond the shown cap (for a "+N more" hint). */
     rulesMore: number;
@@ -143,7 +143,7 @@ export interface OrgReportData {
     implementationRateEvolution: MonthlyRatePoint[];
     repoRanking: RepoRankingRow[];
     highlights: ReportHighlight[];
-    /** Org-wide Kody Rules worth a look (noisy / ignored), worst first. */
+    /** Org-wide Cody Rules worth a look (noisy / ignored), worst first. */
     rulesNeedingAttention: RuleHealthRow[];
     /** Attention-worthy rules beyond the shown cap (for a "+N more" hint). */
     rulesNeedingAttentionMore: number;

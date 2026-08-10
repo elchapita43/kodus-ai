@@ -4,7 +4,7 @@ import type { ProviderName } from "./types.js";
 // (not cli/cloud/setup-tenants.ts) because TWO consumers must agree on it:
 //
 //   1. cli/cloud/setup-tenants.ts seeds the tenants and persists creds to
-//      ~/.kodus-dev/cloud-tenants.json (mirrored into the CLOUD_TENANTS_JSON
+//      ~/.codus-dev/cloud-tenants.json (mirrored into the CLOUD_TENANTS_JSON
 //      secret for CI).
 //   2. lib/runner.ts resolves the per-cell tenant from that file — and falls
 //      back to THIS registry for `repoFullName` when the file entry lacks it.
@@ -13,7 +13,7 @@ import type { ProviderName } from "./types.js";
 // gained `environment: QA`, whose stale environment-scoped copy of
 // CLOUD_TENANTS_JSON (sealed 05-30, before the 1-repo-per-tenant fix in
 // #1237) silently shadowed the fresh repo-level secret. Every GitHub tenant
-// fell back to the shared kodus-e2e/tiny-url-cloud repo and the webhook
+// fell back to the shared codus-e2e/tiny-url-cloud repo and the webhook
 // fan-out collision came right back ("review never started" flakes). With
 // the repo mapping ALSO in code, a stale secret can no longer reintroduce
 // the collision — the secret only carries credentials/org ids.
@@ -33,11 +33,11 @@ export interface TenantSpec {
 }
 
 // Tenant registry. Names can only contain letters / spaces / hyphens /
-// apostrophes (Kodus validates `^[A-Za-z\s\-']+$` server-side), so no
+// apostrophes (Codus validates `^[A-Za-z\s\-']+$` server-side), so no
 // digits in the visible name.
 //
 // GitHub PAT tenants get ONE REPO EACH (1 org : 1 repo). License tier is
-// per-org on cloud (Stripe-driven), so every tier is a distinct Kodus
+// per-org on cloud (Stripe-driven), so every tier is a distinct Codus
 // org. The PAT webhook is a bare `/github/webhook` with no per-org
 // discriminator, and the backend resolves repo→org by picking the first
 // IntegrationConfig ordered by updatedAt DESC (webhook-context.service
@@ -56,42 +56,42 @@ export const CLOUD_TENANTS: TenantSpec[] = [
         name: "Smoke Paid GitHub",
         license: "paid",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-paid",
+        repoFullName: "codus-e2e/tiny-url-cloud-paid",
     },
     {
         email: "e2e-free-gh@kodus.io",
         name: "Smoke Free GitHub",
         license: "free",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-free",
+        repoFullName: "codus-e2e/tiny-url-cloud-free",
     },
     {
         email: "e2e-trial-gh@kodus.io",
         name: "Smoke Trial GitHub",
         license: "trial",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-trial",
+        repoFullName: "codus-e2e/tiny-url-cloud-trial",
     },
     {
         email: "e2e-paid-gl@kodus.io",
         name: "Smoke Paid GitLab",
         license: "paid",
         provider: "gitlab",
-        repoFullName: "kodus-e2e/tiny-url",
+        repoFullName: "codus-e2e/tiny-url",
     },
     {
         email: "e2e-paid-bb@kodus.io",
         name: "Smoke Paid Bitbucket",
         license: "paid",
         provider: "bitbucket",
-        repoFullName: "kodustech/tiny-url",
+        repoFullName: "elchapita43/tiny-url",
     },
     {
         email: "e2e-paid-az@kodus.io",
         name: "Smoke Paid Azure",
         license: "paid",
         provider: "azure-devops",
-        repoFullName: "kodustech/kodus-e2e/tiny-url",
+        repoFullName: "elchapita43/codus-e2e/tiny-url",
     },
     {
         // Community tenant: NO billing subscription, but with BYOK
@@ -101,7 +101,7 @@ export const CLOUD_TENANTS: TenantSpec[] = [
         name: "Smoke Community BYOK GitHub",
         license: "community-byok",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-community",
+        repoFullName: "codus-e2e/tiny-url-cloud-community",
     },
     {
         // Stripe billing scenario — sub-flow #1 (free → paid via
@@ -116,7 +116,7 @@ export const CLOUD_TENANTS: TenantSpec[] = [
         name: "Stripe Checkout Free GitHub",
         license: "free",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-stripe-free",
+        repoFullName: "codus-e2e/tiny-url-cloud-stripe-free",
     },
     {
         // Stripe billing scenario — sub-flow #2 (trial → paid via
@@ -128,16 +128,16 @@ export const CLOUD_TENANTS: TenantSpec[] = [
         name: "Stripe Checkout Trial GitHub",
         license: "trial",
         provider: "github",
-        repoFullName: "kodus-e2e/tiny-url-cloud-stripe-trial",
+        repoFullName: "codus-e2e/tiny-url-cloud-stripe-trial",
     },
     {
         // GitHub App (OAuth installation) variant. Needs a DEDICATED
         // tenant — sharing one with the PAT cells would have the App
-        // and the PAT both registered against the same Kodus
+        // and the PAT both registered against the same Codus
         // organization, which makes the auth-integration upsert
         // overwrite one with the other on each run. The repo
-        // (kodus-e2e/tiny-url-app) is the scope-limited install
-        // target of the kodus-ai-qa GitHub App; the App's webhook
+        // (codus-e2e/tiny-url-app) is the scope-limited install
+        // target of the codus-ai-qa GitHub App; the App's webhook
         // delivers to qa.web.kodus.io. Connect step is SKIPPED at
         // seed time (provider==="github-app") because the scenario
         // itself calls /code-management/auth-integration with
@@ -147,7 +147,7 @@ export const CLOUD_TENANTS: TenantSpec[] = [
         name: "Smoke Paid GitHub App",
         license: "paid",
         provider: "github-app",
-        repoFullName: "kodus-e2e/tiny-url-app",
+        repoFullName: "codus-e2e/tiny-url-app",
     },
 ];
 

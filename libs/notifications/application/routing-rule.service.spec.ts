@@ -62,7 +62,7 @@ describe('RoutingRuleService', () => {
             await expect(
                 service.upsertRules('org-1', [
                     {
-                        event: NotificationEvent.KODY_RULES_GENERATED,
+                        event: NotificationEvent.CODY_RULES_GENERATED,
                         role: '*',
                         channels: { email: true, in_app: true },
                         delete: true,
@@ -74,7 +74,7 @@ describe('RoutingRuleService', () => {
         it('routes deletes to deleteByOrgEventRole and skips them from upsertBatch', async () => {
             await service.upsertRules('org-1', [
                 {
-                    event: NotificationEvent.KODY_RULES_GENERATED,
+                    event: NotificationEvent.CODY_RULES_GENERATED,
                     role: Role.OWNER,
                     channels: { email: true, in_app: true },
                     delete: true,
@@ -83,7 +83,7 @@ describe('RoutingRuleService', () => {
 
             expect(routingRuleRepo.deleteByOrgEventRole).toHaveBeenCalledWith(
                 'org-1',
-                NotificationEvent.KODY_RULES_GENERATED,
+                NotificationEvent.CODY_RULES_GENERATED,
                 Role.OWNER,
             );
             expect(routingRuleRepo.upsertBatch).not.toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe('RoutingRuleService', () => {
         it('passes upserts through to upsertBatch with the catalog category', async () => {
             await service.upsertRules('org-1', [
                 {
-                    event: NotificationEvent.KODY_RULES_GENERATED,
+                    event: NotificationEvent.CODY_RULES_GENERATED,
                     role: Role.OWNER,
                     channels: { email: true, in_app: false },
                 },
@@ -101,9 +101,9 @@ describe('RoutingRuleService', () => {
             expect(routingRuleRepo.upsertBatch).toHaveBeenCalledWith([
                 expect.objectContaining({
                     organization: { uuid: 'org-1' },
-                    event: NotificationEvent.KODY_RULES_GENERATED,
+                    event: NotificationEvent.CODY_RULES_GENERATED,
                     role: Role.OWNER,
-                    category: 'kody_rules',
+                    category: 'cody_rules',
                     channels: { email: true, in_app: false },
                 }),
             ]);
@@ -186,13 +186,13 @@ describe('RoutingRuleService', () => {
             await service.seedDefaults('org-1');
 
             const calls = routingRuleRepo.upsertBatch.mock.calls[0][0];
-            // KODY_RULES_GENERATED has no defaultRoles (directed at users).
-            const kody = calls.filter(
-                (r) => r.event === NotificationEvent.KODY_RULES_GENERATED,
+            // CODY_RULES_GENERATED has no defaultRoles (directed at users).
+            const cody = calls.filter(
+                (r) => r.event === NotificationEvent.CODY_RULES_GENERATED,
             );
-            expect(kody).toHaveLength(1);
-            expect(kody[0].role).toBe('*');
-            expect(kody[0].channels).toEqual({ email: true, in_app: true });
+            expect(cody).toHaveLength(1);
+            expect(cody[0].role).toBe('*');
+            expect(cody[0].channels).toEqual({ email: true, in_app: true });
         });
     });
 

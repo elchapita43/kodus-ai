@@ -92,7 +92,7 @@ describe('CrossProcessEventsBridge', () => {
         await bridge.flushForwardBufferForTests();
 
         const [insertSql, insertArgs] = query.mock.calls[0];
-        expect(insertSql).toContain('INSERT INTO kodus_cross_process_events');
+        expect(insertSql).toContain('INSERT INTO codus_cross_process_events');
         // The batch flush uses a multi-row VALUES list ($1::jsonb),($2::jsonb)...
         // — with one envelope, it's just `($1::jsonb)`.
         expect(insertSql).toContain('($1::jsonb)');
@@ -102,7 +102,7 @@ describe('CrossProcessEventsBridge', () => {
         expect(envelope.payload.pullRequestNumber).toBe(42);
 
         expect(query).toHaveBeenCalledWith('SELECT pg_notify($1, $2)', [
-            'kodus_cross_process_events',
+            'codus_cross_process_events',
             '77',
         ]);
     });
@@ -144,7 +144,7 @@ describe('CrossProcessEventsBridge', () => {
         expect(insertSql).toContain('($1::jsonb),($2::jsonb),($3::jsonb)');
         // Single NOTIFY with comma-joined ids.
         expect(query).toHaveBeenCalledWith('SELECT pg_notify($1, $2)', [
-            'kodus_cross_process_events',
+            'codus_cross_process_events',
             '100,101,102',
         ]);
     });
@@ -154,7 +154,7 @@ describe('CrossProcessEventsBridge', () => {
 
         await bridge.forwardPullRequestClosed({
             ...payload,
-            __kodusBridged: true,
+            __codusBridged: true,
         });
 
         expect(query).not.toHaveBeenCalled();
@@ -239,7 +239,7 @@ describe('CrossProcessEventsBridge', () => {
         await bridge.sweepExpiredRows();
         expect(query).toHaveBeenCalledTimes(3);
         expect(query.mock.calls[0][0]).toContain('pg_try_advisory_lock');
-        expect(query.mock.calls[1][0]).toContain('DELETE FROM kodus_cross_process_events');
+        expect(query.mock.calls[1][0]).toContain('DELETE FROM codus_cross_process_events');
         expect(query.mock.calls[1][0]).toContain("interval '60 minutes'");
         expect(query.mock.calls[2][0]).toContain('pg_advisory_unlock');
     });
@@ -315,7 +315,7 @@ describe('CrossProcessEventsBridge', () => {
             'pull-request.closed',
             expect.objectContaining({
                 pullRequestNumber: 7,
-                __kodusBridged: true,
+                __codusBridged: true,
             }),
         );
         expect((bridge as any).pollLastSeenId).toBe(101n);

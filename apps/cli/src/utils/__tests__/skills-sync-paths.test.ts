@@ -38,11 +38,11 @@ describe('skills sync path helpers', () => {
     };
 
     it('resolves skill and command paths inside the target base dir', () => {
-        expect(resolveManagedSkillPath(skillTarget, 'kodus-review')).toBe(
-            '/tmp/.codex/skills/kodus-review/SKILL.md',
+        expect(resolveManagedSkillPath(skillTarget, 'codus-review')).toBe(
+            '/tmp/.codex/skills/codus-review/SKILL.md',
         );
-        expect(resolveManagedSkillEntryPath(commandTarget, 'kodus-review')).toBe(
-            '/tmp/.claude/commands/kodus-review.md',
+        expect(resolveManagedSkillEntryPath(commandTarget, 'codus-review')).toBe(
+            '/tmp/.claude/commands/codus-review.md',
         );
     });
 
@@ -56,7 +56,7 @@ describe('skills sync path helpers', () => {
     });
 
     it('removes an existing path and reports whether it existed', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-paths-');
+        const tempRoot = await makeTempDir('codus-skills-paths-');
         tempDirs.push(tempRoot);
 
         const targetPath = path.join(tempRoot, 'skill-dir');
@@ -68,7 +68,7 @@ describe('skills sync path helpers', () => {
     });
 
     it('does not remove files during dry run', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-paths-dry-');
+        const tempRoot = await makeTempDir('codus-skills-paths-dry-');
         tempDirs.push(tempRoot);
 
         const targetPath = path.join(tempRoot, 'skill-dir');

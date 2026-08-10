@@ -1,5 +1,5 @@
 {
-    "name": "kodus-test-pr-creator",
+    "name": "codus-test-pr-creator",
     "version": "1.0.0",
     "description": "Script to create test PRs across GitHub, GitLab, Bitbucket, and Azure DevOps",
     "type": "module",

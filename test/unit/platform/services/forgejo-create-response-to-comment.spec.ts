@@ -92,7 +92,7 @@ describe('ForgejoService.createResponseToComment', () => {
             organizationId: 'org-uuid',
             teamId: 'team-uuid',
         },
-        repository: { name: 'kodustech/kodus-ai' },
+        repository: { name: 'elchapita43/codus-ai' },
         prNumber: 7,
         inReplyToId: '1258376',
         body: 'Analyzing your request...',
@@ -104,7 +104,7 @@ describe('ForgejoService.createResponseToComment', () => {
         expect(createIssueCommentMock).toHaveBeenCalledTimes(1);
         expect(createIssueCommentMock).toHaveBeenCalledWith({
             organizationAndTeamData: baseParams.organizationAndTeamData,
-            repository: { name: 'kodustech/kodus-ai' },
+            repository: { name: 'elchapita43/codus-ai' },
             prNumber: 7,
             body: 'Analyzing your request...',
         });

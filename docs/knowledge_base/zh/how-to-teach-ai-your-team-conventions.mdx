@@ -1,45 +1,45 @@
 ---
 title: "如何教 AI 学习团队的编码约定"
-description: "使用记忆功能通过自然对话让 Kody 学习您的编码偏好、架构决策和团队约定。"
+description: "使用记忆功能通过自然对话让 Cody 学习您的编码偏好、架构决策和团队约定。"
 ---
 
-每个团队都有不成文的上下文 — 技术偏好、命名约定、架构决策、迁移中的特殊情况。你不需要一开始就把这些全部文档化，可以通过自然对话教给 Kody，这样未来的审查会更贴合实际，也能减少那些重复出现但没什么价值的建议。
+每个团队都有不成文的上下文 — 技术偏好、命名约定、架构决策、迁移中的特殊情况。你不需要一开始就把这些全部文档化，可以通过自然对话教给 Cody，这样未来的审查会更贴合实际，也能减少那些重复出现但没什么价值的建议。
 
 ## 工作原理
 
-当你在 PR 评论中与 Kody 交流时，它会识别你是否在描述代码库上下文或团队偏好，并自动将其保存为**记忆**。这些记忆随后会作为高优先级上下文应用在之后的所有代码审查和对话中。
+当你在 PR 评论中与 Cody 交流时，它会识别你是否在描述代码库上下文或团队偏好，并自动将其保存为**记忆**。这些记忆随后会作为高优先级上下文应用在之后的所有代码审查和对话中。
 
 ### 显式教学
 
-直接告诉 Kody 记住某些内容：
+直接告诉 Cody 记住某些内容：
 
 ```
-@kody remember: this repo mirrors a third-party API, so some payload fields intentionally stay snake_case.
+@cody remember: this repo mirrors a third-party API, so some payload fields intentionally stay snake_case.
 ```
 
 ```
-@kody please remember: this service follows hexagonal architecture and keeps adapters at the edge.
+@cody please remember: this service follows hexagonal architecture and keeps adapters at the edge.
 ```
 
 ### 隐式学习
 
-自然地陈述偏好 — Kody 会捕获：
+自然地陈述偏好 — Cody 会捕获：
 
 ```
-@kody this repo mirrors a third-party API, so some payload fields intentionally stay snake_case.
-```
-
-```
-@kody in this service, tests usually live next to the implementation files rather than in a central test folder.
+@cody this repo mirrors a third-party API, so some payload fields intentionally stay snake_case.
 ```
 
 ```
-@kody the billing module is mid-migration, so prefer incremental fixes over broad refactors.
+@cody in this service, tests usually live next to the implementation files rather than in a central test folder.
 ```
 
-## Kody 不会保存的内容
+```
+@cody the billing module is mid-migration, so prefer incremental fixes over broad refactors.
+```
 
-Kody 对成为记忆的内容有选择性：
+## Cody 不会保存的内容
+
+Cody 对成为记忆的内容有选择性：
 
 - 临时指令（"立即修复"、"今天跳过"）
 - 问题（"截止日期是什么？"）
@@ -63,6 +63,6 @@ Kody 对成为记忆的内容有选择性：
 
 ## 管理记忆
 
-前往**代码审查设置** → **Kody 规则** → **记忆**选项卡以查看、编辑或删除记忆。您也可以从 UI 手动创建记忆。
+前往**代码审查设置** → **Cody 规则** → **记忆**选项卡以查看、编辑或删除记忆。您也可以从 UI 手动创建记忆。
 
-更多详情，请参阅 [Kody 规则 — 记忆](/how_to_use/zh/code_review/configs/kody_rules#记忆)。
+更多详情，请参阅 [Cody 规则 — 记忆](/how_to_use/zh/code_review/configs/cody_rules#记忆)。

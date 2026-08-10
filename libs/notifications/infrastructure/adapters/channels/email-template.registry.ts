@@ -25,9 +25,9 @@ import IdeRulesSyncFailedEmail, {
 import InviteEmail, {
     inviteEmailMeta,
 } from '@libs/common/email/templates/invite';
-import KodyRulesEmail, {
-    kodyRulesEmailMeta,
-} from '@libs/common/email/templates/kody-rules';
+import CodyRulesEmail, {
+    codyRulesEmailMeta,
+} from '@libs/common/email/templates/cody-rules';
 import MemberRemovedEmail, {
     memberRemovedEmailMeta,
 } from '@libs/common/email/templates/member-removed';
@@ -173,7 +173,7 @@ export const EMAIL_TEMPLATE_REGISTRY: Partial<
         };
     },
 
-    [NotificationEvent.KODY_RULES_GENERATED]: (metadata, { webUrl }) => {
+    [NotificationEvent.CODY_RULES_GENERATED]: (metadata, { webUrl }) => {
         // `as string[]` used to be a blind cast. The producer was sending
         // `{title, rule, severity}` objects, the template rendered each entry
         // as a React child, and the email threw at render — retried 5x per
@@ -186,13 +186,13 @@ export const EMAIL_TEMPLATE_REGISTRY: Partial<
         const organizationName = metadata.organizationName as string;
         const userName = (metadata as { userName?: string }).userName ?? '';
         return {
-            ...kodyRulesEmailMeta({ organizationName }),
-            react: KodyRulesEmail({
+            ...codyRulesEmailMeta({ organizationName }),
+            react: CodyRulesEmail({
                 userName,
                 organizationName,
                 rules,
                 rulesCount: rules.length,
-                rulesLink: `${webUrl}/settings/code-review/global/kody-rules`,
+                rulesLink: `${webUrl}/settings/code-review/global/cody-rules`,
             }),
         };
     },
@@ -303,7 +303,7 @@ export const EMAIL_TEMPLATE_REGISTRY: Partial<
             react: IdeRulesSyncedEmail({
                 repoName,
                 rulesCount,
-                rulesLink: `${webUrl}/settings/code-review/global/kody-rules`,
+                rulesLink: `${webUrl}/settings/code-review/global/cody-rules`,
             }),
         };
     },

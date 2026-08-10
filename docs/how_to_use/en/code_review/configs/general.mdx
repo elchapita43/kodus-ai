@@ -1,26 +1,26 @@
 ---
 title: "General"
-description: "The core review settings — cadence, PR workflow, skip conditions, and analysis types — plus the full kodus-config.yml reference."
+description: "The core review settings — cadence, PR workflow, skip conditions, and analysis types — plus the full codus-config.yml reference."
 ---
 
 ## Core Settings
 
 <Note>
-  Kodus has three config levels: Global, Repository, and Directory. Learn how they work in <a href="/how_to_use/en/code_review/configs/inheritance_overrides">Config Inheritance & Overrides</a>.
+  Codus has three config levels: Global, Repository, and Directory. Learn how they work in <a href="/how_to_use/en/code_review/configs/inheritance_overrides">Config Inheritance & Overrides</a>.
 </Note>
 
 ### Config Priority
 
-You can keep your review configuration in a `kodus-config.yml` file at the root of your
+You can keep your review configuration in a `codus-config.yml` file at the root of your
 repository instead of the web UI.
 
 <Warning>
-  **The file is ignored until you opt in.** By default `kodusConfigFileOverridesWebPreferences`
-  is `false`, which means Kody never reads `kodus-config.yml` — committing the file alone does
+  **The file is ignored until you opt in.** By default `codusConfigFileOverridesWebPreferences`
+  is `false`, which means Cody never reads `codus-config.yml` — committing the file alone does
   nothing.
 
   Turn it on first in **Settings → Code Review → the repository → General**, or set
-  `kodusConfigFileOverridesWebPreferences: true` at the repository (or directory) level in the
+  `codusConfigFileOverridesWebPreferences: true` at the repository (or directory) level in the
   web UI. Only then does the file take effect.
 </Warning>
 
@@ -33,14 +33,14 @@ keys you want to change — anything you omit keeps its web value.
   to have no effect, check the spelling against the sample below.
 </Note>
 
-<Accordion title="Sample kodus-config.yml">
+<Accordion title="Sample codus-config.yml">
 ```yaml
 version: 2.0
 
 # general
 automatedReviewActive: true
 showStatusFeedback: true
-kodusConfigFileOverridesWebPreferences: false
+codusConfigFileOverridesWebPreferences: false
 reviewCadence:
     type: 'automatic' # automatic | auto_pause | manual
     timeWindow: 15 # minutes
@@ -72,7 +72,7 @@ reviewOptions:
 
 # suggestion control
 suggestionControl:
-    applyFiltersToKodyRules: false
+    applyFiltersToCodyRules: false
     severityLevelFilter: 'medium' # low | medium | high | critical
 
 # PR summary
@@ -82,11 +82,11 @@ summary:
     behaviourForExistingDescription: 'replace'
     customInstructions: ''
 
-# kody rules
+# cody rules
 ideRulesSyncEnabled: false
-kodyRulesGeneratorEnabled: true
-kodyLearningExcludedReviewers: []
-kodyKnowledgeApproval:
+codyRulesGeneratorEnabled: true
+codyLearningExcludedReviewers: []
+codyKnowledgeApproval:
     enabled: false
 
 # custom messages
@@ -108,15 +108,15 @@ customMessages:
 
 <Note>
   This sample mirrors the shipped defaults. The canonical source is
-  [`default-kodus-config.yml`](https://github.com/kodustech/kodus-ai/blob/main/default-kodus-config.yml)
-  in the kodus-ai repository.
+  [`default-codus-config.yml`](https://github.com/elchapita43/codus-ai/blob/main/default-codus-config.yml)
+  in the codus-ai repository.
 </Note>
 
 ## Review Behavior
 
 ### Automated Review
 
-Kody can review PRs automatically when opened, or only when you comment `@kody start-review`.
+Cody can review PRs automatically when opened, or only when you comment `@cody start-review`.
 
 <Info>
   This affects the **initial review** only. For subsequent commits, see Review Cadence below.
@@ -124,7 +124,7 @@ Kody can review PRs automatically when opened, or only when you comment `@kody s
 
 #### Review Cadence
 
-How Kody handles reviews on subsequent commits:
+How Cody handles reviews on subsequent commits:
 
 <Tabs>
   <Tab title="Automatic">
@@ -138,19 +138,19 @@ How Kody handles reviews on subsequent commits:
   </Tab>
   
   <Tab title="Manual">
-    Only run follow-up reviews when you comment `@kody start-review`.
+    Only run follow-up reviews when you comment `@cody start-review`.
   </Tab>
 </Tabs>
 
 ### PR Workflow
 
 #### Auto-approve PRs
-Kody approves PRs when no issues are found.
+Cody approves PRs when no issues are found.
 
 **Platforms:** GitHub, GitLab, Bitbucket
 
 #### Request Changes
-Kody requests changes when finding critical issues.
+Cody requests changes when finding critical issues.
 
 **Platforms:** GitHub, Bitbucket
 
@@ -165,7 +165,7 @@ Kody requests changes when finding critical issues.
 <Info>
   **Empty (the default) means every base branch is reviewed** — there is no built-in
   `dev`/`release`/`master` list. Add entries only when you want to *narrow* the scope: once the
-  list is non-empty, Kody reviews only PRs targeting those branches (your repository's default
+  list is non-empty, Cody reviews only PRs targeting those branches (your repository's default
   branch is always included).
 
   Entries are matched against the PR's **target** branch and support a small pattern syntax:
@@ -187,8 +187,8 @@ skip them until the PR is marked ready.
 
 ## Analysis Types
 
-Kody reviews across four categories. Enable or disable each one under **Analysis Types**, or via
-`reviewOptions` in `kodus-config.yml`.
+Cody reviews across four categories. Enable or disable each one under **Analysis Types**, or via
+`reviewOptions` in `codus-config.yml`.
 
 - **Bug** — logic errors, race conditions, null dereferences, edge cases, and incorrect behavior.
 - **Security** — vulnerabilities, injection, auth issues, data exposure, and secrets.
@@ -198,6 +198,6 @@ Kody reviews across four categories. Enable or disable each one under **Analysis
   [Business Logic Validation](/how_to_use/en/code_review/business_logic_validation).
 
 <Note>
-  Kody Rules are **not** one of these categories — they always run, independently of
-  `reviewOptions`. See [Kody Rules](/how_to_use/en/code_review/configs/kody_rules).
+  Cody Rules are **not** one of these categories — they always run, independently of
+  `reviewOptions`. See [Cody Rules](/how_to_use/en/code_review/configs/cody_rules).
 </Note>

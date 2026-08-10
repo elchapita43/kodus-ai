@@ -1,6 +1,6 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  */
 
 import { PipelineContext } from './pipeline-context.interface';

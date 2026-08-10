@@ -105,7 +105,7 @@ export class SendOrgReportUseCase {
             })),
             rulesNeedingAttentionMore: data.rulesNeedingAttentionMore,
             cockpitLink: buildCockpitLink(this.configService, {
-                tab: 'kodus-review',
+                tab: 'codus-review',
                 start: startDate,
                 end: endDate,
             }),

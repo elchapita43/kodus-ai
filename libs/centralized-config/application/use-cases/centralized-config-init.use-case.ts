@@ -216,10 +216,10 @@ export class CentralizedConfigInitUseCase {
             status === 403 ||
             /permission|forbidden|not authorized/i.test(detail)
         ) {
-            return "Kodus doesn't have write access to the repository. Make sure its integration can write repository contents and open pull requests.";
+            return "Codus doesn't have write access to the repository. Make sure its integration can write repository contents and open pull requests.";
         }
         if (status === 404 || /not found/i.test(detail)) {
-            return 'The repository or its default branch could not be found. Confirm the repository still exists and is connected to Kodus.';
+            return 'The repository or its default branch could not be found. Confirm the repository still exists and is connected to Codus.';
         }
         return `Reason: ${detail}`;
     }
@@ -274,10 +274,10 @@ export class CentralizedConfigInitUseCase {
     }): Promise<{ prUrl: string }> {
         const { organizationAndTeamData, repository, configs } = params;
 
-        const title = `Initialize Centralized Config for Kodus Code Review`;
-        const description = `This pull request initializes the centralized configuration for Kodus Code Review. It adds the existing configuration set via the UI as YAML files in the repository.`;
-        const commitMessage = `Initialize Centralized Config for Kodus Code Review`;
-        const sourceBranch = `kodus-centralized-config-init-${Date.now()}`;
+        const title = `Initialize Centralized Config for Codus Code Review`;
+        const description = `This pull request initializes the centralized configuration for Codus Code Review. It adds the existing configuration set via the UI as YAML files in the repository.`;
+        const commitMessage = `Initialize Centralized Config for Codus Code Review`;
+        const sourceBranch = `codus-centralized-config-init-${Date.now()}`;
 
         return await this.centralizedConfigPrService.createPullRequestInCentralizedRepo(
             {
@@ -289,8 +289,8 @@ export class CentralizedConfigInitUseCase {
                 commitMessage,
                 sourceBranch,
                 author: {
-                    name: 'kody',
-                    email: 'kody@kodus.io',
+                    name: 'cody',
+                    email: 'cody@kodus.io',
                 },
             },
         );

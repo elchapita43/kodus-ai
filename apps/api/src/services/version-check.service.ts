@@ -5,7 +5,7 @@ import { environment } from '@libs/ee/configs/environment';
 /**
  * Drives the self-hosted "update available" banner.
  *
- * Self-hosted releases tag the kodus-ai repo as `selfhosted-X.Y.Z` and
+ * Self-hosted releases tag the codus-ai repo as `selfhosted-X.Y.Z` and
  * inject `RELEASE_VERSION=X.Y.Z` (without prefix) into all five images
  * (api/worker/webhooks/web/mcp-manager) — see
  * `.github/workflows/selfhosted-build-push.yml`. So a single semver
@@ -27,7 +27,7 @@ export class VersionCheckService {
 
     private static readonly CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
     private static readonly GH_API =
-        'https://api.github.com/repos/kodustech/kodus-ai/releases?per_page=20';
+        'https://api.github.com/repos/elchapita43/codus-ai/releases?per_page=20';
     private static readonly TAG_RE = /^selfhosted-(\d+)\.(\d+)\.(\d+)$/;
     // Accepts "0.12.3", "v0.12.3", "selfhosted-0.12.3" — trims any of those
     // to a [maj, min, patch] tuple.
@@ -96,7 +96,7 @@ export class VersionCheckService {
             const res = await fetch(VersionCheckService.GH_API, {
                 headers: {
                     Accept: 'application/vnd.github+json',
-                    'User-Agent': 'kodus-self-hosted-update-check',
+                    'User-Agent': 'codus-self-hosted-update-check',
                 },
                 signal: controller.signal,
             });

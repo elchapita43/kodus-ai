@@ -283,7 +283,7 @@ export function ExternalReferencesDisplay({
                                 Reference sync errors
                             </p>
                             <p className="text-text-secondary text-[10px]">
-                                Kody couldn't fetch files mentioned in this
+                                Cody couldn't fetch files mentioned in this
                                 rule's text (used as extra review context).
                                 The rule itself still runs in code reviews.
                             </p>

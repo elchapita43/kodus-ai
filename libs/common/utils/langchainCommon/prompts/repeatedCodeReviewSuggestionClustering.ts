@@ -54,8 +54,8 @@ Rules for identifying and grouping similar suggestions:
     - Focus on the solution without mentioning specific files or line numbers
     - Be generic enough to apply to all occurrences of the issue
     - Start with "Please" or an action verb
-11. This step should only be applied when the primary suggestion (suggestion used in the problemDescription) uses the kody_rules label:
-mention in the problemDescription the kody_rule hyperlink in the same markdown format that is in the suggestionContent of the original suggestion: [text to be displayed](url)
+11. This step should only be applied when the primary suggestion (suggestion used in the problemDescription) uses the cody_rules label:
+mention in the problemDescription the cody_rule hyperlink in the same markdown format that is in the suggestionContent of the original suggestion: [text to be displayed](url)
 </analysis_rules>
 
 <output_format>

@@ -50,7 +50,7 @@ export interface SkillCapabilityRuntimeConfig {
     capabilityToolMap?: Record<string, string[]>;
     capabilityDefinitions?: Record<string, SkillCapabilityDefinition>;
     fetcherPolicy: Required<SkillFetcherPolicy>;
-    /** Primary external provider (first non-kodusmcp connection). */
+    /** Primary external provider (first non-codusmcp connection). */
     providerType: string;
     /** All external provider types available for this team (e.g. ['provider-a', 'provider-b']). */
     allProviderTypes?: string[];

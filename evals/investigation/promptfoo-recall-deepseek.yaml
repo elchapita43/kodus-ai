@@ -1,7 +1,7 @@
 # Finder-recall eval — DeepSeek V4 Flash (official DeepSeek API), openai-compatible.
 # Same harness as promptfoo-recall.yaml; only the provider block differs so the
 # finder can be A/B'd on DeepSeek. Judge stays Sonnet (recall-judge.js reads the
-# Anthropic key from ~/.kodus-dev/config). Run exactly like the kimi config:
+# Anthropic key from ~/.codus-dev/config). Run exactly like the kimi config:
 #   env -u ANTHROPIC_API_KEY -u BYOK_ANTHROPIC_API_KEY \
 #     PROMPTFOO_DISABLE_TEMPLATING=1 RECALL_ALL=1 \
 #     promptfoo eval -c promptfoo-recall-deepseek.yaml --no-cache

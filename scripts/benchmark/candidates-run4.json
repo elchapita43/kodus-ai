@@ -2,7 +2,7 @@
   {
     "pr_title": "Enhanced Pagination Performance for High-Volume Audit Logs",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/122",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: organization_context.member is accessed without a null check when checking for global access. WHY: Triggers an AttributeError and 500 error for superusers who are not members of the organization they are attempting to view. HOW: Add a null check for organization_context.member before accessing its attributes. enable_advanced = request.user.is_superuser or (organization_context.member and organization_context.member.has_global_access)",
@@ -29,7 +29,7 @@
   {
     "pr_title": "Enhanced Pagination Performance for High-Volume Audit Logs",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/123",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "OptimizedCursorPaginator.get_result incorrectly compares len(results) with offset + limit + extra, which is logically flawed when offset is non-zero. Slicing queryset[start:stop] returns at most (stop - start) items, so the count should be compared directly to limit + extra to determine if an additional row was fetched for lookahead. elif len(results) == limit + extra: results = results[:-1]",
@@ -66,7 +66,7 @@
   {
     "pr_title": "feat(upsampling) - Support upsampled error count with performance optimizations",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/124",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `invalidate_upsampling_cache` function and its caching strategy are ineffective for a global allowlist. Since the cache key includes a hash of the specific `project_ids` in a query, invalidating only the current allowlist does not clear stale entries for other previously queried combinations of projects. Additionally, this function is currently unused and should be either correctly implemented with a consistent invalidation strategy (e.g., using a version prefix) or removed.",
@@ -108,7 +108,7 @@
   {
     "pr_title": "GitHub OAuth Security Enhancement",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/125",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `state` parameter in `OAuthLoginView` uses the predictable `pipeline.signature` instead of a cryptographically secure random value tied to the user session. This allows an attacker to perform an OAuth CSRF attack, potentially linking their own GitHub installation to a victim's Sentry organization by crafting a callback URL with a valid `code` and the known `state` hash. if not request.GET.get(\"state\"): state = secrets.token_hex() pipeline.bind_state(\"oauth_state\", state) redirect_uri = absol",
@@ -130,7 +130,7 @@
   {
     "pr_title": "Anonymous: Add configurable device limit",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/109",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `localCache` entry is set before calling the database to enforce the device limit, allowing blocked devices to bypass the limit on subsequent requests. Because `tagDeviceUI` returns early if the device ID is found in the cache, any device that triggers the limit once will be allowed to authenticate on its next attempt (e.g., after a page refresh) because the cache entry was already created. if setting.Env == setting.Dev { a.log.Debug(\"Tagging device for UI\", \"deviceID\", device.DeviceID, \"dev",
@@ -162,7 +162,7 @@
   {
     "pr_title": "AuthZService: improve authz caching",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/110",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `requestCount` metric in `Check` always reports `cached=\"true\"` even when a cache miss leads to a database call via `getIdentityPermissions`. 157\ts.metrics.requestCount.WithLabelValues(\"false\", \"false\", req.GetVerb(), req.GetGroup(), req.GetResource()).Inc()",
@@ -194,7 +194,7 @@
   {
     "pr_title": "Plugins: Chore: Renamed instrumentation middleware to metrics middleware",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/111",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Logging methods in `FakeLogger` append to internal slices (e.g., `InfoLogs.Calls`) without synchronization, causing data races when the logger is used across multiple goroutines in concurrent tests. func (f *FakeLogger) Info(msg string, args ...interface{}) { defer f.mtx.Unlock() f.InfoLogs.Calls = append(f.InfoLogs.Calls, struct { Args []interface{}",
@@ -221,7 +221,7 @@
   {
     "pr_title": "Advanced Query Processing Architecture",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/112",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Ad-hoc filters are added redundantly to the query expression during each manual call to applyTemplateVariables. This leads to duplicate label matchers in the LogQL selector (e.g., {job=\"grafana\", host=\"localhost\", host=\"localhost\"}), which can cause queries to exceed Loki's matcher limits or result in performance degradation. Modify the logic to only append ad-hoc filters once, or ensure applyTemplateVariables checks for existing filters before adding them.",
@@ -238,7 +238,7 @@
   {
     "pr_title": "FEATURE: automatically downsize large images",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/109",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Downsizing in place invalidates the `tempfile` object's internal file descriptor, leading to incorrect SHA1 and filesize calculations in `Upload.create_for`. while attempt > 0 && File.size(tempfile.path) > SiteSetting.max_image_size_kb.kilobytes if OptimizedImage.downsize(tempfile.path, tempfile.path, \"80%\", allow_animation: SiteSetting.allow_animated_thumbnails)",
@@ -280,7 +280,7 @@
   {
     "pr_title": "FEATURE: per-topic unsubscribe option in emails",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/110",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The unsubscribe logic only downgrades 'watching' to 'regular', meaning users will still receive notifications for mentions and replies despite the email promising they will stop. TopicUser.change(current_user.id, params[:topic_id], notification_level: TopicUser.notification_levels[:muted])",
@@ -312,7 +312,7 @@
   {
     "pr_title": "Add comprehensive email validation for blocked users",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/111",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "A nil value for 'email' causes a NoMethodError (nil =~ regexp) if SiteSetting restrictions are present. Add a guard 'return if value.blank?' at the start of validate_each to prevent crashes during validation when the email field is empty. def validate_each(record, attribute, value) return if value.blank? if (setting = SiteSetting.email_domains_whitelist).present?",
@@ -349,7 +349,7 @@
   {
     "pr_title": "Enhance embed URL handling and validation system",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/112",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: Ruby syntax error in ERB tag at line 6 ('end if' without a condition). WHY: Causes a 'SyntaxError: unexpected keyword_if' when the template is rendered, breaking the embed view entirely. HOW: Remove the trailing 'if' from the end tag.",
@@ -416,7 +416,7 @@
   {
     "pr_title": "Async import of the appStore packages",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/123",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Sequential await in `getVideoAdapters` loop creates a performance bottleneck in the availability check path. Triggers O(N) latency growth relative to the number of user credentials because it waits for each dynamic import one by one. Use `await Promise.all(withCredentials.map(...))` to fetch all adapters concurrently. const videoAdapters = (await Promise.all(withCredentials.map(async (cred) => { const appName = cred.type.split(\"_\").join(\"\"); const app = await appStore[appName as keyof typeof app",
@@ -443,7 +443,7 @@
   {
     "pr_title": "feat: 2fa backup codes",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/124",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Using 'throw new Error()' in the API handler will cause the server to return a non-JSON error page (HTML), crashing the client-side form which expects a JSON response with an error field. These error paths should use 'res.status(500).json({ error: ErrorCode.InternalServerError })' to maintain the API contract and prevent client-side parsing failures. if (!process.env.CALENDSO_ENCRYPTION_KEY) { console.error(\"Missing encryption key; cannot proceed with backup code login.\"); return res.status(500)",
@@ -470,7 +470,7 @@
   {
     "pr_title": "fix: handle collective multiple host on destinationCalendar",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/125",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Updating the Calendar interface's createEvent signature causes type errors in all implementations that were not updated (LarkCalendarService, Office365CalendarService, BaseCalendarService, etc.). These implementations will fail to compile as they do not accept the required credentialId parameter. 221:   createEvent(event: CalendarEvent, credentialId?: number): Promise<NewCalendarEventType>;",
@@ -522,7 +522,7 @@
   {
     "pr_title": "feat: convert InsightsBookingService to use Prisma.sql raw queries",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/126",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Use the pre-computed `teamIds` variable (which includes the organization ID) when fetching `userIdsFromOrg` instead of re-mapping `teamsFromOrg`. const userIdsFromOrg = teamsFromOrg.length > 0 ? await MembershipRepository.findAllByTeamIds({ }).then((members) => members.map((m) => m.userId))",
@@ -559,7 +559,7 @@
   {
     "pr_title": "Fixing Re-authentication with passkeys",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/109",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The 'authenticate' method fails to call 'webauthnAuth.fillContextForm(context)', which is required to enable the Passkey Conditional UI on the password page. This prevents users from using passkeys to satisfy the password requirement during re-authentication or in flows where the user is already identified. public void authenticate(AuthenticationFlowContext context) { if (alreadyAuthenticatedUsingPasswordlessCredential(context)) { context.success(); if (webauthnAuth != null && webauthnAuth.isPas",
@@ -586,13 +586,13 @@
   {
     "pr_title": "Add caching support for IdentityProviderStorageProvider.getForLogin operations",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/110",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add AuthzClientCryptoProvider for authorization client cryptographic operations",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/111",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: Potential unhandled NumberFormatException in readInteger() when processing a zero-length byte array. WHY: ASN.1 DER requires INTEGER fields to have at least one content octet; passing an empty array to the BigInteger constructor causes a runtime crash instead of a controlled IOException. HOW: Add a check for length > 0 before calling the BigInteger constructor. int length = readLength(); if (length <= 0) { throw new IOException(\"Invalid INTEGER length: \" + length); byte[] bytes = read(leng",
@@ -634,7 +634,7 @@
   {
     "pr_title": "Add rolling-updates feature flag and compatibility framework",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/112",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   }
 ]

@@ -7,7 +7,7 @@ import type { GateFeature } from "src/core/utils/gate-hit";
 import { captureGateCtaClick } from "src/core/utils/gate-hit";
 
 /**
- * The "Upgrade plan" CTA every gate surface (Cockpit overlay, Plugins/Kody
+ * The "Upgrade plan" CTA every gate surface (Cockpit overlay, Plugins/Cody
  * Rules locked banners, both limit popovers) renders. Centralizing it means
  * every gate's click is tracked the same way — without this, `gate_hit`
  * only tells us someone saw a lock, never whether it drove a click.

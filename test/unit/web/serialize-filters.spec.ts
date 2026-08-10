@@ -2,7 +2,7 @@ import {
     applyFiltersToParams,
     EMPTY_SERIALIZED,
     parseFiltersFromParams,
-} from "../../../apps/web/src/core/utils/kody-rules/serialize-filters";
+} from "../../../apps/web/src/core/utils/cody-rules/serialize-filters";
 
 describe("parseFiltersFromParams", () => {
     it("returns empty filters when no params are provided", () => {

@@ -1,27 +1,27 @@
 {
-    "name": "@kodus/cli",
+    "name": "@codus/cli",
     "version": "0.4.20",
-    "description": "Kodus CLI - AI-powered code review from your terminal",
+    "description": "Codus CLI - AI-powered code review from your terminal",
     "type": "module",
     "bin": {
-        "kodus": "./dist/index.js"
+        "codus": "./dist/index.js"
     },
     "main": "./dist/index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/kodustech/kodus-ai.git",
+        "url": "git+https://github.com/elchapita43/codus-ai.git",
         "directory": "apps/cli"
     },
     "homepage": "https://kodus.io",
     "bugs": {
-        "url": "https://github.com/kodustech/kodus-ai/issues"
+        "url": "https://github.com/elchapita43/codus-ai/issues"
     },
     "scripts": {
         "build": "pnpm clean && tsc && chmod +x dist/index.js",
         "dev": "tsc --watch",
         "start": "node dist/index.js",
-        "start:local": "KODUS_API_URL=http://localhost:3001 node dist/index.js",
-        "start:qa": "KODUS_API_URL=https://qa.api.kodus.io node dist/index.js",
+        "start:local": "CODUS_API_URL=http://localhost:3001 node dist/index.js",
+        "start:qa": "CODUS_API_URL=https://qa.api.kodus.io node dist/index.js",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:integration": "pnpm build && vitest run --config vitest.integration.config.ts",
@@ -39,13 +39,13 @@
         "prepublishOnly": "pnpm build"
     },
     "keywords": [
-        "kodus",
+        "codus",
         "code-review",
         "ai",
         "cli",
         "git"
     ],
-    "author": "Kodus",
+    "author": "Codus",
     "license": "MIT",
     "dependencies": {
         "@inquirer/prompts": "^8.4.3",

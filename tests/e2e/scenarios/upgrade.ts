@@ -30,7 +30,7 @@ export const upgradeNMinusOneToN: Scenario = {
 
         ctx.assert(ctx.tenant, "scenario requires a tenant");
 
-        const session = await ctx.kodus.login(ctx.tenant!);
+        const session = await ctx.codus.login(ctx.tenant!);
 
         const { triggerId, sinceIso } = await ctx.provider.triggerReviewOnExistingPR(0);
         const prNumber = Number(process.env.GH_TEST_PR_NUMBER ?? "0");

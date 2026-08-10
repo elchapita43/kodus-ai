@@ -264,8 +264,8 @@ describe('resolveLinkedRepositories', () => {
     });
 
     it('nests _linked under local sandbox repoDir (not sibling of temp)', () => {
-        expect(linkedRepoRootPath('/tmp/kodus-sandbox-abc', 'x')).toBe(
-            '/tmp/kodus-sandbox-abc/_linked/x',
+        expect(linkedRepoRootPath('/tmp/codus-sandbox-abc', 'x')).toBe(
+            '/tmp/codus-sandbox-abc/_linked/x',
         );
         expect(linkedRepoRootPath('/home/user/repo', 'x')).toBe(
             '/home/user/_linked/x',

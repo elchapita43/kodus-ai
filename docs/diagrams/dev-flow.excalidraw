@@ -1,7 +1,7 @@
 {
  "type": "excalidraw",
  "version": 2,
- "source": "kodus-dev-flow",
+ "source": "codus-dev-flow",
  "elements": [
   {
    "id": "j3hyk84tdr",
@@ -29,14 +29,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "Kodus \u2014 fluxo: do PR ao cliente.   Release SEXTA de manh\u00e3 (paralelizado).",
+   "text": "Codus \u2014 fluxo: do PR ao cliente.   Release SEXTA de manh\u00e3 (paralelizado).",
    "fontSize": 24,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 24,
    "containerId": null,
-   "originalText": "Kodus \u2014 fluxo: do PR ao cliente.   Release SEXTA de manh\u00e3 (paralelizado).",
+   "originalText": "Codus \u2014 fluxo: do PR ao cliente.   Release SEXTA de manh\u00e3 (paralelizado).",
    "lineHeight": 1.35
   },
   {
@@ -512,14 +512,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "\ud83d\udfe3  3 kody rules \"ready-to-ride\":",
+   "text": "\ud83d\udfe3  3 cody rules \"ready-to-ride\":",
    "fontSize": 13,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 13,
    "containerId": null,
-   "originalText": "\ud83d\udfe3  3 kody rules \"ready-to-ride\":",
+   "originalText": "\ud83d\udfe3  3 cody rules \"ready-to-ride\":",
    "lineHeight": 1.35
   },
   {
@@ -2452,14 +2452,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "3 kody rules (engine sem benchmark \u00b7 superf\u00edcie nova sem cen\u00e1rio \u00b7 migration sem changelog)  \u00b7  test-debt report sexta 9h (PRs sem teste, coverage delta, benchmark trend)",
+   "text": "3 cody rules (engine sem benchmark \u00b7 superf\u00edcie nova sem cen\u00e1rio \u00b7 migration sem changelog)  \u00b7  test-debt report sexta 9h (PRs sem teste, coverage delta, benchmark trend)",
    "fontSize": 12,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 12,
    "containerId": null,
-   "originalText": "3 kody rules (engine sem benchmark \u00b7 superf\u00edcie nova sem cen\u00e1rio \u00b7 migration sem changelog)  \u00b7  test-debt report sexta 9h (PRs sem teste, coverage delta, benchmark trend)",
+   "originalText": "3 cody rules (engine sem benchmark \u00b7 superf\u00edcie nova sem cen\u00e1rio \u00b7 migration sem changelog)  \u00b7  test-debt report sexta 9h (PRs sem teste, coverage delta, benchmark trend)",
    "lineHeight": 1.35
   },
   {
@@ -2553,14 +2553,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "\u2b50 engine de review = libs/code-review \u00b7 ee/codeBase \u00b7 sandbox \u00b7 kody-rules \u00b7 cat\u00e1logo BYOK   \u00b7   \u26a1 paralelismo cronologiza ~8h em ~4h reais",
+   "text": "\u2b50 engine de review = libs/code-review \u00b7 ee/codeBase \u00b7 sandbox \u00b7 cody-rules \u00b7 cat\u00e1logo BYOK   \u00b7   \u26a1 paralelismo cronologiza ~8h em ~4h reais",
    "fontSize": 12,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 12,
    "containerId": null,
-   "originalText": "\u2b50 engine de review = libs/code-review \u00b7 ee/codeBase \u00b7 sandbox \u00b7 kody-rules \u00b7 cat\u00e1logo BYOK   \u00b7   \u26a1 paralelismo cronologiza ~8h em ~4h reais",
+   "originalText": "\u2b50 engine de review = libs/code-review \u00b7 ee/codeBase \u00b7 sandbox \u00b7 cody-rules \u00b7 cat\u00e1logo BYOK   \u00b7   \u26a1 paralelismo cronologiza ~8h em ~4h reais",
    "lineHeight": 1.35
   }
  ],

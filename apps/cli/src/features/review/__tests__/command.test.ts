@@ -28,8 +28,8 @@ describe('createReviewCommand', () => {
         const help = command.helpInformation();
 
         expect(help).toContain('Examples:');
-        expect(help).toContain('kodus review');
-        expect(help).toContain('kodus review --staged');
-        expect(help).toContain('kodus review --fail-on error');
+        expect(help).toContain('codus review');
+        expect(help).toContain('codus review --staged');
+        expect(help).toContain('codus review --fail-on error');
     });
 });

@@ -3,7 +3,7 @@ import { createLogger } from '@libs/core/log/logger';
 import { parsePatch } from 'diff';
 import { FileChange } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 
-/** Minimal graph node shape from kodus-graph output. */
+/** Minimal graph node shape from codus-graph output. */
 interface GraphNode {
     qualified_name: string;
     kind: string;
@@ -12,13 +12,13 @@ interface GraphNode {
     line_end: number;
 }
 
-/** Minimal graph edge shape from kodus-graph output. */
+/** Minimal graph edge shape from codus-graph output. */
 interface GraphEdge {
     caller: string;
     callee: string;
 }
 
-/** Graph JSON shape (subset of kodus-graph output). */
+/** Graph JSON shape (subset of codus-graph output). */
 export interface GraphJson {
     nodes: GraphNode[];
     edges: GraphEdge[];

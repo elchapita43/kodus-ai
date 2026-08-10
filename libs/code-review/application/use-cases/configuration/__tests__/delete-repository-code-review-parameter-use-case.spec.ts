@@ -1,7 +1,7 @@
 import { DeleteRepositoryCodeReviewParameterUseCase } from '../delete-repository-code-review-parameter.use-case';
 
 describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
-    it('includes scoped Kody Rules files when creating centralized delete PR for repository config', async () => {
+    it('includes scoped Cody Rules files when creating centralized delete PR for repository config', async () => {
         const createMutationPullRequestIfEnabled = jest.fn().mockResolvedValue({
             mode: 'centralized-pr',
             prUrl: 'https://example.test/pr/42',
@@ -59,7 +59,7 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
                                 repositoryId: 'repo-1',
                                 directoryId: undefined,
                                 centralizedConfig: {
-                                    path: 'repo-1-name/.kody-rules/review/rule-with-path.yml',
+                                    path: 'repo-1-name/.cody-rules/review/rule-with-path.yml',
                                 },
                             },
                             {
@@ -113,15 +113,15 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
         expect(files).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
-                    path: 'repo-1-name/kodus-config.yml',
+                    path: 'repo-1-name/codus-config.yml',
                     operation: 'delete',
                 }),
                 expect.objectContaining({
-                    path: 'repo-1-name/.kody-rules/review/rule-with-path.yml',
+                    path: 'repo-1-name/.cody-rules/review/rule-with-path.yml',
                     operation: 'delete',
                 }),
                 expect.objectContaining({
-                    path: 'repo-1-name/.kody-rules/memories/memory-rule-rule-2.yml',
+                    path: 'repo-1-name/.cody-rules/memories/memory-rule-rule-2.yml',
                     operation: 'delete',
                 }),
             ]),
@@ -148,7 +148,7 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
                 .fn()
                 .mockImplementation(
                     (repositoryFolder: string, groupFolderName: string) =>
-                        `${repositoryFolder}/${groupFolderName}/kodus-config.yml`,
+                        `${repositoryFolder}/${groupFolderName}/codus-config.yml`,
                 ),
             buildDirectoryGroupRulesPath: jest
                 .fn()
@@ -159,7 +159,7 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
                         rulesDirectory: string,
                         fileName: string,
                     ) =>
-                        `${repositoryFolder}/${groupFolderName}/.kody-rules/${rulesDirectory}/${fileName}`,
+                        `${repositoryFolder}/${groupFolderName}/.cody-rules/${rulesDirectory}/${fileName}`,
                 ),
             sanitizeFileName: jest.fn().mockReturnValue('fallback-rule'),
             buildRuleFileName: jest.fn(
@@ -225,7 +225,7 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
                                 repositoryId: 'repo-1',
                                 directoryId: 'dir-2',
                                 centralizedConfig: {
-                                    path: 'repo-1-name/src/web/.kody-rules/review/another-directory-rule.yml',
+                                    path: 'repo-1-name/src/web/.cody-rules/review/another-directory-rule.yml',
                                 },
                             },
                             {
@@ -233,7 +233,7 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
                                 title: 'Repository rule',
                                 repositoryId: 'repo-1',
                                 centralizedConfig: {
-                                    path: 'repo-1-name/.kody-rules/review/repository-rule.yml',
+                                    path: 'repo-1-name/.cody-rules/review/repository-rule.yml',
                                 },
                             },
                         ],
@@ -281,11 +281,11 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
         expect(files).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
-                    path: 'repo-1-name/src%2Fapi/kodus-config.yml',
+                    path: 'repo-1-name/src%2Fapi/codus-config.yml',
                     operation: 'delete',
                 }),
                 expect.objectContaining({
-                    path: 'repo-1-name/src%2Fapi/.kody-rules/review/fallback-rule-rule-dir.yml',
+                    path: 'repo-1-name/src%2Fapi/.cody-rules/review/fallback-rule-rule-dir.yml',
                     operation: 'delete',
                 }),
             ]),
@@ -302,10 +302,10 @@ describe('DeleteRepositoryCodeReviewParameterUseCase', () => {
         expect(files).not.toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
-                    path: 'repo-1-name/src/web/.kody-rules/review/another-directory-rule.yml',
+                    path: 'repo-1-name/src/web/.cody-rules/review/another-directory-rule.yml',
                 }),
                 expect.objectContaining({
-                    path: 'repo-1-name/.kody-rules/review/repository-rule.yml',
+                    path: 'repo-1-name/.cody-rules/review/repository-rule.yml',
                 }),
             ]),
         );

@@ -1,9 +1,9 @@
 ---
 title: "自定义提示"
-description: "为每个类别和建议的编写方式自定义 Kody 的审查提示以匹配团队的需求"
+description: "为每个类别和建议的编写方式自定义 Cody 的审查提示以匹配团队的需求"
 ---
 
-自定义提示让您完全控制 Kody 如何分析代码和沟通发现。定制 AI 在每个审查类别中查找的内容,以及如何呈现建议以匹配团队的标准和沟通风格。
+自定义提示让您完全控制 Cody 如何分析代码和沟通发现。定制 AI 在每个审查类别中查找的内容,以及如何呈现建议以匹配团队的标准和沟通风格。
 
 <Card
   title="访问自定义提示设置"
@@ -17,16 +17,16 @@ description: "为每个类别和建议的编写方式自定义 Kody 的审查提
 
 <CardGroup cols={2}>
   <Card title="团队特定标准" icon="users">
-    使 Kody 的审查与团队独特的编码标准、架构模式和最佳实践保持一致
+    使 Cody 的审查与团队独特的编码标准、架构模式和最佳实践保持一致
   </Card>
   <Card title="模型优化" icon="brain">
     在使用 BYOK 时,为特定 AI 模型的优势精心设计提示
   </Card>
   <Card title="焦点控制" icon="bullseye">
-    将 Kody 的注意力引导到对项目最重要的问题上并减少噪音
+    将 Cody 的注意力引导到对项目最重要的问题上并减少噪音
   </Card>
   <Card title="沟通风格" icon="comments">
-    自定义 Kody 如何呈现建议 - 对关键问题详细或对次要问题简洁
+    自定义 Cody 如何呈现建议 - 对关键问题详细或对次要问题简洁
   </Card>
 </CardGroup>
 
@@ -36,7 +36,7 @@ description: "为每个类别和建议的编写方式自定义 Kody 的审查提
 
 ### 类别提示
 
-定义 Kody 在每个审查类别中查找的内容:
+定义 Cody 在每个审查类别中查找的内容:
 
 <Tabs>
   <Tab title="错误">
@@ -84,20 +84,20 @@ description: "为每个类别和建议的编写方式自定义 Kody 的审查提
 
 ### 建议提示
 
-控制 Kody 如何沟通每个单独的建议。这自定义了出现在 PR 评论中的消息格式和语气,例如:
+控制 Cody 如何沟通每个单独的建议。这自定义了出现在 PR 评论中的消息格式和语气,例如:
 
 ```
 新文件 'create-or-update-issues-parameter.dto.ts' 不遵循
-公司的命名约定。根据 Kody 规则,所有新文件
+公司的命名约定。根据 Cody 规则,所有新文件
 必须使用驼峰命名法。请将文件重命名为 'createOrUpdateIssuesParameter.dto.ts'
 以遵守标准。
 ```
 
-您的自定义提示指示 Kody 如何编写建议消息。提示接收有关严重性级别、问题描述、建议代码以及是否为 Kody 规则违规的上下文。Kody 使用此上下文以及您的提示为每个建议生成适当的消息。
+您的自定义提示指示 Cody 如何编写建议消息。提示接收有关严重性级别、问题描述、建议代码以及是否为 Cody 规则违规的上下文。Cody 使用此上下文以及您的提示为每个建议生成适当的消息。
 
 您可以根据团队的需求自定义语气、详细程度和沟通风格 - 从关键问题的详细解释到次要问题的简洁反馈。
 
-## 在 `kodus-config.yml` 中设置
+## 在 `codus-config.yml` 中设置
 
 同样的四个字段可在 `v2PromptOverrides` 键下配置:
 
@@ -109,16 +109,16 @@ v2PromptOverrides:
     categories:
         descriptions:
             bug: |
-                What Kody should look for in the Bug category.
+                What Cody should look for in the Bug category.
             performance: |
-                What Kody should look for in the Performance category.
+                What Cody should look for in the Performance category.
             security: |
-                What Kody should look for in the Security category.
+                What Cody should look for in the Security category.
 ```
 
 这四项是网页界面所暴露的,每个字段上限为 2000 个字符。Business Logic 类别没有提示词覆盖。
 
-配置文件还接受一组界面上看不到的键 —— Kody 用来对发现进行分级的严重性评判标准:
+配置文件还接受一组界面上看不到的键 —— Cody 用来对发现进行分级的严重性评判标准:
 
 ```yaml
 v2PromptOverrides:
@@ -132,29 +132,29 @@ v2PromptOverrides:
 ```
 
 <Warning>
-  这会改变 Kody 对发现的*分级*,而不只是措辞 —— 一份糟糕的评判标准会在所有审查中悄悄压低或
+  这会改变 Cody 对发现的*分级*,而不只是措辞 —— 一份糟糕的评判标准会在所有审查中悄悄压低或
   抬高严重性。请以随产品发布的默认值
-  [`default-kodus-config.yml`](https://github.com/kodustech/kodus-ai/blob/main/default-kodus-config.yml)
+  [`default-codus-config.yml`](https://github.com/elchapita43/codus-ai/blob/main/default-codus-config.yml)
   为起点,而不要从零编写评判标准。
 </Warning>
 
 <Note>
-  随产品发布的 `default-kodus-config.yml` 中还包含一个 `v2PromptOverrides.level` 分组。出于向后
+  随产品发布的 `default-codus-config.yml` 中还包含一个 `v2PromptOverrides.level` 分组。出于向后
   兼容它仍会被接受,但**引擎已不再读取它** —— 设置它不会产生任何变化。只有
   `categories.descriptions`、`severity.flags` 和 `generation.main` 会进入审查。
 </Note>
 
-只有在启用 `kodusConfigFileOverridesWebPreferences` 之后该文件才会被读取(参见
+只有在启用 `codusConfigFileOverridesWebPreferences` 之后该文件才会被读取(参见
 [通用设置](/how_to_use/zh/code_review/configs/general))。
 
 ## 外部引用
 
-所有自定义提示——类别、建议和 PR 摘要——都支持引用 Kody 可以访问的代码库中的真实文件。当您保存更新时,Kody 会自动检测外部引用并为将来的审查解析它们。
+所有自定义提示——类别、建议和 PR 摘要——都支持引用 Cody 可以访问的代码库中的真实文件。当您保存更新时,Cody 会自动检测外部引用并为将来的审查解析它们。
 
-- 使用 `@file:path/to/file.ts` 指向您正在编辑的代码库中的文件;Kody 将首先尝试在本地找到路径。
+- 使用 `@file:path/to/file.ts` 指向您正在编辑的代码库中的文件;Cody 将首先尝试在本地找到路径。
 - 在引用另一个代码库中的文件或在全局级别编辑提示时包含 `@repo:org/project`。
 - 首选精确的 blob 样式路径而不是占位符,以便模型可以可靠地找到正确的文件。
-- 保存后,Kody 在后台处理引用。检查提示编辑器旁边的状态指示器以确认解析何时完成。
+- 保存后,Cody 在后台处理引用。检查提示编辑器旁边的状态指示器以确认解析何时完成。
 
 ## 最佳实践
 
@@ -274,7 +274,7 @@ v2PromptOverrides:
 <Tabs>
   <Tab title="好:有意义的区别">
     ```
-    对于 Kody 规则违规,使用更严格的语气:
+    对于 Cody 规则违规,使用更严格的语气:
     "**团队标准**:[问题]。要求:[代码]"
 
     对于标准建议,使用更友好的语气:
@@ -288,7 +288,7 @@ v2PromptOverrides:
 
   <Tab title="差:表面标签">
     ```
-    对于 Kody 规则,在问题前添加"[规则]"前缀。
+    对于 Cody 规则,在问题前添加"[规则]"前缀。
     对于建议,在问题前添加"[建议]"前缀。
     否则以相同的方式格式化它们。
     ```
@@ -314,7 +314,7 @@ v2PromptOverrides:
     - 缺少患者同意验证
     ```
 
-    **好处:**Kody 捕获通用安全审查可能错过的特定合规问题。
+    **好处:**Cody 捕获通用安全审查可能错过的特定合规问题。
   </Accordion>
 
   <Accordion title="技术栈优化">
@@ -406,13 +406,13 @@ v2PromptOverrides:
   </Accordion>
 
   <Accordion title="规则与建议的不同语气">
-    **场景:**Kody 规则是严格要求,建议是建议
+    **场景:**Cody 规则是严格要求,建议是建议
 
     **自定义建议提示:**
     ```
     根据类型使用不同的语气:
 
-    对于 Kody 规则违规:
+    对于 Cody 规则违规:
     - 以粗体"**团队标准违规**"开头
     - 陈述问题
     - 添加"这违反了记录的团队标准。"
@@ -442,7 +442,7 @@ v2PromptOverrides:
   </Accordion>
 
   <Accordion title="缺少预期问题">
-    **症状:**Kody 没有捕获应该捕获的问题
+    **症状:**Cody 没有捕获应该捕获的问题
 
     **解决方案:**
     - 审查您的提示是否太窄或示例特定
@@ -489,11 +489,11 @@ v2PromptOverrides:
   </Accordion>
 
   <Accordion title="当我更改提示时,现有 PR 会发生什么?">
-    更改仅影响新审查。使用 `@kody start-review` 重新运行以将新提示应用于现有 PR。
+    更改仅影响新审查。使用 `@cody start-review` 重新运行以将新提示应用于现有 PR。
   </Accordion>
 
-  <Accordion title="我可以使用 kodus-config.yml 自定义提示吗?">
-    不可以。自定义提示仅限网页以确保有意更改。其他设置(忽略的路径、分支)可以使用 `kodus-config.yml`。
+  <Accordion title="我可以使用 codus-config.yml 自定义提示吗?">
+    不可以。自定义提示仅限网页以确保有意更改。其他设置(忽略的路径、分支)可以使用 `codus-config.yml`。
   </Accordion>
 
   <Accordion title="我应该自定义所有提示还是只是一些?">
@@ -505,7 +505,7 @@ v2PromptOverrides:
   </Accordion>
 
   <Accordion title="类别提示和建议提示之间有什么区别?">
-    **类别提示**控制 Kody 在每个审查类别中分析什么。**建议提示**控制 Kody 如何向团队呈现发现。您可以独立自定义两者。
+    **类别提示**控制 Cody 在每个审查类别中分析什么。**建议提示**控制 Cody 如何向团队呈现发现。您可以独立自定义两者。
   </Accordion>
 
   <Accordion title="我可以在建议提示中使用 markdown 吗?">
@@ -513,10 +513,10 @@ v2PromptOverrides:
   </Accordion>
 
   <Accordion title="如果我的建议模板有语法错误会怎样?">
-    Kody 将回退到默认建议格式并在设置中通知您错误。
+    Cody 将回退到默认建议格式并在设置中通知您错误。
   </Accordion>
 
-  <Accordion title="建议提示对 Kody 规则和标准建议都有效吗?">
-    可以。使用 `isKodyRule` 变量在同一提示中为规则 vs. 建议创建不同的消息。
+  <Accordion title="建议提示对 Cody 规则和标准建议都有效吗?">
+    可以。使用 `isCodyRule` 变量在同一提示中为规则 vs. 建议创建不同的消息。
   </Accordion>
 </AccordionGroup>

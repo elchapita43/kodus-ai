@@ -1,4 +1,4 @@
-# Release flow — Kodus CI
+# Release flow — Codus CI
 
 How code goes from a PR to a customer release, with concrete procedures
 for the humans involved. Locked **2026-05-28**.
@@ -11,7 +11,7 @@ For visual layout, see `docs/diagrams/ci-flow-files.excalidraw`.
 
 | Phase | When | What happens |
 |---|---|---|
-| **PR** | PR opened / synchronize | Lint, tests, env-drift, preview deploy, Kody review (3 rules), human approves → merge |
+| **PR** | PR opened / synchronize | Lint, tests, env-drift, preview deploy, Cody review (3 rules), human approves → merge |
 | **Continuous QA** | Push to `main` (paths-filtered) | Per-component deploys to QA cloud + auto-fire `e2e-cloud.yml` (fast.yml) + benchmark FULL if engine paths touched |
 | **Release** | Every **Friday** (dispatch by you) | Freeze main → build RC → matrix on `full.yml` → human approve → promote → cloud + SH ship together |
 | **Hotfix** | Any time, P0 only | Same chain as release, **skips freeze + human gate**, ships in ~1h |
@@ -25,7 +25,7 @@ For visual layout, see `docs/diagrams/ci-flow-files.excalidraw`.
 
 | Event | Workflow(s) | Notes |
 |---|---|---|
-| `pull_request` opened/synchronize | `pr-title-check`, `tests`, `env-drift-check`, `permissions-matrix-check`, `feature-gate-check`, `preview-deploy` | All run in parallel. Kody also reviews the diff (3 global rules). |
+| `pull_request` opened/synchronize | `pr-title-check`, `tests`, `env-drift-check`, `permissions-matrix-check`, `feature-gate-check`, `preview-deploy` | All run in parallel. Cody also reviews the diff (3 global rules). |
 | `push` to `main` matching `apps/{api,worker,webhooks}/**` or `libs/**` or `packages/**` | `qa-build-push-and-pr-green` → `e2e-cloud` (workflow_call, `fast.yml`) | Backend deploy + cloud matrix on the new image |
 | `push` to `main` matching `apps/web/**` or `libs/feature-gate/**` | `web-qa-deploy` | Web deploy to QA ECS |
 | `push` to `main` matching `apps/mcp-manager/**` or relevant `docker/`/`tsconfig*` | `qa-mcp-manager-deploy` | MCP deploy via SSH start-app.sh |
@@ -142,7 +142,7 @@ Everything else **waits for next Friday**. Do not negotiate "kind of P0".
 ### Procedure
 
 1. Land the fix in `main` as fast as is responsible (still goes through PR + review).
-2. Open https://github.com/kodustech/kodus-ai/actions/workflows/selfhosted-build-push.yml
+2. Open https://github.com/elchapita43/codus-ai/actions/workflows/selfhosted-build-push.yml
 3. **Run workflow** with **`hotfix`: ☑ true**.
 4. The pipeline runs the same as Friday **except**:
    - `freeze-main` is skipped (main stays open — you may need follow-up fixes)
@@ -182,8 +182,8 @@ bypass is logged in repo Insights → Rule insights.
 **Failsafe** (if the runner dies mid-release with the freeze still active):
 
 ```bash
-gh api -X PUT repos/kodustech/kodus-ai/rulesets/17004627 \
-  --input <(jq '.enforcement="disabled"' <(gh api repos/kodustech/kodus-ai/rulesets/17004627))
+gh api -X PUT repos/elchapita43/codus-ai/rulesets/17004627 \
+  --input <(jq '.enforcement="disabled"' <(gh api repos/elchapita43/codus-ai/rulesets/17004627))
 ```
 
 ---
@@ -224,7 +224,7 @@ Two channels, one private, one public.
 | Webhook secret | Channel | Audience | What goes there |
 |---|---|---|---|
 | `DISCORD_WEBHOOK_INTERNAL` | private (team only) | Devs + founders | Everything operational: CI/PR test failures, QA deploys (backend/web/mcp), `e2e-cloud` per-deploy + nightly failures, `e2e-self-hosted-matrix` failures, model benchmark failures, SH release pipeline failures, cloud prod deploy success + failure |
-| `DISCORD_WEBHOOK_COMMUNITY` | public (Kodus community) | Customers, prospects | Only the changelog published per self-hosted release — cloud + SH ship the same image, so one announcement covers both audiences |
+| `DISCORD_WEBHOOK_COMMUNITY` | public (Codus community) | Customers, prospects | Only the changelog published per self-hosted release — cloud + SH ship the same image, so one announcement covers both audiences |
 
 The split is sharp because the audiences don't overlap: customers don't
 need to know QA was flaky, and devs don't need a separate copy of the
@@ -247,8 +247,8 @@ nothing goes silent. When you create `DISCORD_WEBHOOK_INTERNAL` and
 channel, then:
 
 ```bash
-gh secret set DISCORD_WEBHOOK_INTERNAL  -R kodustech/kodus-ai --body '<url for team channel>'
-gh secret set DISCORD_WEBHOOK_COMMUNITY -R kodustech/kodus-ai --body '<url for community channel>'
+gh secret set DISCORD_WEBHOOK_INTERNAL  -R elchapita43/codus-ai --body '<url for team channel>'
+gh secret set DISCORD_WEBHOOK_COMMUNITY -R elchapita43/codus-ai --body '<url for community channel>'
 ```
 
 After that, `DISCORD_WEBHOOK` and `DISCORD_WEBHOOK_SELFHOSTED` are
@@ -266,7 +266,7 @@ integration. This is a tenant state issue, not a workflow bug. Re-seed:
 yarn cloud:setup-tenants   # idempotent, signs up + onboards if missing
 ```
 
-Check `~/.kodus-dev/cloud-tenants.json` afterwards — every row should have
+Check `~/.codus-dev/cloud-tenants.json` afterwards — every row should have
 `registered: true` and `onboardingFinished: true`.
 
 ### Matrix cells fail with "Pipeline ack but 0 findings"

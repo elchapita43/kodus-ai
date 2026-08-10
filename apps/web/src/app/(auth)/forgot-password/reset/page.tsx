@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@components/ui/button";
 import { FormControl } from "@components/ui/form-control";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Input } from "@components/ui/input";
 import { Link } from "@components/ui/link";
 import { Page } from "@components/ui/page";

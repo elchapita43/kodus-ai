@@ -1,11 +1,11 @@
 ---
 title: "Single Sign-On"
-description: "Habilite o Single Sign-On (SSO) para acesso seguro e eficiente ao Kodus."
+description: "Habilite o Single Sign-On (SSO) para acesso seguro e eficiente ao Codus."
 ---
 
 ## Visão Geral
 
-O Single Sign-On (SSO) permite gerenciar o acesso ao Kodus por meio de um único provedor de identidade, simplificando a autenticação e aumentando a segurança.
+O Single Sign-On (SSO) permite gerenciar o acesso ao Codus por meio de um único provedor de identidade, simplificando a autenticação e aumentando a segurança.
 
 ## Primeiros Passos
 
@@ -23,8 +23,8 @@ O Single Sign-On (SSO) permite gerenciar o acesso ao Kodus por meio de um único
         </Info>
     </Step>
 
-    <Step title="Configurar o Kodus como SP no seu IdP">
-        Configure o Kodus como um SP no seu IdP fornecendo nosso ID de entidade (`kodus-orchestrator` por padrão) e a URL de callback da sua organização encontrada na página de configurações de SSO.
+    <Step title="Configurar o Codus como SP no seu IdP">
+        Configure o Codus como um SP no seu IdP fornecendo nosso ID de entidade (`codus-orchestrator` por padrão) e a URL de callback da sua organização encontrada na página de configurações de SSO.
 
         Certifique-se de que o formato do ID de nome está definido como e-mail.
 
@@ -34,7 +34,7 @@ O Single Sign-On (SSO) permite gerenciar o acesso ao Kodus por meio de um único
     </Step>
 
     <Step title="Habilitar e testar o SSO">
-        Habilite o SSO no Kodus e teste a configuração fazendo logout e login novamente. Ao tentar fazer login com um domínio de e-mail associado ao seu IdP, você terá a opção de fazer login via SSO.
+        Habilite o SSO no Codus e teste a configuração fazendo logout e login novamente. Ao tentar fazer login com um domínio de e-mail associado ao seu IdP, você terá a opção de fazer login via SSO.
     </Step>
 
 </Steps>
@@ -43,7 +43,7 @@ O Single Sign-On (SSO) permite gerenciar o acesso ao Kodus por meio de um único
 
 ### Mapeamento de Atributos
 
-Você pode mapear os seguintes atributos do seu IdP para os usuários do Kodus, melhorando a experiência do usuário.
+Você pode mapear os seguintes atributos do seu IdP para os usuários do Codus, melhorando a experiência do usuário.
 
 -   Primeiro Nome, mapeado para `firstName`
 -   Sobrenome, mapeado para `lastName`

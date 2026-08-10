@@ -605,7 +605,7 @@ function ReviewExpansion({
                     )}
                     {summary.cliVersion && (
                         <span className="text-text-tertiary ml-auto text-xs">
-                            Kodus CLI {summary.cliVersion}
+                            Codus CLI {summary.cliVersion}
                         </span>
                     )}
                 </div>
@@ -909,7 +909,7 @@ function UserCell({ row }: { row: CliReviewSummary }) {
 /**
  * Compact metadata line directly under the user email. Renders as a single
  * row of text with a colored dot for the auth mode and, when the dev's git
- * config differs from the logged-in Kodus account, a dimmer suffix with
+ * config differs from the logged-in Codus account, a dimmer suffix with
  * the git email. Replaces the old boxed badges, which felt disconnected
  * from the email above them in a dense table row.
  */
@@ -978,7 +978,7 @@ function CliAuthLine({
                         <TooltipContent className="text-xs">
                             Local <code>git config user.email</code> on the
                             machine that ran the review (may differ from the
-                            Kodus account).
+                            Codus account).
                         </TooltipContent>
                     </Tooltip>
                 </>
@@ -1091,7 +1091,7 @@ function EmptyState() {
                     No CLI reviews yet
                 </p>
                 <p className="text-text-tertiary max-w-sm text-pretty text-sm">
-                    Reviews triggered with the Kodus CLI by your team will
+                    Reviews triggered with the Codus CLI by your team will
                     appear here.
                 </p>
             </div>

@@ -1466,7 +1466,7 @@
  "meta": {
   "set": "all (50 per-PR cases / 136 goldens)",
   "judge": "claude-opus-5 inline (Claude Code session), same JUDGE_PROMPT as recall-judge.js — NOT the automated haiku/sonnet judge",
-  "judgeCaveat": "Verdicts were supplied by hand because the Anthropic API key in .env / ~/.kodus-dev/config was invalid (HTTP 401) on 2026-07-31. Both models were judged by the same rater in the same session, so the head-to-head is comparable; absolute values are NOT directly comparable to artifacts judged by the automated judge.",
+  "judgeCaveat": "Verdicts were supplied by hand because the Anthropic API key in .env / ~/.codus-dev/config was invalid (HTTP 401) on 2026-07-31. Both models were judged by the same rater in the same session, so the head-to-head is comparable; absolute values are NOT directly comparable to artifacts judged by the automated judge.",
   "scoring": "metrics produced by the repo recall-assertion.js with only matchComment swapped for the verdict table",
   "verdictsFile": "finder-recall-<model>-all50.verdicts.json",
   "datasetIssue": "optimize-spans-buffer-insertion-...-sentry and replays-self-serve-bulk-delete-system-sentry carry goldens belonging to OTHER PRs (paginator goldens). Both models score 0 there for no fault of their own; ~6 goldens deflate both denominators equally.",

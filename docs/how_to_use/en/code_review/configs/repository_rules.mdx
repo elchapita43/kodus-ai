@@ -1,6 +1,6 @@
 ---
 title: "Repository Rules"
-description: "Create custom Kody Rules directly in your repository using markdown files with structured templates."
+description: "Create custom Cody Rules directly in your repository using markdown files with structured templates."
 ---
 
 <Info>
@@ -8,7 +8,7 @@ Repository Rules use the same auto-sync mechanism as IDE rule file detection. En
 </Info>
 
 ## How to Use
-You can create custom Kody Rules directly in your repository by placing structured markdown files in specific directories. This allows you to version control your rules alongside your code and share them across your team.
+You can create custom Cody Rules directly in your repository by placing structured markdown files in specific directories. This allows you to version control your rules alongside your code and share them across your team.
 
 <Info>
 Repository rule files are imported **verbatim** — no LLM conversion. The frontmatter is parsed as-is, the markdown body becomes the rule's instructions exactly as you wrote it (identifiers, formatting and wording preserved), and the Bad/Good examples are imported structurally. Each file produces one rule. Files that don't parse as the template (missing frontmatter or `title`) fall back to the LLM importer used for free-form files.
@@ -16,14 +16,14 @@ Repository rule files are imported **verbatim** — no LLM conversion. The front
 
 ### Synchronization
 - **Automatic Detection**: Repository rules are automatically detected and synchronized when enabled
-- **Manual Sync**: Add `@kody-sync` to any rule file to sync it individually (works even with auto-sync disabled)
-- **Web Application**: Synchronized rules appear in your Kodus web application dashboard
+- **Manual Sync**: Add `@cody-sync` to any rule file to sync it individually (works even with auto-sync disabled)
+- **Web Application**: Synchronized rules appear in your Codus web application dashboard
 - **Real-time Updates**: Changes to rule files are synced when Pull Requests are closed
 
 ## File Location
 
 Place your rule files in one of these directories:
-- `.kody/rules/**/*.md`
+- `.cody/rules/**/*.md`
 - `rules/**/*.md`
 
 ## Rule Template
@@ -163,14 +163,14 @@ To use Repository Rules, you have two options:
 
 ### Option 1: Enable Auto-Sync (Recommended)
 1. **Enable Rules File Detection**: Toggle "Auto-sync rules from repo" in settings
-2. **Create rule files**: Place `.md` files in `.kody/rules/**` or `rules/**` directories
+2. **Create rule files**: Place `.md` files in `.cody/rules/**` or `rules/**` directories
 3. **Automatic sync**: All rule files sync when PRs are closed
 
 ### Option 2: Manual Sync (Selective)
-1. **Create rule files**: Place `.md` files in `.kody/rules/**` or `rules/**` directories
-2. **Add sync marker**: Include `@kody-sync` anywhere in the rule file
+1. **Create rule files**: Place `.md` files in `.cody/rules/**` or `rules/**` directories
+2. **Add sync marker**: Include `@cody-sync` anywhere in the rule file
 3. **Commit changes**: Only marked files will sync (auto-sync toggle stays off)
 
 <Tip>
-Repository Rules use the same synchronization mechanism as [Rules File Detection](/how_to_use/en/code_review/configs/rules_file_detection). Use manual sync (`@kody-sync`) to selectively sync specific rules without enabling automatic synchronization.
+Repository Rules use the same synchronization mechanism as [Rules File Detection](/how_to_use/en/code_review/configs/rules_file_detection). Use manual sync (`@cody-sync`) to selectively sync specific rules without enabling automatic synchronization.
 </Tip>

@@ -14,7 +14,7 @@ describe('RealRulesApi', () => {
         });
 
         const api = new RealRulesApi(requestWithRetry);
-        await api.createRule('kodus_team_key', {
+        await api.createRule('codus_team_key', {
             title: 'Use async/await',
             rule: 'Prefer async/await over raw promises',
             repositoryId: 'repo-1',
@@ -23,10 +23,10 @@ describe('RealRulesApi', () => {
             path: '**/*.ts',
         });
 
-        expect(requestWithRetry).toHaveBeenCalledWith('/cli/kody-rules', {
+        expect(requestWithRetry).toHaveBeenCalledWith('/cli/cody-rules', {
             method: 'POST',
             headers: {
-                'X-Team-Key': 'kodus_team_key',
+                'X-Team-Key': 'codus_team_key',
             },
             body: JSON.stringify({
                 title: 'Use async/await',
@@ -55,7 +55,7 @@ describe('RealRulesApi', () => {
         });
 
         expect(requestWithRetry).toHaveBeenCalledWith(
-            '/cli/kody-rules/rule-1',
+            '/cli/cody-rules/rule-1',
             {
                 method: 'PATCH',
                 headers: {
@@ -77,7 +77,7 @@ describe('RealRulesApi', () => {
         });
 
         const api = new RealRulesApi(requestWithRetry);
-        const result = await api.createRule('kodus_team_key', {
+        const result = await api.createRule('codus_team_key', {
             title: 'Use async/await',
             rule: 'Prefer async/await over raw promises',
             repositoryId: 'repo-1',
@@ -95,42 +95,42 @@ describe('RealRulesApi', () => {
         const requestWithRetry = vi.fn().mockResolvedValue([]);
 
         const api = new RealRulesApi(requestWithRetry);
-        await api.viewRules('kodus_team_key', {
+        await api.viewRules('codus_team_key', {
             repositoryId: 'repo-22',
         });
 
         expect(requestWithRetry).toHaveBeenCalledWith(
-            '/cli/kody-rules?repositoryId=repo-22',
+            '/cli/cody-rules?repositoryId=repo-22',
             {
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
             },
         );
 
-        await api.viewRules('kodus_team_key', {
+        await api.viewRules('codus_team_key', {
             ruleId: 'rule-99',
         });
 
         expect(requestWithRetry).toHaveBeenCalledWith(
-            '/cli/kody-rules?ruleId=rule-99',
+            '/cli/cody-rules?ruleId=rule-99',
             {
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
             },
         );
 
-        await api.viewRules('kodus_team_key', {
+        await api.viewRules('codus_team_key', {
             repositoryId: 'repo-22',
             ruleId: 'rule-99',
         });
 
         expect(requestWithRetry).toHaveBeenCalledWith(
-            '/cli/kody-rules?repositoryId=repo-22&ruleId=rule-99',
+            '/cli/cody-rules?repositoryId=repo-22&ruleId=rule-99',
             {
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
             },
         );
@@ -140,11 +140,11 @@ describe('RealRulesApi', () => {
         const requestWithRetry = vi.fn().mockResolvedValue([]);
 
         const api = new RealRulesApi(requestWithRetry);
-        await api.viewRules('kodus_team_key');
+        await api.viewRules('codus_team_key');
 
-        expect(requestWithRetry).toHaveBeenCalledWith('/cli/kody-rules', {
+        expect(requestWithRetry).toHaveBeenCalledWith('/cli/cody-rules', {
             headers: {
-                'X-Team-Key': 'kodus_team_key',
+                'X-Team-Key': 'codus_team_key',
             },
         });
     });

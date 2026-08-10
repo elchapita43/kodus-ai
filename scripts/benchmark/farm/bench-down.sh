@@ -2,7 +2,7 @@
 # bench-down.sh <slot>
 #
 # Destroy a farm slot's droplet. Thin wrapper over scripts/selfhosted/destroy.sh
-# (same provider abstraction + the `kodus-selfhosted-*` safety prefix), targeting
+# (same provider abstraction + the `codus-selfhosted-*` safety prefix), targeting
 # the slot's instance name bench-<slot>.
 #
 # Usage:
@@ -21,7 +21,7 @@ state_exists "$NAME" || { warn "Slot '$SLOT' has no droplet -- nothing to destro
 
 log "Destroying slot '$SLOT' ($NAME)..."
 # -y: non-interactive (the farm is script-driven; destroy.sh otherwise prompts
-# for confirmation and hangs). The `kodus-selfhosted-*` prefix safety check in
+# for confirmation and hangs). The `codus-selfhosted-*` prefix safety check in
 # destroy.sh still guards against nuking the wrong droplet.
 bash "${REPO_ROOT}/scripts/selfhosted/destroy.sh" --name "$NAME" -y
 ok "Slot '$SLOT' destroyed."

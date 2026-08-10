@@ -25,7 +25,7 @@ judge on a fixed, real set of pairs.
 
 ```bash
 cd evals/investigation/agreement
-# 1. build the pair set (finder keys: OpenAI + Anthropic in ~/.kodus-dev/config)
+# 1. build the pair set (finder keys: OpenAI + Anthropic in ~/.codus-dev/config)
 node build-pairs.js --set=pr --models=gpt-5.4,claude-sonnet-4-6
 # 2. run the study (judge keys resolved per candidate provider)
 node run-agreement.js --candidates=gpt-5.4-mini,claude-haiku-4-5,gemini-3-flash-preview
@@ -77,7 +77,7 @@ The **dedup** eval pins its judge to `claude-haiku-4-5` (in `evals/dedup/run.js`
 and forces off `gpt-5.4-mini`, so the judge always stays a different model than its
 `gpt-5.4-mini` dedup (non-circular).
 
-`kody-targets.json` is **not** affected: the kody-rules gate matches occurrences by
+`cody-targets.json` is **not** affected: the cody-rules gate matches occurrences by
 line number (enumerated ground truth ±tolerance), not via this LLM judge.
 
 ### Gemini status

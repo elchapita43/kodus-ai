@@ -11,7 +11,7 @@
  * span — so the numbers are identical, it only swaps "scan fat doc" for "read
  * from index".
  *
- * It MUST live under `attributes.*` (not top-level): the @kodus/flow MongoDB
+ * It MUST live under `attributes.*` (not top-level): the @codus/flow MongoDB
  * exporter owns the top-level doc shape and only persists what the app sets via
  * `span.setAttributes(...)`. A nested object there survives `deepSanitize`
  * untouched (it only redacts sensitive keys), so `attributes.tu.model` is a real
@@ -48,11 +48,11 @@ export interface TokenUsageTu {
  */
 export type TokenUsageArea =
     | 'review' // generalist code-review agents (incl. verify/dedup)
-    | 'kody_rules' // kody-rules analysis, generation and sync
+    | 'cody_rules' // cody-rules analysis, generation and sync
     | 'cross_file' // cross-file context collection + analysis
     | 'suggestions' // suggestion refinement (severity/safeguard/validation)
     | 'summary' // PR summary generation
-    | 'conversation' // @kody conversation
+    | 'conversation' // @cody conversation
     | 'system' // internal system analysis (SYSTEM_RUN_NAMES)
     | 'other';
 
@@ -101,10 +101,10 @@ export function deriveArea(
     const rn = typeof runName === 'string' ? runName : '';
 
     if (SYSTEM_RUN_NAMES.has(rn)) return 'system';
-    // kodyRulesAnalyzeCodeWithAI, generateKodyRules.*, prLevelKodyRules*,
-    // *KodyRulesAnalyzeCodeWithAI, kodyRulesFileToRules*, kodyMemoryResolution…
-    if (/kody.?rules?/i.test(rn) || rn.startsWith('kodyMemory')) {
-        return 'kody_rules';
+    // codyRulesAnalyzeCodeWithAI, generateCodyRules.*, prLevelCodyRules*,
+    // *CodyRulesAnalyzeCodeWithAI, codyRulesFileToRules*, codyMemoryResolution…
+    if (/cody.?rules?/i.test(rn) || rn.startsWith('codyMemory')) {
+        return 'cody_rules';
     }
     if (rn.startsWith('crossFile')) return 'cross_file';
     if (rn.startsWith('code-review') || rn.startsWith('analyzeCodeWithAI')) {

@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@nestjs/common';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 
 import { ObservabilityService } from '@libs/core/log/observability.service';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
@@ -34,7 +34,7 @@ export class GeneralistAgentProvider extends BaseCodeReviewAgentProvider {
 
     protected getIdentity(): ReviewAgentIdentity {
         return {
-            name: 'kodus-generalist-review-agent',
+            name: 'codus-generalist-review-agent',
             description:
                 'Senior code reviewer specialized in finding correctness, security, and performance issues in one pass. Investigates the diff and surrounding code before reporting.',
             goal: 'Find the highest-signal bugs, security vulnerabilities, and material performance regressions introduced by the diff with one investigation loop.',

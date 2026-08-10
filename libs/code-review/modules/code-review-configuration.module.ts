@@ -6,14 +6,14 @@ import { LicenseModule } from '@libs/ee/license/license.module';
 import { PermissionValidationModule } from '@libs/ee/shared/permission-validation.module';
 import { PermissionsModule } from '@libs/identity/modules/permissions.module';
 import { IntegrationConfigModule } from '@libs/integrations/modules/config.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { OrganizationParametersModule } from '@libs/organization/modules/organizationParameters.module';
 import { ParametersModule } from '@libs/organization/modules/parameters.module';
 import { PlatformModule } from '@libs/platform/modules/platform.module';
 import { Module, forwardRef } from '@nestjs/common';
 
 import { DeleteRepositoryCodeReviewParameterUseCase } from '../application/use-cases/configuration/delete-repository-code-review-parameter.use-case';
-import { GenerateKodusConfigFileUseCase } from '../application/use-cases/configuration/generate-kodus-config-file.use-case';
+import { GenerateCodusConfigFileUseCase } from '../application/use-cases/configuration/generate-codus-config-file.use-case';
 import { GetCliRepositorySettingsUseCase } from '../application/use-cases/configuration/get-cli-repository-settings.use-case';
 import { GetCodeReviewParameterUseCase } from '../application/use-cases/configuration/get-code-review-parameter.use-case';
 import { ListCodeReviewAutomationLabelsUseCase } from '../application/use-cases/configuration/list-code-review-automation-labels-use-case';
@@ -31,7 +31,7 @@ import { CentralizedConfigModule } from '@libs/centralized-config/modules/centra
         forwardRef(() => OrganizationParametersModule),
         forwardRef(() => CodebaseModule),
         forwardRef(() => PlatformModule),
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         forwardRef(() => PromptsModule),
         forwardRef(() => ContextReferenceModule),
         forwardRef(() => PullRequestMessagesModule),
@@ -43,7 +43,7 @@ import { CentralizedConfigModule } from '@libs/centralized-config/modules/centra
     ],
     providers: [
         DeleteRepositoryCodeReviewParameterUseCase,
-        GenerateKodusConfigFileUseCase,
+        GenerateCodusConfigFileUseCase,
         GetCliRepositorySettingsUseCase,
         GetCodeReviewParameterUseCase,
         ListCodeReviewAutomationLabelsUseCase,
@@ -55,7 +55,7 @@ import { CentralizedConfigModule } from '@libs/centralized-config/modules/centra
     ],
     exports: [
         DeleteRepositoryCodeReviewParameterUseCase,
-        GenerateKodusConfigFileUseCase,
+        GenerateCodusConfigFileUseCase,
         GetCliRepositorySettingsUseCase,
         GetCodeReviewParameterUseCase,
         ListCodeReviewAutomationLabelsUseCase,

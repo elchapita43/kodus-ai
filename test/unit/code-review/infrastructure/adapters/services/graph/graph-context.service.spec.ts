@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GraphContextService } from '@libs/code-review/infrastructure/adapters/services/graph/graph-context.service';
-import { KodusGraphCli } from '@libs/code-review/infrastructure/adapters/services/graph/kodus-graph-cli';
+import { CodusGraphCli } from '@libs/code-review/infrastructure/adapters/services/graph/codus-graph-cli';
 import { AstGraphRepository } from '@libs/code-review/infrastructure/adapters/repositories/astGraph.repository';
 import { IRepositoryService, REPOSITORY_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/RepositoryService.contract';
 import { SandboxInstance } from '@libs/sandbox/domain/contracts/sandbox.provider';
@@ -116,7 +116,7 @@ describe('GraphContextService', () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 GraphContextService,
-                KodusGraphCli,
+                CodusGraphCli,
                 { provide: AstGraphRepository, useValue: mockAstGraphRepo },
                 { provide: REPOSITORY_SERVICE_TOKEN, useValue: mockRepositoryRepo },
             ],
@@ -255,7 +255,7 @@ describe('GraphContextService', () => {
             expect(mockSandbox.run).not.toHaveBeenCalled();
         });
 
-        it('should install kodus-graph, write diff, and generate prompt', async () => {
+        it('should install codus-graph, write diff, and generate prompt', async () => {
             const changedFiles = createChangedFiles(
                 ['src/handler.ts', 'src/db.ts'],
                 { withPatch: true },

@@ -1,10 +1,10 @@
 ---
 name: business-rules-validation
 description: Validate PR code changes against task requirements to identify missing, forgotten, or overlooked business logic implementations
-allowed-tools: KODUS_GET_PULL_REQUEST KODUS_GET_PULL_REQUEST_DIFF
+allowed-tools: CODUS_GET_PULL_REQUEST CODUS_GET_PULL_REQUEST_DIFF
 metadata:
     version: '1.0.0'
-    kodus:
+    codus:
         capabilities:
             - pr.metadata.read
             - pr.diff.read
@@ -12,10 +12,10 @@ metadata:
         capability-definitions:
             pr.metadata.read:
                 mode: fixed_tools
-                tools: KODUS_GET_PULL_REQUEST
+                tools: CODUS_GET_PULL_REQUEST
             pr.diff.read:
                 mode: fixed_tools
-                tools: KODUS_GET_PULL_REQUEST_DIFF
+                tools: CODUS_GET_PULL_REQUEST_DIFF
             task.context.read:
                 mode: provider_dynamic
         fetcher-policy:
@@ -229,7 +229,7 @@ For each acceptance criterion checked, briefly state what code satisfies it:
 - AC #2: "[requirement]" → Implemented in `file:line` — [brief explanation]
 
 ---
-*Analysis performed by Kodus AI Business Rules Validator*
+*Analysis performed by Codus AI Business Rules Validator*
 ```
 
 Additional output rules:

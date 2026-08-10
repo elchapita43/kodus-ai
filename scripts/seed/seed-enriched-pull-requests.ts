@@ -865,7 +865,7 @@ async function connectToMongo(): Promise<MongoClient> {
         process.env.SEED_MONGO_PORT ?? process.env.API_MG_DB_PORT ?? 27017,
     );
     const database =
-        process.env.SEED_MONGO_DATABASE ?? process.env.API_MG_DB_DATABASE ?? 'kodus_db';
+        process.env.SEED_MONGO_DATABASE ?? process.env.API_MG_DB_DATABASE ?? 'codus_db';
 
     const credentials = username ? `${username}:${password}@` : '';
     const uri = `mongodb://${credentials}${host}:${port}/${database}?authSource=${username ? 'admin' : database}`;
@@ -1059,7 +1059,7 @@ async function main() {
             .db(
                 process.env.SEED_MONGO_DATABASE ??
                     process.env.API_MG_DB_DATABASE ??
-                    'kodus_db',
+                    'codus_db',
             )
             .collection('pullRequests');
 

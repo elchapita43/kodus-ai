@@ -1,4 +1,4 @@
-export { GetKodyRulesHealthUseCase } from './get-kody-rules-health.use-case';
+export { GetCodyRulesHealthUseCase } from './get-cody-rules-health.use-case';
 export { SendOrgReportUseCase } from './send-org-report.use-case';
 export type { SendOrgReportInput } from './send-org-report.use-case';
 export { SendRepoReportUseCase } from './send-repo-report.use-case';

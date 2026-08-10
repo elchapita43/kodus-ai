@@ -28,7 +28,7 @@ const DIVIDER_COLOR = '#E5E7EB';
 
 // White-on-dark wordmark, displayed against the dark header banner.
 const LOGO_URL =
-    'https://kodus.io/wp-content/uploads/2023/11/Kodus-logo-light.png';
+    'https://kodus.io/wp-content/uploads/2023/11/Codus-logo-light.png';
 
 const main: React.CSSProperties = {
     backgroundColor: PAGE_BG,
@@ -93,13 +93,13 @@ export function BrandLayout({ preview, children }: Props) {
             <Body style={main}>
                 <Container style={container}>
                     <Section style={header}>
-                        <Img src={LOGO_URL} alt="Kodus" style={logo} />
+                        <Img src={LOGO_URL} alt="Codus" style={logo} />
                     </Section>
                     <Section style={card}>
                         {children}
                         <Hr style={divider} />
                         <Text style={footer}>
-                            Kodus, LLC ·{' '}
+                            Codus, LLC ·{' '}
                             <Link href="https://kodus.io" style={footerLink}>
                                 kodus.io
                             </Link>

@@ -1,7 +1,7 @@
 {
   "type": "excalidraw",
   "version": 2,
-  "source": "kodus-harness-gen",
+  "source": "codus-harness-gen",
   "elements": [
     {
       "id": "title",
@@ -30,11 +30,11 @@
       "locked": false,
       "fontSize": 30,
       "fontFamily": 2,
-      "text": "Kodus \u2014 Code Review Harness (atual)",
+      "text": "Codus \u2014 Code Review Harness (atual)",
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "Kodus \u2014 Code Review Harness (atual)",
+      "originalText": "Codus \u2014 Code Review Harness (atual)",
       "lineHeight": 1.25,
       "baseline": 30
     },
@@ -2100,11 +2100,11 @@
       "locked": false,
       "fontSize": 12,
       "fontFamily": 2,
-      "text": "3 specialized agents (+ Kody Rules)\n\n\ud83d\udc1e Bug \u2014 logic, edge cases, races, nulls\n\ud83d\udd12 Security \u2014 authz, injection, secrets\n\u26a1 Performance \u2014 N+1, leaks, hot paths\n\ud83d\udccf Kody Rules \u2014 custom org rules",
+      "text": "3 specialized agents (+ Cody Rules)\n\n\ud83d\udc1e Bug \u2014 logic, edge cases, races, nulls\n\ud83d\udd12 Security \u2014 authz, injection, secrets\n\u26a1 Performance \u2014 N+1, leaks, hot paths\n\ud83d\udccf Cody Rules \u2014 custom org rules",
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "agents",
-      "originalText": "3 specialized agents (+ Kody Rules)\n\n\ud83d\udc1e Bug \u2014 logic, edge cases, races, nulls\n\ud83d\udd12 Security \u2014 authz, injection, secrets\n\u26a1 Performance \u2014 N+1, leaks, hot paths\n\ud83d\udccf Kody Rules \u2014 custom org rules",
+      "originalText": "3 specialized agents (+ Cody Rules)\n\n\ud83d\udc1e Bug \u2014 logic, edge cases, races, nulls\n\ud83d\udd12 Security \u2014 authz, injection, secrets\n\u26a1 Performance \u2014 N+1, leaks, hot paths\n\ud83d\udccf Cody Rules \u2014 custom org rules",
       "lineHeight": 1.25,
       "baseline": 12
     },
@@ -2520,11 +2520,11 @@
       "locked": false,
       "fontSize": 12,
       "fontFamily": 2,
-      "text": "11 \u00b7 KodyFineTuning\nrule clustering",
+      "text": "11 \u00b7 CodyFineTuning\nrule clustering",
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "ee_ft",
-      "originalText": "11 \u00b7 KodyFineTuning\nrule clustering",
+      "originalText": "11 \u00b7 CodyFineTuning\nrule clustering",
       "lineHeight": 1.25,
       "baseline": 12
     },

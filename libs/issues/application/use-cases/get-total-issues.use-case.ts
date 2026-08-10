@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import { GetIssuesByFiltersDto } from '@libs/core/domain/dtos/get-issues-by-filters.dto';
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';
 import { UserRequest } from '@libs/core/infrastructure/config/types/http/user-request.type';
@@ -14,7 +14,7 @@ import {
     IIssuesService,
     ISSUES_SERVICE_TOKEN,
 } from '@libs/issues/domain/contracts/issues.service.contract';
-import { KodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/kodyIssuesManagement.service';
+import { CodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/codyIssuesManagement.service';
 
 @Injectable()
 export class GetTotalIssuesUseCase implements IUseCase {
@@ -22,8 +22,8 @@ export class GetTotalIssuesUseCase implements IUseCase {
         @Inject(ISSUES_SERVICE_TOKEN)
         private readonly issuesService: IIssuesService,
 
-        @Inject(KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
-        private readonly kodyIssuesManagementService: KodyIssuesManagementService,
+        @Inject(CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
+        private readonly codyIssuesManagementService: CodyIssuesManagementService,
 
         @Inject(REQUEST)
         private readonly request: UserRequest,
@@ -33,7 +33,7 @@ export class GetTotalIssuesUseCase implements IUseCase {
 
     async execute(filters: GetIssuesByFiltersDto): Promise<number> {
         const newFilters: Parameters<
-            typeof this.kodyIssuesManagementService.buildFilter
+            typeof this.codyIssuesManagementService.buildFilter
         >[0] = { ...filters };
 
         if (!newFilters?.organizationId) {
@@ -52,7 +52,7 @@ export class GetTotalIssuesUseCase implements IUseCase {
         }
 
         const filter =
-            await this.kodyIssuesManagementService.buildFilter(newFilters);
+            await this.codyIssuesManagementService.buildFilter(newFilters);
         return this.issuesService.count(filter);
     }
 }

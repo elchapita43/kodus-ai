@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Post a comment as the seeded `kodus-dev` user on the seeded MR. The
-# helper exists because the @kody chat commands and the Note Hook
+# Post a comment as the seeded `codus-dev` user on the seeded MR. The
+# helper exists because the @cody chat commands and the Note Hook
 # delivery path are only reachable by actually posting a comment —
 # neither is exercised by the bare MR.
 #
@@ -8,8 +8,8 @@
 # payload's author matches what GitLab would emit in real use.
 #
 # Usage:
-#   bash scripts/gitlab-dev/post-comment.sh --body "@kody start-review"
-#   echo "@kody start-review" | bash scripts/gitlab-dev/post-comment.sh
+#   bash scripts/gitlab-dev/post-comment.sh --body "@cody start-review"
+#   echo "@cody start-review" | bash scripts/gitlab-dev/post-comment.sh
 #
 # Pre-reqs: scripts/gitlab-dev/create-project.sh and create-mr.sh have
 # been run (so .tmp/gitlab-dev-pat.txt and .tmp/gitlab-dev-mr-url.txt
@@ -60,7 +60,7 @@ MR_URL="$(cat "${MR_URL_FILE}")"
 MR_IID="${MR_URL##*/}"
 
 # Serialise the body through python's json module so newlines, quotes,
-# emoji, and `@kody …` slashes survive into the JSON payload unmodified.
+# emoji, and `@cody …` slashes survive into the JSON payload unmodified.
 PAYLOAD=$(python3 -c "import json,sys; print(json.dumps({'body': sys.argv[1]}))" "${BODY}")
 
 echo "==> posting comment as ${USER_NAME} on MR !${MR_IID}"

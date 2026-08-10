@@ -1,14 +1,14 @@
 ---
 title: "Qual é a diferença entre Regras de Revisão e Memórias"
-description: "Entenda quando usar Regras de Revisão vs Memórias no Kody para obter os melhores resultados de revisão de código."
+description: "Entenda quando usar Regras de Revisão vs Memórias no Cody para obter os melhores resultados de revisão de código."
 ---
 
-Na interface de Regras do Kody, você configura duas coisas diferentes, e saber quando usar cada uma torna suas revisões de código mais eficazes.
+Na interface de Regras do Cody, você configura duas coisas diferentes, e saber quando usar cada uma torna suas revisões de código mais eficazes.
 
 Uma regra prática:
 
-- **Memórias** ensinam ao Kody como seu codebase funciona para que futuras revisões e sugestões sejam mais relevantes.
-- **Regras de Revisão** dizem ao Kody o que ele deve sinalizar quando um PR não estiver batendo com seus padrões.
+- **Memórias** ensinam ao Cody como seu codebase funciona para que futuras revisões e sugestões sejam mais relevantes.
+- **Regras de Revisão** dizem ao Cody o que ele deve sinalizar quando um PR não estiver batendo com seus padrões.
 
 ## Regras de Revisão
 
@@ -28,7 +28,7 @@ Regras de Revisão são **verificações tradicionais de revisão de código** q
 
 ## Memórias
 
-Memórias são **instruções contextuais persistentes** injetadas em todas as interações — revisões de código, conversas e sugestões de IA. Elas representam o conhecimento de contexto que o Kody deve carregar sobre seu codebase, suas convenções e preferências.
+Memórias são **instruções contextuais persistentes** injetadas em todas as interações — revisões de código, conversas e sugestões de IA. Elas representam o conhecimento de contexto que o Cody deve carregar sobre seu codebase, suas convenções e preferências.
 
 **Melhores para:**
 - Contexto do codebase ("este repositório espelha uma API de terceiros, então alguns campos externos permanecem intencionalmente em snake_case")
@@ -38,10 +38,10 @@ Memórias são **instruções contextuais persistentes** injetadas em todas as i
 
 **Como funcionam:**
 - Injetadas como contexto de alta prioridade em todos os prompts
-- Melhoram sugestões futuras ao dar ao Kody contexto específico do repositório
-- Criadas via conversa (`@kody remember: ...`) ou manualmente na interface
+- Melhoram sugestões futuras ao dar ao Cody contexto específico do repositório
+- Criadas via conversa (`@cody remember: ...`) ou manualmente na interface
 - Com escopo de diretório, repositório ou nível de organização
-- O Kody deduplica automaticamente e resolve conflitos entre memórias
+- O Cody deduplica automaticamente e resolve conflitos entre memórias
 
 ## Quando usar cada uma
 
@@ -58,4 +58,4 @@ Memórias são **instruções contextuais persistentes** injetadas em todas as i
 
 Sim. No modal de Memórias Pendentes, você pode **converter uma memória em uma Regra de Revisão** se decidir que ela precisa de uma aplicação mais estruturada com caminhos de arquivo e níveis de severidade.
 
-Para detalhes, consulte [Regras do Kody](/how_to_use/pt-br/code_review/configs/kody_rules).
+Para detalhes, consulte [Regras do Cody](/how_to_use/pt-br/code_review/configs/cody_rules).

@@ -1,5 +1,5 @@
 {
-    "name": "kodus-e2e-playwright",
+    "name": "codus-e2e-playwright",
     "version": "0.1.0",
     "private": true,
     "type": "module",

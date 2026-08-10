@@ -1,9 +1,9 @@
 ---
 title: "Custom Prompts"
-description: "Customize Kody's review prompts for each category and how suggestions are written to match your team's needs"
+description: "Customize Cody's review prompts for each category and how suggestions are written to match your team's needs"
 ---
 
-Custom Prompts give you complete control over how Kody analyzes your code and communicates findings. Tailor what the AI looks for in each review category and how it presents suggestions to match your team's standards and communication style.
+Custom Prompts give you complete control over how Cody analyzes your code and communicates findings. Tailor what the AI looks for in each review category and how it presents suggestions to match your team's standards and communication style.
 
 <Card
   title="Access Custom Prompts Settings"
@@ -17,16 +17,16 @@ Custom Prompts give you complete control over how Kody analyzes your code and co
 
 <CardGroup cols={2}>
   <Card title="Team-Specific Standards" icon="users">
-    Align Kody's reviews with your team's unique coding standards, architectural patterns, and best practices
+    Align Cody's reviews with your team's unique coding standards, architectural patterns, and best practices
   </Card>
   <Card title="Model Optimization" icon="brain">
     Craft prompts optimized for your specific AI model's strengths when using BYOK
   </Card>
   <Card title="Focus Control" icon="bullseye">
-    Direct Kody's attention to issues that matter most to your project and reduce noise
+    Direct Cody's attention to issues that matter most to your project and reduce noise
   </Card>
   <Card title="Communication Style" icon="comments">
-    Customize how Kody presents suggestions - detailed for critical issues or concise for minor ones
+    Customize how Cody presents suggestions - detailed for critical issues or concise for minor ones
   </Card>
 </CardGroup>
 
@@ -36,7 +36,7 @@ Custom Prompts operate at two levels:
 
 ### Category Prompts
 
-Define what Kody looks for in each review category:
+Define what Cody looks for in each review category:
 
 <Tabs>
   <Tab title="Bug">
@@ -84,20 +84,20 @@ Define what Kody looks for in each review category:
 
 ### Suggestion Prompts
 
-Control how Kody communicates each individual suggestion. This customizes the message format and tone that appears in PR comments, like:
+Control how Cody communicates each individual suggestion. This customizes the message format and tone that appears in PR comments, like:
 
 ```
 The new file 'create-or-update-issues-parameter.dto.ts' does not follow 
-the company's naming convention. According to the Kody Rules, all new files 
+the company's naming convention. According to the Cody Rules, all new files 
 must use camelCase. Please rename the file to 'createOrUpdateIssuesParameter.dto.ts' 
 to adhere to the standard.
 ```
 
-Your custom prompt instructs Kody on how to write suggestion messages. The prompt receives context about the severity level, problem description, suggested code, and whether it's a Kody Rules violation. Kody uses this context along with your prompt to generate appropriate messages for each suggestion.
+Your custom prompt instructs Cody on how to write suggestion messages. The prompt receives context about the severity level, problem description, suggested code, and whether it's a Cody Rules violation. Cody uses this context along with your prompt to generate appropriate messages for each suggestion.
 
 You can customize the tone, level of detail, and communication style based on your team's needs - from detailed explanations for critical issues to concise feedback for minor ones.
 
-## Setting them in `kodus-config.yml`
+## Setting them in `codus-config.yml`
 
 The same four fields are available under the `v2PromptOverrides` key:
 
@@ -109,17 +109,17 @@ v2PromptOverrides:
     categories:
         descriptions:
             bug: |
-                What Kody should look for in the Bug category.
+                What Cody should look for in the Bug category.
             performance: |
-                What Kody should look for in the Performance category.
+                What Cody should look for in the Performance category.
             security: |
-                What Kody should look for in the Security category.
+                What Cody should look for in the Security category.
 ```
 
 These four are what the web UI exposes, and each is capped at 2000 characters. There is no
 prompt override for the Business Logic category.
 
-The config file accepts one more group that the UI doesn't surface — the severity rubric Kody
+The config file accepts one more group that the UI doesn't surface — the severity rubric Cody
 uses to classify a finding:
 
 ```yaml
@@ -134,30 +134,30 @@ v2PromptOverrides:
 ```
 
 <Warning>
-  This changes how Kody *classifies* findings, not just how it words them — a bad rubric can
+  This changes how Cody *classifies* findings, not just how it words them — a bad rubric can
   quietly mute or inflate severities across every review. Start from the shipped defaults in
-  [`default-kodus-config.yml`](https://github.com/kodustech/kodus-ai/blob/main/default-kodus-config.yml)
+  [`default-codus-config.yml`](https://github.com/elchapita43/codus-ai/blob/main/default-codus-config.yml)
   rather than writing a rubric from scratch.
 </Warning>
 
 <Note>
-  The shipped `default-kodus-config.yml` also contains a `v2PromptOverrides.level` group. It is
+  The shipped `default-codus-config.yml` also contains a `v2PromptOverrides.level` group. It is
   still accepted for backward compatibility but **the engine no longer reads it** — setting it
   changes nothing. Only `categories.descriptions`, `severity.flags` and `generation.main` reach
   the review.
 </Note>
 
-The file is only read once `kodusConfigFileOverridesWebPreferences` is enabled (see
+The file is only read once `codusConfigFileOverridesWebPreferences` is enabled (see
 [General](/how_to_use/en/code_review/configs/general)).
 
 ## External References
 
-All custom prompts—Category, Suggestion, and PR Summary—support referencing real files from the codebases Kody can access. When you save an update, Kody automatically detects external references and resolves them for future reviews.
+All custom prompts—Category, Suggestion, and PR Summary—support referencing real files from the codebases Cody can access. When you save an update, Cody automatically detects external references and resolves them for future reviews.
 
-- Use `@file:path/to/file.ts` to point at files in the repository you're editing; Kody will try to locate the path locally first.
+- Use `@file:path/to/file.ts` to point at files in the repository you're editing; Cody will try to locate the path locally first.
 - Include `@repo:org/project` when referencing files from another repository or when editing prompts at the global level.
 - Prefer precise blob-style paths rather than placeholders so the model can reliably find the right file.
-- After saving, Kody processes the references in the background. Check the status indicator beside the prompt editor to confirm when resolution completes.
+- After saving, Cody processes the references in the background. Check the status indicator beside the prompt editor to confirm when resolution completes.
 
 ## Best Practices
 
@@ -278,7 +278,7 @@ Only differentiate suggestion formats when there's a real reason:
 <Tabs>
   <Tab title="Good: Meaningful Difference">
     ```
-    For Kody Rules violations, use a stricter tone: 
+    For Cody Rules violations, use a stricter tone: 
     "**Team Standard**: [problem]. Required: [code]"
     
     For standard suggestions, use a friendlier tone:
@@ -292,7 +292,7 @@ Only differentiate suggestion formats when there's a real reason:
   
   <Tab title="Bad: Superficial Label">
     ```
-    For Kody Rules, add "[RULE]" prefix before the problem.
+    For Cody Rules, add "[RULE]" prefix before the problem.
     For suggestions, add "[SUGGESTION]" prefix before the problem.
     Otherwise format them the same way.
     ```
@@ -318,7 +318,7 @@ Only differentiate suggestion formats when there's a real reason:
     - Missing patient consent verification
     ```
     
-    **Benefit:** Kody catches compliance-specific issues that generic security reviews might miss.
+    **Benefit:** Cody catches compliance-specific issues that generic security reviews might miss.
   </Accordion>
 
   <Accordion title="Tech Stack Optimization">
@@ -410,13 +410,13 @@ Only differentiate suggestion formats when there's a real reason:
   </Accordion>
 
   <Accordion title="Different Tone for Rules vs Suggestions">
-    **Scenario:** Kody Rules are strict requirements, suggestions are recommendations
+    **Scenario:** Cody Rules are strict requirements, suggestions are recommendations
     
     **Custom Suggestion Prompt:**
     ```
     Use different tones based on the type:
     
-    For Kody Rules violations:
+    For Cody Rules violations:
     - Start with "**Team Standard Violation**" in bold
     - State the problem
     - Add "This violates documented team standards."
@@ -446,7 +446,7 @@ Only differentiate suggestion formats when there's a real reason:
   </Accordion>
 
   <Accordion title="Missing Expected Issues">
-    **Symptoms:** Kody doesn't catch issues it should
+    **Symptoms:** Cody doesn't catch issues it should
     
     **Solutions:**
     - Review your prompt for being too narrow or example-specific
@@ -493,11 +493,11 @@ Only differentiate suggestion formats when there's a real reason:
   </Accordion>
 
   <Accordion title="What happens to existing PRs when I change prompts?">
-    Changes only affect new reviews. Re-run with `@kody start-review` to apply new prompts to existing PRs.
+    Changes only affect new reviews. Re-run with `@cody start-review` to apply new prompts to existing PRs.
   </Accordion>
 
-  <Accordion title="Can I customize prompts with kodus-config.yml?">
-    No. Custom prompts are web-only to ensure intentional changes. Other settings (ignored paths, branches) can use `kodus-config.yml`.
+  <Accordion title="Can I customize prompts with codus-config.yml?">
+    No. Custom prompts are web-only to ensure intentional changes. Other settings (ignored paths, branches) can use `codus-config.yml`.
   </Accordion>
 
   <Accordion title="Should I customize all prompts or just some?">
@@ -509,7 +509,7 @@ Only differentiate suggestion formats when there's a real reason:
   </Accordion>
 
   <Accordion title="What's the difference between Category prompts and Suggestion prompts?">
-    **Category prompts** control what Kody analyzes in each review category. **Suggestion prompts** control how Kody presents findings to your team. You can customize both independently.
+    **Category prompts** control what Cody analyzes in each review category. **Suggestion prompts** control how Cody presents findings to your team. You can customize both independently.
   </Accordion>
 
   <Accordion title="Can I use markdown in suggestion prompts?">
@@ -517,10 +517,10 @@ Only differentiate suggestion formats when there's a real reason:
   </Accordion>
 
   <Accordion title="What happens if my suggestion template has syntax errors?">
-    Kody will fall back to the default suggestion format and notify you of the error in settings.
+    Cody will fall back to the default suggestion format and notify you of the error in settings.
   </Accordion>
 
-  <Accordion title="Do suggestion prompts work for both Kody Rules and standard suggestions?">
-    Yes. Use the `isKodyRule` variable to create different messages for rules vs suggestions in the same prompt.
+  <Accordion title="Do suggestion prompts work for both Cody Rules and standard suggestions?">
+    Yes. Use the `isCodyRule` variable to create different messages for rules vs suggestions in the same prompt.
   </Accordion>
 </AccordionGroup>

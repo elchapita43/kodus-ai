@@ -7,7 +7,7 @@ description: "Aplique configurações de code review personalizadas a pastas esp
 
 Aplique configurações de code review personalizadas a pastas específicas do seu repositório. Ideal para monorepos onde áreas diferentes possuem padrões ou responsabilidades distintas.
 
-Kody seleciona uma única configuração por PR: **Diretório** → **Repositório** → **Global**
+Cody seleciona uma única configuração por PR: **Diretório** → **Repositório** → **Global**
 
 <Note>
   Saiba como as configurações fluem entre os níveis em <a href="/how_to_use/pt-br/code_review/configs/inheritance_overrides">Herança e Sobrescrita de Configuração</a>.
@@ -26,7 +26,7 @@ Kody seleciona uma única configuração por PR: **Diretório** → **Repositór
 - **Dois ou mais diretórios configurados alterados**: Escala para a configuração do repositório (ou global se não houver configuração de repositório)
 
 <Note>
-  Kody usa uma configuração por PR para manter as revisões previsíveis. Misturar configurações causa conflitos.
+  Cody usa uma configuração por PR para manter as revisões previsíveis. Misturar configurações causa conflitos.
 </Note>
 
 ## Exemplos
@@ -55,4 +55,4 @@ Kody seleciona uma única configuração por PR: **Diretório** → **Repositór
 2. Adicione entradas de diretório e atribua configurações
 3. Salve as alterações
 
-Se você também usa `kodus-config.yml`, ele sobrescreve as configurações da interface web (veja Prioridade de Configuração nas configurações Gerais).
+Se você também usa `codus-config.yml`, ele sobrescreve as configurações da interface web (veja Prioridade de Configuração nas configurações Gerais).

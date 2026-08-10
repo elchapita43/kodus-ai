@@ -1,6 +1,6 @@
 ---
 title: "Descripción General"
-description: "Rastrea y gestiona las sugerencias no implementadas con la función Kody Issues."
+description: "Rastrea y gestiona las sugerencias no implementadas con la función Cody Issues."
 ---
 
 ## Resumen Rápido
@@ -12,10 +12,10 @@ description: "Rastrea y gestiona las sugerencias no implementadas con la funció
 
 ## Qué es
 
-La función **Kody Issues** rastrea automáticamente todas las sugerencias generadas por Kody que **no se implementaron** en tus pull requests (PRs). Actúa como un sonar, proporcionando una lista en vivo de mejoras pendientes para asegurarte de que nunca pierdas de vista la retroalimentación crítica.
+La función **Cody Issues** rastrea automáticamente todas las sugerencias generadas por Cody que **no se implementaron** en tus pull requests (PRs). Actúa como un sonar, proporcionando una lista en vivo de mejoras pendientes para asegurarte de que nunca pierdas de vista la retroalimentación crítica.
 
-<Frame caption="Panel de Kody Issues que muestra las sugerencias rastreadas con filtros y gestión de estado">
-  <img src="/images/issues.png" alt="Panel de Kody Issues" />
+<Frame caption="Panel de Cody Issues que muestra las sugerencias rastreadas con filtros y gestión de estado">
+  <img src="/images/issues.png" alt="Panel de Cody Issues" />
 </Frame>
 
 ## Beneficios Principales
@@ -44,17 +44,17 @@ La función **Kody Issues** rastrea automáticamente todas las sugerencias gener
 </Note>
 
 <Warning>
-  Las reglas de Kody de tipo **PR** no generan issues. Solo las sugerencias a nivel de archivo y de código específico crean issues rastreables.
+  Las reglas de Cody de tipo **PR** no generan issues. Solo las sugerencias a nivel de archivo y de código específico crean issues rastreables.
 </Warning>
 
-- Cuando un PR es **cerrado**, Kody compila todas las sugerencias realizadas en ese PR que **no se aplicaron**
-- Para cada sugerencia no implementada, Kody crea automáticamente un **Issue** vinculado al repositorio
+- Cuando un PR es **cerrado**, Cody compila todas las sugerencias realizadas en ese PR que **no se aplicaron**
+- Para cada sugerencia no implementada, Cody crea automáticamente un **Issue** vinculado al repositorio
 - Cada issue incluye el contexto de la sugerencia original, la ubicación del archivo y el nivel de severidad
 
 ### 2. Resolución Automática
 
-- Si un desarrollador implementa el cambio sugerido en un **PR posterior**, Kody marca el Issue asociado como **Resuelto**
-- Kody empareja inteligentemente los cambios implementados con los issues existentes usando análisis de código
+- Si un desarrollador implementa el cambio sugerido en un **PR posterior**, Cody marca el Issue asociado como **Resuelto**
+- Cody empareja inteligentemente los cambios implementados con los issues existentes usando análisis de código
 - La resolución ocurre automáticamente sin intervención manual
 
 ### 3. Gestión Manual
@@ -115,17 +115,17 @@ La función **Kody Issues** rastrea automáticamente todas las sugerencias gener
 
 <CardGroup cols={2}>
   <Card
-    title="Configuración de Kody Rules"
+    title="Configuración de Cody Rules"
     icon="user-police"
-    href="/how_to_use/es/code_review/configs/kody_rules"
+    href="/how_to_use/es/code_review/configs/cody_rules"
   >
     Configura reglas personalizadas que se rastrearán como issues
   </Card>
   <Card
     title="Aprendizaje del Equipo"
     icon="graduation-cap"
-    href="/how_to_use/es/code_review/learning/kody_learning"
+    href="/how_to_use/es/code_review/learning/cody_learning"
   >
-    Aprende cómo Kody mejora las sugerencias basándose en la retroalimentación de tu equipo
+    Aprende cómo Cody mejora las sugerencias basándose en la retroalimentación de tu equipo
   </Card>
 </CardGroup>

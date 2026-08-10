@@ -701,9 +701,9 @@ describe('CodeReviewPipelineObserver', () => {
             context.errors = [
                 {
                     stage: 'ProcessFilesPrLevelReviewStage',
-                    substage: 'kody-rules',
+                    substage: 'cody-rules',
                     error: new Error('Timeout waiting for LLM response'),
-                    // kody-rules failure is auxiliary — the main review
+                    // cody-rules failure is auxiliary — the main review
                     // still has value, so the stage degrades partially.
                     severity: 'partial',
                 },

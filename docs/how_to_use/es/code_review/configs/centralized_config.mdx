@@ -1,15 +1,15 @@
 ---
 title: "Configuración Centralizada"
-description: "Gestiona toda la configuración de code review y las Kody Rules como código en un único repositorio. Los cambios se sincronizan automáticamente tras cada merge; el despliegue se controla desde la UI o el CLI."
+description: "Gestiona toda la configuración de code review y las Cody Rules como código en un único repositorio. Los cambios se sincronizan automáticamente tras cada merge; el despliegue se controla desde la UI o el CLI."
 ---
 
-La Configuración Centralizada te permite mantener cada ajuste de code review y cada Kody Rule en **un único repositorio** en lugar de editarlos por repositorio en la interfaz web. Cada cambio fluye a través de un pull request en ese repositorio, dándote historial de versiones, revisión y rollback sobre tu configuración de revisión.
+La Configuración Centralizada te permite mantener cada ajuste de code review y cada Cody Rule en **un único repositorio** en lugar de editarlos por repositorio en la interfaz web. Cada cambio fluye a través de un pull request en ese repositorio, dándote historial de versiones, revisión y rollback sobre tu configuración de revisión.
 
 Úsala cuando quieras:
 
 - Una única fuente de verdad para el comportamiento de revisión a través de muchos repositorios.
 - Configuración-como-código: historial, revisión en PR, rollback, validación en CI.
-- Kody Rules consistentes (reglas de revisión y memorias) en toda la organización.
+- Cody Rules consistentes (reglas de revisión y memorias) en toda la organización.
 - Cambios de configuración gestionados desde el CLI o CI.
 
 ## Cómo Funciona
@@ -17,59 +17,59 @@ La Configuración Centralizada te permite mantener cada ajuste de code review y 
 1. Elige un repositorio para almacenar tu configuración centralizada.
 2. Habilita la Configuración Centralizada en la UI y apúntala a ese repositorio.
 3. Elige un **modo de sincronización inicial**:
-   - `pr` — Kodus abre el PR de inicialización con tu configuración efectiva actual y las reglas.
-   - `manual` — Kodus genera los archivos; tu equipo los descarga y abre el PR.
-4. Después del primer merge, cada merge futuro en el repositorio centralizado propaga automáticamente los cambios a Kodus.
+   - `pr` — Codus abre el PR de inicialización con tu configuración efectiva actual y las reglas.
+   - `manual` — Codus genera los archivos; tu equipo los descarga y abre el PR.
+4. Después del primer merge, cada merge futuro en el repositorio centralizado propaga automáticamente los cambios a Codus.
 
-El repositorio centralizado refleja la jerarquía de alcance de Kodus (Global → Repositorio → Directorio) a través de su estructura de carpetas.
+El repositorio centralizado refleja la jerarquía de alcance de Codus (Global → Repositorio → Directorio) a través de su estructura de carpetas.
 
 ## Estructura del Repositorio
 
-El repositorio centralizado usa rutas de carpetas para mapear archivos a alcances. La estructura cubre tanto la configuración de revisión (`kodus-config.yml`) como las Kody Rules (`.kody-rules/`).
+El repositorio centralizado usa rutas de carpetas para mapear archivos a alcances. La estructura cubre tanto la configuración de revisión (`codus-config.yml`) como las Cody Rules (`.cody-rules/`).
 
 <Note>
-El nombre del repositorio es arbitrario — elige el que mejor se adapte a tu organización. A continuación se usa `kodus-config` como convención.
+El nombre del repositorio es arbitrario — elige el que mejor se adapte a tu organización. A continuación se usa `codus-config` como convención.
 </Note>
 
 ```
-kodus-config/
-├── kodus-config.yml                      ← configuración global
-├── .kody-rules/
+codus-config/
+├── codus-config.yml                      ← configuración global
+├── .cody-rules/
 │   ├── review/                           ← reglas de revisión globales
 │   │   └── require-tests-for-endpoints.yml
 │   └── memories/                         ← memorias globales
 │       └── logging-convention.yml
 │
-├── backend-api/                          ← corresponde a un repo de Kodus
-│   ├── kodus-config.yml                  ← overrides a nivel de repositorio
-│   ├── .kody-rules/
+├── backend-api/                          ← corresponde a un repo de Codus
+│   ├── codus-config.yml                  ← overrides a nivel de repositorio
+│   ├── .cody-rules/
 │   │   ├── review/
 │   │   │   └── no-raw-sql.yml
 │   │   └── memories/
 │   │       └── auth-module-layout.yml
 │   │
 │   └── src/auth/                         ← corresponde a un subdirectorio del repo
-│       ├── kodus-config.yml              ← overrides a nivel de directorio
-│       └── .kody-rules/
+│       ├── codus-config.yml              ← overrides a nivel de directorio
+│       └── .cody-rules/
 │           ├── review/
 │           └── memories/
 │
 └── frontend-web/
-    └── kodus-config.yml
+    └── codus-config.yml
 ```
 
 Reglas:
 
-- Un `kodus-config.yml` en la **raíz** del repositorio centralizado se aplica globalmente.
-- Una carpeta de nivel superior cuyo nombre coincida con un repositorio de Kodus (p. ej. `backend-api/`) limita los archivos a ese repositorio.
+- Un `codus-config.yml` en la **raíz** del repositorio centralizado se aplica globalmente.
+- Una carpeta de nivel superior cuyo nombre coincida con un repositorio de Codus (p. ej. `backend-api/`) limita los archivos a ese repositorio.
 - Una ruta anidada dentro de una carpeta de repositorio (p. ej. `backend-api/src/auth/`) limita los archivos a ese directorio, siguiendo el mismo modelo de herencia que la interfaz web.
-- Las reglas bajo `.kody-rules/review/` se convierten en **reglas de revisión**; las reglas bajo `.kody-rules/memories/` se convierten en **memorias**.
+- Las reglas bajo `.cody-rules/review/` se convierten en **reglas de revisión**; las reglas bajo `.cody-rules/memories/` se convierten en **memorias**.
 
 Cualquier archivo sin un alcance coincidente se ignora en la sincronización.
 
 ## Archivos de Configuración
 
-Cada `kodus-config.yml` usa el mismo esquema que el `kodus-config.yml` por repositorio documentado en [Configuración General](/how_to_use/es/code_review/configs/general). Los campos se aplican al nivel de la carpeta donde vive el archivo y siguen las reglas de herencia habituales (ver [Herencia y Overrides de Configuración](/how_to_use/es/code_review/configs/inheritance_overrides)).
+Cada `codus-config.yml` usa el mismo esquema que el `codus-config.yml` por repositorio documentado en [Configuración General](/how_to_use/es/code_review/configs/general). Los campos se aplican al nivel de la carpeta donde vive el archivo y siguen las reglas de herencia habituales (ver [Herencia y Overrides de Configuración](/how_to_use/es/code_review/configs/inheritance_overrides)).
 
 Ejemplo mínimo:
 
@@ -82,18 +82,18 @@ reviewOptions:
   business_logic: true
 suggestionControl:
   severityLevelFilter: medium
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 ignorePaths:
   - yarn.lock
   - package-lock.json
 automatedReviewActive: true
 ```
 
-## Archivos de Kody Rules
+## Archivos de Cody Rules
 
-Cada regla es un único archivo YAML bajo `.kody-rules/review/` (reglas estándar) o `.kody-rules/memories/` (memorias). El nombre del archivo es arbitrario — Kodus identifica las reglas por el campo `title` y por la ruta canónica del archivo almacenada con la regla.
+Cada regla es un único archivo YAML bajo `.cody-rules/review/` (reglas estándar) o `.cody-rules/memories/` (memorias). El nombre del archivo es arbitrario — Codus identifica las reglas por el campo `title` y por la ruta canónica del archivo almacenada con la regla.
 
-Ejemplo de regla de revisión (`.kody-rules/review/require-tests-for-endpoints.yml`):
+Ejemplo de regla de revisión (`.cody-rules/review/require-tests-for-endpoints.yml`):
 
 ```yaml
 title: Require tests for new endpoints
@@ -116,7 +116,7 @@ inheritance:
   include: []
 ```
 
-Consulta [Descripción General de Kody Rules](/how_to_use/es/code_review/configs/kody_rules) para la referencia completa de campos y [Herencia de Reglas](/how_to_use/es/code_review/configs/rules_inheritance) para entender el comportamiento de `inheritance.inheritable`, `exclude` e `include`.
+Consulta [Descripción General de Cody Rules](/how_to_use/es/code_review/configs/cody_rules) para la referencia completa de campos y [Herencia de Reglas](/how_to_use/es/code_review/configs/rules_inheritance) para entender el comportamiento de `inheritance.inheritable`, `exclude` e `include`.
 
 ## Flujo de Trabajo en la UI
 
@@ -135,7 +135,7 @@ Desde **Configuración → Code Review → General**:
 Cuando la Configuración Centralizada está habilitada, la fuente de verdad para la configuración es el repositorio centralizado. La interfaz web refleja esto:
 
 - **Los ajustes de code review de repositorio, directorio y globales** se vuelven de solo lectura en la interfaz web. Edítalos abriendo un PR en el repositorio centralizado.
-- **Las Kody Rules y los Mensajes de PR** permanecen editables en la interfaz web. Guardar una edición no muta la regla directamente — Kodus abre un pull request en el repositorio centralizado con el cambio propuesto. Una vez que el PR es mergeado, el cambio se activa.
+- **Las Cody Rules y los Mensajes de PR** permanecen editables en la interfaz web. Guardar una edición no muta la regla directamente — Codus abre un pull request en el repositorio centralizado con el cambio propuesto. Una vez que el PR es mergeado, el cambio se activa.
 
 Esto preserva la garantía de "todo está revisado y versionado" mientras mantiene la experiencia de edición visual para reglas y mensajes.
 
@@ -145,10 +145,10 @@ Habilitar la Configuración Centralizada **no** elimina las reglas creadas previ
 
 - Las reglas importadas del repositorio centralizado se persisten con estado `SYNCED`.
 - Las reglas creadas directamente en la interfaz web conviven con ellas y permanecen activas.
-- Al momento de la revisión, Kodus carga **todas las reglas activas** de la base de datos sin importar el origen. Una regla que existe solo en la UI se aplica exactamente igual que una regla que existe solo en el repo.
+- Al momento de la revisión, Codus carga **todas las reglas activas** de la base de datos sin importar el origen. Una regla que existe solo en la UI se aplica exactamente igual que una regla que existe solo en el repo.
 - Las reglas con estado `PENDING_ADD` (una edición desde UI/CLI que abrió un PR aún no mergeado) están **excluidas** de las revisiones hasta que el PR sea mergeado y el estado pase a `SYNCED`.
 
-En la práctica: si creas el repositorio centralizado manualmente y le falta una regla que ya tenías en la UI, esa regla sigue funcionando — simplemente no queda versionada en el repo. Para llevarla al versionado, edítala una vez desde la UI (lo que abre un PR) o usa `init` para que Kodus empaquete cada regla existente en el PR de inicialización.
+En la práctica: si creas el repositorio centralizado manualmente y le falta una regla que ya tenías en la UI, esa regla sigue funcionando — simplemente no queda versionada en el repo. Para llevarla al versionado, edítala una vez desde la UI (lo que abre un PR) o usa `init` para que Codus empaquete cada regla existente en el PR de inicialización.
 
 ## Estados de Sincronización
 
@@ -156,7 +156,7 @@ Cada regla que proviene de la Configuración Centralizada rastrea su ciclo de vi
 
 | Estado | Significado |
 |---|---|
-| `SYNCED` | La regla en Kodus coincide con el archivo en el repositorio centralizado. |
+| `SYNCED` | La regla en Codus coincide con el archivo en el repositorio centralizado. |
 | `PENDING_ADD` | Se creó una nueva regla vía UI/CLI y se abrió un PR; el archivo aún no existe en la rama predeterminada. |
 | `PENDING_EDIT` | Se propuso una edición vía UI/CLI y hay un PR abierto; el archivo existente aún no ha sido actualizado. |
 | `PENDING_DELETE` | Se propuso una eliminación vía UI/CLI y hay un PR abierto; el archivo todavía existe en la rama predeterminada. |
@@ -167,18 +167,18 @@ Cada regla que proviene de la Configuración Centralizada rastrea su ciclo de vi
 
 <Tabs>
   <Tab title="PR (predeterminado)">
-    Kodus abre el pull request de inicialización automáticamente con tu
+    Codus abre el pull request de inicialización automáticamente con tu
     configuración efectiva actual y las reglas.
   </Tab>
   <Tab title="Manual">
-    Kodus genera los archivos pero no abre un PR. Usa el paquete de descarga
+    Codus genera los archivos pero no abre un PR. Usa el paquete de descarga
     para exportar los archivos, luego abre y mergea el PR tú mismo.
   </Tab>
 </Tabs>
 
 ## Descargar Paquete de Configuración
 
-Puedes descargar un ZIP con los archivos `kodus-config.yml` generados y el árbol `.kody-rules/` que reflejan tu configuración y reglas actuales.
+Puedes descargar un ZIP con los archivos `codus-config.yml` generados y el árbol `.cody-rules/` que reflejan tu configuración y reglas actuales.
 
 Úsalo cuando:
 
@@ -189,9 +189,9 @@ Puedes descargar un ZIP con los archivos `kodus-config.yml` generados y el árbo
 
 ## Deshabilitar la Configuración Centralizada
 
-Deshabilitar la Configuración Centralizada borra el repositorio fuente seleccionado y devuelve todos los repositorios al comportamiento estándar no centralizado (ajustes editados en la interfaz web, `kodus-config.yml` opcional por repositorio).
+Deshabilitar la Configuración Centralizada borra el repositorio fuente seleccionado y devuelve todos los repositorios al comportamiento estándar no centralizado (ajustes editados en la interfaz web, `codus-config.yml` opcional por repositorio).
 
-Las reglas y ajustes que fueron sincronizados permanecen en Kodus — no se eliminan al deshabilitar.
+Las reglas y ajustes que fueron sincronizados permanecen en Codus — no se eliminan al deshabilitar.
 
 ## CLI
 
@@ -200,24 +200,24 @@ Usa estos comandos para gestionar la Configuración Centralizada desde flujos de
 ### Requisitos
 
 - Autenticación con clave de equipo.
-- Al menos un repositorio seleccionado en Kodus.
+- Al menos un repositorio seleccionado en Codus.
 
 Autentícate con:
 
 ```bash
-kodus auth team-key --key <your-key>
+codus auth team-key --key <your-key>
 ```
 
 ### Verificar Estado
 
 ```bash
-kodus config centralized status
+codus config centralized status
 ```
 
 ### Inicializar la Configuración Centralizada
 
 ```bash
-kodus config centralized init [owner/repo] --sync-option <pr|manual>
+codus config centralized init [owner/repo] --sync-option <pr|manual>
 ```
 
 Notas:
@@ -229,49 +229,49 @@ Notas:
 Ejemplos:
 
 ```bash
-kodus config centralized init kodustech/kodus-config --sync-option pr
-kodus config centralized init kodustech/kodus-config --sync-option manual
+codus config centralized init elchapita43/codus-config --sync-option pr
+codus config centralized init elchapita43/codus-config --sync-option manual
 ```
 
 ### Ejecutar Sincronización
 
 ```bash
-kodus config centralized sync
+codus config centralized sync
 ```
 
 ### Deshabilitar la Configuración Centralizada
 
 ```bash
-kodus config centralized disable
+codus config centralized disable
 ```
 
 ### Descargar ZIP de Configuración
 
 ```bash
-kodus config centralized download --out ./centralized-config.zip
+codus config centralized download --out ./centralized-config.zip
 ```
 
 Notas:
 
 - `--out` es obligatorio.
-- La salida es un paquete ZIP con los archivos de configuración generados y el árbol `.kody-rules/`.
+- La salida es un paquete ZIP con los archivos de configuración generados y el árbol `.cody-rules/`.
 
 ### Salida en JSON
 
 Todos los comandos centralizados soportan salida estructurada con `--json`.
 
 ```bash
-kodus config centralized status --json
-kodus config centralized init kodustech/kodus-config --sync-option pr --json
-kodus config centralized sync --json
-kodus config centralized disable --json
-kodus config centralized download --out ./centralized-config.zip --json
+codus config centralized status --json
+codus config centralized init elchapita43/codus-config --sync-option pr --json
+codus config centralized sync --json
+codus config centralized disable --json
+codus config centralized download --out ./centralized-config.zip --json
 ```
 
 ## Relacionados
 
 - [Configuración General](/how_to_use/es/code_review/configs/general)
 - [Herencia y Overrides de Configuración](/how_to_use/es/code_review/configs/inheritance_overrides)
-- [Descripción General de Kody Rules](/how_to_use/es/code_review/configs/kody_rules)
+- [Descripción General de Cody Rules](/how_to_use/es/code_review/configs/cody_rules)
 - [Herencia de Reglas](/how_to_use/es/code_review/configs/rules_inheritance)
 - [Referencia de comandos del CLI](/how_to_use/es/cli/commands)

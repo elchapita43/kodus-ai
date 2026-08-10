@@ -1,6 +1,6 @@
 ---
 title: "概述"
-description: "使用 Kody 工单功能跟踪和管理未实施的建议。"
+description: "使用 Cody 工单功能跟踪和管理未实施的建议。"
 ---
 
 ## 快速概述
@@ -12,10 +12,10 @@ description: "使用 Kody 工单功能跟踪和管理未实施的建议。"
 
 ## 是什么
 
-**Kody 工单**功能自动跟踪 Kody 生成的所有在您的拉取请求(PR)中**未实施**的建议。它就像声纳一样,提供待处理改进的实时列表,确保您永远不会失去对关键反馈的关注。
+**Cody 工单**功能自动跟踪 Cody 生成的所有在您的拉取请求(PR)中**未实施**的建议。它就像声纳一样,提供待处理改进的实时列表,确保您永远不会失去对关键反馈的关注。
 
-<Frame caption="Kody 工单仪表板显示带有过滤器和状态管理的跟踪建议">
-  <img src="/images/issues.png" alt="Kody 工单仪表板" />
+<Frame caption="Cody 工单仪表板显示带有过滤器和状态管理的跟踪建议">
+  <img src="/images/issues.png" alt="Cody 工单仪表板" />
 </Frame>
 
 ## 主要优势
@@ -44,17 +44,17 @@ description: "使用 Kody 工单功能跟踪和管理未实施的建议。"
 </Note>
 
 <Warning>
-  类型为 **PR** 的 Kody 规则不会生成工单。只有文件级和特定代码的建议才会创建可跟踪的工单。
+  类型为 **PR** 的 Cody 规则不会生成工单。只有文件级和特定代码的建议才会创建可跟踪的工单。
 </Warning>
 
-- 当 PR **关闭**时,Kody 汇编该 PR 中所有**未应用**的建议
-- 对于每个未实施的建议,Kody 自动创建一个链接到代码库的**工单**
+- 当 PR **关闭**时,Cody 汇编该 PR 中所有**未应用**的建议
+- 对于每个未实施的建议,Cody 自动创建一个链接到代码库的**工单**
 - 每个工单都包含原始建议上下文、文件位置和严重性级别
 
 ### 2. 自动解决
 
-- 如果开发人员在**后续 PR** 中实施了建议的更改,Kody 会将相关工单标记为**已解决**
-- Kody 使用代码分析智能地将实施的更改与现有工单匹配
+- 如果开发人员在**后续 PR** 中实施了建议的更改,Cody 会将相关工单标记为**已解决**
+- Cody 使用代码分析智能地将实施的更改与现有工单匹配
 - 解决自动发生,无需手动干预
 
 ### 3. 手动管理
@@ -115,17 +115,17 @@ description: "使用 Kody 工单功能跟踪和管理未实施的建议。"
 
 <CardGroup cols={2}>
   <Card
-    title="Kody 规则设置"
+    title="Cody 规则设置"
     icon="user-police"
-    href="/how_to_use/zh/code_review/configs/kody_rules"
+    href="/how_to_use/zh/code_review/configs/cody_rules"
   >
     配置将作为工单跟踪的自定义规则
   </Card>
   <Card
     title="团队学习"
     icon="graduation-cap"
-    href="/how_to_use/zh/code_review/learning/kody_learning"
+    href="/how_to_use/zh/code_review/learning/cody_learning"
   >
-    了解 Kody 如何根据团队反馈改进建议
+    了解 Cody 如何根据团队反馈改进建议
   </Card>
 </CardGroup>

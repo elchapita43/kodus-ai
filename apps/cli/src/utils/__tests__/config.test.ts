@@ -38,7 +38,7 @@ describe('config utils', () => {
 
     it('returns null when config file does not exist', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-config-test-'),
+            path.join(os.tmpdir(), 'codus-config-test-'),
         );
         tempDirs.push(home);
         const { loadConfig } = await importConfigModule(home);
@@ -48,15 +48,15 @@ describe('config utils', () => {
 
     it('saves and loads config successfully', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-config-test-'),
+            path.join(os.tmpdir(), 'codus-config-test-'),
         );
         tempDirs.push(home);
         const { saveConfig, loadConfig } = await importConfigModule(home);
 
         const input = {
-            teamKey: 'kodus_abc123',
+            teamKey: 'codus_abc123',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         };
 
         await saveConfig(input);
@@ -67,18 +67,18 @@ describe('config utils', () => {
 
     it('writes config atomically without leaving temp files', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-config-test-'),
+            path.join(os.tmpdir(), 'codus-config-test-'),
         );
         tempDirs.push(home);
         const { saveConfig } = await importConfigModule(home);
 
         await saveConfig({
-            teamKey: 'kodus_abc123',
+            teamKey: 'codus_abc123',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
+            organizationName: 'Codus',
         });
 
-        const configDir = path.join(home, '.kodus');
+        const configDir = path.join(home, '.codus');
         const files = await fs.readdir(configDir);
         expect(files.some((f) => f.includes('.tmp'))).toBe(false);
         expect(files).toContain('config.json');
@@ -86,16 +86,16 @@ describe('config utils', () => {
 
     it('saves and loads config with apiUrl and Cloudflare Access fields', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-config-test-'),
+            path.join(os.tmpdir(), 'codus-config-test-'),
         );
         tempDirs.push(home);
         const { saveConfig, loadConfig } = await importConfigModule(home);
 
         const input = {
-            teamKey: 'kodus_abc123',
+            teamKey: 'codus_abc123',
             teamName: 'Platform Team',
-            organizationName: 'Kodus',
-            apiUrl: 'https://kodus.example.com',
+            organizationName: 'Codus',
+            apiUrl: 'https://codus.example.com',
             cfAccessClientId: 'my-client-id',
             cfAccessClientSecret: 'my-client-secret',
         };
@@ -108,12 +108,12 @@ describe('config utils', () => {
 
     it('self-heals malformed JSON by isolating corrupted config', async () => {
         const home = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-config-test-'),
+            path.join(os.tmpdir(), 'codus-config-test-'),
         );
         tempDirs.push(home);
         const { loadConfig } = await importConfigModule(home);
 
-        const configDir = path.join(home, '.kodus');
+        const configDir = path.join(home, '.codus');
         const configFile = path.join(configDir, 'config.json');
         await fs.mkdir(configDir, { recursive: true });
         await fs.writeFile(configFile, '{ malformed-json ', 'utf-8');

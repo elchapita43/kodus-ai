@@ -58,7 +58,7 @@ export class UpdateCommentsAndGenerateSummaryStage extends BasePipelineStage<Cod
 
         // A "failed" review (from the user's perspective) is one with a
         // critical pipeline error — main agent rejected, sandbox blew up,
-        // validation aborted, etc. Partial failures (kody-rules agent,
+        // validation aborted, etc. Partial failures (cody-rules agent,
         // pr-level comment posting, business-logic validation, etc.)
         // don't get the error variant of the message but DO get a short
         // generic notice appended explaining *why* auto-approve was
@@ -82,7 +82,7 @@ export class UpdateCommentsAndGenerateSummaryStage extends BasePipelineStage<Cod
             };
         };
 
-        // Optional team-authored guidance appended below Kody's default error
+        // Optional team-authored guidance appended below Cody's default error
         // comment (issue #1452). Honored whenever the review failed and the
         // message has content — the presence of content is the switch (there is
         // no separate on/off toggle for the error message). Empty/unset content

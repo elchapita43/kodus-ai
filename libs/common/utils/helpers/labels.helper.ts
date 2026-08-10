@@ -18,8 +18,8 @@ export const getSelectedLabels = (
             'Suggestions to improve the consistency and adherence to coding standards.',
         documentation_and_comments:
             'Suggestions related to improving code documentation.',
-        kody_rules:
-            'Suggestions that enforce the rules defined in the Kody configuration.',
+        cody_rules:
+            'Suggestions that enforce the rules defined in the Cody configuration.',
         breaking_changes:
             'Suggestions that address breaking changes in the code.',
     } as const;

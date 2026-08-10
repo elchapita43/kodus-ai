@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 // The public demo no longer ships its own marketing landing — the PR input
-// and the "featured PR" grid live on the main Kodus site, which talks to the
+// and the "featured PR" grid live on the main Codus site, which talks to the
 // public API directly (POST /cli/public/review-pr, GET /cli/public/featured-reviews).
 // This app only renders the review result screen at /r/[jobId]; `/` just
 // bounces to the marketing site.

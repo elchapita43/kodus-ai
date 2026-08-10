@@ -21,10 +21,10 @@ function IdeRulesSyncFailedEmail({
     correlationId,
 }: IdeRulesSyncFailedEmailProps) {
     return (
-        <BrandLayout preview={`Kody could not sync IDE rules in ${repoName}`}>
+        <BrandLayout preview={`Cody could not sync IDE rules in ${repoName}`}>
             <Heading style={baseHeading}>IDE rule sync failed</Heading>
             <Text style={baseText}>
-                Kody could not finish syncing IDE rules from{' '}
+                Cody could not finish syncing IDE rules from{' '}
                 <strong>{repoName}</strong>.
             </Text>
             <Text style={baseText}>
@@ -41,7 +41,7 @@ function IdeRulesSyncFailedEmail({
 
 IdeRulesSyncFailedEmail.PreviewProps = {
     repoName: 'acme/api',
-    reason: 'Failed to fetch .kody-rules/ from default branch',
+    reason: 'Failed to fetch .cody-rules/ from default branch',
     correlationId: 'sync-9505e80b-e6df-42f9',
 } satisfies IdeRulesSyncFailedEmailProps;
 

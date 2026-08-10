@@ -110,7 +110,7 @@ export const RichTextEditorWithMentions = React.forwardRef<
         (pos: number) => {
             // No suggestions to show → let Tiptap insert the literal `@` so
             // users can type things like `@file:owner/repo/path` inside a
-            // kody rule description without the editor swallowing the key.
+            // cody rule description without the editor swallowing the key.
             // `groupsRef.current` can be `undefined` when the parent passes
             // `groups={undefined}` before the useEffect below has run, so
             // the optional-chain is needed to avoid a TypeError crash.

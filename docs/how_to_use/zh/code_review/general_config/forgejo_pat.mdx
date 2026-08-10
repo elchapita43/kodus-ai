@@ -1,6 +1,6 @@
 ---
 title: "Forgejo 访问令牌"
-description: "生成 Kody 读取代码库并发布审查评论所需的 Forgejo 访问令牌。"
+description: "生成 Cody 读取代码库并发布审查评论所需的 Forgejo 访问令牌。"
 ---
 
 <Note>
@@ -9,7 +9,7 @@ description: "生成 Kody 读取代码库并发布审查评论所需的 Forgejo 
 
 ## 简介
 
-要启用 Kody 在 Forgejo 上执行自动代码审查，您需要生成一个**访问令牌**。此令牌允许 Kody 访问您的仓库、拉取请求、Webhook、工单等，具有下面列出的特定权限。
+要启用 Cody 在 Forgejo 上执行自动代码审查，您需要生成一个**访问令牌**。此令牌允许 Cody 访问您的仓库、拉取请求、Webhook、工单等，具有下面列出的特定权限。
 
 ---
 
@@ -18,16 +18,16 @@ description: "生成 Kody 读取代码库并发布审查评论所需的 Forgejo 
 1. 访问您的 Forgejo 实例，点击右上角的头像图标
 2. 选择 **Settings**
 3. 导航到 **Applications**
-4. 在 **Generate New Token** 部分，为令牌命名（例如 `kodus_code_review`）
+4. 在 **Generate New Token** 部分，为令牌命名（例如 `codus_code_review`）
 5. 选择所需的权限（见下文）
 6. 点击 **Generate Token**
 7. **立即复制**令牌并安全存储 — 关闭页面后将无法再次查看
 
 ---
 
-## Kody 所需的权限
+## Cody 所需的权限
 
-令牌必须包含**所有**以下权限才能与 Kody 完全配合使用：
+令牌必须包含**所有**以下权限才能与 Cody 完全配合使用：
 
 | 类别 | 级别 | 用途 |
 |------|------|------|
@@ -38,9 +38,9 @@ description: "生成 Kody 读取代码库并发布审查评论所需的 Forgejo 
 
 ---
 
-## 将令牌添加到 Kody
+## 将令牌添加到 Cody
 
-在启用 Forgejo 集成时，将生成的令牌粘贴到 **Kody 集成设置屏幕**中。
+在启用 Forgejo 集成时，将生成的令牌粘贴到 **Cody 集成设置屏幕**中。
 
 ---
 

@@ -42,7 +42,7 @@ import {
     McpConnectionsResponseDto,
     McpIntegrationDetailsDto,
     McpIntegrationDto,
-    McpKodusIntegrationResponseDto,
+    McpCodusIntegrationResponseDto,
     McpMessageResponseDto,
     McpOAuthInitResponseDto,
     McpRequiredParamDto,
@@ -58,7 +58,7 @@ import { McpService } from './mcp.service';
 @Controller('mcp')
 @ApiTags('MCP')
 @ApiBearerAuth()
-@ApiExtraModels(McpIntegrationDto, McpKodusIntegrationResponseDto)
+@ApiExtraModels(McpIntegrationDto, McpCodusIntegrationResponseDto)
 @UseGuards(AuthGuard)
 export class McpController {
     constructor(private readonly mcpService: McpService) {}
@@ -84,7 +84,7 @@ export class McpController {
         name: 'provider',
         required: false,
         type: String,
-        example: 'kodusmcp',
+        example: 'codusmcp',
     })
     @ApiQuery({
         name: 'appName',
@@ -250,7 +250,7 @@ export class McpController {
     @ApiParam({
         name: 'provider',
         type: String,
-        example: 'kodusmcp',
+        example: 'codusmcp',
     })
     @ApiParam({
         name: 'integrationId',
@@ -282,7 +282,7 @@ export class McpController {
     @ApiParam({
         name: 'provider',
         type: String,
-        example: 'kodusmcp',
+        example: 'codusmcp',
     })
     @ApiParam({
         name: 'integrationId',
@@ -312,7 +312,7 @@ export class McpController {
     @ApiParam({
         name: 'provider',
         type: String,
-        example: 'kodusmcp',
+        example: 'codusmcp',
     })
     @ApiParam({
         name: 'integrationId',
@@ -344,7 +344,7 @@ export class McpController {
     @ApiParam({
         name: 'provider',
         type: String,
-        example: 'kodusmcp',
+        example: 'codusmcp',
     })
     @ApiBody({ type: InitiateConnectionDto })
     initiateConnection(
@@ -442,11 +442,11 @@ export class McpController {
         );
     }
 
-    @Get('integration/kodusmcp/:integrationId/connection-config')
+    @Get('integration/codusmcp/:integrationId/connection-config')
     @ApiOperation({
-        summary: 'Get Kodus MCP integration connection config',
+        summary: 'Get Codus MCP integration connection config',
         description:
-            'Returns the resolved auth header(s) for a managed (kodusmcp) connection — refreshed OAuth bearer or a stored static token. Internal use only.',
+            'Returns the resolved auth header(s) for a managed (codusmcp) connection — refreshed OAuth bearer or a stored static token. Internal use only.',
     })
     @ApiParam({
         name: 'integrationId',
@@ -456,21 +456,21 @@ export class McpController {
     @ApiUnauthorizedResponse({ type: ErrorResponseDto })
     @ApiForbiddenResponse({ type: ErrorResponseDto })
     @ApiInternalServerErrorResponse({ type: ErrorResponseDto })
-    getKodusMcpConnectionConfig(
+    getCodusMcpConnectionConfig(
         @Param('integrationId') integrationId: string,
         @Req() request: FastifyRequest,
     ) {
-        return this.mcpService.getKodusMCPConnectionConfig(
+        return this.mcpService.getCodusMCPConnectionConfig(
             request.organizationId,
             integrationId,
         );
     }
 
-    @Post('integration/kodusmcp/:integrationId/token')
+    @Post('integration/codusmcp/:integrationId/token')
     @ApiOperation({
         summary: 'Connect a managed integration with a token',
         description:
-            'Connects a managed (kodusmcp) integration using a user-supplied static token (bring-your-own-token auth method).',
+            'Connects a managed (codusmcp) integration using a user-supplied static token (bring-your-own-token auth method).',
     })
     @ApiCreatedResponse({ type: McpConnectionDto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
@@ -498,13 +498,13 @@ export class McpController {
     @Post('integration/:provider')
     @ApiOperation({
         summary: 'Create integration',
-        description: 'Creates a custom integration or a Kodus MCP integration.',
+        description: 'Creates a custom integration or a Codus MCP integration.',
     })
     @ApiOkResponse({
         schema: {
             oneOf: [
                 { $ref: getSchemaPath(McpIntegrationDto) },
-                { $ref: getSchemaPath(McpKodusIntegrationResponseDto) },
+                { $ref: getSchemaPath(McpCodusIntegrationResponseDto) },
             ],
         },
     })

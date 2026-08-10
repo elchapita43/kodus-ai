@@ -36,7 +36,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
     it('falls back to team key when bearer auth returns 401', async () => {
         mockAuthService.getValidToken.mockResolvedValue('eyJ.user.token');
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_team_key',
+            teamKey: 'codus_team_key',
             teamName: 'Team',
             organizationName: 'Org',
         } as any);
@@ -52,7 +52,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
             } as any);
 
         const result = await reviewService.getPullRequestSuggestions({
-            prUrl: 'https://github.com/kodustech/cli/pull/6',
+            prUrl: 'https://github.com/elchapita43/cli/pull/6',
         });
 
         expect(mockApi.review.getPullRequestSuggestions).toHaveBeenCalledTimes(
@@ -64,30 +64,30 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
             1,
             'eyJ.user.token',
             expect.objectContaining({
-                prUrl: 'https://github.com/kodustech/cli/pull/6',
+                prUrl: 'https://github.com/elchapita43/cli/pull/6',
             }),
         );
         expect(
             mockApi.review.getPullRequestSuggestions,
         ).toHaveBeenNthCalledWith(
             2,
-            'kodus_team_key',
+            'codus_team_key',
             expect.objectContaining({
-                prUrl: 'https://github.com/kodustech/cli/pull/6',
+                prUrl: 'https://github.com/elchapita43/cli/pull/6',
             }),
         );
         expect(result.result.summary).toBe('Suggestions');
     });
 
     it('does not fallback when token is already a team key', async () => {
-        mockAuthService.getValidToken.mockResolvedValue('kodus_team_key');
+        mockAuthService.getValidToken.mockResolvedValue('codus_team_key');
         mockApi.review.getPullRequestSuggestions = vi
             .fn()
             .mockRejectedValue(new ApiError(401, 'Unauthorized'));
 
         await expect(
             reviewService.getPullRequestSuggestions({
-                prUrl: 'https://github.com/kodustech/cli/pull/6',
+                prUrl: 'https://github.com/elchapita43/cli/pull/6',
             }),
         ).rejects.toThrow(ApiError);
 
@@ -103,7 +103,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
 
         await expect(
             reviewService.getPullRequestSuggestions({
-                prUrl: 'https://github.com/kodustech/cli/pull/6',
+                prUrl: 'https://github.com/elchapita43/cli/pull/6',
             }),
         ).rejects.toThrow(ApiError);
     });
@@ -114,7 +114,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
 
         mockAuthService.getValidToken.mockResolvedValue('eyJ.user.token');
         mockLoadConfig.mockResolvedValue({
-            teamKey: 'kodus_team_key',
+            teamKey: 'codus_team_key',
             teamName: 'Team',
             organizationName: 'Org',
         } as any);
@@ -125,7 +125,7 @@ describe('ReviewService getPullRequestSuggestions auth fallback', () => {
 
         await expect(
             reviewService.getPullRequestSuggestions({
-                prUrl: 'https://github.com/kodustech/cli/pull/6',
+                prUrl: 'https://github.com/elchapita43/cli/pull/6',
             }),
         ).rejects.toBe(fallbackError);
     });

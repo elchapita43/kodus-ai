@@ -1,4 +1,4 @@
-// The MCP adapter (relocated from @kodus/flow to @libs/mcp-server/mcp-adapter in
+// The MCP adapter (relocated from @codus/flow to @libs/mcp-server/mcp-adapter in
 // the ai-sdk migration) is pulled in transitively via the integrations service.
 // Mock it so the unit test doesn't load the real adapter + its worker-thread
 // logger transport.
@@ -59,7 +59,7 @@ describe('McpService.getConnections — tenant scoping', () => {
                 page: 1,
                 pageSize: 50,
                 status: 'ACTIVE',
-                provider: 'kodusmcp',
+                provider: 'codusmcp',
             } as any,
             AUTH_ORG,
         );
@@ -69,7 +69,7 @@ describe('McpService.getConnections — tenant scoping', () => {
         expect(where).toMatchObject({
             organizationId: AUTH_ORG,
             status: 'ACTIVE',
-            provider: 'kodusmcp',
+            provider: 'codusmcp',
         });
     });
 });

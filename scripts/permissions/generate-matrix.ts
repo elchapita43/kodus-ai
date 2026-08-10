@@ -46,7 +46,7 @@ const ROLE_ORDER: Role[] = [
 
 const RESOURCE_LABELS: Partial<Record<ResourceType, string>> = {
     [ResourceType.CodeReviewSettings]: 'Code Review Settings',
-    [ResourceType.KodyRules]: 'Kody Rules (Library)',
+    [ResourceType.CodyRules]: 'Cody Rules (Library)',
     [ResourceType.PullRequests]: 'Pull Requests',
     [ResourceType.CliReview]: 'CLI Review',
     [ResourceType.Issues]: 'Issues',

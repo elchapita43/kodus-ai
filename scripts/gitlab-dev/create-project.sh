@@ -2,7 +2,7 @@
 # Step 2 of 3 — provision the test user, group, and seed project on the
 # running GitLab instance. Mints a personal access token for the test
 # user and (optionally) registers a project webhook so events flow to
-# wherever Kodus is reachable from outside the docker network.
+# wherever Codus is reachable from outside the docker network.
 #
 # Idempotent — re-running just refreshes the user PAT and (if WEBHOOK_URL
 # changed) replaces the webhook.
@@ -10,11 +10,11 @@
 # Env knobs:
 #   WEBHOOK_URL   if set, a Merge Request + Note webhook will be added
 #                 to the project pointing at this URL. Use whatever URL
-#                 your Kodus API is reachable at from inside the GitLab
+#                 your Codus API is reachable at from inside the GitLab
 #                 container — e.g. your existing zrok/ngrok URL, or
-#                 http://kodus-api:3001/gitlab/webhook for the docker
+#                 http://codus-api:3001/gitlab/webhook for the docker
 #                 dev stack. Skipping this leaves the project without
-#                 a webhook; Kodus will register one itself when you
+#                 a webhook; Codus will register one itself when you
 #                 connect the integration through the UI.
 
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
@@ -38,7 +38,7 @@ if [ -z "${USER_ID}" ]; then
 {
     "email": "${USER_EMAIL}",
     "username": "${USER_NAME}",
-    "name": "Kodus Dev",
+    "name": "Codus Dev",
     "password": "${USER_PASSWORD}",
     "skip_confirmation": true
 }
@@ -58,7 +58,7 @@ GROUP_ID=$(api "${GITLAB_URL}/api/v4/groups?search=${GROUP_PATH}" \
 if [ -z "${GROUP_ID}" ]; then
     GROUP_ID=$(api -X POST "${GITLAB_URL}/api/v4/groups" -d "$(cat <<EOF
 {
-    "name": "Kodus Playground",
+    "name": "Codus Playground",
     "path": "${GROUP_PATH}",
     "visibility": "private"
 }
@@ -116,7 +116,7 @@ if [ "${COMMIT_COUNT}" = "0" ]; then
     README_B64=$(cat <<'EOF' | b64
 # discount-service
 
-Tiny order-pricing service used as a fixture for the Kodus self-hosted
+Tiny order-pricing service used as a fixture for the Codus self-hosted
 GitLab integration tests. The code is intentionally small — just enough
 shape for a code reviewer to have something meaningful to comment on.
 EOF
@@ -269,7 +269,7 @@ fi
 echo
 echo "==> minting PAT for ${USER_NAME}"
 EXISTING_TOKENS=$(api "${GITLAB_URL}/api/v4/users/${USER_ID}/impersonation_tokens?state=active" \
-    | python3 -c "import json,sys; print(','.join(str(t['id']) for t in json.load(sys.stdin) if t['name']=='kodus-dev-bootstrap'))")
+    | python3 -c "import json,sys; print(','.join(str(t['id']) for t in json.load(sys.stdin) if t['name']=='codus-dev-bootstrap'))")
 
 if [ -n "${EXISTING_TOKENS}" ]; then
     for tid in $(echo "${EXISTING_TOKENS}" | tr ',' ' '); do
@@ -277,7 +277,7 @@ if [ -n "${EXISTING_TOKENS}" ]; then
     done
 fi
 
-# Scope set mirrors the Kody docs at docs.kodus.io for "GitLab PAT
+# Scope set mirrors the Cody docs at docs.kodus.io for "GitLab PAT
 # Token" — `api`, `read_api`, `read_user`, `read_repository`,
 # `write_repository`. Keeping the dev fixture in sync with the docs
 # means a token minted here is drop-in replaceable with one a user
@@ -285,11 +285,11 @@ fi
 #
 # `expires_at` is required by GitLab 16+; never-expiring PATs were
 # removed. One year out is plenty for a dev fixture and matches what
-# the Kody docs suggest users pick when creating their own token.
+# the Cody docs suggest users pick when creating their own token.
 EXPIRES_AT="$(date -d '+365 days' +%Y-%m-%d 2>/dev/null || date -v+365d +%Y-%m-%d)"
 PAT=$(api -X POST "${GITLAB_URL}/api/v4/users/${USER_ID}/impersonation_tokens" -d "$(cat <<EOF
 {
-    "name": "kodus-dev-bootstrap",
+    "name": "codus-dev-bootstrap",
     "scopes": ["api", "read_api", "read_user", "read_repository", "write_repository"],
     "expires_at": "${EXPIRES_AT}"
 }
@@ -307,8 +307,8 @@ echo "    PAT written to ${USER_PAT_FILE}"
 
 # ─── optional webhook ────────────────────────────────────────────────
 # If WEBHOOK_URL is set, register/replace a project hook covering the
-# events Kodus actually consumes (merge_requests_events, note_events).
-# Skipping this leaves the project without a hook; the real Kodus
+# events Codus actually consumes (merge_requests_events, note_events).
+# Skipping this leaves the project without a hook; the real Codus
 # integration registers one itself on setup, so this is only useful
 # when you want to drive the project directly (e.g. via a zrok tunnel)
 # before the integration is wired up.
@@ -342,7 +342,7 @@ cat <<EOF
   User PAT:    ${PAT}
                (also at ${USER_PAT_FILE})
 
-  Register in Kodus as a self-hosted GitLab integration with:
+  Register in Codus as a self-hosted GitLab integration with:
       host  = ${GITLAB_URL}
       token = <PAT above>
 

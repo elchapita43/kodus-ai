@@ -2,16 +2,16 @@ import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { z } from 'zod';
 import { zodToStrictWireSchema } from '@libs/llm/strict-wire-schema';
-import { kodyRulesIDEGeneratorSchema } from '@libs/common/utils/langchainCommon/prompts/kodyRules';
-import { kodyMemoryResolutionSchema } from '@libs/common/utils/langchainCommon/prompts/kodyMemoryResolution';
-import { kodyRulesRecommendationSchema } from '@libs/common/utils/langchainCommon/prompts/kodyRulesRecommendation';
-import { compilerOutputSchema } from '@libs/code-review/infrastructure/agents/collaborators/kody-rules-detector.compiler';
-import { decomposeOutputSchema } from '@libs/kodyRules/infrastructure/adapters/services/kody-rule-summary.service';
-import { shardViolationsWireSchema } from '@libs/code-review/infrastructure/agents/collaborators/kody-rules-sharded.judge';
+import { codyRulesIDEGeneratorSchema } from '@libs/common/utils/langchainCommon/prompts/codyRules';
+import { codyMemoryResolutionSchema } from '@libs/common/utils/langchainCommon/prompts/codyMemoryResolution';
+import { codyRulesRecommendationSchema } from '@libs/common/utils/langchainCommon/prompts/codyRulesRecommendation';
+import { compilerOutputSchema } from '@libs/code-review/infrastructure/agents/collaborators/cody-rules-detector.compiler';
+import { decomposeOutputSchema } from '@libs/codyRules/infrastructure/adapters/services/cody-rule-summary.service';
+import { shardViolationsWireSchema } from '@libs/code-review/infrastructure/agents/collaborators/cody-rules-sharded.judge';
 import {
     MERGE_MATCHES_SCHEMA,
     ISSUE_VERIFICATION_SCHEMA,
-} from '@libs/ee/codeBase/kodyIssuesAnalysis.service';
+} from '@libs/ee/codeBase/codyIssuesAnalysis.service';
 
 // OpenAI strict structured outputs impose TWO rules on every object node, and
 // 400 the request if either is violated:
@@ -50,10 +50,10 @@ describe('zodToStrictWireSchema', () => {
     // which degrades to the raw zod schema and 400s OpenAI-strict) fails here
     // BEFORE it 400s a BYOK-OpenAI customer's shards.
     const realSchemas: Array<[string, z.ZodType]> = [
-        ['kodyRulesIDEGeneratorSchema (guidance-file extraction)', kodyRulesIDEGeneratorSchema],
-        ['kodyMemoryResolutionSchema', kodyMemoryResolutionSchema],
+        ['codyRulesIDEGeneratorSchema (guidance-file extraction)', codyRulesIDEGeneratorSchema],
+        ['codyMemoryResolutionSchema', codyMemoryResolutionSchema],
         ['compilerOutputSchema (detector compiler)', compilerOutputSchema],
-        ['kodyRulesRecommendationSchema (rule recommendation)', kodyRulesRecommendationSchema],
+        ['codyRulesRecommendationSchema (rule recommendation)', codyRulesRecommendationSchema],
         ['decomposeOutputSchema (atom decomposition)', decomposeOutputSchema],
         ['MERGE_MATCHES_SCHEMA (issue merge)', MERGE_MATCHES_SCHEMA],
         ['ISSUE_VERIFICATION_SCHEMA (issue resolve)', ISSUE_VERIFICATION_SCHEMA],
@@ -93,7 +93,7 @@ describe('zodToStrictWireSchema', () => {
     });
 
     it('validate(): lenient providers that omit optional keys still parse', () => {
-        const result = (zodToStrictWireSchema(kodyRulesIDEGeneratorSchema) as any)
+        const result = (zodToStrictWireSchema(codyRulesIDEGeneratorSchema) as any)
             .validate({
                 rules: [
                     {
@@ -146,7 +146,7 @@ describe('runStructuredReviewCall — strict-wire contract across ALL call sites
     // AI-SDK Schema objects passed directly to runStructuredReviewCall (they
     // bypass zodToStrictWireSchema). MUST already be OpenAI-strict compatible.
     const passThroughWireSchemas: Array<[string, any]> = [
-        ['shardViolationsWireSchema (sharded kody-rules judge)', shardViolationsWireSchema],
+        ['shardViolationsWireSchema (sharded cody-rules judge)', shardViolationsWireSchema],
     ];
 
     it.each(passThroughWireSchemas)(
@@ -160,12 +160,12 @@ describe('runStructuredReviewCall — strict-wire contract across ALL call sites
     // covered above. Keep this in lockstep with the schema lists — the scan
     // below fails if a call site appears in a file that isn't listed here.
     const REGISTERED_CALL_SITE_FILES = new Set<string>([
-        'libs/ee/kodyRules/service/kody-rule-detector-compiler.service.ts', // compilerOutputSchema
-        'libs/ee/kodyRules/service/kodyRules.service.ts', // kodyRulesRecommendationSchema, kodyMemoryResolutionSchema
-        'libs/code-review/infrastructure/agents/providers/kody-rules-agent.provider.ts', // shardViolationsWireSchema
-        'libs/kodyRules/infrastructure/adapters/services/kodyRulesSync.service.ts', // kodyRulesIDEGeneratorSchema
-        'libs/kodyRules/infrastructure/adapters/services/kody-rule-summary.service.ts', // decomposeOutputSchema (+ compilerOutputSchema, already covered)
-        'libs/ee/codeBase/kodyIssuesAnalysis.service.ts', // MERGE_MATCHES_SCHEMA, ISSUE_VERIFICATION_SCHEMA
+        'libs/ee/codyRules/service/cody-rule-detector-compiler.service.ts', // compilerOutputSchema
+        'libs/ee/codyRules/service/codyRules.service.ts', // codyRulesRecommendationSchema, codyMemoryResolutionSchema
+        'libs/code-review/infrastructure/agents/providers/cody-rules-agent.provider.ts', // shardViolationsWireSchema
+        'libs/codyRules/infrastructure/adapters/services/codyRulesSync.service.ts', // codyRulesIDEGeneratorSchema
+        'libs/codyRules/infrastructure/adapters/services/cody-rule-summary.service.ts', // decomposeOutputSchema (+ compilerOutputSchema, already covered)
+        'libs/ee/codeBase/codyIssuesAnalysis.service.ts', // MERGE_MATCHES_SCHEMA, ISSUE_VERIFICATION_SCHEMA
     ]);
 
     it('every runStructuredReviewCall call site is registered (schema is under test)', () => {

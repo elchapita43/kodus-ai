@@ -453,7 +453,7 @@ export class ValidateConfigStage extends BasePipelineStage<CodeReviewPipelineCon
     ): Promise<string | null> {
         try {
             const commentBody =
-                "Auto-paused – comment @kody start-review when you're ready.";
+                "Auto-paused – comment @cody start-review when you're ready.";
 
             const comment =
                 await this.codeManagementService.createSingleIssueComment({

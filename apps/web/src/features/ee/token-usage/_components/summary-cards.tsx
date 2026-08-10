@@ -58,7 +58,7 @@ const pctChange = (current: number, previous?: number | null) =>
 
 /**
  * KPI row in the cockpit MetricCard vocabulary (see
- * cockpit/@kodusReviewTab/_components/review-cards.tsx): label on top,
+ * cockpit/@codusReviewTab/_components/review-cards.tsx): label on top,
  * one bold value, quiet footer. Cost is the lead metric; the token cards
  * carry their own billed cost in the footer, so nothing repeats.
  */

@@ -117,7 +117,7 @@
                 }
             ],
             "defaultVariantId": "moonshot",
-            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-moonshot-with-kodus"
+            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-moonshot-with-codus"
         },
         {
             "id": "kimi-k2.7-code",
@@ -139,7 +139,7 @@
                 "baseURL": "https://api.moonshot.ai/v1",
                 "reasoningEffort": "medium"
             },
-            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-moonshot-with-kodus"
+            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-moonshot-with-codus"
         },
         {
             "id": "glm-5.2",
@@ -179,7 +179,7 @@
                 }
             ],
             "defaultVariantId": "paas",
-            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-z-ai-with-kodus"
+            "docsUrl": "https://docs.kodus.io/knowledge_base/en/how-to-use-z-ai-with-codus"
         },
         {
             "id": "claude-sonnet-4-5-20250929",

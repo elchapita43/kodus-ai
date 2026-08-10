@@ -4,7 +4,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 
-import { CodeManagementTools, KodyIssuesTools, KodyRulesTools } from '../tools';
+import { CodeManagementTools, CodyIssuesTools, CodyRulesTools } from '../tools';
 import { toShape } from '../types/mcp-tool.interface';
 import { executeLoggedTool } from '../utils/mcp-protocol.utils';
 
@@ -34,14 +34,14 @@ export class McpServerFactory {
 
     constructor(
         private readonly codeManagementTools: CodeManagementTools,
-        private readonly kodyRulesTools: KodyRulesTools,
-        private readonly kodyIssuesTools: KodyIssuesTools,
+        private readonly codyRulesTools: CodyRulesTools,
+        private readonly codyIssuesTools: CodyIssuesTools,
     ) {}
 
     async create(): Promise<StatelessMcpRequestHandler> {
         const server = new McpServer(
             {
-                name: 'kodus-code-management',
+                name: 'codus-code-management',
                 version: '1.0.0',
             },
             {
@@ -78,8 +78,8 @@ export class McpServerFactory {
 
         const allTools = [
             ...this.codeManagementTools.getAllTools(),
-            ...this.kodyRulesTools.getAllTools(),
-            ...this.kodyIssuesTools.getAllTools(),
+            ...this.codyRulesTools.getAllTools(),
+            ...this.codyIssuesTools.getAllTools(),
         ];
 
         this.registeredToolsCache = allTools.map((tool) => {

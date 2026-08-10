@@ -1,10 +1,10 @@
 ---
 title: Webhookの作成
-description: "自動登録が行われなかった場合に GitHub の Webhook を手動で作成し、Kodus が利用する 3 つのイベントを選択する手順。"
+description: "自動登録が行われなかった場合に GitHub の Webhook を手動で作成し、Codus が利用する 3 つのイベントを選択する手順。"
 icon: webhook
 ---
 
-Kodusは通常、Webhookを自動的に作成します。それが行われなかった場合は、以下の手順に従って手動で設定してください：
+Codusは通常、Webhookを自動的に作成します。それが行われなかった場合は、以下の手順に従って手動で設定してください：
 
 <Note>
   WebhookのURLはWebhooksサービス（ポート3332）に到達できる必要があります。APIドメインを使用するのは、リバースプロキシが`/.../webhook`パスをWebhooksサービスにルーティングする場合のみ機能します。
@@ -31,6 +31,6 @@ Kodusは通常、Webhookを自動的に作成します。それが行われな�
 GitHubリポジトリのコードレビュー用Webhookのセットアップが完了しました。
 
 <Note>
-  Kodus が利用するのはこの 3 つのイベントだけです。それ以外（pushes、pull request reviews、
+  Codus が利用するのはこの 3 つのイベントだけです。それ以外（pushes、pull request reviews、
   review threads）を選んでも、届いた時点で破棄されるトラフィックが増えるだけです。
 </Note>

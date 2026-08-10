@@ -1,4 +1,4 @@
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { Injectable, Inject } from '@nestjs/common';
 
 import { OrganizationParametersKey } from '@libs/core/domain/enums';
@@ -362,7 +362,7 @@ export class PermissionValidationService {
 
             // 4. Managed plans use our keys
             // if (identifiedPlanType === PlanType.MANAGED) {
-            //     byokConfig = null; // Uses Kodus keys
+            //     byokConfig = null; // Uses Codus keys
             // }
             // 5. Free/BYOK plans need BYOK config (check BEFORE user validation)
             if (this.requiresBYOK(identifiedPlanType)) {
@@ -874,7 +874,7 @@ export class PermissionValidationService {
 
     /**
      * Returns the org's current subscription status (e.g. 'trial', 'active').
-     * Used by non-review flows (kody-rules, config detection) to mirror the
+     * Used by non-review flows (cody-rules, config detection) to mirror the
      * code review pipeline's trial-only defaults for helper LLM calls.
      * Non-UUID org ids (CLI trial requests) and errors resolve to undefined.
      */
@@ -899,7 +899,7 @@ export class PermissionValidationService {
     }
 
     /**
-     * Access tier for the global Kody Rules import feature:
+     * Access tier for the global Cody Rules import feature:
      *   - `free`  → blocked (no valid license, or an explicit Free plan);
      *   - `trial` → capped (see GLOBAL_RULES_TRIAL_IMPORT_LIMIT);
      *   - `paid`  → unlimited (any other valid plan).

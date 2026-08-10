@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 /**
- * Cockpit revamp (phase 2) — two columns the "Kodus Review" tab needs:
+ * Cockpit revamp (phase 2) — two columns the "Codus Review" tab needs:
  *
- *  - `suggestions_mv.brokenKodyRulesIds` — the rule UUIDs a suggestion
+ *  - `suggestions_mv.brokenCodyRulesIds` — the rule UUIDs a suggestion
  *    enforces, promoted out of the `raw` JSONB so rule-level analytics
  *    (triggers, implementation rate per rule) can aggregate with a GIN
  *    index instead of scanning JSON. Backfilled from `raw` in place.
@@ -21,21 +21,21 @@ export class AddRuleIdsAndPrNumber2026060612000000
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             ALTER TABLE "analytics"."suggestions_mv"
-                ADD COLUMN IF NOT EXISTS "brokenKodyRulesIds" text[]
+                ADD COLUMN IF NOT EXISTS "brokenCodyRulesIds" text[]
         `);
         await queryRunner.query(`
             CREATE INDEX IF NOT EXISTS "idx_sugg_mv_broken_rules"
-                ON "analytics"."suggestions_mv" USING GIN ("brokenKodyRulesIds")
+                ON "analytics"."suggestions_mv" USING GIN ("brokenCodyRulesIds")
         `);
 
         // Backfill from the raw JSONB already sitting in the table.
         await queryRunner.query(`
             UPDATE "analytics"."suggestions_mv"
-               SET "brokenKodyRulesIds" = ARRAY(
-                       SELECT jsonb_array_elements_text("raw"->'brokenKodyRulesIds')
+               SET "brokenCodyRulesIds" = ARRAY(
+                       SELECT jsonb_array_elements_text("raw"->'brokenCodyRulesIds')
                    )
-             WHERE "brokenKodyRulesIds" IS NULL
-               AND jsonb_typeof("raw"->'brokenKodyRulesIds') = 'array'
+             WHERE "brokenCodyRulesIds" IS NULL
+               AND jsonb_typeof("raw"->'brokenCodyRulesIds') = 'array'
         `);
 
         await queryRunner.query(`
@@ -50,7 +50,7 @@ export class AddRuleIdsAndPrNumber2026060612000000
         `);
         await queryRunner.query(`
             ALTER TABLE "analytics"."suggestions_mv"
-                DROP COLUMN IF EXISTS "brokenKodyRulesIds"
+                DROP COLUMN IF EXISTS "brokenCodyRulesIds"
         `);
         await queryRunner.query(`
             ALTER TABLE "analytics"."pull_requests_opt"

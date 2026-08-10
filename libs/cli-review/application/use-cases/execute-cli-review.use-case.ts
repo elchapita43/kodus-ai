@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IdGenerator } from '@libs/core/utils/id-generator';
 import { createLogger } from '@libs/core/log/logger';
-import { LLMModelProvider } from '@kodus/kodus-common/llm';
+import { LLMModelProvider } from '@codus/codus-common/llm';
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';
 import { normalizeReviewDirective } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 import {
@@ -24,7 +24,7 @@ import {
     CodeReviewVersion,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { DeepPartial } from 'typeorm';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { AutomationStatus } from '@libs/automation/domain/automation/enum/automation-status';
 import { PipelineError } from '@libs/core/infrastructure/pipeline/interfaces/pipeline-context.interface';
 import {
@@ -39,10 +39,10 @@ import {
 import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
 import { deepMerge } from '@libs/common/utils/deep';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
-import { KodyRulesValidationService } from '@libs/ee/kodyRules/service/kody-rules-validation.service';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
+import { CodyRulesValidationService } from '@libs/ee/codyRules/service/cody-rules-validation.service';
 import { CodeReviewPipelineObserver } from '@libs/code-review/infrastructure/observers/code-review-pipeline.observer';
 
 interface GitContext {
@@ -102,9 +102,9 @@ export class ExecuteCliReviewUseCase implements IUseCase {
         private readonly automationExecutionService: IAutomationExecutionService,
         @Inject(TEAM_AUTOMATION_SERVICE_TOKEN)
         private readonly teamAutomationService: ITeamAutomationService,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
-        private readonly kodyRulesValidationService: KodyRulesValidationService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
+        private readonly codyRulesValidationService: CodyRulesValidationService,
         private readonly pipelineObserver: CodeReviewPipelineObserver,
     ) {}
 
@@ -213,7 +213,7 @@ export class ExecuteCliReviewUseCase implements IUseCase {
                 organizationAndTeamData,
                 codeReviewConfig: effectiveConfig,
                 changedFiles,
-                // CLI equivalent of `@kody review focus on X` — same sanitize +
+                // CLI equivalent of `@cody review focus on X` — same sanitize +
                 // cap as the PR-comment path. Steers the finder when set.
                 reviewDirective: normalizeReviewDirective(input.config?.focus),
                 // Heavy mode — extra critic pass in the finder for more recall.
@@ -222,7 +222,7 @@ export class ExecuteCliReviewUseCase implements IUseCase {
                 discardedSuggestions: [],
                 preparedFileContexts: [],
 
-                // PR context - use resolved repository ID and name for kody rules filtering
+                // PR context - use resolved repository ID and name for cody rules filtering
                 repository: {
                     id: resolvedRepoId,
                     name: resolvedRepoName ?? 'cli-review',
@@ -374,7 +374,7 @@ export class ExecuteCliReviewUseCase implements IUseCase {
 
     /**
      * Load user's code review configuration from database,
-     * including kody rules resolved for the repository matched by git remote.
+     * including cody rules resolved for the repository matched by git remote.
      */
     /**
      * Platform backing this CLI review.
@@ -429,12 +429,12 @@ export class ExecuteCliReviewUseCase implements IUseCase {
         repositoryName: string | null;
     }> {
         try {
-            const [params, kodyRulesEntity] = await Promise.all([
+            const [params, codyRulesEntity] = await Promise.all([
                 this.parametersService.findByKey(
                     ParametersKey.CODE_REVIEW_CONFIG,
                     organizationAndTeamData,
                 ),
-                this.kodyRulesService.findByOrganizationId(
+                this.codyRulesService.findByOrganizationId(
                     organizationAndTeamData.organizationId,
                 ),
             ]);
@@ -468,14 +468,14 @@ export class ExecuteCliReviewUseCase implements IUseCase {
                 );
 
             const { standardRules, memoryRules } =
-                this.kodyRulesValidationService.filterKodyRules(
-                    kodyRulesEntity?.toObject()?.rules || [],
+                this.codyRulesValidationService.filterCodyRules(
+                    codyRulesEntity?.toObject()?.rules || [],
                     repositoryId,
                 );
 
             if (standardRules.length > 0 || memoryRules.length > 0) {
                 this.logger.log({
-                    message: 'Kody rules loaded for CLI review',
+                    message: 'Cody rules loaded for CLI review',
                     context: ExecuteCliReviewUseCase.name,
                     metadata: {
                         organizationId: organizationAndTeamData.organizationId,
@@ -495,8 +495,8 @@ export class ExecuteCliReviewUseCase implements IUseCase {
                         typeof (normalizedConfig as any).languageResultPrompt === 'string'
                             ? (normalizedConfig as any).languageResultPrompt
                             : 'en-US',
-                    kodyRules: standardRules,
-                    kodyMemoryRules: memoryRules,
+                    codyRules: standardRules,
+                    codyMemoryRules: memoryRules,
                 } as any as CodeReviewConfig,
                 repositoryId,
                 repositoryName,
@@ -643,7 +643,7 @@ export class ExecuteCliReviewUseCase implements IUseCase {
      * For trial mode, force Gemini 2.5 Flash (cheaper and faster)
      */
     private getDefaultConfig(isTrialMode: boolean = false): CodeReviewConfig {
-        const defaults = getDefaultKodusConfigFile();
+        const defaults = getDefaultCodusConfigFile();
 
         const config = {
             ...defaults,

@@ -150,7 +150,7 @@ export class GitHubPublicPrService implements IGitHubPublicPrService {
         const otherProvider = detectOtherProvider(host, url.pathname);
         if (otherProvider) {
             throw new PublicPrFetchError(
-                `Kodus's public demo only supports GitHub today. Sign up and connect ${otherProvider} to review ${otherProvider} PRs.`,
+                `Codus's public demo only supports GitHub today. Sign up and connect ${otherProvider} to review ${otherProvider} PRs.`,
                 'requires_auth',
                 403,
             );
@@ -210,14 +210,14 @@ export class GitHubPublicPrService implements IGitHubPublicPrService {
         const totalLines = meta.additions + meta.deletions;
         if (totalLines > this.MAX_CHANGED_LINES) {
             throw new PublicPrFetchError(
-                `This PR has ${totalLines.toLocaleString()} lines changed — a bit much for the free demo. Sign up (free) and Kody reviews PRs of any size on your own repos.`,
+                `This PR has ${totalLines.toLocaleString()} lines changed — a bit much for the free demo. Sign up (free) and Cody reviews PRs of any size on your own repos.`,
                 'too_large',
                 413,
             );
         }
         if (meta.changedFiles > this.MAX_CHANGED_FILES) {
             throw new PublicPrFetchError(
-                `This PR touches ${meta.changedFiles} files — past the free demo cap. Sign up (free) and Kody reviews PRs of any size on your own repos.`,
+                `This PR touches ${meta.changedFiles} files — past the free demo cap. Sign up (free) and Cody reviews PRs of any size on your own repos.`,
                 'too_large',
                 413,
             );
@@ -527,7 +527,7 @@ export class GitHubPublicPrService implements IGitHubPublicPrService {
         headers: Record<string, string>,
     ): Promise<Response> {
         const finalHeaders: Record<string, string> = {
-            'User-Agent': 'kodus-public-demo',
+            'User-Agent': 'codus-public-demo',
             ...headers,
         };
 

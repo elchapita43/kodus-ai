@@ -27,7 +27,7 @@ const MOCK_DEFAULTS = {
         limitationType: 'by_file',
         maxSuggestions: 15,
         severityLevelFilter: 'all',
-        applyFiltersToKodyRules: false,
+        applyFiltersToCodyRules: false,
     },
     summary: {
         generatePRSummary: false,
@@ -37,18 +37,18 @@ const MOCK_DEFAULTS = {
     ignorePaths: [],
     ignoredTitleKeywords: [],
     baseBranches: [],
-    kodyRulesGeneratorEnabled: false,
-    kodyKnowledgeApproval: { enabled: false },
+    codyRulesGeneratorEnabled: false,
+    codyKnowledgeApproval: { enabled: false },
     enableCommittableSuggestions: false,
     automatedReviewActive: false,
     reviewCadence: { type: 'every_push' },
-    kodusConfigFileOverridesWebPreferences: false,
+    codusConfigFileOverridesWebPreferences: false,
     showStatusFeedback: false,
     crossFileDependenciesAnalysis: false,
 };
 
 jest.mock('@libs/common/utils/validateCodeReviewConfigFile', () => ({
-    getDefaultKodusConfigFile: () => ({ ...MOCK_DEFAULTS }),
+    getDefaultCodusConfigFile: () => ({ ...MOCK_DEFAULTS }),
 }));
 
 describe('CodeReviewConfigLogHandler', () => {
@@ -204,16 +204,16 @@ describe('CodeReviewConfigLogHandler', () => {
             expect(data[0].description).toContain('Severity Level Filter');
         });
 
-        it('detects applyFiltersToKodyRules toggle', async () => {
+        it('detects applyFiltersToCodyRules toggle', async () => {
             await callHandler(
-                { suggestionControl: { applyFiltersToKodyRules: false } },
-                { suggestionControl: { applyFiltersToKodyRules: true } },
+                { suggestionControl: { applyFiltersToCodyRules: false } },
+                { suggestionControl: { applyFiltersToCodyRules: true } },
             );
 
             const data = extractChangedData(mockUnified.saveLogEntry);
             expect(data).toHaveLength(1);
             expect(data[0].description).toContain(
-                'Apply Filters to Kody Rules',
+                'Apply Filters to Cody Rules',
             );
         });
     });
@@ -221,26 +221,26 @@ describe('CodeReviewConfigLogHandler', () => {
     // ─── Business rules ───
 
     describe('business rules', () => {
-        it('detects kodyRulesGeneratorEnabled toggle', async () => {
+        it('detects codyRulesGeneratorEnabled toggle', async () => {
             await callHandler(
-                { kodyRulesGeneratorEnabled: false },
-                { kodyRulesGeneratorEnabled: true },
+                { codyRulesGeneratorEnabled: false },
+                { codyRulesGeneratorEnabled: true },
             );
 
             const data = extractChangedData(mockUnified.saveLogEntry);
             expect(data).toHaveLength(1);
-            expect(data[0].description).toContain('Kody Rules Generator');
+            expect(data[0].description).toContain('Cody Rules Generator');
         });
 
-        it('detects kodyKnowledgeApproval toggle', async () => {
+        it('detects codyKnowledgeApproval toggle', async () => {
             await callHandler(
-                { kodyKnowledgeApproval: { enabled: false } },
-                { kodyKnowledgeApproval: { enabled: true } },
+                { codyKnowledgeApproval: { enabled: false } },
+                { codyKnowledgeApproval: { enabled: true } },
             );
 
             const data = extractChangedData(mockUnified.saveLogEntry);
             expect(data).toHaveLength(1);
-            expect(data[0].description).toContain('Kody Knowledge Approval');
+            expect(data[0].description).toContain('Cody Knowledge Approval');
         });
 
         it('detects enableCommittableSuggestions toggle', async () => {

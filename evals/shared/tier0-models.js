@@ -1,4 +1,4 @@
-// Shared tier-0 model seam for the replay evals (kody-rules, anchoring, …).
+// Shared tier-0 model seam for the replay evals (cody-rules, anchoring, …).
 //
 // Maps each tier-0 (curated-models.json tier="recommended") model id to the env
 // the production `byokToVercelModel` self-hosted path reads, so a single

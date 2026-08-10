@@ -9,7 +9,7 @@ A precision é a pior entre todos os tools. O recall é razoável — encontramo
 
 ## Proposta
 
-Substituir a geração standard por **agentes com tools** que investigam antes de sugerir. Kody Rules (file e PR) mantêm como hoje — o problema não é lá.
+Substituir a geração standard por **agentes com tools** que investigam antes de sugerir. Cody Rules (file e PR) mantêm como hoje — o problema não é lá.
 
 ---
 
@@ -53,7 +53,7 @@ Substituir a geração standard por **agentes com tools** que investigam antes d
           └──────┬─┴───────┬───┘
                     ↓
          ┌─────────────────────┐
-         │ Kody Rules          │
+         │ Cody Rules          │
          │ (mantém como hoje)  │
          │ - Rules file-level  │
          │ - Rules PR-level    │
@@ -179,7 +179,7 @@ Os agentes novos **devem** respeitar tudo que o pipeline atual já respeita:
   - `v2PromptOverrides`: cada agente recebe os overrides relevantes no prompt:
     - `categories.descriptions` — descrição customizada por categoria (bug, performance, security). Cada agente recebe o override da sua categoria.
     - `severity.flags` — flags por severidade (critical, high, medium, low). Todos os agentes recebem.
-    - `generation.main` — instrução base de como escrever suggestions (tom, formato, estilo). Default: "Detailed and verifiable issue description" com regras de brevidade, voz ativa, sem filler. Customizável pelo cliente. **Todos os agentes devem respeitar.** Referência: `default-kodus-config.yml` e `CodeReviewConfig.v2PromptOverrides` em `libs/core/infrastructure/config/types/general/codeReview.type.ts`.
+    - `generation.main` — instrução base de como escrever suggestions (tom, formato, estilo). Default: "Detailed and verifiable issue description" com regras de brevidade, voz ativa, sem filler. Customizável pelo cliente. **Todos os agentes devem respeitar.** Referência: `default-codus-config.yml` e `CodeReviewConfig.v2PromptOverrides` em `libs/core/infrastructure/config/types/general/codeReview.type.ts`.
 
 ### Referências
 
@@ -239,7 +239,7 @@ Os agentes novos **devem** respeitar tudo que o pipeline atual já respeita:
 | **1-5**                           | Setup, validation, config, fetch files — não muda              |
 | **7-8**                           | LoadExternalContext, FileContextGate — vira contexto do agente |
 | **9**                             | InitialComment                                                 |
-| **11. ProcessFilesPrLevelReview** | Kody Rules PR + Business Logic — mantém                        |
+| **11. ProcessFilesPrLevelReview** | Cody Rules PR + Business Logic — mantém                        |
 | **13. ValidateSuggestions**       | Morph/committable — mantém                                     |
 | **15-18**                         | Comments, summary, approve — mantém                            |
 
@@ -257,7 +257,7 @@ Sandbox E2B precisa ser criado antes dos agentes (hoje é criado no CollectCross
 ...
 ```
 
-### Kody Rules: onde ficam no novo fluxo
+### Cody Rules: onde ficam no novo fluxo
 
 **Não mudam.** Continuam nos mesmos stages/services de hoje:
 
@@ -266,7 +266,7 @@ Sandbox E2B precisa ser criado antes dos agentes (hoje é criado no CollectCross
 - **Memory rules**: vão no system prompt dos agentes como contexto
 - **Business Logic**: continua no stage 11
 
-A única mudança é que as **standard suggestions** que os rules recebem como input (`standardSuggestions` no `executeKodyRulesAnalysis`) agora vêm dos agentes ao invés do single-shot LLM.
+A única mudança é que as **standard suggestions** que os rules recebem como input (`standardSuggestions` no `executeCodyRulesAnalysis`) agora vêm dos agentes ao invés do single-shot LLM.
 
 ---
 
@@ -284,8 +284,8 @@ O pipeline atual já faz merge e dedup, mas precisa de uma adição pra lidar co
 
 **Já existe (mantém):**
 - `removeSuggestionsRelatedToSavedFiles`: remove suggestions de arquivos que já têm suggestions salvas
-- Merge: junta suggestions de diferentes fontes (standard, kody rules, AST) com dedup por arquivo
-- Clustering por Kody Rule ID: agrupa suggestions que quebraram a mesma rule
+- Merge: junta suggestions de diferentes fontes (standard, cody rules, AST) com dedup por arquivo
+- Clustering por Cody Rule ID: agrupa suggestions que quebraram a mesma rule
 
 **Novo — dedup cross-agent por localização:**
 - Hoje o clustering é só por Rule ID — não detecta quando dois agentes apontam pro mesmo trecho de código
@@ -436,10 +436,10 @@ Referência: `libs/code-review/infrastructure/adapters/services/suggestion.servi
 - Suggestion Service (filtros + ranking): `libs/code-review/infrastructure/adapters/services/suggestion.service.ts`
 - Cross-file Context: `libs/code-review/infrastructure/adapters/services/collectCrossFileContexts.service.ts`
 
-### Kody Rules (mantém)
+### Cody Rules (mantém)
 
-- Interface: `libs/kodyRules/domain/interfaces/kodyRules.interface.ts`
-- File analysis: `libs/ee/codeBase/kodyRulesAnalysis.service.ts`
-- PR analysis: `libs/ee/codeBase/kodyRulesPrLevelAnalysis.service.ts`
-- Validation: `libs/ee/kodyRules/service/kody-rules-validation.service.ts`
+- Interface: `libs/codyRules/domain/interfaces/codyRules.interface.ts`
+- File analysis: `libs/ee/codeBase/codyRulesAnalysis.service.ts`
+- PR analysis: `libs/ee/codeBase/codyRulesPrLevelAnalysis.service.ts`
+- Validation: `libs/ee/codyRules/service/cody-rules-validation.service.ts`
 

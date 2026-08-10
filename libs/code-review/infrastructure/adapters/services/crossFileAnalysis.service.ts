@@ -5,7 +5,7 @@ import {
     PromptRole,
     PromptRunnerService,
     TokenUsage,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -468,7 +468,7 @@ export class CrossFileAnalysisService {
             language,
             v2PromptOverrides: context?.codeReviewConfig?.v2PromptOverrides,
             crossFileContexts,
-            memories: context?.codeReviewConfig?.kodyMemoryRules || [],
+            memories: context?.codeReviewConfig?.codyMemoryRules || [],
             externalReferences:
                 context?.externalPromptContext?.generation?.main?.references,
             externalReferenceErrors:

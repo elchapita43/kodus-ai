@@ -19,7 +19,7 @@ import {
 import { ICockpitCodeHealthService } from '../../domain/contracts/cockpit-code-health.service.contract';
 
 /**
- * Postgres port of `kodus-service-analytics/src/services/analytics/code-health.service.ts`.
+ * Postgres port of `codus-service-analytics/src/services/analytics/code-health.service.ts`.
  *
  * Notes on the port:
  *  - Suggestion aggregations read from `analytics.suggestions_mv` (flat),

@@ -12,14 +12,14 @@ import {
     INTEGRATION_CONFIG_SERVICE_TOKEN,
 } from '@libs/integrations/domain/integrationConfigs/contracts/integration-config.service.contracts';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
 import {
-    IKodyRule,
-    KodyRuleCentralizedStatus,
-    KodyRulesStatus,
-} from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRule,
+    CodyRuleCentralizedStatus,
+    CodyRulesStatus,
+} from '@libs/codyRules/domain/interfaces/codyRules.interface';
 import {
     IParametersService,
     PARAMETERS_SERVICE_TOKEN,
@@ -76,8 +76,8 @@ export class CentralizedConfigPrService {
         private readonly parametersService: IParametersService,
         @Inject(INTEGRATION_CONFIG_SERVICE_TOKEN)
         private readonly integrationConfigService: IIntegrationConfigService,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
         private readonly moduleRef: ModuleRef,
         private readonly codeManagementService: CodeManagementService,
     ) {}
@@ -102,7 +102,7 @@ export class CentralizedConfigPrService {
             });
 
         if (matchedTrackedPullRequest && !params.merged) {
-            await this.cleanupPendingProposedKodyRules(
+            await this.cleanupPendingProposedCodyRules(
                 params.organizationAndTeamData.organizationId,
             );
 
@@ -414,10 +414,10 @@ export class CentralizedConfigPrService {
         groupFolderName: string,
     ): string {
         if (repositoryFolder === 'global') {
-            return `${groupFolderName}/kodus-config.yml`;
+            return `${groupFolderName}/codus-config.yml`;
         }
 
-        return `${repositoryFolder}/${groupFolderName}/kodus-config.yml`;
+        return `${repositoryFolder}/${groupFolderName}/codus-config.yml`;
     }
 
     buildDirectoryGroupRulesPath(
@@ -427,10 +427,10 @@ export class CentralizedConfigPrService {
         fileName: string,
     ): string {
         if (repositoryFolder === 'global') {
-            return `${groupFolderName}/.kody-rules/${rulesDirectory}/${fileName}`;
+            return `${groupFolderName}/.cody-rules/${rulesDirectory}/${fileName}`;
         }
 
-        return `${repositoryFolder}/${groupFolderName}/.kody-rules/${rulesDirectory}/${fileName}`;
+        return `${repositoryFolder}/${groupFolderName}/.cody-rules/${rulesDirectory}/${fileName}`;
     }
 
     async resolveDirectoryGroupFolderName(
@@ -587,7 +587,7 @@ export class CentralizedConfigPrService {
         }
     }
 
-    async getScopedKodusConfigFileContent(params: {
+    async getScopedCodusConfigFileContent(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repositoryId?: string;
         directoryPath?: string;
@@ -619,7 +619,7 @@ export class CentralizedConfigPrService {
 
         const path = this.buildCentralizedPath({
             repositoryFolder,
-            relativePath: this.buildKodusConfigRelativePath(
+            relativePath: this.buildCodusConfigRelativePath(
                 params.directoryPath,
             ),
         });
@@ -661,7 +661,7 @@ export class CentralizedConfigPrService {
         } catch (error) {
             this.logger.warn({
                 message:
-                    'Failed to fetch scoped kodus-config.yml content from centralized repository',
+                    'Failed to fetch scoped codus-config.yml content from centralized repository',
                 context: CentralizedConfigPrService.name,
                 error: this.normalizeError(error),
                 metadata: {
@@ -689,8 +689,8 @@ export class CentralizedConfigPrService {
     private resolveAuthor(author?: { name: string; email?: string }) {
         return (
             author || {
-                name: 'kody',
-                email: 'kody@kodus.io',
+                name: 'cody',
+                email: 'cody@kodus.io',
             }
         );
     }
@@ -915,7 +915,7 @@ export class CentralizedConfigPrService {
 
                     return (
                         typeof sourceBranch === 'string' &&
-                        sourceBranch.startsWith('kodus-centralized-') &&
+                        sourceBranch.startsWith('codus-centralized-') &&
                         typeof baseBranch === 'string' &&
                         baseBranch === params.targetBranch
                     );
@@ -1098,15 +1098,15 @@ export class CentralizedConfigPrService {
         }
     }
 
-    private buildKodusConfigRelativePath(directoryPath?: string): string {
+    private buildCodusConfigRelativePath(directoryPath?: string): string {
         const normalizedDirectoryPath =
             this.normalizeDirectoryPath(directoryPath);
 
         if (!normalizedDirectoryPath) {
-            return 'kodus-config.yml';
+            return 'codus-config.yml';
         }
 
-        return `${normalizedDirectoryPath}/kodus-config.yml`;
+        return `${normalizedDirectoryPath}/codus-config.yml`;
     }
 
     private normalizeDirectoryPath(path?: string): string | undefined {
@@ -1128,24 +1128,24 @@ export class CentralizedConfigPrService {
         return String(repositoryId);
     }
 
-    private async cleanupPendingProposedKodyRules(
+    private async cleanupPendingProposedCodyRules(
         organizationId: string,
     ): Promise<void> {
         const entity =
-            await this.kodyRulesService.findByOrganizationId(organizationId);
+            await this.codyRulesService.findByOrganizationId(organizationId);
 
         if (!entity?.uuid) {
             return;
         }
 
-        const rules = (entity.toJson?.()?.rules || []) as Partial<IKodyRule>[];
+        const rules = (entity.toJson?.()?.rules || []) as Partial<ICodyRule>[];
 
         for (const rule of rules) {
             const centralizedStatus = rule.centralizedConfig?.status;
             const isPendingCentralizedStatus =
-                centralizedStatus === KodyRuleCentralizedStatus.PENDING_ADD ||
-                centralizedStatus === KodyRuleCentralizedStatus.PENDING_EDIT ||
-                centralizedStatus === KodyRuleCentralizedStatus.PENDING_DELETE;
+                centralizedStatus === CodyRuleCentralizedStatus.PENDING_ADD ||
+                centralizedStatus === CodyRuleCentralizedStatus.PENDING_EDIT ||
+                centralizedStatus === CodyRuleCentralizedStatus.PENDING_DELETE;
 
             if (!isPendingCentralizedStatus || !rule.uuid) {
                 continue;
@@ -1156,16 +1156,16 @@ export class CentralizedConfigPrService {
             }
 
             const nextStatus =
-                centralizedStatus === KodyRuleCentralizedStatus.PENDING_ADD
-                    ? KodyRulesStatus.REJECTED
+                centralizedStatus === CodyRuleCentralizedStatus.PENDING_ADD
+                    ? CodyRulesStatus.REJECTED
                     : rule.status;
 
-            await this.kodyRulesService.updateRule(entity.uuid, rule.uuid, {
+            await this.codyRulesService.updateRule(entity.uuid, rule.uuid, {
                 ...rule,
                 status: nextStatus,
                 centralizedConfig: {
                     ...rule.centralizedConfig,
-                    status: KodyRuleCentralizedStatus.SYNCED,
+                    status: CodyRuleCentralizedStatus.SYNCED,
                 },
             });
         }

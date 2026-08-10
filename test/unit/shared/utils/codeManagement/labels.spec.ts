@@ -50,10 +50,10 @@ describe('labels', () => {
             '![Documentation and Comments](https://img.shields.io/badge/Documentation_and_Comments-D81B60)',
         );
 
-        label = 'kody_rules';
+        label = 'cody_rules';
         shield = getLabelShield(label);
         expect(shield).toBe(
-            '![Kody Rules](https://img.shields.io/badge/Kody_Rules-4527A0)',
+            '![Cody Rules](https://img.shields.io/badge/Cody_Rules-4527A0)',
         );
     });
 

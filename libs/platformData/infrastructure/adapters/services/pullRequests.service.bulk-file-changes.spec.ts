@@ -39,7 +39,7 @@ describe('PullRequestsService — #1107 bulk file changes', () => {
 
     const stubRepository = {
         id: 'repo-uuid-stable',
-        name: 'kodus-app',
+        name: 'codus-app',
     };
     const stubOrg = {
         organizationId: 'org-1',

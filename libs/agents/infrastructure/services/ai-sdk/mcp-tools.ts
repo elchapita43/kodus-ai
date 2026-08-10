@@ -16,14 +16,14 @@ export interface ConnectedMcpTools {
  * `createMCPAdapter`).
  *
  * The local MCP adapter is the MCP transport/auth/retry layer — it is
- * battle-tested for the kodus servers (HTTP/SSE, bearer/api-key/basic auth,
+ * battle-tested for the codus servers (HTTP/SSE, bearer/api-key/basic auth,
  * connection routing). This helper is just the thin bridge that turns the
  * adapter's tools into AI SDK `tool()` entries so the migrated agents run their
  * loop on the AI SDK while MCP keeps going through the local adapter.
  *
  * Tool names are kept verbatim (no server prefix) to match the legacy
  * orchestration behavior — prompts reference bare names like
- * `KODUS_FIND_MEMORIES`. Tool execution is routed back through
+ * `CODUS_FIND_MEMORIES`. Tool execution is routed back through
  * `adapter.executeTool(name, args)`, which resolves the owning server.
  *
  * Never throws on connect failure: the error is reported via `onError` and the

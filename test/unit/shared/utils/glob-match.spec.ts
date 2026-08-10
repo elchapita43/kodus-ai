@@ -104,7 +104,7 @@ describe('globMatch', () => {
         expect(
             isFileMatchingGlob('.rules/backend/security.md', ['.rules/**/*']),
         ).toBe(true);
-        expect(isFileMatchingGlob('.kody/rules.json', ['.kody/**/*'])).toBe(
+        expect(isFileMatchingGlob('.cody/rules.json', ['.cody/**/*'])).toBe(
             true,
         );
         expect(isFileMatchingGlob('.windsurfrules', ['.windsurfrules'])).toBe(

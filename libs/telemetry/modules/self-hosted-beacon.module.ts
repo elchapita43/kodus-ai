@@ -3,9 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import {
-    KodyRulesModel,
-    KodyRulesSchema,
-} from '@libs/kodyRules/infrastructure/adapters/repositories/schemas/kodyRules.model';
+    CodyRulesModel,
+    CodyRulesSchema,
+} from '@libs/codyRules/infrastructure/adapters/repositories/schemas/codyRules.model';
 import { GlobalParametersModule } from '@libs/organization/modules/global-parameters.module';
 import {
     PullRequestsModel,
@@ -31,7 +31,7 @@ import {
         GlobalParametersModule,
         MongooseModule.forFeature([
             { name: PullRequestsModel.name, schema: PullRequestsSchema },
-            { name: KodyRulesModel.name, schema: KodyRulesSchema },
+            { name: CodyRulesModel.name, schema: CodyRulesSchema },
         ]),
     ],
     providers: [

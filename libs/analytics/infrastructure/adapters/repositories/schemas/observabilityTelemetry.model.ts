@@ -25,7 +25,7 @@ export const ObservabilityTelemetryModelSchema = SchemaFactory.createForClass(
 );
 
 // Indexes for token usage / analytics queries. These MUST be keyed on
-// `timestamp` (the span's event time, written by the @kodus/flow exporter) —
+// `timestamp` (the span's event time, written by the @codus/flow exporter) —
 // NOT the Mongoose `timestamps: true` `createdAt`. Every read filters on
 // `timestamp`, so a `createdAt` index is dead weight the planner never uses.
 // (The index-covered Token Usage path uses the `tu_cover_*` indexes built by

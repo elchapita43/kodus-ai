@@ -44,17 +44,17 @@ export type CheckinConfigValue = {
 export type PlatformConfigValue = {
     finishOnboard: boolean;
     finishProjectManagementConnection: boolean;
-    kodyLearningStatus: KodyLearningStatus;
+    codyLearningStatus: CodyLearningStatus;
     /**
      * Consecutive rule-generation runs that hard-crashed before completing
      * — bumped when entering `GENERATING_RULES`, reset to 0 on any
-     * completion. The KodyLearning cron stops retrying once this reaches
+     * completion. The CodyLearning cron stops retrying once this reaches
      * `MAX_STUCK_RETRIES`.
      */
-    kodyLearningStuckRetries?: number;
+    codyLearningStuckRetries?: number;
 };
 
-export enum KodyLearningStatus {
+export enum CodyLearningStatus {
     ENABLED = 'enabled',
     DISABLED = 'disabled',
     GENERATING_RULES = 'generating_rules',

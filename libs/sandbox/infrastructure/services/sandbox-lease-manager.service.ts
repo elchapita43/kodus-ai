@@ -29,12 +29,12 @@ import {
 /**
  * Default idle timeout applied when the last lease on a sandbox is released.
  * After this window the E2B sandbox is paused automatically (not killed).
- * 5 minutes is generous enough for a second @kody comment in the same PR
+ * 5 minutes is generous enough for a second @cody comment in the same PR
  * to reuse the warm sandbox without paying cold-start.
  *
  * Callers (e.g. CreateSandboxStage for review) can override this via
  * `release(leaseId, { idleMs })` when a shorter window makes more sense for
- * their flow — review uses 30s because the agent's @kody flow either arrives
+ * their flow — review uses 30s because the agent's @cody flow either arrives
  * within seconds (warm reuse) or much later (well past the TTL anyway).
  */
 const IDLE_TIMEOUT_MS = 300_000; // 5 minutes — default for conversation flow
@@ -295,7 +295,7 @@ export class SandboxLeaseManager implements ISandboxLeaseManager {
      * up the orphaned doc later.
      *
      * Callers choose `idleMs` based on the flow: review uses 30s because
-     * @kody arrives within seconds or much later; conversation uses the
+     * @cody arrives within seconds or much later; conversation uses the
      * 5min default because the user is interactive.
      */
     async release(leaseId: string, opts?: { idleMs?: number }): Promise<void> {

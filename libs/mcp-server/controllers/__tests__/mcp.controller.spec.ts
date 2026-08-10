@@ -9,8 +9,8 @@ jest.mock('../../services/mcp-manager.service', () => ({
     MCPManagerService: class {},
 }));
 
-jest.mock('../../services/kodus-issues-mcp-server.service', () => ({
-    KodusIssuesMcpServerService: class {},
+jest.mock('../../services/codus-issues-mcp-server.service', () => ({
+    CodusIssuesMcpServerService: class {},
 }));
 
 jest.mock('@libs/core/log/logger', () => ({
@@ -23,7 +23,7 @@ jest.mock('@libs/core/log/logger', () => ({
 }));
 
 import { McpController } from '../mcp.controller';
-import { KodusIssuesMcpController } from '../kodus-issues-mcp.controller';
+import { CodusIssuesMcpController } from '../codus-issues-mcp.controller';
 import { McpEnabledGuard } from '../../guards/mcp-enabled.guard';
 
 function makeResponse(accept?: string) {
@@ -126,8 +126,8 @@ describe('McpController', () => {
     });
 });
 
-describe('KodusIssuesMcpController', () => {
-    let controller: KodusIssuesMcpController;
+describe('CodusIssuesMcpController', () => {
+    let controller: CodusIssuesMcpController;
     let mcpServerService: {
         handleRequest: jest.Mock;
     };
@@ -137,7 +137,7 @@ describe('KodusIssuesMcpController', () => {
             handleRequest: jest.fn().mockResolvedValue(undefined),
         };
 
-        controller = new KodusIssuesMcpController(mcpServerService as any);
+        controller = new CodusIssuesMcpController(mcpServerService as any);
     });
 
     it('delegates POST requests directly to the stateless service', async () => {
@@ -198,7 +198,7 @@ describe('KodusIssuesMcpController', () => {
 
     it('keeps only the MCP enabled guard at controller level', () => {
         const guards =
-            Reflect.getMetadata(GUARDS_METADATA, KodusIssuesMcpController) ??
+            Reflect.getMetadata(GUARDS_METADATA, CodusIssuesMcpController) ??
             [];
 
         expect(guards).toEqual([McpEnabledGuard]);

@@ -7,7 +7,7 @@ describe('install instructions', () => {
 
         expect(instructions.primary).toContain('install.sh');
         expect(instructions.primary).toContain('curl -fsSL');
-        expect(instructions.fallback).toContain('/tmp/kodus-install.sh');
+        expect(instructions.fallback).toContain('/tmp/codus-install.sh');
     });
 
     it('returns powershell installer for windows', () => {

@@ -24,8 +24,8 @@ const pkg = require('../package.json') as { version: string };
 const program = new Command();
 
 program
-    .name('kodus')
-    .description('Kodus CLI - AI-powered code review from your terminal')
+    .name('codus')
+    .description('Codus CLI - AI-powered code review from your terminal')
     .version(pkg.version)
     .option(
         '-f, --format <format>',

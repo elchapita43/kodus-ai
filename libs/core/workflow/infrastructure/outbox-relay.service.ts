@@ -329,13 +329,13 @@ export class OutboxRelayService
      * PERFORMANCE NOTE: Uses separate queries per consumer for better index utilization.
      * Requires partial indexes:
      *   CREATE INDEX CONCURRENTLY idx_inbox_webhook_stale
-     *     ON kodus_workflow.inbox_messages (lockedAt)
+     *     ON codus_workflow.inbox_messages (lockedAt)
      *     WHERE consumerId = 'workflow-job-consumer.webhook' AND status = 'PROCESSING';
      *   CREATE INDEX CONCURRENTLY idx_inbox_check_implementation_stale
-     *     ON kodus_workflow.inbox_messages (lockedAt)
+     *     ON codus_workflow.inbox_messages (lockedAt)
      *     WHERE consumerId = 'workflow-job-consumer.check_implementation' AND status = 'PROCESSING';
      *   CREATE INDEX CONCURRENTLY idx_inbox_codereview_stale
-     *     ON kodus_workflow.inbox_messages (lockedAt)
+     *     ON codus_workflow.inbox_messages (lockedAt)
      *     WHERE consumerId = 'workflow-job-consumer.code_review' AND status = 'PROCESSING';
      *   Add equivalent partial indexes for AST/event consumers if reclaim volume grows.
      */

@@ -46,14 +46,14 @@ describe('describePipelineError', () => {
 
     it('cuts a multi-sentence internal message down to its first sentence', () => {
         const rationale =
-            'Kody Rules could not be evaluated: all 3 rule checks failed to run. ' +
+            'Cody Rules could not be evaluated: all 3 rule checks failed to run. ' +
             'Reporting 0 findings would green-wash a review that evaluated nothing, ' +
             'so we fail loudly instead and mark the execution degraded for the operator.';
 
         const { text } = describePipelineError(wrap(new Error(rationale)));
 
         expect(text).toBe(
-            'Kody Rules could not be evaluated: all 3 rule checks failed to run.',
+            'Cody Rules could not be evaluated: all 3 rule checks failed to run.',
         );
     });
 

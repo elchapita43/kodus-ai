@@ -12,7 +12,7 @@ const BOT_LOGIN_FRAGMENTS: ReadonlyArray<string> = [
     'renovatebot',
     'github-actions',
     'gitlab-bot',
-    'kodus-bot',
+    'codus-bot',
     'mergify',
 ];
 

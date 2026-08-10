@@ -1,10 +1,10 @@
 ---
 title: Criando um Webhook
-description: "Registre manualmente o webhook do Azure Repos quando o Kody não conseguiu criar o service hook, incluindo o token assinado que a URL exige."
+description: "Registre manualmente o webhook do Azure Repos quando o Cody não conseguiu criar o service hook, incluindo o token assinado que a URL exige."
 icon: webhook
 ---
 
-O Kody geralmente cria o webhook automaticamente quando você conecta um projeto do Azure DevOps. Esta página cobre o caminho de **configuração manual** que você percorre quando o registro automático não aconteceu — tipicamente em instalações self-hosted ou em projetos Azure onde o Kody não pode criar service hooks em seu nome.
+O Cody geralmente cria o webhook automaticamente quando você conecta um projeto do Azure DevOps. Esta página cobre o caminho de **configuração manual** que você percorre quando o registro automático não aconteceu — tipicamente em instalações self-hosted ou em projetos Azure onde o Cody não pode criar service hooks em seu nome.
 
 <Note>
   As URLs de webhook devem alcançar o serviço de Webhooks (porta 3332). Usar o domínio da API só funciona se seu proxy reverso rotear os caminhos `/.../webhook` para o serviço de Webhooks.
@@ -12,7 +12,7 @@ O Kody geralmente cria o webhook automaticamente quando você conecta um projeto
 
 ## A URL de webhook do Azure Repos requer um token assinado
 
-Ao contrário do GitHub, GitLab, Bitbucket e Forgejo, as requisições de webhook do Azure Repos **devem incluir um parâmetro de consulta `token` criptografado**. O Kodus valida esse token em cada requisição recebida e rejeita chamadas sem ele com `403 Unauthorized`. O token é derivado de duas variáveis de ambiente que você já configurou durante a instalação self-hosted:
+Ao contrário do GitHub, GitLab, Bitbucket e Forgejo, as requisições de webhook do Azure Repos **devem incluir um parâmetro de consulta `token` criptografado**. O Codus valida esse token em cada requisição recebida e rejeita chamadas sem ele com `403 Unauthorized`. O token é derivado de duas variáveis de ambiente que você já configurou durante a instalação self-hosted:
 
 - `CODE_MANAGEMENT_SECRET` — a chave de criptografia de 32 bytes (codificada em hex).
 - `CODE_MANAGEMENT_WEBHOOK_TOKEN` — o texto simples que a chave criptografa.
@@ -20,20 +20,20 @@ Ao contrário do GitHub, GitLab, Bitbucket e Forgejo, as requisições de webhoo
 Portanto, a URL de webhook do Azure fica assim:
 
 ```
-https://kodus-api.yourdomain.com/azure-repos/webhook?token=<generated>
+https://codus-api.yourdomain.com/azure-repos/webhook?token=<generated>
 ```
 
 O valor `<generated>` é produzido criptografando `CODE_MANAGEMENT_WEBHOOK_TOKEN` com `CODE_MANAGEMENT_SECRET` usando AES-256-CBC, formatado como `<ivHex>:<cipherHex>`.
 
 <Note>
-  O Kody gera esse token automaticamente quando cria o webhook para você por meio do fluxo de integração via UI. Você só precisa gerá-lo manualmente quando estiver registrando o webhook manualmente no Azure DevOps.
+  O Cody gera esse token automaticamente quando cria o webhook para você por meio do fluxo de integração via UI. Você só precisa gerá-lo manualmente quando estiver registrando o webhook manualmente no Azure DevOps.
 </Note>
 
 ## Gerando o token do webhook
 
-Escolha a opção que corresponde ao seu ambiente. Ambas usam as variáveis de ambiente que seu stack Kodus já tem configurado — você **não** precisa clonar o repositório.
+Escolha a opção que corresponde ao seu ambiente. Ambas usam as variáveis de ambiente que seu stack Codus já tem configurado — você **não** precisa clonar o repositório.
 
-### Opção A — dentro do contêiner Kodus em execução (recomendado)
+### Opção A — dentro do contêiner Codus em execução (recomendado)
 
 Execute isto contra um contêiner `api` já em execução. As variáveis de ambiente já estão no escopo:
 
@@ -57,7 +57,7 @@ A saída é o valor que você cola como `?token=...` na URL do webhook. Exemplo:
 
 ### Opção B — localmente com Node (sem Docker)
 
-Se seu stack Kodus não estiver em execução ou quiser gerar o token em uma máquina diferente, exporte as duas variáveis de ambiente e execute:
+Se seu stack Codus não estiver em execução ou quiser gerar o token em uma máquina diferente, exporte as duas variáveis de ambiente e execute:
 
 ```bash
 export CODE_MANAGEMENT_SECRET="<mesmo valor do seu .env>"
@@ -75,7 +75,7 @@ console.log(iv.toString('hex') + ':' + e);
 ```
 
 <Warning>
-  Ambos os valores das variáveis de ambiente devem corresponder **exatamente** aos que o contêiner da API do Kodus está usando. Uma discrepância na chave produz um token com aparência válida que o Kodus rejeitará com `403 Unauthorized`.
+  Ambos os valores das variáveis de ambiente devem corresponder **exatamente** aos que o contêiner da API do Codus está usando. Uma discrepância na chave produz um token com aparência válida que o Codus rejeitará com `403 Unauthorized`.
 </Warning>
 
 <Tip>
@@ -92,10 +92,10 @@ console.log(iv.toString('hex') + ':' + e);
 
    - **Service:** **Web Hooks**
    - **Trigger on this type of event:** selecione um dos eventos suportados (veja abaixo)
-   - **URL:** sua URL de webhook do Azure Repos do Kodus com o token anexado:
+   - **URL:** sua URL de webhook do Azure Repos do Codus com o token anexado:
 
      ```
-     https://kodus-api.yourdomain.com/azure-repos/webhook?token=<generated>
+     https://codus-api.yourdomain.com/azure-repos/webhook?token=<generated>
      ```
 
    - **Filters** (opcional): filtre por repositório ou branch se necessário.
@@ -103,7 +103,7 @@ console.log(iv.toString('hex') + ':' + e);
 
 6. Clique em **Finish**.
 
-Crie uma assinatura por tipo de evento. O Kodus atualmente reage a:
+Crie uma assinatura por tipo de evento. O Codus atualmente reage a:
 
 - `git.pullrequest.created` — Pull request criado
 - `git.pullrequest.updated` — Pull request atualizado
@@ -117,7 +117,7 @@ Crie uma assinatura por tipo de evento. O Kodus atualmente reage a:
 ## Solução de Problemas
 
 <AccordionGroup>
-  <Accordion title="Azure envia o webhook mas o Kodus retorna 403">
+  <Accordion title="Azure envia o webhook mas o Codus retorna 403">
     O valor `?token=` está ausente, truncado, ou foi gerado com um `CODE_MANAGEMENT_SECRET` / `CODE_MANAGEMENT_WEBHOOK_TOKEN` diferente do que a API em execução usa. Regenere o token com a **Opção A** (que garante que ele é produzido com as mesmas variáveis de ambiente que o contêiner está usando de fato) e atualize a URL da assinatura no Azure.
   </Accordion>
 

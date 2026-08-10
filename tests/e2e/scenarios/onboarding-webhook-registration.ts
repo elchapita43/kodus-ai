@@ -1,11 +1,11 @@
 import type { RunContext, Scenario, WebhookInfo } from "../lib/types.js";
 
-// Validates the core onboarding wiring: after Kodus completes the
+// Validates the core onboarding wiring: after Codus completes the
 // auth-integration + repositories + finish-onboarding flow for a given
 // provider, the provider's repo/project must have at least one webhook
-// pointing back at Kodus. If this step silently fails (e.g. the GitLab
+// pointing back at Codus. If this step silently fails (e.g. the GitLab
 // fire-and-forget bug at gitlab.service.ts:712), nothing downstream
-// works — PRs/MRs are opened, events fire, but Kodus never hears them.
+// works — PRs/MRs are opened, events fire, but Codus never hears them.
 //
 // This scenario is intentionally lightweight (no LLM, no review pipeline)
 // so it runs in ~30s and acts as a fast preflight gate per (target,
@@ -16,13 +16,13 @@ import type { RunContext, Scenario, WebhookInfo } from "../lib/types.js";
 //   - ≥1 webhook URL ends with provider.webhookPath
 //   - it's active
 // We do NOT assert specific event subscriptions here — wrong event set
-// surfaces as a code-review-basic failure (events fire but Kodus filters
+// surfaces as a code-review-basic failure (events fire but Codus filters
 // them out). The job of THIS scenario is just to prove the URL got
 // registered at all.
 export const onboardingWebhookRegistration: Scenario = {
     id: "onboarding-webhook-registration",
     title:
-        "After onboarding, a Kodus webhook is registered on the provider's repo/project",
+        "After onboarding, a Codus webhook is registered on the provider's repo/project",
     priority: "P0",
     appliesTo: {
         target: ["cloud", "self-hosted"],
@@ -31,7 +31,7 @@ export const onboardingWebhookRegistration: Scenario = {
         // /repos/{owner}/{repo}/hooks entry). The webhook URL is
         // configured ONCE at the App registration level on
         // github.com, and GitHub delivers events to every install
-        // automatically. This scenario asserts that Kodus
+        // automatically. This scenario asserts that Codus
         // auto-registered a hook via REST after onboarding — it
         // would always fail for github-app, but for the right reason
         // (the App's webhook isn't supposed to appear there).
@@ -46,11 +46,11 @@ export const onboardingWebhookRegistration: Scenario = {
     async run(ctx: RunContext) {
         ctx.assert(ctx.tenant, "scenario requires a tenant");
 
-        const session = await ctx.kodus.login(ctx.tenant!);
+        const session = await ctx.codus.login(ctx.tenant!);
 
-        // Pre-clean: drop any existing Kodus-shaped webhooks so we can
+        // Pre-clean: drop any existing Codus-shaped webhooks so we can
         // assert THIS run's onboarding registered a fresh one. Without
-        // this, a hook left over from a previous (working) Kodus build
+        // this, a hook left over from a previous (working) Codus build
         // would mask a current regression.
         // Match on path-containment rather than endsWith — Azure DevOps
         // appends `?token=<hmac>` to the consumer URL for webhook
@@ -58,11 +58,11 @@ export const onboardingWebhookRegistration: Scenario = {
         // /azure-repos/webhook. Other providers don't append anything
         // and the contains-check still matches them.
         const expectedPath = ctx.provider.webhookPath;
-        const matchesKodus = (h: WebhookInfo) =>
+        const matchesCodus = (h: WebhookInfo) =>
             h.url.includes(expectedPath);
 
         const preExisting = await ctx.provider.listWebhooks();
-        const stale = preExisting.filter(matchesKodus);
+        const stale = preExisting.filter(matchesCodus);
         for (const h of stale) {
             try {
                 await ctx.provider.deleteWebhook(h.id);
@@ -72,35 +72,35 @@ export const onboardingWebhookRegistration: Scenario = {
             }
         }
 
-        await ctx.kodus.registerIntegration(session);
+        await ctx.codus.registerIntegration(session);
         // forceRecreate: this scenario just deleted the repo's webhook in
         // the pre-clean above and asserts registerRepo recreated it, so it
         // must bypass the per-run registration cache (which otherwise skips
         // the POST that re-creates the hook).
-        const repo = await ctx.kodus.registerRepo(session, {
+        const repo = await ctx.codus.registerRepo(session, {
             forceRecreate: true,
         });
-        await ctx.kodus.finishOnboarding(session, repo);
+        await ctx.codus.finishOnboarding(session, repo);
 
         const after = await ctx.provider.listWebhooks();
-        const kodusHooks = after.filter(matchesKodus);
+        const codusHooks = after.filter(matchesCodus);
 
         ctx.assert(
-            kodusHooks.length > 0,
-            `Kodus did not register a webhook on ${ctx.provider.name} after onboarding. ` +
+            codusHooks.length > 0,
+            `Codus did not register a webhook on ${ctx.provider.name} after onboarding. ` +
                 `Expected ≥1 hook with URL containing '${expectedPath}', found ${after.length} hooks total, ` +
-                `${kodusHooks.length} matching. URLs: ${JSON.stringify(after.map((h) => h.url))}`,
+                `${codusHooks.length} matching. URLs: ${JSON.stringify(after.map((h) => h.url))}`,
         );
 
-        const active = kodusHooks.filter((h) => h.active);
+        const active = codusHooks.filter((h) => h.active);
         ctx.assert(
             active.length > 0,
-            `Kodus webhook(s) registered but none are active: ${JSON.stringify(kodusHooks)}`,
+            `Codus webhook(s) registered but none are active: ${JSON.stringify(codusHooks)}`,
         );
 
         return {
             staleRemoved: stale.length,
-            registered: kodusHooks.map((h) => ({
+            registered: codusHooks.map((h) => ({
                 id: h.id,
                 url: h.url,
                 active: h.active,

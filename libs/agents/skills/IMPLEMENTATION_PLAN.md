@@ -251,7 +251,7 @@ See the reference files for detailed output examples and quality classification 
 **Arquivo NOVO:** `libs/agents/skills/capabilities/pr-metadata-read.ts`
 
 **Extrair de `blueprint.tooling.ts`:**
-- Funcao que monta args pra `KODUS_GET_PULL_REQUEST` (buscar organizationId, teamId, repo, prNumber do contexto)
+- Funcao que monta args pra `CODUS_GET_PULL_REQUEST` (buscar organizationId, teamId, repo, prNumber do contexto)
 - Chamada `executeDeterministicTool` pro capability `pr.metadata.read`
 - Parsing do resultado (extrair body/description do PR)
 
@@ -302,7 +302,7 @@ export async function fetchPullRequestMetadata(
 **Arquivo NOVO:** `libs/agents/skills/capabilities/pr-diff-read.ts`
 
 **Mesmo padrao do B1, mas para:**
-- Funcao que monta args pra `KODUS_GET_PULL_REQUEST_DIFF`
+- Funcao que monta args pra `CODUS_GET_PULL_REQUEST_DIFF`
 - Interface `PrDiffReadParams` e `PrDiffReadResult`
 
 **De onde extrair:** A funcao `fetchPullRequestDiff` dentro de `createBusinessRulesBlueprintTooling`.

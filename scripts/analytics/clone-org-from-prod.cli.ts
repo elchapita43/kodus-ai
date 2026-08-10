@@ -32,7 +32,7 @@ import {
  * Usage:
  *   pnpm run analytics:clone-from-prod \
  *     --source-org 11111111-1111-1111-1111-111111111111 \
- *     --target-org analytics-test-kodus
+ *     --target-org analytics-test-codus
  *
  *   # two-phase watermark test (dump up to T, then delta from T onward)
  *   pnpm run analytics:clone-from-prod --source-org <src> --target-org <dst> \
@@ -50,16 +50,16 @@ import {
  * Collections the cockpit pipeline reads from Mongo:
  *  - pullRequests        → suggestions_mv / pull_requests_opt (ingestion)
  *  - codeReviewFeedback  → suggestion_feedback (thumbs up/down)
- *  - kodyRules           → rule titles/states for the rules-health table
+ *  - codyRules           → rule titles/states for the rules-health table
  *
- * `kodyRules` is one doc per org. CAUTION: cloning it adds a SECOND doc
+ * `codyRules` is one doc per org. CAUTION: cloning it adds a SECOND doc
  * for the target org unless `--reset-target` removes the existing one —
  * which also wipes any locally created rules for that org.
  */
 const CLONABLE_COLLECTIONS = [
     'pullRequests',
     'codeReviewFeedback',
-    'kodyRules',
+    'codyRules',
 ] as const;
 type ClonableCollection = (typeof CLONABLE_COLLECTIONS)[number];
 
@@ -69,7 +69,7 @@ const WINDOWED_COLLECTIONS: ReadonlySet<string> = new Set([
     'codeReviewFeedback',
 ]);
 
-const DEFAULT_DB = 'kodus_db';
+const DEFAULT_DB = 'codus_db';
 const DEFAULT_BATCH = 200;
 const PROD_ENV_PATH = '.env.prod';
 const DEV_ENV_PATH = '.env';

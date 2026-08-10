@@ -13,7 +13,7 @@ const CODE_REVIEW_ROUTE_OVERRIDE_PATH_PREFIXES: Record<string, string[]> = {
         "showStatusFeedback",
         "reviewCadence",
         "pullRequestApprovalActive",
-        "kodusConfigFileOverridesWebPreferences",
+        "codusConfigFileOverridesWebPreferences",
         "isRequestChangesActive",
         "runOnDraft",
         "enableCommittableSuggestions",
@@ -29,16 +29,16 @@ const CODE_REVIEW_ROUTE_OVERRIDE_PATH_PREFIXES: Record<string, string[]> = {
     // the override-count badge silently reads as 0.
     "suggestion-control": ["suggestionControl"],
     "pr-summary": ["summary"],
-    "kody-rules": [
+    "cody-rules": [
         // `ideRulesSyncEnabled` is intentionally NOT counted: it's an
         // import action toggle ("am I auto-syncing right now?"), not a
         // rule-shaping configuration. Counting it as an override made
-        // the Kody Rules nav badge show "1" on repos that hadn't actually
+        // the Cody Rules nav badge show "1" on repos that hadn't actually
         // customised any rule policy, which read as "1 custom rule" to
         // users.
-        "kodyKnowledgeApproval",
-        "kodyRulesGeneratorEnabled",
-        "kodyLearningExcludedReviewers",
+        "codyKnowledgeApproval",
+        "codyRulesGeneratorEnabled",
+        "codyLearningExcludedReviewers",
     ],
 };
 

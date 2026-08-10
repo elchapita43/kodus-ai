@@ -8,7 +8,7 @@ export type TeamKeyAccess = {
 export async function resolveTeamKeyAccess(
     missingAuthMessage: string,
 ): Promise<TeamKeyAccess> {
-    const envTeamKey = process.env.KODUS_TEAM_KEY?.trim();
+    const envTeamKey = process.env.CODUS_TEAM_KEY?.trim();
     if (envTeamKey) {
         return { teamKey: envTeamKey };
     }

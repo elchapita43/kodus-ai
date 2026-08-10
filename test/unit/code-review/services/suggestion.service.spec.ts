@@ -88,7 +88,7 @@ describe('SuggestionService', () => {
 
     describe('normalizeLabel', () => {
         it('should convert label to lowercase and replace spaces with underscores', () => {
-            expect(service.normalizeLabel('Kody Rules')).toBe('kody_rules');
+            expect(service.normalizeLabel('Cody Rules')).toBe('cody_rules');
             expect(service.normalizeLabel('Breaking Changes')).toBe(
                 'breaking_changes',
             );
@@ -105,7 +105,7 @@ describe('SuggestionService', () => {
         });
 
         it('should handle already normalized labels', () => {
-            expect(service.normalizeLabel('kody_rules')).toBe('kody_rules');
+            expect(service.normalizeLabel('cody_rules')).toBe('cody_rules');
         });
     });
 
@@ -396,7 +396,7 @@ describe('SuggestionService', () => {
         it('should sort by rankScore descending', () => {
             const suggestions = [
                 { id: '1', rankScore: 50, label: 'security' },
-                { id: '2', rankScore: 100, label: 'kody_rules' },
+                { id: '2', rankScore: 100, label: 'cody_rules' },
                 { id: '3', rankScore: 75, label: 'potential_issues' },
             ];
 
@@ -414,7 +414,7 @@ describe('SuggestionService', () => {
         it('should use category priority as tiebreaker when rankScores are equal', () => {
             const suggestions = [
                 { id: '1', rankScore: 100, label: 'code_style' },
-                { id: '2', rankScore: 100, label: 'kody_rules' },
+                { id: '2', rankScore: 100, label: 'cody_rules' },
                 { id: '3', rankScore: 100, label: 'security' },
             ];
 
@@ -424,8 +424,8 @@ describe('SuggestionService', () => {
                 suggestions,
             );
 
-            // kody_rules (priority 1) > security (priority 3) > code_style (priority 9)
-            expect(result[0].label).toBe('kody_rules');
+            // cody_rules (priority 1) > security (priority 3) > code_style (priority 9)
+            expect(result[0].label).toBe('cody_rules');
             expect(result[1].label).toBe('security');
             expect(result[2].label).toBe('code_style');
         });
@@ -433,7 +433,7 @@ describe('SuggestionService', () => {
         it('should handle missing rankScores (undefined treated as 0)', () => {
             const suggestions = [
                 { id: '1', rankScore: undefined, label: 'security' },
-                { id: '2', rankScore: 100, label: 'kody_rules' },
+                { id: '2', rankScore: 100, label: 'cody_rules' },
             ];
 
             const result = service.sortSuggestionsByPriority(
@@ -462,11 +462,11 @@ describe('SuggestionService', () => {
     });
 
     describe('calculateSuggestionRankScore', () => {
-        it('should calculate correct score for kody_rules + critical', async () => {
-            const suggestion = { label: 'kody_rules', severity: 'critical' };
+        it('should calculate correct score for cody_rules + critical', async () => {
+            const suggestion = { label: 'cody_rules', severity: 'critical' };
             const score =
                 await service.calculateSuggestionRankScore(suggestion);
-            expect(score).toBe(150); // 100 (kody_rules) + 50 (critical)
+            expect(score).toBe(150); // 100 (cody_rules) + 50 (critical)
         });
 
         it('should calculate correct score for security + high', async () => {
@@ -502,7 +502,7 @@ describe('SuggestionService', () => {
         it('should identify suggestions that were filtered out', () => {
             const allSuggestions = [
                 { id: '1', label: 'security' },
-                { id: '2', label: 'kody_rules' },
+                { id: '2', label: 'cody_rules' },
                 { id: '3', label: 'code_style' },
             ];
 
@@ -824,7 +824,7 @@ __new hunk__
     describe('prioritizeSuggestionsByPR', () => {
         it('should limit total suggestions based on PR limit', async () => {
             const suggestions = [
-                { id: '1', rankScore: 100, label: 'kody_rules' },
+                { id: '1', rankScore: 100, label: 'cody_rules' },
                 { id: '2', rankScore: 75, label: 'security' },
                 { id: '3', rankScore: 50, label: 'potential_issues' },
                 { id: '4', rankScore: 25, label: 'code_style' },
@@ -1083,8 +1083,8 @@ __new hunk__
         });
     });
 
-    describe('prioritizeSuggestionsLegacy - Kody Rules deterministic grouping', () => {
-        it('should group same Kody Rule suggestions in FULL mode before LLM clustering', async () => {
+    describe('prioritizeSuggestionsLegacy - Cody Rules deterministic grouping', () => {
+        it('should group same Cody Rule suggestions in FULL mode before LLM clustering', async () => {
             mockCommentManagerService.repeatedCodeReviewSuggestionClustering.mockImplementation(
                 async (_org, _pr, _provider, inputSuggestions) =>
                     inputSuggestions,
@@ -1095,44 +1095,44 @@ __new hunk__
                 limitationType: LimitationType.PR,
                 maxSuggestions: 0,
                 severityLevelFilter: SeverityLevel.LOW,
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
             } as any;
 
             const suggestions = [
                 {
                     id: 'a2',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/a.ts',
                     relevantLinesStart: 10,
                     relevantLinesEnd: 10,
                     suggestionContent: 'Rule A violation in file A',
                     oneSentenceSummary: 'Fix rule A',
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 80,
                 },
                 {
                     id: 'a1',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/b.tsx',
                     relevantLinesStart: 20,
                     relevantLinesEnd: 20,
                     suggestionContent: 'Rule A violation in file B',
                     oneSentenceSummary: 'Fix rule A',
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 90,
                 },
                 {
                     id: 'b1',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/c.ts',
                     relevantLinesStart: 30,
                     relevantLinesEnd: 30,
                     suggestionContent: 'Rule B violation',
                     oneSentenceSummary: 'Fix rule B',
-                    brokenKodyRulesIds: ['rule-b'],
+                    brokenCodyRulesIds: ['rule-b'],
                     rankScore: 70,
                 },
             ];
@@ -1147,12 +1147,12 @@ __new hunk__
             const parent = result.prioritizedSuggestions.find(
                 (s) =>
                     s.clusteringInformation?.type === ClusteringType.PARENT &&
-                    s.brokenKodyRulesIds?.[0] === 'rule-a',
+                    s.brokenCodyRulesIds?.[0] === 'rule-a',
             );
             const related = result.prioritizedSuggestions.find(
                 (s) =>
                     s.clusteringInformation?.type === ClusteringType.RELATED &&
-                    s.brokenKodyRulesIds?.[0] === 'rule-a',
+                    s.brokenCodyRulesIds?.[0] === 'rule-a',
             );
             const otherRule = result.prioritizedSuggestions.find(
                 (s) => s.id === 'b1',
@@ -1189,28 +1189,28 @@ __new hunk__
                 limitationType: LimitationType.PR,
                 maxSuggestions: 0,
                 severityLevelFilter: SeverityLevel.LOW,
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
             } as any;
 
             const suggestions = [
                 {
                     id: 'a1',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/a.ts',
                     relevantLinesStart: 1,
                     relevantLinesEnd: 1,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 90,
                 },
                 {
                     id: 'a2',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/b.tsx',
                     relevantLinesStart: 2,
                     relevantLinesEnd: 2,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 80,
                 },
             ];
@@ -1245,28 +1245,28 @@ __new hunk__
                 limitationType: LimitationType.PR,
                 maxSuggestions: 0,
                 severityLevelFilter: SeverityLevel.LOW,
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
             } as any;
 
             const suggestions = [
                 {
                     id: '',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/a.ts',
                     relevantLinesStart: 10,
                     relevantLinesEnd: 10,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 80,
                 },
                 {
                     id: 'a1',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/b.tsx',
                     relevantLinesStart: 20,
                     relevantLinesEnd: 20,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 90,
                 },
             ];
@@ -1304,28 +1304,28 @@ __new hunk__
                 limitationType: LimitationType.PR,
                 maxSuggestions: 0,
                 severityLevelFilter: SeverityLevel.LOW,
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
             } as any;
 
             const suggestions = [
                 {
                     id: '',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/a.ts',
                     relevantLinesStart: 10,
                     relevantLinesEnd: 10,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 80,
                 },
                 {
                     id: '',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/b.tsx',
                     relevantLinesStart: 20,
                     relevantLinesEnd: 20,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 90,
                 },
             ];
@@ -1346,35 +1346,35 @@ __new hunk__
         });
     });
 
-    describe('prioritizeSuggestions - Kody Rules control branch', () => {
-        it('should group Kody Rules in FULL mode even when applyFiltersToKodyRules is false', async () => {
+    describe('prioritizeSuggestions - Cody Rules control branch', () => {
+        it('should group Cody Rules in FULL mode even when applyFiltersToCodyRules is false', async () => {
             const suggestionControl = {
                 groupingMode: GroupingModeSuggestions.FULL,
                 limitationType: LimitationType.PR,
                 maxSuggestions: 0,
                 severityLevelFilter: SeverityLevel.LOW,
-                applyFiltersToKodyRules: false,
+                applyFiltersToCodyRules: false,
             } as any;
 
             const suggestions = [
                 {
                     id: 'a2',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/a.ts',
                     relevantLinesStart: 10,
                     relevantLinesEnd: 10,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 80,
                 },
                 {
                     id: 'a1',
-                    label: 'kody_rules',
+                    label: 'cody_rules',
                     severity: 'high',
                     relevantFile: 'src/b.tsx',
                     relevantLinesStart: 20,
                     relevantLinesEnd: 20,
-                    brokenKodyRulesIds: ['rule-a'],
+                    brokenCodyRulesIds: ['rule-a'],
                     rankScore: 90,
                 },
             ];

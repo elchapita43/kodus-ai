@@ -9,10 +9,10 @@ import {
     Terminal,
     type LucideIcon,
 } from "lucide-react";
-import { KodusLogo } from "./icons/KodusLogo";
+import { CodusLogo } from "./icons/CodusLogo";
 import { useSignupGate } from "./SignupGate";
 
-const STAR_URL = "https://github.com/kodustech/kodus-ai";
+const STAR_URL = "https://github.com/elchapita43/codus-ai";
 const SIGNUP_URL = "https://app.kodus.io/sign-up";
 const LOGIN_URL = "https://app.kodus.io/sign-in";
 
@@ -39,8 +39,8 @@ const NAV_ITEMS: NavItem[] = [
         label: "Library",
         icon: LibraryBig,
         gate: {
-            title: "Kody Rules Library",
-            body: "Your Kody Rules, version-controlled per repo. Reuse what works, propagate fixes across the team, and let Kody enforce them on every PR.",
+            title: "Cody Rules Library",
+            body: "Your Cody Rules, version-controlled per repo. Reuse what works, propagate fixes across the team, and let Cody enforce them on every PR.",
         },
     },
     {
@@ -48,7 +48,7 @@ const NAV_ITEMS: NavItem[] = [
         icon: Info,
         gate: {
             title: "Recurring issues, tracked",
-            body: "Bugs Kody flagged across PRs grouped into actionable issues. See patterns that keep popping up and which teams own them.",
+            body: "Bugs Cody flagged across PRs grouped into actionable issues. See patterns that keep popping up and which teams own them.",
         },
     },
     {
@@ -56,15 +56,15 @@ const NAV_ITEMS: NavItem[] = [
         icon: GitPullRequest,
         gate: {
             title: "Every PR, reviewed",
-            body: "Timeline of every PR Kody has reviewed for your team — comments, severity, time saved. Searchable, filterable, exportable.",
+            body: "Timeline of every PR Cody has reviewed for your team — comments, severity, time saved. Searchable, filterable, exportable.",
         },
     },
     {
         label: "CLI Reviews",
         icon: Terminal,
         gate: {
-            title: "Kody in your terminal",
-            body: "Run the same review locally with `npx kodus review` — pre-commit feedback, zero setup. Same engine, same suggestions.",
+            title: "Cody in your terminal",
+            body: "Run the same review locally with `npx codus review` — pre-commit feedback, zero setup. Same engine, same suggestions.",
         },
     },
 ];
@@ -96,10 +96,10 @@ export function MainHeader({
         >
             <Link
                 href="/"
-                aria-label="Kodus"
+                aria-label="Codus"
                 className="flex items-center shrink-0"
             >
-                <KodusLogo className="h-7" />
+                <CodusLogo className="h-7" />
             </Link>
 
             {leftExtra}

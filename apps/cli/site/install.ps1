@@ -42,36 +42,36 @@ function Get-NpmBin {
     return (Join-Path $prefix 'bin')
 }
 
-function Get-KodusExecutableName {
+function Get-CodusExecutableName {
     if (Test-IsWindows) {
-        return 'kodus.cmd'
+        return 'codus.cmd'
     }
 
-    return 'kodus'
+    return 'codus'
 }
 
-function Resolve-KodusCommand {
-    $command = Get-Command kodus -ErrorAction SilentlyContinue
+function Resolve-CodusCommand {
+    $command = Get-Command codus -ErrorAction SilentlyContinue
     if ($command) {
         return $command.Source
     }
 
     $npmBin = Get-NpmBin
-    $candidate = Join-Path $npmBin (Get-KodusExecutableName)
+    $candidate = Join-Path $npmBin (Get-CodusExecutableName)
     if (Test-Path $candidate) {
         return $candidate
     }
 
-    throw 'Unable to find kodus after installation. Open a new terminal and try again.'
+    throw 'Unable to find codus after installation. Open a new terminal and try again.'
 }
 
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
     throw 'npm is required but was not found. Install Node.js from https://nodejs.org and run again.'
 }
 
-Write-Header 'Kodus CLI installer (PowerShell)'
-Write-Step 'Installing or updating @kodus/cli'
-& npm install -g @kodus/cli | Out-Host
+Write-Header 'Codus CLI installer (PowerShell)'
+Write-Step 'Installing or updating @codus/cli'
+& npm install -g @codus/cli | Out-Host
 
 $npmBin = Get-NpmBin
 $pathSeparator = [System.IO.Path]::PathSeparator
@@ -80,16 +80,16 @@ if (-not ($pathEntries | Where-Object { $_ -eq $npmBin })) {
     $env:Path = "$npmBin$pathSeparator$env:Path"
 }
 
-$kodus = Resolve-KodusCommand
-$version = (& $kodus --version).Trim()
-Write-Success "Kodus CLI ready ($version)"
+$codus = Resolve-CodusCommand
+$version = (& $codus --version).Trim()
+Write-Success "Codus CLI ready ($version)"
 
 if ($TeamKey) {
     Write-Step 'Authenticating with team key'
-    & $kodus auth team-key --key $TeamKey | Out-Host
+    & $codus auth team-key --key $TeamKey | Out-Host
     Write-Success 'Authenticated successfully'
 }
 
-Write-Step 'Installing bundled Kodus skills into detected agent roots'
-& $kodus skills install | Out-Host
+Write-Step 'Installing bundled Codus skills into detected agent roots'
+& $codus skills install | Out-Host
 Write-Success 'Bundled skills installed'

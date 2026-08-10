@@ -21,10 +21,10 @@ libs/common/utils/translations/dictionaries/
 !package.json
 !tsconfig*.json
 !nest-cli.json
-!kodus-config.yml
+!codus-config.yml
 
 # --- Arquivos de Dados Grandes ---
-libs/ee/kodyRules/service/data/
+libs/ee/codyRules/service/data/
 libs/code-review/infrastructure/data/
 
 # --- Logs e Temporários ---

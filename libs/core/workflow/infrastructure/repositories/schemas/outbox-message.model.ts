@@ -10,7 +10,7 @@ export enum OutboxStatus {
     FAILED = 'FAILED',
 }
 
-@Entity({ name: 'outbox_messages', schema: 'kodus_workflow' })
+@Entity({ name: 'outbox_messages', schema: 'codus_workflow' })
 @Index('IDX_outbox_messages_status', ['status'])
 @Index('IDX_outbox_messages_next_attempt_at', ['nextAttemptAt'])
 @Index('IDX_outbox_messages_created_at', ['createdAt'])

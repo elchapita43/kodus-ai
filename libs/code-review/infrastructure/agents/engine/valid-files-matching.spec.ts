@@ -76,43 +76,43 @@ describe('validFiles path matching across Git providers', () => {
     describe('Azure Repos', () => {
         it('matches when changedFiles have leading slash and suggestion does not', () => {
             const validFiles = buildValidFilesSet([
-                '/Kodus.Api/Exceptions/ExceptionHandler.php',
-                '/Kodus.Api/Entities/User.php',
+                '/Codus.Api/Exceptions/ExceptionHandler.php',
+                '/Codus.Api/Entities/User.php',
             ]);
             expect(
                 matchesSuggestion(
                     validFiles,
-                    'Kodus.Api/Exceptions/ExceptionHandler.php',
+                    'Codus.Api/Exceptions/ExceptionHandler.php',
                 ),
             ).toBe(true);
             expect(
                 matchesSuggestion(
                     validFiles,
-                    'Kodus.Api/Entities/User.php',
+                    'Codus.Api/Entities/User.php',
                 ),
             ).toBe(true);
         });
 
         it('matches when both have leading slash', () => {
             const validFiles = buildValidFilesSet([
-                '/Kodus.Api/Exceptions/ExceptionHandler.php',
+                '/Codus.Api/Exceptions/ExceptionHandler.php',
             ]);
             expect(
                 matchesSuggestion(
                     validFiles,
-                    '/Kodus.Api/Exceptions/ExceptionHandler.php',
+                    '/Codus.Api/Exceptions/ExceptionHandler.php',
                 ),
             ).toBe(true);
         });
 
         it('matches when changedFiles have no slash but suggestion has leading slash', () => {
             const validFiles = buildValidFilesSet([
-                'Kodus.Api/Exceptions/ExceptionHandler.php',
+                'Codus.Api/Exceptions/ExceptionHandler.php',
             ]);
             expect(
                 matchesSuggestion(
                     validFiles,
-                    '/Kodus.Api/Exceptions/ExceptionHandler.php',
+                    '/Codus.Api/Exceptions/ExceptionHandler.php',
                 ),
             ).toBe(true);
         });
@@ -189,14 +189,14 @@ describe('validFiles path matching across Git providers', () => {
     describe('canonicalization back to provider path', () => {
         it('restores Azure leading slash from LLM-emitted path', () => {
             const validFiles = buildValidFilesMap([
-                '/Kodus.Api/Exceptions/ExceptionHandler.php',
+                '/Codus.Api/Exceptions/ExceptionHandler.php',
             ]);
             expect(
                 canonicalizeRelevantFile(
                     validFiles,
-                    'Kodus.Api/Exceptions/ExceptionHandler.php',
+                    'Codus.Api/Exceptions/ExceptionHandler.php',
                 ),
-            ).toBe('/Kodus.Api/Exceptions/ExceptionHandler.php');
+            ).toBe('/Codus.Api/Exceptions/ExceptionHandler.php');
         });
 
         it('keeps GitHub-style path untouched', () => {
@@ -242,7 +242,7 @@ describe('validFiles path matching across Git providers', () => {
             ).toBe('src/unknown.ts');
         });
 
-        it('passes undefined through unchanged for PR-level kody_rules', () => {
+        it('passes undefined through unchanged for PR-level cody_rules', () => {
             const validFiles = buildValidFilesMap(['src/known.ts']);
             expect(canonicalizeRelevantFile(validFiles, undefined)).toBe(
                 undefined,

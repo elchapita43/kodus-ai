@@ -5,7 +5,7 @@
  *
  * How it works:
  *   1. greps the codebase for `process.env.X` and `env.X` usages
- *   2. filters to "Kodus-shaped" prefixes (drops Node stdlib + tooling)
+ *   2. filters to "Codus-shaped" prefixes (drops Node stdlib + tooling)
  *   3. applies an allowlist for known false-positives (CLI app, tests,
  *      DI tokens that grep can't tell from real env vars)
  *   4. compares against vars declared in .env.schema
@@ -23,10 +23,10 @@ import { flatten, parseSchema } from './parse-schema';
 const REPO_ROOT = join(__dirname, '..', '..');
 
 // Vars whose names start with one of these prefixes are considered
-// "Kodus-shaped" and therefore candidates to be in the schema. Anything
+// "Codus-shaped" and therefore candidates to be in the schema. Anything
 // else from the grep (NODE_ENV, PATH, JEST_WORKER_ID, etc) is ignored.
-const KODUS_PREFIX_RE =
-    /^(API_|WEB_|KODUS_|GLOBAL_|GITHUB_|GITLAB_|BITBUCKET_|AZURE_|FORGEJO_|RABBIT|WORKFLOW_|AST_|ANALYTICS_|MCP_|METRICS_|REVIEW_|WEBHOOK_|MONGODB_|DATABASE_|SANDBOX_|LANGFUSE_|PYROSCOPE_|RESEND_|N8N_|CODE_MANAGEMENT_|NEXTAUTH_|RUN_)/;
+const CODUS_PREFIX_RE =
+    /^(API_|WEB_|CODUS_|GLOBAL_|GITHUB_|GITLAB_|BITBUCKET_|AZURE_|FORGEJO_|RABBIT|WORKFLOW_|AST_|ANALYTICS_|MCP_|METRICS_|REVIEW_|WEBHOOK_|MONGODB_|DATABASE_|SANDBOX_|LANGFUSE_|PYROSCOPE_|RESEND_|N8N_|CODE_MANAGEMENT_|NEXTAUTH_|RUN_)/;
 
 // Names that match these patterns are deliberately NOT in the schema.
 // Grouped by reason so the gate's failure message can point reviewers at
@@ -35,8 +35,8 @@ const ALLOWLIST: Array<{ pattern: RegExp; reason: string }> = [
     {
         // apps/cli is a standalone CLI tool with its own config story —
         // not part of the api/worker/web/webhooks/mcp-manager runtime.
-        // KODUS_LICENSE_KEY is the one exception (real EE feature flag).
-        pattern: /^KODUS_(?!LICENSE_KEY$)/,
+        // CODUS_LICENSE_KEY is the one exception (real EE feature flag).
+        pattern: /^CODUS_(?!LICENSE_KEY$)/,
         reason: 'apps/cli (standalone CLI tool, not the main runtime)',
     },
     {
@@ -52,7 +52,7 @@ const ALLOWLIST: Array<{ pattern: RegExp; reason: string }> = [
         reason: 'generic name — likely DI token or test fixture (false positive)',
     },
     {
-        // Inherited from the original kodus-mcp-manager imports — those
+        // Inherited from the original codus-mcp-manager imports — those
         // module names also use SCREAMING_CASE strings the grep mistakes
         // for env vars.
         pattern: /^(BEARER_TOKEN|GOOGLE_SERVICE_ACCOUNT|NO_AUTH|BASIC_WITH_JWT)$/,
@@ -61,10 +61,10 @@ const ALLOWLIST: Array<{ pattern: RegExp; reason: string }> = [
     {
         // GitHub Actions runtime variables referenced by inline `node`
         // scripts in .github/workflows/*.yml (the scan includes *.yml).
-        // Injected by the Actions runner — CI plumbing, never Kodus
+        // Injected by the Actions runner — CI plumbing, never Codus
         // runtime config, so they don't belong in .env.schema.
         pattern: /^(GITHUB_OUTPUT|GITHUB_ENV|GITHUB_STATE|GITHUB_STEP_SUMMARY|GITHUB_PATH|RUNNER_TEMP)$/,
-        reason: 'GitHub Actions workflow plumbing (inline node in *.yml), not a Kodus env var',
+        reason: 'GitHub Actions workflow plumbing (inline node in *.yml), not a Codus env var',
     },
 ];
 
@@ -107,7 +107,7 @@ function grepStrongUsages(): Set<string> {
         // evals reference legacy env names that were renamed in production
         // code (e.g. API_OPENROUTER_KEY → API_OPEN_ROUTER_API_KEY).
         '--exclude-dir=evals',
-        // Standalone CLI app — already covered by the KODUS_* allowlist
+        // Standalone CLI app — already covered by the CODUS_* allowlist
         // pattern below, but excluding here too saves a few seconds.
         '--exclude-dir=apps/cli',
         // E2E test harness with its own CLI under tests/e2e/cli. Reads
@@ -116,7 +116,7 @@ function grepStrongUsages(): Set<string> {
         // apps/cli, just lives under tests/ instead of apps/.
         '--exclude-dir=tests',
         // Schema/scripts/CI tooling itself references env var names as
-        // strings (e.g. SECRET_RE in build-slim-csv.ts, KODUS_PREFIX_RE
+        // strings (e.g. SECRET_RE in build-slim-csv.ts, CODUS_PREFIX_RE
         // here). Don't double-count those.
         '--exclude-dir=scripts/env',
         '--include=*.ts',
@@ -158,7 +158,7 @@ function main() {
     const undeclared: string[] = [];
     const allowedHits: Map<string, string[]> = new Map();
     for (const name of used) {
-        if (!KODUS_PREFIX_RE.test(name)) continue; // not Kodus-shaped
+        if (!CODUS_PREFIX_RE.test(name)) continue; // not Codus-shaped
         if (declared.has(name)) continue; // already in schema, OK
         const { allowed, reason } = isAllowed(name);
         if (allowed && reason) {
@@ -171,7 +171,7 @@ function main() {
     }
 
     console.log(`Schema declares: ${declared.size} vars`);
-    console.log(`Code references: ${[...used].filter((n) => KODUS_PREFIX_RE.test(n)).length} Kodus-shaped vars`);
+    console.log(`Code references: ${[...used].filter((n) => CODUS_PREFIX_RE.test(n)).length} Codus-shaped vars`);
     console.log(`Allowlisted:     ${[...allowedHits.values()].reduce((a, l) => a + l.length, 0)}`);
     console.log();
 

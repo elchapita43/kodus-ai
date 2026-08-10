@@ -65,7 +65,7 @@ import { CodeReviewCoreModule } from '@libs/code-review/modules/code-review-core
 import { CodeReviewPipelineModule } from '@libs/code-review/pipeline/code-review-pipeline.module';
 import { GlobalCacheModule } from '@libs/core/cache/cache.module';
 import { LicenseModule } from '@libs/ee/license/license.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { ParametersModule } from '@libs/organization/modules/parameters.module';
 import { TeamModule } from '@libs/organization/modules/team.module';
 // Needed by ValidateCliKeyUseCase — exports AUTH_SERVICE_TOKEN +
@@ -115,7 +115,7 @@ import { OutboxMessageModel } from '@libs/core/workflow/infrastructure/repositor
         forwardRef(() => GlobalCacheModule), // For rate limiting
         forwardRef(() => AutomationModule), // For tracking executions
         forwardRef(() => LicenseModule), // For license validation and auto-assign
-        forwardRef(() => KodyRulesModule), // For loading kody rules in CLI review
+        forwardRef(() => CodyRulesModule), // For loading cody rules in CLI review
         forwardRef(() => GithubModule), // For GitHubRateLimitGateService dependency
         forwardRef(() => PlatformCoreModule), // For CodeManagementService (platform resolution)
     ],
@@ -173,7 +173,7 @@ import { OutboxMessageModel } from '@libs/core/workflow/infrastructure/repositor
         CliSessionCaptureRepository,
         SessionEventRepository,
         // Services + repos that must be consumed via DI tokens
-        // (Kody rule: don't inject services/repos by concrete class).
+        // (Cody rule: don't inject services/repos by concrete class).
         {
             provide: TRIAL_RATE_LIMITER_SERVICE_TOKEN,
             useClass: TrialRateLimiterService,

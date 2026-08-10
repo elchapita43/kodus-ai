@@ -75,7 +75,7 @@
 
             "@/core/application/use-cases/organizationParameters/*": ["./libs/organization/application/use-cases/organizationParameters/*"],
 
-            "@/ee/kodyIssuesManagement/*": ["./libs/issues/infrastructure/adapters/*"],
+            "@/ee/codyIssuesManagement/*": ["./libs/issues/infrastructure/adapters/*"],
             "@/ee/*": ["./libs/ee/*"],
 
             "@/*": ["./libs/*"]

@@ -6,7 +6,7 @@ import { Button } from "@components/ui/button";
 import { Card, CardHeader } from "@components/ui/card";
 import { Checkbox } from "@components/ui/checkbox";
 import { Heading } from "@components/ui/heading";
-import { SvgKodus } from "@components/ui/icons/SvgKodus";
+import { SvgCodus } from "@components/ui/icons/SvgCodus";
 import { Label } from "@components/ui/label";
 import { Link } from "@components/ui/link";
 import { Page } from "@components/ui/page";

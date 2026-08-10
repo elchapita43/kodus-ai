@@ -35,7 +35,7 @@ Usage: $0 [--e2e] [--skip-build]
   --e2e         Also run the full SAML round-trip in a browser.
                 Requires \`brew install mkcert && sudo mkcert -install\`
                 on the host.
-  --skip-build  Don't (re)build the kodus-web:test image even if
+  --skip-build  Don't (re)build the codus-web:test image even if
                 missing. Use when you've just built it manually.
 EOF
             exit 0
@@ -90,19 +90,19 @@ else
 fi
 
 # ─────────────────────────────────────────────────────────────────
-# Step 2: build kodus-web:test if missing
+# Step 2: build codus-web:test if missing
 # ─────────────────────────────────────────────────────────────────
 step "Step 2/3 — prod web image"
-if docker image inspect kodus-web:test >/dev/null 2>&1; then
-    ok "kodus-web:test already built"
+if docker image inspect codus-web:test >/dev/null 2>&1; then
+    ok "codus-web:test already built"
 elif [ "${SKIP_BUILD}" = "true" ]; then
-    fail "kodus-web:test missing and --skip-build was passed"
+    fail "codus-web:test missing and --skip-build was passed"
     exit 1
 else
-    info "  building kodus-web:test via docker buildx bake"
-    if WEB_TAGS=kodus-web:test RELEASE_VERSION=test \
+    info "  building codus-web:test via docker buildx bake"
+    if WEB_TAGS=codus-web:test RELEASE_VERSION=test \
             docker buildx bake -f docker-bake.hcl web 2>&1 | tail -3; then
-        ok "kodus-web:test built"
+        ok "codus-web:test built"
     else
         fail "build failed"
         exit 1
@@ -124,13 +124,13 @@ docker run -d --rm --name sso-smoke-cloud -p 33010:3000 \
     -e WEB_HOSTNAME_API=api.kodus.io \
     -e WEB_NODE_ENV=production \
     -e RELEASE_VERSION=smoke-cloud \
-    kodus-web:test >/dev/null
+    codus-web:test >/dev/null
 
 docker run -d --rm --name sso-smoke-selfhosted -p 33011:3000 \
-    -e WEB_HOSTNAME_API=kodus-api-dev.web.scorpion.co \
+    -e WEB_HOSTNAME_API=codus-api-dev.web.scorpion.co \
     -e WEB_NODE_ENV=production \
     -e RELEASE_VERSION=smoke-selfhosted \
-    kodus-web:test >/dev/null
+    codus-web:test >/dev/null
 
 info "  waiting for both containers to serve /sign-in"
 for i in $(seq 1 30); do
@@ -172,10 +172,10 @@ else
     failures=$((failures + 1))
 fi
 
-if [ "${self_url}" = "https://kodus-api-dev.web.scorpion.co" ]; then
-    ok "self-hosted shape resolves to https://kodus-api-dev.web.scorpion.co"
+if [ "${self_url}" = "https://codus-api-dev.web.scorpion.co" ]; then
+    ok "self-hosted shape resolves to https://codus-api-dev.web.scorpion.co"
 else
-    fail "self-hosted shape: expected https://kodus-api-dev.web.scorpion.co, got '${self_url}'"
+    fail "self-hosted shape: expected https://codus-api-dev.web.scorpion.co, got '${self_url}'"
     failures=$((failures + 1))
 fi
 
@@ -200,7 +200,7 @@ printf '%s═══════════════════════�
 printf '%s All SSO regression layers passed%s\n' "${GREEN}${BOLD}" "${RESET}"
 printf '%s═══════════════════════════════════════════════════════════%s\n' "${GREEN}" "${RESET}"
 echo "  Layer 1: unit + integration tests           28 cases"
-echo "  Layer 2: kodus-web:test image               built"
+echo "  Layer 2: codus-web:test image               built"
 echo "  Layer 3: runtime smoke (cloud + self-hosted) 2 shapes"
 if [ "${WITH_E2E}" = "true" ]; then
 echo "  Layer 4: full SAML round-trip               passed (manual verification)"

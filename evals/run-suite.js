@@ -10,7 +10,7 @@
 //     --enforce (off by default = post-merge monitor while thresholds calibrate).
 //
 // Per-eval exit codes the suite reads: 0 = pass, 1 = gate-fail, 2 = infra. The
-// deterministic evals (kody-rules, anchoring) honor this contract. The promptfoo
+// deterministic evals (cody-rules, anchoring) honor this contract. The promptfoo
 // evals (finder, promotion) can't cleanly separate gate-vs-infra on their exit
 // code yet, so they run REPORT-ONLY (logged, never block) until classified.
 const { spawnSync } = require('child_process');
@@ -42,8 +42,8 @@ const SUITE = [
       cmd: ['node', 'evals/severity/run.js', '--mock=heuristic', '--gate'] },
     { name: 'format', kind: 'gate',
       cmd: ['node', 'evals/format/run.js', '--mock=perfect', '--gate'] },
-    { name: 'kody-rules', kind: 'gate',
-      cmd: ['node', 'evals/kody-rules/real-agent.js', '--dataset=github-cases', '--gate', `--model=${MODEL}`, `--runs=${RUNS}`, `--limit=${PRS}`] },
+    { name: 'cody-rules', kind: 'gate',
+      cmd: ['node', 'evals/cody-rules/real-agent.js', '--dataset=github-cases', '--gate', `--model=${MODEL}`, `--runs=${RUNS}`, `--limit=${PRS}`] },
     { name: 'anchoring', kind: 'gate',
       cmd: ['node', 'evals/anchoring/anchor-eval.js', '--gate', `--model=${MODEL}`, `--limit=${PRS}`] },
     { name: 'pr-summary', kind: 'gate',

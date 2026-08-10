@@ -2,7 +2,7 @@
  * OpenAI structured outputs (strict `json_schema`) reject any schema whose
  * `required` array doesn't list EVERY key in `properties`. Zod schemas with
  * `.optional()` fields therefore 400 instantly on `openai.responses` — this
- * silently killed every kody-rules shard AND every guidance-file rule
+ * silently killed every cody-rules shard AND every guidance-file rule
  * extraction for BYOK-OpenAI orgs (found live in QA; two call sites, same
  * class, and any future `.optional()` schema would reintroduce it).
  *

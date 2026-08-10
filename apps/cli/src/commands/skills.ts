@@ -82,7 +82,7 @@ async function runSkillAction(
 }
 
 export const skillsCommand = new Command('skills')
-    .description('Inspect bundled Kodus skills')
+    .description('Inspect bundled Codus skills')
     .action(listAction);
 
 skillsCommand

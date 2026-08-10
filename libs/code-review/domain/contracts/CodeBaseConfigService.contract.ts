@@ -2,7 +2,7 @@ import {
     CodeReviewConfig,
     CodeReviewConfigWithoutLLMProvider,
     FileChange,
-    KodusConfigFile,
+    CodusConfigFile,
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 
@@ -42,7 +42,7 @@ export interface ICodeBaseConfigService {
         affectedPath: string,
     ): Promise<string | undefined>;
 
-    getKodusConfigFile(params: {
+    getCodusConfigFile(params: {
         organizationAndTeamData: OrganizationAndTeamData;
         repository: { id: string; name: string };
         overrideConfig?: boolean;
@@ -50,7 +50,7 @@ export interface ICodeBaseConfigService {
         directoryId?: string;
         defaultBranch?: string;
         removeProperties?: boolean;
-    }): Promise<KodusConfigFile | undefined>;
+    }): Promise<CodusConfigFile | undefined>;
 
     getE2BIpAddress(): Promise<string | null>;
 }

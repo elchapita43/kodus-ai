@@ -67,7 +67,7 @@ type ReviewCommandOptions = {
 
 /**
  * Resolve the GitHub PAT for trial mode: explicit --github-pat flag takes
- * precedence, then KODUS_GITHUB_PAT, then GITHUB_TOKEN/GH_TOKEN as a
+ * precedence, then CODUS_GITHUB_PAT, then GITHUB_TOKEN/GH_TOKEN as a
  * developer convenience. Returns undefined when none are set so the
  * sandbox falls back to anonymous clone (works for public repos).
  */
@@ -76,7 +76,7 @@ function resolveTrialGithubPat(
 ): string | undefined {
     return (
         options.githubPat?.trim() ||
-        process.env.KODUS_GITHUB_PAT?.trim() ||
+        process.env.CODUS_GITHUB_PAT?.trim() ||
         process.env.GITHUB_TOKEN?.trim() ||
         process.env.GH_TOKEN?.trim() ||
         undefined
@@ -89,11 +89,11 @@ export function createReviewCommand(): Command {
             `Analyze modified files for code review
 
 Examples:
-  kodus review
-  kodus review --staged
-  kodus review --branch main
-  kodus review src/auth.ts src/config.ts
-  kodus review --fail-on error`,
+  codus review
+  codus review --staged
+  codus review --branch main
+  codus review src/auth.ts src/config.ts
+  codus review --fail-on error`,
         )
         .argument('[files...]', 'Specific files to analyze')
         .option('-s, --staged', 'Analyze only staged files')
@@ -135,7 +135,7 @@ Examples:
         )
         .option(
             '--github-pat <token>',
-            'GitHub Personal Access Token (read:repo). Trial users only — needed to clone private repos. Can also be set via KODUS_GITHUB_PAT env var. Held in memory only, never persisted.',
+            'GitHub Personal Access Token (read:repo). Trial users only — needed to clone private repos. Can also be set via CODUS_GITHUB_PAT env var. Held in memory only, never persisted.',
         )
         .option(
             '--no-hunk',

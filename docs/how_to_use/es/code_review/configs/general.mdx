@@ -1,26 +1,26 @@
 ---
 title: "General"
-description: "Los ajustes centrales de la revisión — cadencia, flujo de PR, condiciones de omisión y tipos de análisis — más la referencia completa de kodus-config.yml."
+description: "Los ajustes centrales de la revisión — cadencia, flujo de PR, condiciones de omisión y tipos de análisis — más la referencia completa de codus-config.yml."
 ---
 
 ## Configuración Principal
 
 <Note>
-  Kodus tiene tres niveles de configuración: Global, Repositorio y Directorio. Aprende cómo funcionan en <a href="/how_to_use/es/code_review/configs/inheritance_overrides">Herencia y Overrides de Configuración</a>.
+  Codus tiene tres niveles de configuración: Global, Repositorio y Directorio. Aprende cómo funcionan en <a href="/how_to_use/es/code_review/configs/inheritance_overrides">Herencia y Overrides de Configuración</a>.
 </Note>
 
 ### Prioridad de Configuración
 
-Puedes mantener la configuración de revisión en un archivo `kodus-config.yml` en la raíz de tu
+Puedes mantener la configuración de revisión en un archivo `codus-config.yml` en la raíz de tu
 repositorio en lugar de usar la interfaz web.
 
 <Warning>
   **El archivo se ignora hasta que lo habilites.** Por defecto,
-  `kodusConfigFileOverridesWebPreferences` es `false`, lo que significa que Kody nunca lee
-  `kodus-config.yml` — hacer commit del archivo por sí solo no hace nada.
+  `codusConfigFileOverridesWebPreferences` es `false`, lo que significa que Cody nunca lee
+  `codus-config.yml` — hacer commit del archivo por sí solo no hace nada.
 
   Actívalo primero en **Settings → Code Review → el repositorio → General**, o define
-  `kodusConfigFileOverridesWebPreferences: true` a nivel de repositorio (o directorio) desde la
+  `codusConfigFileOverridesWebPreferences: true` a nivel de repositorio (o directorio) desde la
   interfaz web. Solo entonces el archivo surte efecto.
 </Warning>
 
@@ -34,14 +34,14 @@ las claves que quieras cambiar — todo lo que omitas conserva su valor de la we
   abajo.
 </Note>
 
-<Accordion title="Ejemplo de kodus-config.yml">
+<Accordion title="Ejemplo de codus-config.yml">
 ```yaml
 version: 2.0
 
 # general
 automatedReviewActive: true
 showStatusFeedback: true
-kodusConfigFileOverridesWebPreferences: false
+codusConfigFileOverridesWebPreferences: false
 reviewCadence:
     type: 'automatic' # automatic | auto_pause | manual
     timeWindow: 15 # minutos
@@ -73,7 +73,7 @@ reviewOptions:
 
 # control de sugerencias
 suggestionControl:
-    applyFiltersToKodyRules: false
+    applyFiltersToCodyRules: false
     severityLevelFilter: 'medium' # low | medium | high | critical
 
 # resumen del PR
@@ -83,11 +83,11 @@ summary:
     behaviourForExistingDescription: 'replace'
     customInstructions: ''
 
-# kody rules
+# cody rules
 ideRulesSyncEnabled: false
-kodyRulesGeneratorEnabled: true
-kodyLearningExcludedReviewers: []
-kodyKnowledgeApproval:
+codyRulesGeneratorEnabled: true
+codyLearningExcludedReviewers: []
+codyKnowledgeApproval:
     enabled: false
 
 # mensajes personalizados
@@ -109,15 +109,15 @@ customMessages:
 
 <Note>
   Este ejemplo refleja los valores por defecto que se entregan. La fuente canónica es
-  [`default-kodus-config.yml`](https://github.com/kodustech/kodus-ai/blob/main/default-kodus-config.yml)
-  en el repositorio kodus-ai.
+  [`default-codus-config.yml`](https://github.com/elchapita43/codus-ai/blob/main/default-codus-config.yml)
+  en el repositorio codus-ai.
 </Note>
 
 ## Comportamiento de la Revisión
 
 ### Revisión Automatizada
 
-Kody puede revisar los PRs automáticamente cuando se abren, o solo cuando comentas `@kody start-review`.
+Cody puede revisar los PRs automáticamente cuando se abren, o solo cuando comentas `@cody start-review`.
 
 <Info>
   Esto afecta solo la **revisión inicial**. Para commits posteriores, consulta Cadencia de Revisión a continuación.
@@ -125,7 +125,7 @@ Kody puede revisar los PRs automáticamente cuando se abren, o solo cuando comen
 
 #### Cadencia de Revisión
 
-Cómo Kody gestiona las revisiones en commits posteriores:
+Cómo Cody gestiona las revisiones en commits posteriores:
 
 <Tabs>
   <Tab title="Automática">
@@ -139,19 +139,19 @@ Cómo Kody gestiona las revisiones en commits posteriores:
   </Tab>
   
   <Tab title="Manual">
-    Solo ejecuta revisiones de seguimiento cuando comentas `@kody start-review`.
+    Solo ejecuta revisiones de seguimiento cuando comentas `@cody start-review`.
   </Tab>
 </Tabs>
 
 ### Flujo de Trabajo del PR
 
 #### Auto-aprobar PRs
-Kody aprueba los PRs cuando no se encuentran problemas.
+Cody aprueba los PRs cuando no se encuentran problemas.
 
 **Plataformas:** GitHub, GitLab, Bitbucket
 
 #### Solicitar Cambios
-Kody solicita cambios cuando encuentra problemas críticos.
+Cody solicita cambios cuando encuentra problemas críticos.
 
 **Plataformas:** GitHub, Bitbucket
 
@@ -166,7 +166,7 @@ Kody solicita cambios cuando encuentra problemas críticos.
 <Info>
   **Vacío (el valor por defecto) significa que se revisa cualquier rama de destino** — no existe
   una lista integrada de `dev`/`release`/`master`. Añade entradas solo cuando quieras *acotar* el
-  alcance: con la lista no vacía, Kody revisa únicamente los PRs dirigidos a esas ramas (la rama
+  alcance: con la lista no vacía, Cody revisa únicamente los PRs dirigidos a esas ramas (la rama
   por defecto de tu repositorio siempre se incluye).
 
   Las entradas se comparan con la rama de **destino** del PR y admiten una sintaxis propia:
@@ -188,8 +188,8 @@ Ponlo en `false` para omitirlos hasta que el PR se marque como listo.
 
 ## Tipos de Análisis
 
-Kody revisa en cuatro categorías. Habilita o deshabilita cada una en **Analysis Types**, o
-mediante `reviewOptions` en `kodus-config.yml`.
+Cody revisa en cuatro categorías. Habilita o deshabilita cada una en **Analysis Types**, o
+mediante `reviewOptions` en `codus-config.yml`.
 
 - **Bug** — errores de lógica, condiciones de carrera, desreferencias nulas, casos límite y comportamiento incorrecto.
 - **Security** — vulnerabilidades, inyección, problemas de autenticación, exposición de datos y secretos.
@@ -199,6 +199,6 @@ mediante `reviewOptions` en `kodus-config.yml`.
   [Validación de Lógica de Negocio](/how_to_use/es/code_review/business_logic_validation).
 
 <Note>
-  Kody Rules **no** es una de estas categorías — siempre se ejecutan, con independencia de
-  `reviewOptions`. Consulta [Kody Rules](/how_to_use/es/code_review/configs/kody_rules).
+  Cody Rules **no** es una de estas categorías — siempre se ejecutan, con independencia de
+  `reviewOptions`. Consulta [Cody Rules](/how_to_use/es/code_review/configs/cody_rules).
 </Note>

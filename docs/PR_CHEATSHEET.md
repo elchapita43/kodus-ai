@@ -1,14 +1,14 @@
-# Kody Code Review - Quick Cheatsheet
+# Cody Code Review - Quick Cheatsheet
 
-**Kody** is your AI code reviewer that automatically analyzes pull requests and provides actionable suggestions.
+**Cody** is your AI code reviewer that automatically analyzes pull requests and provides actionable suggestions.
 
-## 🚀 When Kody Reviews Automatically
+## 🚀 When Cody Reviews Automatically
 
 - ✅ PR opened
 - ✅ New commits pushed (depending on cadence settings)
-- ✅ Manual trigger: comment `@kody start-review`
+- ✅ Manual trigger: comment `@cody start-review`
 
-## 👀 When Kody Skips
+## 👀 When Cody Skips
 
 - No new commits since last review
 - Only merge commits (no effective changes)
@@ -18,16 +18,16 @@
 
 ## 📊 Status Reactions (GitHub/GitLab)
 
-Kody shows live status with emoji reactions:
+Cody shows live status with emoji reactions:
 
 - 🚀 **Processing** - Review in progress
 - 🎉 **Completed** - Review finished, check comments
 - 👀 **Skipped** - No review needed (see reasons above)
-- 😕 **Error** - Something went wrong, try `@kody start-review` again
+- 😕 **Error** - Something went wrong, try `@cody start-review` again
 
 ## 🎯 Quick Actions
 
-**Need a review?** Comment: `@kody start-review`
+**Need a review?** Comment: `@cody start-review`
 
 **Review not showing?** Check:
 1. PR has code changes (not just docs/images)
@@ -38,8 +38,8 @@ Kody shows live status with emoji reactions:
 ## 💡 Tips for Better Reviews
 
 - **Keep PRs focused** - Smaller diffs = better review quality
-- **Link specs/tickets** - Helps Kody understand context
-- **Re-run after fixes** - Use `@kody start-review` after addressing feedback
+- **Link specs/tickets** - Helps Cody understand context
+- **Re-run after fixes** - Use `@cody start-review` after addressing feedback
 
 ## 📚 Learn More
 

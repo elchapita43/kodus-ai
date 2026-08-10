@@ -12,14 +12,14 @@ import { cliDebug, cliInfo } from '../utils/logger.js';
 const require = createRequire(import.meta.url);
 const pkg = require('../../package.json') as { version: string };
 
-const KODUS_HOOK_MARKER = '# kodus-hook';
-const DECISIONS_CAPTURE_COMMAND_PREFIX = 'kodus decisions capture';
+const CODUS_HOOK_MARKER = '# codus-hook';
+const DECISIONS_CAPTURE_COMMAND_PREFIX = 'codus decisions capture';
 const CODEX_NOTIFY_LINE =
-    'notify = ["kodus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]';
+    'notify = ["codus", "decisions", "capture", "--capture-agent", "codex", "--event", "stop"]';
 const CODEX_NOTIFY_LINE_STOP_LEGACY =
-    'notify = ["kodus", "decisions", "capture", "--agent", "codex", "--event", "stop"]';
+    'notify = ["codus", "decisions", "capture", "--agent", "codex", "--event", "stop"]';
 const CODEX_NOTIFY_LINE_LEGACY =
-    'notify = ["kodus", "decisions", "capture", "--agent", "codex", "--event", "agent-turn-complete"]';
+    'notify = ["codus", "decisions", "capture", "--agent", "codex", "--event", "agent-turn-complete"]';
 
 interface RepoStatus {
     label: string;
@@ -69,7 +69,7 @@ async function getPrePushHookStatus(repoRoot: string | null): Promise<string> {
 
     try {
         const content = await fs.readFile(hookPath, 'utf-8');
-        if (content.includes(KODUS_HOOK_MARKER)) {
+        if (content.includes(CODUS_HOOK_MARKER)) {
             return 'installed';
         }
         return 'installed (external)';
@@ -136,7 +136,7 @@ export async function statusAction(): Promise<void> {
             ? chalk.green('configured')
             : `${chalk.yellow('not configured')} ${chalk.dim('(required for: rules, config writes)')}`;
 
-    cliInfo(chalk.bold('Kodus Status'));
+    cliInfo(chalk.bold('Codus Status'));
     cliInfo('');
     cliInfo(`${chalk.dim('Version:')} ${pkg.version}`);
     cliInfo(`${chalk.dim('Auth:')} ${authMode.label}`);
@@ -148,5 +148,5 @@ export async function statusAction(): Promise<void> {
 }
 
 export const statusCommand = new Command('status')
-    .description('Show consolidated Kodus status')
+    .description('Show consolidated Codus status')
     .action(statusAction);

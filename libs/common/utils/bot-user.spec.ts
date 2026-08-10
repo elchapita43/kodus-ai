@@ -8,7 +8,7 @@ describe('isBotUser', () => {
         ['renovatebot'],
         ['github-actions[bot]'],
         ['gitlab-bot'],
-        ['kodus-bot'],
+        ['codus-bot'],
         ['mergify[bot]'],
         // case-insensitive match
         ['Dependabot[BOT]'],

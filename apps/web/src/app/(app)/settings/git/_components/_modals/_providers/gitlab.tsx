@@ -96,7 +96,7 @@ export const GitlabModal = (props: Props) => {
                             <AlertTitle>Heads up!</AlertTitle>
                             <AlertDescription>
                                 Unlike OAuth, reviews will be published using
-                                your profile - not Kody's.
+                                your profile - not Cody's.
                             </AlertDescription>
                         </Alert>
 

@@ -194,7 +194,7 @@ async function seedAutomation(dataSource: DataSource) {
         {
             name: 'Automated Code Review',
             description:
-                'Whenever a Pull Request is opened, Kody will perform an automated code review, highlighting improvements, issues, and suggestions to ensure code quality.',
+                'Whenever a Pull Request is opened, Cody will perform an automated code review, highlighting improvements, issues, and suggestions to ensure code quality.',
             tags: ['Code Review'],
             antiPatterns: ['Code Review'],
             status: true,

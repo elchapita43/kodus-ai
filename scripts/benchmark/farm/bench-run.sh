@@ -2,7 +2,7 @@
 # bench-run.sh <slot> <branch>
 #
 # ONE command, end to end: ensure a droplet -> build the branch's compiled
-# engine -> clone a fresh per-run repo-set -> open the 50 PRs -> wait for Kody
+# engine -> clone a fresh per-run repo-set -> open the 50 PRs -> wait for Cody
 # -> judge vs golden -> F1 -> destroy the repo-set. DETACHED: it daemonizes and
 # returns immediately with a run id; track with `bench-result.sh <slot>`.
 #
@@ -37,10 +37,10 @@ E2E_DIR="${REPO_ROOT}/tests/e2e"
 # The farm uses ONE dedicated token, FARM_GH_TOKEN — a fine-grained PAT scoped to
 # the benchmark org with repo Administration/Contents/PR/Webhooks/Workflows. It
 # is NOT GH_TEST_TOKEN (that's reused by the rest of the e2e suite). It's read
-# from ~/.kodus-dev/config (exported by _common.sh's `set -a` config load) and
+# from ~/.codus-dev/config (exported by _common.sh's `set -a` config load) and
 # used by clone-run-repos.ts (create/push/delete) + farm-run.ts (integration +
 # PRs, via GitHubProvider tokenOverride).
-[ -n "${FARM_GH_TOKEN:-}" ] || { err "FARM_GH_TOKEN not set — add it to ~/.kodus-dev/config (a PAT scoped to the benchmark org: repo Administration+Contents+Pull requests+Webhooks+Workflows, all repos)"; exit 2; }
+[ -n "${FARM_GH_TOKEN:-}" ] || { err "FARM_GH_TOKEN not set — add it to ~/.codus-dev/config (a PAT scoped to the benchmark org: repo Administration+Contents+Pull requests+Webhooks+Workflows, all repos)"; exit 2; }
 export FARM_GH_TOKEN
 
 # ---- foreground: stamp a run id, daemonize, return ----
@@ -131,7 +131,7 @@ cp "${E2E_DIR}/benchmark/results-farm-${RUN_ID}.json" "${RUNDIR}/results.json" 2
 
 CURRENT_PHASE="cleanup"; set_status cleanup
 ( cd "$E2E_DIR" && FARM_RUN_ID="$RUN_ID" FARM_MAX_PRS="${BENCH_MAX_PRS:-0}" npx tsx benchmark/clone-run-repos.ts --destroy ) || \
-    warn "[${RUN_ID}] repo-set cleanup failed -- orphan kodus-e2e/*-${RUN_ID} may remain"
+    warn "[${RUN_ID}] repo-set cleanup failed -- orphan codus-e2e/*-${RUN_ID} may remain"
 
 trap - ERR
 set_status done

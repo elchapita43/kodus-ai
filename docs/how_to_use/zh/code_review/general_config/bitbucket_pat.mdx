@@ -1,11 +1,11 @@
 ---
 title: "Bitbucket API 令牌"
-description: "生成 Kody 在 Bitbucket Cloud 上进行代码审查所需的 API Token,含需要授予的具体权限。"
+description: "生成 Cody 在 Bitbucket Cloud 上进行代码审查所需的 API Token,含需要授予的具体权限。"
 ---
 
 ## 简介
 
-要使 Kody 能够对 Bitbucket Cloud 执行自动代码审查,您需要生成一个 **API 令牌**。此令牌允许 Kody 访问您的代码库、拉取请求、webhooks、工单、管道等,并具有下面列出的特定权限。
+要使 Cody 能够对 Bitbucket Cloud 执行自动代码审查,您需要生成一个 **API 令牌**。此令牌允许 Cody 访问您的代码库、拉取请求、webhooks、工单、管道等,并具有下面列出的特定权限。
 
 ---
 
@@ -13,7 +13,7 @@ description: "生成 Kody 在 Bitbucket Cloud 上进行代码审查所需的 API
 
 1. 直接打开 [Atlassian API 令牌页面](https://id.atlassian.com/manage-profile/security/api-tokens)(或从您的 Atlassian 个人资料导航到 **Security → API tokens**)。
 2. 点击 **Create API token with scopes**。
-3. 为令牌命名(例如 `kody_code_review`)并设置到期日期。
+3. 为令牌命名(例如 `cody_code_review`)并设置到期日期。
 4. 如果出现提示,选择 **Bitbucket** 作为应用程序。
 5. 选择所有必需的范围(见下文)。
 6. 查看您的选择,然后点击 **Create token**。
@@ -21,9 +21,9 @@ description: "生成 Kody 在 Bitbucket Cloud 上进行代码审查所需的 API
 
 ---
 
-## Kody 所需的范围
+## Cody 所需的范围
 
-令牌必须包含 Kody 完整功能的**所有**以下范围:
+令牌必须包含 Cody 完整功能的**所有**以下范围:
 
 | 范围                         | 用途/启用的功能                                                                   |
 | ----------------------------- | ------------------------------------------------------------------------------------------- |
@@ -44,10 +44,10 @@ description: "生成 Kody 在 Bitbucket Cloud 上进行代码审查所需的 API
 
 ---
 
-## 将令牌添加到 Kody
+## 将令牌添加到 Cody
 
-- 一旦使用所有必需的范围生成令牌,在启用 Bitbucket 集成时将其粘贴到 **Kody 集成/自动化设置屏幕**中。
-- 如果 Kody 需要配置 webhooks 或监听拉取请求事件,请确保令牌具有 `admin:repository:bitbucket`(或等效权限)。
+- 一旦使用所有必需的范围生成令牌,在启用 Bitbucket 集成时将其粘贴到 **Cody 集成/自动化设置屏幕**中。
+- 如果 Cody 需要配置 webhooks 或监听拉取请求事件,请确保令牌具有 `admin:repository:bitbucket`(或等效权限)。
 
 ---
 

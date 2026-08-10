@@ -20,7 +20,7 @@ import { makeProvider } from "../providers/index.js";
 // ---------------------------------------------------------------------------
 // Trial managed review (cloud × github × trial, one cell).
 //
-// The ONLY matrix cell that runs a review on Kodus-MANAGED LLM keys — what a
+// The ONLY matrix cell that runs a review on Codus-MANAGED LLM keys — what a
 // real trial (and paid) customer gets in prod. Every other review-running
 // cell is BYOK (`paid` is seeded as free_byok by decision — see
 // setup-tenants.ts:304 — and `community-byok` is BYOK by definition), so
@@ -37,7 +37,7 @@ import { makeProvider } from "../providers/index.js";
 //     must exclusively own its repo — mirrored from the base fixture so the
 //     committed branch pairs come along.
 //
-// Cost note: each run burns one managed-LLM review on Kodus's own keys.
+// Cost note: each run burns one managed-LLM review on Codus's own keys.
 // That's the point — it's the path under test — but it's why this exists as
 // ONE scenario instead of re-adding `trial` to all three review scenarios.
 //
@@ -49,7 +49,7 @@ import { makeProvider } from "../providers/index.js";
 const REPO_PREFIX = "tiny-url-trial-e2e-";
 
 // Same head/base pair license-attribution uses: a persistent committed diff
-// (/stats endpoint, ~30 lines) meaty enough that Kody reliably surfaces
+// (/stats endpoint, ~30 lines) meaty enough that Cody reliably surfaces
 // SOMETHING. The mirror copies all branches, and the repo is exclusive to
 // this run, so there is no open-PR collision with other scenarios.
 const FIXTURE = { head: "feature/add-stats", base: "main" };
@@ -64,13 +64,13 @@ export const trialManagedReview: Scenario = {
         provider: ["github"],
         license: ["trial"],
     },
-    // Onboarding (~3-5 min incl. kody-rules generation) + 600s pipeline-start
+    // Onboarding (~3-5 min incl. cody-rules generation) + 600s pipeline-start
     // budget + 900s review poll.
     timeoutSec: 2400,
     async run(ctx: RunContext) {
         const target = ctx.target as TargetContext;
         const baseRepo =
-            process.env.GH_TEST_REPO_CLOUD ?? "kodus-e2e/tiny-url-cloud";
+            process.env.GH_TEST_REPO_CLOUD ?? "codus-e2e/tiny-url-cloud";
         const owner = baseRepo.split("/")[0];
 
         // Best-effort: clear >24h-old leftovers from crashed prior runs so
@@ -105,7 +105,7 @@ export const trialManagedReview: Scenario = {
 
             // The freshly-minted repo can take a little while to appear in
             // the integration's available-repos listing (GitHub propagation
-            // after create + Kodus-side listing). Observed live: 19s after
+            // after create + Codus-side listing). Observed live: 19s after
             // creation the repo was still absent. Retry the lookup for up to
             // ~2 min before declaring failure; any OTHER registerRepo error
             // rethrows immediately.
@@ -136,7 +136,7 @@ export const trialManagedReview: Scenario = {
                 head: FIXTURE.head,
                 base: FIXTURE.base,
                 title: `[e2e] trial-managed-review ${ctx.runId.slice(0, 8)}`,
-                body: `Automated PR opened by Kodus E2E run ${ctx.runId} to validate that a fresh trial org receives a managed-LLM review. Repo is throwaway and deleted by the scenario.`,
+                body: `Automated PR opened by Codus E2E run ${ctx.runId} to validate that a fresh trial org receives a managed-LLM review. Repo is throwaway and deleted by the scenario.`,
             });
 
             try {
@@ -173,7 +173,7 @@ export const trialManagedReview: Scenario = {
                 );
                 ctx.assert(
                     !review.licenseBlockedNotice,
-                    `Trial must NOT trigger a BYOK/trial-ended notice, but Kody posted one: ${JSON.stringify(review.licenseBlockedNotice)}`,
+                    `Trial must NOT trigger a BYOK/trial-ended notice, but Cody posted one: ${JSON.stringify(review.licenseBlockedNotice)}`,
                 );
 
                 // Execution HEALTH: the trial managed-LLM review can post

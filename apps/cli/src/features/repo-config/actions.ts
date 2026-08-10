@@ -25,7 +25,7 @@ import {
     validateRepositoryPatternField,
 } from '../../utils/repo-settings-patterns.js';
 import {
-    getKodusAppUrl,
+    getCodusAppUrl,
     getRepositorySettingsSectionLabel,
     validateRepositorySettingsSection,
 } from '../../utils/repo-settings-dashboard.js';
@@ -114,7 +114,7 @@ export async function configRepoAction(
         if (result.status === 'already-added') {
             cliInfo(
                 chalk.yellow(
-                    `Repository '${result.repositoryFullName}' is already added to Kodus.`,
+                    `Repository '${result.repositoryFullName}' is already added to Codus.`,
                 ),
             );
             return;
@@ -122,7 +122,7 @@ export async function configRepoAction(
 
         cliInfo(
             chalk.green(
-                `Repository '${result.repositoryFullName}' was added to Kodus successfully.`,
+                `Repository '${result.repositoryFullName}' was added to Codus successfully.`,
             ),
         );
 
@@ -353,7 +353,7 @@ export async function configRepoOpenAction(
         const section = validateRepositorySettingsSection(options.section);
         const current =
             await repositorySettingsService.getRepositorySettings(repository);
-        const appUrl = getKodusAppUrl();
+        const appUrl = getCodusAppUrl();
         const sectionLabel = getRepositorySettingsSectionLabel(section);
 
         if (options.json) {

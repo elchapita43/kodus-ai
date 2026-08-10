@@ -1,5 +1,5 @@
 {
-    "name": "@kodus/api-rest",
+    "name": "@codus/api-rest",
     "version": "0.0.1",
     "description": "API REST Microservice - Administrative endpoints and dashboard",
     "main": "dist/main.js",

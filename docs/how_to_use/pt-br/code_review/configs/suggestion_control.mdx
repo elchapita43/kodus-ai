@@ -1,16 +1,16 @@
 ---
 title: "Filtros de Revisão"
-description: "Controle quanto feedback o Kody publica nos seus PRs."
+description: "Controle quanto feedback o Cody publica nos seus PRs."
 ---
 
-Os filtros de revisão decidem **quais** achados do Kody são efetivamente publicados. Você os
+Os filtros de revisão decidem **quais** achados do Cody são efetivamente publicados. Você os
 encontra em **Settings → Code Review → o repositório → Review filters**, e podem ser definidos
 nos níveis global, de repositório ou de diretório — veja
 [Herança e Sobrescrita de Configuração](/how_to_use/pt-br/code_review/configs/inheritance_overrides).
 
 ## Severidade mínima
 
-O Kody atribui uma severidade a cada sugestão e publica somente as que estão no nível escolhido
+O Cody atribui uma severidade a cada sugestão e publica somente as que estão no nível escolhido
 ou acima dele. O padrão é **Medium**.
 
 | Nível | O que cobre |
@@ -26,29 +26,29 @@ ou acima dele. O padrão é **Medium**.
   nitpicks. Veja [Como reduzir o ruído na revisão](/knowledge_base/pt-br/how-to-reduce-code-review-noise).
 </Tip>
 
-## Aplicar filtros às Kody Rules
+## Aplicar filtros às Cody Rules
 
 Um toggle, **desligado por padrão**.
 
-- **Desligado** — os achados das [Kody Rules](/how_to_use/pt-br/code_review/configs/kody_rules)
+- **Desligado** — os achados das [Cody Rules](/how_to_use/pt-br/code_review/configs/cody_rules)
   **ignoram** o filtro de severidade. Uma regra escrita pelo seu time é sempre reportada,
   independentemente da severidade atribuída.
-- **Ligado** — as Kody Rules passam pelo mesmo filtro de severidade que as demais sugestões.
+- **Ligado** — as Cody Rules passam pelo mesmo filtro de severidade que as demais sugestões.
 
 Deixe desligado, a menos que suas regras estejam gerando mais ruído do que sinal. O sentido de
-uma Kody Rule é justamente o time já ter decidido que aquilo importa.
+uma Cody Rule é justamente o time já ter decidido que aquilo importa.
 
 <Note>
-  No `kodus-config.yml`, essas duas configurações ficam sob `suggestionControl`:
+  No `codus-config.yml`, essas duas configurações ficam sob `suggestionControl`:
 
   ```yaml
   suggestionControl:
       severityLevelFilter: 'medium' # low | medium | high | critical
-      applyFiltersToKodyRules: false
+      applyFiltersToCodyRules: false
   ```
 
   Lembre-se de que o arquivo só é lido depois que você habilita
-  `kodusConfigFileOverridesWebPreferences` — veja
+  `codusConfigFileOverridesWebPreferences` — veja
   [Geral](/how_to_use/pt-br/code_review/configs/general).
 </Note>
 
@@ -62,5 +62,5 @@ Filtros de revisão são um instrumento grosseiro. Quando precisar de algo mais 
   em que ela não ajuda.
 - **Config por diretório** — aplique filtros mais rígidos ou mais frouxos por pasta num
   monorepo. Veja [Configuração por Diretório](/how_to_use/pt-br/code_review/configs/directory_level).
-- **Kody Rules** — codifique o que seu time realmente valoriza, para o sinal vir dos seus
+- **Cody Rules** — codifique o que seu time realmente valoriza, para o sinal vir dos seus
   padrões em vez de conselhos genéricos.

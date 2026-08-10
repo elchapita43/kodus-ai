@@ -14,7 +14,7 @@ import type { RunContext, Scenario } from '../lib/types.js';
 //
 // For GitHub: assumes the repo was forked via
 // `scripts/pr-creator/fork-benchmark-repos.sh` into an org owned by the
-// test PAT (e.g. `kodus-e2e`). The branch pair below comes from the sentry
+// test PAT (e.g. `codus-e2e`). The branch pair below comes from the sentry
 // fork. When extending to other providers, populate the corresponding
 // entries here once the fixture repos are set up.
 const FIXTURE_BRANCHES: Record<
@@ -24,7 +24,7 @@ const FIXTURE_BRANCHES: Record<
     'github': {
         // Fixture branch deliberately introduces a missing null-check +
         // misleading comment + unsafe `as string` cast on a redirect
-        // path (kodus-e2e/tiny-url). Any LLM that is paying attention
+        // path (codus-e2e/tiny-url). Any LLM that is paying attention
         // flags at least one of: (1) the dropped 404 branch, (2) the
         // "we trust resolveCode here" comment that is factually wrong,
         // (3) the type assertion masking an undefined. Was previously
@@ -67,7 +67,7 @@ const FIXTURE_BRANCHES: Record<
 
 export const codeReviewBasic: Scenario = {
     id: 'code-review-basic',
-    title: 'Kody reviews a PR opened on the configured fixture repo',
+    title: 'Cody reviews a PR opened on the configured fixture repo',
     priority: 'P0',
     appliesTo: {
         target: ['cloud', 'self-hosted'],
@@ -96,10 +96,10 @@ export const codeReviewBasic: Scenario = {
             'scenario requires a tenant (set CLOUD_TENANT_*_EMAIL or SH_TENANT_EMAIL)',
         );
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         // Self-hosted licensed mode gates reviews per seat; grant the PR
         // author one so the pipeline doesn't skip with USER_NOT_LICENSED.
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
@@ -121,12 +121,12 @@ export const codeReviewBasic: Scenario = {
             head: fixture!.head,
             base: fixture!.base,
             title: `[e2e] code-review-basic ${ctx.runId.slice(0, 8)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId}. Auto-closed by the scenario; branches are persistent fixtures and are not deleted.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId}. Auto-closed by the scenario; branches are persistent fixtures and are not deleted.`,
         });
 
         try {
             // Two-phase wait. Phase A waits for the pipeline to wake up —
-            // separates the "worker dequeued the PR and Kody posted a
+            // separates the "worker dequeued the PR and Cody posted a
             // heartbeat" signal from the "LLM found the deliberate bugs"
             // signal. Budget is deliberately generous (600s): under matrix
             // load the GitHub bot's rate-limit gate defers the review job
@@ -177,8 +177,8 @@ export const codeReviewBasic: Scenario = {
             );
 
             // Trust per-provider filter (each pollForReview excludes the
-            // `<!-- kody-codereview -->` status comments). What survives the
-            // filter is a real Kody finding in whatever bucket the provider
+            // `<!-- cody-codereview -->` status comments). What survives the
+            // filter is a real Cody finding in whatever bucket the provider
             // uses (GitLab puts everything in issueComments because the API
             // has only notes; Bitbucket/Azure use reviewComments; GitHub
             // splits across all three).

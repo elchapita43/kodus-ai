@@ -4,7 +4,7 @@ import {
     pruneSelection,
     selectAll,
     toggleRuleSelection,
-} from "../../../apps/web/src/core/utils/kody-rules/bulk-selection";
+} from "../../../apps/web/src/core/utils/cody-rules/bulk-selection";
 
 describe("toggleRuleSelection", () => {
     it("adds a missing id and removes a present one", () => {

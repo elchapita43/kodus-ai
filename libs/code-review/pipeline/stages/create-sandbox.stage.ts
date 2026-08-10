@@ -14,7 +14,7 @@ import { CliReviewPipelineContext } from '@libs/cli-review/pipeline/context/cli-
 
 /**
  * After review finishes, only keep the sandbox warm for 30 seconds. Either
- * `@kody` arrives in a hot window (likely seconds after the review comment
+ * `@cody` arrives in a hot window (likely seconds after the review comment
  * lands) — and benefits from warm-resume — or the user takes their time and
  * comes back well past the lease TTL anyway, where cold-start is unavoidable.
  * 30s strikes the balance without keeping a paused sandbox occupying an E2B

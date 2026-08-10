@@ -2,13 +2,13 @@
 
 # Start PostgreSQL container (if not running)
 echo "🐳 Checking/starting PostgreSQL container..."
-if ! docker ps | grep -q kodus-mcp-postgres; then
+if ! docker ps | grep -q codus-mcp-postgres; then
   docker compose up -d postgres
 fi
 
 # Wait for the database container to be ready
 echo "⏳ Waiting for database to become available..."
-until docker exec kodus-mcp-postgres pg_isready -U kodus >/dev/null 2>&1; do
+until docker exec codus-mcp-postgres pg_isready -U codus >/dev/null 2>&1; do
   echo -n "."
   sleep 2
 done
@@ -17,8 +17,8 @@ echo "✅ Database is available!"
 
 # Create test database (if it doesn't exist)
 echo "🗄️ Creating test database..."
-docker exec kodus-mcp-postgres psql -U kodus -d kodus_mcp -c "DROP DATABASE IF EXISTS kodus_mcp_test;"
-docker exec kodus-mcp-postgres psql -U kodus -d kodus_mcp -c "CREATE DATABASE kodus_mcp_test;"
+docker exec codus-mcp-postgres psql -U codus -d codus_mcp -c "DROP DATABASE IF EXISTS codus_mcp_test;"
+docker exec codus-mcp-postgres psql -U codus -d codus_mcp -c "CREATE DATABASE codus_mcp_test;"
 
 # Wait a bit to ensure the database is available
 sleep 2
@@ -43,7 +43,7 @@ TEST_EXIT_CODE=$?
 
 # Clean up test database after tests
 echo "🧹 Cleaning up test database..."
-docker exec kodus-mcp-postgres psql -U kodus -d kodus_mcp -c "DROP DATABASE IF EXISTS kodus_mcp_test;" 2>/dev/null || echo "Error cleaning up test database (not critical)"
+docker exec codus-mcp-postgres psql -U codus -d codus_mcp -c "DROP DATABASE IF EXISTS codus_mcp_test;" 2>/dev/null || echo "Error cleaning up test database (not critical)"
 
 if [ $TEST_EXIT_CODE -eq 0 ]; then
   echo "✅ E2E tests completed successfully!"

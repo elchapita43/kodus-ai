@@ -133,7 +133,7 @@ describe('ForgejoService review metadata mapping', () => {
                 organizationId: 'org-123',
                 teamId: 'team-456',
             },
-            repository: { name: 'kodustech/kodus-ai' },
+            repository: { name: 'elchapita43/codus-ai' },
             prNumber: 42,
         });
 
@@ -189,7 +189,7 @@ describe('ForgejoService review metadata mapping', () => {
                 organizationId: 'org-123',
                 teamId: 'team-456',
             },
-            repository: { name: 'kodustech/kodus-ai' },
+            repository: { name: 'elchapita43/codus-ai' },
             prNumber: 42,
         });
 

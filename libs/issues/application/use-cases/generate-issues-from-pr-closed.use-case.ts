@@ -1,7 +1,7 @@
 import { createLogger } from '@libs/core/log/logger';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import {
     IPullRequestsService,
     PULL_REQUESTS_SERVICE_TOKEN,
@@ -18,8 +18,8 @@ import {
 import {
     contextToGenerateIssues,
     IRepositoryToIssues,
-} from '@libs/issues/domain/interfaces/kodyIssuesManagement.interface';
-import { KodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/kodyIssuesManagement.service';
+} from '@libs/issues/domain/interfaces/codyIssuesManagement.interface';
+import { CodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/codyIssuesManagement.service';
 import { stripCurlyBracesFromUUIDs } from '@libs/platform/domain/platformIntegrations/types/webhooks/webhooks-bitbucket.type';
 import {
     IMappedPullRequest,
@@ -32,8 +32,8 @@ export class GenerateIssuesFromPrClosedUseCase implements IUseCase {
         GenerateIssuesFromPrClosedUseCase.name,
     );
     constructor(
-        @Inject(KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
-        private readonly kodyIssuesManagementService: KodyIssuesManagementService,
+        @Inject(CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
+        private readonly codyIssuesManagementService: CodyIssuesManagementService,
         @Inject(PULL_REQUESTS_SERVICE_TOKEN)
         private readonly pullRequestService: IPullRequestsService,
         @Inject(INTEGRATION_CONFIG_SERVICE_TOKEN)
@@ -132,14 +132,14 @@ export class GenerateIssuesFromPrClosedUseCase implements IUseCase {
                 return;
             }
 
-            await this.kodyIssuesManagementService.processClosedPr({
+            await this.codyIssuesManagementService.processClosedPr({
                 organizationAndTeamData: prData.context.organizationAndTeamData,
                 pullRequest: prData.context.pullRequest,
                 repository: prData.context.repository,
                 prFiles: prFiles,
             });
 
-            await this.kodyIssuesManagementService.clearIssuesCache(
+            await this.codyIssuesManagementService.clearIssuesCache(
                 prData.context?.organizationAndTeamData?.organizationId,
             );
         } catch (error) {

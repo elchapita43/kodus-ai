@@ -5,47 +5,47 @@ export class AddNewStageWorkflow1768834829951 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum"
+            ALTER TYPE "codus_workflow"."workflow_jobs_workflowtype_enum"
             RENAME TO "workflow_jobs_workflowtype_enum_old"
         `);
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_workflowtype_enum" AS ENUM(
                 'CODE_REVIEW',
                 'CRON_CHECK_PR_APPROVAL',
-                'CRON_KODY_LEARNING',
+                'CRON_CODY_LEARNING',
                 'CRON_CODE_REVIEW_FEEDBACK',
                 'WEBHOOK_PROCESSING',
                 'CHECK_SUGGESTION_IMPLEMENTATION'
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "workflowType" TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum" USING "workflowType"::"text"::"kodus_workflow"."workflow_jobs_workflowtype_enum"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "workflowType" TYPE "codus_workflow"."workflow_jobs_workflowtype_enum" USING "workflowType"::"text"::"codus_workflow"."workflow_jobs_workflowtype_enum"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            DROP TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old"
         `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            CREATE TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old" AS ENUM(
+            CREATE TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old" AS ENUM(
                 'CODE_REVIEW',
                 'CRON_CHECK_PR_APPROVAL',
-                'CRON_KODY_LEARNING',
+                'CRON_CODY_LEARNING',
                 'CRON_CODE_REVIEW_FEEDBACK',
                 'WEBHOOK_PROCESSING'
             )
         `);
         await queryRunner.query(`
-            ALTER TABLE "kodus_workflow"."workflow_jobs"
-            ALTER COLUMN "workflowType" TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old" USING "workflowType"::"text"::"kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            ALTER TABLE "codus_workflow"."workflow_jobs"
+            ALTER COLUMN "workflowType" TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old" USING "workflowType"::"text"::"codus_workflow"."workflow_jobs_workflowtype_enum_old"
         `);
         await queryRunner.query(`
-            DROP TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum"
+            DROP TYPE "codus_workflow"."workflow_jobs_workflowtype_enum"
         `);
         await queryRunner.query(`
-            ALTER TYPE "kodus_workflow"."workflow_jobs_workflowtype_enum_old"
+            ALTER TYPE "codus_workflow"."workflow_jobs_workflowtype_enum_old"
             RENAME TO "workflow_jobs_workflowtype_enum"
         `);
     }

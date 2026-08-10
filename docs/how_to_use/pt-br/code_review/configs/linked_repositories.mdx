@@ -1,9 +1,9 @@
 ---
 title: "Repositórios Vinculados"
-description: "Deixe o Kody ler repositórios irmãos como contexto para pegar quebras de contrato entre repositórios durante a revisão."
+description: "Deixe o Cody ler repositórios irmãos como contexto para pegar quebras de contrato entre repositórios durante a revisão."
 ---
 
-Repositórios Vinculados permitem que o Kody leia repositórios irmãos como **contexto somente-leitura** enquanto revisa um pull request. Use para pegar os bugs que uma revisão de repositório único não enxerga: o backend renomeia um campo da API e o frontend continua lendo o antigo, um producer adiciona um valor de enum que nenhum consumer trata, ou writer e reader derivam a mesma chave de formas diferentes.
+Repositórios Vinculados permitem que o Cody leia repositórios irmãos como **contexto somente-leitura** enquanto revisa um pull request. Use para pegar os bugs que uma revisão de repositório único não enxerga: o backend renomeia um campo da API e o frontend continua lendo o antigo, um producer adiciona um valor de enum que nenhum consumer trata, ou writer e reader derivam a mesma chave de formas diferentes.
 
 Disponível nos planos **Teams e Enterprise**. Configurado **por repositório** — não existe padrão global, porque as relações são direcionais: vincular `frontend → backend-api` significa que *revisões de `frontend`* podem consultar `backend-api`, e não o contrário. Vincule as duas direções explicitamente se os dois times quiserem a verificação.
 
@@ -16,7 +16,7 @@ const isNotApproved =
     error.response?.data?.error === 'INTEGRATION_NOT_APPROVED';
 ```
 
-Com o backend vinculado, o Kody verifica o outro lado desse contrato e comenta no PR:
+Com o backend vinculado, o Cody verifica o outro lado desse contrato e comenta no PR:
 
 > **Bug · medium** — O frontend verifica `error.response?.data?.error` procurando `INTEGRATION_NOT_APPROVED`, mas o `sendError` do backend retorna o código num campo `message`. O branch de not-approved nunca casa, então os usuários sempre veem o toast de erro genérico. Leia `data.message`.
 
@@ -24,14 +24,14 @@ O resumo da revisão também mostra o que foi consultado: **Additional context u
 
 ## Como funciona
 
-Quando um pull request num repositório com repositórios vinculados toca superfície de fronteira (literais de string alterados, campos de payload, valores de status, símbolos exportados), o agente de revisão do Kody pode buscar e ler os repositórios vinculados — do mesmo jeito que faz grep no seu próprio repositório — para verificar se os dois lados do contrato continuam de acordo. Achados só são levantados com evidência confirmada no arquivo da contraparte, e o comentário sempre cai numa linha do **seu** PR; o código do repositório vinculado é citado dentro dele como evidência de apoio, nunca comentado diretamente.
+Quando um pull request num repositório com repositórios vinculados toca superfície de fronteira (literais de string alterados, campos de payload, valores de status, símbolos exportados), o agente de revisão do Cody pode buscar e ler os repositórios vinculados — do mesmo jeito que faz grep no seu próprio repositório — para verificar se os dois lados do contrato continuam de acordo. Achados só são levantados com evidência confirmada no arquivo da contraparte, e o comentário sempre cai numa linha do **seu** PR; o código do repositório vinculado é citado dentro dele como evidência de apoio, nunca comentado diretamente.
 
 Revisões que usaram contexto entre repositórios avisam: o resumo da revisão inclui uma linha **Additional context used** listando cada repositório e o ref em que foi lido.
 
 <Info>
-- Só podem ser vinculados repositórios **já conectados à mesma organização Kodus** (o Kody reaproveita sua integração de Git existente — sem tokens extras).
+- Só podem ser vinculados repositórios **já conectados à mesma organização Codus** (o Cody reaproveita sua integração de Git existente — sem tokens extras).
 - Até **3 repositórios vinculados** por repositório.
-- O acesso é somente leitura. O Kody nunca faz push, comenta nem modifica um repositório vinculado.
+- O acesso é somente leitura. O Cody nunca faz push, comenta nem modifica um repositório vinculado.
 - Se um repositório vinculado não puder ser buscado (permissões, timeout), a revisão continua normalmente sem ele.
 </Info>
 
@@ -41,7 +41,7 @@ Vá em **Code Review Settings → _seu repositório_ → Linked Repositories**, 
 
 ### Instruções
 
-Uma dica em texto livre que diz ao agente de revisão **para que serve esse vínculo e onde olhar**. O Kody funciona sem ela, mas uma boa instrução deixa a passagem entre repositórios mais rápida e precisa — é a diferença entre o agente explorar o repositório vinculado do zero e ir direto ao código relevante.
+Uma dica em texto livre que diz ao agente de revisão **para que serve esse vínculo e onde olhar**. O Cody funciona sem ela, mas uma boa instrução deixa a passagem entre repositórios mais rápida e precisa — é a diferença entre o agente explorar o repositório vinculado do zero e ir direto ao código relevante.
 
 Boas instruções nomeiam a relação e os caminhos que sustentam o contrato:
 
@@ -59,7 +59,7 @@ Instruções fracas repetem o óbvio ("repositório do backend") e não acrescen
 
 ### Ref pin (seleção de branch)
 
-Controla qual branch ("ref") do repositório vinculado o Kody lê. **A maioria dos times deixa vazio**: o Kody então lê a branch com o mesmo nome da branch do seu PR quando ela existe (para que mudanças coordenadas entre repositórios se enxerguem antes do merge), e cai na branch padrão caso contrário.
+Controla qual branch ("ref") do repositório vinculado o Cody lê. **A maioria dos times deixa vazio**: o Cody então lê a branch com o mesmo nome da branch do seu PR quando ela existe (para que mudanças coordenadas entre repositórios se enxerguem antes do merge), e cai na branch padrão caso contrário.
 
 A ordem completa de resolução, vence a primeira que casar:
 

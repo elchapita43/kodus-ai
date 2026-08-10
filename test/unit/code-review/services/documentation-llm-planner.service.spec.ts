@@ -1,4 +1,4 @@
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { DocumentationLLMPlannerService } from '@libs/code-review/infrastructure/adapters/services/documentation-llm-planner.service';
 import { RepositoryPackageReference } from '@libs/code-review/pipeline/context/code-review-pipeline.context';
 import { FileChange } from '@libs/core/infrastructure/config/types/general/codeReview.type';

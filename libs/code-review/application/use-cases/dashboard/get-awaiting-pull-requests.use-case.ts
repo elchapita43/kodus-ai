@@ -88,7 +88,7 @@ export class GetAwaitingPullRequestsUseCase implements IUseCase {
             }
             const { repositoryIds } = scope;
 
-            // Awaiting = PRs Kody was triggered on but skipped and never
+            // Awaiting = PRs Cody was triggered on but skipped and never
             // reviewed (every execution status='skipped'). Same source as the
             // Awaiting facet count, so the list and the badge always agree.
             const awaitingKeys =

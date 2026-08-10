@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-# Multi-stage production build for kodus-try (try.kodus.io demo, Next.js).
+# Multi-stage production build for codus-try (try.kodus.io demo, Next.js).
 #
 # Build context: apps/try (same as the dev compose service), NOT the
 # monorepo root — unlike apps/web, the demo is self-contained and imports

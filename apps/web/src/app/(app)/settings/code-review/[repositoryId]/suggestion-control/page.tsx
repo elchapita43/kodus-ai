@@ -3,7 +3,7 @@
 import { Button } from "@components/ui/button";
 import { Page } from "@components/ui/page";
 import { toast } from "@components/ui/toaster/use-toast";
-import { KodyLearningStatus } from "@services/parameters/types";
+import { CodyLearningStatus } from "@services/parameters/types";
 import { RotateCcwIcon, Save } from "lucide-react";
 import { useFormContext, useFormState } from "react-hook-form";
 import { useSelectedTeamId } from "src/core/providers/selected-team-context";
@@ -20,7 +20,7 @@ import {
 import { getCentralizedPrToastPayload } from "../../_utils/centralized-pr-feedback";
 import { usePlatformConfig } from "../../../_components/context";
 import { useCodeReviewRouteParams } from "../../../_hooks";
-import { ApplyFiltersToKodyRules } from "./_components/apply-filters-to-kody-rules";
+import { ApplyFiltersToCodyRules } from "./_components/apply-filters-to-cody-rules";
 import { MinimumSeverityLevel } from "./_components/minimum-severity-level";
 
 export default function SuggestionControl(
@@ -83,8 +83,8 @@ export default function SuggestionControl(
     } = useFormState({ control: form.control });
 
     if (
-        platformConfig.kodyLearningStatus ===
-        KodyLearningStatus.GENERATING_CONFIG
+        platformConfig.codyLearningStatus ===
+        CodyLearningStatus.GENERATING_CONFIG
     ) {
         return <GeneratingConfig />;
     }
@@ -128,8 +128,8 @@ export default function SuggestionControl(
                     <div data-field-name="suggestionControl.severityLevelFilter">
                         <MinimumSeverityLevel />
                     </div>
-                    <div data-field-name="suggestionControl.applyFiltersToKodyRules">
-                        <ApplyFiltersToKodyRules />
+                    <div data-field-name="suggestionControl.applyFiltersToCodyRules">
+                        <ApplyFiltersToCodyRules />
                     </div>
                 </div>
             </Page.Content>

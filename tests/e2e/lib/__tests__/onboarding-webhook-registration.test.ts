@@ -11,7 +11,7 @@ import type {
     WebhookInfo,
 } from '../types.js';
 
-// Hand-rolled fake provider + kodus client so we can drive the scenario
+// Hand-rolled fake provider + codus client so we can drive the scenario
 // directly without spinning up the full mock HTTP server. The scenario's
 // only external touchpoints are `ctx.provider.listWebhooks/deleteWebhook`
 // and the onboarding helpers — both trivial to fake.
@@ -74,7 +74,7 @@ function makeRunContext(provider: Provider): {
         provider,
         license: 'license-paid',
         tenant: { email: 'x@y', password: 'p' },
-        kodus: {
+        codus: {
             login: async () => ({
                 accessToken: 't',
                 organizationId: 'o',
@@ -102,7 +102,7 @@ test('onboarding-webhook-registration: passes when a matching active hook exists
         listWebhooksImpl: async () => {
             calls += 1;
             // Pre-clean call: no stale hooks. Post-onboarding call: one
-            // fresh hook from Kodus pointing at the tunnel.
+            // fresh hook from Codus pointing at the tunnel.
             if (calls === 1) return [];
             return [
                 {
@@ -170,7 +170,7 @@ test('onboarding-webhook-registration: removes stale hooks before re-running onb
         assert.equal(
             result.staleRemoved,
             1,
-            'only the kodus-shaped stale hook should be removed (not the unrelated one)',
+            'only the codus-shaped stale hook should be removed (not the unrelated one)',
         );
         // Cast back to access the test-only field we attached.
         const fake = provider as unknown as { deletedIds: string[] };
@@ -180,7 +180,7 @@ test('onboarding-webhook-registration: removes stale hooks before re-running onb
     }
 });
 
-test('onboarding-webhook-registration: FAILS when no kodus hook is registered after onboarding (the GitLab bug shape)', async () => {
+test('onboarding-webhook-registration: FAILS when no codus hook is registered after onboarding (the GitLab bug shape)', async () => {
     const provider = makeFakeProvider({
         listWebhooksImpl: async () => [],
     });
@@ -188,7 +188,7 @@ test('onboarding-webhook-registration: FAILS when no kodus hook is registered af
     try {
         await assert.rejects(
             () => onboardingWebhookRegistration.run(ctx),
-            /Kodus did not register a webhook/,
+            /Codus did not register a webhook/,
         );
     } finally {
         cleanup();

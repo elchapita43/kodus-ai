@@ -28,7 +28,7 @@ const TrialExhausted = () => {
             <Link href="/organization/byok" className="font-bold">
                 Connect your own AI key
             </Link>{" "}
-            to keep Kody reviewing — unlimited, on any plan.
+            to keep Cody reviewing — unlimited, on any plan.
         </div>
     );
 };
@@ -36,7 +36,7 @@ const TrialExhausted = () => {
 const SubscriptionInvalid = () => {
     return (
         <div className="bg-danger/30 py-2 text-center text-sm">
-            Kody's off duty!{" "}
+            Cody's off duty!{" "}
             <Link href="/settings/subscription" className="font-bold">
                 Upgrade
             </Link>{" "}

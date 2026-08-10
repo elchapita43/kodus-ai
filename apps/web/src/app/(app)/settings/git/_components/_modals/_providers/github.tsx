@@ -125,7 +125,7 @@ export const GithubModal = (props: Props) => {
                                         <span>
                                             Unlike OAuth, reviews will be
                                             published using your profile - not
-                                            Kody's.
+                                            Cody's.
                                         </span>
                                         <span className="text-destructive font-semibold">
                                             GitHub Checks/PR status won't be

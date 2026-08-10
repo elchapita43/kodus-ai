@@ -105,8 +105,8 @@ export function repoReportEmailMeta({
     const suffix = range ? ` · ${range}` : '';
     const subject =
         repoCount === 1 && repoName
-            ? `${repoShortName(repoName)} · Kody update${suffix}`
-            : `Your Kody repo update${suffix}`;
+            ? `${repoShortName(repoName)} · Cody update${suffix}`
+            : `Your Cody repo update${suffix}`;
     return {
         from: EMAIL_FROM.NOTIFICATIONS,
         subject,
@@ -262,7 +262,7 @@ function RepoSection({ section }: { section: RepoReportSectionProps }) {
             {section.rules.length > 0 ? (
                 <>
                     <Text style={{ ...sectionSubhead, margin: '18px 0 4px' }}>
-                        Kody Rules worth a look — noisy or ignored here
+                        Cody Rules worth a look — noisy or ignored here
                     </Text>
                     <Section>
                         {section.rules.map((r, i) => (
@@ -291,7 +291,7 @@ function RepoSection({ section }: { section: RepoReportSectionProps }) {
 
             <Section style={{ margin: '16px 0 0' }}>
                 <Link href={section.cockpitLink} style={sectionLink}>
-                    Open {repoShortName(section.repository)} in Kodus →
+                    Open {repoShortName(section.repository)} in Codus →
                 </Link>
             </Section>
         </Section>
@@ -311,7 +311,7 @@ function RepoReportEmail({
         <BrandLayout
             preview={`${company} · ${sections.length} ${
                 sections.length === 1 ? 'repo' : 'repos'
-            } · your Kodus digest`}
+            } · your Codus digest`}
         >
             <Heading style={baseHeading}>Hi {recipientName} 👋</Heading>
             <Text style={baseText}>
@@ -399,10 +399,10 @@ RepoReportEmail.PreviewProps = {
             ],
             rulesMore: 2,
             cockpitLink:
-                'https://app.kodus.io/cockpit?tab=kodus-review&repository=acme/auth-service',
+                'https://app.kodus.io/cockpit?tab=codus-review&repository=acme/auth-service',
         },
     ],
-    cockpitLink: 'https://app.kodus.io/cockpit?tab=kodus-review',
+    cockpitLink: 'https://app.kodus.io/cockpit?tab=codus-review',
 } satisfies RepoReportEmailProps;
 
 export default RepoReportEmail;

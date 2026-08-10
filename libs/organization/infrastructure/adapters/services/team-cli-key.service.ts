@@ -59,13 +59,13 @@ export class TeamCliKeyService implements ITeamCliKeyService {
         });
 
         // Return the raw key with prefix (only time it's shown)
-        return `kodus_${rawKey}`;
+        return `codus_${rawKey}`;
     }
 
     async validateKey(key: string): Promise<ValidateKeyResult | null> {
         try {
             // Remove prefix
-            const rawKey = key.replace(/^kodus_/, '');
+            const rawKey = key.replace(/^codus_/, '');
 
             // Calculate keyPrefix for fast lookup
             const keyPrefix = crypto

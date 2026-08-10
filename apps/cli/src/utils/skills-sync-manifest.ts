@@ -3,7 +3,7 @@ import path from 'node:path';
 import { assertValidSkillName } from './skills.js';
 import type { SkillSyncTarget } from './skills-sync.js';
 
-const MANAGED_SKILLS_MANIFEST = '.kodus-managed-skills.json';
+const MANAGED_SKILLS_MANIFEST = '.codus-managed-skills.json';
 
 export function resolveManagedManifestPath(target: SkillSyncTarget): string {
     return path.join(target.baseDir, MANAGED_SKILLS_MANIFEST);

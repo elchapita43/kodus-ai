@@ -561,7 +561,7 @@ describe('ValidatePrerequisitesStage', () => {
             const body =
                 mockCodeManagementService.createIssueComment.mock.calls[0][0]
                     .body;
-            expect(body).toContain('Kodus-paid PR reviews');
+            expect(body).toContain('Codus-paid PR reviews');
             expect(body).toContain('/organization/byok');
             expect(body).not.toContain('trial has ended');
         });
@@ -590,7 +590,7 @@ describe('ValidatePrerequisitesStage', () => {
                 mockCodeManagementService.createIssueComment.mock.calls[0][0]
                     .body;
             expect(body).toContain('Subscription check unavailable');
-            expect(body).not.toContain('Kodus-paid PR reviews');
+            expect(body).not.toContain('Codus-paid PR reviews');
             expect(body).not.toContain('trial has ended');
             expect(result.statusInfo?.message).toContain(
                 'Subscription Check Unavailable',

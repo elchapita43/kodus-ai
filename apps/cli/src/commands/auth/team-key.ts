@@ -42,10 +42,10 @@ export async function teamKeyAction(options: { key?: string }): Promise<void> {
         exitWithCode(1);
     }
 
-    if (!options.key.startsWith('kodus_')) {
+    if (!options.key.startsWith('codus_')) {
         cliError(
             chalk.red(
-                'Error: Invalid key format. Key should start with "kodus_"',
+                'Error: Invalid key format. Key should start with "codus_"',
             ),
         );
         exitWithCode(1);
@@ -60,16 +60,16 @@ export async function teamKeyAction(options: { key?: string }): Promise<void> {
                 'X-Team-Key': options.key,
                 ...cfHeaders,
                 ...(device?.deviceId
-                    ? { 'X-Kodus-Device-Id': device.deviceId }
+                    ? { 'X-Codus-Device-Id': device.deviceId }
                     : {}),
                 ...(device?.deviceToken
-                    ? { 'X-Kodus-Device-Token': device.deviceToken }
+                    ? { 'X-Codus-Device-Token': device.deviceToken }
                     : {}),
             },
         });
 
         const responseDeviceToken = response.headers.get(
-            'x-kodus-device-token',
+            'x-codus-device-token',
         );
         if (responseDeviceToken) {
             await updateDeviceToken(responseDeviceToken).catch(() => {});
@@ -145,7 +145,7 @@ export async function teamStatusAction(): Promise<void> {
 
     if (!config) {
         cliInfo(chalk.yellow('Not authenticated with team key'));
-        cliInfo('\nRun: kodus auth team-key --key <your-key>');
+        cliInfo('\nRun: codus auth team-key --key <your-key>');
         cliInfo(
             'Get your key from: https://app.kodus.io/organization/cli-keys',
         );

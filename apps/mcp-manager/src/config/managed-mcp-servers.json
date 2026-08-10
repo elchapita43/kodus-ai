@@ -1,21 +1,21 @@
 [
     {
-        "id": "kodus-docs-default",
-        "name": "Kodus Docs",
+        "id": "codus-docs-default",
+        "name": "Codus Docs",
         "category": "documentation",
         "baseUrl": "https://docs.kodus.io/mcp",
         "protocol": "http",
-        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Kodus-AI-Logo-6.png",
+        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Codus-AI-Logo-6.png",
         "headers": {},
         "authMethods": [{ "id": "none", "type": "none", "default": true }]
     },
     {
-        "id": "kodus-issues-default",
+        "id": "codus-issues-default",
         "name": "Git Issues",
         "category": "task-management",
         "baseUrl": "/mcp/issues",
         "protocol": "http",
-        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Kodus-AI-Logo-6.png",
+        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Codus-AI-Logo-6.png",
         "headers": {},
         "authMethods": [{ "id": "none", "type": "none", "default": true }]
     },
@@ -48,12 +48,12 @@
         "authMethods": [{ "id": "none", "type": "none", "default": true }]
     },
     {
-        "id": "kodus-osv-default",
-        "name": "Kodus OSV",
+        "id": "codus-osv-default",
+        "name": "Codus OSV",
         "category": "security",
         "baseUrl": "https://mcp-osv.kodus.io/mcp",
         "protocol": "http",
-        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Kodus-AI-Logo-6.png",
+        "logoUrl": "https://kodus.io/wp-content/uploads/2025/11/Codus-AI-Logo-6.png",
         "headers": {},
         "authMethods": [{ "id": "none", "type": "none", "default": true }]
     },

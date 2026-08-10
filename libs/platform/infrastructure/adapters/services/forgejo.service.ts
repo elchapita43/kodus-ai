@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { createLogger } from '@libs/core/log/logger';
 import { fitPRDescription } from '@libs/code-review/utils/fit-pr-description';
-import { hasKodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
+import { hasCodyMarker } from '@libs/common/utils/codeManagement/codeCommentMarkers';
 import { getCodeReviewBadge } from '@libs/common/utils/codeManagement/codeReviewBadge';
 import { getLabelShield } from '@libs/common/utils/codeManagement/labels';
 import { getSeverityLevelShield } from '@libs/common/utils/codeManagement/severityLevel';
@@ -541,7 +541,7 @@ export class ForgejoService implements Omit<
                 authDetail.authMode === AuthMode.TOKEN && author?.name
                     ? {
                           name: author.name,
-                          email: author.email || 'kody@kodus.io',
+                          email: author.email || 'cody@kodus.io',
                       }
                     : undefined;
 
@@ -702,7 +702,7 @@ export class ForgejoService implements Omit<
         const identity = author?.name
             ? {
                   name: author.name,
-                  email: author.email || 'kody@kodus.io',
+                  email: author.email || 'cody@kodus.io',
               }
             : undefined;
 
@@ -3057,9 +3057,9 @@ export class ForgejoService implements Omit<
             actionStatement,
             codeBlock,
             copyPrompt,
-            formatSub(translations?.talkToKody || ''),
+            formatSub(translations?.talkToCody || ''),
             formatSub(translations?.feedback || '') +
-                '<!-- kody-codereview -->&#8203;\n&#8203;',
+                '<!-- cody-codereview -->&#8203;\n&#8203;',
         ]
             .filter(Boolean)
             .join('\n')
@@ -3328,7 +3328,7 @@ export class ForgejoService implements Omit<
                     });
                     const comments = commentsResult.data ?? [];
                     for (const c of comments) {
-                        if (hasKodyMarker(c.body)) continue;
+                        if (hasCodyMarker(c.body)) continue;
 
                         allComments.push(
                             this.mapForgejoReviewComment(review, c),

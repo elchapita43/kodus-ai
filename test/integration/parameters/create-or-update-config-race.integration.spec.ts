@@ -49,13 +49,13 @@ const PG_PORT = parseInt(
     10,
 );
 const PG_USER =
-    process.env.TEST_PG_USER ?? process.env.API_PG_DB_USERNAME ?? 'kodusdev';
+    process.env.TEST_PG_USER ?? process.env.API_PG_DB_USERNAME ?? 'codusdev';
 const PG_PASSWORD =
     process.env.TEST_PG_PASSWORD ??
     process.env.API_PG_DB_PASSWORD ??
-    'kodusdev';
+    'codusdev';
 const PG_DB =
-    process.env.TEST_PG_DB ?? process.env.API_PG_DB_DATABASE ?? 'kodus_db';
+    process.env.TEST_PG_DB ?? process.env.API_PG_DB_DATABASE ?? 'codus_db';
 
 const skipIntegration = process.env.SKIP_INTEGRATION === 'true';
 

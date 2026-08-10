@@ -24,7 +24,7 @@ import { ForgejoService } from '../forgejo.service';
  * - `status: in_progress/completed` → `state: pending/success/failure/warning`
  * - `conclusion: success/failure/neutral` → `state: success/failure/warning`
  */
-const COMMIT_STATUS_CONTEXT = 'Kodus Code Review';
+const COMMIT_STATUS_CONTEXT = 'Codus Code Review';
 
 const statusStateMap: Record<CheckStatus, string> = {
     [CheckStatus.IN_PROGRESS]: 'pending',

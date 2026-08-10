@@ -40,7 +40,7 @@ async function provisionUserWithRole(
     teamId: string,
     role: RbacRole,
 ): Promise<RoleSession> {
-    const email = `e2e-rbac-${role}-${Date.now()}@kodus.local`;
+    const email = `e2e-rbac-${role}-${Date.now()}@codus.local`;
     const name = `e2e ${role}`;
     const authed = { Authorization: `Bearer ${ownerToken}` };
 
@@ -121,7 +121,7 @@ export interface RbacOrg {
 
 /** Sign up a fresh disposable org and provision all four role sessions. */
 export async function setupRbacOrg(ctx: RunContext): Promise<RbacOrg> {
-    const ownerEmail = `e2e-rbac-owner-${Date.now()}@kodus.local`;
+    const ownerEmail = `e2e-rbac-owner-${Date.now()}@codus.local`;
     await signUp(ctx.target, { email: ownerEmail, password: RBAC_PASSWORD });
     const owner = await login(ctx.target, {
         email: ownerEmail,

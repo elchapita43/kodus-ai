@@ -66,7 +66,7 @@ describe('JoinOrganizationUseCase', () => {
         };
         const organization = {
             uuid: 'org-new',
-            name: 'Kodus Org',
+            name: 'Codus Org',
         };
         const team = { uuid: 'team-1' };
 
@@ -176,7 +176,7 @@ describe('JoinOrganizationUseCase', () => {
             payload: {
                 token: 'email-token',
                 email: 'dev@kodus.io',
-                organizationName: 'Kodus Org',
+                organizationName: 'Codus Org',
                 organizationAndTeamData: {
                     organizationId: 'org-new',
                     teamId: team.uuid,

@@ -70,7 +70,7 @@ export default function HelpdeskPage() {
                 src={helpdeskUrl}
                 className="h-full w-full border-0"
                 allow="clipboard-write"
-                title="Kodus Helpdesk"
+                title="Codus Helpdesk"
             />
         </div>
     );

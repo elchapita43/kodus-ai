@@ -198,7 +198,7 @@ export class AuthController {
     @ApiOperation({
         summary: 'Generate helpdesk SSO token',
         description:
-            'Generate a short-lived RS256 token for authenticating with kodus-helpdesk.',
+            'Generate a short-lived RS256 token for authenticating with codus-helpdesk.',
     })
     @ApiOkResponse({
         schema: {

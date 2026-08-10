@@ -21,14 +21,14 @@ describe('ContextService', () => {
 
     it('reads context files using injected repository root resolver', async () => {
         tmpDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-context-test-'),
+            path.join(os.tmpdir(), 'codus-context-test-'),
         );
         await fs.writeFile(path.join(tmpDir, '.cursorrules'), 'cursor rules');
         await fs.writeFile(path.join(tmpDir, 'claude.md'), 'claude rules');
-        await fs.mkdir(path.join(tmpDir, '.kodus'), { recursive: true });
+        await fs.mkdir(path.join(tmpDir, '.codus'), { recursive: true });
         await fs.writeFile(
-            path.join(tmpDir, '.kodus', 'rules.md'),
-            'kodus rules',
+            path.join(tmpDir, '.codus', 'rules.md'),
+            'codus rules',
         );
 
         const contextService = new ContextService(async () => tmpDir!);
@@ -36,12 +36,12 @@ describe('ContextService', () => {
 
         expect(context.cursorRules).toBe('cursor rules');
         expect(context.claudeRules).toBe('claude rules');
-        expect(context.kodusRules).toBe('kodus rules');
+        expect(context.codusRules).toBe('codus rules');
     });
 
     it('falls back to process cwd when repository root resolver fails', async () => {
         tmpDir = await fs.mkdtemp(
-            path.join(os.tmpdir(), 'kodus-context-fallback-test-'),
+            path.join(os.tmpdir(), 'codus-context-fallback-test-'),
         );
         await fs.writeFile(path.join(tmpDir, '.cursorrules'), 'cwd rules');
 

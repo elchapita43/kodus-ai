@@ -3,7 +3,7 @@ name: "Benchmark: tier-0 model code review"
 # Per-model code-review benchmark against the QA cloud. For each recommended
 # model in the BYOK catalog (curated-models.json, tier="recommended") it points
 # ONE QA benchmark tenant's BYOK at the model and opens the fixed 5-PR set on the
-# shared kodus-e2e benchmark repos, waiting for Kody to review each.
+# shared codus-e2e benchmark repos, waiting for Cody to review each.
 #
 # Gate (mechanical): `benchmark:models` exits non-zero if any review fails to
 # complete — that is the pass/fail. The precision/recall scorecard
@@ -28,7 +28,7 @@ name: "Benchmark: tier-0 model code review"
 # NO pull_request trigger: the benchmark drives reviews on qa.web.kodus.io,
 # which runs main's image — a PR-time LIGHT run would benchmark MAIN's
 # engine quality (not the PR's), defeating the purpose. The right signal
-# at PR-time is the kody rule "engine sem benchmark" reminding the dev to
+# at PR-time is the cody rule "engine sem benchmark" reminding the dev to
 # update the dataset; the FULL run after deploy measures the actual change.
 # NO nightly cron: full FULL run only when the engine actually changes,
 # to keep cost bounded. Opus is dropped at the driver level
@@ -37,7 +37,7 @@ name: "Benchmark: tier-0 model code review"
 # if you ever need it.
 #
 # Required secrets (add in repo settings — only GH_TEST_TOKEN exists today):
-#   GH_TEST_TOKEN            PAT that can see + write the kodus-e2e/* bench repos
+#   GH_TEST_TOKEN            PAT that can see + write the codus-e2e/* bench repos
 #   BYOK_ANTHROPIC_API_KEY   Claude (sonnet-4-6, opus-4-7)
 #   BYOK_OPENAI_API_KEY      gpt-5.4
 #   BYOK_GOOGLE_API_KEY      gemini-3.1-pro
@@ -139,7 +139,7 @@ jobs:
                   BASE="${CLOUD_WEB_BASE_URL%/}/api/proxy/api"
                   WAF_HDR=()
                   if [ -n "${QA_WAF_BYPASS_HEADER:-}" ]; then
-                      WAF_HDR=(-H "x-kodus-e2e: ${QA_WAF_BYPASS_HEADER}")
+                      WAF_HDR=(-H "x-codus-e2e: ${QA_WAF_BYPASS_HEADER}")
                   fi
                   # This runs after the deploy job built+pushed the image and
                   # opened the infra PR, so it hits the backend mid-rollout: the
@@ -163,7 +163,7 @@ jobs:
                           -X POST "$BASE/auth/login" \
                           "${WAF_HDR[@]}" \
                           -H 'Content-Type: application/json' \
-                          -d '{"email":"readiness-probe@invalid.kodus","password":"x"}' \
+                          -d '{"email":"readiness-probe@invalid.codus","password":"x"}' \
                           2>/dev/null || echo 000)
                       # If we know the target build, the live version must ALSO still
                       # match on each probe — a flip back to the prior build means a

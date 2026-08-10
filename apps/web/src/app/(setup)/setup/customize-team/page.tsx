@@ -9,9 +9,9 @@ import { Heading } from "@components/ui/heading";
 import { Page } from "@components/ui/page";
 import { Spinner } from "@components/ui/spinner";
 import { toast } from "@components/ui/toaster/use-toast";
-import { KODY_RULES_PATHS } from "@services/kodyRules";
-import { changeStatusKodyRules } from "@services/kodyRules/fetch";
-import { KodyRulesStatus, type KodyRule } from "@services/kodyRules/types";
+import { CODY_RULES_PATHS } from "@services/codyRules";
+import { changeStatusCodyRules } from "@services/codyRules/fetch";
+import { CodyRulesStatus, type CodyRule } from "@services/codyRules/types";
 import { useSuspenseGetCodeReviewParameter } from "@services/parameters/hooks";
 import { isCentralizedPrResponse } from "@services/parameters/types";
 import { useAuth } from "src/core/providers/auth.provider";
@@ -22,13 +22,13 @@ import { safeArray } from "src/core/utils/safe-array";
 
 import { StepIndicators } from "../_components/step-indicators";
 
-const KodyRuleCard = ({
+const CodyRuleCard = ({
     rule,
     selected,
     repositoryName,
     onToggle,
 }: {
-    rule: KodyRule;
+    rule: CodyRule;
     selected: boolean;
     repositoryName?: string;
     onToggle: () => void;
@@ -86,8 +86,8 @@ export default function CustomizeTeamPage() {
         isLoading: isPendingRulesLoading,
         isFetching: isPendingRulesFetching,
         isRefetching: isPendingRulesRefetching,
-    } = useFetch<Array<KodyRule>>(
-        KODY_RULES_PATHS.PENDING_IDE_RULES,
+    } = useFetch<Array<CodyRule>>(
+        CODY_RULES_PATHS.PENDING_IDE_RULES,
         { params: { teamId } },
         !!teamId,
         {
@@ -111,7 +111,7 @@ export default function CustomizeTeamPage() {
 
     const pendingRuleIds = useMemo(
         () =>
-            safeArray<KodyRule>(pendingRules)
+            safeArray<CodyRule>(pendingRules)
                 .map((rule) => rule.uuid)
                 .filter((id): id is string => Boolean(id)),
         [pendingRules],
@@ -223,9 +223,9 @@ export default function CustomizeTeamPage() {
             const prUrls = new Set<string>();
 
             if (toActivate.length) {
-                const activationResult = await changeStatusKodyRules(
+                const activationResult = await changeStatusCodyRules(
                     toActivate,
-                    KodyRulesStatus.ACTIVE,
+                    CodyRulesStatus.ACTIVE,
                 );
 
                 if (
@@ -237,9 +237,9 @@ export default function CustomizeTeamPage() {
             }
 
             if (toDelete.length) {
-                const deletionResult = await changeStatusKodyRules(
+                const deletionResult = await changeStatusCodyRules(
                     toDelete,
-                    KodyRulesStatus.DELETED,
+                    CodyRulesStatus.DELETED,
                 );
 
                 if (
@@ -289,11 +289,11 @@ export default function CustomizeTeamPage() {
             <div className="bg-card-lv1 flex w-full flex-col justify-center gap-10 rounded-3xl p-8 lg:max-w-none lg:flex-10 lg:p-12">
                 <div className="flex-1 overflow-hidden">
                     <h1 className="text-2xl font-bold">
-                        Teach Kody how your team builds software
+                        Teach Cody how your team builds software
                     </h1>
                     <p className="text-text-secondary mt-2 text-base">
                         Rules add your team’s standards to every review. By
-                        default, Kody checks bugs, security, and performance.
+                        default, Cody checks bugs, security, and performance.
                     </p>
                     <div className="mt-5 flex flex-col gap-2">
                         {highlightItems.map((item) => (
@@ -328,7 +328,7 @@ export default function CustomizeTeamPage() {
                 <div className="flex flex-1 flex-col gap-8">
                     <StepIndicators.Auto />
 
-                    <Heading variant="h2">Review your Kody Rules</Heading>
+                    <Heading variant="h2">Review your Cody Rules</Heading>
 
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
@@ -364,7 +364,7 @@ export default function CustomizeTeamPage() {
                                 <span className="text-text-primary">
                                     {noRulesTimeoutReached
                                         ? "We couldn't find rules from your repo configs this time. You can continue and add or edit rules later in Settings."
-                                        : "Kody is scanning your config files and preparing recommendations. They will appear here automatically, and you can keep going in the meantime."}
+                                        : "Cody is scanning your config files and preparing recommendations. They will appear here automatically, and you can keep going in the meantime."}
                                 </span>
                             </div>
                         ) : (
@@ -373,7 +373,7 @@ export default function CustomizeTeamPage() {
                                     const ruleId = rule.uuid ?? rule.title;
 
                                     return (
-                                        <KodyRuleCard
+                                        <CodyRuleCard
                                             key={ruleId}
                                             rule={rule}
                                             repositoryName={

@@ -19,25 +19,25 @@ function makeMongoModel(count = 0): MockMongoModel {
 function build(opts: {
     dsHandler: (sql: string) => unknown;
     pullRequests?: number;
-    kodyRules?: number;
+    codyRules?: number;
 }): {
     service: HeartbeatCollectorService;
     pullRequests: MockMongoModel;
-    kodyRules: MockMongoModel;
+    codyRules: MockMongoModel;
 } {
     const dataSource: MockDataSource = {
         query: jest.fn().mockImplementation(opts.dsHandler),
     };
     const pullRequests = makeMongoModel(opts.pullRequests ?? 0);
-    const kodyRules = makeMongoModel(opts.kodyRules ?? 0);
+    const codyRules = makeMongoModel(opts.codyRules ?? 0);
 
     const service = new HeartbeatCollectorService(
         dataSource as never,
         pullRequests as never,
-        kodyRules as never,
+        codyRules as never,
     );
 
-    return { service, pullRequests, kodyRules };
+    return { service, pullRequests, codyRules };
 }
 
 describe('HeartbeatCollectorService.collect', () => {
@@ -87,9 +87,9 @@ describe('HeartbeatCollectorService.collect', () => {
 
         // Reads from package.json — must look like a semver string and not
         // be the placeholder fallback.
-        expect(metrics.kodus.version).toMatch(/^\d+\.\d+\.\d+/);
-        expect(metrics.kodus.version).not.toBe('0.0.0');
-        expect(metrics.kodus.uptime_hours).toBe(5);
+        expect(metrics.codus.version).toMatch(/^\d+\.\d+\.\d+/);
+        expect(metrics.codus.version).not.toBe('0.0.0');
+        expect(metrics.codus.uptime_hours).toBe(5);
         expect(metrics.runtime.node_version).toBe(process.version);
         expect(metrics.runtime.cpu_count).toBeGreaterThan(0);
         expect(metrics.runtime.db_type).toBe('postgres');
@@ -139,20 +139,20 @@ describe('HeartbeatCollectorService.collect', () => {
         );
     });
 
-    it('reports kody_rules_enabled true when at least one document has rules', async () => {
-        const { service } = build({ dsHandler: dsRouter({}), kodyRules: 1 });
+    it('reports cody_rules_enabled true when at least one document has rules', async () => {
+        const { service } = build({ dsHandler: dsRouter({}), codyRules: 1 });
 
         const metrics = await service.collect({ firstSeenAt: new Date() });
 
-        expect(metrics.config.kody_rules_enabled).toBe(true);
+        expect(metrics.config.cody_rules_enabled).toBe(true);
     });
 
-    it('reports kody_rules_enabled false when none exist', async () => {
-        const { service } = build({ dsHandler: dsRouter({}), kodyRules: 0 });
+    it('reports cody_rules_enabled false when none exist', async () => {
+        const { service } = build({ dsHandler: dsRouter({}), codyRules: 0 });
 
         const metrics = await service.collect({ firstSeenAt: new Date() });
 
-        expect(metrics.config.kody_rules_enabled).toBe(false);
+        expect(metrics.config.cody_rules_enabled).toBe(false);
     });
 
     it('normalises integrations to a closed enum and buckets unknowns as "other"', async () => {
@@ -175,7 +175,7 @@ describe('HeartbeatCollectorService.collect', () => {
                 throw new Error('postgres unavailable');
             },
             pullRequests: 0,
-            kodyRules: 0,
+            codyRules: 0,
         });
 
         const metrics = await service.collect({ firstSeenAt: new Date() });
@@ -194,7 +194,7 @@ describe('HeartbeatCollectorService.collect', () => {
 
         const metrics = await service.collect({ firstSeenAt: new Date() });
 
-        expect(metrics.kodus.deployment).toBe('k8s');
+        expect(metrics.codus.deployment).toBe('k8s');
     });
 
     it('falls back to "unknown" when no deployment hint is present', async () => {
@@ -204,6 +204,6 @@ describe('HeartbeatCollectorService.collect', () => {
 
         const metrics = await service.collect({ firstSeenAt: new Date() });
 
-        expect(metrics.kodus.deployment).toBe('unknown');
+        expect(metrics.codus.deployment).toBe('unknown');
     });
 });

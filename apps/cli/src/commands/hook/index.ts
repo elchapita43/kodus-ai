@@ -23,7 +23,7 @@ hookCommand
 
 hookCommand
     .command('uninstall')
-    .description('Remove pre-push hook installed by kodus')
+    .description('Remove pre-push hook installed by codus')
     .option('--dry-run', 'Print planned changes without writing files', false)
     .action((options, cmd) => uninstallAction(options, cmd.optsWithGlobals()));
 

@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@nestjs/common';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import { ObservabilityService } from '@libs/core/log/observability.service';
 import { DocumentationSearchExaService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-exa.service';
@@ -30,7 +30,7 @@ export class BugAgentProvider extends BaseCodeReviewAgentProvider {
 
     protected getIdentity(): ReviewAgentIdentity {
         return {
-            name: 'kodus-bug-review-agent',
+            name: 'codus-bug-review-agent',
             description:
                 'Senior software engineer specialized in finding bugs, logic errors, ' +
                 'edge cases, error handling issues, data flow problems, and race conditions ' +

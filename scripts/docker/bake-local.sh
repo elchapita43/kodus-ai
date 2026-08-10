@@ -29,6 +29,6 @@ docker buildx bake --no-cache -f docker-bake.hcl \
     --load
 
 echo "✅ Bake Complete! Images loaded to Docker."
-echo "   kodus-ai-api:local"
-echo "   kodus-ai-webhook:local"
-echo "   kodus-ai-worker:local"
+echo "   codus-ai-api:local"
+echo "   codus-ai-webhook:local"
+echo "   codus-ai-worker:local"

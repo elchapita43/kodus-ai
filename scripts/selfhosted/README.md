@@ -1,6 +1,6 @@
 # Self-hosted dev VM
 
-Provisions a real self-hosted Kodus stack on a cloud VM, leaves it alive for you (and the team) to test against, destroys it when you say so. Unrelated to the automated E2E suite in `tests/e2e/` — this is for manual work.
+Provisions a real self-hosted Codus stack on a cloud VM, leaves it alive for you (and the team) to test against, destroys it when you say so. Unrelated to the automated E2E suite in `tests/e2e/` — this is for manual work.
 
 ## Mental model
 
@@ -18,7 +18,7 @@ provision   ─►   deploy   ─►   destroy
 ## Quick start — test your local branch
 
 ```bash
-# 1) Bootstrap (once per machine — saves to ~/.kodus-dev/config)
+# 1) Bootstrap (once per machine — saves to ~/.codus-dev/config)
 pnpm run selfhosted:setup
 
 # 2) Provision a droplet (~10 min, runs published :latest image)
@@ -65,9 +65,9 @@ In priority order (higher wins):
 
 1. **Inline-exported env** — `IMAGE_TAG=foo pnpm run selfhosted:provision`
 2. **`scripts/selfhosted/.env`** — per-repo override (gitignored)
-3. **`~/.kodus-dev/config`** — global per-machine (managed by `pnpm run selfhosted:setup`)
+3. **`~/.codus-dev/config`** — global per-machine (managed by `pnpm run selfhosted:setup`)
 
-`~/.kodus-dev/config` is the recommended path: set it up once and forget. Works across every clone of the repo, survives project reinstalls.
+`~/.codus-dev/config` is the recommended path: set it up once and forget. Works across every clone of the repo, survives project reinstalls.
 
 ```bash
 pnpm run selfhosted:setup         # interactive (auto-runs on first provision)
@@ -75,17 +75,17 @@ pnpm run selfhosted:setup --show  # show current config (masked)
 pnpm run selfhosted:setup --path  # print config file path
 ```
 
-If `direnv` is installed, the setup script offers to create a `.envrc` in the repo that auto-loads the config when you `cd` into the directory. Without direnv, the scripts read `~/.kodus-dev/config` directly anyway.
+If `direnv` is installed, the setup script offers to create a `.envrc` in the repo that auto-loads the config when you `cd` into the directory. Without direnv, the scripts read `~/.codus-dev/config` directly anyway.
 
 ### 1Password CLI (internal team)
 
-Each value in `~/.kodus-dev/config` can be either a plain value or a 1Password reference (`op://Vault/Item/field`). Internal Kodus engineers use refs so secrets stay in the team vault — rotation is automatic. External contributors just paste plain values.
+Each value in `~/.codus-dev/config` can be either a plain value or a 1Password reference (`op://Vault/Item/field`). Internal Codus engineers use refs so secrets stay in the team vault — rotation is automatic. External contributors just paste plain values.
 
 ```bash
 # Example config mixing both:
-DIGITALOCEAN_TOKEN=op://Engineering/kodus-dev/do-token   # team ref
+DIGITALOCEAN_TOKEN=op://Engineering/codus-dev/do-token   # team ref
 SH_LICENSE_KEY=lic-paid-plain-value                      # plain
-API_OPEN_AI_API_KEY=op://Engineering/kodus-dev/openai-key # team ref
+API_OPEN_AI_API_KEY=op://Engineering/codus-dev/openai-key # team ref
 ```
 
 See [`op-references.md`](./op-references.md) for the team's standard paths and setup. The `op` CLI is auto-detected; if not installed, plain-value prompts are used.
@@ -103,7 +103,7 @@ pnpm run selfhosted:destroy --name junior
 pnpm run selfhosted:destroy --name wellington
 ```
 
-Each `--name` becomes a suffix on the droplet (`kodus-selfhosted-junior`) and the local state file (`.kodus-dev/selfhosted-vm-junior.json`). The Docker image tag pushed by `deploy` is also per-name (`dev-junior`), so deploys don't collide.
+Each `--name` becomes a suffix on the droplet (`codus-selfhosted-junior`) and the local state file (`.codus-dev/selfhosted-vm-junior.json`). The Docker image tag pushed by `deploy` is also per-name (`dev-junior`), so deploys don't collide.
 
 ## How `deploy` works
 
@@ -134,7 +134,7 @@ Requirements:
 - `gh auth login` completed (we read your GHCR token from `gh` CLI)
 - Docker with buildx
 
-Images are pushed to `ghcr.io/<your-gh-user>/kodus-ai-{api,worker,webhook,web,mcp-manager}:dev-<instance-name>` — each dev has their own namespace, no conflict with org-published images.
+Images are pushed to `ghcr.io/<your-gh-user>/codus-ai-{api,worker,webhook,web,mcp-manager}:dev-<instance-name>` — each dev has their own namespace, no conflict with org-published images.
 
 ## Configuration
 
@@ -150,19 +150,19 @@ Recommended: run `pnpm run selfhosted:setup`, which prompts for the fields below
 
 | Env | Default | Purpose |
 |---|---|---|
-| `KODUS_INSTALLER_PATH` | `../kodus-installer` | Path to the local installer checkout |
+| `CODUS_INSTALLER_PATH` | `../codus-installer` | Path to the local installer checkout |
 | `TEST_VM_PROVIDER` | `digitalocean` | Set to `hetzner` to use Hetzner Cloud (requires `HCLOUD_TOKEN`) |
 | `IMAGE_TAG` | `latest` | GHCR image tag for `provision`. Useful to test a specific RC (`selfhosted-X.Y.Z-rc.N`) |
 | `SH_LICENSE_KEY` | (none) | If set, stack boots with the license injected (paid features unlocked) |
 | `GH_DEV_TOKEN` | (none) | If set, auto-configures the GitHub integration after signup — dashboard ready to use |
-| `API_OPEN_AI_API_KEY` | (none) | OpenAI API key. **Required for Kodus to review PRs.** Without it, the dashboard shows a "No LLM provider configured" banner. Get one at https://platform.openai.com/api-keys. |
+| `API_OPEN_AI_API_KEY` | (none) | OpenAI API key. **Required for Codus to review PRs.** Without it, the dashboard shows a "No LLM provider configured" banner. Get one at https://platform.openai.com/api-keys. |
 | `API_OPENAI_FORCE_BASE_URL` | (none) | Optional. Override `api.openai.com` — set to e.g. `https://your-proxy/v1` for Azure OpenAI, OpenRouter, or local LLM proxies. |
 | `DO_REGION` | `nyc3` | DigitalOcean region |
 | `DO_SIZE` | `s-2vcpu-4gb` | Droplet size (~$24/mo if left running) |
 
 ## Local state
 
-`provision.sh` saves each instance's metadata to `.kodus-dev/selfhosted-vm-{name}.json`:
+`provision.sh` saves each instance's metadata to `.codus-dev/selfhosted-vm-{name}.json`:
 
 ```json
 {
@@ -171,13 +171,13 @@ Recommended: run `pnpm run selfhosted:setup`, which prompts for the fields below
   "server_id": "487234",
   "server_ip": "164.92.x.x",
   "ssh_key_id": "998877",
-  "ssh_key_path": ".kodus-dev/ssh-keys/default",
+  "ssh_key_path": ".codus-dev/ssh-keys/default",
   "tunnel_url": "https://chunky-llama.trycloudflare.com",
   "dashboard_url": "http://164.92.x.x:3000",
   "api_url": "http://164.92.x.x:3001",
   "image_tag": "latest",
   "tenant": {
-    "email": "dev-default-1715812345@kodus.local",
+    "email": "dev-default-1715812345@codus.local",
     "password": "k8j3xX2qaPlmnQAa1!"
   },
   "gh_integration_configured": false,
@@ -185,7 +185,7 @@ Recommended: run `pnpm run selfhosted:setup`, which prompts for the fields below
 }
 ```
 
-`.kodus-dev/` is in `.gitignore`. Passwords and tokens stay on your machine only.
+`.codus-dev/` is in `.gitignore`. Passwords and tokens stay on your machine only.
 
 ## Cost
 
@@ -211,7 +211,7 @@ pnpm run selfhosted:logs -- web api                    # check for errors
 
 Common causes:
 - Memory pressure on `s-2vcpu-4gb` → use `DO_SIZE=s-4vcpu-8gb`
-- `WEB_HOSTNAME_API` wrong (must be `localhost`, the sentinel that makes the web resolve the API via `GLOBAL_API_CONTAINER_NAME`, i.e. the `kodus_api` container)
+- `WEB_HOSTNAME_API` wrong (must be `localhost`, the sentinel that makes the web resolve the API via `GLOBAL_API_CONTAINER_NAME`, i.e. the `codus_api` container)
 - Container crash-looping due to a missing env var → read the logs
 
 ### Tunnel URL changed
@@ -234,10 +234,10 @@ Doesn't work out-of-the-box because the E2E matrix uses its own provisioning. Bu
 
 ```bash
 cd tests/e2e
-SERVER_IP=$(jq -r .server_ip ../../.kodus-dev/selfhosted-vm-default.json)
-TUNNEL=$(jq -r .tunnel_url ../../.kodus-dev/selfhosted-vm-default.json)
-EMAIL=$(jq -r .tenant.email ../../.kodus-dev/selfhosted-vm-default.json)
-PASS=$(jq -r .tenant.password ../../.kodus-dev/selfhosted-vm-default.json)
+SERVER_IP=$(jq -r .server_ip ../../.codus-dev/selfhosted-vm-default.json)
+TUNNEL=$(jq -r .tunnel_url ../../.codus-dev/selfhosted-vm-default.json)
+EMAIL=$(jq -r .tenant.email ../../.codus-dev/selfhosted-vm-default.json)
+PASS=$(jq -r .tenant.password ../../.codus-dev/selfhosted-vm-default.json)
 
 TARGET_BASE_URL=http://$SERVER_IP:3001 \
 TARGET_WEB_URL=http://$SERVER_IP:3000 \

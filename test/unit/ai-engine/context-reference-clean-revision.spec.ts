@@ -1,6 +1,6 @@
 import { ContextReferenceDetectionService } from '@libs/ai-engine/infrastructure/adapters/services/context/context-reference-detection.service';
 
-// The stale-sync-error bug (found during manual validation of the kody-rules
+// The stale-sync-error bug (found during manual validation of the cody-rules
 // hotfix): a rule that once had a sync error kept it FOREVER because a clean
 // detection returned early without persisting anything — the errored revision
 // stayed latest. A clean detection over an existing revision must commit an
@@ -37,7 +37,7 @@ describe('ContextReferenceDetectionService — clean detection clears stale revi
         {
             text: 'clean rule body, no references',
             path: ['rule'],
-            sourceType: 'kody_rule',
+            sourceType: 'cody_rule',
         } as any,
     ];
 
@@ -45,7 +45,7 @@ describe('ContextReferenceDetectionService — clean detection clears stale revi
         const { svc, contextReferenceService } = build({ id: 'rev-old' });
 
         await svc.detectAndSaveReferences({
-            entityType: 'kodyRule',
+            entityType: 'codyRule',
             entityId: 'rule-1',
             fields,
             organizationAndTeamData: orgTeam,
@@ -60,7 +60,7 @@ describe('ContextReferenceDetectionService — clean detection clears stale revi
         const { svc, contextReferenceService } = build(null);
 
         const result = await svc.detectAndSaveReferences({
-            entityType: 'kodyRule',
+            entityType: 'codyRule',
             entityId: 'rule-1',
             fields,
             organizationAndTeamData: orgTeam,

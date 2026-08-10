@@ -22,7 +22,7 @@ Headline metric: **goldens lost** = goldens covered by some finding *before* ded
 ## Run
 
 ```bash
-# real dedup (needs OpenAI key + Anthropic judge key, from ~/.kodus-dev/config)
+# real dedup (needs OpenAI key + Anthropic judge key, from ~/.codus-dev/config)
 node evals/dedup/build-dataset.js /tmp/recall-new-g3.json   # once, to build datasets
 node evals/dedup/run.js --model=gpt-5.4-mini --guard=content --contentthresh=0.3 --limit=39
 

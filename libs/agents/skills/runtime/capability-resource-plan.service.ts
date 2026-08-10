@@ -195,11 +195,11 @@ export class CapabilityResourcePlanService {
             candidates.push('clickup');
         }
         if (
-            normalized.includes('kodus-github-issues') ||
-            compact.includes('kodusgithubissues') ||
+            normalized.includes('codus-github-issues') ||
+            compact.includes('codusgithubissues') ||
             (compact.includes('github') && compact.includes('issues'))
         ) {
-            candidates.push('kodus-github-issues');
+            candidates.push('codus-github-issues');
         }
 
         return [...new Set(candidates)];

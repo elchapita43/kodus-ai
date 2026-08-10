@@ -14,7 +14,7 @@ describe('CentralizedConfigSyncUseCase', () => {
             }),
             getCentralizedConfigRepository: jest.fn().mockResolvedValue({
                 id: 'central-repo-id',
-                name: 'kodus',
+                name: 'codus',
             }),
             discoverConfigFiles: jest.fn().mockResolvedValue([
                 {}, // global config
@@ -23,22 +23,22 @@ describe('CentralizedConfigSyncUseCase', () => {
                     centralizedDirectoryPath: 'repo1',
                 }, // repo config
             ]),
-            discoverKodyRulesFiles: jest.fn().mockResolvedValue([]),
+            discoverCodyRulesFiles: jest.fn().mockResolvedValue([]),
             synchronizeConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Config files synchronized successfully',
             }),
-            synchronizeKodyRules: jest.fn().mockResolvedValue({
+            synchronizeCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Kody rules synchronized successfully',
+                message: 'Cody rules synchronized successfully',
             }),
             removeStaleConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Stale configs removed successfully',
             }),
-            removeStaleKodyRules: jest.fn().mockResolvedValue({
+            removeStaleCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Stale Kody rules removed successfully',
+                message: 'Stale Cody rules removed successfully',
             }),
         };
 
@@ -125,25 +125,25 @@ describe('CentralizedConfigSyncUseCase', () => {
             }),
             getCentralizedConfigRepository: jest.fn().mockResolvedValue({
                 id: 'central-repo-id',
-                name: 'kodus',
+                name: 'codus',
             }),
             discoverConfigFiles: jest.fn().mockResolvedValue([]),
-            discoverKodyRulesFiles: jest.fn().mockResolvedValue([]),
+            discoverCodyRulesFiles: jest.fn().mockResolvedValue([]),
             synchronizeConfigs: jest.fn().mockResolvedValue({
                 success: false,
                 message: 'Failed to update parameters',
             }),
-            synchronizeKodyRules: jest.fn().mockResolvedValue({
+            synchronizeCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Kody rules synchronized successfully',
+                message: 'Cody rules synchronized successfully',
             }),
             removeStaleConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Stale configs removed successfully',
             }),
-            removeStaleKodyRules: jest.fn().mockResolvedValue({
+            removeStaleCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Stale Kody rules removed successfully',
+                message: 'Stale Cody rules removed successfully',
             }),
         };
 
@@ -170,25 +170,25 @@ describe('CentralizedConfigSyncUseCase', () => {
             }),
             getCentralizedConfigRepository: jest.fn().mockResolvedValue({
                 id: 'central-repo-id',
-                name: 'kodus',
+                name: 'codus',
             }),
             discoverConfigFiles: jest.fn().mockResolvedValue([]),
-            discoverKodyRulesFiles: jest.fn().mockResolvedValue([]),
+            discoverCodyRulesFiles: jest.fn().mockResolvedValue([]),
             synchronizeConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Config files synchronized successfully',
             }),
-            synchronizeKodyRules: jest.fn().mockResolvedValue({
+            synchronizeCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Kody rules synchronized successfully',
+                message: 'Cody rules synchronized successfully',
             }),
             removeStaleConfigs: jest.fn().mockResolvedValue({
                 success: false,
                 message: 'Failed to clean up configs',
             }),
-            removeStaleKodyRules: jest.fn().mockResolvedValue({
+            removeStaleCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Stale Kody rules removed successfully',
+                message: 'Stale Cody rules removed successfully',
             }),
         };
 
@@ -215,7 +215,7 @@ describe('CentralizedConfigSyncUseCase', () => {
             }),
             getCentralizedConfigRepository: jest.fn().mockResolvedValue({
                 id: 'central-repo-id',
-                name: 'kodus',
+                name: 'codus',
             }),
             discoverConfigFiles: jest.fn().mockResolvedValue([
                 {},
@@ -224,39 +224,39 @@ describe('CentralizedConfigSyncUseCase', () => {
                     centralizedDirectoryPath: 'repo-1',
                 },
             ]),
-            discoverKodyRulesFiles: jest.fn().mockResolvedValue([
+            discoverCodyRulesFiles: jest.fn().mockResolvedValue([
                 {
                     repositoryId: 'repo-1-id',
                     directoryPath: '/src',
-                    centralizedDirectoryPath: 'repo-1/src/.kody-rules/review',
+                    centralizedDirectoryPath: 'repo-1/src/.cody-rules/review',
                     ruleType: 'standard',
-                    ruleFilePath: 'repo-1/src/.kody-rules/review/rule.yml',
-                    path: 'repo-1/src/.kody-rules/review/rule.yml',
+                    ruleFilePath: 'repo-1/src/.cody-rules/review/rule.yml',
+                    path: 'repo-1/src/.cody-rules/review/rule.yml',
                 },
                 {
                     repositoryId: 'repo-1-id',
                     directoryPath: '/src',
-                    centralizedDirectoryPath: 'repo-1/src/.kody-rules/memories',
+                    centralizedDirectoryPath: 'repo-1/src/.cody-rules/memories',
                     ruleType: 'memory',
-                    ruleFilePath: 'repo-1/src/.kody-rules/memories/rule.yml',
-                    path: 'repo-1/src/.kody-rules/memories/rule.yml',
+                    ruleFilePath: 'repo-1/src/.cody-rules/memories/rule.yml',
+                    path: 'repo-1/src/.cody-rules/memories/rule.yml',
                 },
             ]),
             synchronizeConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Config files synchronized successfully',
             }),
-            synchronizeKodyRules: jest.fn().mockResolvedValue({
+            synchronizeCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Kody rules synchronized successfully',
+                message: 'Cody rules synchronized successfully',
             }),
             removeStaleConfigs: jest.fn().mockResolvedValue({
                 success: true,
                 message: 'Stale configs removed successfully',
             }),
-            removeStaleKodyRules: jest.fn().mockResolvedValue({
+            removeStaleCodyRules: jest.fn().mockResolvedValue({
                 success: true,
-                message: 'Stale Kody rules removed successfully',
+                message: 'Stale Cody rules removed successfully',
             }),
         };
 
@@ -283,7 +283,7 @@ describe('CentralizedConfigSyncUseCase', () => {
                         repositoryId: 'repo-1-id',
                         directoryPath: '/src',
                         centralizedDirectoryPath:
-                            'repo-1/src/.kody-rules/review',
+                            'repo-1/src/.cody-rules/review',
                     },
                 ],
             }),
@@ -302,7 +302,7 @@ describe('CentralizedConfigSyncUseCase', () => {
                         repositoryId: 'repo-1-id',
                         directoryPath: '/src',
                         centralizedDirectoryPath:
-                            'repo-1/src/.kody-rules/review',
+                            'repo-1/src/.cody-rules/review',
                     },
                 ],
             }),
@@ -316,12 +316,12 @@ describe('CentralizedConfigSyncUseCase', () => {
                 .mockResolvedValue({ success: true, message: 'ok' }),
             getCentralizedConfigRepository: jest
                 .fn()
-                .mockResolvedValue({ id: 'central-repo-id', name: 'kodus' }),
+                .mockResolvedValue({ id: 'central-repo-id', name: 'codus' }),
             discoverConfigFiles: jest.fn().mockResolvedValue([]),
             // A transient read failure now THROWS (scanRepositoryTree) instead
             // of returning [] — the use-case must abort before any removeStale
             // runs, or it would wipe every rule + the org's global config.
-            discoverKodyRulesFiles: jest
+            discoverCodyRulesFiles: jest
                 .fn()
                 .mockRejectedValue(
                     new Error(
@@ -329,9 +329,9 @@ describe('CentralizedConfigSyncUseCase', () => {
                     ),
                 ),
             synchronizeConfigs: jest.fn(),
-            synchronizeKodyRules: jest.fn(),
+            synchronizeCodyRules: jest.fn(),
             removeStaleConfigs: jest.fn(),
-            removeStaleKodyRules: jest.fn(),
+            removeStaleCodyRules: jest.fn(),
         };
 
         const useCase = new CentralizedConfigSyncUseCase(
@@ -345,38 +345,38 @@ describe('CentralizedConfigSyncUseCase', () => {
         expect(result.success).toBe(false);
         // The critical safety property: nothing destructive ran.
         expect(
-            centralizedConfigService.removeStaleKodyRules,
+            centralizedConfigService.removeStaleCodyRules,
         ).not.toHaveBeenCalled();
         expect(
             centralizedConfigService.removeStaleConfigs,
         ).not.toHaveBeenCalled();
         expect(
-            centralizedConfigService.synchronizeKodyRules,
+            centralizedConfigService.synchronizeCodyRules,
         ).not.toHaveBeenCalled();
     });
 
-    it('surfaces a partial Kody-rules sync as a failure and skips stale removal (#1518)', async () => {
+    it('surfaces a partial Cody-rules sync as a failure and skips stale removal (#1518)', async () => {
         const centralizedConfigService = {
             validateCentralizedConfig: jest
                 .fn()
                 .mockResolvedValue({ success: true, message: 'ok' }),
             getCentralizedConfigRepository: jest
                 .fn()
-                .mockResolvedValue({ id: 'r', name: 'kodus' }),
+                .mockResolvedValue({ id: 'r', name: 'codus' }),
             discoverConfigFiles: jest.fn().mockResolvedValue([]),
-            discoverKodyRulesFiles: jest
+            discoverCodyRulesFiles: jest
                 .fn()
                 .mockResolvedValue([{ path: 'a.yml' }]),
             synchronizeConfigs: jest
                 .fn()
                 .mockResolvedValue({ success: true, message: 'ok' }),
             // 27 of 61 materialized, the rest failed — must NOT be success.
-            synchronizeKodyRules: jest.fn().mockResolvedValue({
+            synchronizeCodyRules: jest.fn().mockResolvedValue({
                 success: false,
-                message: 'Kody rules sync incomplete — synced 27, failed 34',
+                message: 'Cody rules sync incomplete — synced 27, failed 34',
             }),
             removeStaleConfigs: jest.fn(),
-            removeStaleKodyRules: jest.fn(),
+            removeStaleCodyRules: jest.fn(),
         };
 
         const useCase = new CentralizedConfigSyncUseCase(
@@ -391,7 +391,7 @@ describe('CentralizedConfigSyncUseCase', () => {
         expect(result.message).toContain('incomplete');
         // A partial materialization must not trigger stale deletion.
         expect(
-            centralizedConfigService.removeStaleKodyRules,
+            centralizedConfigService.removeStaleCodyRules,
         ).not.toHaveBeenCalled();
         expect(
             centralizedConfigService.removeStaleConfigs,

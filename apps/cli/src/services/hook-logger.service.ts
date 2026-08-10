@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import type { LogLevel, LogComponent, LogEntry } from '../types/session.js';
 
-const LOG_FILE = '.kody/logs/hooks.jsonl';
+const LOG_FILE = '.cody/logs/hooks.jsonl';
 
 class HookLoggerService {
     private logDir: string | null = null;
@@ -13,7 +13,7 @@ class HookLoggerService {
      * Must be called before any log methods.
      */
     async init(repoRoot: string): Promise<void> {
-        this.logDir = path.join(repoRoot, '.kody', 'logs');
+        this.logDir = path.join(repoRoot, '.cody', 'logs');
         this.logPath = path.join(repoRoot, LOG_FILE);
         await fs.mkdir(this.logDir, { recursive: true });
     }

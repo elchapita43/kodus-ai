@@ -3,7 +3,7 @@ import { ProcessFilesReview } from '@libs/code-review/pipeline/stages/process-fi
 import { SUGGESTION_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/SuggestionService.contract';
 import { PULL_REQUESTS_SERVICE_TOKEN } from '@libs/platformData/domain/pullRequests/contracts/pullRequests.service.contracts';
 import { FILE_REVIEW_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/file-review-context-preparation.interface';
-import { KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/kody-fine-tuning-context-preparation.interface';
+import { CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/cody-fine-tuning-context-preparation.interface';
 import { CodeAnalysisOrchestrator } from '@libs/ee/codeBase/codeAnalysisOrchestrator.service';
 import { GraphContentFormatter } from '@libs/code-review/infrastructure/adapters/services/graphContentFormatter.service';
 import {
@@ -81,7 +81,7 @@ const mockSuggestionService = {
 
 const mockCodeAnalysisOrchestrator = {
     executeStandardAnalysis: jest.fn(),
-    executeKodyRulesAnalysis: jest.fn(() => ({ codeSuggestions: [] })),
+    executeCodyRulesAnalysis: jest.fn(() => ({ codeSuggestions: [] })),
 };
 
 const mockPullRequestService = {
@@ -92,8 +92,8 @@ const mockFileReviewContextPreparation = {
     prepareFileReviewContext: jest.fn(),
 };
 
-const mockKodyFineTuningContextPreparation = {
-    prepareKodyFineTuningContext: jest.fn(
+const mockCodyFineTuningContextPreparation = {
+    prepareCodyFineTuningContext: jest.fn(
         (_orgId, _pr, _repo, suggestions) => ({
             keepedSuggestions: suggestions,
             discardedSuggestions: [],
@@ -128,8 +128,8 @@ describe('ProcessFilesReview – file content chunking', () => {
                     useValue: mockFileReviewContextPreparation,
                 },
                 {
-                    provide: KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
-                    useValue: mockKodyFineTuningContextPreparation,
+                    provide: CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
+                    useValue: mockCodyFineTuningContextPreparation,
                 },
                 {
                     provide: CodeAnalysisOrchestrator,
@@ -205,7 +205,7 @@ describe('ProcessFilesReview – file content chunking', () => {
             codeReviewConfig: {
                 reviewOptions: {},
                 pullRequestApprovalActive: false,
-                kodusConfigFileOverridesWebPreferences: false,
+                codusConfigFileOverridesWebPreferences: false,
             } as any,
             reviewModeResponse: { isReviewMode: false },
             fileChangeContext: {
@@ -265,7 +265,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 100000 },
                     },
@@ -311,7 +311,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: MAX_INPUT_TOKENS },
                     },
@@ -535,7 +535,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 10000 },
                     },
@@ -591,7 +591,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 1000 },
                     },
@@ -709,7 +709,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                     codeReviewConfig: {
                         reviewOptions: {},
                         pullRequestApprovalActive: false,
-                        kodusConfigFileOverridesWebPreferences: false,
+                        codusConfigFileOverridesWebPreferences: false,
                         byokConfig: {
                             main: { maxInputTokens: MAX_INPUT_TOKENS },
                         },
@@ -833,7 +833,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 6000 },
                     },
@@ -877,7 +877,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 10000 },
                     },
@@ -936,7 +936,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 10000 },
                     },
@@ -979,7 +979,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 10000 },
                     },
@@ -1025,7 +1025,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: 10000 },
                     },
@@ -1123,7 +1123,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: MAX_INPUT_TOKENS },
                     },
@@ -1133,7 +1133,7 @@ describe('ProcessFilesReview – file content chunking', () => {
                 codeReviewConfig: {
                     reviewOptions: {},
                     pullRequestApprovalActive: false,
-                    kodusConfigFileOverridesWebPreferences: false,
+                    codusConfigFileOverridesWebPreferences: false,
                     byokConfig: {
                         main: { maxInputTokens: MAX_INPUT_TOKENS },
                     },

@@ -7,17 +7,17 @@ description: "AIコードレビューを調整して、最も関連性の高い�
 
 ## レビューフィルター
 
-Kodus は、どの検出結果を実際に投稿するかをフィルタリングします：
+Codus は、どの検出結果を実際に投稿するかをフィルタリングします：
 
 - **最小重大度** — 指定したしきい値以上のサジェストのみ表示（デフォルト：Medium）
-- **Kody Rules にフィルターを適用** — デフォルトはオフで、チーム独自のルールは常に表示されます
+- **Cody Rules にフィルターを適用** — デフォルトはオフで、チーム独自のルールは常に表示されます
 
-**Code Review Settings** → **Review filters**、または `kodus-config.yml` で設定します：
+**Code Review Settings** → **Review filters**、または `codus-config.yml` で設定します：
 
 ```yaml
 suggestionControl:
   severityLevelFilter: medium   # low | medium | high | critical
-  applyFiltersToKodyRules: false
+  applyFiltersToCodyRules: false
 ```
 
 ## ファイルとパスを無視する
@@ -57,6 +57,6 @@ reviewOptions:
 
 ## レビューの頻度
 
-アクティブな開発中のスパムを防ぐために**自動一時停止**を使用します — Kodusは連続した急速なプッシュを検出したときにレビューを一時停止します（デフォルト：15分以内に3回のプッシュ）。
+アクティブな開発中のスパムを防ぐために**自動一時停止**を使用します — Codusは連続した急速なプッシュを検出したときにレビューを一時停止します（デフォルト：15分以内に3回のプッシュ）。
 
 詳細については、[一般設定](/how_to_use/ja/code_review/configs/general)と[提案コントロール](/how_to_use/ja/code_review/configs/suggestion_control)を参照してください。

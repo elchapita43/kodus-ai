@@ -25,7 +25,7 @@ describe("computeLockedPluginIds", () => {
     });
 
     it("never locks default (system-managed) plugins, even when /mcp/connections is empty", () => {
-        // Regression: "Kodus MCP" is isConnected+ACTIVE+isDefault but never
+        // Regression: "Codus MCP" is isConnected+ACTIVE+isDefault but never
         // appears in /mcp/connections. Before excluding isDefault, an empty
         // orderedActiveIntegrationIds made the runnable set empty, so this
         // single always-on default plugin was wrongly marked locked.

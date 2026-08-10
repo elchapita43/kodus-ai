@@ -33,7 +33,7 @@ export const PluginsGrid = ({
      * runs only the first `limit` of these on capped plans. */
     orderedActiveIntegrationIds: string[];
 }) => {
-    // Default (system-managed) plugins like "Kodus MCP" are always on and
+    // Default (system-managed) plugins like "Codus MCP" are always on and
     // don't count against the plan's plugin cap — they never appear in
     // /mcp/connections at all, so they'd otherwise look "locked" whenever
     // they fall outside the runnable set computed from that list.
@@ -76,7 +76,7 @@ export const PluginsGrid = ({
                         <span className="text-text-secondary text-sm">
                             The Free plan runs {limit} plugins at a time —
                             locked plugins are skipped during reviews. Upgrade
-                            to run them all, plus unlimited Kody Rules and the
+                            to run them all, plus unlimited Cody Rules and the
                             Cockpit.
                         </span>
                     </div>

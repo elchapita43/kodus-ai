@@ -12,7 +12,7 @@ import {
 } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
 
-import { KODY_RULES_ANALYSIS_SERVICE_TOKEN } from './kodyRulesAnalysis.service';
+import { CODY_RULES_ANALYSIS_SERVICE_TOKEN } from './codyRulesAnalysis.service';
 
 @Injectable()
 export class CodeAnalysisOrchestrator {
@@ -20,8 +20,8 @@ export class CodeAnalysisOrchestrator {
     constructor(
         @Inject(LLM_ANALYSIS_SERVICE_TOKEN)
         private readonly standardLLMAnalysisService: IAIAnalysisService,
-        @Inject(KODY_RULES_ANALYSIS_SERVICE_TOKEN)
-        private readonly kodyRulesAnalysisService: IAIAnalysisService,
+        @Inject(CODY_RULES_ANALYSIS_SERVICE_TOKEN)
+        private readonly codyRulesAnalysisService: IAIAnalysisService,
     ) {}
 
     async executeStandardAnalysis(
@@ -83,7 +83,7 @@ export class CodeAnalysisOrchestrator {
         }
     }
 
-    async executeKodyRulesAnalysis(
+    async executeCodyRulesAnalysis(
         organizationAndTeamData: OrganizationAndTeamData,
         prNumber: number,
         fileContext: FileChangeContext,
@@ -92,7 +92,7 @@ export class CodeAnalysisOrchestrator {
     ): Promise<AIAnalysisResult | null> {
         try {
             if (
-                !this.shouldExecuteKodyRules(
+                !this.shouldExecuteCodyRules(
                     context,
                     organizationAndTeamData,
                     prNumber,
@@ -102,7 +102,7 @@ export class CodeAnalysisOrchestrator {
             }
 
             const result =
-                await this.kodyRulesAnalysisService.analyzeCodeWithAI(
+                await this.codyRulesAnalysisService.analyzeCodeWithAI(
                     organizationAndTeamData,
                     prNumber,
                     fileContext,
@@ -113,7 +113,7 @@ export class CodeAnalysisOrchestrator {
 
             if (!result) {
                 this.logger.log({
-                    message: `Kody rules suggestions null for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
+                    message: `Cody rules suggestions null for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
                     context: CodeAnalysisOrchestrator.name,
                     metadata: {
                         organizationAndTeamData,
@@ -125,7 +125,7 @@ export class CodeAnalysisOrchestrator {
 
             if (result?.codeSuggestions?.length === 0) {
                 this.logger.log({
-                    message: `Kody rules suggestions empty for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
+                    message: `Cody rules suggestions empty for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
                     context: CodeAnalysisOrchestrator.name,
                     metadata: {
                         organizationAndTeamData,
@@ -138,7 +138,7 @@ export class CodeAnalysisOrchestrator {
             return result;
         } catch (error) {
             this.logger.error({
-                message: `Error executing Kody rules analysis for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
+                message: `Error executing Cody rules analysis for file: ${fileContext?.file?.filename} from PR#${prNumber}`,
                 context: CodeAnalysisOrchestrator.name,
                 error: error,
                 metadata: {
@@ -152,23 +152,23 @@ export class CodeAnalysisOrchestrator {
         }
     }
 
-    private shouldExecuteKodyRules(
+    private shouldExecuteCodyRules(
         context: AnalysisContext,
         organizationAndTeamData: OrganizationAndTeamData,
         prNumber: number,
     ): boolean {
-        const hasRules = context.codeReviewConfig?.kodyRules?.length > 0;
+        const hasRules = context.codeReviewConfig?.codyRules?.length > 0;
 
         if (!hasRules) {
             this.logger.log({
-                message: `Kody rules will not execute: ${!hasRules ? 'No rules found' : 'Feature disabled'} for PR#${prNumber}`,
+                message: `Cody rules will not execute: ${!hasRules ? 'No rules found' : 'Feature disabled'} for PR#${prNumber}`,
                 context: CodeAnalysisOrchestrator.name,
                 metadata: {
                     organizationAndTeamData,
                     prNumber,
                     hasRules,
                     rulesCount:
-                        context.codeReviewConfig?.kodyRules?.length || 0,
+                        context.codeReviewConfig?.codyRules?.length || 0,
                     reviewOptions: context.codeReviewConfig?.reviewOptions,
                 },
             });

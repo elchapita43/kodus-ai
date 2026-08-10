@@ -15,7 +15,7 @@ import { EnqueueImplementationCheckUseCase } from '@libs/code-review/application
 import {
     hasReviewMarker,
     isForceReviewCommand,
-    isKodyMentionNonReview,
+    isCodyMentionNonReview,
     isReviewCommand,
     parseReviewDirective,
     isHeavyReviewCommand
@@ -30,7 +30,7 @@ import { PullRequestClosedEvent } from '@libs/core/domain/events/pull-request-cl
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     IWebhookEventHandler,
     IWebhookEventParams,
@@ -111,7 +111,7 @@ export class GitLabMergeRequestHandler implements IWebhookEventHandler {
     constructor(
         private readonly savePullRequestUseCase: SavePullRequestUseCase,
         private readonly webhookContextService: WebhookContextService,
-        private readonly chatWithKodyFromGitUseCase: ChatWithKodyFromGitUseCase,
+        private readonly chatWithCodyFromGitUseCase: ChatWithCodyFromGitUseCase,
         private readonly generateIssuesFromPrClosedUseCase: GenerateIssuesFromPrClosedUseCase,
         private readonly eventEmitter: EventEmitter2,
         private readonly codeManagement: CodeManagementService,
@@ -381,7 +381,7 @@ export class GitLabMergeRequestHandler implements IWebhookEventHandler {
                         }
                     } catch (e) {
                         this.logger.error({
-                            message: 'Failed to sync Kody Rules after MR merge',
+                            message: 'Failed to sync Cody Rules after MR merge',
                             context: GitLabMergeRequestHandler.name,
                             error: e,
                         });
@@ -554,7 +554,7 @@ export class GitLabMergeRequestHandler implements IWebhookEventHandler {
 
                 if (isStartCommand && !hasMarker) {
                     this.logger.log({
-                        message: `@kody start command detected in GitLab comment for PR#${mrNumber}`,
+                        message: `@cody start command detected in GitLab comment for PR#${mrNumber}`,
                         serviceName: GitLabMergeRequestHandler.name,
                         metadata: { mrNumber },
                         context: GitLabMergeRequestHandler.name,
@@ -591,9 +591,9 @@ export class GitLabMergeRequestHandler implements IWebhookEventHandler {
                 if (
                     !isStartCommand &&
                     !hasMarker &&
-                    isKodyMentionNonReview(comment.body, botUsername)
+                    isCodyMentionNonReview(comment.body, botUsername)
                 ) {
-                    this.chatWithKodyFromGitUseCase.execute(params);
+                    this.chatWithCodyFromGitUseCase.execute(params);
                     return;
                 }
             }

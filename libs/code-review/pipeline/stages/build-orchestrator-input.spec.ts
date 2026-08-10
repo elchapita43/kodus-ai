@@ -1,7 +1,7 @@
 /**
  * Guards the context → agent-input wiring that no typecheck would catch: the
  * fields are OPTIONAL, so a refactor that silently stops forwarding one (most
- * importantly `reviewDirective` from `@kody review <directive>`) would leave the
+ * importantly `reviewDirective` from `@cody review <directive>`) would leave the
  * feature dead with every other test still green. Testing the pure mapping is
  * the cheap, durable seam for that.
  */
@@ -29,7 +29,7 @@ const makeContext = (
     ({
         organizationAndTeamData: { organizationId: 'o', teamId: 't' },
         pullRequest: { title: 'T', body: 'B' },
-        repository: { fullName: 'kodus/test' },
+        repository: { fullName: 'codus/test' },
         codeReviewConfig: {},
         ...over,
     }) as unknown as CodeReviewPipelineContext;
@@ -80,24 +80,24 @@ describe('buildOrchestratorInput — context→agent wiring', () => {
         expect(input.prNumber).toBe(42);
     });
 
-    it('prefers stage-computed kodyRules (summary-swapped) over the raw config rules', () => {
+    it('prefers stage-computed codyRules (summary-swapped) over the raw config rules', () => {
         const configRules = [{ uuid: 'r1', rule: 'full long text' }];
         const swappedRules = [
             { uuid: 'r1', rule: 'WHAT TO VALIDATE:\n- condition' },
         ];
         const input = buildOrchestratorInput(
-            makeContext({ codeReviewConfig: { kodyRules: configRules } }),
-            { ...computed, kodyRules: swappedRules as any },
+            makeContext({ codeReviewConfig: { codyRules: configRules } }),
+            { ...computed, codyRules: swappedRules as any },
         );
-        expect(input.kodyRules).toBe(swappedRules);
+        expect(input.codyRules).toBe(swappedRules);
     });
 
-    it('falls back to the config kodyRules when the stage computes none', () => {
+    it('falls back to the config codyRules when the stage computes none', () => {
         const configRules = [{ uuid: 'r1', rule: 'full long text' }];
         const input = buildOrchestratorInput(
-            makeContext({ codeReviewConfig: { kodyRules: configRules } }),
+            makeContext({ codeReviewConfig: { codyRules: configRules } }),
             computed,
         );
-        expect(input.kodyRules).toBe(configRules);
+        expect(input.codyRules).toBe(configRules);
     });
 });

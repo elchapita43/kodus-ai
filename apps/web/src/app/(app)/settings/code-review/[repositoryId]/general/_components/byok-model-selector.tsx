@@ -129,7 +129,7 @@ export const BYOKModelSelectorSection = () => {
                 const effectiveModelId = currentValue || byokMainModel;
 
                 // A model id that isn't in the provider catalog — either typed
-                // manually or inherited from a kodus-config.yml. We can't be
+                // manually or inherited from a codus-config.yml. We can't be
                 // certain it's invalid (the catalog isn't exhaustive), so warn
                 // rather than block.
                 const isUnknownModel =

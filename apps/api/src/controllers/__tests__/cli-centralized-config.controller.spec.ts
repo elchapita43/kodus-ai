@@ -33,14 +33,14 @@ describe('CliCentralizedConfigController', () => {
     const selectedRepositories = [
         {
             id: 'repo-1',
-            name: 'kodus-config',
-            organizationName: 'kodustech',
+            name: 'codus-config',
+            organizationName: 'elchapita43',
             selected: true,
         },
         {
             id: 'repo-2',
             name: 'other',
-            organizationName: 'kodustech',
+            organizationName: 'elchapita43',
             selected: false,
         },
     ];
@@ -86,7 +86,7 @@ describe('CliCentralizedConfigController', () => {
         centralizedConfigDownloadUseCase = {
             execute: jest.fn().mockResolvedValue([
                 {
-                    path: 'kodus-config.yml',
+                    path: 'codus-config.yml',
                     content: 'version: 1',
                 },
             ]),
@@ -105,7 +105,7 @@ describe('CliCentralizedConfigController', () => {
     });
 
     it('returns centralized config status with default disabled state', async () => {
-        const result = await controller.getStatus('kodus_test_key', undefined);
+        const result = await controller.getStatus('codus_test_key', undefined);
 
         expect(parametersService.findByKey).toHaveBeenCalledWith(
             ParametersKey.CENTRALIZED_CONFIG,
@@ -126,7 +126,7 @@ describe('CliCentralizedConfigController', () => {
                 repositoryId: 'repo-1',
                 syncOption: 'manual',
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 
@@ -142,8 +142,8 @@ describe('CliCentralizedConfigController', () => {
         });
         expect(centralizedConfigInitUseCase.execute).toHaveBeenCalledWith({
             user: {
-                uuid: 'kody',
-                email: 'kody@kodus.io',
+                uuid: 'cody',
+                email: 'cody@kodus.io',
                 organization: {
                     uuid: 'org-1',
                 },
@@ -154,7 +154,7 @@ describe('CliCentralizedConfigController', () => {
             },
             repository: {
                 id: 'repo-1',
-                name: 'kodus-config',
+                name: 'codus-config',
             },
             syncOption: 'manual',
             skipAuthorizationForDownload: true,
@@ -163,7 +163,7 @@ describe('CliCentralizedConfigController', () => {
 
     it('rejects init when repositoryId is missing', async () => {
         await expect(
-            controller.initialize({} as any, 'kodus_test_key', undefined),
+            controller.initialize({} as any, 'codus_test_key', undefined),
         ).rejects.toThrow(BadRequestException);
 
         expect(centralizedConfigInitUseCase.execute).not.toHaveBeenCalled();
@@ -176,7 +176,7 @@ describe('CliCentralizedConfigController', () => {
                     repositoryId: 'repo-1',
                     syncOption: 'invalid' as any,
                 },
-                'kodus_test_key',
+                'codus_test_key',
                 undefined,
             ),
         ).rejects.toThrow(BadRequestException);
@@ -185,7 +185,7 @@ describe('CliCentralizedConfigController', () => {
     });
 
     it('syncs centralized config for the team', async () => {
-        const result = await controller.sync('kodus_test_key', undefined);
+        const result = await controller.sync('codus_test_key', undefined);
 
         expect(centralizedConfigSyncUseCase.execute).toHaveBeenCalledWith({
             organizationAndTeamData: {
@@ -200,7 +200,7 @@ describe('CliCentralizedConfigController', () => {
     });
 
     it('disables centralized config', async () => {
-        const result = await controller.disable('kodus_test_key', undefined);
+        const result = await controller.disable('codus_test_key', undefined);
 
         expect(createOrUpdateParametersUseCase.execute).toHaveBeenCalledWith(
             ParametersKey.CENTRALIZED_CONFIG,
@@ -234,7 +234,7 @@ describe('CliCentralizedConfigController', () => {
             set: jest.fn(),
         } as any;
 
-        await controller.download(response, 'kodus_test_key', undefined);
+        await controller.download(response, 'codus_test_key', undefined);
 
         expect(response.set).toHaveBeenCalledWith({
             'Content-Type': 'application/zip',
@@ -243,13 +243,13 @@ describe('CliCentralizedConfigController', () => {
         });
         expect(archiveMock.pipe).toHaveBeenCalledWith(response);
         expect(archiveMock.append).toHaveBeenCalledWith('version: 1', {
-            name: 'kodus-config.yml',
+            name: 'codus-config.yml',
         });
         expect(archiveMock.finalize).toHaveBeenCalled();
         expect(centralizedConfigDownloadUseCase.execute).toHaveBeenCalledWith(
             {
-                uuid: 'kody',
-                email: 'kody@kodus.io',
+                uuid: 'cody',
+                email: 'cody@kodus.io',
                 organization: {
                     uuid: 'org-1',
                 },
@@ -271,7 +271,7 @@ describe('CliCentralizedConfigController', () => {
         });
 
         await expect(
-            controller.getStatus('kodus_test_key', undefined),
+            controller.getStatus('codus_test_key', undefined),
         ).rejects.toThrow(ForbiddenException);
     });
 
@@ -279,7 +279,7 @@ describe('CliCentralizedConfigController', () => {
         teamCliKeyService.validateKey.mockResolvedValue(null);
 
         await expect(
-            controller.getStatus('kodus_test_key', undefined),
+            controller.getStatus('codus_test_key', undefined),
         ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -291,7 +291,7 @@ describe('CliCentralizedConfigController', () => {
                 {
                     repositoryId: 'repo-1',
                 },
-                'kodus_test_key',
+                'codus_test_key',
                 undefined,
             ),
         ).rejects.toThrow(BadRequestException);

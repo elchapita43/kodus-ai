@@ -5,7 +5,7 @@ import { isSelfHosted } from "src/core/utils/self-hosted";
 export const BYOKMissingKeyTopbar = () => {
     return (
         <div className="bg-warning/30 px-4 py-2 text-center text-sm text-pretty">
-            No LLM provider configured. Kodus can&apos;t review PRs until you
+            No LLM provider configured. Codus can&apos;t review PRs until you
             add a key
             {isSelfHosted ? (
                 <>

@@ -176,9 +176,9 @@ describe("buildHeaderPrInfo", () => {
     it("splits owner/repo, sums +/-, counts files and maps author/branches", () => {
         const pr = buildHeaderPrInfo({
             execution: {
-                repositoryName: "kodustech/kodus-ai",
+                repositoryName: "elchapita43/codus-ai",
                 title: "Fix things",
-                url: "https://github.com/kodustech/kodus-ai/pull/1",
+                url: "https://github.com/elchapita43/codus-ai/pull/1",
                 status: "open",
                 merged: false,
                 baseBranchRef: "main",
@@ -194,8 +194,8 @@ describe("buildHeaderPrInfo", () => {
         });
 
         expect(pr).toMatchObject({
-            owner: "kodustech",
-            repo: "kodus-ai",
+            owner: "elchapita43",
+            repo: "codus-ai",
             title: "Fix things",
             additions: 8,
             deletions: 3,
@@ -241,11 +241,11 @@ describe("buildPrInfo", () => {
             buildPrInfo({
                 prNumber: 1,
                 prUrl: "https://x",
-                repositoryName: "kodustech/kodus-ai",
+                repositoryName: "elchapita43/codus-ai",
             }),
         ).toMatchObject({
-            owner: "kodustech",
-            repo: "kodus-ai",
+            owner: "elchapita43",
+            repo: "codus-ai",
             prNumber: 1,
             htmlUrl: "https://x",
         });

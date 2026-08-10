@@ -5,7 +5,7 @@ import { isServerSide } from './server-side';
  * Public, absolute URL of the API as seen from the user's browser.
  *
  * Server reads process.env directly. Client reads from the runtime
- * config injected into window.__KODUS_PUBLIC_CONFIG__ by the root
+ * config injected into window.__CODUS_PUBLIC_CONFIG__ by the root
  * layout — same pattern as self-hosted.ts. Module-scope client
  * callers (e.g. ssoLogin in lib/auth/fetchers.ts) need a window-
  * backed getter because they can't call useConfig().
@@ -26,6 +26,6 @@ export function getApiPublicUrl(): string {
                   '',
               )
             : ''
-        : ((globalThis as any).__KODUS_PUBLIC_CONFIG__?.apiPublicUrl ?? '');
+        : ((globalThis as any).__CODUS_PUBLIC_CONFIG__?.apiPublicUrl ?? '');
     return raw.replace(/\/$/, '');
 }

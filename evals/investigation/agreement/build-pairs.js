@@ -24,13 +24,13 @@ const os = require('os');
 const path = require('path');
 
 // The finder's key routing (applyModelEnv) reads process.env only. Locally the
-// keys live in ~/.kodus-dev/config (same file the judge reads) — load any simple
+// keys live in ~/.codus-dev/config (same file the judge reads) — load any simple
 // KEY=VALUE that isn't already set so `node build-pairs.js` just works.
 function loadDevConfigIntoEnv() {
     for (const file of [
         path.join(__dirname, '..', '..', '..', '.env.local'),
         path.join(__dirname, '..', '..', '..', '.env'),
-        path.join(os.homedir(), '.kodus-dev', 'config'),
+        path.join(os.homedir(), '.codus-dev', 'config'),
     ]) {
         let text;
         try {

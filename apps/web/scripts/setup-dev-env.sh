@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "🚀 Setting up development environment for Kodus Web..."
+echo "🚀 Setting up development environment for Codus Web..."
 
 # Check if .env.example exists
 if [ ! -f ".env.example" ]; then
@@ -99,7 +99,7 @@ if [ -n "$JWT_SECRET" ]; then
         echo "📁 Common API folder locations:"
         echo "   - ../api/.env"
         echo "   - ../backend/.env"
-        echo "   - ../kodus-api/.env"
+        echo "   - ../codus-api/.env"
         echo "   - ../orchestrator/.env"
         echo "   - Or wherever your API .env is located"
     fi

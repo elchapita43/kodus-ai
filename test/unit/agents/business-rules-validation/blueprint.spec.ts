@@ -7,7 +7,7 @@ import { runBlueprint } from '@libs/shared/blueprint/blueprint.runner';
 
 const defaultRuntimeConfig: SkillCapabilityRuntimeConfig = {
     capabilities: ['pr.metadata.read', 'pr.diff.read', 'task.context.read'],
-    allowedTools: ['KODUS_GET_PULL_REQUEST', 'KODUS_GET_PULL_REQUEST_DIFF'],
+    allowedTools: ['CODUS_GET_PULL_REQUEST', 'CODUS_GET_PULL_REQUEST_DIFF'],
     fetcherPolicy: {
         toolMode: 'any',
         allowWithoutTools: false,
@@ -52,7 +52,7 @@ describe('business-rules blueprint', () => {
     it('uses preloaded PR metadata and still fetches diff deterministically', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST') {
                     return Promise.resolve({
                         result: {
                             result: {
@@ -71,8 +71,8 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST' },
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                 ]),
         } as any;
 
@@ -124,7 +124,7 @@ describe('business-rules blueprint', () => {
         expect(fetcher.callTool).toHaveBeenCalledTimes(1);
         expect(fetcher.callTool).toHaveBeenNthCalledWith(
             1,
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.objectContaining({
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -146,7 +146,7 @@ describe('business-rules blueprint', () => {
             }),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -179,7 +179,7 @@ describe('business-rules blueprint', () => {
         } as BusinessRulesContext);
 
         expect(fetcher.callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.objectContaining({
                 repositoryId: '123456',
                 prNumber: 12,
@@ -195,7 +195,7 @@ describe('business-rules blueprint', () => {
             }),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -228,7 +228,7 @@ describe('business-rules blueprint', () => {
         } as BusinessRulesContext);
 
         expect(fetcher.callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.objectContaining({
                 repositoryId: 'repo-legacy',
                 prNumber: 44,
@@ -240,7 +240,7 @@ describe('business-rules blueprint', () => {
     it('fetches metadata via MCP when PR description is not preloaded', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST') {
                     return Promise.resolve({
                         result: {
                             result: {
@@ -258,8 +258,8 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST' },
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                 ]),
         } as any;
 
@@ -302,7 +302,7 @@ describe('business-rules blueprint', () => {
 
         expect(fetcher.callTool).toHaveBeenNthCalledWith(
             1,
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST',
             expect.any(Object),
         );
         expect(next.prBody).toBe('PR body from tool');
@@ -311,20 +311,20 @@ describe('business-rules blueprint', () => {
     it('uses fetched PR body as hint source to resolve task context when prepareContext has no PR description', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string, args) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST') {
                     return Promise.resolve({
                         result: {
                             result: {
                                 success: true,
                                 data: {
-                                    body: 'Task link: https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1457',
+                                    body: 'Task link: https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1457',
                                 },
                             },
                         },
                     });
                 }
 
-                if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                     return Promise.resolve({
                         result: { result: { success: true, data: 'diff' } },
                     });
@@ -356,8 +356,8 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST' },
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                     { name: 'getJiraIssue' },
                 ]),
             getToolsForLLM: jest.fn().mockReturnValue([
@@ -424,7 +424,7 @@ describe('business-rules blueprint', () => {
             }),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const hooks = {
@@ -467,7 +467,7 @@ describe('business-rules blueprint', () => {
 
         expect(fetcher.callTool).toHaveBeenCalledTimes(1);
         expect(fetcher.callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.any(Object),
         );
         expect(next.prBody).toBe('PR body from prepare context');
@@ -480,13 +480,13 @@ describe('business-rules blueprint', () => {
             }),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const runtimeConfig: SkillCapabilityRuntimeConfig = {
             ...defaultRuntimeConfig,
             capabilities: ['pr.diff.read', 'task.context.read'],
-            allowedTools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+            allowedTools: ['CODUS_GET_PULL_REQUEST_DIFF'],
         };
 
         const steps = createBusinessRulesBlueprint(fetcher, runtimeConfig);
@@ -514,7 +514,7 @@ describe('business-rules blueprint', () => {
 
         expect(fetcher.callTool).toHaveBeenCalledTimes(1);
         expect(fetcher.callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.any(Object),
         );
         expect(next.prBody).toBe('PR description from prepare context');
@@ -525,7 +525,7 @@ describe('business-rules blueprint', () => {
             callTool: jest
                 .fn()
                 .mockImplementation((toolName: string, _args?: unknown) => {
-                    if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                    if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                         return Promise.resolve({
                             result: {
                                 result: { success: true, data: 'diff content' },
@@ -536,7 +536,7 @@ describe('business-rules blueprint', () => {
                     if (
                         toolName === 'getJiraIssue' &&
                         (_args as Record<string, unknown>)?.cloudId ===
-                            'https://kodustech.atlassian.net' &&
+                            'https://elchapita43.atlassian.net' &&
                         (_args as Record<string, unknown>)?.issueIdOrKey ===
                             'PROJ-123'
                     ) {
@@ -564,7 +564,7 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                     { name: 'getJiraIssue' },
                     { name: 'fetch' },
                 ]),
@@ -619,7 +619,7 @@ describe('business-rules blueprint', () => {
             userLanguage: 'en-US',
             prepareContext: {
                 pullRequestDescription:
-                    'Implements checkout validation. Related to https://kodustech.atlassian.net/jira/software/c/projects/PROJ/boards/1?selectedIssue=PROJ-123.',
+                    'Implements checkout validation. Related to https://elchapita43.atlassian.net/jira/software/c/projects/PROJ/boards/1?selectedIssue=PROJ-123.',
                 repository: { id: 'repo-1', name: 'my-repo' },
                 pullRequest: {
                     pullRequestNumber: 22,
@@ -639,7 +639,7 @@ describe('business-rules blueprint', () => {
         expect(taskToolCall).toBeDefined();
         expect((taskToolCall as unknown[])[1]).toEqual(
             expect.objectContaining({
-                cloudId: 'https://kodustech.atlassian.net',
+                cloudId: 'https://elchapita43.atlassian.net',
                 issueIdOrKey: 'PROJ-123',
             }),
         );
@@ -660,12 +660,12 @@ describe('business-rules blueprint', () => {
         ).toBe(true);
     });
 
-    it('derives repository owner from fullName so KODUS_GET_ISSUE is pre-filled deterministically', async () => {
+    it('derives repository owner from fullName so CODUS_GET_ISSUE is pre-filled deterministically', async () => {
         const fetcher = {
             callTool: jest
                 .fn()
                 .mockImplementation((toolName: string, _args?: unknown) => {
-                    if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                    if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                         return Promise.resolve({
                             result: {
                                 result: { success: true, data: 'diff content' },
@@ -673,7 +673,7 @@ describe('business-rules blueprint', () => {
                         });
                     }
 
-                    if (toolName === 'KODUS_GET_ISSUE') {
+                    if (toolName === 'CODUS_GET_ISSUE') {
                         return Promise.resolve({
                             result: {
                                 result: {
@@ -693,12 +693,12 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
-                    { name: 'KODUS_GET_ISSUE' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_ISSUE' },
                 ]),
             getToolsForLLM: jest.fn().mockReturnValue([
                 {
-                    name: 'KODUS_GET_ISSUE',
+                    name: 'CODUS_GET_ISSUE',
                     parameters: {
                         type: 'object',
                         properties: {
@@ -729,7 +729,7 @@ describe('business-rules blueprint', () => {
             getCachedTaskContextTools: jest.fn().mockResolvedValue([]),
             getSeedTaskContextTools: jest
                 .fn()
-                .mockResolvedValue(['KODUS_GET_ISSUE']),
+                .mockResolvedValue(['CODUS_GET_ISSUE']),
             resolveTaskContextMode: jest.fn().mockReturnValue('cache_first'),
             saveCachedTaskContextTools: jest.fn().mockResolvedValue(undefined),
             resolvePreferredTool: jest.fn().mockResolvedValue(undefined),
@@ -738,7 +738,7 @@ describe('business-rules blueprint', () => {
 
         const steps = createBusinessRulesBlueprint(
             fetcher,
-            { ...defaultRuntimeConfig, providerType: 'kodus-github-issues' },
+            { ...defaultRuntimeConfig, providerType: 'codus-github-issues' },
             hooks,
         );
         const deterministicSteps = steps.filter(
@@ -760,7 +760,7 @@ describe('business-rules blueprint', () => {
                     'Implements resilient webhook delivery. Closes #972.',
                 repository: {
                     id: '670345891',
-                    fullName: 'kodustech/kodus-orchestrator',
+                    fullName: 'elchapita43/codus-orchestrator',
                 },
                 pullRequest: {
                     pullRequestNumber: 973,
@@ -775,14 +775,14 @@ describe('business-rules blueprint', () => {
         }
 
         const issueCall = fetcher.callTool.mock.calls.find(
-            (call: unknown[]) => call[0] === 'KODUS_GET_ISSUE',
+            (call: unknown[]) => call[0] === 'CODUS_GET_ISSUE',
         );
         expect(issueCall).toBeDefined();
         expect((issueCall as unknown[])[1]).toEqual(
             expect.objectContaining({
                 organizationId: 'org-uuid-1',
                 teamId: 'team-uuid-1',
-                repository: { owner: 'kodustech', name: 'kodus-orchestrator' },
+                repository: { owner: 'elchapita43', name: 'codus-orchestrator' },
                 issueNumber: 972,
             }),
         );
@@ -804,7 +804,7 @@ describe('business-rules blueprint', () => {
             }),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -848,7 +848,7 @@ describe('business-rules blueprint', () => {
     it('enforces seeded task-context boundary before applying cache ordering', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                     return Promise.resolve({
                         result: {
                             result: { success: true, data: 'diff content' },
@@ -881,7 +881,7 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                     { name: 'search' },
                     { name: 'getJiraIssue' },
                 ]),
@@ -936,7 +936,7 @@ describe('business-rules blueprint', () => {
             userLanguage: 'en-US',
             prepareContext: {
                 pullRequestDescription:
-                    'Related to https://kodustech.atlassian.net/jira/software/c/projects/PROJ/boards/1?selectedIssue=PROJ-700',
+                    'Related to https://elchapita43.atlassian.net/jira/software/c/projects/PROJ/boards/1?selectedIssue=PROJ-700',
                 repository: { id: 'repo-1', name: 'my-repo' },
                 pullRequest: { pullRequestNumber: 24 },
                 taskContext: '',
@@ -974,7 +974,7 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                     { name: 'search' },
                 ]),
             getToolsForLLM: jest.fn().mockReturnValue([
@@ -1045,7 +1045,7 @@ describe('business-rules blueprint', () => {
             callTool: jest
                 .fn()
                 .mockImplementation((toolName: string, _args?: unknown) => {
-                    if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                    if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                         return Promise.resolve({
                             result: {
                                 result: { success: true, data: 'diff content' },
@@ -1073,7 +1073,7 @@ describe('business-rules blueprint', () => {
             getRegisteredTools: jest
                 .fn()
                 .mockReturnValue([
-                    { name: 'KODUS_GET_PULL_REQUEST_DIFF' },
+                    { name: 'CODUS_GET_PULL_REQUEST_DIFF' },
                     { name: 'editJiraIssue' },
                     { name: 'getJiraIssue' },
                 ]),
@@ -1132,7 +1132,7 @@ describe('business-rules blueprint', () => {
             userLanguage: 'en-US',
             prepareContext: {
                 pullRequestDescription:
-                    'Related to https://kodustech.atlassian.net/browse/PROJ-321',
+                    'Related to https://elchapita43.atlassian.net/browse/PROJ-321',
                 repository: { id: 'repo-1', name: 'my-repo' },
                 pullRequest: { pullRequestNumber: 26 },
                 taskContext: '',
@@ -1154,7 +1154,7 @@ describe('business-rules blueprint', () => {
     it('short-circuits before analysis when the PR diff is empty', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                     return Promise.resolve({
                         result: { result: { success: true, data: '' } },
                     });
@@ -1165,7 +1165,7 @@ describe('business-rules blueprint', () => {
             callAgent: jest.fn(),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -1186,7 +1186,7 @@ describe('business-rules blueprint', () => {
                     repository: { id: 'repo-1', name: 'my-repo' },
                     pullRequest: { pullRequestNumber: 31 },
                     taskContext:
-                        'Kody rules por time. Atualmente as kodyRules sao cadastradas somente com organizationId e isso faz com que o billing possa ser resolvido no team errado quando existem dois workspaces configurados.',
+                        'Cody rules por time. Atualmente as codyRules sao cadastradas somente com organizationId e isso faz com que o billing possa ser resolvido no team errado quando existem dois workspaces configurados.',
                 },
             } as BusinessRulesContext,
             steps,
@@ -1198,7 +1198,7 @@ describe('business-rules blueprint', () => {
 
         expect(result.skippedAt).toBe('validatePullRequestDiff');
         expect(fetcher.callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.any(Object),
         );
         expect(result.context.validationResult).toEqual(
@@ -1227,7 +1227,7 @@ describe('business-rules blueprint', () => {
     it('returns a limitation outcome when task context is too weak even if the diff is available', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                     return Promise.resolve({
                         result: {
                             result: {
@@ -1243,7 +1243,7 @@ describe('business-rules blueprint', () => {
             callAgent: jest.fn(),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -1262,7 +1262,7 @@ describe('business-rules blueprint', () => {
                     pullRequestDescription: 'PR body',
                     repository: { id: 'repo-1', name: 'my-repo' },
                     pullRequest: { pullRequestNumber: 33 },
-                    taskContext: 'KC-1441 — Kody rules por time',
+                    taskContext: 'KC-1441 — Cody rules por time',
                 },
             } as BusinessRulesContext,
             steps,
@@ -1290,7 +1290,7 @@ describe('business-rules blueprint', () => {
     it('allows analysis to run when PR diff has surrounding whitespace', async () => {
         const fetcher = {
             callTool: jest.fn().mockImplementation((toolName: string) => {
-                if (toolName === 'KODUS_GET_PULL_REQUEST_DIFF') {
+                if (toolName === 'CODUS_GET_PULL_REQUEST_DIFF') {
                     return Promise.resolve({
                         result: {
                             result: {
@@ -1306,7 +1306,7 @@ describe('business-rules blueprint', () => {
             callAgent: jest.fn(),
             getRegisteredTools: jest
                 .fn()
-                .mockReturnValue([{ name: 'KODUS_GET_PULL_REQUEST_DIFF' }]),
+                .mockReturnValue([{ name: 'CODUS_GET_PULL_REQUEST_DIFF' }]),
         } as any;
 
         const steps = createBusinessRulesBlueprint(
@@ -1326,7 +1326,7 @@ describe('business-rules blueprint', () => {
                     repository: { id: 'repo-1', name: 'my-repo' },
                     pullRequest: { pullRequestNumber: 32 },
                     taskContext:
-                        'Kody rules por time. Billing must respect the selected workspace team, the lookup must not leak billing state from a different workspace, and acceptance must verify the rule creation flow when multiple teams exist in the same organization.',
+                        'Cody rules por time. Billing must respect the selected workspace team, the lookup must not leak billing state from a different workspace, and acceptance must verify the rule creation flow when multiple teams exist in the same organization.',
                 },
             } as BusinessRulesContext,
             steps,

@@ -154,12 +154,12 @@ export class CliReviewController {
         type: CliValidateKeyResponseDto,
     })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -167,8 +167,8 @@ export class CliReviewController {
         @Headers('x-team-key') teamKey: string,
         @Headers('authorization') authHeader: string,
         @Query('teamId') queryTeamId: string,
-        @Headers('x-kodus-device-id') deviceId: string,
-        @Headers('x-kodus-device-token') deviceToken: string,
+        @Headers('x-codus-device-id') deviceId: string,
+        @Headers('x-codus-device-token') deviceToken: string,
         @Headers('user-agent') userAgent: string,
         @Res() res,
     ) {
@@ -181,7 +181,7 @@ export class CliReviewController {
             userAgent,
         });
         if (payload.deviceToken) {
-            res.setHeader('x-kodus-device-token', payload.deviceToken);
+            res.setHeader('x-codus-device-token', payload.deviceToken);
         }
         return res.status(payload.valid ? 200 : 401).json(payload);
     }
@@ -206,12 +206,12 @@ export class CliReviewController {
         type: CliValidateKeyResponseDto,
     })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -219,8 +219,8 @@ export class CliReviewController {
         @Headers('x-team-key') teamKey: string,
         @Headers('authorization') authHeader: string,
         @Query('teamId') queryTeamId: string,
-        @Headers('x-kodus-device-id') deviceId: string,
-        @Headers('x-kodus-device-token') deviceToken: string,
+        @Headers('x-codus-device-id') deviceId: string,
+        @Headers('x-codus-device-token') deviceToken: string,
         @Headers('user-agent') userAgent: string,
         @Res() res,
     ) {
@@ -233,7 +233,7 @@ export class CliReviewController {
             userAgent,
         });
         if (payload.deviceToken) {
-            res.setHeader('x-kodus-device-token', payload.deviceToken);
+            res.setHeader('x-codus-device-token', payload.deviceToken);
         }
         return res.status(payload.valid ? 200 : 401).json(payload);
     }
@@ -316,13 +316,13 @@ export class CliReviewController {
 
     /**
      * Polls a CLI review job's status. Used by the CLI when it opted into
-     * the async path via `x-kodus-async: 1`.
+     * the async path via `x-codus-async: 1`.
      */
     @Get('review/jobs/:jobId')
     @ApiOperation({
         summary: 'Get CLI review job status',
         description:
-            'Returns status, result (when COMPLETED) and error (when FAILED) for a CLI review job enqueued via POST /cli/review with `x-kodus-async: 1`.',
+            'Returns status, result (when COMPLETED) and error (when FAILED) for a CLI review job enqueued via POST /cli/review with `x-codus-async: 1`.',
     })
     @ApiHeader({
         name: 'x-team-key',
@@ -365,7 +365,7 @@ export class CliReviewController {
     }> {
         const bearerToken = authHeader?.replace(/^Bearer\s+/i, '');
 
-        if (teamKey || bearerToken?.startsWith('kodus_')) {
+        if (teamKey || bearerToken?.startsWith('codus_')) {
             const key = teamKey || bearerToken;
             if (!key) {
                 throw new UnauthorizedException(
@@ -442,12 +442,12 @@ export class CliReviewController {
         description: 'Device limit reached',
     })
     @ApiHeader({
-        name: 'x-kodus-device-id',
+        name: 'x-codus-device-id',
         required: false,
         description: 'Unique device identifier for device tracking',
     })
     @ApiHeader({
-        name: 'x-kodus-device-token',
+        name: 'x-codus-device-token',
         required: false,
         description: 'Device token returned on first registration',
     })
@@ -456,10 +456,10 @@ export class CliReviewController {
         @Headers('x-team-key') teamKey?: string,
         @Headers('authorization') authHeader?: string,
         @Query('teamId') queryTeamId?: string,
-        @Headers('x-kodus-device-id') deviceId?: string,
-        @Headers('x-kodus-device-token') deviceToken?: string,
+        @Headers('x-codus-device-id') deviceId?: string,
+        @Headers('x-codus-device-token') deviceToken?: string,
         @Headers('user-agent') userAgent?: string,
-        @Headers('x-kodus-async') asyncHeader?: string,
+        @Headers('x-codus-async') asyncHeader?: string,
         @Res({ passthrough: true }) res?: any,
     ) {
         const bearerToken = authHeader?.replace(/^Bearer\s+/i, '');
@@ -480,8 +480,8 @@ export class CliReviewController {
             userEmail?: string;
         };
 
-        // Route 1: Team CLI key (via X-Team-Key header or Bearer with kodus_ prefix)
-        if (teamKey || bearerToken?.startsWith('kodus_')) {
+        // Route 1: Team CLI key (via X-Team-Key header or Bearer with codus_ prefix)
+        if (teamKey || bearerToken?.startsWith('codus_')) {
             const key = teamKey || bearerToken;
 
             if (!key) {
@@ -621,7 +621,7 @@ export class CliReviewController {
                 },
             );
             if (deviceResult?.deviceToken && res) {
-                res.setHeader('x-kodus-device-token', deviceResult.deviceToken);
+                res.setHeader('x-codus-device-token', deviceResult.deviceToken);
             }
         }
 
@@ -807,7 +807,7 @@ export class CliReviewController {
     @ApiHeader({
         name: 'authorization',
         required: false,
-        description: 'Bearer token (JWT or kodus_* team key)',
+        description: 'Bearer token (JWT or codus_* team key)',
     })
     @ApiHeader({
         name: 'x-team-key',
@@ -1147,7 +1147,7 @@ export class CliReviewController {
 
     /**
      * Featured public reviews — pre-curated snapshots of real PRs the
-     * Kodus team picked because they expose interesting bugs. Used by
+     * Codus team picked because they expose interesting bugs. Used by
      * the home grid on try.kodus.io and embedded on the kodus.io
      * WordPress site so visitors can explore a real review without
      * waiting for one to run.

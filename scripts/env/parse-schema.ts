@@ -2,11 +2,11 @@
  * Parses a varlock-style .env.schema and returns annotated items.
  *
  * Recognises both standard varlock decorators (@required, @optional,
- * @sensitive, @type) and Kodus-specific metadata in plain comments:
+ * @sensitive, @type) and Codus-specific metadata in plain comments:
  *
- *   # kodus: audience=cloud,self-hosted,both
- *   # kodus: installer-default="value"
- *   # kodus: category=name      (used in section headers)
+ *   # codus: audience=cloud,self-hosted,both
+ *   # codus: installer-default="value"
+ *   # codus: category=name      (used in section headers)
  */
 
 import { readFileSync } from 'node:fs';
@@ -25,7 +25,7 @@ export type SchemaItem = {
     installerDefault?: string;
     installerComment: boolean;
     // Method the installer's generate-secrets.sh should use to produce a
-    // value for this key. Set via `kodus: autogen=hex32|base64-32|base64url-32|
+    // value for this key. Set via `codus: autogen=hex32|base64-32|base64url-32|
     // mirror:OTHER_VAR`. Read by generate.ts → schema-vars.sh →
     // generate-secrets.sh. Only set on keys the installer can produce
     // unattended (NOT DB passwords / API keys, which the operator owns).
@@ -40,7 +40,7 @@ export type SchemaSection = {
 };
 
 const SECTION_RE = /^#\s*=+\s*$/;
-const KODUS_META_RE = /^\s*kodus:\s*(.*)$/;
+const CODUS_META_RE = /^\s*codus:\s*(.*)$/;
 
 export function parseSchema(path: string): SchemaSection[] {
     const text = readFileSync(path, 'utf-8');
@@ -50,22 +50,22 @@ export function parseSchema(path: string): SchemaSection[] {
     let currentSection: SchemaSection | null = null;
     let pendingDescription: string[] = [];
     let pendingDecorators = '';
-    let pendingKodus: Record<string, string> = {};
+    let pendingCodus: Record<string, string> = {};
     let i = 0;
 
     while (i < lines.length) {
         const line = lines[i];
 
-        // Section header: "# === ..." \n "# Title" \n [optional "# kodus: category=..."] \n "# === ..."
+        // Section header: "# === ..." \n "# Title" \n [optional "# codus: category=..."] \n "# === ..."
         if (SECTION_RE.test(line)) {
             const titleLine = lines[i + 1] ?? '';
             let metaIdx = i + 2;
             let metaLine = lines[metaIdx] ?? '';
             let endIdx = metaIdx;
-            // Look for an optional "# kodus: category=..." line.
+            // Look for an optional "# codus: category=..." line.
             const stripped = stripCommentPrefix(metaLine);
-            const kodusMatch = stripped.match(KODUS_META_RE);
-            if (kodusMatch) {
+            const codusMatch = stripped.match(CODUS_META_RE);
+            if (codusMatch) {
                 endIdx = metaIdx + 1;
             } else {
                 endIdx = metaIdx;
@@ -74,8 +74,8 @@ export function parseSchema(path: string): SchemaSection[] {
             if (SECTION_RE.test(closer)) {
                 const title = stripCommentPrefix(titleLine).trim();
                 let category = slug(title);
-                if (kodusMatch) {
-                    const meta = parseKodusMeta(kodusMatch[1]);
+                if (codusMatch) {
+                    const meta = parseCodusMeta(codusMatch[1]);
                     if (meta.category) category = meta.category;
                 }
                 currentSection = { title, category, items: [] };
@@ -95,9 +95,9 @@ export function parseSchema(path: string): SchemaSection[] {
 
         if (line.startsWith('#')) {
             const stripped = stripCommentPrefix(line);
-            const kodusMatch = stripped.match(KODUS_META_RE);
-            if (kodusMatch) {
-                Object.assign(pendingKodus, parseKodusMeta(kodusMatch[1]));
+            const codusMatch = stripped.match(CODUS_META_RE);
+            if (codusMatch) {
+                Object.assign(pendingCodus, parseCodusMeta(codusMatch[1]));
             } else if (stripped.includes('@')) {
                 pendingDecorators += ' ' + stripped;
             } else {
@@ -118,13 +118,13 @@ export function parseSchema(path: string): SchemaSection[] {
                 required: /@required\b/.test(pendingDecorators),
                 sensitive: /@sensitive\b/.test(pendingDecorators),
                 type: matchDecorator(pendingDecorators, 'type'),
-                audience: parseAudience(pendingKodus.audience),
+                audience: parseAudience(pendingCodus.audience),
                 category: currentSection.category,
-                installerDefault: pendingKodus['installer-default'],
+                installerDefault: pendingCodus['installer-default'],
                 installerComment:
-                    (pendingKodus['installer-comment'] ?? '').toLowerCase() ===
+                    (pendingCodus['installer-comment'] ?? '').toLowerCase() ===
                     'true',
-                autogen: pendingKodus.autogen,
+                autogen: pendingCodus.autogen,
                 section: currentSection.title,
             };
             currentSection.items.push(item);
@@ -139,7 +139,7 @@ export function parseSchema(path: string): SchemaSection[] {
     function resetBuffers() {
         pendingDescription = [];
         pendingDecorators = '';
-        pendingKodus = {};
+        pendingCodus = {};
     }
 }
 
@@ -154,7 +154,7 @@ function matchDecorator(text: string, name: string): string | undefined {
     return stripQuotes(m[1]);
 }
 
-function parseKodusMeta(blob: string): Record<string, string> {
+function parseCodusMeta(blob: string): Record<string, string> {
     // Parse `key=value key="quoted value" key=val` into a record.
     const out: Record<string, string> = {};
     const re = /(\S+?)=("[^"]*"|\S+)/g;

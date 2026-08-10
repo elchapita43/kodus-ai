@@ -88,7 +88,7 @@ export class TypeORMFactory implements TypeOrmOptionsFactory {
                 // Tags every connection this pool opens in `pg_stat_activity`
                 // so incident triage can bucket by process type ("who is
                 // holding those 20 slots?") without guessing.
-                application_name: `kodus-${componentType}-pool`,
+                application_name: `codus-${componentType}-pool`,
                 ...(!urlControlsSsl && useSSL
                     ? {
                           ssl: {

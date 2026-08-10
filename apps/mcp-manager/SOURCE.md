@@ -1,34 +1,34 @@
 # Source provenance
 
-This app was originally a separate repo: `github.com/kodustech/kodus-mcp-manager`.
+This app was originally a separate repo: `github.com/elchapita43/codus-mcp-manager`.
 
-Imported into kodus-ai as a monorepo merge:
+Imported into codus-ai as a monorepo merge:
 
-- **Imported from commit**: `fb4c5d9` of `kodustech/kodus-mcp-manager`
+- **Imported from commit**: `fb4c5d9` of `elchapita43/codus-mcp-manager`
 - **Imported on**: 2026-05-04
-- **Image name preserved**: `ghcr.io/kodustech/kodus-mcp-manager:<tag>`
-  — no change required in `kodus-installer/docker-compose.yml`.
+- **Image name preserved**: `ghcr.io/elchapita43/codus-mcp-manager:<tag>`
+  — no change required in `codus-installer/docker-compose.yml`.
 
 ## Modifications applied during the import
 
 1. **Imports rewritten** — code in the original repo used absolute
    imports rooted at the package's `baseUrl` (`from 'src/...'`). The
-   monorepo's webpack config uses the kodus-ai root tsconfig and does
+   monorepo's webpack config uses the codus-ai root tsconfig and does
    not honor a per-app `baseUrl`. All `from 'src/...'` imports were
    rewritten to relative paths (`from '../../...'`).
 
 2. **`tsconfig.json` rewired** — extends `../../tsconfig.json`
-   (kodus-ai root). Output goes to `dist/apps/mcp-manager/`. `@libs/*`
-   path mapping added so this app can import from `kodus-ai/libs/`
+   (codus-ai root). Output goes to `dist/apps/mcp-manager/`. `@libs/*`
+   path mapping added so this app can import from `codus-ai/libs/`
    (currently unused, available for future shared code).
 
 3. **`package.json` slimmed** — deps moved to the root `package.json`
-   (kodus-ai monorepo pattern). The local `package.json` only carries
+   (codus-ai monorepo pattern). The local `package.json` only carries
    the app `name`, `scripts`, and stub `dependencies: {}`.
 
 4. **Config path resolution** — `IntegrationDescriptionService` and
-   `KodusMcpProvider` originally used `process.cwd() + 'src/config/...'`.
-   In the monorepo, `cwd` is the kodus-ai root (`/usr/src/app`), not
+   `CodusMcpProvider` originally used `process.cwd() + 'src/config/...'`.
+   In the monorepo, `cwd` is the codus-ai root (`/usr/src/app`), not
    `apps/mcp-manager/`. Both were changed to use `__dirname`-relative
    paths.
 
@@ -44,19 +44,19 @@ scripts for local migration management.
 ## What was NOT brought over
 
 - The original repo's `docker-compose.yml` / `docker-compose.prod.yml`
-  — the kodus-ai root `docker-compose.dev.yml` already wires this app
-  up, and prod is composed by `kodus-installer`.
-- `ecosystem.config.js` (PM2) — kodus-ai uses Docker, not PM2.
-- The original `.github/workflows/` — replaced by kodus-ai's unified
+  — the codus-ai root `docker-compose.dev.yml` already wires this app
+  up, and prod is composed by `codus-installer`.
+- `ecosystem.config.js` (PM2) — codus-ai uses Docker, not PM2.
+- The original `.github/workflows/` — replaced by codus-ai's unified
   `selfhosted-build-push.yml` which now builds and publishes the
-  `kodus-mcp-manager` image alongside the others.
+  `codus-mcp-manager` image alongside the others.
 - `postman/`, `self-hosted/` directories — operationally equivalent
-  output now lives in kodus-installer / docs site.
+  output now lives in codus-installer / docs site.
 
 ## Updating from upstream
 
 The original repo is now archived. There is no upstream to track. To
-make changes, edit `apps/mcp-manager/` directly in kodus-ai.
+make changes, edit `apps/mcp-manager/` directly in codus-ai.
 
 If for some reason you need to import another future change from a
 fork:

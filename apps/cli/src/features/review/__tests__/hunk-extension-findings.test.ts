@@ -8,12 +8,12 @@ import {
     orderFindings,
     parseFindings,
     shortenPath,
-    type KodusFinding,
-} from '../../../../hunk-extension/kodus/findings.js';
+    type CodusFinding,
+} from '../../../../hunk-extension/codus/findings.js';
 
-function finding(overrides: Partial<KodusFinding> = {}): KodusFinding {
+function finding(overrides: Partial<CodusFinding> = {}): CodusFinding {
     return {
-        id: 'kodus-0',
+        id: 'codus-0',
         file: 'src/a.ts',
         line: 10,
         endLine: 10,
@@ -120,7 +120,7 @@ describe('findHunkIndex', () => {
     });
 
     it('falls back to the nearest hunk when the line is outside every span', () => {
-        // Kodus reviews whole files; hunk only renders changed spans.
+        // Codus reviews whole files; hunk only renders changed spans.
         expect(findHunkIndex(file, { line: 12 })).toBe(0);
         expect(findHunkIndex(file, { line: 38 })).toBe(1);
         expect(findHunkIndex(file, { line: 900 })).toBe(1);

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-# Development stage for kodus-try (try.kodus.io demo, Next.js).
+# Development stage for codus-try (try.kodus.io demo, Next.js).
 #
 # Application code is provided at runtime via the bind mount declared in
 # docker-compose.dev.yml (./apps/try:/usr/src/app) and node_modules is

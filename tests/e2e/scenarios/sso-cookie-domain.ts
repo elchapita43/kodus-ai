@@ -6,7 +6,7 @@ import type { RunContext, Scenario } from "../lib/types.js";
 // SSO cookie-domain regression as a release-matrix scenario.
 //
 // Unlike every other scenario in this matrix, SSO does NOT use
-// `ctx.kodus` / `ctx.provider`: it has its own droplet topology
+// `ctx.codus` / `ctx.provider`: it has its own droplet topology
 // (Caddy + Keycloak + sslip.io) that the regular self-hosted
 // installer doesn't ship. We provision that topology on a dedicated
 // droplet named "sso-e2e" via the existing standalone scripts —
@@ -89,7 +89,7 @@ export const ssoCookieDomain: Scenario = {
         );
 
         // --reuse: idempotent — if a droplet already exists under the
-        // "sso-e2e" name (.kodus-dev/selfhosted-vm-sso-e2e.json), the
+        // "sso-e2e" name (.codus-dev/selfhosted-vm-sso-e2e.json), the
         // script just runs the Playwright spec against it. The first
         // cell in a fresh run pays the ~7-min provision tax; any
         // re-run in the same machine completes in ~30s.

@@ -13,9 +13,9 @@ import { DeleteRepositoryCodeReviewParameterUseCase } from '@libs/code-review/ap
 import { UpdateOrCreateCodeReviewParameterUseCase } from '@libs/code-review/application/use-cases/configuration/update-or-create-code-review-parameter-use-case';
 import { CreateOrUpdatePullRequestMessagesUseCase } from '@libs/code-review/application/use-cases/pullRequestMessages/create-or-update-pull-request-messages.use-case';
 import { PULL_REQUEST_MESSAGES_SERVICE_TOKEN } from '@libs/code-review/domain/pullRequestMessages/contracts/pullRequestMessages.service.contract';
-import { CreateOrUpdateKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/create-or-update.use-case';
-import { DeleteRuleInOrganizationByIdKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/delete-rule-in-organization-by-id.use-case';
-import { KODY_RULES_SERVICE_TOKEN } from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
+import { CreateOrUpdateCodyRulesUseCase } from '@libs/codyRules/application/use-cases/create-or-update.use-case';
+import { DeleteRuleInOrganizationByIdCodyRulesUseCase } from '@libs/codyRules/application/use-cases/delete-rule-in-organization-by-id.use-case';
+import { CODY_RULES_SERVICE_TOKEN } from '@libs/codyRules/domain/contracts/codyRules.service.contract';
 import * as yaml from 'js-yaml';
 import { CentralizedConfigService } from '../centralized-config.service';
 
@@ -30,9 +30,9 @@ describe('CentralizedConfigService', () => {
     let mockCreateOrUpdatePullRequestMessagesUseCase: any;
     let mockPullRequestMessagesService: any;
     let mockCodeBaseConfigService: any;
-    let mockCreateOrUpdateKodyRulesUseCase: any;
-    let mockDeleteRuleInOrganizationByIdKodyRulesUseCase: any;
-    let mockKodyRulesService: any;
+    let mockCreateOrUpdateCodyRulesUseCase: any;
+    let mockDeleteRuleInOrganizationByIdCodyRulesUseCase: any;
+    let mockCodyRulesService: any;
 
     const organizationAndTeamData: OrganizationAndTeamData = {
         organizationId: 'org-1',
@@ -42,8 +42,8 @@ describe('CentralizedConfigService', () => {
     const actor = {
         organizationId: 'org-1',
         source: 'sync' as const,
-        userEmail: 'kody@kodus.io',
-        userId: 'kody',
+        userEmail: 'cody@kodus.io',
+        userId: 'cody',
     };
 
     beforeEach(async () => {
@@ -85,19 +85,19 @@ describe('CentralizedConfigService', () => {
         };
 
         mockCodeBaseConfigService = {
-            getKodusConfigFile: jest.fn(),
+            getCodusConfigFile: jest.fn(),
             getDirectoryIdForPath: jest.fn(),
         };
 
-        mockCreateOrUpdateKodyRulesUseCase = {
+        mockCreateOrUpdateCodyRulesUseCase = {
             execute: jest.fn(),
         };
 
-        mockDeleteRuleInOrganizationByIdKodyRulesUseCase = {
+        mockDeleteRuleInOrganizationByIdCodyRulesUseCase = {
             execute: jest.fn(),
         };
 
-        mockKodyRulesService = {
+        mockCodyRulesService = {
             find: jest.fn(),
             findByOrganizationId: jest.fn(),
             updateRulesStatusByFilter: jest.fn(),
@@ -143,16 +143,16 @@ describe('CentralizedConfigService', () => {
                     useValue: mockCodeBaseConfigService,
                 },
                 {
-                    provide: CreateOrUpdateKodyRulesUseCase,
-                    useValue: mockCreateOrUpdateKodyRulesUseCase,
+                    provide: CreateOrUpdateCodyRulesUseCase,
+                    useValue: mockCreateOrUpdateCodyRulesUseCase,
                 },
                 {
-                    provide: DeleteRuleInOrganizationByIdKodyRulesUseCase,
-                    useValue: mockDeleteRuleInOrganizationByIdKodyRulesUseCase,
+                    provide: DeleteRuleInOrganizationByIdCodyRulesUseCase,
+                    useValue: mockDeleteRuleInOrganizationByIdCodyRulesUseCase,
                 },
                 {
-                    provide: KODY_RULES_SERVICE_TOKEN,
-                    useValue: mockKodyRulesService,
+                    provide: CODY_RULES_SERVICE_TOKEN,
+                    useValue: mockCodyRulesService,
                 },
             ],
         }).compile();
@@ -210,7 +210,7 @@ describe('CentralizedConfigService', () => {
             mockPullRequestMessagesService.findOne.mockResolvedValue(null);
 
             // Mock config file fetch
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 configFileWithCustomMessages,
             );
 
@@ -254,8 +254,8 @@ describe('CentralizedConfigService', () => {
                 mockCreateOrUpdatePullRequestMessagesUseCase.execute,
             ).toHaveBeenCalledWith(
                 {
-                    uuid: 'kody',
-                    email: 'kody@kodus.io',
+                    uuid: 'cody',
+                    email: 'cody@kodus.io',
                     organization: { uuid: 'org-1' },
                 },
                 {
@@ -321,7 +321,7 @@ describe('CentralizedConfigService', () => {
             };
 
             // Mock config file fetch
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 configFileWithCustomMessages,
             );
 
@@ -415,7 +415,7 @@ describe('CentralizedConfigService', () => {
             };
 
             // Mock config file fetch
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 configFileWithOnlyCustomMessages,
             );
 
@@ -506,7 +506,7 @@ describe('CentralizedConfigService', () => {
             };
 
             // Mock config file fetch
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 configFileWithoutCustomMessages,
             );
 
@@ -574,7 +574,7 @@ describe('CentralizedConfigService', () => {
             };
 
             // Mock config file fetch
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 configFileWithCustomMessages,
             );
 
@@ -630,11 +630,11 @@ describe('CentralizedConfigService', () => {
                 {
                     repositoryId: 'repo-1',
                     directoryPath: '/src',
-                    centralizedDirectoryPath: 'repo-1/src/.kody-rules/review',
+                    centralizedDirectoryPath: 'repo-1/src/.cody-rules/review',
                 },
             ];
 
-            mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue(
+            mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue(
                 null,
             );
 
@@ -764,9 +764,9 @@ describe('CentralizedConfigService', () => {
     // post-guard behavior and are the regression coverage for the fix.
     // ---------------------------------------------------------------------
     describe('#1518 empty-discovery wipe guard', () => {
-        it('discoverKodyRulesFiles THROWS (not []) when the repositories mapping cannot be loaded', async () => {
+        it('discoverCodyRulesFiles THROWS (not []) when the repositories mapping cannot be loaded', async () => {
             mockCodeManagementService.getRepositoryTree.mockResolvedValue([
-                { type: 'file', path: 'my-repo/.kody-rules/review/a.yml' },
+                { type: 'file', path: 'my-repo/.cody-rules/review/a.yml' },
             ]);
             // Transient integration-config read failure → null (a FAILURE, not
             // "zero files"). Must surface so the sync aborts before deletion.
@@ -775,7 +775,7 @@ describe('CentralizedConfigService', () => {
             );
 
             await expect(
-                service.discoverKodyRulesFiles({
+                service.discoverCodyRulesFiles({
                     organizationAndTeamData,
                     repository: { name: 'config-repo', id: 'repo-1' },
                 }),
@@ -783,10 +783,10 @@ describe('CentralizedConfigService', () => {
         });
 
         it('discoverConfigFiles THROWS (not []) when the repositories mapping cannot be loaded', async () => {
-            // Twin of discoverKodyRulesFiles — both go through scanRepositoryTree,
+            // Twin of discoverCodyRulesFiles — both go through scanRepositoryTree,
             // and both feed removeStale*, so both must fail loudly on a read error.
             mockCodeManagementService.getRepositoryTree.mockResolvedValue([
-                { type: 'file', path: 'my-repo/kodus-config.yml' },
+                { type: 'file', path: 'my-repo/codus-config.yml' },
             ]);
             mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
                 null,
@@ -800,31 +800,31 @@ describe('CentralizedConfigService', () => {
             ).rejects.toThrow();
         });
 
-        it('removeStaleKodyRules does NOT delete centralized rules when discovery is empty', async () => {
+        it('removeStaleCodyRules does NOT delete centralized rules when discovery is empty', async () => {
             const ruleFiles: any[] = []; // empty discovery
 
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 toJson: () => ({
                     rules: [
                         {
                             uuid: 'r1',
                             title: 'A',
                             centralizedConfig: {
-                                path: '.kody-rules/review/a.yml',
+                                path: '.cody-rules/review/a.yml',
                             },
                         },
                         {
                             uuid: 'r2',
                             title: 'B',
                             centralizedConfig: {
-                                path: '.kody-rules/review/b.yml',
+                                path: '.cody-rules/review/b.yml',
                             },
                         },
                     ],
                 }),
             });
 
-            const result = await service.removeStaleKodyRules({
+            const result = await service.removeStaleCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
@@ -833,7 +833,7 @@ describe('CentralizedConfigService', () => {
             expect(result.success).toBe(true);
             expect(result.removedRuleCount).toBe(0);
             expect(
-                mockDeleteRuleInOrganizationByIdKodyRulesUseCase.execute,
+                mockDeleteRuleInOrganizationByIdCodyRulesUseCase.execute,
             ).not.toHaveBeenCalled();
         });
 
@@ -918,7 +918,7 @@ describe('CentralizedConfigService', () => {
                 mockParametersService.findByKey.mockResolvedValue({
                     configValue: {
                         enabled: true,
-                        repository: { id: 'r1', name: 'kodus' },
+                        repository: { id: 'r1', name: 'codus' },
                     },
                 });
                 const r = await service.validateCentralizedConfig({
@@ -931,13 +931,13 @@ describe('CentralizedConfigService', () => {
         describe('getCentralizedConfigRepository', () => {
             it('returns the configured repository', async () => {
                 mockParametersService.findByKey.mockResolvedValue({
-                    configValue: { repository: { id: 'r1', name: 'kodus' } },
+                    configValue: { repository: { id: 'r1', name: 'codus' } },
                 });
                 const repo =
                     await service.getCentralizedConfigRepository(
                         organizationAndTeamData,
                     );
-                expect(repo).toEqual({ id: 'r1', name: 'kodus' });
+                expect(repo).toEqual({ id: 'r1', name: 'codus' });
             });
 
             it('throws when no repository is configured', async () => {
@@ -956,7 +956,7 @@ describe('CentralizedConfigService', () => {
 
         describe('fetchConfigFile', () => {
             it('returns the config file on success', async () => {
-                mockCodeBaseConfigService.getKodusConfigFile.mockResolvedValue({
+                mockCodeBaseConfigService.getCodusConfigFile.mockResolvedValue({
                     version: 2,
                 });
                 const file = await service.fetchConfigFile({
@@ -967,7 +967,7 @@ describe('CentralizedConfigService', () => {
             });
 
             it('returns null (does not throw) when the read fails', async () => {
-                mockCodeBaseConfigService.getKodusConfigFile.mockRejectedValue(
+                mockCodeBaseConfigService.getCodusConfigFile.mockRejectedValue(
                     new Error('boom'),
                 );
                 const file = await service.fetchConfigFile({
@@ -978,7 +978,7 @@ describe('CentralizedConfigService', () => {
             });
         });
 
-        describe('fetchKodyRuleFile', () => {
+        describe('fetchCodyRuleFile', () => {
             it('returns null when the file has no content', async () => {
                 mockCodeManagementService.getDefaultBranch.mockResolvedValue(
                     'main',
@@ -986,10 +986,10 @@ describe('CentralizedConfigService', () => {
                 mockCodeManagementService.getRepositoryContentFile.mockResolvedValue(
                     { data: {} },
                 );
-                const rule = await service.fetchKodyRuleFile({
+                const rule = await service.fetchCodyRuleFile({
                     organizationAndTeamData,
                     repository: { name: 'r', id: 'r1' },
-                    filePath: '.kody-rules/review/a.yml',
+                    filePath: '.cody-rules/review/a.yml',
                 });
                 expect(rule).toBeNull();
             });
@@ -1010,37 +1010,37 @@ describe('CentralizedConfigService', () => {
                         },
                     },
                 );
-                const rule = await service.fetchKodyRuleFile({
+                const rule = await service.fetchCodyRuleFile({
                     organizationAndTeamData,
                     repository: { name: 'r', id: 'r1' },
-                    filePath: '.kody-rules/review/a.yml',
+                    filePath: '.cody-rules/review/a.yml',
                 });
                 expect(rule).toMatchObject({ title: 'My rule' });
             });
         });
     });
 
-    describe('discoverKodyRulesFiles', () => {
-        it('should discover Kody rule files from centralized repository', async () => {
+    describe('discoverCodyRulesFiles', () => {
+        it('should discover Cody rule files from centralized repository', async () => {
             const mockRepoTree = [
                 {
-                    path: 'kodus-config.yml',
+                    path: 'codus-config.yml',
                     type: 'file' as const,
                 },
                 {
-                    path: '.kody-rules/memories/logging.yml',
+                    path: '.cody-rules/memories/logging.yml',
                     type: 'file' as const,
                 },
                 {
-                    path: '.kody-rules/review/security.yml',
+                    path: '.cody-rules/review/security.yml',
                     type: 'file' as const,
                 },
                 {
-                    path: 'org-a/.kody-rules/memories/auth.yml',
+                    path: 'org-a/.cody-rules/memories/auth.yml',
                     type: 'file' as const,
                 },
                 {
-                    path: 'org-a/services%2Fapi/.kody-rules/review/api.yml',
+                    path: 'org-a/services%2Fapi/.cody-rules/review/api.yml',
                     type: 'file' as const,
                 },
             ];
@@ -1053,7 +1053,7 @@ describe('CentralizedConfigService', () => {
                 [{ id: 'org-a-id', name: 'org-a', full_name: 'org-a' }],
             );
 
-            const result = await service.discoverKodyRulesFiles({
+            const result = await service.discoverCodyRulesFiles({
                 organizationAndTeamData,
                 repository: { name: 'central-repo', id: 'central-repo-id' },
             });
@@ -1062,51 +1062,51 @@ describe('CentralizedConfigService', () => {
             expect(result).toEqual(
                 expect.arrayContaining([
                     {
-                        centralizedDirectoryPath: '.kody-rules/memories',
+                        centralizedDirectoryPath: '.cody-rules/memories',
                         repositoryId: undefined,
                         directoryPath: undefined,
                         directoryPaths: undefined,
                         ruleType: 'memory' as any,
-                        ruleFilePath: '.kody-rules/memories/logging.yml',
-                        path: '.kody-rules/memories/logging.yml',
+                        ruleFilePath: '.cody-rules/memories/logging.yml',
+                        path: '.cody-rules/memories/logging.yml',
                     },
                     {
-                        centralizedDirectoryPath: '.kody-rules/review',
+                        centralizedDirectoryPath: '.cody-rules/review',
                         repositoryId: undefined,
                         directoryPath: undefined,
                         directoryPaths: undefined,
                         ruleType: 'standard' as any,
-                        ruleFilePath: '.kody-rules/review/security.yml',
-                        path: '.kody-rules/review/security.yml',
+                        ruleFilePath: '.cody-rules/review/security.yml',
+                        path: '.cody-rules/review/security.yml',
                     },
                     {
-                        centralizedDirectoryPath: 'org-a/.kody-rules/memories',
+                        centralizedDirectoryPath: 'org-a/.cody-rules/memories',
                         repositoryId: 'org-a-id',
                         directoryPath: undefined,
                         directoryPaths: undefined,
                         ruleType: 'memory' as any,
-                        ruleFilePath: 'org-a/.kody-rules/memories/auth.yml',
-                        path: 'org-a/.kody-rules/memories/auth.yml',
+                        ruleFilePath: 'org-a/.cody-rules/memories/auth.yml',
+                        path: 'org-a/.cody-rules/memories/auth.yml',
                     },
                     {
                         centralizedDirectoryPath:
-                            'org-a/services%2Fapi/.kody-rules/review',
+                            'org-a/services%2Fapi/.cody-rules/review',
                         repositoryId: 'org-a-id',
                         directoryPath: '/services/api',
                         directoryPaths: ['/services/api'],
                         ruleType: 'standard' as any,
                         ruleFilePath:
-                            'org-a/services%2Fapi/.kody-rules/review/api.yml',
-                        path: 'org-a/services%2Fapi/.kody-rules/review/api.yml',
+                            'org-a/services%2Fapi/.cody-rules/review/api.yml',
+                        path: 'org-a/services%2Fapi/.cody-rules/review/api.yml',
                     },
                 ]),
             );
         });
 
-        it('should exclude files not in .kody-rules directories', async () => {
+        it('should exclude files not in .cody-rules directories', async () => {
             const mockRepoTree = [
                 {
-                    path: 'kodus-config.yml',
+                    path: 'codus-config.yml',
                     type: 'file' as const,
                 },
                 {
@@ -1114,7 +1114,7 @@ describe('CentralizedConfigService', () => {
                     type: 'file' as const,
                 },
                 {
-                    path: '.kody-rules/memories/logging.yml',
+                    path: '.cody-rules/memories/logging.yml',
                     type: 'file' as const,
                 },
             ];
@@ -1127,28 +1127,28 @@ describe('CentralizedConfigService', () => {
                 [],
             );
 
-            const result = await service.discoverKodyRulesFiles({
+            const result = await service.discoverCodyRulesFiles({
                 organizationAndTeamData,
                 repository: { name: 'central-repo', id: 'central-repo-id' },
             });
 
             expect(result).toHaveLength(1);
             expect(result[0].ruleFilePath).toBe(
-                '.kody-rules/memories/logging.yml',
+                '.cody-rules/memories/logging.yml',
             );
         });
     });
 
-    describe('synchronizeKodyRules', () => {
-        it('should synchronize Kody rules successfully', async () => {
+    describe('synchronizeCodyRules', () => {
+        it('should synchronize Cody rules successfully', async () => {
             const ruleFiles: any[] = [
                 {
-                    centralizedDirectoryPath: '.kody-rules/memories',
+                    centralizedDirectoryPath: '.cody-rules/memories',
                     repositoryId: undefined,
                     directoryPath: undefined,
                     ruleType: 'memory' as any,
-                    ruleFilePath: '.kody-rules/memories/logging.yml',
-                    path: '.kody-rules/memories/logging.yml',
+                    ruleFilePath: '.cody-rules/memories/logging.yml',
+                    path: '.cody-rules/memories/logging.yml',
                 },
             ];
 
@@ -1185,14 +1185,14 @@ describe('CentralizedConfigService', () => {
             mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
                 [],
             );
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 rules: [],
             });
-            mockCreateOrUpdateKodyRulesUseCase.execute.mockResolvedValue({
+            mockCreateOrUpdateCodyRulesUseCase.execute.mockResolvedValue({
                 uuid: 'rule-uuid',
             });
 
-            const result = await service.synchronizeKodyRules({
+            const result = await service.synchronizeCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
@@ -1200,11 +1200,11 @@ describe('CentralizedConfigService', () => {
 
             expect(result.success).toBe(true);
             expect(result.message).toContain(
-                'Kody rules synchronized successfully',
+                'Cody rules synchronized successfully',
             );
             expect(result.syncedRuleCount).toBe(1);
             expect(
-                mockCreateOrUpdateKodyRulesUseCase.execute,
+                mockCreateOrUpdateCodyRulesUseCase.execute,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     title: 'Logging Rule',
@@ -1213,7 +1213,7 @@ describe('CentralizedConfigService', () => {
                     status: 'active',
                     repositoryId: 'global',
                     centralizedConfig: {
-                        path: '.kody-rules/memories/logging.yml',
+                        path: '.cody-rules/memories/logging.yml',
                         status: 'synced',
                     },
                 }),
@@ -1226,12 +1226,12 @@ describe('CentralizedConfigService', () => {
         it('should update existing pending rule when sourcePath matches', async () => {
             const ruleFiles: any[] = [
                 {
-                    centralizedDirectoryPath: '.kody-rules/review',
+                    centralizedDirectoryPath: '.cody-rules/review',
                     repositoryId: undefined,
                     directoryPath: undefined,
                     ruleType: 'standard' as any,
-                    ruleFilePath: '.kody-rules/review/security.yml',
-                    path: '.kody-rules/review/security.yml',
+                    ruleFilePath: '.cody-rules/review/security.yml',
+                    path: '.cody-rules/review/security.yml',
                 },
             ];
 
@@ -1266,24 +1266,24 @@ describe('CentralizedConfigService', () => {
             mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
                 [],
             );
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 rules: [
                     {
                         uuid: 'pending-rule-uuid',
                         status: 'pending',
                         origin: 'past_reviews',
                         centralizedConfig: {
-                            path: '.kody-rules/review/security.yml',
+                            path: '.cody-rules/review/security.yml',
                             status: 'pending_edit',
                         },
                     },
                 ],
             });
-            mockCreateOrUpdateKodyRulesUseCase.execute.mockResolvedValue({
+            mockCreateOrUpdateCodyRulesUseCase.execute.mockResolvedValue({
                 uuid: 'pending-rule-uuid',
             });
 
-            const result = await service.synchronizeKodyRules({
+            const result = await service.synchronizeCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
@@ -1294,12 +1294,12 @@ describe('CentralizedConfigService', () => {
             // must not reclassify its origin — otherwise merging the
             // centralized-config PR silently approves every pending rule.
             expect(
-                mockCreateOrUpdateKodyRulesUseCase.execute,
+                mockCreateOrUpdateCodyRulesUseCase.execute,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     uuid: 'pending-rule-uuid',
                     centralizedConfig: {
-                        path: '.kody-rules/review/security.yml',
+                        path: '.cody-rules/review/security.yml',
                         status: 'synced',
                     },
                     status: 'pending',
@@ -1314,12 +1314,12 @@ describe('CentralizedConfigService', () => {
         it('should NOT resurrect a rejected rule when sourcePath matches', async () => {
             const ruleFiles: any[] = [
                 {
-                    centralizedDirectoryPath: '.kody-rules/review',
+                    centralizedDirectoryPath: '.cody-rules/review',
                     repositoryId: undefined,
                     directoryPath: undefined,
                     ruleType: 'standard' as any,
-                    ruleFilePath: '.kody-rules/review/rejected.yml',
-                    path: '.kody-rules/review/rejected.yml',
+                    ruleFilePath: '.cody-rules/review/rejected.yml',
+                    path: '.cody-rules/review/rejected.yml',
                 },
             ];
 
@@ -1354,30 +1354,30 @@ describe('CentralizedConfigService', () => {
             mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
                 [],
             );
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 rules: [
                     {
                         uuid: 'rejected-rule-uuid',
                         status: 'rejected',
                         centralizedConfig: {
-                            path: '.kody-rules/review/rejected.yml',
+                            path: '.cody-rules/review/rejected.yml',
                             status: 'synced',
                         },
                     },
                 ],
             });
-            mockCreateOrUpdateKodyRulesUseCase.execute.mockResolvedValue({
+            mockCreateOrUpdateCodyRulesUseCase.execute.mockResolvedValue({
                 uuid: 'rejected-rule-uuid',
             });
 
-            await service.synchronizeKodyRules({
+            await service.synchronizeCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
             });
 
             expect(
-                mockCreateOrUpdateKodyRulesUseCase.execute,
+                mockCreateOrUpdateCodyRulesUseCase.execute,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     uuid: 'rejected-rule-uuid',
@@ -1392,12 +1392,12 @@ describe('CentralizedConfigService', () => {
         it('should update existing active rule when sourcePath matches', async () => {
             const ruleFiles: any[] = [
                 {
-                    centralizedDirectoryPath: '.kody-rules/review',
+                    centralizedDirectoryPath: '.cody-rules/review',
                     repositoryId: undefined,
                     directoryPath: undefined,
                     ruleType: 'standard' as any,
-                    ruleFilePath: '.kody-rules/review/style.yml',
-                    path: '.kody-rules/review/style.yml',
+                    ruleFilePath: '.cody-rules/review/style.yml',
+                    path: '.cody-rules/review/style.yml',
                 },
             ];
 
@@ -1432,23 +1432,23 @@ describe('CentralizedConfigService', () => {
             mockIntegrationConfigService.findIntegrationConfigFormatted.mockResolvedValue(
                 [],
             );
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 rules: [
                     {
                         uuid: 'active-rule-uuid',
                         status: 'active',
                         centralizedConfig: {
-                            path: '.kody-rules/review/style.yml',
+                            path: '.cody-rules/review/style.yml',
                             status: 'synced',
                         },
                     },
                 ],
             });
-            mockCreateOrUpdateKodyRulesUseCase.execute.mockResolvedValue({
+            mockCreateOrUpdateCodyRulesUseCase.execute.mockResolvedValue({
                 uuid: 'active-rule-uuid',
             });
 
-            const result = await service.synchronizeKodyRules({
+            const result = await service.synchronizeCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
@@ -1456,12 +1456,12 @@ describe('CentralizedConfigService', () => {
 
             expect(result.success).toBe(true);
             expect(
-                mockCreateOrUpdateKodyRulesUseCase.execute,
+                mockCreateOrUpdateCodyRulesUseCase.execute,
             ).toHaveBeenCalledWith(
                 expect.objectContaining({
                     uuid: 'active-rule-uuid',
                     centralizedConfig: {
-                        path: '.kody-rules/review/style.yml',
+                        path: '.cody-rules/review/style.yml',
                         status: 'synced',
                     },
                     status: 'active',
@@ -1475,9 +1475,9 @@ describe('CentralizedConfigService', () => {
         it('should handle YAML parsing errors gracefully', async () => {
             const ruleFiles: any[] = [
                 {
-                    centralizedDirectoryPath: '.kody-rules/memories',
-                    ruleFilePath: '.kody-rules/memories/invalid.yml',
-                    path: '.kody-rules/memories/invalid.yml',
+                    centralizedDirectoryPath: '.cody-rules/memories',
+                    ruleFilePath: '.cody-rules/memories/invalid.yml',
+                    path: '.cody-rules/memories/invalid.yml',
                     ruleType: 'memory' as any,
                 },
             ];
@@ -1487,7 +1487,7 @@ describe('CentralizedConfigService', () => {
                     repository: { name: 'central-repo', id: 'central-repo-id' },
                 },
             });
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 rules: [],
             });
 
@@ -1500,7 +1500,7 @@ describe('CentralizedConfigService', () => {
                 },
             );
 
-            const result = await service.synchronizeKodyRules({
+            const result = await service.synchronizeCodyRules({
                 organizationAndTeamData,
                 ruleFiles,
                 actor,
@@ -1512,14 +1512,14 @@ describe('CentralizedConfigService', () => {
             expect(result.message).toContain('incomplete');
             expect(result.failureDetails).toHaveLength(1);
             expect(result.failureDetails![0].file).toBe(
-                '.kody-rules/memories/invalid.yml',
+                '.cody-rules/memories/invalid.yml',
             );
         });
     });
 
-    describe('removeStaleKodyRules', () => {
+    describe('removeStaleCodyRules', () => {
         it('should remove stale centralized rules not present in centralized files', async () => {
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 toJson: () => ({
                     rules: [
                         {
@@ -1527,7 +1527,7 @@ describe('CentralizedConfigService', () => {
                             title: 'Pending merge rule',
                             status: 'active',
                             centralizedConfig: {
-                                path: '.kody-rules/review/pending.yml',
+                                path: '.cody-rules/review/pending.yml',
                                 status: 'pending_delete',
                             },
                         },
@@ -1535,24 +1535,24 @@ describe('CentralizedConfigService', () => {
                 }),
             });
 
-            mockDeleteRuleInOrganizationByIdKodyRulesUseCase.execute.mockResolvedValue(
+            mockDeleteRuleInOrganizationByIdCodyRulesUseCase.execute.mockResolvedValue(
                 true,
             );
 
-            const result = await service.removeStaleKodyRules({
+            const result = await service.removeStaleCodyRules({
                 organizationAndTeamData,
                 actor,
                 // Non-empty discovery (a real file list that just doesn't
                 // include pending.yml) so the #1518 empty-discovery guard does
                 // not trigger — this validates genuine stale removal.
                 ruleFiles: [
-                    { path: '.kody-rules/review/other.yml' } as any,
+                    { path: '.cody-rules/review/other.yml' } as any,
                 ],
             });
 
             expect(result.success).toBe(true);
             expect(
-                mockDeleteRuleInOrganizationByIdKodyRulesUseCase.execute,
+                mockDeleteRuleInOrganizationByIdCodyRulesUseCase.execute,
             ).toHaveBeenCalledWith('pending-merge-rule-1', actor);
         });
 
@@ -1560,7 +1560,7 @@ describe('CentralizedConfigService', () => {
             // Pending/rejected/manual rules have no centralizedConfig.path —
             // they aren't exported, so the stale-cleanup must leave them alone
             // instead of treating a missing path as "stale".
-            mockKodyRulesService.findByOrganizationId.mockResolvedValue({
+            mockCodyRulesService.findByOrganizationId.mockResolvedValue({
                 toJson: () => ({
                     rules: [
                         { uuid: 'pending-rule', status: 'pending' },
@@ -1574,7 +1574,7 @@ describe('CentralizedConfigService', () => {
                             uuid: 'synced-rule',
                             status: 'active',
                             centralizedConfig: {
-                                path: '.kody-rules/review/kept.yml',
+                                path: '.cody-rules/review/kept.yml',
                                 status: 'synced',
                             },
                         },
@@ -1582,15 +1582,15 @@ describe('CentralizedConfigService', () => {
                 }),
             });
 
-            mockDeleteRuleInOrganizationByIdKodyRulesUseCase.execute.mockResolvedValue(
+            mockDeleteRuleInOrganizationByIdCodyRulesUseCase.execute.mockResolvedValue(
                 true,
             );
 
-            const result = await service.removeStaleKodyRules({
+            const result = await service.removeStaleCodyRules({
                 organizationAndTeamData,
                 actor,
                 ruleFiles: [
-                    { path: '.kody-rules/review/kept.yml' } as any,
+                    { path: '.cody-rules/review/kept.yml' } as any,
                 ],
             });
 
@@ -1598,7 +1598,7 @@ describe('CentralizedConfigService', () => {
             // The synced rule is still present in the files → not deleted.
             // None of the path-less rules are deleted either.
             expect(
-                mockDeleteRuleInOrganizationByIdKodyRulesUseCase.execute,
+                mockDeleteRuleInOrganizationByIdCodyRulesUseCase.execute,
             ).not.toHaveBeenCalled();
         });
     });

@@ -13,7 +13,7 @@ import {
 class SourceFiltersDto {
     @IsBoolean()
     @ApiProperty({ type: Boolean })
-    includeKodyRules: boolean;
+    includeCodyRules: boolean;
 
     @IsBoolean()
     @ApiProperty({ type: Boolean })

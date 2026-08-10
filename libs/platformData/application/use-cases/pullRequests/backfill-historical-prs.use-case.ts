@@ -208,7 +208,7 @@ export class BackfillHistoricalPRsUseCase {
                     // Sequential + per-call 429 retry. The old Promise.all
                     // of two parallel calls per PR is what tipped bitbucket
                     // Atlassian Edge into x-envoy-ratelimited=true during
-                    // the 2026-05-23 matrix run on kodustech/tiny-url
+                    // the 2026-05-23 matrix run on elchapita43/tiny-url
                     // (38+ historical PRs) — finishOnboarding 500'd before
                     // the user-visible response could land. Going serial
                     // halves the peak in-flight count; with429Retry on

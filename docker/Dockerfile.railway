@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 # =============================================================================
-# Railway-compatible Dockerfile for kodus-ai backend services.
+# Railway-compatible Dockerfile for codus-ai backend services.
 #
 # Railway doesn't support Docker --target, so this Dockerfile uses a build arg
 # SERVICE_TYPE to select which service to run (api, worker, webhooks).
@@ -32,19 +32,19 @@ FROM base AS deps
 # pnpm-workspace.yaml carries the overrides (moved out of package.json/.npmrc by the pnpm 11 migration).
 # Without it here, the frozen install sees empty overrides and aborts with ERR_PNPM_LOCKFILE_CONFIG_MISMATCH.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY packages/kodus-common ./packages/kodus-common
+COPY packages/codus-common ./packages/codus-common
 
 # Railway's Metal builder rejects BuildKit secret mounts and requires a
 # service-id-prefixed cache key on cache mounts (which can't share across
 # our 3 services), so this Dockerfile drops both. The repo-local .npmrc
-# copied above only holds registry URLs (no tokens), and the @kodus/*
+# copied above only holds registry URLs (no tokens), and the @codus/*
 # packages are replaced by the local copies in packages/ via `cp -r`.
-RUN cd packages/kodus-common \
+RUN cd packages/codus-common \
   && pnpm install \
   && pnpm run prepack
 
 RUN pnpm install --frozen-lockfile
-RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_modules/@kodus/kodus-common
+RUN rm -rf node_modules/@codus/codus-common && cp -r packages/codus-common node_modules/@codus/codus-common
 
 FROM deps AS build
 ARG API_CLOUD_MODE=false
@@ -67,9 +67,9 @@ RUN pnpm run build:apps && pnpm run build:migrations
 # Install production dependencies only
 FROM base AS prod-deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY packages/kodus-common ./packages/kodus-common
+COPY packages/codus-common ./packages/codus-common
 
-RUN cd packages/kodus-common \
+RUN cd packages/codus-common \
   && pnpm install \
   && pnpm run prepack
 
@@ -78,10 +78,10 @@ RUN pnpm install --frozen-lockfile --prod
 # Drop nested node_modules/src/test that were needed for `pnpm run prepack`
 # but not at runtime — keeping them would duplicate hundreds of MB inside
 # the final image. `dist/` and `package.json` are what Node resolves.
-RUN rm -rf packages/kodus-common/node_modules \
-           packages/kodus-common/src \
-           packages/kodus-common/test
-RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_modules/@kodus/kodus-common
+RUN rm -rf packages/codus-common/node_modules \
+           packages/codus-common/src \
+           packages/codus-common/test
+RUN rm -rf node_modules/@codus/codus-common && cp -r packages/codus-common node_modules/@codus/codus-common
 
 # Runtime stage — single stage, service selected via SERVICE_TYPE
 FROM docker.io/library/node:22.22.2-slim
@@ -106,8 +106,8 @@ RUN apt-get update \
 COPY --chown=1000:1000 --from=prod-deps /usr/src/app/node_modules ./node_modules
 COPY --chown=1000:1000 --from=build /usr/src/app/dist ./dist
 COPY --chown=1000:1000 --from=build /usr/src/app/package.json ./package.json
-COPY --chown=1000:1000 --from=build /usr/src/app/default-kodus-config.yml ./default-kodus-config.yml
-COPY --chown=1000:1000 --from=build /usr/src/app/kodus-config.yml ./kodus-config.yml
+COPY --chown=1000:1000 --from=build /usr/src/app/default-codus-config.yml ./default-codus-config.yml
+COPY --chown=1000:1000 --from=build /usr/src/app/codus-config.yml ./codus-config.yml
 COPY --chown=1000:1000 --from=build /usr/src/app/scripts ./scripts
 COPY --chown=1000:1000 --from=build /usr/src/app/tsconfig-paths-bootstrap.js ./tsconfig-paths-bootstrap.js
 

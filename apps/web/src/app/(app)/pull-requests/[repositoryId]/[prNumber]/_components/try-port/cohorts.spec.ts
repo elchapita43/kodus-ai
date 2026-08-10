@@ -107,7 +107,7 @@ describe("buildCohorts", () => {
     });
 
     it("prefers a backend-supplied cohort hint over the heuristic", () => {
-        // Paves the Kody-decided path: a file carrying its own cohort wins.
+        // Paves the Cody-decided path: a file carrying its own cohort wins.
         const hinted = {
             ...file("libs/x/foo.service.ts"),
             cohort: "contracts",

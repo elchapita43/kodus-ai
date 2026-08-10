@@ -12,7 +12,7 @@ export const authCommand = new Command('auth').description(
 authCommand
     .command('login')
     .description(
-        'Authenticate via the Kodus web app. Opens your browser by default; falls back to a device code on headless machines.',
+        'Authenticate via the Codus web app. Opens your browser by default; falls back to a device code on headless machines.',
     )
     .option(
         '--device-code',
@@ -44,7 +44,7 @@ authCommand
 authCommand
     .command('team-key')
     .description('Authenticate using team API key')
-    .requiredOption('--key <key>', 'Team API key from Kodus dashboard')
+    .requiredOption('--key <key>', 'Team API key from Codus dashboard')
     .action(teamKeyAction);
 
 authCommand

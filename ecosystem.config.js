@@ -24,7 +24,7 @@ module.exports = {
             kill_timeout: 5000,
         },
         {
-            name: 'kodus-orchestrator',
+            name: 'codus-orchestrator',
             script: './dist/apps/api/main.js',
             exec_mode: 'fork',
             instances: 1,

@@ -5,7 +5,7 @@ import { Button } from "@components/ui/button";
 import { Page } from "@components/ui/page";
 import { toast } from "@components/ui/toaster/use-toast";
 import { useGetCodeReviewLabels } from "@services/parameters/hooks";
-import { KodyLearningStatus } from "@services/parameters/types";
+import { CodyLearningStatus } from "@services/parameters/types";
 import { RotateCcwIcon, SaveIcon } from "lucide-react";
 import { useFormContext, useFormState } from "react-hook-form";
 import { useSelectedTeamId } from "src/core/providers/selected-team-context";
@@ -100,8 +100,8 @@ export default function ReviewCategories() {
     } = useFormState({ control: form.control });
 
     if (
-        platformConfig.kodyLearningStatus ===
-        KodyLearningStatus.GENERATING_CONFIG
+        platformConfig.codyLearningStatus ===
+        CodyLearningStatus.GENERATING_CONFIG
     ) {
         return <GeneratingConfig />;
     }

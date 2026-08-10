@@ -251,7 +251,7 @@ export function CuratedConnectPanel({
                 ok: false,
                 code: "unknown",
                 latencyMs: 0,
-                message: "Couldn't reach Kodus. Try again in a moment.",
+                message: "Couldn't reach Codus. Try again in a moment.",
             };
             setTestState({ status: "error", result });
             return result;

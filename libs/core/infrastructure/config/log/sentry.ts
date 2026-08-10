@@ -37,10 +37,10 @@ export function setupSentry(
         Sentry.init({
             dsn,
             environment,
-            release: `kodus-orchestrator@${
+            release: `codus-orchestrator@${
                 process.env.SENTRY_RELEASE || environment
             }`,
-            serverName: `kodus-${componentType}`,
+            serverName: `codus-${componentType}`,
             initialScope: {
                 tags: {
                     component: componentType,

@@ -127,7 +127,7 @@ describe('ProcessFilesPrLevelReviewStage', () => {
             expect.objectContaining({
                 organizationAndTeamData: context.organizationAndTeamData,
                 prepareContext: expect.objectContaining({
-                    userQuestion: '@kody -v business-logic',
+                    userQuestion: '@cody -v business-logic',
                     repository: context.repository,
                     pullRequestDescription: context.pullRequest.body,
                     businessSignals: {

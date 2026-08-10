@@ -1,14 +1,14 @@
 ---
 title: "What is the difference between Review Rules and Memories"
-description: "Understand when to use Review Rules vs Memories in Kody for the best code review results."
+description: "Understand when to use Review Rules vs Memories in Cody for the best code review results."
 ---
 
-In the Kody Rules UI, you configure two different things, and knowing when to use each one makes your code reviews more effective.
+In the Cody Rules UI, you configure two different things, and knowing when to use each one makes your code reviews more effective.
 
 A useful rule of thumb:
 
-- **Memories** teach Kody how your codebase works so future reviews and suggestions are more relevant.
-- **Review Rules** tell Kody what to flag when a PR does not match your standards.
+- **Memories** teach Cody how your codebase works so future reviews and suggestions are more relevant.
+- **Review Rules** tell Cody what to flag when a PR does not match your standards.
 
 ## Review Rules
 
@@ -28,7 +28,7 @@ Review Rules are **traditional code review checks** that run during the dedicate
 
 ## Memories
 
-Memories are **persistent contextual instructions** injected across all interactions — code reviews, conversations, and AI suggestions. They represent the background knowledge Kody should carry about your codebase, conventions, and preferences.
+Memories are **persistent contextual instructions** injected across all interactions — code reviews, conversations, and AI suggestions. They represent the background knowledge Cody should carry about your codebase, conventions, and preferences.
 
 **Best for:**
 - Codebase context ("this repo mirrors a third-party API, so some external payload fields intentionally stay snake_case")
@@ -38,10 +38,10 @@ Memories are **persistent contextual instructions** injected across all interact
 
 **How they work:**
 - Injected as high-priority context in all prompts
-- Improve future suggestions by grounding Kody in repo-specific context
-- Created via conversation (`@kody remember: ...`) or manually in the UI
+- Improve future suggestions by grounding Cody in repo-specific context
+- Created via conversation (`@cody remember: ...`) or manually in the UI
 - Scoped to directory, repository, or organization level
-- Kody auto-deduplicates and resolves conflicts between memories
+- Cody auto-deduplicates and resolves conflicts between memories
 
 ## When to use which
 
@@ -58,4 +58,4 @@ Memories are **persistent contextual instructions** injected across all interact
 
 Yes. In the Pending Memories modal, you can **convert a memory into a Review Rule** if you decide it needs more structured enforcement with file paths and severity levels.
 
-For details, see [Kody Rules](/how_to_use/en/code_review/configs/kody_rules).
+For details, see [Cody Rules](/how_to_use/en/code_review/configs/cody_rules).

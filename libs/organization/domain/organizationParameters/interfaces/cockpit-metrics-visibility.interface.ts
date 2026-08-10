@@ -1,13 +1,13 @@
 export interface ICockpitMetricsVisibility {
     /** Whole-tab visibility. At least one tab must stay enabled. */
     readonly tabs: {
-        readonly kodusReview: boolean;
+        readonly codusReview: boolean;
         readonly productivity: boolean;
     };
     readonly summary: {
         readonly deployFrequency: boolean;
         readonly prCycleTime: boolean;
-        readonly kodySuggestions: boolean;
+        readonly codySuggestions: boolean;
         readonly bugRatio: boolean;
         readonly prSize: boolean;
     };
@@ -22,13 +22,13 @@ export interface ICockpitMetricsVisibility {
 
 export const DEFAULT_COCKPIT_METRICS_VISIBILITY: ICockpitMetricsVisibility = {
     tabs: {
-        kodusReview: true,
+        codusReview: true,
         productivity: true,
     },
     summary: {
         deployFrequency: true,
         prCycleTime: true,
-        kodySuggestions: true,
+        codySuggestions: true,
         bugRatio: true,
         prSize: true,
     },

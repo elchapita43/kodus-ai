@@ -4,30 +4,30 @@ interface CliOutputMode {
 }
 
 export function isCliQuietMode(): boolean {
-    return process.env.KODUS_QUIET === '1';
+    return process.env.CODUS_QUIET === '1';
 }
 
 export function isCliVerboseMode(): boolean {
     return (
-        process.env.KODUS_VERBOSE === '1' ||
-        process.env.KODUS_VERBOSE === 'true'
+        process.env.CODUS_VERBOSE === '1' ||
+        process.env.CODUS_VERBOSE === 'true'
     );
 }
 
 export function setCliOutputMode(mode: CliOutputMode): void {
     if (mode.quiet !== undefined) {
         if (mode.quiet) {
-            process.env.KODUS_QUIET = '1';
+            process.env.CODUS_QUIET = '1';
         } else {
-            delete process.env.KODUS_QUIET;
+            delete process.env.CODUS_QUIET;
         }
     }
 
     if (mode.verbose !== undefined) {
         if (mode.verbose) {
-            process.env.KODUS_VERBOSE = '1';
+            process.env.CODUS_VERBOSE = '1';
         } else {
-            delete process.env.KODUS_VERBOSE;
+            delete process.env.CODUS_VERBOSE;
         }
     }
 }

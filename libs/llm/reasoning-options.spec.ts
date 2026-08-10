@@ -1,4 +1,4 @@
-import { BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKProvider } from '@codus/codus-common/llm';
 
 import {
     buildProviderOptions,
@@ -111,7 +111,7 @@ describe('buildReasoningProviderOptions', () => {
         });
 
         it('falls back to budgetTokens when modelName is undefined (regression: agentName bug)', () => {
-            // The original bug: agentName ("kodus-generalist-review-agent") was passed as modelName.
+            // The original bug: agentName ("codus-generalist-review-agent") was passed as modelName.
             // It does not match sonnet-4/opus-4 → should fall through to budgetTokens.
             // This test guarantees the behavior is consistent regardless of the modelName value.
             expect(

@@ -3,7 +3,7 @@ import { CacheService } from '@libs/core/cache/cache.service';
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import { SavePullRequestUseCase } from '@libs/platformData/application/use-cases/pullRequests/save.use-case';
 import { PULL_REQUESTS_SERVICE_TOKEN } from '@libs/platformData/domain/pullRequests/contracts/pullRequests.service.contracts';
 import { OUTBOX_MESSAGE_REPOSITORY_TOKEN } from '@libs/core/workflow/domain/contracts/outbox-message.repository.contract';
@@ -44,7 +44,7 @@ describe('AzureReposPullRequestHandler', () => {
                     provide: WebhookContextService,
                     useValue: webhookContextService,
                 },
-                { provide: ChatWithKodyFromGitUseCase, useValue: {} },
+                { provide: ChatWithCodyFromGitUseCase, useValue: {} },
                 { provide: CacheService, useValue: {} },
                 { provide: GenerateIssuesFromPrClosedUseCase, useValue: {} },
                 { provide: EventEmitter2, useValue: {} },
@@ -216,7 +216,7 @@ describe('AzureReposPullRequestHandler', () => {
                     resource: {
                         comment: {
                             id: 10,
-                            content: '@kody start-review',
+                            content: '@cody start-review',
                         },
                         pullRequest: {
                             pullRequestId: 123,

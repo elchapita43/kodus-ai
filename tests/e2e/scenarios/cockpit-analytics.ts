@@ -12,7 +12,7 @@ import type { RunContext, Scenario } from "../lib/types.js";
 // Catches the self-hosted regression where the cockpit page showed "Analytics
 // Not Available" despite a valid Enterprise license and a healthy Postgres
 // warehouse: the web layout gated on `WEB_ANALYTICS_SECRET` (the x-api-key of
-// the retired `kodus-service-analytics` microservice, shipped EMPTY on
+// the retired `codus-service-analytics` microservice, shipped EMPTY on
 // self-hosted) instead of the license tier. The legacy path is dead
 // server-side (CockpitSourceResolver hard-returns INTERNAL) so the secret is
 // vestigial — yet it blocked the whole page. The matrix never exercised
@@ -62,13 +62,13 @@ export const cockpitAnalytics: Scenario = {
         ctx.assert(ctx.tenant, "scenario requires a tenant");
         ctx.assert(existsSync(SPEC), `Playwright spec not found at ${SPEC}`);
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
         // The (app) layout redirects every page to /setup until the team is
         // ACTIVE and finishOnboard is true — the browser render needs a fully
         // onboarded org, not just a signed-up one.
-        await ctx.kodus.finishOnboarding(session, repo);
+        await ctx.codus.finishOnboarding(session, repo);
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         // ---- Layer 1: cockpit eligibility + warehouse reachability ----

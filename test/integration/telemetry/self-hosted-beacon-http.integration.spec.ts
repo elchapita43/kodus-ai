@@ -129,8 +129,8 @@ describe('self-hosted telemetry HTTP flow', () => {
 
     it('sends one real heartbeat POST to the configured receiver and marks the day as sent', async () => {
         const receiver = await startReceiver();
-        process.env.KODUS_TELEMETRY_ENDPOINT = receiver.url;
-        delete process.env.KODUS_TELEMETRY_DISABLED;
+        process.env.CODUS_TELEMETRY_ENDPOINT = receiver.url;
+        delete process.env.CODUS_TELEMETRY_DISABLED;
 
         let state: TelemetryState | null = {
             instance_id: '55555555-5555-4555-8555-555555555555',
@@ -176,13 +176,13 @@ describe('self-hosted telemetry HTTP flow', () => {
             );
             const body = receiver.requests[0].body;
             expect(receiver.requests[0].headers['user-agent']).toBe(
-                `kodus-self-hosted/${(body.kodus as { version: string }).version}`,
+                `codus-self-hosted/${(body.codus as { version: string }).version}`,
             );
             expect(body).toEqual(
                 expect.objectContaining({
                     schema_version: 1,
                     instance_id: '55555555-5555-4555-8555-555555555555',
-                    kodus: expect.objectContaining({
+                    codus: expect.objectContaining({
                         version: expect.stringMatching(/^\d+\.\d+\.\d+/),
                     }),
                     runtime: expect.objectContaining({
@@ -195,7 +195,7 @@ describe('self-hosted telemetry HTTP flow', () => {
                         prs_reviewed: 9,
                     }),
                     config: expect.objectContaining({
-                        kody_rules_enabled: true,
+                        cody_rules_enabled: true,
                         integrations: ['github'],
                     }),
                 }),

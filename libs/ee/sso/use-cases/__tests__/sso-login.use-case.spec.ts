@@ -4,7 +4,7 @@ import { STATUS } from '@libs/core/infrastructure/config/types/database/status.t
 import { SSOLoginUseCase } from '../sso-login.use-case';
 
 describe('SSOLoginUseCase', () => {
-    const email = 'sso-user@kodus-test.com';
+    const email = 'sso-user@codus-test.com';
     const organizationId = 'org-1';
     const profile = { email, firstName: 'Sso', lastName: 'User' };
     const tokens = { accessToken: 'access', refreshToken: 'refresh' };

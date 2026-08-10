@@ -204,7 +204,7 @@ export const ClientSsoOrganizationSettingsPage = (props: {
                     SAML_EMAIL_IDENTIFIER_FORMAT,
                 issuer:
                     props.ssoConfig.providerConfig.issuer ||
-                    "kodus-orchestrator",
+                    "codus-orchestrator",
             },
             domains:
                 props.ssoConfig.domains.length > 0
@@ -918,16 +918,16 @@ export const ClientSsoOrganizationSettingsPage = (props: {
                                                             {...field}
                                                             value={
                                                                 field.value ||
-                                                                "kodus-orchestrator"
+                                                                "codus-orchestrator"
                                                             }
-                                                            placeholder="kodus-orchestrator"
+                                                            placeholder="codus-orchestrator"
                                                         />
                                                     )}
                                                 />
                                                 <FormControl.Helper>
                                                     Entity ID for this service
                                                     provider (default:
-                                                    kodus-orchestrator)
+                                                    codus-orchestrator)
                                                 </FormControl.Helper>
                                             </FormControl.Root>
 

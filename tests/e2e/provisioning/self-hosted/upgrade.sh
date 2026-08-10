@@ -9,7 +9,7 @@
 # Required env:
 #   UPGRADE_FROM_TAG       previous tag (e.g. selfhosted-1.41.0)
 #   UPGRADE_TO_TAG         new candidate tag (e.g. selfhosted-1.42.0-rc.1)
-#   KODUS_INSTALLER_PATH   path to a checkout of kodus-installer
+#   CODUS_INSTALLER_PATH   path to a checkout of codus-installer
 #   DIGITALOCEAN_TOKEN     (or HCLOUD_TOKEN)
 #   GH_TEST_TOKEN, GH_TEST_REPO, GH_TEST_PR_NUMBER
 #
@@ -39,8 +39,8 @@ IMAGE_TAG="$UPGRADE_FROM_TAG" \
 # vm.sh exits without teardown when TEST_KEEP_RUNNING=1. The droplet is still
 # alive here. vm.sh runs as a subprocess so any `export SERVER_IP=...` it
 # does dies with the child shell — read the IP back from the state file
-# vm.sh writes (`.kodus-dev/selfhosted-vm-default.json`) instead.
-SERVER_IP=$(jq -r '.server_ip // empty' "$REPO_ROOT/.kodus-dev/selfhosted-vm-default.json" 2>/dev/null || true)
+# vm.sh writes (`.codus-dev/selfhosted-vm-default.json`) instead.
+SERVER_IP=$(jq -r '.server_ip // empty' "$REPO_ROOT/.codus-dev/selfhosted-vm-default.json" 2>/dev/null || true)
 if [ -z "${SERVER_IP:-}" ]; then
     err "vm.sh did not save SERVER_IP — upgrade flow expects a kept-alive droplet"
     exit 1
@@ -49,7 +49,7 @@ fi
 log "Step 2/3: rolling stack from $UPGRADE_FROM_TAG to $UPGRADE_TO_TAG"
 ssh -i "$LOCAL_SSH_KEY" -o StrictHostKeyChecking=no "root@$SERVER_IP" bash <<REMOTE
 set -e
-cd /opt/kodus-installer
+cd /opt/codus-installer
 sed -i "s|^IMAGE_TAG=.*|IMAGE_TAG=$UPGRADE_TO_TAG|" .env
 docker compose pull
 docker compose up -d

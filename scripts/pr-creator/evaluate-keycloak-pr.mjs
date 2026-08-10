@@ -54,7 +54,7 @@ async function main() {
     ];
 
     if (actualComments.length === 0) {
-        console.log(`   -> ⏳ Nenhum comentário encontrado. Kodus travou ou ainda está pensando.`);
+        console.log(`   -> ⏳ Nenhum comentário encontrado. Codus travou ou ainda está pensando.`);
         process.exit(0);
     }
 

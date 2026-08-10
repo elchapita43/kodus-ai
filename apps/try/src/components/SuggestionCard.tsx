@@ -10,7 +10,7 @@ import {
     type PromptContext,
 } from "@/lib/llm-prompt";
 
-const KODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
+const CODY_AVATAR_URL = "https://avatars.githubusercontent.com/in/413034?v=4";
 
 const LABEL_BY_SEVERITY: Record<string, string> = {
     critical: "Potential Bug",
@@ -107,14 +107,14 @@ function Identity() {
             <div className="flex items-center gap-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src={KODY_AVATAR_URL}
+                    src={CODY_AVATAR_URL}
                     alt=""
                     width={20}
                     height={20}
                     className="rounded-full ring-1 ring-[var(--border)]"
                 />
                 <span className="text-[13px] font-medium text-[var(--text)]">
-                    Kody
+                    Cody
                 </span>
             </div>
             <button
@@ -304,7 +304,7 @@ function CodeBlock({ code }: { code: string }) {
     const tokens = tokenize(code);
     return (
         <div className="rounded-md border border-[var(--border)] bg-[var(--bg)] overflow-hidden">
-            <pre className="overflow-x-auto px-3 py-2.5 text-[12.5px] leading-[1.65] font-mono whitespace-pre kodus-scroll">
+            <pre className="overflow-x-auto px-3 py-2.5 text-[12.5px] leading-[1.65] font-mono whitespace-pre codus-scroll">
                 <code>
                     {tokens.map((tok, idx) => (
                         <span key={idx} style={TOKEN_STYLE[tok.kind]}>

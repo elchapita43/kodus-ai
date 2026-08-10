@@ -28,10 +28,10 @@ import { PrHeader, type PrTab } from "./try-port/PrHeader";
 import { RightSidebar } from "./try-port/RightSidebar";
 import type { ReviewIssue } from "./try-port/types";
 
-// Web only carries data for these two tabs (Kody doesn't store the PR body
+// Web only carries data for these two tabs (Cody doesn't store the PR body
 // or comment threads), so we render a narrower tab bar than try's four.
 const WEB_TABS: PrTab[] = ["review", "commits"];
-const FILE_TREE_MODE_KEY = "kodus:pr-file-tree-mode";
+const FILE_TREE_MODE_KEY = "codus:pr-file-tree-mode";
 
 function PanelError({ error }: FallbackProps) {
     const message =
@@ -227,7 +227,7 @@ export function ReviewPageClient({
 // spinner while suggestions load.
 function ReviewPageSkeleton() {
     return (
-        <div className="kodus-scroll h-full overflow-y-auto bg-[var(--bg)]">
+        <div className="codus-scroll h-full overflow-y-auto bg-[var(--bg)]">
             <section className="px-6 py-6">
                 <div className="mx-auto max-w-[1600px]">
                     <Skeleton className="mb-4 h-4 w-28" />
@@ -466,10 +466,10 @@ function ReviewLayout({
     }, [deepLinkFile, deepLinkIssue, dispatch]);
 
     const stickyAside =
-        "lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto kodus-scroll";
+        "lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto codus-scroll";
 
     return (
-        <div className="kodus-scroll h-full overflow-y-auto bg-[var(--bg)]">
+        <div className="codus-scroll h-full overflow-y-auto bg-[var(--bg)]">
             <section className="px-6 py-6">
                 <div className="mx-auto max-w-[1600px]">
                     <NextLink

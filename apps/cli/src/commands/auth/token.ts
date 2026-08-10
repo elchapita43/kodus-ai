@@ -14,7 +14,7 @@ export async function tokenAction(): Promise<void> {
             cliInfo(
                 chalk.yellow('\nYou need to be logged in to generate a token.'),
             );
-            cliInfo(chalk.dim('Run `kodus auth login` first.'));
+            cliInfo(chalk.dim('Run `codus auth login` first.'));
             return;
         }
 
@@ -28,7 +28,7 @@ export async function tokenAction(): Promise<void> {
         cliInfo(chalk.dim('Use this token in your CI/CD pipelines:'));
         cliInfo(chalk.cyan(`\n${token}\n`));
         cliInfo(chalk.dim('Set as environment variable:'));
-        cliInfo(chalk.dim('  export KODUS_TOKEN=<token>'));
+        cliInfo(chalk.dim('  export CODUS_TOKEN=<token>'));
         cliInfo(
             chalk.yellow(
                 '\n⚠️  Keep this token secret! It provides access to your account.',

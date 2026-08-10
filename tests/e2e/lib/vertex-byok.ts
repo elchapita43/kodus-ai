@@ -1,8 +1,8 @@
 import { http } from "./http.js";
-import type { KodusSession } from "./types.js";
+import type { CodusSession } from "./types.js";
 
 // Shared Claude-on-Vertex BYOK helpers, used by every vertex-byok scenario
-// (code-review, conversation, kody-issues). Keeps the /test-byok probe +
+// (code-review, conversation, cody-issues). Keeps the /test-byok probe +
 // byok_config write in one place so all three exercise the exact same wiring.
 
 export interface VertexByokCfg {
@@ -30,11 +30,11 @@ export function readVertexByokEnv(): VertexByokCfg | null {
  * Point the org's main BYOK slot at a Claude model on Google Vertex. Probes
  * /test-byok first so a missing Model-Garden enablement or a bad service
  * account fails HERE with Google's actual reason — not later as a silent
- * "Kody never responded".
+ * "Cody never responded".
  */
 export async function setVertexByok(
     apiBaseUrl: string,
-    session: KodusSession,
+    session: CodusSession,
     cfg: VertexByokCfg,
 ): Promise<void> {
     const main = {

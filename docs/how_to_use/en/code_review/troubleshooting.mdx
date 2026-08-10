@@ -1,9 +1,9 @@
 ---
 title: "Troubleshooting"
-description: "Troubleshooting Kody Code Review"
+description: "Troubleshooting Cody Code Review"
 ---
 
-## Kody Code Review Not Working? Steps to Fix Common Issues
+## Cody Code Review Not Working? Steps to Fix Common Issues
 
 ### Token Issues
 
@@ -31,16 +31,16 @@ If you're connected via a token, ensure these points are checked:
 
 ### Configuration Issues
 
-- **Automated Reviews**: Ensure automated reviews are enabled in your [Global Settings](https://app.kodus.io/settings/code-review/global/general). If disabled, start reviews manually with `@kody start-review`.
-- **Review Types**: Ensure at least one review type is selected for Kody to provide suggestions. [Configure review types](https://app.kodus.io/settings/code-review/global/general).
-- **Branch Reviews**: By default, Kody reviews PRs merged into the default branch. To include additional branches, [update your configuration](https://app.kodus.io/settings/code-review/global/general).
+- **Automated Reviews**: Ensure automated reviews are enabled in your [Global Settings](https://app.kodus.io/settings/code-review/global/general). If disabled, start reviews manually with `@cody start-review`.
+- **Review Types**: Ensure at least one review type is selected for Cody to provide suggestions. [Configure review types](https://app.kodus.io/settings/code-review/global/general).
+- **Branch Reviews**: By default, Cody reviews PRs merged into the default branch. To include additional branches, [update your configuration](https://app.kodus.io/settings/code-review/global/general).
 - **Large PRs**: Be aware that PRs with a high number of changes may take longer to process.
 
 ---
 
 ### Global vs. Repository Settings
 
-Kody uses a hierarchical configuration system. Here's how it works:
+Cody uses a hierarchical configuration system. Here's how it works:
 
 - **Global Settings**: Applied to all repositories by default.
 - **Repository-Specific Settings**: If configured, they will override global settings for that specific repository.
@@ -58,18 +58,18 @@ Kody uses a hierarchical configuration system. Here's how it works:
 #### Common Symptoms
 
 - Automated reviews are not triggered for a repository.
-- Kody applies unexpected settings or suggestions.
+- Cody applies unexpected settings or suggestions.
 - Global settings are not reflected in specific repositories.
 
 
-## No Response or No Comments from Kody
+## No Response or No Comments from Cody
 
 Work through this quick checklist:
 
-1. PR contains reviewable code changes (not only docs or images)? Kody may skip if there's nothing relevant to analyze.
+1. PR contains reviewable code changes (not only docs or images)? Cody may skip if there's nothing relevant to analyze.
 2. Branch is in scope? By default, only PRs targeting the default branch are reviewed unless additional base branches are configured.
-3. **Large PRs:** Kody reviews PRs with up to 200 **reviewable files** (after applying ignore patterns). Example: PR with 250 total files but 60 are `.lock` files → Kody reviews the remaining 190 files ✅
-4. Mode: If automated reviews are disabled, trigger manually with `@kody start-review`.
+3. **Large PRs:** Cody reviews PRs with up to 200 **reviewable files** (after applying ignore patterns). Example: PR with 250 total files but 60 are `.lock` files → Cody reviews the remaining 190 files ✅
+4. Mode: If automated reviews are disabled, trigger manually with `@cody start-review`.
 5. Push cadence: If using auto-pause, wait for the cool-down or request a manual review.
 6. Repository overrides: Repo-specific settings can override global ones. Clear or align them as needed.
 

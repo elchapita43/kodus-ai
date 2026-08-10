@@ -5,7 +5,7 @@ const downloadUrl = `https://github.com/shadowsocks/shadowsocks-rust/releases/do
 
 // Transparent proxy: all outbound TCP traffic is routed through the Shadowsocks server
 // so git fetch, curl, etc. automatically use the proxy without any extra configuration.
-export const kodusTemplate = Template()
+export const codusTemplate = Template()
     .fromBaseImage()
     .aptInstall(['iptables', 'git', 'ripgrep'])
     .runCmd([

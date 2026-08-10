@@ -1,7 +1,7 @@
 import {
     ruleMatchesFile,
     splitRulesByFileMatch,
-} from "../../../apps/web/src/core/utils/kody-rules/match-file-against-rules";
+} from "../../../apps/web/src/core/utils/cody-rules/match-file-against-rules";
 
 describe("ruleMatchesFile", () => {
     it("returns false when filePath is empty", () => {

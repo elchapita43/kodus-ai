@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Tear down a Kodus SSO E2E droplet provisioned by provision.sh.
+# Tear down a Codus SSO E2E droplet provisioned by provision.sh.
 #
 # Thin wrapper around scripts/selfhosted/destroy.sh — the droplet is
 # just a self-hosted instance with the SSO E2E overlay layered on top.

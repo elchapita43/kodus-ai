@@ -76,11 +76,11 @@ describe('skills-sync utilities', () => {
     });
 
     it('includes centralized config in default synced skill names', () => {
-        expect(DEFAULT_SYNC_SKILL_NAMES).toContain('kodus-centralized-config');
+        expect(DEFAULT_SYNC_SKILL_NAMES).toContain('codus-centralized-config');
     });
 
     it('syncs skill and command targets and removes legacy entries', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-sync-');
+        const tempRoot = await makeTempDir('codus-skills-sync-');
         tempDirs.push(tempRoot);
 
         const skillBaseDir = path.join(tempRoot, '.codex', 'skills');
@@ -113,9 +113,9 @@ describe('skills-sync utilities', () => {
         ];
         const result = await syncSkillsToTargets(targets, {
             skills: [
-                { name: 'kodus-review', content: 'review skill content' },
+                { name: 'codus-review', content: 'review skill content' },
                 {
-                    name: 'kodus-business-rules-validation',
+                    name: 'codus-business-rules-validation',
                     content: 'business validation content',
                 },
             ],
@@ -127,23 +127,23 @@ describe('skills-sync utilities', () => {
         expect(result.removedLegacyEntries).toBe(2);
 
         expect(
-            await exists(path.join(skillBaseDir, 'kodus-review', 'SKILL.md')),
+            await exists(path.join(skillBaseDir, 'codus-review', 'SKILL.md')),
         ).toBe(true);
         expect(
             await exists(
                 path.join(
                     skillBaseDir,
-                    'kodus-business-rules-validation',
+                    'codus-business-rules-validation',
                     'SKILL.md',
                 ),
             ),
         ).toBe(true);
-        expect(await exists(path.join(commandBaseDir, 'kodus-review.md'))).toBe(
+        expect(await exists(path.join(commandBaseDir, 'codus-review.md'))).toBe(
             true,
         );
         expect(
             await exists(
-                path.join(commandBaseDir, 'kodus-business-rules-validation.md'),
+                path.join(commandBaseDir, 'codus-business-rules-validation.md'),
             ),
         ).toBe(true);
 
@@ -158,7 +158,7 @@ describe('skills-sync utilities', () => {
     });
 
     it('supports dry-run without mutating files', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-sync-dry-');
+        const tempRoot = await makeTempDir('codus-skills-sync-dry-');
         tempDirs.push(tempRoot);
 
         const skillBaseDir = path.join(tempRoot, '.codex', 'skills');
@@ -178,7 +178,7 @@ describe('skills-sync utilities', () => {
             ],
             {
                 dryRun: true,
-                skills: [{ name: 'kodus-review', content: 'review skill' }],
+                skills: [{ name: 'codus-review', content: 'review skill' }],
             },
         );
 
@@ -186,7 +186,7 @@ describe('skills-sync utilities', () => {
         expect(result.createdFiles).toBe(1);
         expect(result.removedLegacyEntries).toBe(1);
         expect(
-            await exists(path.join(skillBaseDir, 'kodus-review', 'SKILL.md')),
+            await exists(path.join(skillBaseDir, 'codus-review', 'SKILL.md')),
         ).toBe(false);
         expect(
             await exists(path.join(skillBaseDir, 'business-rules-validation')),
@@ -194,7 +194,7 @@ describe('skills-sync utilities', () => {
     });
 
     it('installs into detected activation path even when target dir is missing', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-install-');
+        const tempRoot = await makeTempDir('codus-skills-install-');
         tempDirs.push(tempRoot);
 
         const activationPath = path.join(tempRoot, '.codex');
@@ -212,36 +212,36 @@ describe('skills-sync utilities', () => {
             ],
             {
                 mode: 'install',
-                skills: [{ name: 'kodus-review', content: 'review skill' }],
+                skills: [{ name: 'codus-review', content: 'review skill' }],
             },
         );
 
         expect(result.syncedTargets).toBe(1);
         expect(result.createdFiles).toBe(1);
         expect(
-            await exists(path.join(baseDir, 'kodus-review', 'SKILL.md')),
+            await exists(path.join(baseDir, 'codus-review', 'SKILL.md')),
         ).toBe(true);
     });
 
     it('uninstalls managed skills from target directory', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-uninstall-');
+        const tempRoot = await makeTempDir('codus-skills-uninstall-');
         tempDirs.push(tempRoot);
 
         const baseDir = path.join(tempRoot, '.codex', 'skills');
-        await fs.mkdir(path.join(baseDir, 'kodus-review'), { recursive: true });
-        await fs.mkdir(path.join(baseDir, 'kodus-business-rules-validation'), {
+        await fs.mkdir(path.join(baseDir, 'codus-review'), { recursive: true });
+        await fs.mkdir(path.join(baseDir, 'codus-business-rules-validation'), {
             recursive: true,
         });
         await fs.mkdir(path.join(baseDir, 'business-rules-validation'), {
             recursive: true,
         });
         await fs.writeFile(
-            path.join(baseDir, 'kodus-review', 'SKILL.md'),
+            path.join(baseDir, 'codus-review', 'SKILL.md'),
             'content',
             'utf8',
         );
         await fs.writeFile(
-            path.join(baseDir, 'kodus-business-rules-validation', 'SKILL.md'),
+            path.join(baseDir, 'codus-business-rules-validation', 'SKILL.md'),
             'content',
             'utf8',
         );
@@ -258,8 +258,8 @@ describe('skills-sync utilities', () => {
             {
                 mode: 'uninstall',
                 skills: [
-                    { name: 'kodus-review', content: '' },
-                    { name: 'kodus-business-rules-validation', content: '' },
+                    { name: 'codus-review', content: '' },
+                    { name: 'codus-business-rules-validation', content: '' },
                 ],
             },
         );
@@ -267,9 +267,9 @@ describe('skills-sync utilities', () => {
         expect(result.syncedTargets).toBe(1);
         expect(result.removedManagedEntries).toBe(2);
         expect(result.removedLegacyEntries).toBe(1);
-        expect(await exists(path.join(baseDir, 'kodus-review'))).toBe(false);
+        expect(await exists(path.join(baseDir, 'codus-review'))).toBe(false);
         expect(
-            await exists(path.join(baseDir, 'kodus-business-rules-validation')),
+            await exists(path.join(baseDir, 'codus-business-rules-validation')),
         ).toBe(false);
         expect(
             await exists(path.join(baseDir, 'business-rules-validation')),
@@ -277,7 +277,7 @@ describe('skills-sync utilities', () => {
     });
 
     it('install mirrors the current bundled skill set on repeat runs', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-reinstall-');
+        const tempRoot = await makeTempDir('codus-skills-reinstall-');
         tempDirs.push(tempRoot);
 
         const activationPath = path.join(tempRoot, '.codex');
@@ -296,9 +296,9 @@ describe('skills-sync utilities', () => {
             {
                 mode: 'install',
                 skills: [
-                    { name: 'kodus-review', content: 'review v1' },
+                    { name: 'codus-review', content: 'review v1' },
                     {
-                        name: 'kodus-business-rules-validation',
+                        name: 'codus-business-rules-validation',
                         content: 'business v1',
                     },
                 ],
@@ -316,7 +316,7 @@ describe('skills-sync utilities', () => {
             ],
             {
                 mode: 'install',
-                skills: [{ name: 'kodus-review', content: 'review v2' }],
+                skills: [{ name: 'codus-review', content: 'review v2' }],
             },
         );
 
@@ -327,21 +327,21 @@ describe('skills-sync utilities', () => {
             await exists(
                 path.join(
                     baseDir,
-                    'kodus-business-rules-validation',
+                    'codus-business-rules-validation',
                     'SKILL.md',
                 ),
             ),
         ).toBe(false);
         expect(
             await fs.readFile(
-                path.join(baseDir, 'kodus-review', 'SKILL.md'),
+                path.join(baseDir, 'codus-review', 'SKILL.md'),
                 'utf8',
             ),
         ).toBe('review v2');
     });
 
     it('syncs nested subskill files for skill targets', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-nested-');
+        const tempRoot = await makeTempDir('codus-skills-nested-');
         tempDirs.push(tempRoot);
 
         const activationPath = path.join(tempRoot, '.codex');
@@ -361,7 +361,7 @@ describe('skills-sync utilities', () => {
                 mode: 'install',
                 skills: [
                     {
-                        name: 'kodus-kody-rules',
+                        name: 'codus-cody-rules',
                         content: 'root skill',
                         files: [
                             {
@@ -369,7 +369,7 @@ describe('skills-sync utilities', () => {
                                 content: 'root skill',
                             },
                             {
-                                relativePath: 'rules/view-kody-rules.md',
+                                relativePath: 'rules/view-cody-rules.md',
                                 content: 'nested rule doc',
                             },
                         ],
@@ -381,22 +381,22 @@ describe('skills-sync utilities', () => {
         expect(result.syncedTargets).toBe(1);
         expect(result.createdFiles).toBe(2);
         expect(
-            await exists(path.join(baseDir, 'kodus-kody-rules', 'SKILL.md')),
+            await exists(path.join(baseDir, 'codus-cody-rules', 'SKILL.md')),
         ).toBe(true);
         expect(
             await exists(
                 path.join(
                     baseDir,
-                    'kodus-kody-rules',
+                    'codus-cody-rules',
                     'rules',
-                    'view-kody-rules.md',
+                    'view-cody-rules.md',
                 ),
             ),
         ).toBe(true);
     });
 
     it('rejects skill names that escape the target directory', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-invalid-');
+        const tempRoot = await makeTempDir('codus-skills-invalid-');
         tempDirs.push(tempRoot);
 
         const baseDir = path.join(tempRoot, '.codex', 'skills');
@@ -420,7 +420,7 @@ describe('skills-sync utilities', () => {
     });
 
     it('rejects nested skill file paths that resolve to the skill root', async () => {
-        const tempRoot = await makeTempDir('kodus-skills-invalid-path-');
+        const tempRoot = await makeTempDir('codus-skills-invalid-path-');
         tempDirs.push(tempRoot);
 
         const baseDir = path.join(tempRoot, '.codex', 'skills');
@@ -439,7 +439,7 @@ describe('skills-sync utilities', () => {
                 {
                     skills: [
                         {
-                            name: 'kodus-review',
+                            name: 'codus-review',
                             content: 'root',
                             files: [
                                 {

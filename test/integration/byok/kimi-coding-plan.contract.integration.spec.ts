@@ -24,7 +24,7 @@
  * locally with:
  *   KIMI_CODING_PLAN_KEY=sk-kimi-... yarn test --testPathPatterns=kimi-coding-plan.contract
  */
-import { getAdapter, BYOKProvider } from '@kodus/kodus-common/llm';
+import { getAdapter, BYOKProvider } from '@codus/codus-common/llm';
 
 // Identity crypto so byokToVercelModel can "decrypt" a raw key without needing
 // API_CRYPTO_KEY — this test exercises the HTTP contract, not encryption.

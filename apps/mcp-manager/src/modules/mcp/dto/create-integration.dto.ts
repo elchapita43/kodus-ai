@@ -17,11 +17,11 @@ import {
 export class CreateIntegrationDto {
     @ApiPropertyOptional({
         example: 'int_456',
-        description: 'Only used by Kodus MCP',
+        description: 'Only used by Codus MCP',
     })
     @IsString()
     @IsOptional()
-    integrationId?: string; // Only used by Kodus MCP
+    integrationId?: string; // Only used by Codus MCP
 
     @ApiProperty({ example: 'https://api.example.com' })
     @IsString()

@@ -304,7 +304,7 @@ export class CliConfigController {
         const bearerToken = authHeader?.replace(/^Bearer\s+/i, '');
         const resolvedTeamKey = teamKey || bearerToken;
 
-        if (!resolvedTeamKey || !resolvedTeamKey.startsWith('kodus_')) {
+        if (!resolvedTeamKey || !resolvedTeamKey.startsWith('codus_')) {
             throw new UnauthorizedException('Team API key required');
         }
 

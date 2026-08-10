@@ -1,6 +1,6 @@
 // Tiny regex-based TS/JS highlighter. Not a full parser — just enough to
 // give LLM-suggested code blocks the same visual rhythm as a real editor.
-// Colors map to the Kodus palette so the syntax stays on-brand.
+// Colors map to the Codus palette so the syntax stays on-brand.
 
 export type Token = {
     kind:

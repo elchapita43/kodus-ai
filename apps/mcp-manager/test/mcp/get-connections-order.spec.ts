@@ -1,4 +1,4 @@
-// The MCP adapter (relocated from @kodus/flow to @libs/mcp-server/mcp-adapter in
+// The MCP adapter (relocated from @codus/flow to @libs/mcp-server/mcp-adapter in
 // the ai-sdk migration) is pulled in transitively via the integrations service.
 // Mock it so the unit test doesn't load the real adapter + its worker-thread
 // logger transport.

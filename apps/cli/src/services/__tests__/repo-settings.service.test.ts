@@ -40,21 +40,21 @@ describe('repositorySettingsService.getRepositorySettings', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         vi.unstubAllEnvs();
-        mockAuthService.getValidToken.mockResolvedValue('kodus_team_key');
+        mockAuthService.getValidToken.mockResolvedValue('codus_team_key');
         mockGitService.isGitRepository.mockResolvedValue(true);
         mockGitService.getRemoteUrl.mockResolvedValue(
-            'git@github.com:kodustech/cli.git',
+            'git@github.com:elchapita43/cli.git',
         );
         mockGitService.extractOrgRepo.mockResolvedValue({
-            org: 'kodustech',
+            org: 'elchapita43',
             repo: 'cli',
         });
         mockApiConfig.getSelectedRepositories.mockResolvedValue([
             {
                 id: 'repo-1',
                 name: 'cli',
-                full_name: 'kodustech/cli',
-                organizationName: 'kodustech',
+                full_name: 'elchapita43/cli',
+                organizationName: 'elchapita43',
                 selected: true,
             },
         ] as any);
@@ -77,15 +77,15 @@ describe('repositorySettingsService.getRepositorySettings', () => {
             await repositorySettingsService.getRepositorySettings('.');
 
         expect(mockApiConfig.getSelectedRepositories).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
         );
         expect(mockApiConfig.getRepositorySettings).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
             'repo-1',
         );
         expect(result).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -98,11 +98,11 @@ describe('repositorySettingsService.getRepositorySettings', () => {
     });
 
     it('accepts an explicit owner/repo target', async () => {
-        await repositorySettingsService.getRepositorySettings('kodustech/cli');
+        await repositorySettingsService.getRepositorySettings('elchapita43/cli');
 
         expect(mockGitService.isGitRepository).not.toHaveBeenCalled();
         expect(mockApiConfig.getRepositorySettings).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
             'repo-1',
         );
     });
@@ -129,7 +129,7 @@ describe('repositorySettingsService.getRepositorySettings', () => {
         );
     });
 
-    it('fails when the repository is not configured in Kodus', async () => {
+    it('fails when the repository is not configured in Codus', async () => {
         mockApiConfig.getSelectedRepositories.mockResolvedValue([] as any);
 
         await expect(
@@ -146,13 +146,13 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         vi.unstubAllEnvs();
-        mockAuthService.getValidToken.mockResolvedValue('kodus_team_key');
+        mockAuthService.getValidToken.mockResolvedValue('codus_team_key');
         mockApiConfig.getSelectedRepositories.mockResolvedValue([
             {
                 id: 'repo-1',
                 name: 'cli',
-                full_name: 'kodustech/cli',
-                organizationName: 'kodustech',
+                full_name: 'elchapita43/cli',
+                organizationName: 'elchapita43',
                 selected: true,
             },
         ] as any);
@@ -172,7 +172,7 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
 
     it('updates repository settings through the CLI repository settings endpoint', async () => {
         const result = await repositorySettingsService.updateRepositorySettings(
-            'kodustech/cli',
+            'elchapita43/cli',
             {
                 reviewEnabled: true,
                 autoApproveEnabled: true,
@@ -184,7 +184,7 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
         );
 
         expect(mockApiConfig.updateRepositorySettings).toHaveBeenCalledWith(
-            'kodus_team_key',
+            'codus_team_key',
             'repo-1',
             {
                 reviewEnabled: true,
@@ -197,7 +197,7 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
         );
         expect(result).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: true,
@@ -214,7 +214,7 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
 
         await expect(
             repositorySettingsService.updateRepositorySettings(
-                'kodustech/cli',
+                'elchapita43/cli',
                 {
                     reviewEnabled: false,
                     autoApproveEnabled: true,
@@ -237,11 +237,11 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
             pending: true,
             message:
                 'Centralized config is enabled. Code review settings change proposed through a pull request.',
-            prUrl: 'https://github.com/kodustech/config-repo/pull/123',
+            prUrl: 'https://github.com/elchapita43/config-repo/pull/123',
         } as any);
 
         const result = await repositorySettingsService.updateRepositorySettings(
-            'kodustech/cli',
+            'elchapita43/cli',
             {
                 reviewEnabled: true,
                 autoApproveEnabled: true,
@@ -254,13 +254,13 @@ describe('repositorySettingsService.updateRepositorySettings', () => {
 
         expect(result).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             centralized: {
                 mode: 'centralized-pr',
                 pending: true,
                 message:
                     'Centralized config is enabled. Code review settings change proposed through a pull request.',
-                prUrl: 'https://github.com/kodustech/config-repo/pull/123',
+                prUrl: 'https://github.com/elchapita43/config-repo/pull/123',
             },
         });
     });

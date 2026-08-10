@@ -1,6 +1,6 @@
 import { SUGGESTION_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/SuggestionService.contract';
 import { FILE_REVIEW_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/file-review-context-preparation.interface';
-import { KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/kody-fine-tuning-context-preparation.interface';
+import { CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN } from '@libs/core/domain/interfaces/cody-fine-tuning-context-preparation.interface';
 import { FileChange } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { CodeAnalysisOrchestrator } from '@libs/ee/codeBase/codeAnalysisOrchestrator.service';
 import { GraphContentFormatter } from '@libs/code-review/infrastructure/adapters/services/graphContentFormatter.service';
@@ -34,13 +34,13 @@ describe('ProcessFilesReview', () => {
             prepareFileContext: jest.fn(),
         };
 
-        const mockKodyFineTuningContextPreparation = {
-            prepareKodyFineTuningContext: jest.fn(),
+        const mockCodyFineTuningContextPreparation = {
+            prepareCodyFineTuningContext: jest.fn(),
         };
 
         const mockCodeAnalysisOrchestrator = {
             executeStandardAnalysis: jest.fn(),
-            executeKodyRulesAnalysis: jest.fn(),
+            executeCodyRulesAnalysis: jest.fn(),
         };
 
         const module: TestingModule = await Test.createTestingModule({
@@ -59,8 +59,8 @@ describe('ProcessFilesReview', () => {
                     useValue: fileReviewContextPreparation,
                 },
                 {
-                    provide: KODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
-                    useValue: mockKodyFineTuningContextPreparation,
+                    provide: CODY_FINE_TUNING_CONTEXT_PREPARATION_TOKEN,
+                    useValue: mockCodyFineTuningContextPreparation,
                 },
                 {
                     provide: CodeAnalysisOrchestrator,
@@ -186,7 +186,7 @@ describe('ProcessFilesReview', () => {
             codeReviewModelUsed: {},
         });
         (
-            codeAnalysisOrchestrator.executeKodyRulesAnalysis as jest.Mock
+            codeAnalysisOrchestrator.executeCodyRulesAnalysis as jest.Mock
         ).mockResolvedValue({ codeSuggestions: [] });
 
         (

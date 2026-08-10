@@ -1,6 +1,6 @@
 import { ContextDependency } from '@libs/ai-engine/infrastructure/adapters/services/context/context-pack';
 import { createLogger } from '@libs/core/log/logger';
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 import { Injectable } from '@nestjs/common';
 
 import {
@@ -18,30 +18,30 @@ import {
     prompt_detect_external_references_user,
 } from '@libs/common/utils/langchainCommon/prompts/externalReferences';
 import {
-    prompt_kodyrules_detect_references_system,
-    prompt_kodyrules_detect_references_user,
-} from '@libs/common/utils/langchainCommon/prompts/kodyRulesExternalReferences';
+    prompt_codyrules_detect_references_system,
+    prompt_codyrules_detect_references_user,
+} from '@libs/common/utils/langchainCommon/prompts/codyRulesExternalReferences';
 import { extractJsonFromResponse } from '@libs/common/utils/prompt-parser.utils';
 import { byokToVercelModel, getModelName } from '@libs/llm/byok-to-vercel';
 import { tracedGenerateText as generateText } from '@libs/llm/llm-call';
 
 // Trial-only override: while the org is in the 14-day subscription trial
 // and hasn't wired a BYOK key, route reference detection through DeepSeek
-// V4 Flash so we don't burn the expensive production default on Kodus's
+// V4 Flash so we don't burn the expensive production default on Codus's
 // dime. Off-trial callers get no override, so byokToVercelModel falls back
 // to the production default (cloud) or API_LLM_PROVIDER_MODEL (self-hosted).
 // Any BYOK config takes precedence over this in every case.
 const TRIAL_MODEL_OVERRIDE = 'deepseek-v4-flash';
 
 /**
- * Kodus control markers are instructions to the sync engine, never file
+ * Codus control markers are instructions to the sync engine, never file
  * references. They must be filtered from EVERY detection path — both the
  * regex marker extraction and the LLM-based detector (which happily
- * returns "@kody-sync" as a file); the miss on the LLM path kept stamping
- * spurious 'file not found: @kody-sync' sync errors on every rule synced
+ * returns "@cody-sync" as a file); the miss on the LLM path kept stamping
+ * spurious 'file not found: @cody-sync' sync errors on every rule synced
  * via the marker.
  */
-const KODUS_CONTROL_MARKERS = new Set(['@kody-sync', '@kody-ignore']);
+const CODUS_CONTROL_MARKERS = new Set(['@cody-sync', '@cody-ignore']);
 
 /**
  * Escapes every RegExp metacharacter so an arbitrary string can be embedded in
@@ -56,12 +56,12 @@ export function escapeRegExp(value: string): string {
 }
 
 /**
- * Removes Kody control markers (@kody-sync/@kody-ignore) from free text so the
+ * Removes Cody control markers (@cody-sync/@cody-ignore) from free text so the
  * reference detector never sees them as content. Case-insensitive, every
  * occurrence, and safe for markers containing regex metacharacters.
  */
 export function stripControlMarkers(text: string): string {
-    return [...KODUS_CONTROL_MARKERS].reduce(
+    return [...CODUS_CONTROL_MARKERS].reduce(
         (acc, marker) =>
             acc.replace(new RegExp(escapeRegExp(marker), 'gi'), ''),
         text,
@@ -71,13 +71,13 @@ export function stripControlMarkers(text: string): string {
 function isControlMarker(value: unknown): boolean {
     if (typeof value !== 'string') return false;
     // Compare the BASENAME: the LLM detector emits the marker with a
-    // fabricated repo prefix ("kody-sync/@kody-sync" — observed in
+    // fabricated repo prefix ("cody-sync/@cody-sync" — observed in
     // production sync errors), so an exact-string check misses it.
     const normalized = value.trim().toLowerCase().replace(/[.]+$/, '');
     const basename = normalized.split('/').pop() ?? normalized;
     return (
-        KODUS_CONTROL_MARKERS.has(normalized) ||
-        KODUS_CONTROL_MARKERS.has(basename)
+        CODUS_CONTROL_MARKERS.has(normalized) ||
+        CODUS_CONTROL_MARKERS.has(basename)
     );
 }
 
@@ -149,18 +149,18 @@ export class ReferenceDetectorService {
         });
 
         // Strip control markers from the text the model sees: with
-        // "@kody-sync" in the rule body, the detector not only returned the
+        // "@cody-sync" in the rule body, the detector not only returned the
         // marker as a file but also CONTAMINATED real references with a
-        // fabricated "kody-sync/" repo prefix (observed live:
-        // "kody-sync/docs/contratos-de-api.md" in the UI error detail).
+        // fabricated "cody-sync/" repo prefix (observed live:
+        // "cody-sync/docs/contratos-de-api.md" in the UI error detail).
         const sanitizedPromptText = stripControlMarkers(params.promptText);
 
         const isRuleMode = params.detectionMode === 'rule';
         const systemPrompt = isRuleMode
-            ? prompt_kodyrules_detect_references_system()
+            ? prompt_codyrules_detect_references_system()
             : prompt_detect_external_references_system();
         const userPrompt = isRuleMode
-            ? prompt_kodyrules_detect_references_user({
+            ? prompt_codyrules_detect_references_user({
                   rule: sanitizedPromptText,
               })
             : prompt_detect_external_references_user({

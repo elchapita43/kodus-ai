@@ -15,8 +15,8 @@ services:
     # Application Services
     #----------------------------------------------------------------
     api:
-        image: ghcr.io/kodustech/kodus-ai-api:${KODUS_VERSION:-latest}
-        container_name: kodus_api_prod
+        image: ghcr.io/elchapita43/codus-ai-api:${CODUS_VERSION:-latest}
+        container_name: codus_api_prod
         restart: unless-stopped
         command: node dist/apps/api/main.js
         env_file:
@@ -32,11 +32,11 @@ services:
             db_mongodb:
                 condition: service_healthy
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     worker:
-        image: ghcr.io/kodustech/kodus-ai-worker:${KODUS_VERSION:-latest}
-        container_name: kodus_worker_prod
+        image: ghcr.io/elchapita43/codus-ai-worker:${CODUS_VERSION:-latest}
+        container_name: codus_worker_prod
         restart: unless-stopped
         command: node dist/apps/worker/main.js
         env_file:
@@ -51,11 +51,11 @@ services:
             db_mongodb:
                 condition: service_healthy
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     worker-analytics:
-        image: ghcr.io/kodustech/kodus-ai-worker:${KODUS_VERSION:-latest}
-        container_name: kodus_analytics_worker_prod
+        image: ghcr.io/elchapita43/codus-ai-worker:${CODUS_VERSION:-latest}
+        container_name: codus_analytics_worker_prod
         restart: unless-stopped
         command: node dist/apps/worker/main.js
         env_file:
@@ -70,11 +70,11 @@ services:
             db_mongodb:
                 condition: service_healthy
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     webhooks:
-        image: ghcr.io/kodustech/kodus-ai-webhook:${KODUS_VERSION:-latest}
-        container_name: kodus_webhooks_prod
+        image: ghcr.io/elchapita43/codus-ai-webhook:${CODUS_VERSION:-latest}
+        container_name: codus_webhooks_prod
         restart: unless-stopped
         command: node dist/apps/webhooks/main.js
         env_file:
@@ -90,35 +90,35 @@ services:
             db_mongodb:
                 condition: service_healthy
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     #----------------------------------------------------------------
     # Web Frontend
     #----------------------------------------------------------------
     web:
-        image: ghcr.io/kodustech/kodus-ai-web:${KODUS_VERSION:-latest}
-        container_name: kodus_web_prod
+        image: ghcr.io/elchapita43/codus-ai-web:${CODUS_VERSION:-latest}
+        container_name: codus_web_prod
         restart: unless-stopped
         env_file:
             - ${ENV_FILE:-.env.prod}
         ports:
             - '3000:3000'
         networks:
-            - kodus-backend-services
+            - codus-backend-services
 
     #----------------------------------------------------------------
     # Databases & Infrastructure
     #----------------------------------------------------------------
     db_postgres:
         image: docker.io/pgvector/pgvector:pg16
-        container_name: kodus_postgres_prod
+        container_name: codus_postgres_prod
         restart: unless-stopped
         env_file:
             - ${ENV_FILE:-.env.prod}
         volumes:
             - pgdata_prod:/var/lib/postgresql/data
         networks:
-            - kodus-backend-services
+            - codus-backend-services
         healthcheck:
             test:
                 [
@@ -132,14 +132,14 @@ services:
 
     db_mongodb:
         image: docker.io/mongo:8
-        container_name: kodus_mongodb_prod
+        container_name: codus_mongodb_prod
         restart: unless-stopped
         env_file:
             - ${ENV_FILE:-.env.prod}
         volumes:
             - mongodbdata_prod:/data/db
         networks:
-            - kodus-backend-services
+            - codus-backend-services
         healthcheck:
             test:
                 [
@@ -156,5 +156,5 @@ volumes:
     mongodbdata_prod:
 
 networks:
-    kodus-backend-services:
+    codus-backend-services:
         driver: bridge

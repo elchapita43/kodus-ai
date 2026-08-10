@@ -1,10 +1,10 @@
 ---
 title: 创建 GitLab OAuth App（GitLab 登录）
-description: "创建为 Kodus 用户启用「Sign in with GitLab」的 GitLab OAuth App —— 与用于代码审查的 webhook 集成相互独立。"
+description: "创建为 Codus 用户启用「Sign in with GitLab」的 GitLab OAuth App —— 与用于代码审查的 webhook 集成相互独立。"
 icon: gitlab
 ---
 
-如果您希望用户通过 GitLab 登录 Kodus，请使用此方式。这与用于代码审查自动化的 GitLab Webhook 集成是分开的。
+如果您希望用户通过 GitLab 登录 Codus，请使用此方式。这与用于代码审查自动化的 GitLab Webhook 集成是分开的。
 
 ## 先决条件
 
@@ -36,7 +36,7 @@ WEB_GITLAB_SCOPES="read_api read_user read_repository"
 
 ## 步骤 4：将凭据写入 .env
 
-创建完成后，从 GitLab 复制凭据并写入 Kodus 环境变量：
+创建完成后，从 GitLab 复制凭据并写入 Codus 环境变量：
 
 ```
 WEB_OAUTH_GITLAB_CLIENT_ID="your_client_id_here"

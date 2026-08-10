@@ -32,8 +32,8 @@ export interface UserInfo {
     userEmail: string;
 }
 
-// Specific types for Kody Rules
-export interface KodyRuleLogData {
+// Specific types for Cody Rules
+export interface CodyRuleLogData {
     ruleId?: string;
     title: string;
     rule: string;
@@ -49,7 +49,7 @@ export interface KodyRuleLogData {
     }>;
 }
 
-export interface KodyRuleChangeMetadata {
+export interface CodyRuleChangeMetadata {
     configLevel: ConfigLevel;
     ruleMetadata: {
         ruleId: string;
@@ -62,7 +62,7 @@ export interface KodyRuleChangeMetadata {
     };
 }
 
-export enum KodyRuleActionType {
+export enum CodyRuleActionType {
     CREATE = 'create',
     UPDATE = 'update',
     DELETE = 'delete',

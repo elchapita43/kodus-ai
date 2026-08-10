@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 /**
  * Adds `global_rules_source_repositories` to the
  * `organization_parameters_configkey_enum` Postgres enum so the list of
- * repositories selected as sources of global Kody Rules can be persisted as an
+ * repositories selected as sources of global Cody Rules can be persisted as an
  * organization_parameters row. Without this,
  * `OrganizationParametersService.createOrUpdateConfig` (and any read of the
  * key) fails with `invalid input value for enum ...` and the save endpoint

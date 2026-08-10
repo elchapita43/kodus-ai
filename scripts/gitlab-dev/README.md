@@ -1,13 +1,13 @@
 # gitlab-dev — self-hosted GitLab fixture for local testing
 
 Spins up a single-node `gitlab-ce` container on the
-`kodus-backend-services` docker network and lets you bring up the
+`codus-backend-services` docker network and lets you bring up the
 test data in steps so you can browse between them.
 
 The seed produces:
 
-- a test user (`kodus-dev`)
-- a private group + project (`kodus-playground/discount-service`)
+- a test user (`codus-dev`)
+- a private group + project (`codus-playground/discount-service`)
 - a small but real TypeScript service on `main`
 - an open merge request from `feat/discount-codes` → `main` that
   carries five deliberate review-worthy issues (missing `await`,
@@ -19,14 +19,14 @@ The seed produces:
   written to `.tmp/gitlab-dev-pat.txt`
 
 **Development only.** No production data, no production credentials,
-no telemetry. The root password is hardcoded (`KodusDev!2026`), the
+no telemetry. The root password is hardcoded (`CodusDev!2026`), the
 instance listens on `gitlab.lvh.me:8929`, and `destroy.sh` wipes
 everything.
 
 ## Prerequisites
 
 ```sh
-# Creates the kodus-backend-services network that compose attaches to
+# Creates the codus-backend-services network that compose attaches to
 pnpm run docker:start
 ```
 
@@ -38,7 +38,7 @@ Each script is idempotent and safe to re-run.
 
 ```sh
 # 1. Boot. First time takes 2-5 minutes (gitlab-ce reconfigure).
-#    Browse it at http://gitlab.lvh.me:8929  (root / KodusDev!2026)
+#    Browse it at http://gitlab.lvh.me:8929  (root / CodusDev!2026)
 bash scripts/gitlab-dev/start.sh
 
 # 2. Create the test user, group, project, and seed main.
@@ -55,9 +55,9 @@ bash scripts/gitlab-dev/run.sh
 bash scripts/gitlab-dev/destroy.sh
 ```
 
-## Wiring into the Kodus dev stack
+## Wiring into the Codus dev stack
 
-Register a self-hosted GitLab integration in the Kodus UI with:
+Register a self-hosted GitLab integration in the Codus UI with:
 
 | field | value |
 |---|---|
@@ -75,16 +75,16 @@ The compose enables
 so GitLab will POST to **any** target you give it:
 
 - a public tunnel (zrok / ngrok) — works as-is; GitLab has internet
-- `http://kodus-api:3001/gitlab/webhook` — for the docker dev stack
+- `http://codus-api:3001/gitlab/webhook` — for the docker dev stack
 - `http://host.docker.internal:3001/gitlab/webhook` — for `pnpm run start:dev` on the host
 
 You generally don't need to change anything: when you connect the
-integration in the Kodus UI, Kodus registers the webhook itself using
+integration in the Codus UI, Codus registers the webhook itself using
 whatever `API_GITLAB_CODE_MANAGEMENT_WEBHOOK` you already have set
 (e.g. your zrok URL).
 
 If you want to pre-wire a webhook directly on the GitLab side
-(skipping the Kodus UI step — useful when you're testing GitLab → API
+(skipping the Codus UI step — useful when you're testing GitLab → API
 delivery in isolation), pass `WEBHOOK_URL` to `create-project.sh`:
 
 ```sh
@@ -118,7 +118,7 @@ first and retries without it on `ActiveRecord::RecordInvalid`.
 ## Common test scenarios
 
 Each recipe assumes the dev stack is up and `WEBHOOK_URL` points at
-your Kodus API (zrok tunnel, `kodus-api:3001`, etc.).
+your Codus API (zrok tunnel, `codus-api:3001`, etc.).
 
 ### Regression check on a current GitLab
 
@@ -126,7 +126,7 @@ your Kodus API (zrok tunnel, `kodus-api:3001`, etc.).
 bash scripts/gitlab-dev/run.sh   # default = gitlab-ce:latest
 ```
 
-Register the integration in Kodus, trigger a review on the seeded MR.
+Register the integration in Codus, trigger a review on the seeded MR.
 The MR carries a hardcoded `ADMIN_TOKEN` and a missing `await` — both
 reliable critical hits — so the critical-issues code path should
 engage even on a current GitLab CE.
@@ -136,7 +136,7 @@ engage even on a current GitLab CE.
 ```sh
 bash scripts/gitlab-dev/destroy.sh   # only if previously booted with another pin
 GITLAB_IMAGE=gitlab/gitlab-ce:15.6.5-ce.0 \
-    WEBHOOK_URL="<your-kodus-webhook>" \
+    WEBHOOK_URL="<your-codus-webhook>" \
     bash scripts/gitlab-dev/run.sh
 ```
 
@@ -150,14 +150,14 @@ produce suggestions.
 13.x Note Hook payloads omit `object_attributes.action` and may also
 omit `object_attributes.discussion_id`, so this is the pin to use for
 shaking out any "missing field on the webhook" assumption in handlers
-or the chat-with-Kody paths.
+or the chat-with-Cody paths.
 
 ```sh
 GITLAB_IMAGE=gitlab/gitlab-ce:13.12.15-ce.0 \
-    WEBHOOK_URL="<your-kodus-webhook>" \
+    WEBHOOK_URL="<your-codus-webhook>" \
     bash scripts/gitlab-dev/run.sh
 
-bash scripts/gitlab-dev/post-comment.sh --body "@kody start-review"
+bash scripts/gitlab-dev/post-comment.sh --body "@cody start-review"
 ```
 
 Confirm the comment is received and routed. Optionally, manually post
@@ -188,7 +188,7 @@ scripts/gitlab-dev/
   start.sh                 step 1 — boot compose + wait for /-/health
   create-project.sh        step 2 — user/group/project/seed/PAT (+optional webhook)
   create-mr.sh             step 3 — feature branch + open MR
-  post-comment.sh          post a comment as kodus-dev on the seeded MR
+  post-comment.sh          post a comment as codus-dev on the seeded MR
   run.sh                   start + create-project + create-mr in sequence
   destroy.sh               compose down -v + clean .tmp artefacts
 ```

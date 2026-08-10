@@ -9,14 +9,14 @@ import { absenceRetryDelayMs, isTransientFailure } from "../runner.js";
 // below is a REAL failure string observed in matrix runs.
 
 const TRANSIENT = [
-    // kody-rules × gitlab, 2026-06-04 run 26953557579 — lost webhook
+    // cody-rules × gitlab, 2026-06-04 run 26953557579 — lost webhook
     "Assertion failed: No review activity on PR https://gitlab.com/x/-/merge_requests/74 within timeout",
     // license-attribution expectReview path: review never materialized
     "Assertion failed: Expected a real review for license=trial but none arrived within 900s. licenseBlockedNotice=undefined",
     // blocked-tier notice that never showed up (absence)
-    "Assertion failed: License=free should have triggered a trial-ended / BYOK / no-license notice from Kody, but the PR has no such comment after 180s. review={}",
+    "Assertion failed: License=free should have triggered a trial-ended / BYOK / no-license notice from Cody, but the PR has no such comment after 180s. review={}",
     // command-review: no findings after the command (absence)
-    'Assertion failed: No review findings on PR/MR #8 within 900s after posting "@kody review". pre-command findings count was 0.',
+    'Assertion failed: No review findings on PR/MR #8 within 900s after posting "@cody review". pre-command findings count was 0.',
     // network / gateway shapes
     "onboarding:login HTTP 502: <html>Bad Gateway</html>",
     "request to https://qa.web.kodus.io failed, reason: ECONNRESET",
@@ -29,7 +29,7 @@ const DETERMINISTIC = [
     // rbac route-guard verdict mismatch — re-running cannot flip a policy
     "Frontend route mismatches (2):\n  billing_manager on /settings/git: expected deny, got allow",
     // entitlement gate posted the WRONG thing (value present, not absent)
-    'Assertion failed: Expected NO real review for license=free but Kody posted one: {"reviewComments":1}',
+    'Assertion failed: Expected NO real review for license=free but Cody posted one: {"reviewComments":1}',
     // wrong subscription state — fresh org provisioning produced bad data
     "Assertion failed: Expected subscriptionStatus='trial' (the state that makes the entitlement gate allow managed reviews with no BYOK), got 'active'. Full license={}",
     // registry/config errors
@@ -56,7 +56,7 @@ test("isTransientFailure: tolerates empty/undefined", () => {
 
 test("absenceRetryDelayMs: review-never-started shapes get the 120s settle", () => {
     const absent = [
-        "[provider:github] No kody-codereview status comment on PR #23 within 60s — review pipeline likely never started (check droplet worker logs and the webhook delivery list).",
+        "[provider:github] No cody-codereview status comment on PR #23 within 60s — review pipeline likely never started (check droplet worker logs and the webhook delivery list).",
         "Assertion failed: No review activity on PR https://gitlab.com/x/-/merge_requests/79 within timeout",
         "Expected a real review for license=trial but none arrived within 900s.",
     ];

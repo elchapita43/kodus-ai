@@ -131,7 +131,7 @@ describe('PermissionsAbilityFactory', () => {
         expect(
             ability.can(
                 Action.Read,
-                inUnassignedRepo(ResourceType.KodyRules) as any,
+                inUnassignedRepo(ResourceType.CodyRules) as any,
             ),
         ).toBe(true);
         expect(

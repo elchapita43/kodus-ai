@@ -7,7 +7,7 @@ describe('deterministic-tool-executor', () => {
         });
 
         const output = await executeDeterministicTool({
-            toolName: 'KODUS_GET_PULL_REQUEST_DIFF',
+            toolName: 'CODUS_GET_PULL_REQUEST_DIFF',
             args: {
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -23,7 +23,7 @@ describe('deterministic-tool-executor', () => {
         });
 
         expect(callTool).toHaveBeenCalledWith(
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
             expect.objectContaining({
                 organizationId: 'org-1',
                 teamId: 'team-1',
@@ -55,7 +55,7 @@ describe('deterministic-tool-executor', () => {
         const onFallback = jest.fn();
 
         const output = await executeDeterministicTool({
-            toolName: 'KODUS_GET_PULL_REQUEST',
+            toolName: 'CODUS_GET_PULL_REQUEST',
             args: { organizationId: 'org-1' },
             callTool,
             validate: () => 'precondition_failed',
@@ -75,7 +75,7 @@ describe('deterministic-tool-executor', () => {
         });
 
         const output = await executeDeterministicTool({
-            toolName: 'KODUS_GET_PULL_REQUEST',
+            toolName: 'CODUS_GET_PULL_REQUEST',
             args: { organizationId: 'org-1' },
             callTool,
             validate: () => undefined,
@@ -92,7 +92,7 @@ describe('deterministic-tool-executor', () => {
         const onFallback = jest.fn();
 
         const output = await executeDeterministicTool({
-            toolName: 'KODUS_GET_PULL_REQUEST',
+            toolName: 'CODUS_GET_PULL_REQUEST',
             args: { organizationId: 'org-1' },
             callTool,
             extract: () => 'should-not-happen',

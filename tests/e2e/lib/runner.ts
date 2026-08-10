@@ -132,13 +132,13 @@ function envForTarget(target: Target, provider?: ProviderName): TargetContext {
 // `cloud`: pre-provisioned tenants per license tier (free/trial/paid)
 // because the cloud control plane wires each tier into Stripe and we
 // can't reproduce that from the test runner. The env vars are seeded by
-// run.sh from `~/.kodus-dev/config` (or 1Password refs).
+// run.sh from `~/.codus-dev/config` (or 1Password refs).
 //
 // `self-hosted`: one persistent tenant PER PROVIDER, seeded during
 // `provision.sh` so they're the OLDEST tenants on the droplet. Two
 // reasons we don't sign up a fresh tenant per cell:
 //
-//   1. Kodus's `getTypeIntegration` resolves the platform by category
+//   1. Codus's `getTypeIntegration` resolves the platform by category
 //      alone (not by platform). One tenant with multiple integrations
 //      ends up routing dispatches to the first match. Splitting per
 //      provider keeps each tenant single-integration.
@@ -168,7 +168,7 @@ interface CloudTenantEntry {
 }
 
 function readCloudTenantsFile(): CloudTenantEntry[] {
-    const path = join(homedir(), '.kodus-dev', 'cloud-tenants.json');
+    const path = join(homedir(), '.codus-dev', 'cloud-tenants.json');
     if (!existsSync(path)) return [];
     try {
         const raw = readFileSync(path, 'utf8');
@@ -290,7 +290,7 @@ async function resolveTenantForCell(
 ): Promise<TenantCredentials | undefined> {
     if (target.target === 'cloud') {
         // Preferred path (post-cloud:setup-tenants): match by
-        // (provider, license) in ~/.kodus-dev/cloud-tenants.json. Each
+        // (provider, license) in ~/.codus-dev/cloud-tenants.json. Each
         // entry has email + password + the resolved org/team uuids the
         // setup phase persisted.
         const entries = readCloudTenantsFile();
@@ -335,7 +335,7 @@ async function resolveTenantForCell(
     // command-review's automatedReviewActive=false leftover, or a
     // team_automation that drifted out of sync after dozens of
     // POST /parameters/create-or-update calls. Junior 2026-05-21:
-    // the deterministic `e2e-${provider}@kodus.local` email accumu-
+    // the deterministic `e2e-${provider}@codus.local` email accumu-
     // lated 25 rows of code_review_config from earlier debug runs and
     // the latest row's `configs: { automatedReviewActive: false }`
     // (left behind by command-review's finally restoration, which
@@ -350,7 +350,7 @@ async function resolveTenantForCell(
     // `2026-05-` collides for every run on the same calendar day,
     // which silently reuses a tenant whose code_review_config got
     // polluted by per-seat-toggle (`automatedReviewActive: false`) or
-    // kody-rules cleanup deletes in a previous matrix cycle — the
+    // cody-rules cleanup deletes in a previous matrix cycle — the
     // review pipeline then short-circuits in ~1s with the job marked
     // COMPLETED and zero `Code Review Started!` comment, which Phase
     // A reports as "pipeline never started". slice(0,16) drops down
@@ -359,7 +359,7 @@ async function resolveTenantForCell(
     // 60s); cross-minute runs always get fresh tenants.
     const email =
         explicitEmail ??
-        `e2e-${provider}-${runId.slice(0, 16).replace(/[^a-z0-9-]/gi, '')}@kodus.local`;
+        `e2e-${provider}-${runId.slice(0, 16).replace(/[^a-z0-9-]/gi, '')}@codus.local`;
     const password =
         process.env.SH_TENANT_PASSWORD ??
         process.env.TEST_USER_PASSWORD ??
@@ -371,10 +371,10 @@ async function resolveTenantForCell(
 // Failure shapes worth ONE automatic retry: ABSENCE (something expected
 // never arrived — lost webhook, review that never materialized, pipeline
 // that never woke) and NETWORK/INFRA noise. These are the flake classes
-// observed in practice (e.g. kody-rules × gitlab "No review activity on
+// observed in practice (e.g. cody-rules × gitlab "No review activity on
 // PR … within timeout" while the same repo passed 3 other scenarios in
 // the same run). Deterministic mismatches — "expected deny, got allow",
-// "Kody posted one", wrong subscriptionStatus — deliberately do NOT
+// "Cody posted one", wrong subscriptionStatus — deliberately do NOT
 // match: re-running cannot change a wrong value, it only burns an LLM
 // review and 10 minutes.
 const TRANSIENT_FAILURE_PATTERNS: RegExp[] = [
@@ -547,7 +547,7 @@ export async function runMatrix(opts: RunOptions): Promise<RunOutcome> {
               }
             : envForTarget(cell.target, cell.provider);
         const tenant = opts.dryRun
-            ? { email: 'dry-run@kodus.test', password: 'dry-run' }
+            ? { email: 'dry-run@codus.test', password: 'dry-run' }
             : await resolveTenantForCell(
                   target,
                   cell.license,
@@ -635,7 +635,7 @@ export async function runMatrix(opts: RunOptions): Promise<RunOutcome> {
             // One automatic retry for TRANSIENT failure shapes (lost
             // webhook, provider hiccup, network) — see isTransientFailure.
             // Deterministic assertion mismatches ("expected deny, got
-            // allow", "Kody posted one") never retry: re-running can't
+            // allow", "Cody posted one") never retry: re-running can't
             // change a wrong value, only waste an LLM review.
             let failFastHit = false;
             let retriedAfter: string | undefined;
@@ -680,7 +680,7 @@ export async function runMatrix(opts: RunOptions): Promise<RunOutcome> {
                             provider,
                             license: cell.license,
                             tenant,
-                            kodus: {
+                            codus: {
                                 login: (creds) => login(target, creds),
                                 registerIntegration: (session) =>
                                     registerIntegration(

@@ -1,11 +1,11 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  */
 import { FileChange } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { AnalysisContext } from '@libs/core/infrastructure/config/types/general/codeReview.type';
 import { CodeSuggestion } from '@libs/core/infrastructure/config/types/general/codeReview.type';
-import { IClusterizedSuggestion } from '@libs/kodyFineTuning/domain/interfaces/kodyFineTuning.interface';
+import { IClusterizedSuggestion } from '@libs/codyFineTuning/domain/interfaces/codyFineTuning.interface';
 
 export interface IFileAnalysisRule {
     /**

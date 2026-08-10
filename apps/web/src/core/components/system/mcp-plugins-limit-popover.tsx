@@ -45,7 +45,7 @@ export const MCPPluginsLimitPopover = ({
                     <span className="text-primary-light font-semibold">
                         unlimited plugins
                     </span>{" "}
-                    across all your repos, plus unlimited Kody Rules and the
+                    across all your repos, plus unlimited Cody Rules and the
                     Cockpit engineering metrics.
                 </p>
 

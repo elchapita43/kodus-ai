@@ -54,7 +54,7 @@ const EXPECTED_ORDER = [
 
 const REMOVED_EE_STAGES = [
     'CollectCrossFileContextStage',
-    'KodyFineTuningStage',
+    'CodyFineTuningStage',
     'PRLevelReviewStage',
     'FileAnalysisStage',
 ];

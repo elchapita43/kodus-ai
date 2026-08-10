@@ -3,8 +3,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { CoreDocument } from '@libs/core/infrastructure/repositories/model/mongodb';
 
 /**
- * Mongo model for `kodus-agent-sessions` — the conversation record that used to
- * be written by the `@kodus/flow` session engine.
+ * Mongo model for `codus-agent-sessions` — the conversation record that used to
+ * be written by the `@codus/flow` session engine.
  *
  * Faithful to the legacy document's recognizable OUTER shape
  * (`id` / `threadId` / `timestamp` / `sessionData.runtime.messages`) so support
@@ -39,12 +39,12 @@ interface PersistedSessionData {
 }
 
 @Schema({
-    collection: 'kodus-agent-sessions',
+    collection: 'codus-agent-sessions',
     timestamps: true,
     // autoIndex on boot is the repo convention (no Mongo index migration
     // mechanism exists for mongoose models here). Safe because the indexes
     // below are NON-UNIQUE and background: building them over the existing
-    // legacy `@kodus/flow` documents cannot fail on duplicate threadIds and
+    // legacy `@codus/flow` documents cannot fail on duplicate threadIds and
     // does not block startup. (A unique build WOULD have failed — see below.)
     autoIndex: true,
 })

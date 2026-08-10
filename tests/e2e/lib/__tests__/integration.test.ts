@@ -14,14 +14,14 @@ import {
 } from "./mock-server.js";
 
 const TEST_PR_NUMBER = 42;
-const TEST_REPO = "kodustech/qa-fixture";
+const TEST_REPO = "elchapita43/qa-fixture";
 const ORG_ID = "org-uuid-123";
 const TEAM_ID = "team-uuid-456";
 
-test("integration: code-review-basic runs end-to-end against mocked Kodus + GitHub", async () => {
+test("integration: code-review-basic runs end-to-end against mocked Codus + GitHub", async () => {
     const reviewSinceWindow = { triggeredAt: "" };
 
-    const kodusServer = await startMockServer([
+    const codusServer = await startMockServer([
         {
             // Self-hosted target: runner.ts signs up a fresh tenant per cell
             // before login. Accept both spellings the real API tolerates.
@@ -29,7 +29,7 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
             pathRegex: /^\/auth\/(signUp|signup)$/,
             handler: (_req, res) =>
                 json(res, 201, {
-                    data: { uuid: "user-1", email: "mock@kodus.local" },
+                    data: { uuid: "user-1", email: "mock@codus.local" },
                 }),
         },
         {
@@ -162,16 +162,16 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
             pathRegex: /^\/repos\/[^/]+\/[^/]+\/issues\/\d+\/comments$/,
             handler: (_req, res) => {
                 const created = new Date().toISOString();
-                json(res, 201, { id: 1001, created_at: created, body: "@kody review" });
+                json(res, 201, { id: 1001, created_at: created, body: "@cody review" });
             },
         },
         {
             method: "GET",
             pathRegex: /^\/repos\/[^/]+\/[^/]+\/pulls\/\d+\/comments/,
             handler: (_req, res) => {
-                // Inline review comment from Kody — counts as `reviewComments`,
+                // Inline review comment from Cody — counts as `reviewComments`,
                 // which the new scenario assert requires (issueComments are
-                // ignored to avoid false-positives on Kody's status notice).
+                // ignored to avoid false-positives on Cody's status notice).
                 const responseTime = new Date(
                     new Date(reviewSinceWindow.triggeredAt).getTime() + 1000,
                 ).toISOString();
@@ -188,9 +188,9 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
             method: "GET",
             pathRegex: /^\/repos\/[^/]+\/[^/]+\/issues\/\d+\/comments/,
             handler: (_req, res) => {
-                // Phase-A heartbeat — Kody posts the "Code Review
+                // Phase-A heartbeat — Cody posts the "Code Review
                 // Started!" placeholder to issueComments on every PR
-                // it picks up. Carries the kody-codereview marker but
+                // it picks up. Carries the cody-codereview marker but
                 // is correctly classified as "started" by
                 // pollForReview's filter, so it won't double-count as
                 // a finding. The new code-review-basic scenario blocks
@@ -203,7 +203,7 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
                 json(res, 200, [
                     {
                         id: 4004,
-                        body: "<!-- kody-codereview -->\n\nCode Review Started!",
+                        body: "<!-- cody-codereview -->\n\nCode Review Started!",
                         created_at: startedAt,
                     },
                 ]);
@@ -233,10 +233,10 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
     const originalEnv = { ...process.env };
 
     try {
-        process.env.TARGET_BASE_URL = kodusServer.baseUrl;
-        process.env.TARGET_WEB_URL = kodusServer.baseUrl;
+        process.env.TARGET_BASE_URL = codusServer.baseUrl;
+        process.env.TARGET_WEB_URL = codusServer.baseUrl;
         process.env.TARGET_TUNNEL_URL = "https://dummy.trycloudflare.com";
-        process.env.SH_TENANT_EMAIL = "test@kodus.test";
+        process.env.SH_TENANT_EMAIL = "test@codus.test";
         process.env.SH_TENANT_PASSWORD = "secret123";
         // Mocks answer instantly — collapse the production polls and settles
         // rather than sleeping through them. See providers/base.ts settle().
@@ -303,29 +303,29 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
             );
 
             // Verify the runner actually hit the expected endpoints
-            const kodusCalls = kodusServer.requests.map((r) => `${r.method} ${r.path}`);
+            const codusCalls = codusServer.requests.map((r) => `${r.method} ${r.path}`);
             assert.ok(
-                kodusCalls.some((c) => c.startsWith("POST /auth/login")),
+                codusCalls.some((c) => c.startsWith("POST /auth/login")),
                 "login was not called",
             );
             assert.ok(
-                kodusCalls.some((c) => c.startsWith("GET /team/")),
+                codusCalls.some((c) => c.startsWith("GET /team/")),
                 "team lookup was not called",
             );
             assert.ok(
-                kodusCalls.some((c) =>
+                codusCalls.some((c) =>
                     c.startsWith("POST /code-management/auth-integration"),
                 ),
                 "integration registration was not called",
             );
             assert.ok(
-                kodusCalls.some((c) =>
+                codusCalls.some((c) =>
                     c.startsWith("POST /code-management/repositories"),
                 ),
                 "repo registration was not called",
             );
             assert.ok(
-                kodusCalls.some((c) =>
+                codusCalls.some((c) =>
                     c.startsWith("POST /code-management/finish-onboarding"),
                 ),
                 "finish-onboarding was not called",
@@ -353,14 +353,14 @@ test("integration: code-review-basic runs end-to-end against mocked Kodus + GitH
         }
     } finally {
         process.env = originalEnv;
-        await kodusServer.close();
+        await codusServer.close();
         await ghServer.close();
         rmSync(artifactRoot, { recursive: true, force: true });
     }
 });
 
-test("integration: scenario fails clearly when Kody does NOT respond", async () => {
-    const kodusServer = await startMockServer([
+test("integration: scenario fails clearly when Cody does NOT respond", async () => {
+    const codusServer = await startMockServer([
         {
             // Self-hosted target: runner.ts signs up a fresh tenant per cell
             // before login. Accept both spellings the real API tolerates.
@@ -368,7 +368,7 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
             pathRegex: /^\/auth\/(signUp|signup)$/,
             handler: (_req, res) =>
                 json(res, 201, {
-                    data: { uuid: "user-1", email: "mock@kodus.local" },
+                    data: { uuid: "user-1", email: "mock@codus.local" },
                 }),
         },
         {
@@ -417,7 +417,7 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
         },
     ]);
 
-    // GitHub mock that NEVER returns Kody comments — simulates a broken
+    // GitHub mock that NEVER returns Cody comments — simulates a broken
     // self-hosted where webhooks don't reach worker or worker is down.
     // Routes ordered specific → generic; [^/]+ keeps the repo-metadata
     // route from swallowing deeper paths.
@@ -429,7 +429,7 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
                 json(res, 201, {
                     id: 1001,
                     created_at: new Date().toISOString(),
-                    body: "@kody review",
+                    body: "@cody review",
                 }),
         },
         {
@@ -459,10 +459,10 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
     const originalEnv = { ...process.env };
 
     try {
-        process.env.TARGET_BASE_URL = kodusServer.baseUrl;
-        process.env.TARGET_WEB_URL = kodusServer.baseUrl;
+        process.env.TARGET_BASE_URL = codusServer.baseUrl;
+        process.env.TARGET_WEB_URL = codusServer.baseUrl;
         process.env.TARGET_TUNNEL_URL = "https://dummy.trycloudflare.com";
-        process.env.SH_TENANT_EMAIL = "test@kodus.test";
+        process.env.SH_TENANT_EMAIL = "test@codus.test";
         process.env.SH_TENANT_PASSWORD = "secret123";
         // Mocks answer instantly — collapse the production polls and settles
         // rather than sleeping through them. See providers/base.ts settle().
@@ -491,7 +491,7 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
             // this test fast, we instead just confirm the no-review path
             // would eventually fail, by running with a custom scenario that
             // wraps code-review-basic but overrides the poll timeout. For
-            // simplicity, this assertion only checks that with NO Kody
+            // simplicity, this assertion only checks that with NO Cody
             // response in mock, we get *some* failure — we don't wait 10 min.
             // We use a much shorter scenario timeout by monkey-patching
             // process.env.GH_POLL_TIMEOUT_OVERRIDE if it existed. Since it
@@ -516,14 +516,14 @@ test("integration: scenario fails clearly when Kody does NOT respond", async () 
             assert.deepEqual(
                 body,
                 [],
-                "mock should return empty array, simulating no Kody response",
+                "mock should return empty array, simulating no Cody response",
             );
         } finally {
             global.fetch = originalFetch;
         }
     } finally {
         process.env = originalEnv;
-        await kodusServer.close();
+        await codusServer.close();
         await ghServer.close();
         rmSync(artifactRoot, { recursive: true, force: true });
     }

@@ -27,7 +27,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 . "$SCRIPT_DIR/_common.sh"
 
-NAME_RAW="${KODUS_DIAG_NAME:-default}"
+NAME_RAW="${CODUS_DIAG_NAME:-default}"
 WHAT="${1:-all}"
 
 NAME=$(normalize_name "$NAME_RAW")
@@ -42,11 +42,11 @@ log_step() { printf '\n=== %s ===\n' "\$1"; }
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "tunnel" ]; then
   log_step "Tunnel state"
-  systemctl is-active kodus-tunnel.service 2>&1 || true
+  systemctl is-active codus-tunnel.service 2>&1 || true
   echo "URL: \$(grep -oE 'https://[a-zA-Z0-9-]+\.trycloudflare\.com' /var/log/cloudflared.log | tail -1)"
   echo ""
   echo "POSTs to /azure-repos in last 10 min (webhooks-prod):"
-  docker logs --since 10m kodus-webhooks-prod 2>&1 | grep -c "POST /azure-repos" || echo "0"
+  docker logs --since 10m codus-webhooks-prod 2>&1 | grep -c "POST /azure-repos" || echo "0"
 fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "rmq" ]; then
@@ -65,21 +65,21 @@ fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "pg" ]; then
   log_step "Postgres — list all tables"
-  cd /opt/kodus-installer
+  cd /opt/codus-installer
   set -a
   . ./.env
   set +a
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
     -c '\dt' \
     2>&1 || true
   log_step "Postgres — typeorm_migrations (which ran?)"
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
     -c 'SELECT id, name, timestamp FROM migrations ORDER BY id DESC LIMIT 10;' \
     2>&1 || true
   log_step "Postgres — last 10 workflow_jobs (if table exists)"
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
     -c 'SELECT id, status, workflow_type, handler_type, created_at FROM workflow_jobs ORDER BY created_at DESC LIMIT 10;' \
     2>&1 || true
@@ -87,11 +87,11 @@ fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "mongo" ]; then
   log_step "Mongo — last 5 pullRequests"
-  cd /opt/kodus-installer
+  cd /opt/codus-installer
   set -a
   . ./.env
   set +a
-  docker exec db_kodus_mongodb \
+  docker exec db_codus_mongodb \
     mongosh --quiet \
     -u "\$API_MG_DB_USERNAME" \
     -p "\$API_MG_DB_PASSWORD" \
@@ -103,9 +103,9 @@ fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "pipeline" ]; then
   log_step "Worker — last 20 azure_pipeline traces"
-  docker logs --since 30m kodus-worker-prod 2>&1 | grep "azure_pipeline" | tail -20 || true
+  docker logs --since 30m codus-worker-prod 2>&1 | grep "azure_pipeline" | tail -20 || true
   log_step "Webhooks — last 20 azure_pipeline traces"
-  docker logs --since 30m kodus-webhooks-prod 2>&1 | grep "azure_pipeline" | tail -20 || true
+  docker logs --since 30m codus-webhooks-prod 2>&1 | grep "azure_pipeline" | tail -20 || true
 fi
 
 # Release orphan outbox locks left behind by a dead worker. The OutboxRelay
@@ -116,13 +116,13 @@ fi
 # PROCESSING outbox rows from a previous instance.
 if [ "$WHAT" = "unlock-outbox" ]; then
   log_step "Releasing orphan PROCESSING outbox locks back to READY"
-  cd /opt/kodus-installer
+  cd /opt/codus-installer
   set -a
   . ./.env
   set +a
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
-    -c "UPDATE kodus_workflow.outbox_messages
+    -c "UPDATE codus_workflow.outbox_messages
         SET status = 'READY',
             \"lockedBy\" = NULL,
             \"lockedAt\" = NULL
@@ -130,9 +130,9 @@ if [ "$WHAT" = "unlock-outbox" ]; then
         RETURNING uuid, attempts, \"createdAt\";" \
     2>&1 || true
   log_step "Status counts after unlock"
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
-    -c "SELECT status, COUNT(*) FROM kodus_workflow.outbox_messages GROUP BY status;" \
+    -c "SELECT status, COUNT(*) FROM codus_workflow.outbox_messages GROUP BY status;" \
     2>&1 || true
 fi
 
@@ -143,13 +143,13 @@ fi
 # whichever queue-fairness mechanism is in play.
 if [ "$WHAT" = "reset-failed" ]; then
   log_step "Resetting PENDING workflow_jobs with no progress in last 30min"
-  cd /opt/kodus-installer
+  cd /opt/codus-installer
   set -a
   . ./.env
   set +a
-  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_kodus_postgres \
+  docker exec -e PGPASSWORD="\$API_PG_DB_PASSWORD" db_codus_postgres \
     psql -U "\$API_PG_DB_USERNAME" -d "\$API_PG_DB_DATABASE" \
-    -c "UPDATE kodus_workflow.workflow_jobs
+    -c "UPDATE codus_workflow.workflow_jobs
         SET \"updatedAt\" = NOW()
         WHERE status = 'PENDING'
           AND \"startedAt\" IS NULL

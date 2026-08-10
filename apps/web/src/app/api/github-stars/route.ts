@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-const GITHUB_REPO = "kodustech/kodus-ai";
+const GITHUB_REPO = "elchapita43/codus-ai";
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000;
 
 type GithubStarsCache = {
@@ -11,9 +11,9 @@ type GithubStarsCache = {
 const getGithubStarsCache = () => {
     const cache = (
         globalThis as typeof globalThis & {
-            __kodusGithubStarsCache?: GithubStarsCache;
+            __codusGithubStarsCache?: GithubStarsCache;
         }
-    ).__kodusGithubStarsCache;
+    ).__codusGithubStarsCache;
 
     return cache;
 };
@@ -21,9 +21,9 @@ const getGithubStarsCache = () => {
 const setGithubStarsCache = (cache: GithubStarsCache) => {
     (
         globalThis as typeof globalThis & {
-            __kodusGithubStarsCache?: GithubStarsCache;
+            __codusGithubStarsCache?: GithubStarsCache;
         }
-    ).__kodusGithubStarsCache = cache;
+    ).__codusGithubStarsCache = cache;
 };
 
 export async function GET() {
@@ -43,7 +43,7 @@ export async function GET() {
                 cache: "no-store",
                 headers: {
                     "Accept": "application/vnd.github+json",
-                    "User-Agent": "kodus-web",
+                    "User-Agent": "codus-web",
                 },
             },
         );

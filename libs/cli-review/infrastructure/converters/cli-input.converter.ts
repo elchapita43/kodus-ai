@@ -141,7 +141,7 @@ export class CliInputConverter {
             message: suggestion.suggestionContent || '',
             suggestion: suggestion.improvedCode,
             recommendation: (suggestion as any).recommendation,
-            ruleId: suggestion.brokenKodyRulesIds?.[0],
+            ruleId: suggestion.brokenCodyRulesIds?.[0],
             fixable: false, // TODO: Implement fix detection based on improvedCode
         }));
 

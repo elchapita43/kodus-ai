@@ -35,7 +35,7 @@ import {
 } from "@services/mcp-manager/fetch";
 import {
     CUSTOM_MCP_SESSION_STORAGE_KEYS,
-    KODUS_ISSUES_INTEGRATION_ID,
+    CODUS_ISSUES_INTEGRATION_ID,
 } from "@services/mcp-manager/types";
 import { useSelectedTeamId } from "src/core/providers/selected-team-context";
 
@@ -64,7 +64,7 @@ export const PluginModal = ({
     const router = useRouter();
     const { toast } = useToast();
     // Must agree with PluginsGrid's count — default (system-managed)
-    // plugins like "Kodus MCP" don't consume the free-plan cap, so
+    // plugins like "Codus MCP" don't consume the free-plan cap, so
     // counting raw `.length` here could block a valid install that the
     // grid itself would've allowed.
     const mcpPluginsLimits = useMCPPluginsLimit(
@@ -79,14 +79,14 @@ export const PluginModal = ({
     // The generic issues MCP reuses the team's code-management integration, so
     // it only works on hosts with a native issue tracker (not Azure Repos or
     // Bitbucket Data Center). Gate install on backend-confirmed support.
-    const requiresIssuesSupport = plugin.id === KODUS_ISSUES_INTEGRATION_ID;
+    const requiresIssuesSupport = plugin.id === CODUS_ISSUES_INTEGRATION_ID;
     const [isIssuesSupported, setIsIssuesSupported] = useState<boolean | null>(
         requiresIssuesSupport ? null : true,
     );
 
     const isCustomOauthUnauthorized =
         plugin.authScheme?.toLowerCase() === "oauth2" &&
-        ["custom", "kodusmcp"].includes(plugin.provider) &&
+        ["custom", "codusmcp"].includes(plugin.provider) &&
         !plugin.active;
 
     // Only label "OAuth login" when OAuth is the *only* way to connect — not for

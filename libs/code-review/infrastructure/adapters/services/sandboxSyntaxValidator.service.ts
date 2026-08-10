@@ -5,13 +5,13 @@ import { Sandbox } from 'e2b';
 import pLimit from 'p-limit';
 import { ValidationCandidate } from '@libs/code-review/domain/types/astValidate.type';
 import { shSingleQuote } from './shell-quote';
-import { KODUS_GRAPH_VERSION } from './graph/kodus-graph-cli';
+import { CODUS_GRAPH_VERSION } from './graph/codus-graph-cli';
 
 const PARSE_TIMEOUT_MS = 30_000;
 const CONCURRENCY_LIMIT = 10;
 const VALIDATE_DIR = '/tmp/validate';
 const SANDBOX_TIMEOUT_MS = 5 * 60 * 1000; // 5 min — only needs to survive through validation
-const INSTALL_TIMEOUT_MS = 120_000; // 2 min — bun + kodus-graph install
+const INSTALL_TIMEOUT_MS = 120_000; // 2 min — bun + codus-graph install
 
 @Injectable()
 export class SandboxSyntaxValidator {
@@ -20,7 +20,7 @@ export class SandboxSyntaxValidator {
     constructor(private readonly configService: ConfigService) {}
 
     /**
-     * Validate syntax of merged code candidates by running kodus-graph parse
+     * Validate syntax of merged code candidates by running codus-graph parse
      * in a dedicated lightweight sandbox.
      * Returns a Set of candidate IDs that are syntactically valid.
      * If sandbox creation fails, returns all IDs (skip validation).
@@ -44,7 +44,7 @@ export class SandboxSyntaxValidator {
         let sandbox: Sandbox | null = null;
         try {
             sandbox = await this.createLightweightSandbox(apiKey);
-            await this.installKodusGraph(sandbox);
+            await this.installCodusGraph(sandbox);
 
             const limit = pLimit(CONCURRENCY_LIMIT);
             const tasks = candidates.map((candidate) =>
@@ -105,15 +105,15 @@ export class SandboxSyntaxValidator {
         });
     }
 
-    private async installKodusGraph(sandbox: Sandbox): Promise<void> {
+    private async installCodusGraph(sandbox: Sandbox): Promise<void> {
         const check = await sandbox.commands.run(
-            'export PATH="$HOME/.bun/bin:$PATH" && kodus-graph --version 2>/dev/null || true',
+            'export PATH="$HOME/.bun/bin:$PATH" && codus-graph --version 2>/dev/null || true',
             { timeoutMs: 5_000 },
         );
 
         if ((check.stdout || '').trim()) {
             this.logger.log({
-                message: `[SYNTAX] kodus-graph already available: ${(check.stdout || '').trim()}`,
+                message: `[SYNTAX] codus-graph already available: ${(check.stdout || '').trim()}`,
                 context: SandboxSyntaxValidator.name,
             });
             return;
@@ -123,14 +123,14 @@ export class SandboxSyntaxValidator {
             [
                 'which bun > /dev/null 2>&1 || (curl -fsSL https://bun.sh/install | bash > /dev/null 2>&1)',
                 'export PATH="$HOME/.bun/bin:$PATH"',
-                `bun install -g @kodus/kodus-graph@${KODUS_GRAPH_VERSION} 2>&1`,
+                `bun install -g @codus/codus-graph@${CODUS_GRAPH_VERSION} 2>&1`,
             ].join(' && '),
             { timeoutMs: INSTALL_TIMEOUT_MS },
         );
 
         if (result.exitCode !== 0) {
             throw new Error(
-                `kodus-graph install failed (exit=${result.exitCode}): ${(result.stderr || result.stdout || '').slice(0, 500)}`,
+                `codus-graph install failed (exit=${result.exitCode}): ${(result.stderr || result.stdout || '').slice(0, 500)}`,
             );
         }
     }
@@ -154,13 +154,13 @@ export class SandboxSyntaxValidator {
             await sandbox.files.write(fullPath, code);
 
             const result = await sandbox.commands.run(
-                `export PATH="$HOME/.bun/bin:$PATH" && kodus-graph parse --files ${shSingleQuote(filePath)} --repo-dir ${shSingleQuote(workDir)} --out ${shSingleQuote(resultPath)}`,
+                `export PATH="$HOME/.bun/bin:$PATH" && codus-graph parse --files ${shSingleQuote(filePath)} --repo-dir ${shSingleQuote(workDir)} --out ${shSingleQuote(resultPath)}`,
                 { timeoutMs: PARSE_TIMEOUT_MS },
             );
 
             if (result.exitCode !== 0) {
                 this.logger.warn({
-                    message: `[SYNTAX] kodus-graph parse failed for ${filePath} (exit=${result.exitCode})`,
+                    message: `[SYNTAX] codus-graph parse failed for ${filePath} (exit=${result.exitCode})`,
                     context: SandboxSyntaxValidator.name,
                     metadata: { candidateId: candidate.id, stderr: result.stderr?.substring(0, 200) },
                 });

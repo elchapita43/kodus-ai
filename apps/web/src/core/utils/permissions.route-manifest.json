@@ -64,7 +64,7 @@
     }
   },
   {
-    "route": "/library/kody-rules",
+    "route": "/library/cody-rules",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",
@@ -72,7 +72,7 @@
     }
   },
   {
-    "route": "/library/kody-rules/featured",
+    "route": "/library/cody-rules/featured",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "route": "/library/kody-rules/packs",
+    "route": "/library/cody-rules/packs",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",
@@ -88,7 +88,7 @@
     }
   },
   {
-    "route": "/library/kody-rules/x",
+    "route": "/library/cody-rules/x",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",
@@ -232,7 +232,7 @@
     }
   },
   {
-    "route": "/settings/code-review/x/kody-rules",
+    "route": "/settings/code-review/x/cody-rules",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",
@@ -240,7 +240,7 @@
     }
   },
   {
-    "route": "/settings/code-review/x/kody-rules/x",
+    "route": "/settings/code-review/x/cody-rules/x",
     "expected": {
       "billing_manager": "allow",
       "repo_admin": "allow",

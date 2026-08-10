@@ -1,6 +1,6 @@
 /**
  * @license
- * © Kodus Tech. All rights reserved.
+ * © Codus Tech. All rights reserved.
  */
 import { Provider } from '@nestjs/common';
 import {

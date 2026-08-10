@@ -276,8 +276,8 @@ export class AutomationCodeReviewService implements Omit<
                     lastExecution?.dataExecution, // Pass last execution data
                     correlationId,
                     signal, // parentSignal — forwarded to pipeline context
-                    reviewDirective, // @kody review <directive> steering text
-                    heavy, // @kody review --heavy — extra critic pass
+                    reviewDirective, // @cody review <directive> steering text
+                    heavy, // @cody review --heavy — extra critic pass
                 );
 
             await this._handleExecutionCompletion(execution, result, payload);
@@ -365,7 +365,7 @@ export class AutomationCodeReviewService implements Omit<
                         repositoryId: repository?.id,
                     },
                     message,
-                    'Kody Review Started',
+                    'Cody Review Started',
                 );
 
             if (result?.stageLog) {
@@ -468,7 +468,7 @@ export class AutomationCodeReviewService implements Omit<
             finalStatus,
             finalMessage,
             newData,
-            'Kody Review Finished',
+            'Cody Review Finished',
         );
 
         this.logger.log({
@@ -494,7 +494,7 @@ export class AutomationCodeReviewService implements Omit<
      *     (sandbox / fetch / validation). Either way the review is not
      *     trustworthy.
      *  3. Any errors[].severity === 'partial' → PARTIAL_ERROR. Auxiliary
-     *     work failed (kody-rules agent, summary, PR-level comments)
+     *     work failed (cody-rules agent, summary, PR-level comments)
      *     but the main review still has value. Cron auto-approve filters
      *     by SUCCESS, so this still blocks auto-approve — by design,
      *     because the user should decide what to do about the gap.
@@ -505,12 +505,12 @@ export class AutomationCodeReviewService implements Omit<
      * observer's behavior.
      */
     /**
-     * The message shown on the final "Kody Review Finished" row.
+     * The message shown on the final "Cody Review Finished" row.
      *
      * `statusInfo.message` is only meaningful for a SKIPPED run — the stages
      * that fail without throwing never update it, so it still holds whatever
      * the pipeline set at startup. Using it verbatim rendered a failed review
-     * as "Kody Review Finished / Error / Pipeline started" (#1568). For a
+     * as "Cody Review Finished / Error / Pipeline started" (#1568). For a
      * failed run, report the actual reason instead.
      */
     private buildFinalMessage(
@@ -652,7 +652,7 @@ export class AutomationCodeReviewService implements Omit<
         // Adaptive-fit fidelity warnings — emitted by the agent pipeline
         // when a small context window forced a degraded path (compact
         // prompt, dropped callGraph, etc). Persisted here so the
-        // admin-facing Pull Requests dashboard in the Kodus web app can
+        // admin-facing Pull Requests dashboard in the Codus web app can
         // surface them — the PR author's GitHub comment intentionally
         // omits this (it's an operator concern, not an author concern).
         if (

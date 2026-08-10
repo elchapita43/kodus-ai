@@ -62,7 +62,7 @@ async function exportOpenApi(): Promise<void> {
 
     const docsConfig = buildDocsConfig(process.env);
     const swaggerBuilder = new DocumentBuilder()
-        .setTitle('Kodus API')
+        .setTitle('Codus API')
         .setVersion('1.0')
         .addBearerAuth(
             {

@@ -1,10 +1,10 @@
 ---
 title: Crear un webhook
-description: "Crea manualmente el webhook de GitHub cuando el registro automático no ocurrió, y selecciona los tres eventos que Kodus consume."
+description: "Crea manualmente el webhook de GitHub cuando el registro automático no ocurrió, y selecciona los tres eventos que Codus consume."
 icon: webhook
 ---
 
-Kodus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue estos pasos para configurarlo manualmente:
+Codus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue estos pasos para configurarlo manualmente:
 
 <Note>
   Las URLs de webhook deben llegar al servicio de Webhooks (puerto 3332). Usar el dominio de la API solo funciona si tu proxy inverso enruta las rutas `/.../webhook` al servicio de webhooks.
@@ -31,6 +31,6 @@ Kodus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue e
 Has configurado correctamente un webhook para las revisiones de código en tu repositorio de GitHub.
 
 <Note>
-  Estos son los únicos tres eventos que Kodus consume. Marcar otros (pushes, pull request
+  Estos son los únicos tres eventos que Codus consume. Marcar otros (pushes, pull request
   reviews, review threads) solo genera tráfico que se descarta al llegar.
 </Note>

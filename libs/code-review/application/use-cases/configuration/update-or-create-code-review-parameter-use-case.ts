@@ -32,7 +32,7 @@ import {
 } from '@libs/ai-engine/infrastructure/adapters/services/context/context-reference-detection.service';
 import { deepDifference, deepMerge } from '@libs/common/utils/deep';
 import { convertTiptapJSONToText } from '@libs/common/utils/tiptap-json';
-import { getDefaultKodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
+import { getDefaultCodusConfigFile } from '@libs/common/utils/validateCodeReviewConfigFile';
 import { IntegrationConfigKey, ParametersKey } from '@libs/core/domain/enums';
 import {
     CodeReviewConfigWithoutLLMProvider,
@@ -76,19 +76,19 @@ import {
 import { ParametersEntity } from '@libs/organization/domain/parameters/entities/parameters.entity';
 import { CreateOrUpdateCodeReviewParameterDto } from '@libs/organization/dtos/create-or-update-code-review-parameter.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { buildKodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/kodus-config-centralized-pr.builder';
-import { formatRuleToYaml } from '@libs/centralized-config/utils/kody-rules-centralized-pr.builder';
+import { buildCodusConfigCentralizedMutationRequest } from '@libs/centralized-config/utils/codus-config-centralized-pr.builder';
+import { formatRuleToYaml } from '@libs/centralized-config/utils/cody-rules-centralized-pr.builder';
 import {
     IDE_RULES_SYNC_DISABLED_EVENT,
     IdeRulesSyncDisabledEvent,
     IdeSyncDisableAction,
-} from '@libs/kodyRules/domain/events/ide-rules-sync.events';
+} from '@libs/codyRules/domain/events/ide-rules-sync.events';
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
-import { KodyRulesType } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
-import { GenerateInitialKodyRulesUseCase } from '@libs/kodyRules/application/use-cases/generate-initial-kody-rules.use-case';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
+import { CodyRulesType } from '@libs/codyRules/domain/interfaces/codyRules.interface';
+import { GenerateInitialCodyRulesUseCase } from '@libs/codyRules/application/use-cases/generate-initial-cody-rules.use-case';
 import {
     InvalidGroupPathError,
     validateGroupPaths,
@@ -117,10 +117,10 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
         @Inject(PROMPT_EXTERNAL_REFERENCE_MANAGER_SERVICE_TOKEN)
         private readonly promptReferenceManager: IPromptExternalReferenceManagerService,
         private readonly centralizedConfigPrService: CentralizedConfigPrService,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRulesService: IKodyRulesService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRulesService: ICodyRulesService,
         private readonly permissionValidationService: PermissionValidationService,
-        private readonly generateInitialKodyRulesUseCase: GenerateInitialKodyRulesUseCase,
+        private readonly generateInitialCodyRulesUseCase: GenerateInitialCodyRulesUseCase,
         @Inject(LICENSE_SERVICE_TOKEN)
         private readonly licenseService: ILicenseService,
     ) {}
@@ -496,7 +496,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
                 this.eventEmitter.emit(IDE_RULES_SYNC_DISABLED_EVENT, event);
             }
 
-            // Enabling the Kody Rules generator for a repo seeds its rules from
+            // Enabling the Cody Rules generator for a repo seeds its rules from
             // the last 3 months of PR reviews right away, instead of waiting for
             // the weekly cron (which also backfills, but only on its next run).
             // The seed is idempotent — it skips when past-review rules already
@@ -504,14 +504,14 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
             // detached so it never blocks the settings save (issue #1506).
             if (
                 !!repositoryId &&
-                configValue?.kodyRulesGeneratorEnabled === true
+                configValue?.codyRulesGeneratorEnabled === true
             ) {
-                void this.generateInitialKodyRulesUseCase
+                void this.generateInitialCodyRulesUseCase
                     .execute({ organizationAndTeamData, repositoryId })
                     .catch((error) => {
                         this.logger.error({
                             message:
-                                'Failed to start initial Kody Rules generation',
+                                'Failed to start initial Cody Rules generation',
                             context:
                                 UpdateOrCreateCodeReviewParameterUseCase.name,
                             error:
@@ -628,7 +628,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
             userEmail?: string;
         },
     ) {
-        const defaultConfig: ConfigDelta = getDefaultKodusConfigFile();
+        const defaultConfig: ConfigDelta = getDefaultCodusConfigFile();
 
         const sanitizedConfigValue =
             this.stripCustomMessagesFromConfig(configValue);
@@ -862,7 +862,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
         }
 
         const existingScopedConfigFileContent =
-            await this.centralizedConfigPrService?.getScopedKodusConfigFileContent(
+            await this.centralizedConfigPrService?.getScopedCodusConfigFileContent(
                 {
                     organizationAndTeamData: params.organizationAndTeamData,
                     repositoryId:
@@ -944,7 +944,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
 
         const pr =
             await this.centralizedConfigPrService?.createMutationPullRequestIfEnabled(
-                buildKodusConfigCentralizedMutationRequest({
+                buildCodusConfigCentralizedMutationRequest({
                     centralizedConfigPrService: this.centralizedConfigPrService,
                     organizationAndTeamData: params.organizationAndTeamData,
                     repositoryId:
@@ -969,11 +969,11 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
                         Object.keys(configFileContent).length > 0
                             ? configFileContent
                             : null,
-                    title: `Update Kodus config for ${repositoryLabel}${params.level === ConfigLevel.DIRECTORY ? ` (${directoryLabel})` : ''}`,
+                    title: `Update Codus config for ${repositoryLabel}${params.level === ConfigLevel.DIRECTORY ? ` (${directoryLabel})` : ''}`,
                     description:
                         'This pull request proposes a code review configuration change in centralized config mode.',
                     commitMessage: `update code review config for ${repositoryLabel}`,
-                    sourceBranchPrefix: `kodus-centralized-config-${params.level}`,
+                    sourceBranchPrefix: `codus-centralized-config-${params.level}`,
                     centralizedModeMessage:
                         'Centralized config is enabled. Code review settings change proposed through a pull request.',
                 }),
@@ -1002,7 +1002,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
         }
 
         try {
-            const entities = await this.kodyRulesService.find({
+            const entities = await this.codyRulesService.find({
                 organizationId,
                 rules: [
                     {
@@ -1035,7 +1035,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
                     const content = formatRuleToYaml(rule);
                     const entry = { fileName, content };
 
-                    if (rule.type === KodyRulesType.MEMORY) {
+                    if (rule.type === CodyRulesType.MEMORY) {
                         memories.push(entry);
                     } else {
                         review.push(entry);
@@ -1607,7 +1607,7 @@ export class UpdateOrCreateCodeReviewParameterUseCase {
 }
 
 class ConfigResolver {
-    private readonly defaultConfig: ConfigDelta = getDefaultKodusConfigFile();
+    private readonly defaultConfig: ConfigDelta = getDefaultCodusConfigFile();
 
     constructor(private readonly codeReviewConfigs: CodeReviewParameter) {}
 

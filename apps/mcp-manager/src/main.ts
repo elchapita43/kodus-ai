@@ -82,8 +82,8 @@ async function bootstrap() {
         });
 
         const configBuilder = new DocumentBuilder()
-            .setTitle('Kodus MCP Manager')
-            .setDescription('OpenAPI documentation for Kodus MCP Manager')
+            .setTitle('Codus MCP Manager')
+            .setDescription('OpenAPI documentation for Codus MCP Manager')
             .setVersion(process.env.npm_package_version || '0.0.1')
             .addBearerAuth()
             .addTag('Health', 'Service health and environment checks')

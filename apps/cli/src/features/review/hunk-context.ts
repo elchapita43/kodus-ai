@@ -113,7 +113,7 @@ function toAnnotation(issue: ReviewIssue): HunkAgentAnnotation | null {
     const advice = firstNonEmpty(suggestion, recommendation);
 
     const source =
-        firstNonEmpty(message, suggestion, recommendation) ?? 'Kodus finding';
+        firstNonEmpty(message, suggestion, recommendation) ?? 'Codus finding';
     const { head } = splitFirstSentence(source);
     // `/cli/review` bypasses the suggestions normalizer, so `high` / `medium` /
     // `low` arrive verbatim and would miss every severity lookup below.
@@ -145,7 +145,7 @@ function toAnnotation(issue: ReviewIssue): HunkAgentAnnotation | null {
         );
     }
 
-    parts.push(`— Kody · ${attribution}`);
+    parts.push(`— Cody · ${attribution}`);
 
     return {
         newRange: [start, end],
@@ -163,7 +163,7 @@ function buildAttribution(issue: ReviewIssue, severity: Severity): string {
     if (issue.category) {
         bits.push(issue.category);
     }
-    // Kody-rule findings carry the rule's UUID, which reads as noise and is
+    // Cody-rule findings carry the rule's UUID, which reads as noise and is
     // already in the rule link the body keeps. Named rule ids still earn a spot.
     if (issue.ruleId && !UUID_RE.test(issue.ruleId)) {
         bits.push(issue.ruleId);
@@ -235,7 +235,7 @@ function buildMarkup(
 
     // URLs go last, out of the prose flow but never dropped: STML's `<a>`
     // renders only the label and discards the href entirely (no OSC 8 either),
-    // so a Kody-rule link put there would be unreachable. A dim paragraph keeps
+    // so a Cody-rule link put there would be unreachable. A dim paragraph keeps
     // it — and `p` wraps long tokens instead of clipping them.
     for (const link of links) {
         // The label already reads inline above, so repeating it only earns its
@@ -247,7 +247,7 @@ function buildMarkup(
         blocks.push(`<p><dim>${caption}${escapeStml(link.url)}</dim></p>`);
     }
 
-    blocks.push(`<text><dim>— Kody · ${escapeStml(attribution)}</dim></text>`);
+    blocks.push(`<text><dim>— Cody · ${escapeStml(attribution)}</dim></text>`);
 
     return blocks.join('\n');
 }
@@ -260,7 +260,7 @@ export interface ExtractedLink {
 /**
  * Pull Markdown links out of a finding and undo Markdown escaping.
  *
- * Kody-rule findings arrive with the rule name as `[label](url)` plus
+ * Cody-rule findings arrive with the rule name as `[label](url)` plus
  * backslash-escaped punctuation, which rendered verbatim in the note: a
  * hundred-character URL wrapped through the middle of a sentence. The label
  * stays inline where it reads naturally; the URL is returned for the caller to
@@ -457,7 +457,7 @@ function buildTopLevelSummary(result: ReviewResult): string {
     if (total === 0) {
         return result.summary?.trim()
             ? result.summary.trim()
-            : 'Kodus review: no findings.';
+            : 'Codus review: no findings.';
     }
 
     const counts: Partial<Record<Severity, number>> = {};
@@ -470,7 +470,7 @@ function buildTopLevelSummary(result: ReviewResult): string {
         .map((s) => `${counts[s]} ${SEVERITY_LABEL[s]}`)
         .join(', ');
 
-    const headline = `Kodus review: ${total} ${total === 1 ? 'finding' : 'findings'}${
+    const headline = `Codus review: ${total} ${total === 1 ? 'finding' : 'findings'}${
         breakdown ? ` (${breakdown})` : ''
     }.`;
 

@@ -9,7 +9,7 @@ import { EnqueueImplementationCheckUseCase } from '@libs/code-review/application
 import {
     hasReviewMarker,
     isForceReviewCommand,
-    isKodyMentionNonReview,
+    isCodyMentionNonReview,
     isReviewCommand,
     parseReviewDirective,
     isHeavyReviewCommand
@@ -21,7 +21,7 @@ import { PullRequestClosedEvent } from '@libs/core/domain/events/pull-request-cl
 import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use-cases/enqueue-code-review-job.use-case';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     IWebhookEventHandler,
     IWebhookEventParams,
@@ -48,7 +48,7 @@ export class AzureReposPullRequestHandler implements IWebhookEventHandler {
     constructor(
         private readonly savePullRequestUseCase: SavePullRequestUseCase,
         private readonly webhookContextService: WebhookContextService,
-        private readonly chatWithKodyFromGitUseCase: ChatWithKodyFromGitUseCase,
+        private readonly chatWithCodyFromGitUseCase: ChatWithCodyFromGitUseCase,
         private readonly cacheService: CacheService,
         private readonly generateIssuesFromPrClosedUseCase: GenerateIssuesFromPrClosedUseCase,
         private readonly eventEmitter: EventEmitter2,
@@ -372,7 +372,7 @@ export class AzureReposPullRequestHandler implements IWebhookEventHandler {
                         }
                     } catch (e) {
                         this.logger.error({
-                            message: 'Failed to sync Kody Rules after PR merge',
+                            message: 'Failed to sync Cody Rules after PR merge',
                             context: AzureReposPullRequestHandler.name,
                             error: e instanceof Error ? e : undefined,
                             metadata: {
@@ -520,7 +520,7 @@ export class AzureReposPullRequestHandler implements IWebhookEventHandler {
 
             if (isStartCommand && !hasMarker) {
                 this.logger.log({
-                    message: `@kody start command detected in Azure Repos comment for PR#${prId}`,
+                    message: `@cody start command detected in Azure Repos comment for PR#${prId}`,
                     serviceName: AzureReposPullRequestHandler.name,
                     metadata: {
                         prId,
@@ -576,9 +576,9 @@ export class AzureReposPullRequestHandler implements IWebhookEventHandler {
             if (
                 !hasMarker &&
                 !isStartCommand &&
-                isKodyMentionNonReview(comment.body)
+                isCodyMentionNonReview(comment.body)
             ) {
-                this.chatWithKodyFromGitUseCase.execute(params);
+                this.chatWithCodyFromGitUseCase.execute(params);
                 return;
             }
         } catch (error: any) {

@@ -143,9 +143,9 @@
     }
   },
   {
-    "key": "cockpit.controller.ts#kodyRulesHealthTable",
+    "key": "cockpit.controller.ts#codyRulesHealthTable",
     "httpMethod": "GET",
-    "urlPath": "/review-analytics/tables/kody-rules-health",
+    "urlPath": "/review-analytics/tables/cody-rules-health",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -627,9 +627,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#addLibraryKodyRules",
+    "key": "codyRules.controller.ts#addLibraryCodyRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/add-library-kody-rules",
+    "urlPath": "/cody-rules/add-library-cody-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -638,9 +638,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#applyPendingKodyRules",
+    "key": "codyRules.controller.ts#applyPendingCodyRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/pending/apply",
+    "urlPath": "/cody-rules/pending/apply",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -649,9 +649,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#changeStatusKodyRules",
+    "key": "codyRules.controller.ts#changeStatusCodyRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/change-status-kody-rules",
+    "urlPath": "/cody-rules/change-status-cody-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -660,9 +660,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#checkSyncStatus",
+    "key": "codyRules.controller.ts#checkSyncStatus",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/check-sync-status",
+    "urlPath": "/cody-rules/check-sync-status",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -671,9 +671,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#convertPendingUpdatesToNew",
+    "key": "codyRules.controller.ts#convertPendingUpdatesToNew",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/pending/convert-updates-to-new",
+    "urlPath": "/cody-rules/pending/convert-updates-to-new",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -682,9 +682,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#countImportedRules",
+    "key": "codyRules.controller.ts#countImportedRules",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/imported/count",
+    "urlPath": "/cody-rules/imported/count",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -693,9 +693,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#countRulesByRepository",
+    "key": "codyRules.controller.ts#countRulesByRepository",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/counts-by-repository",
+    "urlPath": "/cody-rules/counts-by-repository",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -704,9 +704,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#create",
+    "key": "codyRules.controller.ts#create",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/create-or-update",
+    "urlPath": "/cody-rules/create-or-update",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -715,9 +715,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#deleteRuleInOrganizationById",
+    "key": "codyRules.controller.ts#deleteRuleInOrganizationById",
     "httpMethod": "DELETE",
-    "urlPath": "/kody-rules/delete-rule-in-organization-by-id",
+    "urlPath": "/cody-rules/delete-rule-in-organization-by-id",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -726,9 +726,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#discardPendingKodyRules",
+    "key": "codyRules.controller.ts#discardPendingCodyRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/pending/discard",
+    "urlPath": "/cody-rules/pending/discard",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -737,9 +737,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#fastSyncIdeRules",
+    "key": "codyRules.controller.ts#fastSyncIdeRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/fast-sync-ide-rules",
+    "urlPath": "/cody-rules/fast-sync-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -748,9 +748,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#findByOrganizationId",
+    "key": "codyRules.controller.ts#findByOrganizationId",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/find-by-organization-id",
+    "urlPath": "/cody-rules/find-by-organization-id",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -759,9 +759,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#findRecommendedKodyRules",
+    "key": "codyRules.controller.ts#findRecommendedCodyRules",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/find-recommended-kody-rules",
+    "urlPath": "/cody-rules/find-recommended-cody-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -770,9 +770,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#findRulesInOrganizationByFilter",
+    "key": "codyRules.controller.ts#findRulesInOrganizationByFilter",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/find-rules-in-organization-by-filter",
+    "urlPath": "/cody-rules/find-rules-in-organization-by-filter",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -781,9 +781,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#findSuggestionsByRule",
+    "key": "codyRules.controller.ts#findSuggestionsByRule",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/suggestions",
+    "urlPath": "/cody-rules/suggestions",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -792,9 +792,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#generateKodyRules",
+    "key": "codyRules.controller.ts#generateCodyRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/generate-kody-rules",
+    "urlPath": "/cody-rules/generate-cody-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -803,9 +803,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#getGlobalRulesImportStatus",
+    "key": "codyRules.controller.ts#getGlobalRulesImportStatus",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/global-source-repositories/import-status",
+    "urlPath": "/cody-rules/global-source-repositories/import-status",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -814,9 +814,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#getGlobalSourceRepositories",
+    "key": "codyRules.controller.ts#getGlobalSourceRepositories",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/global-source-repositories",
+    "urlPath": "/cody-rules/global-source-repositories",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -825,9 +825,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#getInheritedRules",
+    "key": "codyRules.controller.ts#getInheritedRules",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/inherited-rules",
+    "urlPath": "/cody-rules/inherited-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -836,9 +836,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#getPending",
+    "key": "codyRules.controller.ts#getPending",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/pending",
+    "urlPath": "/cody-rules/pending",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -847,9 +847,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#getRulesLimitStatus",
+    "key": "codyRules.controller.ts#getRulesLimitStatus",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/limits",
+    "urlPath": "/cody-rules/limits",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -858,9 +858,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#importFastIdeRules",
+    "key": "codyRules.controller.ts#importFastIdeRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/import-fast-ide-rules",
+    "urlPath": "/cody-rules/import-fast-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -869,9 +869,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#listPastReviewers",
+    "key": "codyRules.controller.ts#listPastReviewers",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/past-reviewers",
+    "urlPath": "/cody-rules/past-reviewers",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -880,9 +880,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#listPendingIdeRules",
+    "key": "codyRules.controller.ts#listPendingIdeRules",
     "httpMethod": "GET",
-    "urlPath": "/kody-rules/pending-ide-rules",
+    "urlPath": "/cody-rules/pending-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",
@@ -891,9 +891,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#manageImportedRules",
+    "key": "codyRules.controller.ts#manageImportedRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/imported/manage",
+    "urlPath": "/cody-rules/imported/manage",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -902,9 +902,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#resyncGlobalRules",
+    "key": "codyRules.controller.ts#resyncGlobalRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/resync-global-rules",
+    "urlPath": "/cody-rules/resync-global-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -913,9 +913,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#resyncIdeRules",
+    "key": "codyRules.controller.ts#resyncIdeRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/resync-ide-rules",
+    "urlPath": "/cody-rules/resync-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -924,9 +924,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#reviewFastIdeRules",
+    "key": "codyRules.controller.ts#reviewFastIdeRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/review-fast-ide-rules",
+    "urlPath": "/cody-rules/review-fast-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -935,9 +935,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#setGlobalSourceRepositories",
+    "key": "codyRules.controller.ts#setGlobalSourceRepositories",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/global-source-repositories",
+    "urlPath": "/cody-rules/global-source-repositories",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -946,9 +946,9 @@
     }
   },
   {
-    "key": "kodyRules.controller.ts#syncIdeRules",
+    "key": "codyRules.controller.ts#syncIdeRules",
     "httpMethod": "POST",
-    "urlPath": "/kody-rules/sync-ide-rules",
+    "urlPath": "/cody-rules/sync-ide-rules",
     "expected": {
       "owner": "allow",
       "billing_manager": "deny",
@@ -1221,9 +1221,9 @@
     }
   },
   {
-    "key": "parameters.controller.ts#GenerateKodusConfigFile",
+    "key": "parameters.controller.ts#GenerateCodusConfigFile",
     "httpMethod": "GET",
-    "urlPath": "/parameters/generate-kodus-config-file",
+    "urlPath": "/parameters/generate-codus-config-file",
     "expected": {
       "owner": "allow",
       "billing_manager": "allow",

@@ -1,9 +1,9 @@
-name: "Kodus RabbitMQ: Build and Publish"
+name: "Codus RabbitMQ: Build and Publish"
 
 # The RabbitMQ image packages the rabbitmq_delayed_message_exchange
-# plugin, which Kodus services need for workflow delayed retries.
+# plugin, which Codus services need for workflow delayed retries.
 # Since the plugin + RabbitMQ version change rarely (and independently
-# of Kodus releases), this runs on its own cadence instead of piggybacking
+# of Codus releases), this runs on its own cadence instead of piggybacking
 # on every self-hosted release.
 
 on:
@@ -24,7 +24,7 @@ on:
 
 jobs:
     build-and-push:
-        name: Build and push kodus-rabbitmq
+        name: Build and push codus-rabbitmq
         runs-on: ubuntu-latest
         # Multi-arch buildx + Trivy typically finish in ~4–7 min. Cap
         # at 20 so a hung upload or stuck qemu emulation fails loud.
@@ -59,7 +59,7 @@ jobs:
               run: |
                   set -euo pipefail
                   OWNER="${{ github.repository_owner }}"
-                  IMAGE="ghcr.io/${OWNER}/kodus-rabbitmq"
+                  IMAGE="ghcr.io/${OWNER}/codus-rabbitmq"
                   TAGS="${IMAGE}:latest,${IMAGE}:sha-${GITHUB_SHA::7}"
                   if [ -n "${{ inputs.tag }}" ]; then
                     TAGS="${TAGS},${IMAGE}:${{ inputs.tag }}"
@@ -67,7 +67,7 @@ jobs:
                   echo "tags=${TAGS}" >> "$GITHUB_OUTPUT"
                   echo "Publishing: ${TAGS}"
 
-            - name: Build and push kodus-rabbitmq
+            - name: Build and push codus-rabbitmq
               env:
                   RABBITMQ_TAGS: ${{ steps.tags.outputs.tags }}
               run: |
@@ -78,10 +78,10 @@ jobs:
                     --set rabbitmq.platform=linux/amd64,linux/arm64 \
                     --push
 
-            - name: Trivy scan — kodus-rabbitmq
+            - name: Trivy scan — codus-rabbitmq
               uses: aquasecurity/trivy-action@v0.36.0
               with:
-                  image-ref: ghcr.io/${{ github.repository_owner }}/kodus-rabbitmq:latest
+                  image-ref: ghcr.io/${{ github.repository_owner }}/codus-rabbitmq:latest
                   format: "sarif"
                   output: "trivy-rabbitmq.sarif"
                   severity: "CRITICAL,HIGH"

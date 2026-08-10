@@ -24,7 +24,7 @@ import { getAnalyticsStatus } from "./_services/analytics/fetch";
 export default async function Layout({
     bugRatioAnalytics,
     deployFrequencyAnalytics,
-    kodusReviewTab,
+    codusReviewTab,
     leadTimeBreakdownChart,
     prCycleTimeAnalytics,
     prCycleTimeChart,
@@ -44,12 +44,12 @@ export default async function Layout({
     prsOpenedVsClosedChart: React.ReactNode;
     prsMergedByDeveloperChart: React.ReactNode;
     teamActivityChart: React.ReactNode;
-    kodusReviewTab: React.ReactNode;
+    codusReviewTab: React.ReactNode;
 }) {
     // Cockpit availability is decided solely by the license tier below
     // (`isCockpitTierAllowed`). We intentionally do NOT gate on
     // `WEB_ANALYTICS_SECRET`: that env var is the x-api-key for the retired
-    // standalone `kodus-service-analytics` microservice, and the backend
+    // standalone `codus-service-analytics` microservice, and the backend
     // source resolver now hard-returns INTERNAL — analytics is served by the
     // in-process Postgres warehouse via apps/api (JWT auth), which never reads
     // that secret. Gating the page on an empty legacy secret made self-hosted
@@ -91,7 +91,7 @@ export default async function Layout({
         return (
             <LockedFeatureOverlay
                 title="Unlock the Cockpit"
-                description="Engineering metrics and Kody review analytics for your team are available on Teams and Enterprise plans."
+                description="Engineering metrics and Cody review analytics for your team are available on Teams and Enterprise plans."
                 cta={{
                     label: "Upgrade plan",
                     href: "/settings/subscription",
@@ -119,14 +119,14 @@ export default async function Layout({
 
     // Whole-tab visibility. At least one tab is always enabled (the
     // settings form prevents disabling both); fall back defensively.
-    const showKodusReview = metricsVisibility.tabs?.kodusReview ?? true;
+    const showCodusReview = metricsVisibility.tabs?.codusReview ?? true;
     const showProductivity = metricsVisibility.tabs?.productivity ?? true;
     const tabsVisibility: Record<TabValue, boolean> = {
-        "kodus-review": showKodusReview,
-        "productivity": showProductivity || !showKodusReview,
+        "codus-review": showCodusReview,
+        "productivity": showProductivity || !showCodusReview,
     };
-    const defaultTab: TabValue = showKodusReview
-        ? "kodus-review"
+    const defaultTab: TabValue = showCodusReview
+        ? "codus-review"
         : "productivity";
 
     const visibleTabs = (Object.keys(tabsVisibility) as TabValue[]).filter(
@@ -215,12 +215,12 @@ export default async function Layout({
                             </TabsContent>
                         )}
 
-                        {tabsVisibility["kodus-review"] && (
+                        {tabsVisibility["codus-review"] && (
                             <TabsContent
                                 forceMount
-                                value={"kodus-review" satisfies TabValue}
+                                value={"codus-review" satisfies TabValue}
                                 className="flex flex-col gap-6">
-                                {kodusReviewTab}
+                                {codusReviewTab}
                             </TabsContent>
                         )}
                     </CockpitTabs>

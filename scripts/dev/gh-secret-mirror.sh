@@ -2,10 +2,10 @@
 # Mirror secrets into a GitHub environment, pulling from local sources first.
 #
 # Source order per secret:
-#   1. ~/.kodus-dev/config           (KEY=VALUE lines)
+#   1. ~/.codus-dev/config           (KEY=VALUE lines)
 #   2. ~/.aws/credentials            (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-#   3. ~/.kodus-dev/cloud-tenants.json (CLOUD_TENANT_{FREE,TRIAL,PAID}_{EMAIL,PASSWORD})
-#   4. ~/.kodus-dev/license-seats1.jwt (SH_LICENSE_KEY_PAID — file contents)
+#   3. ~/.codus-dev/cloud-tenants.json (CLOUD_TENANT_{FREE,TRIAL,PAID}_{EMAIL,PASSWORD})
+#   4. ~/.codus-dev/license-seats1.jwt (SH_LICENSE_KEY_PAID — file contents)
 #   5. 1Password CLI                 (op read from known paths)
 #   6. Interactive prompt            (hidden input)
 #
@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-REPO="kodustech/kodus-ai"
+REPO="elchapita43/codus-ai"
 TARGET_ENV="production-hotfix"
 DRY_RUN=0
 ONLY_FILTER=""
@@ -37,10 +37,10 @@ DEFAULT_SECRETS=(
     INFRA_GITHUB_APP_PRIVATE_KEY
 )
 
-KODUS_CONFIG="${HOME}/.kodus-dev/config"
+CODUS_CONFIG="${HOME}/.codus-dev/config"
 AWS_CREDS="${HOME}/.aws/credentials"
-TENANTS_JSON="${HOME}/.kodus-dev/cloud-tenants.json"
-LICENSE_JWT="${HOME}/.kodus-dev/license-seats1.jwt"
+TENANTS_JSON="${HOME}/.codus-dev/cloud-tenants.json"
+LICENSE_JWT="${HOME}/.codus-dev/license-seats1.jwt"
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -52,18 +52,18 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-# Load ~/.kodus-dev/config into env (carefully — many KEY=VALUE lines, may have shell-special chars)
-if [ -f "$KODUS_CONFIG" ]; then
+# Load ~/.codus-dev/config into env (carefully — many KEY=VALUE lines, may have shell-special chars)
+if [ -f "$CODUS_CONFIG" ]; then
     set -a
     # shellcheck source=/dev/null
-    . "$KODUS_CONFIG"
+    . "$CODUS_CONFIG"
     set +a
 fi
 
 # ── value sourcing helpers ───────────────────────────────────────────────
 
-src_kodus_config() {
-    # Whatever key exported from ~/.kodus-dev/config — also handle GH↔config name mapping.
+src_codus_config() {
+    # Whatever key exported from ~/.codus-dev/config — also handle GH↔config name mapping.
     # Bash indirect expansion (${!var}) avoids eval — important because $1 ultimately
     # traces back to --only user input.
     local key="$1"
@@ -124,9 +124,9 @@ src_op() {
     local key="$1"
     local path=""
     case "$key" in
-        DIGITALOCEAN_TOKEN)       path="op://Engineering/kodus-self-hosted-dev/do-token" ;;
-        SH_LICENSE_KEY_PAID)      path="op://Engineering/kodus-self-hosted-dev/license-paid" ;;
-        GH_TEST_TOKEN)            path="op://Engineering/kodus-self-hosted-dev/gh-bot-token" ;;
+        DIGITALOCEAN_TOKEN)       path="op://Engineering/codus-self-hosted-dev/do-token" ;;
+        SH_LICENSE_KEY_PAID)      path="op://Engineering/codus-self-hosted-dev/license-paid" ;;
+        GH_TEST_TOKEN)            path="op://Engineering/codus-self-hosted-dev/gh-bot-token" ;;
         # Add more known op refs as discovered
         *) return ;;
     esac
@@ -139,7 +139,7 @@ resolve_value() {
     local key="$1"
     local v src=""
 
-    v=$(src_kodus_config "$key");      [ -n "$v" ] && { echo "kodus-dev/config|$v"; return; }
+    v=$(src_codus_config "$key");      [ -n "$v" ] && { echo "codus-dev/config|$v"; return; }
     v=$(src_aws_credentials "$key");   [ -n "$v" ] && { echo "aws/credentials|$v"; return; }
     v=$(src_cloud_tenants "$key");     [ -n "$v" ] && { echo "cloud-tenants.json|$v"; return; }
     v=$(src_license_file "$key");      [ -n "$v" ] && { echo "license-seats1.jwt|$v"; return; }

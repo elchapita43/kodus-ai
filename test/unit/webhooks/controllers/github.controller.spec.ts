@@ -114,7 +114,7 @@ describe('GithubController', () => {
         it('should enqueue issue_comment event', async () => {
             mockRequest = {
                 headers: { 'x-github-event': 'issue_comment' },
-                body: { action: 'created', comment: { body: '@kody review' } },
+                body: { action: 'created', comment: { body: '@cody review' } },
             };
 
             controller.handleWebhook(
@@ -129,7 +129,7 @@ describe('GithubController', () => {
                 event: 'issue_comment',
                 payload: {
                     action: 'created',
-                    comment: { body: '@kody review' },
+                    comment: { body: '@cody review' },
                 },
             });
         });

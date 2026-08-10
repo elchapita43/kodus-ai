@@ -5,9 +5,9 @@ jest.mock(
     }),
 );
 jest.mock(
-    '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case',
+    '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case',
     () => ({
-        ChatWithKodyFromGitUseCase: class ChatWithKodyFromGitUseCase {},
+        ChatWithCodyFromGitUseCase: class ChatWithCodyFromGitUseCase {},
     }),
 );
 
@@ -18,7 +18,7 @@ import { EnqueueCodeReviewJobUseCase } from '@libs/core/workflow/application/use
 import { OUTBOX_MESSAGE_REPOSITORY_TOKEN } from '@libs/core/workflow/domain/contracts/outbox-message.repository.contract';
 import { GenerateIssuesFromPrClosedUseCase } from '@libs/issues/application/use-cases/generate-issues-from-pr-closed.use-case';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
-import { ChatWithKodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithKodyFromGit.use-case';
+import { ChatWithCodyFromGitUseCase } from '@libs/platform/application/use-cases/codeManagement/chatWithCodyFromGit.use-case';
 import {
     SANDBOX_INVALIDATE_ROUTING_KEY,
     SandboxInvalidatePayload,
@@ -107,7 +107,7 @@ describe('ForgejoPullRequestHandler push events', () => {
                     useValue: webhookContextService,
                 },
                 {
-                    provide: ChatWithKodyFromGitUseCase,
+                    provide: ChatWithCodyFromGitUseCase,
                     useValue: {},
                 },
                 {

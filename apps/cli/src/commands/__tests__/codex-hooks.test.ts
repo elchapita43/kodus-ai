@@ -13,7 +13,7 @@ import {
 let tmpDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-codex-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-codex-test-'));
 });
 
 afterEach(async () => {
@@ -120,7 +120,7 @@ describe('removeCodexNotify', () => {
         expect(result.removed).toBe(false);
     });
 
-    it('returns removed=false when no kodus notify present', async () => {
+    it('returns removed=false when no codus notify present', async () => {
         await fs.mkdir(path.dirname(configPath()), { recursive: true });
         await fs.writeFile(configPath(), 'model = "o3"\n');
 

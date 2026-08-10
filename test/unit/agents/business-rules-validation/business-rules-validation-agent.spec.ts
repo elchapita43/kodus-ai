@@ -38,7 +38,7 @@ describe('BusinessRulesValidationAgentProvider parser', () => {
 **Analysis Confidence:** high
 
 ---
-*Analysis performed by Kodus AI Business Rules Validator*`;
+*Analysis performed by Codus AI Business Rules Validator*`;
 
         const parsed = (provider as any).parseValidationResult(payload);
 

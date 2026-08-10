@@ -84,7 +84,7 @@ const EnvConfigNotice = ({ env }: { env: LLMConfigStatus["env"] }) => {
         <Alert variant="info">
             <InfoIcon />
             <AlertTitle className="text-balance">
-                Kodus is currently using an LLM configured via environment
+                Codus is currently using an LLM configured via environment
                 variables.
             </AlertTitle>
             <AlertDescription className="flex flex-col gap-3">
@@ -145,7 +145,7 @@ const confirmEnvOverride = (): Promise<boolean> =>
             <ConfirmModal
                 open
                 title="Override env-based LLM configuration?"
-                description="This will replace the LLM provider currently configured in your .env. Kodus will use the key and model you just entered instead."
+                description="This will replace the LLM provider currently configured in your .env. Codus will use the key and model you just entered instead."
                 confirmText="Override env config"
                 variant="primary-dark"
                 onConfirm={() => {
@@ -260,7 +260,7 @@ export const ByokPageClient = ({
                 <ConfirmModal
                     open
                     title="Remove main model?"
-                    description="Kodus will stop using this key immediately. Any fallback model will also be cleared."
+                    description="Codus will stop using this key immediately. Any fallback model will also be cleared."
                     confirmText="Remove"
                     variant="primary-dark"
                     onConfirm={() => {
@@ -294,7 +294,7 @@ export const ByokPageClient = ({
                 <ConfirmModal
                     open
                     title="Remove fallback model?"
-                    description="Kodus will stop using this fallback immediately. Reviews will rely solely on your main model."
+                    description="Codus will stop using this fallback immediately. Reviews will rely solely on your main model."
                     confirmText="Remove"
                     variant="primary-dark"
                     onConfirm={() => {
@@ -335,7 +335,7 @@ export const ByokPageClient = ({
                     <Page.Description className="flex flex-wrap items-center gap-x-2 gap-y-1 text-pretty">
                         <span>
                             Pick a model for code review. You pay your
-                            provider directly — Kodus never sees your key.
+                            provider directly — Codus never sees your key.
                         </span>
                         <a
                             href="https://docs.kodus.io/how_to_use/en/byok"

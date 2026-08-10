@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 
-import { validateTokenSubmission } from '../../src/modules/providers/kodusMCP/token-submission';
-import { ManagedAuthMethod } from '../../src/modules/providers/kodusMCP/auth-methods';
+import { validateTokenSubmission } from '../../src/modules/providers/codusMCP/token-submission';
+import { ManagedAuthMethod } from '../../src/modules/providers/codusMCP/auth-methods';
 import { MCPIntegrationAuthType } from '../../src/modules/integrations/enums/integration.enum';
 
 const jiraTokenMethod: ManagedAuthMethod = {

@@ -2,7 +2,7 @@
   {
     "pr_title": "Enhanced Pagination Performance for High-Volume Audit Logs",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/142",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "User-controlled cursor offsets are passed to Django QuerySet slicing without validation for negative values, which causes a ValueError and a 500 Internal Server Error. An attacker can cause a Denial of Service by providing a crafted cursor string (e.g., '0:-1:1') to any endpoint using these paginators, as the new logic explicitly bypasses non-negative checks for previous-page cursors and advanced pagination. Always use `max(0, offset)` when slicing QuerySets to ensure boundary safety in the unde",
@@ -29,7 +29,7 @@
   {
     "pr_title": "Enhanced Pagination Performance for High-Volume Audit Logs",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/143",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "A typo in build_queryset assigns the new ordering to an undefined attribute order_b instead of order_by. This causes the queryset to retain its original ordering when paging backwards, leading to incorrect results. queryset.query.order_by = tuple(new_order_by)",
@@ -61,7 +61,7 @@
   {
     "pr_title": "feat(upsampling) - Support upsampled error count with performance optimizations",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/144",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "`_is_error_focused_query` uses a simple substring check on the raw user-controlled query parameter to determine upsampling eligibility. An attacker can manipulate this by adding `event.type:error` as a comment or within a message search to trigger or bypass upsampling logic, leading to incorrect data representation. # Use parsed filter values from snuba_params to check for event.type:error reliably",
@@ -88,7 +88,7 @@
   {
     "pr_title": "GitHub OAuth Security Enhancement",
     "pr_url": "https://github.com/Wellington01/sentry-greptile/pull/145",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: The OAuth `state` parameter is predictable because it is set to `pipeline.signature`. WHY: `pipeline.signature` is a constant hash of the pipeline's view classes, which is identical for every user installing the GitHub integration, rendering the CSRF protection for the OAuth flow ineffective. HOW: Generate a unique, cryptographically secure random token, store it in the pipeline session (`pipeline.bind_state`), and use that value as the `state` parameter. state = pipeline.fetch_state(\"oaut",
@@ -125,7 +125,7 @@
   {
     "pr_title": "Anonymous: Add configurable device limit",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/129",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `updateDevice` function uses '?' placeholders which are incompatible with PostgreSQL. Use the database-specific placeholder syntax ($1, $2, etc.) by implementing a switch statement on the database type, similar to the one used in `CreateOrUpdateDevice`. var query string switch s.sqlStore.GetDBType() { case migrator.Postgres: query = `UPDATE anon_device SET client_ip = $1, user_agent = $2, updated_at = $3 WHERE device_id = $4 AND updated_at BETWEEN $5 AND $6`",
@@ -162,7 +162,7 @@
   {
     "pr_title": "AuthZService: improve authz caching",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/130",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: User-controlled input in cache keys is joined without escaping, leading to key collisions. WHY: Allows an attacker or a malicious user to cause authorization bypasses (privilege escalation) or Denial of Service by poisoning the cache for other users or resources. HOW: Use a unique delimiter that is not allowed in UIDs or actions (e.g., a null byte '\\x00'), or use a structured format like JSON/Protobuf and hash the result to generate a collision-resistant key. func userPermDenialCacheKey(na",
@@ -179,7 +179,7 @@
   {
     "pr_title": "Plugins: Chore: Renamed instrumentation middleware to metrics middleware",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/131",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "MetricsMiddleware identifies as a shared singleton that mutates its 'next' field on every request, creating a critical race condition. Since the middleware chain is rebuilt per-request in the decorator, concurrent calls will overwrite 'imw.next', potentially routing requests to the wrong plugin client. The factory closure must return a new MetricsMiddleware instance that captures the 'next' client locally instead of modifying a shared struct. func NewMetricsMiddleware(promRegisterer prometheus.R",
@@ -206,7 +206,7 @@
   {
     "pr_title": "Advanced Query Processing Architecture",
     "pr_url": "https://github.com/Wellington01/grafana-greptile/pull/132",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: Redundant call to `applyTemplateVariables` inside the query splitting loop. WHY: `datasource.runQuery` (via `DataSourceWithBackend.query`) re-interpolates every target for every split chunk, resulting in O(N) redundant string parsing and ad-hoc filter injection operations that can block the UI thread for wide time ranges. HOW: Reuse the pre-interpolated `queries` by bypassing the automatic interpolation in `super.query` for sub-requests, or implement a caching/flagging mechanism to skip `a",
@@ -218,7 +218,7 @@
   {
     "pr_title": "FEATURE: automatically downsize large images",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/129",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "The `tempfile.size` property is stale after the file is replaced on disk by downsizing, causing the loop to execute 5 times redundantly and the upload to be recorded with incorrect size metadata. while attempt > 0 && File.size(tempfile.path) > SiteSetting.max_image_size_kb.kilobytes OptimizedImage.downsize(tempfile.path, tempfile.path, \"80%\", allow_animation: SiteSetting.allow_animated_thumbnails) upload = Upload.create_for(current_user.id, File.new(tempfile.path), filename, File.size(tempfile.p",
@@ -265,7 +265,7 @@
   {
     "pr_title": "FEATURE: per-topic unsubscribe option in emails",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/130",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "tu will be nil if the user has not previously interacted with the topic, causing a NoMethodError at runtime when attempting to access tu.notification_level. tu = TopicUser.get(params[:topic_id], current_user) level = tu.try(:notification_level) || TopicUser.notification_levels[:regular] if level > TopicUser.notification_levels[:regular]",
@@ -312,7 +312,7 @@
   {
     "pr_title": "Add comprehensive email validation for blocked users",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/131",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: The increment of match_count is non-atomic, creating a race condition. WHY: Concurrent registration attempts with the same blocked email can lead to lost updates in the match count statistics. HOW: Use atomic updates such as record.class.where(id: record.id).update_all([\"match_count = match_count + 1, last_match_at = ?\", Time.zone.now]). record.class.where(id: record.id).update_all([\"match_count = match_count + 1, last_match_at = ?\", Time.zone.now])",
@@ -349,7 +349,7 @@
   {
     "pr_title": "Enhance embed URL handling and validation system",
     "pr_url": "https://github.com/Wellington01/discourse-greptile/pull/132",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: syntax error in the template closing tag at line 6. WHY: causes the embed page to crash with a SyntaxError when attempting to render. HOW: remove the trailing 'if' from the end tag.",
@@ -416,7 +416,7 @@
   {
     "pr_title": "Async import of the appStore packages",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/143",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: `appStore` object triggers all dynamic imports eagerly on module load. WHY: Every member of the object is assigned the result of `import()`, causing 30+ concurrent network requests regardless of which app is actually needed, which defeats the purpose of lazy loading and increases network overhead. HOW: Wrap the imports in functions (e.g., `applecalendar: () => import('./applecalendar')`) or use getters to make them lazy. const appStore = { applecalendar: () => import(\"./applecalendar\"), ca",
@@ -438,13 +438,13 @@
   {
     "pr_title": "feat: 2fa backup codes",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/144",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "fix: handle collective multiple host on destinationCalendar",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/145",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "A potential null/undefined dereference occurs when accessing `mainHostDestinationCalendar.integration` because the array destructuring can result in `undefined` if `evt.destinationCalendar` is null or empty. This will cause the event creation process to crash when no destination calendar is configured or available. const [mainHostDestinationCalendar] = evt.destinationCalendar ?? []; if (evt.location === MeetLocationType && mainHostDestinationCalendar?.integration !== \"google_calendar\") {",
@@ -491,7 +491,7 @@
   {
     "pr_title": "feat: convert InsightsBookingService to use Prisma.sql raw queries",
     "pr_url": "https://github.com/Wellington01/cal.com-greptile/pull/146",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "WHAT: `userIdsFromOrg` is an array of objects that is passed to `new Set` and the SQL query without mapping to primitive IDs first. WHY: This fails to de-duplicate users across teams (increasing query payload and DB work) and passes an array of objects to the database, which will cause a type mismatch or inefficient serialization when compared against the numeric `userId` column. HOW: Map the result to an array of user IDs using `userIdsFromOrg.map(u => u.userId)` before de-duplication. if (user",
@@ -503,13 +503,13 @@
   {
     "pr_title": "Fixing Re-authentication with passkeys",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/129",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   },
   {
     "pr_title": "Add caching support for IdentityProviderStorageProvider.getForLogin operations",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/130",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Calling `idp.getConfig().get(...)` will throw a `NullPointerException` if the IDP configuration map is null. Although most providers initialize this map, the model contract does not guarantee it and it should be guarded. Boolean.parseBoolean(idp.getConfig() != null ? idp.getConfig().get(OrganizationModel.BROKER_PUBLIC) : null)",
@@ -541,7 +541,7 @@
   {
     "pr_title": "Add AuthzClientCryptoProvider for authorization client cryptographic operations",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/131",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": [
       {
         "comment": "Redundant allocations and dead code identified in `concatenatedRSToASN1DER`. The function creates five `ASN1Encoder` instances and two dead objects (lines 113-114) per signature conversion, increasing GC pressure in a hot path. Refactor to remove unused allocations and simplify the sequence construction. return ASN1Encoder.create() ASN1Encoder.create().write(rBigInteger), ASN1Encoder.create().write(sBigInteger))",
@@ -563,7 +563,7 @@
   {
     "pr_title": "Add rolling-updates feature flag and compatibility framework",
     "pr_url": "https://github.com/Wellington01/keycloak-greptile/pull/132",
-    "tool": "kodus",
+    "tool": "codus",
     "issues": []
   }
 ]

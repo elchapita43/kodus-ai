@@ -6,7 +6,7 @@ export const SUPPORTED_REPO_SETTINGS_SECTIONS = [
     'custom-prompts',
     'suggestion-control',
     'pr-summary',
-    'kody-rules',
+    'cody-rules',
     'custom-messages',
     'business-rules',
 ] as const;
@@ -20,13 +20,13 @@ const SECTION_LABELS: Record<RepositorySettingsSection, string> = {
     'custom-prompts': 'Custom Prompts',
     'suggestion-control': 'Suggestion Control',
     'pr-summary': 'PR Summary',
-    'kody-rules': 'Kody Rules',
+    'cody-rules': 'Cody Rules',
     'custom-messages': 'Custom Messages',
     'business-rules': 'Business Rules',
 };
 
-export function getKodusAppUrl(): string {
-    const configuredUrl = process.env.KODUS_APP_URL?.trim();
+export function getCodusAppUrl(): string {
+    const configuredUrl = process.env.CODUS_APP_URL?.trim();
     return configuredUrl || 'https://app.kodus.io';
 }
 

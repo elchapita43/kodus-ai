@@ -188,7 +188,7 @@ function main() {
     const usage = grepUsage();
     const mainValues = parseEnvWithValues(join(REPO_ROOT, '.env.example'));
     const installerValues = parseEnvWithValues(
-        join(REPO_ROOT, '..', 'kodus-installer', '.env.example'),
+        join(REPO_ROOT, '..', 'codus-installer', '.env.example'),
     );
     const src: Source = {
         main: new Set(mainValues.keys()),
@@ -199,16 +199,16 @@ function main() {
         schema,
     };
 
-    // Include code-only vars that look "Kodus-shaped" — drops Node stdlib
+    // Include code-only vars that look "Codus-shaped" — drops Node stdlib
     // and tooling vars (PATH, HOME, JEST_WORKER_ID, etc).
-    const KODUS_PREFIX_RE =
-        /^(API_|WEB_|KODUS_|GLOBAL_|GITHUB_|GITLAB_|BITBUCKET_|AZURE_|FORGEJO_|RABBIT|WORKFLOW_|AST_|ANALYTICS_|MCP_|METRICS_|REVIEW_|WEBHOOK_|MONGODB_|DATABASE_|SANDBOX_|LANGFUSE_|PYROSCOPE_|RESEND_|N8N_|CODE_MANAGEMENT_|NEXTAUTH_|RUN_)/;
+    const CODUS_PREFIX_RE =
+        /^(API_|WEB_|CODUS_|GLOBAL_|GITHUB_|GITLAB_|BITBUCKET_|AZURE_|FORGEJO_|RABBIT|WORKFLOW_|AST_|ANALYTICS_|MCP_|METRICS_|REVIEW_|WEBHOOK_|MONGODB_|DATABASE_|SANDBOX_|LANGFUSE_|PYROSCOPE_|RESEND_|N8N_|CODE_MANAGEMENT_|NEXTAUTH_|RUN_)/;
     // High-precision orphan detection: only count code-only vars accessed
     // via process.env.X or env.X — drops DI tokens, enums, log keys.
     const codeOnlyOrphans = new Set(
         [...src.usedStrong].filter(
             (n) =>
-                KODUS_PREFIX_RE.test(n) &&
+                CODUS_PREFIX_RE.test(n) &&
                 !n.endsWith('_') &&
                 n.length >= 6 &&
                 !src.main.has(n) &&
@@ -283,7 +283,7 @@ function main() {
         'presence',
         'hints',
         'description',
-        'main_value',          // current value in kodus-ai/.env.example
+        'main_value',          // current value in codus-ai/.env.example
         'installer_value',     // pre-filled when it DIFFERS from main; edit if you want override
         'proposal_mine',
         'your_override',       // EDIT HERE if you disagree with proposal

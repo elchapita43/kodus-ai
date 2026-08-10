@@ -27,19 +27,19 @@ test("every github PAT tenant has its own dedicated repo (no sharing)", () => {
 test("registryRepoFor resolves the per-tier github fixture repos", () => {
     assert.equal(
         registryRepoFor("github", "paid"),
-        "kodus-e2e/tiny-url-cloud-paid",
+        "codus-e2e/tiny-url-cloud-paid",
     );
     assert.equal(
         registryRepoFor("github", "trial"),
-        "kodus-e2e/tiny-url-cloud-trial",
+        "codus-e2e/tiny-url-cloud-trial",
     );
     assert.equal(
         registryRepoFor("github", "free"),
-        "kodus-e2e/tiny-url-cloud-free",
+        "codus-e2e/tiny-url-cloud-free",
     );
     assert.equal(
         registryRepoFor("github", "community-byok"),
-        "kodus-e2e/tiny-url-cloud-community",
+        "codus-e2e/tiny-url-cloud-community",
     );
     // Unknown (provider, license) combos resolve to undefined, never throw —
     // the runner decides whether that's fatal (github) or fine (others).
@@ -54,19 +54,19 @@ test("validateGithubRepoIsolation rejects shared and missing repos", () => {
             name: "A",
             license: "paid",
             provider: "github",
-            repoFullName: "kodus-e2e/dup",
+            repoFullName: "codus-e2e/dup",
         },
         {
             email: "b@kodus.io",
             name: "B",
             license: "trial",
             provider: "github",
-            repoFullName: "kodus-e2e/dup",
+            repoFullName: "codus-e2e/dup",
         },
     ];
     assert.throws(
         () => validateGithubRepoIsolation(shared),
-        /shared by a@kodus\.io and b@kodus\.io/,
+        /shared by a@codus\.io and b@codus\.io/,
     );
 
     const missing: TenantSpec[] = [
@@ -89,14 +89,14 @@ test("validateGithubRepoIsolation rejects shared and missing repos", () => {
             name: "D",
             license: "paid",
             provider: "gitlab",
-            repoFullName: "kodus-e2e/shared",
+            repoFullName: "codus-e2e/shared",
         },
         {
             email: "e@kodus.io",
             name: "E",
             license: "trial",
             provider: "bitbucket",
-            repoFullName: "kodus-e2e/shared",
+            repoFullName: "codus-e2e/shared",
         },
     ];
     assert.doesNotThrow(() => validateGithubRepoIsolation(others));

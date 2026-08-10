@@ -6,8 +6,8 @@ import {
     getPRDescriptionLimit,
 } from './fit-pr-description';
 
-const END_MARKER = '<!-- kody-pr-summary:end -->';
-const NOTICE_FRAGMENT = '(truncated by Kody';
+const END_MARKER = '<!-- cody-pr-summary:end -->';
+const NOTICE_FRAGMENT = '(truncated by Cody';
 
 describe('fitPRDescription', () => {
     describe.each([
@@ -34,7 +34,7 @@ describe('fitPRDescription', () => {
             expect(out).toContain(NOTICE_FRAGMENT);
         });
 
-        it('preserves the kody-pr-summary end marker when the input ends with it', () => {
+        it('preserves the cody-pr-summary end marker when the input ends with it', () => {
             const body = 'a'.repeat(limit + 200);
             const input = body + END_MARKER;
             const out = fitPRDescription(input, platform);
@@ -70,7 +70,7 @@ describe('fitPRDescription', () => {
             // where everything must fit in 4000 chars. Marker (28) + notice
             // (~70) leave plenty of room — pathological case is exercised
             // in the unit-level test below using a hand-built fixture.
-            const noticeLength = '\n\n_…(truncated by Kody to fit the platform description size limit)_\n'
+            const noticeLength = '\n\n_…(truncated by Cody to fit the platform description size limit)_\n'
                 .length;
             const markerLength = END_MARKER.length;
             const minSafeLimit = noticeLength + markerLength + 1;

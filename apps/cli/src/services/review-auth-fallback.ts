@@ -16,7 +16,7 @@ export async function withTeamKeyFallback<T>({
         const canFallbackToTeamKey =
             error instanceof ApiError &&
             error.statusCode === 401 &&
-            !token.startsWith('kodus_');
+            !token.startsWith('codus_');
 
         if (!canFallbackToTeamKey) {
             throw error;

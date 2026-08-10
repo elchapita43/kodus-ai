@@ -14,7 +14,7 @@ import type { LanguageModel } from 'ai';
 
 import { byokToVercelModel, getModelName } from '@libs/llm/byok-to-vercel';
 import type { ReasoningEffort } from '@libs/llm/reasoning-options';
-import type { BYOKConfig } from '@kodus/kodus-common/llm';
+import type { BYOKConfig } from '@codus/codus-common/llm';
 import type { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 
 import type { ReviewAgentInput } from '@libs/code-review/infrastructure/agents/review-agent.contract';

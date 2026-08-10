@@ -21,9 +21,9 @@ const ADDITIONAL_FILTER_FIELDS: Record<
     string,
     Pick<(typeof columns)[number], "meta">
 > = {
-    "kodyRule.number": {
+    "codyRule.number": {
         meta: {
-            name: "Kody Rule ID",
+            name: "Cody Rule ID",
             filters: {
                 "is": true,
                 "is-not": true,

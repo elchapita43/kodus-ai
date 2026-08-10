@@ -27,7 +27,7 @@ node evals/anchoring/anchor-eval.js [--limit=25] [--model=gpt-5.4|gpt-5.4-mini] 
 ```
 
 `--gate` (CI) fails if any near-miss drop occurs or the drop-rate exceeds
-`--drop-max` (default 8%). Needs the model key in `~/.kodus-dev/config`. Loads
+`--drop-max` (default 8%). Needs the model key in `~/.codus-dev/config`. Loads
 `.ts` via an esbuild require-hook (agent-loop.ts has mid-file imports ts-node
 won't hoist).
 

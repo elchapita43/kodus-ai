@@ -1,10 +1,10 @@
-# Kodus Code Management MCP Server
+# Codus Code Management MCP Server
 
-Este módulo expõe funcionalidades do `CodeManagementService` através do protocolo MCP (Model Context Protocol), permitindo que aplicações externas consumam as operações de gerenciamento de código do Kodus.
+Este módulo expõe funcionalidades do `CodeManagementService` através do protocolo MCP (Model Context Protocol), permitindo que aplicações externas consumam as operações de gerenciamento de código do Codus.
 
 ## Modelo de transporte HTTP
 
-O endpoint HTTP MCP do Kodus roda em modo `Streamable HTTP` stateless.
+O endpoint HTTP MCP do Codus roda em modo `Streamable HTTP` stateless.
 
 ## Contrato atual
 
@@ -27,7 +27,7 @@ O endpoint HTTP MCP do Kodus roda em modo `Streamable HTTP` stateless.
 - Todas as operações MCP neste endpoint seguem públicas no nível HTTP. Validações de tenant e integração continuam no fluxo de domínio e nos próprios tools.
 - Esse desenho evita afinidade de sessão no load balancer e funciona corretamente com múltiplas instâncias ECS/EC2 atrás de ALB.
 
-Esse comportamento é intencional. No fluxo interno do Kodus, contexto de tenant, autenticação e autorização já trafegam no request e nos argumentos dos tools. Não há dependência funcional de sessão MCP para executar `initialize`, `tools/list`, `tool/call` e `ping`.
+Esse comportamento é intencional. No fluxo interno do Codus, contexto de tenant, autenticação e autorização já trafegam no request e nos argumentos dos tools. Não há dependência funcional de sessão MCP para executar `initialize`, `tools/list`, `tool/call` e `ping`.
 
 ## Funcionalidades Disponíveis
 
@@ -40,13 +40,13 @@ Esse comportamento é intencional. No fluxo interno do Kodus, contexto de tenant
 4. **`get_pull_request_details`** - Obtém detalhes específicos de um pull request
 5. **`get_repository_files`** - Lista arquivos de um repositório com filtros
 
-#### Kody Issues Management Tools
-6. **`KODUS_CREATE_KODY_ISSUE`** - Cria uma nova issue manualmente
-7. **`KODUS_LIST_KODY_ISSUES`** - Lista issues com filtros opcionais
-8. **`KODUS_GET_KODY_ISSUE_DETAILS`** - Obtém detalhes de uma issue específica
-9. **`KODUS_UPDATE_KODY_ISSUE_STATUS`** - Atualiza o status de uma issue
-10. **`KODUS_UPDATE_KODY_ISSUE_CATEGORY`** - Atualiza a categoria/label de uma issue
-11. **`KODUS_DELETE_KODY_ISSUE`** - Fecha/descarta uma issue
+#### Cody Issues Management Tools
+6. **`CODUS_CREATE_CODY_ISSUE`** - Cria uma nova issue manualmente
+7. **`CODUS_LIST_CODY_ISSUES`** - Lista issues com filtros opcionais
+8. **`CODUS_GET_CODY_ISSUE_DETAILS`** - Obtém detalhes de uma issue específica
+9. **`CODUS_UPDATE_CODY_ISSUE_STATUS`** - Atualiza o status de uma issue
+10. **`CODUS_UPDATE_CODY_ISSUE_CATEGORY`** - Atualiza a categoria/label de uma issue
+11. **`CODUS_DELETE_CODY_ISSUE`** - Fecha/descarta uma issue
 
 ## Uso
 
@@ -70,7 +70,7 @@ import { createMCPAdapter } from '@libs/mcp-server/mcp-adapter';
 const mcpAdapter = createMCPAdapter({
   servers: [
     {
-      name: 'kodus-code-management',
+      name: 'codus-code-management',
       type: 'http',
       url: 'https://api.kodus.io/mcp'
     }
@@ -179,11 +179,11 @@ O client `StreamableHTTPClientTransport` do SDK funciona com esse modelo porque:
 }
 ```
 
-#### 6. Criar Kody Issue
+#### 6. Criar Cody Issue
 
 ```json
 {
-  "name": "KODUS_CREATE_KODY_ISSUE",
+  "name": "CODUS_CREATE_CODY_ISSUE",
   "arguments": {
     "organizationId": "uuid-da-organizacao",
     "title": "Memory leak in user service",
@@ -208,13 +208,13 @@ O client `StreamableHTTPClientTransport` do SDK funciona com esse modelo porque:
 }
 ```
 
-**Note**: `owner` and `reporter` are optional. If `reporter` is not provided, defaults to Kody-MCP.
+**Note**: `owner` and `reporter` are optional. If `reporter` is not provided, defaults to Cody-MCP.
 
-#### 7. Listar Kody Issues
+#### 7. Listar Cody Issues
 
 ```json
 {
-  "name": "KODUS_LIST_KODY_ISSUES",
+  "name": "CODUS_LIST_CODY_ISSUES",
   "arguments": {
     "organizationId": "uuid-da-organizacao",
     "repositoryName": "my-repo",
@@ -226,11 +226,11 @@ O client `StreamableHTTPClientTransport` do SDK funciona com esse modelo porque:
 
 All filters are optional.
 
-#### 8. Detalhes de Kody Issue
+#### 8. Detalhes de Cody Issue
 
 ```json
 {
-  "name": "KODUS_GET_KODY_ISSUE_DETAILS",
+  "name": "CODUS_GET_CODY_ISSUE_DETAILS",
   "arguments": {
     "organizationId": "uuid-da-organizacao",
     "issueId": "issue-uuid"
@@ -242,7 +242,7 @@ All filters are optional.
 
 ```json
 {
-  "name": "KODUS_UPDATE_KODY_ISSUE_STATUS",
+  "name": "CODUS_UPDATE_CODY_ISSUE_STATUS",
   "arguments": {
     "issueId": "issue-uuid",
     "status": "resolved"
@@ -256,7 +256,7 @@ Valid statuses: `open`, `resolved`, `dismissed`
 
 ```json
 {
-  "name": "KODUS_UPDATE_KODY_ISSUE_CATEGORY",
+  "name": "CODUS_UPDATE_CODY_ISSUE_CATEGORY",
   "arguments": {
     "issueId": "issue-uuid",
     "label": "performance"
@@ -268,7 +268,7 @@ Valid statuses: `open`, `resolved`, `dismissed`
 
 ```json
 {
-  "name": "KODUS_DELETE_KODY_ISSUE",
+  "name": "CODUS_DELETE_CODY_ISSUE",
   "arguments": {
     "issueId": "issue-uuid"
   }
@@ -286,7 +286,7 @@ This sets the issue status to `dismissed`.
 
 ## Quando não usar esse modelo
 
-Se no futuro o Kodus precisar de:
+Se no futuro o Codus precisar de:
 
 - SSE iniciado por `GET`,
 - resumability com `Last-Event-ID`,
@@ -299,7 +299,7 @@ o endpoint HTTP terá que voltar a um modo stateful com storage ou roteamento di
 
 - **`@modelcontextprotocol/sdk`** - SDK oficial do MCP v1.13.2
 - **`@nestjs/common`** - Framework NestJS
-- **`CodeManagementService`** - Serviço interno do Kodus
+- **`CodeManagementService`** - Serviço interno do Codus
 - **TypeScript** - Type safety completo
 
 ## Características
@@ -374,7 +374,7 @@ private async handleNewTool(args: any): Promise<CallToolResult> {
 
 ## Suporte a Plataformas
 
-O MCP Server funciona com todas as plataformas suportadas pelo Kodus:
+O MCP Server funciona com todas as plataformas suportadas pelo Codus:
 - ✅ **GitHub** 
 - ✅ **GitLab**
 - ✅ **Azure Repos**

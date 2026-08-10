@@ -18,7 +18,7 @@ import { INTEGRATION_SERVICE_TOKEN } from '@libs/integrations/domain/integration
 import { AUTH_INTEGRATION_SERVICE_TOKEN } from '@libs/integrations/domain/authIntegrations/contracts/auth-integration.service.contracts';
 import { MCPManagerService } from '@libs/mcp-server/services/mcp-manager.service';
 import { LLM_ANALYSIS_SERVICE_TOKEN } from '@libs/code-review/infrastructure/adapters/services/llmAnalysis.service';
-import { KODY_RULES_ANALYSIS_SERVICE_TOKEN } from '@libs/ee/codeBase/kodyRulesAnalysis.service';
+import { CODY_RULES_ANALYSIS_SERVICE_TOKEN } from '@libs/ee/codeBase/codyRulesAnalysis.service';
 import { WebhookContextService } from '@libs/platform/application/services/webhook-context.service';
 
 // --- MOCK DEFINITIONS ---
@@ -87,7 +87,7 @@ describe('Code Review Workflow Logic Integrity (No AST)', () => {
         getPlatformAuthDetails: jest.fn(),
     };
     const mockAuthIntegrationService = { update: jest.fn() };
-    const mockMCPManagerService = { createKodusMCPIntegration: jest.fn() };
+    const mockMCPManagerService = { createCodusMCPIntegration: jest.fn() };
 
     // Mock do LLM Analysis (Onde a AST era usada)
     const mockLLMAnalysisService = {
@@ -104,7 +104,7 @@ describe('Code Review Workflow Logic Integrity (No AST)', () => {
         }),
     };
 
-    const mockKodyRulesAnalysisService = {
+    const mockCodyRulesAnalysisService = {
         analyzeCodeWithAI: jest.fn(),
     };
 
@@ -165,8 +165,8 @@ describe('Code Review Workflow Logic Integrity (No AST)', () => {
                     useValue: mockLLMAnalysisService,
                 },
                 {
-                    provide: KODY_RULES_ANALYSIS_SERVICE_TOKEN,
-                    useValue: mockKodyRulesAnalysisService,
+                    provide: CODY_RULES_ANALYSIS_SERVICE_TOKEN,
+                    useValue: mockCodyRulesAnalysisService,
                 },
                 { provide: WebhookContextService, useValue: {} },
             ],
@@ -282,7 +282,7 @@ describe('Code Review Workflow Logic Integrity (No AST)', () => {
     it('should pass full file content to LLM when AST is missing', async () => {
         const orchestrator = new CodeAnalysisOrchestrator(
             mockLLMAnalysisService,
-            mockKodyRulesAnalysisService,
+            mockCodyRulesAnalysisService,
         );
 
         const mockFileContext = {
@@ -322,7 +322,7 @@ describe('Code Review Workflow Logic Integrity (No AST)', () => {
 
         const orchestrator = new CodeAnalysisOrchestrator(
             mockLLMAnalysisService,
-            mockKodyRulesAnalysisService,
+            mockCodyRulesAnalysisService,
         );
 
         const mockOrganizationAndTeamData = {

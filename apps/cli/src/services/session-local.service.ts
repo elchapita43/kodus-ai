@@ -9,7 +9,7 @@ export interface LocalSessionData {
     turnCompleted?: boolean;
 }
 
-const SESSION_DIR = '.kody/sessions';
+const SESSION_DIR = '.cody/sessions';
 
 function sessionPath(repoRoot: string, sessionId: string): string {
     // Prevent path traversal attacks by ensuring sessionId is a simple filename.

@@ -122,21 +122,21 @@ describe('AuthController.ssoCallback — SSO handoff cookie Domain', () => {
     describe('self-hosted topology (Dmitry repro)', () => {
         it('sets Domain=.web.scorpion.co for the original Dmitry host shape in production', async () => {
             const r = await callSsoCallback({
-                apiHost: 'kodus-api-dev.web.scorpion.co',
-                frontendUrl: 'https://kodus-dev.web.scorpion.co',
+                apiHost: 'codus-api-dev.web.scorpion.co',
+                frontendUrl: 'https://codus-dev.web.scorpion.co',
                 nodeEnv: 'production',
             });
             expect(r.cookieOptions.domain).toBe('.web.scorpion.co');
             expect(r.cookieOptions.secure).toBe(true);
             expect(r.redirectUrl).toBe(
-                'https://kodus-dev.web.scorpion.co/sso-callback',
+                'https://codus-dev.web.scorpion.co/sso-callback',
             );
         });
 
-        it('does NOT regress to a hardcoded .kodus.io for non-kodus deployments', async () => {
+        it('does NOT regress to a hardcoded .kodus.io for non-codus deployments', async () => {
             const r = await callSsoCallback({
-                apiHost: 'kodus-api-dev.web.scorpion.co',
-                frontendUrl: 'https://kodus-dev.web.scorpion.co',
+                apiHost: 'codus-api-dev.web.scorpion.co',
+                frontendUrl: 'https://codus-dev.web.scorpion.co',
                 nodeEnv: 'production',
             });
             expect(r.cookieOptions.domain).not.toBe('.kodus.io');

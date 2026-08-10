@@ -1,5 +1,5 @@
 // undici (Node's built-in fetch) ships a `headersTimeout` of 300_000ms.
-// It fires INDEPENDENT of our AbortSignal — when Kodus's slow endpoints
+// It fires INDEPENDENT of our AbortSignal — when Codus's slow endpoints
 // (e.g. Bitbucket `finish-onboarding` regularly takes 3–5 minutes while
 // it clones, generates rules, and round-trips an LLM) don't send the
 // first response byte by 5 minutes, the connection is killed with
@@ -52,8 +52,8 @@ export function wafBypassHeader(url: string): Record<string, string> {
     if (!secret) return {};
     try {
         const host = new URL(url).hostname;
-        if (/^qa\.([a-z0-9-]+\.)*kodus\.io$/i.test(host)) {
-            return { "x-kodus-e2e": secret };
+        if (/^qa\.([a-z0-9-]+\.)*codus\.io$/i.test(host)) {
+            return { "x-codus-e2e": secret };
         }
     } catch {
         // unparsable URL → fetch() will fail with its own error anyway
@@ -221,7 +221,7 @@ const TRANSPORT_RETRIES = 5;
 // up to 10min) plus the review worker's own Bitbucket calls overrun the
 // per-account quota and Bitbucket returns 429 with a Retry-After header. A
 // single 429 also cascades — the next scenario's PAT re-validation goes
-// through Kodus to Bitbucket and comes back as 400 "Error authenticating".
+// through Codus to Bitbucket and comes back as 400 "Error authenticating".
 // Honouring Retry-After here makes the whole thing deterministic: we wait
 // exactly as long as Bitbucket asks (capped) and retry, so no rate-limit
 // blip ever surfaces as a test failure. Applies to every provider but only

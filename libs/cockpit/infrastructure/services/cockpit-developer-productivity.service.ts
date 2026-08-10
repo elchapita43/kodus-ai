@@ -29,7 +29,7 @@ import { CockpitCodeHealthService } from './cockpit-code-health.service';
 
 /**
  * Postgres port of
- * `kodus-service-analytics/src/services/analytics/developer-productivity.service.ts`.
+ * `codus-service-analytics/src/services/analytics/developer-productivity.service.ts`.
  * `pull_request_author_view` from BQ collapses into
  * `pull_requests_opt.author_username` here — we already populate it on
  * ingestion, so no extra view is needed.

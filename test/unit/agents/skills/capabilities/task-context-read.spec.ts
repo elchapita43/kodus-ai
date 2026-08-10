@@ -36,7 +36,7 @@ function createBaseParams() {
         skillName: 'business-rules-validation',
         organizationId: 'org-1',
         teamId: 'team-1',
-        userQuestion: '@kody TASK-1',
+        userQuestion: '@cody TASK-1',
         pullRequestDescription: 'Related to TASK-1',
         prBody: 'PR text TASK-1',
         taskContextResolutionMode: 'cache_first' as const,
@@ -228,7 +228,7 @@ describe('fetchTaskContext capability', () => {
                 data: {
                     key: 'KC-1441',
                     fields: {
-                        summary: 'Kody rules por time',
+                        summary: 'Cody rules por time',
                         description: 'Resolved from structured signals',
                     },
                 },
@@ -267,13 +267,13 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('jira'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic',
+                userQuestion: '@cody -v business-logic',
                 pullRequestDescription: 'General cleanup in extension commands',
                 prBody: 'No direct ticket reference in the body',
                 businessSignals: {
                     ticketKeys: ['KC-1441'],
                     taskLinks: [
-                        'https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                        'https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
                     ],
                     requirementKeywords: ['acceptance criteria'],
                 },
@@ -287,7 +287,7 @@ describe('fetchTaskContext capability', () => {
         );
         expect(result.normalized).toMatchObject({
             id: 'KC-1441',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description: 'Resolved from structured signals',
             sourceProvider: 'jira',
         });
@@ -299,7 +299,7 @@ describe('fetchTaskContext capability', () => {
                 issue: {
                     id: 'issue-uuid-1',
                     identifier: 'KC-1441',
-                    title: 'Kody rules por time',
+                    title: 'Cody rules por time',
                     description: 'Resolved from aliased Linear tool name.',
                 },
             },
@@ -339,7 +339,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('linear'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody KC-1441',
+                userQuestion: '@cody KC-1441',
                 pullRequestDescription: 'Related to KC-1441',
                 prBody: 'PR text KC-1441',
             },
@@ -352,7 +352,7 @@ describe('fetchTaskContext capability', () => {
         );
         expect(result.normalized).toMatchObject({
             id: 'KC-1441',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description: 'Resolved from aliased Linear tool name.',
             sourceProvider: 'linear',
         });
@@ -363,7 +363,7 @@ describe('fetchTaskContext capability', () => {
             result: {
                 task: {
                     id: '86d123',
-                    name: 'Kody rules por time',
+                    name: 'Cody rules por time',
                     description: 'Resolved from provider-qualified tool name.',
                 },
             },
@@ -398,7 +398,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('clickup'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody TASK-86',
+                userQuestion: '@cody TASK-86',
                 pullRequestDescription: 'Related to TASK-86',
                 prBody: 'PR text TASK-86',
             },
@@ -411,7 +411,7 @@ describe('fetchTaskContext capability', () => {
         );
         expect(result.normalized).toMatchObject({
             id: '86d123',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description: 'Resolved from provider-qualified tool name.',
             sourceProvider: 'clickup',
         });
@@ -424,7 +424,7 @@ describe('fetchTaskContext capability', () => {
                     id: '15604',
                     key: 'KC-1441',
                     fields: {
-                        summary: 'Kody rules por time',
+                        summary: 'Cody rules por time',
                         description: 'Resolved from Jira issue payload',
                     },
                 },
@@ -463,14 +463,14 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('jira'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic KC-1441',
+                userQuestion: '@cody -v business-logic KC-1441',
             },
             hooks,
         );
 
         expect(result.normalized).toMatchObject({
             id: 'KC-1441',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description: 'Resolved from Jira issue payload',
             sourceProvider: 'jira',
         });
@@ -643,10 +643,10 @@ describe('fetchTaskContext capability', () => {
                 issue: {
                     id: 'issue-uuid-1',
                     identifier: 'KC-1441',
-                    title: 'Kody rules por time',
+                    title: 'Cody rules por time',
                     description:
                         'Rules must be resolved deterministically by team and billing context.',
-                    url: 'https://linear.app/kodus/issue/KC-1441',
+                    url: 'https://linear.app/codus/issue/KC-1441',
                 },
             },
         });
@@ -689,10 +689,10 @@ describe('fetchTaskContext capability', () => {
 
         expect(result.normalized).toMatchObject({
             id: 'KC-1441',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description:
                 'Rules must be resolved deterministically by team and billing context.',
-            links: ['https://linear.app/kodus/issue/KC-1441'],
+            links: ['https://linear.app/codus/issue/KC-1441'],
             sourceProvider: 'linear',
         });
     });
@@ -702,7 +702,7 @@ describe('fetchTaskContext capability', () => {
             result: {
                 task: {
                     id: '86d123',
-                    name: 'Kody rules por time',
+                    name: 'Cody rules por time',
                     description:
                         'Adicionar escopo por time nas regras e no billing para evitar comportamento imprevisivel.',
                     url: 'https://app.clickup.com/t/86d123',
@@ -739,14 +739,14 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('clickup'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody 86d123',
+                userQuestion: '@cody 86d123',
             },
             hooks,
         );
 
         expect(result.normalized).toMatchObject({
             id: '86d123',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description:
                 'Adicionar escopo por time nas regras e no billing para evitar comportamento imprevisivel.',
             links: ['https://app.clickup.com/t/86d123'],
@@ -754,23 +754,23 @@ describe('fetchTaskContext capability', () => {
         });
     });
 
-    it('builds deterministic args for KODUS_GET_GITHUB_ISSUE using repository owner/name and issue number', async () => {
+    it('builds deterministic args for CODUS_GET_GITHUB_ISSUE using repository owner/name and issue number', async () => {
         const callTool: CallToolMock = jest.fn().mockResolvedValue({
             success: true,
             data: {
                 number: 37,
                 title: 'Business logic validation issue',
                 body: 'Issue context from GitHub',
-                html_url: 'https://github.com/kodustech/kodus-ai/issues/37',
+                html_url: 'https://github.com/elchapita43/codus-ai/issues/37',
             },
         });
 
         const toolCaller: ToolCaller = {
             callTool,
-            getRegisteredTools: () => [{ name: 'KODUS_GET_GITHUB_ISSUE' }],
+            getRegisteredTools: () => [{ name: 'CODUS_GET_GITHUB_ISSUE' }],
             getToolsForLLM: () => [
                 {
-                    name: 'KODUS_GET_GITHUB_ISSUE',
+                    name: 'CODUS_GET_GITHUB_ISSUE',
                     parameters: {
                         required: [
                             'organizationId',
@@ -798,7 +798,7 @@ describe('fetchTaskContext capability', () => {
 
         const hooks = {
             getSeedTaskContextTools: jest.fn(async () => [
-                'KODUS_GET_GITHUB_ISSUE',
+                'CODUS_GET_GITHUB_ISSUE',
             ]),
             getCachedTaskContextTools: jest.fn(async () => []),
             saveCachedTaskContextTools: jest.fn(async () => undefined),
@@ -808,22 +808,22 @@ describe('fetchTaskContext capability', () => {
 
         await fetchTaskContext(
             toolCaller,
-            createCapabilityRuntime('kodus-github-issues'),
+            createCapabilityRuntime('codus-github-issues'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic use issue #37',
-                repositoryOwner: 'kodustech',
-                repositoryName: 'kodus-ai',
+                userQuestion: '@cody -v business-logic use issue #37',
+                repositoryOwner: 'elchapita43',
+                repositoryName: 'codus-ai',
             },
             hooks,
         );
 
-        expect(callTool).toHaveBeenCalledWith('KODUS_GET_GITHUB_ISSUE', {
+        expect(callTool).toHaveBeenCalledWith('CODUS_GET_GITHUB_ISSUE', {
             organizationId: 'org-1',
             teamId: 'team-1',
             repository: {
-                owner: 'kodustech',
-                name: 'kodus-ai',
+                owner: 'elchapita43',
+                name: 'codus-ai',
             },
             issueNumber: 37,
         });
@@ -835,14 +835,14 @@ describe('fetchTaskContext capability', () => {
                 taskContext: 'Agent context',
                 title: 'Agent title',
                 id: 'GH-37',
-                toolsUsed: ['KODUS_GET_GITHUB_ISSUE'],
+                toolsUsed: ['CODUS_GET_GITHUB_ISSUE'],
             }),
         });
 
         const toolCaller: ToolCaller = {
             callTool: jest.fn(),
             callAgent,
-            getRegisteredTools: () => [{ name: 'KODUS_GET_GITHUB_ISSUE' }],
+            getRegisteredTools: () => [{ name: 'CODUS_GET_GITHUB_ISSUE' }],
             getToolsForLLM: () => [],
         };
 
@@ -856,12 +856,12 @@ describe('fetchTaskContext capability', () => {
 
         await fetchTaskContext(
             toolCaller,
-            createCapabilityRuntime('kodus-github-issues'),
+            createCapabilityRuntime('codus-github-issues'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic for issue #37',
-                repositoryOwner: 'kodustech',
-                repositoryName: 'kodus-ai',
+                userQuestion: '@cody -v business-logic for issue #37',
+                repositoryOwner: 'elchapita43',
+                repositoryName: 'codus-ai',
                 taskContextResolutionMode: 'agent_first',
             },
             hooks,
@@ -870,8 +870,8 @@ describe('fetchTaskContext capability', () => {
         expect(callAgent).toHaveBeenCalled();
         const prompt = callAgent.mock.calls[0][1];
         expect(prompt).toContain('KNOWN_ISSUE_NUMBERS: 37');
-        expect(prompt).toContain('KNOWN_REPOSITORY_OWNER: kodustech');
-        expect(prompt).toContain('KNOWN_REPOSITORY_NAME: kodus-ai');
+        expect(prompt).toContain('KNOWN_REPOSITORY_OWNER: elchapita43');
+        expect(prompt).toContain('KNOWN_REPOSITORY_NAME: codus-ai');
     });
 
     it('uses typed candidates for optional-only tool parameters', async () => {
@@ -886,10 +886,10 @@ describe('fetchTaskContext capability', () => {
 
         const toolCaller: ToolCaller = {
             callTool,
-            getRegisteredTools: () => [{ name: 'KODUS_GET_GITHUB_ISSUE' }],
+            getRegisteredTools: () => [{ name: 'CODUS_GET_GITHUB_ISSUE' }],
             getToolsForLLM: () => [
                 {
-                    name: 'KODUS_GET_GITHUB_ISSUE',
+                    name: 'CODUS_GET_GITHUB_ISSUE',
                     parameters: {
                         required: [],
                         properties: {
@@ -904,7 +904,7 @@ describe('fetchTaskContext capability', () => {
 
         const hooks = {
             getSeedTaskContextTools: jest.fn(async () => [
-                'KODUS_GET_GITHUB_ISSUE',
+                'CODUS_GET_GITHUB_ISSUE',
             ]),
             getCachedTaskContextTools: jest.fn(async () => []),
             saveCachedTaskContextTools: jest.fn(async () => undefined),
@@ -914,22 +914,22 @@ describe('fetchTaskContext capability', () => {
 
         await fetchTaskContext(
             toolCaller,
-            createCapabilityRuntime('kodus-github-issues'),
+            createCapabilityRuntime('codus-github-issues'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic use issue #37',
-                repositoryOwner: 'kodustech',
-                repositoryName: 'kodus-ai',
+                userQuestion: '@cody -v business-logic use issue #37',
+                repositoryOwner: 'elchapita43',
+                repositoryName: 'codus-ai',
             },
             hooks,
         );
 
         expect(callTool).toHaveBeenCalledWith(
-            'KODUS_GET_GITHUB_ISSUE',
+            'CODUS_GET_GITHUB_ISSUE',
             expect.objectContaining({
                 issueNumber: 37,
-                repositoryOwner: 'kodustech',
-                repositoryName: 'kodus-ai',
+                repositoryOwner: 'elchapita43',
+                repositoryName: 'codus-ai',
             }),
         );
     });
@@ -1102,9 +1102,9 @@ describe('fetchTaskContext capability', () => {
             {
                 ...createBaseParams(),
                 userQuestion:
-                    '@kody -v business-logic https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                    '@cody -v business-logic https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
                 pullRequestDescription:
-                    'Related to https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                    'Related to https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
             },
             hooks,
         );
@@ -1186,7 +1186,7 @@ describe('fetchTaskContext capability', () => {
             {
                 ...createBaseParams(),
                 userQuestion:
-                    '@kody https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                    '@cody https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
                 pullRequestDescription: '',
                 prBody: '',
             },
@@ -1196,7 +1196,7 @@ describe('fetchTaskContext capability', () => {
         expect(callTool).toHaveBeenCalledWith(
             'getJiraIssue',
             expect.objectContaining({
-                cloudId: 'https://kodustech.atlassian.net',
+                cloudId: 'https://elchapita43.atlassian.net',
                 issueIdOrKey: 'KC-1441',
             }),
         );
@@ -1247,7 +1247,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('jira'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody KC-1441',
+                userQuestion: '@cody KC-1441',
             },
             hooks,
         );
@@ -1323,7 +1323,7 @@ describe('fetchTaskContext capability', () => {
             {
                 ...createBaseParams(),
                 userQuestion:
-                    '@kody KC-1441 https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441 https://editorconfig.org.',
+                    '@cody KC-1441 https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441 https://editorconfig.org.',
                 pullRequestDescription: '',
                 prBody: '',
             },
@@ -1333,7 +1333,7 @@ describe('fetchTaskContext capability', () => {
         expect(callTool).toHaveBeenCalledWith(
             'getJiraIssue',
             expect.objectContaining({
-                cloudId: 'https://kodustech.atlassian.net',
+                cloudId: 'https://elchapita43.atlassian.net',
                 issueIdOrKey: 'KC-1441',
             }),
         );
@@ -1393,7 +1393,7 @@ describe('fetchTaskContext capability', () => {
             {
                 ...createBaseParams(),
                 userQuestion:
-                    '@kody https://kodustech.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
+                    '@cody https://elchapita43.atlassian.net/jira/software/c/projects/KC/boards/2?selectedIssue=KC-1441',
                 pullRequestDescription: '',
                 prBody: '',
                 taskId: 'KC-1441',
@@ -1468,7 +1468,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('jira'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic KC-1441',
+                userQuestion: '@cody -v business-logic KC-1441',
                 pullRequestDescription: '',
                 prBody: '',
             },
@@ -1490,7 +1490,7 @@ describe('fetchTaskContext capability', () => {
             result: {
                 task: {
                     id: '86d123',
-                    name: 'Kody rules por time',
+                    name: 'Cody rules por time',
                     description: 'Resolved from explicit taskId parameter.',
                 },
             },
@@ -1525,7 +1525,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('clickup'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic',
+                userQuestion: '@cody -v business-logic',
                 pullRequestDescription: '',
                 prBody: '',
                 taskId: '86d123',
@@ -1539,7 +1539,7 @@ describe('fetchTaskContext capability', () => {
         );
         expect(result.normalized).toMatchObject({
             id: '86d123',
-            title: 'Kody rules por time',
+            title: 'Cody rules por time',
             description: 'Resolved from explicit taskId parameter.',
             sourceProvider: 'clickup',
         });
@@ -1593,7 +1593,7 @@ describe('fetchTaskContext capability', () => {
             createCapabilityRuntime('jira'),
             {
                 ...createBaseParams(),
-                userQuestion: '@kody -v business-logic',
+                userQuestion: '@cody -v business-logic',
                 pullRequestDescription: '',
                 prBody: '',
                 taskId: 'KC-1441',

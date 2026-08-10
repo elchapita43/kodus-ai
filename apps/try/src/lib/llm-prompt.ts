@@ -29,7 +29,7 @@ export function buildLlmPromptForIssue(
     if (issue.category) headerLines.push(`Category: ${issue.category}`);
 
     const sections: string[] = [
-        "I'm reviewing a code change and got the following feedback from Kodus. Apply the fix below in this codebase.",
+        "I'm reviewing a code change and got the following feedback from Codus. Apply the fix below in this codebase.",
         headerLines.join("\n"),
         `Problem:\n${issue.message.trim()}`,
     ];
@@ -54,7 +54,7 @@ export function buildLlmPromptForFile(
     ctx: PromptContext = {},
 ): string {
     const intro = [
-        `I'm reviewing a code change and got the following feedback from Kodus on \`${file}\`. Apply the fixes below.`,
+        `I'm reviewing a code change and got the following feedback from Codus on \`${file}\`. Apply the fixes below.`,
     ];
     if (ctx.prRef) intro.push(`PR: ${ctx.prRef}`);
     if (ctx.htmlUrl) intro.push(`Link: ${ctx.htmlUrl}`);

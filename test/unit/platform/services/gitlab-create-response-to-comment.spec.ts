@@ -110,7 +110,7 @@ describe('GitlabService.createResponseToComment', () => {
             organizationId: 'org-uuid',
             teamId: 'team-uuid',
         },
-        repository: { id: 42, name: 'kodustech/kodus-ai' },
+        repository: { id: 42, name: 'elchapita43/codus-ai' },
         prNumber: 7,
         discussionId: 'disc-abc',
         body: 'Analyzing your request...',

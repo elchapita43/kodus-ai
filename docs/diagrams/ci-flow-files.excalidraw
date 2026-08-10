@@ -1,7 +1,7 @@
 {
  "type": "excalidraw",
  "version": 2,
- "source": "kodus-ci-flow",
+ "source": "codus-ci-flow",
  "elements": [
   {
    "id": "rjnm93txz6",
@@ -29,14 +29,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "Kodus CI \u2014 workflows por fase",
+   "text": "Codus CI \u2014 workflows por fase",
    "fontSize": 24,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 24,
    "containerId": null,
-   "originalText": "Kodus CI \u2014 workflows por fase",
+   "originalText": "Codus CI \u2014 workflows por fase",
    "lineHeight": 1.35
   },
   {
@@ -476,14 +476,14 @@
    "updated": 1,
    "link": null,
    "locked": false,
-   "text": "Kody review (comenta no PR):",
+   "text": "Cody review (comenta no PR):",
    "fontSize": 13,
    "fontFamily": 2,
    "textAlign": "left",
    "verticalAlign": "top",
    "baseline": 13,
    "containerId": null,
-   "originalText": "Kody review (comenta no PR):",
+   "originalText": "Cody review (comenta no PR):",
    "lineHeight": 1.35
   },
   {

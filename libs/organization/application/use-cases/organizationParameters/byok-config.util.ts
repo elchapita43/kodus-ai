@@ -1,4 +1,4 @@
-import { BYOKConfig, BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, BYOKProvider } from '@codus/codus-common/llm';
 
 /**
  * A single BYOK credential slot — the `main` (or `fallback`) block of a

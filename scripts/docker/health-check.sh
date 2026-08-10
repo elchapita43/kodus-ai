@@ -19,13 +19,13 @@ if [ -f .env ]; then
     if grep -q "^API_PG_DB_USERNAME=" .env; then
         API_PG_DB_USERNAME=$(grep "^API_PG_DB_USERNAME=" .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
     else
-        API_PG_DB_USERNAME=kodusdev
+        API_PG_DB_USERNAME=codusdev
     fi
     
     if grep -q "^API_PG_DB_DATABASE=" .env; then
         API_PG_DB_DATABASE=$(grep "^API_PG_DB_DATABASE=" .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
     else
-        API_PG_DB_DATABASE=kodus_db
+        API_PG_DB_DATABASE=codus_db
     fi
 
     if grep -q "^WEB_PORT=" .env; then
@@ -36,12 +36,12 @@ if [ -f .env ]; then
 else
     # Default values if .env doesn't exist
     API_PORT=3001
-    API_PG_DB_USERNAME=kodusdev
-    API_PG_DB_DATABASE=kodus_db
+    API_PG_DB_USERNAME=codusdev
+    API_PG_DB_DATABASE=codus_db
     WEB_PORT=3000
 fi
 
-echo -e "${BLUE}🔍 Kodus AI - Health Check${NC}"
+echo -e "${BLUE}🔍 Codus AI - Health Check${NC}"
 echo -e "${BLUE}============================${NC}"
 echo -e "${BLUE}Using API Port: ${API_PORT}${NC}"
 echo -e "${BLUE}Using Database: ${API_PG_DB_DATABASE} (user: ${API_PG_DB_USERNAME})${NC}"
@@ -110,18 +110,18 @@ check_port() {
 all_good=true
 
 echo -e "${YELLOW}🐳 Checking Docker containers...${NC}"
-check_any_container "Kodus API" "kodus_api" "kodus-orchestrator" || all_good=false
-check_any_container "Kodus Worker" "kodus_worker" || all_good=false
-check_any_container "Kodus Webhooks" "kodus_webhooks" || all_good=false
-check_any_container "Kodus Web" "kodus_web" || all_good=false
+check_any_container "Codus API" "codus_api" "codus-orchestrator" || all_good=false
+check_any_container "Codus Worker" "codus_worker" || all_good=false
+check_any_container "Codus Webhooks" "codus_webhooks" || all_good=false
+check_any_container "Codus Web" "codus_web" || all_good=false
 check_any_container "PostgreSQL" "db_postgres" "postgres" || all_good=false
 check_any_container "MongoDB" "mongodb" "mongo" || all_good=false
 check_any_container "RabbitMQ" "rabbitmq" || all_good=false
 echo ""
 
 echo -e "${YELLOW}🔌 Checking ports...${NC}"
-check_port "Kodus API" $API_PORT || all_good=false
-check_port "Kodus Web" $WEB_PORT || all_good=false
+check_port "Codus API" $API_PORT || all_good=false
+check_port "Codus Web" $WEB_PORT || all_good=false
 check_port "PostgreSQL" 5432 || all_good=false
 check_port "MongoDB" 27017 || all_good=false
 check_port "RabbitMQ" 5672 || all_good=false
@@ -130,10 +130,10 @@ echo ""
 echo -e "${YELLOW}🗄️ Checking database setup...${NC}"
 
 check_migrations() {
-    local result=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-kodusdev} -d ${API_PG_DB_DATABASE:-kodus_db} -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'migrations';" 2>/dev/null | tr -d ' ')
+    local result=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-codusdev} -d ${API_PG_DB_DATABASE:-codus_db} -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'migrations';" 2>/dev/null | tr -d ' ')
     
     if [ "$result" = "1" ]; then
-        local migration_count=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-kodusdev} -d ${API_PG_DB_DATABASE:-kodus_db} -t -c "SELECT COUNT(*) FROM migrations;" 2>/dev/null | tr -d ' ')
+        local migration_count=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-codusdev} -d ${API_PG_DB_DATABASE:-codus_db} -t -c "SELECT COUNT(*) FROM migrations;" 2>/dev/null | tr -d ' ')
         if [ "$migration_count" -gt "0" ]; then
             echo -e "   ✅ Migrations: $migration_count executed"
             return 0
@@ -148,7 +148,7 @@ check_migrations() {
 }
 
 check_seed() {
-    local result=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-kodusdev} -d ${API_PG_DB_DATABASE:-kodus_db} -t -c "SELECT COUNT(*) FROM automation;" 2>/dev/null | tr -d ' ')
+    local result=$(docker exec db_postgres psql -U ${API_PG_DB_USERNAME:-codusdev} -d ${API_PG_DB_DATABASE:-codus_db} -t -c "SELECT COUNT(*) FROM automation;" 2>/dev/null | tr -d ' ')
     
     if [ "$?" -eq 0 ] && [ "$result" -gt "0" ]; then
         echo -e "   ✅ Seed data: $result automations found"

@@ -54,7 +54,7 @@ export const EnableCommittableSuggestions = () => {
                                 </div>
 
                                 <p className="text-text-secondary text-sm">
-                                    Allows Kody to provide suggestions that can
+                                    Allows Cody to provide suggestions that can
                                     be applied directly as commits.
                                 </p>
 

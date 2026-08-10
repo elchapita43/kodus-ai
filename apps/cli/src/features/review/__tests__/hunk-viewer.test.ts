@@ -123,9 +123,9 @@ describe('buildHunkArgs', () => {
         ).not.toContain('--staged');
     });
 
-    it('loads the Kodus sidebar extension when one is available', () => {
+    it('loads the Codus sidebar extension when one is available', () => {
         expect(
-            buildHunkArgs({ staged: false }, CTX, '/pkg/hunk-extension/kodus'),
+            buildHunkArgs({ staged: false }, CTX, '/pkg/hunk-extension/codus'),
         ).toEqual([
             'diff',
             '--agent-context',
@@ -133,7 +133,7 @@ describe('buildHunkArgs', () => {
             '--agent-notes',
             '--experimental',
             '--extension',
-            '/pkg/hunk-extension/kodus',
+            '/pkg/hunk-extension/codus',
         ]);
     });
 
@@ -147,7 +147,7 @@ describe('buildHunkArgs', () => {
         const args = buildHunkArgs(
             { staged: false, paths: ['src/a.ts'] },
             CTX,
-            '/pkg/hunk-extension/kodus',
+            '/pkg/hunk-extension/codus',
         );
         expect(args.indexOf('--extension')).toBeLessThan(args.indexOf('--'));
         expect(args[args.length - 1]).toBe('src/a.ts');

@@ -1,6 +1,6 @@
 /**
  * finding-mapper unit tests — pure, zero LLM/IO (logger is a spy).
- * Locks path validation, kody-rule UUID gating/recovery, and label/severity.
+ * Locks path validation, cody-rule UUID gating/recovery, and label/severity.
  */
 import {
     mapAgentFindings,
@@ -46,7 +46,7 @@ describe('mapAgentFindings', () => {
     ) => ({
         changedFiles: [file('src/a.ts')],
         prNumber: 1,
-        isKodyRules: false,
+        isCodyRules: false,
         identityName: 'bug-agent',
         labelPolicy: bugPolicy,
         logger: noLog,
@@ -96,7 +96,7 @@ describe('mapAgentFindings', () => {
         expect(r.suggestions[0].severity).toBe('medium');
     });
 
-    it('kody-rules: attributes a uuid-less suggestion to the SINGLE selected rule', () => {
+    it('cody-rules: attributes a uuid-less suggestion to the SINGLE selected rule', () => {
         // Observed live (PR #598 on the validation env): the model found the
         // violations but omitted the uuid echo, and the hard drop meant the
         // customer saw "rule never fires" even with path matching fixed.
@@ -108,13 +108,13 @@ describe('mapAgentFindings', () => {
                     ],
                 },
             },
-            ctx({ isKodyRules: true, kodyRules: [{ uuid: 'rule-1' } as any] }),
+            ctx({ isCodyRules: true, codyRules: [{ uuid: 'rule-1' } as any] }),
         );
         expect(r.suggestions).toHaveLength(1);
-        expect(r.suggestions[0].brokenKodyRulesIds).toEqual(['rule-1']);
+        expect(r.suggestions[0].brokenCodyRulesIds).toEqual(['rule-1']);
     });
 
-    it('kody-rules: still drops a uuid-less suggestion when multiple rules are candidates (ambiguous)', () => {
+    it('cody-rules: still drops a uuid-less suggestion when multiple rules are candidates (ambiguous)', () => {
         const r = mapAgentFindings(
             {
                 findings: {
@@ -124,8 +124,8 @@ describe('mapAgentFindings', () => {
                 },
             },
             ctx({
-                isKodyRules: true,
-                kodyRules: [
+                isCodyRules: true,
+                codyRules: [
                     { uuid: 'rule-1' } as any,
                     { uuid: 'rule-2' } as any,
                 ],
@@ -134,7 +134,7 @@ describe('mapAgentFindings', () => {
         expect(r.suggestions).toHaveLength(0);
     });
 
-    it('kody-rules: recovers a near-miss ruleUuid (edit distance ≤ 2)', () => {
+    it('cody-rules: recovers a near-miss ruleUuid (edit distance ≤ 2)', () => {
         const uuid = '123e4567-e89b-12d3-a456-426614174000';
         const corrupted = uuid.replace('0', 'x'); // 1 char off
         const r = mapAgentFindings(
@@ -149,10 +149,10 @@ describe('mapAgentFindings', () => {
                     ],
                 },
             },
-            ctx({ isKodyRules: true, kodyRules: [{ uuid } as any] }),
+            ctx({ isCodyRules: true, codyRules: [{ uuid } as any] }),
         );
         expect(r.suggestions).toHaveLength(1);
-        expect(r.suggestions[0].brokenKodyRulesIds).toEqual([uuid]);
+        expect(r.suggestions[0].brokenCodyRulesIds).toEqual([uuid]);
     });
 
     it('maps discardedBySeverity and discardedByVerify', () => {

@@ -157,12 +157,12 @@ describe('CliDeviceService', () => {
             await service.validateOrRegisterDevice({
                 deviceId: DEVICE_ID,
                 organizationId: ORG_ID,
-                userAgent: 'Kodus-CLI/1.0',
+                userAgent: 'Codus-CLI/1.0',
             });
 
             expect(mockRepository.create).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    userAgent: 'Kodus-CLI/1.0',
+                    userAgent: 'Codus-CLI/1.0',
                 }),
             );
         });
@@ -180,13 +180,13 @@ describe('CliDeviceService', () => {
                 deviceId: DEVICE_ID,
                 deviceToken: 'valid-token',
                 organizationId: ORG_ID,
-                userAgent: 'Kodus-CLI/2.0',
+                userAgent: 'Codus-CLI/2.0',
             });
 
             expect(result).toEqual({});
             expect(mockRepository.updateLastSeen).toHaveBeenCalledWith(
                 DEVICE_UUID,
-                'Kodus-CLI/2.0',
+                'Codus-CLI/2.0',
             );
             expect(mockRepository.create).not.toHaveBeenCalled();
             expect(mockRepository.updateTokenHash).not.toHaveBeenCalled();
@@ -254,13 +254,13 @@ describe('CliDeviceService', () => {
                 deviceId: DEVICE_ID,
                 deviceToken: 'wrong-token',
                 organizationId: ORG_ID,
-                userAgent: 'Kodus-CLI/3.0',
+                userAgent: 'Codus-CLI/3.0',
             });
 
             expect(mockRepository.updateTokenHash).toHaveBeenCalledWith(
                 DEVICE_UUID,
                 expect.any(String),
-                'Kodus-CLI/3.0',
+                'Codus-CLI/3.0',
             );
         });
     });

@@ -9,7 +9,7 @@ import type { DiffFile } from "./types";
  *
  * This v1 is a DETERMINISTIC classifier over the path/extension we already
  * have on the client — no extra request, no model call. The cohort shape is
- * deliberately the seam where a Kody-decided grouping can later drop in: if a
+ * deliberately the seam where a Cody-decided grouping can later drop in: if a
  * file arrives carrying its own `cohort` hint from the backend, prefer that
  * over the heuristic (see resolveCohort) and the rest of this file — ordering,
  * rendering — keeps working unchanged.
@@ -165,7 +165,7 @@ export function buildCohorts(files: DiffFile[]): Cohort[] {
 }
 
 /**
- * Prefer a backend-supplied cohort hint when present (the Kody-decided path),
+ * Prefer a backend-supplied cohort hint when present (the Cody-decided path),
  * else fall back to the deterministic classifier. Kept isolated so wiring the
  * LLM grouping later is a one-field change here, not a rewrite.
  */

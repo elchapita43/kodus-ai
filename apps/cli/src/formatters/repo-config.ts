@@ -143,7 +143,7 @@ export function formatRepositorySettingsOpenInfo(
     sectionLabel: string,
 ): string[] {
     return [
-        chalk.blue('Opening Kodus dashboard...'),
+        chalk.blue('Opening Codus dashboard...'),
         chalk.dim(`URL: ${appUrl}`),
         `${chalk.dim('Navigate to:')} ${repositoryFullName} > ${sectionLabel}`,
         chalk.dim('Advanced repository settings stay in the web app.'),

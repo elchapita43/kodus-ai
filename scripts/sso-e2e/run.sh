@@ -2,20 +2,20 @@
 # End-to-end orchestrator for the SSO cookie-domain regression test.
 #
 # Boots the SSO E2E stack (Keycloak + API + Web prod images), configures
-# Keycloak as a SAML IdP, configures Kodus to consume that IdP, then
+# Keycloak as a SAML IdP, configures Codus to consume that IdP, then
 # prints the manual verification steps.
 #
 # Prerequisites:
 #   1. The dev stack must already be running (postgres, mongo, rabbit):
 #        pnpm run docker:start
 #   2. The prod images of API + Web must be built:
-#        WEB_TAGS=kodus-web:sso-e2e RELEASE_VERSION=sso-e2e \
+#        WEB_TAGS=codus-web:sso-e2e RELEASE_VERSION=sso-e2e \
 #          docker buildx bake -f docker-bake.hcl web
-#        API_TAGS=kodus-api:sso-e2e API_CLOUD_MODE=false \
+#        API_TAGS=codus-api:sso-e2e API_CLOUD_MODE=false \
 #          docker buildx bake -f docker-bake.hcl api
 #
 # After this script returns, follow the printed manual steps to assert
-# `Set-Cookie: sso_handoff=...; Domain=.kodus.lvh.me` in the browser
+# `Set-Cookie: sso_handoff=...; Domain=.codus.lvh.me` in the browser
 # DevTools network panel.
 
 set -euo pipefail
@@ -24,10 +24,10 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPOSE="${REPO_ROOT}/docker/sso-e2e/docker-compose.yml"
 
-export SSO_E2E_API_IMAGE="${SSO_E2E_API_IMAGE:-kodus-api:sso-e2e}"
-export SSO_E2E_WEB_IMAGE="${SSO_E2E_WEB_IMAGE:-kodus-web:sso-e2e}"
+export SSO_E2E_API_IMAGE="${SSO_E2E_API_IMAGE:-codus-api:sso-e2e}"
+export SSO_E2E_WEB_IMAGE="${SSO_E2E_WEB_IMAGE:-codus-web:sso-e2e}"
 # Web container's NODE_EXTRA_CA_CERTS volume — points at the host's
-# mkcert CA root so server-side fetches to https://api.kodus.lvh.me
+# mkcert CA root so server-side fetches to https://api.codus.lvh.me
 # succeed in production-mode.
 export MKCERT_CAROOT_HOST="$(mkcert -CAROOT 2>/dev/null || true)"
 
@@ -44,9 +44,9 @@ for img in "${SSO_E2E_API_IMAGE}" "${SSO_E2E_WEB_IMAGE}"; do
 error: image "${img}" not found.
 
 Build it first:
-    WEB_TAGS=kodus-web:sso-e2e RELEASE_VERSION=sso-e2e \\
+    WEB_TAGS=codus-web:sso-e2e RELEASE_VERSION=sso-e2e \\
         docker buildx bake -f docker-bake.hcl web
-    API_TAGS=kodus-api:sso-e2e API_CLOUD_MODE=false \\
+    API_TAGS=codus-api:sso-e2e API_CLOUD_MODE=false \\
         docker buildx bake -f docker-bake.hcl api
 EOF
         exit 1
@@ -67,12 +67,12 @@ if ! command -v mkcert >/dev/null 2>&1; then
     exit 1
 fi
 TLS_DIR="${REPO_ROOT}/.tmp/sso-e2e-tls"
-if [ ! -f "${TLS_DIR}/kodus.lvh.me.crt" ] || [ ! -f "${TLS_DIR}/kodus.lvh.me.key" ]; then
+if [ ! -f "${TLS_DIR}/codus.lvh.me.crt" ] || [ ! -f "${TLS_DIR}/codus.lvh.me.key" ]; then
     echo "==> [0/5] generating mkcert wildcard cert (covers both test shapes)"
     mkdir -p "${TLS_DIR}"
     (cd "${TLS_DIR}" && mkcert \
-        -cert-file kodus.lvh.me.crt -key-file kodus.lvh.me.key \
-        '*.kodus.lvh.me' 'kodus.lvh.me' \
+        -cert-file codus.lvh.me.crt -key-file codus.lvh.me.key \
+        '*.codus.lvh.me' 'codus.lvh.me' \
         '*.web.scorpion.lvh.me' 'web.scorpion.lvh.me' >/dev/null)
 fi
 # Verify the CA is actually in the system trust store (mkcert -install
@@ -108,8 +108,8 @@ if [ -n "${CAROOT}" ] && [ -f "${CAROOT}/rootCA.pem" ]; then
     CURL_HEALTH+=(--cacert "${CAROOT}/rootCA.pem")
 fi
 for i in $(seq 1 60); do
-    api_status=$("${CURL_HEALTH[@]}" -w "%{http_code}" "https://api.${SSO_E2E_DOMAIN:-kodus.lvh.me}/health" || true)
-    web_status=$("${CURL_HEALTH[@]}" -w "%{http_code}" "https://app.${SSO_E2E_DOMAIN:-kodus.lvh.me}/sign-in" || true)
+    api_status=$("${CURL_HEALTH[@]}" -w "%{http_code}" "https://api.${SSO_E2E_DOMAIN:-codus.lvh.me}/health" || true)
+    web_status=$("${CURL_HEALTH[@]}" -w "%{http_code}" "https://app.${SSO_E2E_DOMAIN:-codus.lvh.me}/sign-in" || true)
     kc_status=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:8080/realms/master" || true)
     if [ "${api_status}" = "200" ] && [ "${web_status}" = "200" ] && [ "${kc_status}" = "200" ]; then
         echo "    api=${api_status}  web=${web_status}  keycloak=${kc_status}  OK"
@@ -127,10 +127,10 @@ echo
 echo "==> [3/5] bootstrap Keycloak (first pass)"
 bash "${HERE}/bootstrap-keycloak.sh"
 
-# 4. Bootstrap Kodus (signup + cadastrar SSO + emit orgId)
+# 4. Bootstrap Codus (signup + cadastrar SSO + emit orgId)
 echo
-echo "==> [4/5] bootstrap Kodus tenant + SSO config"
-bash "${HERE}/bootstrap-kodus.sh"
+echo "==> [4/5] bootstrap Codus tenant + SSO config"
+bash "${HERE}/bootstrap-codus.sh"
 
 # 5. Re-bootstrap Keycloak so the SAML client's ACS URL points at the
 #    actual orgId (instead of the placeholder "*").
@@ -146,36 +146,36 @@ cat <<EOF
  Stack ready. Run the SAML flow:
 ════════════════════════════════════════════════════════════════
 
-  1. Open  https://api.${SSO_E2E_DOMAIN:-kodus.lvh.me}/auth/sso/login/${ORG_ID}
+  1. Open  https://api.${SSO_E2E_DOMAIN:-codus.lvh.me}/auth/sso/login/${ORG_ID}
      (direct call to the API — bypasses the front-end "active"
       gate, which would otherwise refuse to redirect because the
       seeded SSO config has active=false. The cookie-domain code
       path on the callback is the same either way.)
 
   2. On the Keycloak login form:
-        username  sso-user@kodus-test.com
+        username  sso-user@codus-test.com
         password  TestSso!2026
 
   3. After Keycloak posts back, you should land on
-     https://app.${SSO_E2E_DOMAIN:-kodus.lvh.me}/sso-callback and then be signed in
+     https://app.${SSO_E2E_DOMAIN:-codus.lvh.me}/sso-callback and then be signed in
      (the page consumes \`sso_handoff\`, exchanges it for the
       session, then redirects into the app).
 
   4. Open Chrome DevTools → Application → Cookies →
-     https://app.${SSO_E2E_DOMAIN:-kodus.lvh.me}. You should see:
+     https://app.${SSO_E2E_DOMAIN:-codus.lvh.me}. You should see:
 
         Name     sso_handoff (briefly — 15s lifetime, then gone)
-        Domain   .${SSO_E2E_DOMAIN:-kodus.lvh.me}
+        Domain   .${SSO_E2E_DOMAIN:-codus.lvh.me}
         Path     /
         Secure   ✓
         SameSite Lax
 
-     The \`Domain=.${SSO_E2E_DOMAIN:-kodus.lvh.me}\` line is the proof: it's the
-     smallest common DNS suffix between api.${SSO_E2E_DOMAIN:-kodus.lvh.me} and
-     app.${SSO_E2E_DOMAIN:-kodus.lvh.me}, computed at request-time — exactly what
+     The \`Domain=.${SSO_E2E_DOMAIN:-codus.lvh.me}\` line is the proof: it's the
+     smallest common DNS suffix between api.${SSO_E2E_DOMAIN:-codus.lvh.me} and
+     app.${SSO_E2E_DOMAIN:-codus.lvh.me}, computed at request-time — exactly what
      the Dmitry deployment needed and the old hard-coded
      \`.kodus.io\` could never produce.
 
   Teardown:    docker compose -f ${COMPOSE} down -v
-  Logs:        docker compose -f ${COMPOSE} logs -f kodus-api
+  Logs:        docker compose -f ${COMPOSE} logs -f codus-api
 EOF

@@ -28,7 +28,7 @@ export type TrialUnlockViewModel = {
     rewardLabel: string;
     status: TrialUnlockStatus;
     /**
-     * `signal` unlocks are evaluated automatically by Kodus and the user
+     * `signal` unlocks are evaluated automatically by Codus and the user
      * cannot trigger them directly (e.g. company email comes from the
      * signup address). `action` unlocks expose something the user can do
      * right now (invite teammates, manage the git connection, configure
@@ -126,7 +126,7 @@ const fallbackUnlocks = (params: {
         description:
             params.codeHostMembersCount && params.codeHostMembersCount >= 10
                 ? "Your connected code org has at least 10 members."
-                : "Counts the members of the Git organization Kodus is connected to. Connect your org (not a personal account) — it qualifies automatically once it reaches 10 developers. Switching orgs requires reconnecting the integration.",
+                : "Counts the members of the Git organization Codus is connected to. Connect your org (not a personal account) — it qualifies automatically once it reaches 10 developers. Switching orgs requires reconnecting the integration.",
         rewardLabel: `+${TRIAL_UNLOCK_CODE_ORG_REWARD} reviews`,
         status:
             params.codeHostMembersCount && params.codeHostMembersCount >= 10
@@ -156,7 +156,7 @@ const fallbackUnlocks = (params: {
         key: "byok",
         title: "Connect BYOK",
         description:
-            "Use your own AI key. Reviews no longer use Kodus-paid PRs.",
+            "Use your own AI key. Reviews no longer use Codus-paid PRs.",
         rewardLabel: TRIAL_UNLOCK_BYOK_REWARD_LABEL,
         status: params.byok ? "completed" : "available",
         kind: "action",

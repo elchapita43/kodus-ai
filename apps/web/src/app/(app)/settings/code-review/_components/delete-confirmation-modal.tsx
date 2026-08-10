@@ -16,23 +16,23 @@ import { Markdown } from "@components/ui/markdown";
 import { Separator } from "@components/ui/separator";
 import { toast } from "@components/ui/toaster/use-toast";
 import { useTimeout } from "@hooks/use-timeout";
-import { deleteKodyRule } from "@services/kodyRules/fetch";
-import type { KodyRule } from "@services/kodyRules/types";
+import { deleteCodyRule } from "@services/codyRules/fetch";
+import type { CodyRule } from "@services/codyRules/types";
 import { isCentralizedPrResponse } from "@services/parameters/types";
 import { TrashIcon } from "lucide-react";
 import { useSelectedTeamId } from "src/core/providers/selected-team-context";
 
 import { getCentralizedPrToastPayload } from "../_utils/centralized-pr-feedback";
 
-type DeleteKodyRuleModalProps = {
-    rule: KodyRule;
+type DeleteCodyRuleModalProps = {
+    rule: CodyRule;
     onSuccess?: () => void;
 };
 
-export const DeleteKodyRuleConfirmationModal = ({
+export const DeleteCodyRuleConfirmationModal = ({
     rule,
     onSuccess,
-}: DeleteKodyRuleModalProps) => {
+}: DeleteCodyRuleModalProps) => {
     const { teamId } = useSelectedTeamId();
     const [enabled, setEnabled] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -48,7 +48,7 @@ export const DeleteKodyRuleConfirmationModal = ({
         magicModal.lock();
 
         try {
-            const mutationResult = await deleteKodyRule(rule.uuid, teamId);
+            const mutationResult = await deleteCodyRule(rule.uuid, teamId);
 
             magicModal.hide(true);
             onSuccess?.();
@@ -57,22 +57,22 @@ export const DeleteKodyRuleConfirmationModal = ({
                 toast(
                     getCentralizedPrToastPayload(
                         mutationResult,
-                        "Kody Rule removal proposed through centralized pull request.",
+                        "Cody Rule removal proposed through centralized pull request.",
                     ),
                 );
             } else {
                 toast({
-                    description: "Kody Rule successfully removed.",
+                    description: "Cody Rule successfully removed.",
                     variant: "success",
                 });
             }
         } catch (error) {
-            console.error("Error removing Kody Rule:", error);
+            console.error("Error removing Cody Rule:", error);
 
             toast({
                 title: "Error",
                 description:
-                    "An error occurred while removing the Kody Rule. Please try again.",
+                    "An error occurred while removing the Cody Rule. Please try again.",
                 variant: "danger",
             });
 
@@ -86,7 +86,7 @@ export const DeleteKodyRuleConfirmationModal = ({
         <Dialog open onOpenChange={() => magicModal.hide()}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Remove this Kody Rule?</DialogTitle>
+                    <DialogTitle>Remove this Cody Rule?</DialogTitle>
                     <DialogDescription>
                         This action cannot be undone!
                     </DialogDescription>

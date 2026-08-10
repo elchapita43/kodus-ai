@@ -20,7 +20,7 @@ export interface MockServer {
 
 /**
  * Builds a base64url-encoded JWT with a custom payload. Used to simulate the
- * Kodus /auth/login response — the onboarding layer decodes the payload to
+ * Codus /auth/login response — the onboarding layer decodes the payload to
  * extract organizationId, so the mock needs to produce a valid-looking JWT.
  */
 export function makeFakeJwt(payload: Record<string, unknown>): string {
@@ -94,11 +94,11 @@ export function json(res: ServerResponse, status: number, body: unknown): void {
 }
 
 /**
- * Standard Kodus-side routes used by all provider integration tests. The
+ * Standard Codus-side routes used by all provider integration tests. The
  * provider-specific routes (webhook trigger + comment polling) are added
  * separately per provider — those live in their own builder functions.
  */
-export function kodusRoutes(opts: {
+export function codusRoutes(opts: {
     orgId: string;
     teamId: string;
     repoId: string | number;
@@ -111,7 +111,7 @@ export function kodusRoutes(opts: {
             pathRegex: /^\/auth\/(signUp|signup)$/,
             handler: (_req, res) =>
                 json(res, 201, {
-                    data: { uuid: "user-1", email: "mock@kodus.local" },
+                    data: { uuid: "user-1", email: "mock@codus.local" },
                 }),
         },
         {

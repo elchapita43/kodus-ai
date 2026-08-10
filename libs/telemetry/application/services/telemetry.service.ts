@@ -237,7 +237,7 @@ export class TelemetryService {
         reviewedPR: boolean;
         /**
          * Real engineering team size from the just-connected git org (member
-         * count). Enriched at the call site — only Kodus holds the per-org git
+         * count). Enriched at the call site — only Codus holds the per-org git
          * auth to fetch it — and forwarded to n8n for lead scoring.
          */
         orgMemberCount?: number;
@@ -355,7 +355,7 @@ export class TelemetryService {
         ownerEmail?: string;
         /**
          * Real engineering team size from the connected git org (member
-         * count). Only Kodus holds the per-org git auth to fetch this, so it's
+         * count). Only Codus holds the per-org git auth to fetch this, so it's
          * enriched at the call site and forwarded here for lead scoring in n8n.
          */
         orgMemberCount?: number;

@@ -27,7 +27,7 @@ const plugin = (
     description: `${id} description`,
     authScheme: "none" as any,
     logo: "",
-    provider: "kodusmcp",
+    provider: "codusmcp",
     isConnected: false,
     ...overrides,
 });
@@ -60,7 +60,7 @@ describe("PluginsGrid — free plan cap", () => {
 
     it("never locks the default (system-managed) plugin, even when /mcp/connections is empty", () => {
         // Regression for the real bug found while testing issue #1459:
-        // "Kodus MCP" is isConnected+ACTIVE+isDefault but never appears in
+        // "Codus MCP" is isConnected+ACTIVE+isDefault but never appears in
         // /mcp/connections. An empty orderedActiveIntegrationIds used to make
         // the runnable set empty, wrongly locking this always-on plugin.
         const defaultPlugin = plugin("kd_mcp", {

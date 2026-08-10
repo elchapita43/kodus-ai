@@ -1,9 +1,9 @@
 import { ensureLicenseSeat } from "../lib/onboarding.js";
 import { assertHealthyExecution } from "../lib/execution-health.js";
 import { http } from "../lib/http.js";
-import type { KodusSession, RunContext, Scenario } from "../lib/types.js";
+import type { CodusSession, RunContext, Scenario } from "../lib/types.js";
 
-// Same deliberate-bug fixture as code-review-basic (kodus-e2e/tiny-url):
+// Same deliberate-bug fixture as code-review-basic (codus-e2e/tiny-url):
 // missing null-check + misleading comment + unsafe `as string` cast. Any
 // competent model flags at least one — so "0 findings" means a real
 // regression (here: Claude-on-Vertex routing) rather than a clean diff.
@@ -23,7 +23,7 @@ interface VertexByok {
  */
 async function setVertexByok(
     apiBaseUrl: string,
-    session: KodusSession,
+    session: CodusSession,
     cfg: VertexByok,
 ): Promise<void> {
     const main = {
@@ -63,7 +63,7 @@ async function setVertexByok(
 
 export const codeReviewVertexByok: Scenario = {
     id: "code-review-vertex-byok",
-    title: "Kody reviews a PR using a Claude-on-Vertex BYOK key (self-hosted)",
+    title: "Cody reviews a PR using a Claude-on-Vertex BYOK key (self-hosted)",
     priority: "P1",
     appliesTo: {
         // Self-hosted is the durable target: it runs the GA agent-first engine
@@ -97,10 +97,10 @@ export const codeReviewVertexByok: Scenario = {
         const region = process.env.VERTEX_REGION || "global";
         const model = process.env.VERTEX_MODEL || "claude-sonnet-4-6";
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         // Configure Claude-on-Vertex BYOK before opening the PR so the review
@@ -122,7 +122,7 @@ export const codeReviewVertexByok: Scenario = {
             head: FIXTURE.head,
             base: FIXTURE.base,
             title: `[e2e] code-review-vertex-byok ${ctx.runId.slice(0, 8)}`,
-            body: `Automated PR opened by Kodus E2E run ${ctx.runId} (Claude-on-Vertex BYOK: ${model} @ ${region}). Auto-closed by the scenario.`,
+            body: `Automated PR opened by Codus E2E run ${ctx.runId} (Claude-on-Vertex BYOK: ${model} @ ${region}). Auto-closed by the scenario.`,
         });
 
         try {

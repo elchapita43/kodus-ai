@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Kodus CLI</title>
+        <title>Codus CLI</title>
         <style>
             * {
                 margin: 0;
@@ -310,11 +310,11 @@
         <div class="container">
             <header>
                 <div class="logo">
-                    <img src="/logo.png" alt="Kodus" />
+                    <img src="/logo.png" alt="Codus" />
                 </div>
-                <h1>Kodus CLI</h1>
+                <h1>Codus CLI</h1>
                 <p class="subtitle">
-                    Install the Kodus CLI and bundled skills for Claude Code,
+                    Install the Codus CLI and bundled skills for Claude Code,
                     Cursor, Codex, Windsurf and other supported agents from a
                     single source of truth.
                 </p>
@@ -375,12 +375,12 @@
                     </button>
                 </div>
                 <p class="install-note">
-                    The installer updates <code>@kodus/cli</code> globally and
+                    The installer updates <code>@codus/cli</code> globally and
                     installs bundled skills into detected local agent roots.
                 </p>
                 <p class="alt-install">
-                    Alternative: <code>npm install -g @kodus/cli</code> then
-                    <code>kodus skills install</code>.
+                    Alternative: <code>npm install -g @codus/cli</code> then
+                    <code>codus skills install</code>.
                 </p>
             </div>
 
@@ -388,7 +388,7 @@
                 <h2>Core Commands</h2>
                 <div class="commands">
                     <div class="command">
-                        <span class="command-name">kodus review</span>
+                        <span class="command-name">codus review</span>
                         <p class="command-desc">
                             Review local changes, gate commit or merge
                             readiness, and optionally emit prompt-friendly
@@ -405,9 +405,9 @@
                     </div>
 
                     <div class="command">
-                        <span class="command-name">kodus pr suggestions</span>
+                        <span class="command-name">codus pr suggestions</span>
                         <p class="command-desc">
-                            Fetch and triage PR suggestions from Kodus for an
+                            Fetch and triage PR suggestions from Codus for an
                             existing remote PR, with structured output for
                             skills and automation.
                         </p>
@@ -421,9 +421,9 @@
                     </div>
 
                     <div class="command">
-                        <span class="command-name">kodus skills install</span>
+                        <span class="command-name">codus skills install</span>
                         <p class="command-desc">
-                            Sync bundled Kodus skills into supported agent roots
+                            Sync bundled Codus skills into supported agent roots
                             already present on the machine.
                         </p>
                         <div class="command-flags">
@@ -464,7 +464,7 @@
                             <h3>Single installer</h3>
                             <p>
                                 One install source updates the CLI and deploys
-                                bundled Kodus skills without depending on the
+                                bundled Codus skills without depending on the
                                 old review-skill repository.
                             </p>
                         </div>
@@ -475,7 +475,7 @@
                             <h3>Agent-friendly output</h3>
                             <p>
                                 Use <code>--agent</code>,
-                                <code>kodus schema</code> and
+                                <code>codus schema</code> and
                                 <code>--fields</code> to make CLI usage
                                 predictable for skills, CI and thin MCP layers.
                             </p>
@@ -486,8 +486,8 @@
                         <div>
                             <h3>Local and remote review flows</h3>
                             <p>
-                                Use <code>kodus review</code> for local diff
-                                review and <code>kodus pr suggestions</code> for
+                                Use <code>codus review</code> for local diff
+                                review and <code>codus pr suggestions</code> for
                                 remote PR suggestion resolution.
                             </p>
                         </div>
@@ -499,7 +499,7 @@
                 <p>
                     Made by
                     <a href="https://kodus.io" target="_blank" rel="noreferrer"
-                        >Kodus</a
+                        >Codus</a
                     >
                 </p>
             </footer>
@@ -509,7 +509,7 @@
             const origin = window.location.origin || 'https://kodus.io';
             const commands = {
                 unix: `curl -fsSL ${origin}/install | bash`,
-                windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'kodus-install.ps1'; Invoke-WebRequest ${origin}/install.ps1 -OutFile $tmp; & $tmp"`,
+                windows: `powershell -NoProfile -ExecutionPolicy Bypass -Command "$tmp = Join-Path $env:TEMP 'codus-install.ps1'; Invoke-WebRequest ${origin}/install.ps1 -OutFile $tmp; & $tmp"`,
             };
 
             let currentPlatform = /Windows/i.test(navigator.userAgent)

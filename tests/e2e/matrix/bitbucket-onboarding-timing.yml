@@ -6,7 +6,7 @@ description: |
   once after `pnpm run selfhosted:deploy --name matrix`, then tail
   the api container for per-step breakdown:
 
-      docker logs --since 5m kodus-api | grep TIMING:onboarding
+      docker logs --since 5m codus-api | grep TIMING:onboarding
 
   Not for CI — exists only as an investigation aid.
 scenarios:

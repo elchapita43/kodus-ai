@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { buildKodyRuleLink } from '@libs/code-review/utils/build-kody-rule-link';
-import { buildKodyRuleAppLink } from '@libs/ee/kodyRules/utils/build-rule-link';
-import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { buildCodyRuleLink } from '@libs/code-review/utils/build-cody-rule-link';
+import { buildCodyRuleAppLink } from '@libs/ee/codyRules/utils/build-rule-link';
+import { CodyRulesStatus } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 /**
- * Every external app link Kody pastes into a PR must land on a real web
+ * Every external app link Cody pastes into a PR must land on a real web
  * route — a dead link in a PR comment is invisible to unit tests of the
  * builders alone (they only check the string shape). This spec closes
  * the loop: it generates every link VARIATION the backend can emit into
@@ -15,9 +15,9 @@ import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.int
  * actual Next.js App Router tree in apps/web/src/app.
  *
  * If someone moves/removes a route the links depend on (e.g. the
- * /kody-rules/[id] deep-link page), this fails at unit-test time
+ * /cody-rules/[id] deep-link page), this fails at unit-test time
  * instead of as a customer-reported dead link (see the David B /
- * directory-scoped incident in build-kody-rule-link.ts).
+ * directory-scoped incident in build-cody-rule-link.ts).
  */
 
 const APP_DIR = path.resolve(__dirname, '../../../../apps/web/src/app');
@@ -118,15 +118,15 @@ describe('PR external links → web route coverage', () => {
         expect(routeExists('/definitely/not/a/route')).toBe(false);
     });
 
-    describe('buildKodyRuleLink (file-level, PR-level and agent review pipelines)', () => {
+    describe('buildCodyRuleLink (file-level, PR-level and agent review pipelines)', () => {
         const variations: Array<{ name: string; url: string }> = [
             {
                 name: 'global rule, no extras',
-                url: buildKodyRuleLink(BASE, 'rule-1', {}),
+                url: buildCodyRuleLink(BASE, 'rule-1', {}),
             },
             {
                 name: 'global rule with teamId',
-                url: buildKodyRuleLink(
+                url: buildCodyRuleLink(
                     BASE,
                     'rule-1',
                     { repositoryId: 'global' },
@@ -135,7 +135,7 @@ describe('PR external links → web route coverage', () => {
             },
             {
                 name: 'repo-level rule',
-                url: buildKodyRuleLink(
+                url: buildCodyRuleLink(
                     BASE,
                     'rule-1',
                     { repositoryId: '1190062595' },
@@ -144,7 +144,7 @@ describe('PR external links → web route coverage', () => {
             },
             {
                 name: 'directory-scoped rule (David B bug shape)',
-                url: buildKodyRuleLink(
+                url: buildCodyRuleLink(
                     BASE,
                     'rule-1',
                     { repositoryId: '1190062595', directoryId: 'dir-1' },
@@ -158,11 +158,11 @@ describe('PR external links → web route coverage', () => {
         });
     });
 
-    describe('buildKodyRuleAppLink (kodyRules service + MCP tools)', () => {
+    describe('buildCodyRuleAppLink (codyRules service + MCP tools)', () => {
         const variations: Array<{ name: string; url: string }> = [
             {
                 name: 'active rule deep link (review-rules tab)',
-                url: buildKodyRuleAppLink({
+                url: buildCodyRuleAppLink({
                     repositoryId: '1190062595',
                     ruleId: 'rule-1',
                     teamId: 'team-1',
@@ -172,7 +172,7 @@ describe('PR external links → web route coverage', () => {
             },
             {
                 name: 'active memory deep link (memories tab)',
-                url: buildKodyRuleAppLink({
+                url: buildCodyRuleAppLink({
                     repositoryId: 'global',
                     ruleId: 'rule-1',
                     tab: 'memories',
@@ -181,17 +181,17 @@ describe('PR external links → web route coverage', () => {
             },
             {
                 name: 'pending rule → list page fallback',
-                url: buildKodyRuleAppLink({
+                url: buildCodyRuleAppLink({
                     repositoryId: '1190062595',
                     ruleId: 'rule-1',
-                    status: KodyRulesStatus.PENDING,
+                    status: CodyRulesStatus.PENDING,
                     tab: 'review-rules',
                     baseUrl: BASE,
                 }),
             },
             {
                 name: 'missing ruleId → list page fallback',
-                url: buildKodyRuleAppLink({
+                url: buildCodyRuleAppLink({
                     repositoryId: null,
                     ruleId: undefined,
                     tab: 'review-rules',

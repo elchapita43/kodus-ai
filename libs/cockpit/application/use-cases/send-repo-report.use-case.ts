@@ -66,7 +66,7 @@ export class SendRepoReportUseCase {
 
         const deeplink = (repository?: string) =>
             buildCockpitLink(this.configService, {
-                tab: 'kodus-review',
+                tab: 'codus-review',
                 start: startDate,
                 end: endDate,
                 repository,

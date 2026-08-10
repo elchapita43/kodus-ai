@@ -13,7 +13,7 @@
 #
 # Prereqs:
 #   - `pnpm run docker:start` has been run; all `as_*` containers up.
-#   - `as_kodus_api` was started AFTER `API_ANALYTICS_ALLOW_TRIGGER=true`
+#   - `as_codus_api` was started AFTER `API_ANALYTICS_ALLOW_TRIGGER=true`
 #     was added to docker-compose.override.yml (you may need to restart
 #     it once after pulling this branch).
 #
@@ -28,12 +28,12 @@ set -uo pipefail
 API_URL="${API_URL:-http://localhost:3011}"
 MONGO_CONTAINER="${MONGO_CONTAINER:-as_mongodb}"
 PG_CONTAINER="${PG_CONTAINER:-as_db_postgres}"
-MONGO_USER="${MONGO_USER:-kodusdev}"
+MONGO_USER="${MONGO_USER:-codusdev}"
 MONGO_PASS="${MONGO_PASS:-123456}"
-MONGO_DB="${MONGO_DB:-kodus_db}"
-PG_USER="${PG_USER:-kodusdev}"
-PG_DB="${PG_DB:-kodus_db}"
-WORKER_CONTAINER="${WORKER_CONTAINER:-as_kodus_analytics_worker}"
+MONGO_DB="${MONGO_DB:-codus_db}"
+PG_USER="${PG_USER:-codusdev}"
+PG_DB="${PG_DB:-codus_db}"
+WORKER_CONTAINER="${WORKER_CONTAINER:-as_codus_analytics_worker}"
 
 # Tag prefix for all seeded test orgs; --reset uses this to scope deletes.
 ORG_PREFIX="${ORG_PREFIX:-analytics-test}"
@@ -111,7 +111,7 @@ trigger() {
         # suppresses the normal response body) still shows the failure.
         >&2 echo "  $(red "trigger failed [$status]") $body"
         if [ "$status" = "403" ]; then
-            >&2 echo "  hint: $(yellow 'API container needs `docker compose -f docker-compose.dev.yml -f docker-compose.override.yml --profile local-db up -d --force-recreate kodus-api` to pick up API_ANALYTICS_ALLOW_TRIGGER')"
+            >&2 echo "  hint: $(yellow 'API container needs `docker compose -f docker-compose.dev.yml -f docker-compose.override.yml --profile local-db up -d --force-recreate codus-api` to pick up API_ANALYTICS_ALLOW_TRIGGER')"
         fi
         return 1
     fi

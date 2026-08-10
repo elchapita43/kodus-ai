@@ -1,6 +1,6 @@
 ---
 title: "安全优先的审查流程"
-description: "设置专注于 OWASP Top 10、密钥检测和安全编码模式的 Kody 规则。"
+description: "设置专注于 OWASP Top 10、密钥检测和安全编码模式的 Cody 规则。"
 icon: "shield-halved"
 ---
 
@@ -19,7 +19,7 @@ reviewOptions:
   security: true
 ```
 
-这提供 Kodus 的内置安全检查。以下规则在此基础上添加团队的特定安全策略。
+这提供 Codus 的内置安全检查。以下规则在此基础上添加团队的特定安全策略。
 
 ## 步骤 2 — 创建 OWASP 专项规则
 
@@ -88,17 +88,17 @@ reviewOptions:
 创建适用于所有地方的持久约定：
 
 ```
-@kody remember: all user input must be validated and sanitized
+@cody remember: all user input must be validated and sanitized
 before use. Never trust client-side data.
 ```
 
 ```
-@kody remember: all API endpoints that handle sensitive data
+@cody remember: all API endpoints that handle sensitive data
 must use HTTPS only and include rate limiting.
 ```
 
 ```
-@kody remember: error messages must never expose stack traces,
+@cody remember: error messages must never expose stack traces,
 internal paths, or database details to the client.
 ```
 
@@ -106,7 +106,7 @@ internal paths, or database details to the client.
 
 对于安全规则，您希望关键发现能够阻断：
 
-1. 在 PR 工作流设置中启用**请求更改**，使 Kody 在发现严重问题时请求更改
+1. 在 PR 工作流设置中启用**请求更改**，使 Cody 在发现严重问题时请求更改
 2. 将安全规则设置为**严重**级别，使它们始终高于任何严重性过滤器
 3. 不要设置低的 `maxSuggestions` 限制 — 安全发现永远不应被抑制
 
@@ -135,4 +135,4 @@ internal paths, or database details to the client.
 - [ ] 为严重发现启用请求更改
 - [ ] 测试 PR 确认规则正确触发
 
-有关配置规则的更多信息，请参阅 [Kody 规则](/how_to_use/zh/code_review/configs/kody_rules)。
+有关配置规则的更多信息，请参阅 [Cody 规则](/how_to_use/zh/code_review/configs/cody_rules)。

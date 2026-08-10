@@ -1,5 +1,5 @@
 // BYOK layer for the model benchmark: login a tenant, validate a model's
-// credentials via Kodus's own /test-byok probe, and set the org's BYOK_CONFIG
+// credentials via Codus's own /test-byok probe, and set the org's BYOK_CONFIG
 // so reviews actually run on that model.
 import { http } from "../lib/http.js";
 import type { BenchModel } from "./models.js";
@@ -56,7 +56,7 @@ export interface TestByokResult {
 }
 
 /**
- * Probe the provider with this model's exact config (Kodus's own validation —
+ * Probe the provider with this model's exact config (Codus's own validation —
  * cheap list-models/identity call, no inference). Fails fast on a bad
  * key/model/baseURL so a misconfig never masquerades as "0 findings".
  */

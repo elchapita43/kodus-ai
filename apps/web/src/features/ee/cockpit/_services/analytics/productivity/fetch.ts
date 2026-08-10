@@ -23,7 +23,7 @@ export const getDeployFrequencyAnalytics = ({
     });
 };
 
-export const getKodySuggestionsAnalytics = () => {
+export const getCodySuggestionsAnalytics = () => {
     return analyticsFetch<{
         suggestionsSent: number;
         suggestionsImplemented: number;

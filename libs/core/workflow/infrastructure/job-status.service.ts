@@ -297,7 +297,7 @@ export class JobStatusService implements IJobStatusService {
     }> {
         const result = await this.dataSource.query(
             `SELECT status, COUNT(*) as count
-             FROM kodus_workflow.outbox_messages
+             FROM codus_workflow.outbox_messages
              GROUP BY status`,
         );
 
@@ -331,7 +331,7 @@ export class JobStatusService implements IJobStatusService {
     }> {
         const result = await this.dataSource.query(
             `SELECT status, COUNT(*) as count
-             FROM kodus_workflow.workflow_jobs
+             FROM codus_workflow.workflow_jobs
              WHERE "createdAt" > NOW() - INTERVAL '24 hours'
              GROUP BY status`,
         );

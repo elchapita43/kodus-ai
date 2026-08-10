@@ -106,7 +106,7 @@ export function SetupConnectingGitToolPage(props: {
                         <Heading variant="h2">Connect your Git tool</Heading>
 
                         <p className="text-text-secondary text-sm">
-                            By connecting, Kody starts automating reviews
+                            By connecting, Cody starts automating reviews
                             instantly, saving hours every week.
                         </p>
                     </div>
@@ -322,7 +322,7 @@ export function SetupConnectingGitToolPage(props: {
                     </Tabs>
 
                     <p className="text-text-secondary px-4 text-center text-xs">
-                        Kody complies with LGPD, GDPR, and CCPA to ensure your
+                        Cody complies with LGPD, GDPR, and CCPA to ensure your
                         privacy and security.
                     </p>
                 </div>

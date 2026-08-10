@@ -1,11 +1,11 @@
 ---
 title: "Github FGPAT トークン"
-description: "コードレビューに Kody が必要とする GitHub の Fine-Grained PAT を発行します。組織のリポジトリへのアクセスを解放する方法も含みます。"
+description: "コードレビューに Cody が必要とする GitHub の Fine-Grained PAT を発行します。組織のリポジトリへのアクセスを解放する方法も含みます。"
 ---
 
 ## FGPAT の概要
 
-Kody が自動コードレビューを実行できるようにするには、GitHub で Fine-Grained Personal Access Token（FGPAT）を生成する必要があります。このトークンにより、Kody はリポジトリに安全にアクセスし、制御された方法でコード分析を実行できます。
+Cody が自動コードレビューを実行できるようにするには、GitHub で Fine-Grained Personal Access Token（FGPAT）を生成する必要があります。このトークンにより、Cody はリポジトリに安全にアクセスし、制御された方法でコード分析を実行できます。
 
 ## Fine-Grained アクセス権限の確認
 
@@ -16,7 +16,7 @@ Kody が自動コードレビューを実行できるようにするには、Git
 1. 組織のオーナーである必要があります。
 1. GitHub で組織の設定に移動します：
    - この URL を組織名に置き換えて使用できます：<small>https://github.com/organizations/YOUR_ORG_NAME/settings/personal-access-tokens)</small>
-1. **Fine-Grained Personal Access Tokens** の下で、Kody の安全なアクセスを有効にするために **「Allow access via fine-grained personal access tokens」** を選択します。
+1. **Fine-Grained Personal Access Tokens** の下で、Cody の安全なアクセスを有効にするために **「Allow access via fine-grained personal access tokens」** を選択します。
 
 ## FGPAT（Fine-Grained Personal Access Token）の生成
 
@@ -52,7 +52,7 @@ Kody が自動コードレビューを実行できるようにするには、Git
 
 5. **以下の仕様で新しいトークンを設定します**：
 
-   - **トークン名**：`kody_code_review` など識別しやすい名前を選択します。
+   - **トークン名**：`cody_code_review` など識別しやすい名前を選択します。
    - **有効期限**：可能であれば、少なくとも 180 日以上の長い有効期限を選択します。
    - **リソースオーナー**：チームのリポジトリが組織下にあるため、組織をトークンオーナーとして設定していることを確認します。
    - **リポジトリアクセス**：トークンがすべてのリポジトリにアクセスできるよう **すべてのリポジトリ**を選択します。
@@ -71,8 +71,8 @@ Kody が自動コードレビューを実行できるようにするには、Git
 
 6. **トークンを確定して保存します**：
    - 権限を設定したら、`Generate token` をクリックします。
-   - 生成されたトークンをコピーして安全に保存してください。Kody の設定に必要になります。
+   - 生成されたトークンをコピーして安全に保存してください。Cody の設定に必要になります。
 
-## Kody へのトークンの追加
+## Cody へのトークンの追加
 
-トークンを生成した後、自動化設定の Kody 設定画面に貼り付けます。自動化を有効にしようとするとすぐに、モーダルが自動的に開きます。
+トークンを生成した後、自動化設定の Cody 設定画面に貼り付けます。自動化を有効にしようとするとすぐに、モーダルが自動的に開きます。

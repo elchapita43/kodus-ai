@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Sets up a Cloudflare named tunnel + DNS for a provisioned self-hosted
-# Kodus droplet. Replaces the random quick-tunnel webhook URL with stable
+# Codus droplet. Replaces the random quick-tunnel webhook URL with stable
 # DNS-backed routes for both web (port 3000) and webhook (port 3332).
 # One named tunnel handles both via ingress rules — same systemd service
-# slot as before (kodus-tunnel.service), so the rollback story is just
+# slot as before (codus-tunnel.service), so the rollback story is just
 # putting the old ExecStart line back.
 #
 # No cloudflared CLI needed locally: we drive everything through the
@@ -24,7 +24,7 @@
 #       --zone-id    <CF_ZONE_ID>
 #
 # Optional:
-#   --web-sub <name>    web subdomain (default: kodus-<8hex>)
+#   --web-sub <name>    web subdomain (default: codus-<8hex>)
 #   --wh-sub  <name>    webhook subdomain (default: wh-<same-8hex>)
 #   --name    <inst>    selfhosted instance name (default: default)
 #   --dry-run           print plan, skip all API + remote calls
@@ -83,11 +83,11 @@ SERVER_IP=$(state_get "$NAME" .server_ip)
 
 # Generate a single random suffix and share it between web + webhook subs
 # unless the caller pinned either one. Sharing the suffix keeps the two
-# subdomains visually related (kodus-a3f2b9c1 + wh-a3f2b9c1) so when you
+# subdomains visually related (codus-a3f2b9c1 + wh-a3f2b9c1) so when you
 # see one in a log you immediately know the other.
 if [ -z "$WEB_SUB" ] || [ -z "$WH_SUB" ]; then
     RAND=$(openssl rand -hex 4)
-    [ -z "$WEB_SUB" ] && WEB_SUB="kodus-${RAND}"
+    [ -z "$WEB_SUB" ] && WEB_SUB="codus-${RAND}"
     [ -z "$WH_SUB" ]  && WH_SUB="wh-${RAND}"
 fi
 
@@ -125,7 +125,7 @@ ok "Zone: $ZONE_NAME"
 
 WEB_FQDN="${WEB_SUB}.${ZONE_NAME}"
 WH_FQDN="${WH_SUB}.${ZONE_NAME}"
-TUNNEL_NAME="kodus-${NAME}-${WEB_SUB##*-}"
+TUNNEL_NAME="codus-${NAME}-${WEB_SUB##*-}"
 
 log "Plan:"
 dim "  Instance:        $NAME ($SERVER_IP)"
@@ -199,9 +199,9 @@ TUNNEL_TOKEN=${TUNNEL_TOKEN}
 EOF
 chmod 600 /etc/cloudflared/tunnel.env
 
-cat > /etc/systemd/system/kodus-tunnel.service <<'UNIT'
+cat > /etc/systemd/system/codus-tunnel.service <<'UNIT'
 [Unit]
-Description=cloudflared named tunnel for Kodus (web + webhooks)
+Description=cloudflared named tunnel for Codus (web + webhooks)
 After=network-online.target
 [Service]
 EnvironmentFile=/etc/cloudflared/tunnel.env
@@ -212,9 +212,9 @@ WantedBy=multi-user.target
 UNIT
 
 systemctl daemon-reload
-systemctl restart kodus-tunnel.service
+systemctl restart codus-tunnel.service
 sleep 2
-systemctl --no-pager status kodus-tunnel.service | head -10
+systemctl --no-pager status codus-tunnel.service | head -10
 REMOTE
 ok "cloudflared restarted with named tunnel"
 
@@ -227,7 +227,7 @@ ok "cloudflared restarted with named tunnel"
 log "Updating .env on droplet..."
 ssh_to "$NAME" bash -s <<REMOTE
 set -euo pipefail
-cd /opt/kodus-installer
+cd /opt/codus-installer
 env_set() {
     local k="\$1" v="\$2"
     if grep -qE "^\${k}=" .env; then
@@ -249,8 +249,8 @@ ok ".env updated on droplet"
 # ---------- 6. Restart app containers ----------
 # Only the services that read any of the changed env vars need to bounce.
 # DB / mongo / rabbit are untouched.
-log "Restarting kodus app containers..."
-ssh_to "$NAME" "cd /opt/kodus-installer && docker compose up -d --force-recreate kodus-web api webhooks worker"
+log "Restarting codus app containers..."
+ssh_to "$NAME" "cd /opt/codus-installer && docker compose up -d --force-recreate codus-web api webhooks worker"
 ok "Containers restarted"
 
 # ---------- 7. Persist tunnel info for later (destroy, status) ----------
@@ -282,4 +282,4 @@ echo ""
 warn "DNS + tunnel can take ~30s to be reachable. If first request 404s, wait a minute."
 warn "Existing browser sessions tied to http://${SERVER_IP}:3000 are gone — relog."
 warn "Webhooks already registered with the old quick-tunnel URL must be re-registered"
-warn "  → in the Kodus dashboard, reconnect each repository / integration."
+warn "  → in the Codus dashboard, reconnect each repository / integration."

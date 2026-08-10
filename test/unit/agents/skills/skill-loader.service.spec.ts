@@ -92,19 +92,19 @@ describe('SkillLoaderService', () => {
         expect(meta.capabilityDefinitions).toEqual({
             'pr.metadata.read': {
                 mode: 'fixed_tools',
-                tools: ['KODUS_GET_PULL_REQUEST'],
+                tools: ['CODUS_GET_PULL_REQUEST'],
             },
             'pr.diff.read': {
                 mode: 'fixed_tools',
-                tools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+                tools: ['CODUS_GET_PULL_REQUEST_DIFF'],
             },
             'task.context.read': {
                 mode: 'provider_dynamic',
             },
         });
         expect(meta.allowedTools).toEqual([
-            'KODUS_GET_PULL_REQUEST',
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST_DIFF',
         ]);
         expect(meta.fetcherPolicy).toEqual({
             toolMode: 'any',
@@ -148,10 +148,10 @@ name: business-rules-validation
 description: >
   Validate PR code changes against task requirements
   with multiline YAML support
-allowed-tools: KODUS_GET_PULL_REQUEST_DIFF KODUS_GET_PULL_REQUEST
+allowed-tools: CODUS_GET_PULL_REQUEST_DIFF CODUS_GET_PULL_REQUEST
 metadata:
   version: "2.0.0"
-  kodus:
+  codus:
     fetcher-policy:
       tool-mode: all
       allow-without-tools: false
@@ -178,8 +178,8 @@ metadata:
             'Validate PR code changes against task requirements with multiline YAML support\n',
         );
         expect(parsed.meta.allowedTools).toEqual([
-            'KODUS_GET_PULL_REQUEST_DIFF',
-            'KODUS_GET_PULL_REQUEST',
+            'CODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST',
         ]);
         expect(parsed.meta.fetcherPolicy).toEqual({
             toolMode: 'all',
@@ -213,14 +213,14 @@ metadata:
         });
     });
 
-    it('keeps backward compatibility with legacy Kodus top-level keys', () => {
+    it('keeps backward compatibility with legacy Codus top-level keys', () => {
         const service = new SkillLoaderService() as any;
 
         const parsed = service.parseFrontmatter(`---
 name: legacy-skill
 description: Legacy format
 allowed-tools:
-  - KODUS_GET_PULL_REQUEST_DIFF
+  - CODUS_GET_PULL_REQUEST_DIFF
 capabilities:
   - pr.diff.read
 fetcher-policy:
@@ -234,7 +234,7 @@ contracts:
 # Body`);
 
         expect(parsed.meta.allowedTools).toEqual([
-            'KODUS_GET_PULL_REQUEST_DIFF',
+            'CODUS_GET_PULL_REQUEST_DIFF',
         ]);
         expect(parsed.meta.capabilities).toEqual(['pr.diff.read']);
         expect(parsed.meta.fetcherPolicy).toEqual({
@@ -256,7 +256,7 @@ contracts:
 name: multi-tool-skill
 description: Skill with capability-tool-map
 metadata:
-  kodus:
+  codus:
     capability-tool-map:
       task.context.read: getLinearIssue getNotionPage
       custom.read:
@@ -292,7 +292,7 @@ description: No capability-tool-map
 name: dynamic-capability-skill
 description: Skill with capability definitions
 metadata:
-  kodus:
+  codus:
     capability-definitions:
       task.context.read:
         mode: provider_dynamic
@@ -320,15 +320,15 @@ metadata:
         });
     });
 
-    it('warns and ignores invalid metadata.kodus schema', () => {
+    it('warns and ignores invalid metadata.codus schema', () => {
         const service = new SkillLoaderService() as any;
         const warnSpy = jest.spyOn((service as any).logger, 'warn');
 
         const parsed = service.parseFrontmatter(`---
-name: invalid-kodus
-description: Invalid kodus metadata
+name: invalid-codus
+description: Invalid codus metadata
 metadata:
-  kodus:
+  codus:
     fetcher-policy: invalid
 ---
 
@@ -336,7 +336,7 @@ metadata:
 
         expect(parsed.meta.fetcherPolicy).toBeUndefined();
         expect(warnSpy).toHaveBeenCalledWith(
-            expect.stringContaining('invalid metadata.kodus schema'),
+            expect.stringContaining('invalid metadata.codus schema'),
         );
     });
 

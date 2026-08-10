@@ -5,7 +5,7 @@ import {
 } from '@libs/mcp-server/mcp-adapter';
 import { Injectable, Logger, Optional } from '@nestjs/common';
 
-import { BYOKConfig } from '@kodus/kodus-common/llm';
+import { BYOKConfig } from '@codus/codus-common/llm';
 
 import type { ToolRegistry } from '@libs/agent-harness/domain/contracts';
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';
@@ -172,7 +172,7 @@ export class GenericSkillRunnerService {
                 mcpManagerServers,
             );
             this.metricsCollector?.recordGauge(
-                'kodus_skill_required_tools_total',
+                'codus_skill_required_tools_total',
                 requiredTools.length,
                 { skill: skillName },
             );
@@ -183,13 +183,13 @@ export class GenericSkillRunnerService {
                         `[GenericSkillRunner] No MCP tools available for skill '${skillName}', but policy allows fallback without tools.`,
                     );
                     this.metricsCollector?.recordCounter(
-                        'kodus_skill_mcp_fallback_total',
+                        'codus_skill_mcp_fallback_total',
                         1,
                         { skill: skillName, reason: 'missing_mcp_or_tools' },
                     );
                 } else {
                     this.metricsCollector?.recordCounter(
-                        'kodus_skill_mcp_failfast_total',
+                        'codus_skill_mcp_failfast_total',
                         1,
                         { skill: skillName, reason: 'missing_mcp_or_tools' },
                     );
@@ -238,13 +238,13 @@ export class GenericSkillRunnerService {
                             }`,
                         );
                         this.metricsCollector?.recordCounter(
-                            'kodus_skill_mcp_fallback_total',
+                            'codus_skill_mcp_fallback_total',
                             1,
                             { skill: skillName, reason: 'connect_error' },
                         );
                     } else {
                         this.metricsCollector?.recordCounter(
-                            'kodus_skill_mcp_failfast_total',
+                            'codus_skill_mcp_failfast_total',
                             1,
                             { skill: skillName, reason: 'connect_error' },
                         );
@@ -304,7 +304,7 @@ export class GenericSkillRunnerService {
                         const result =
                             await this.observabilityService.runAiSdkLLMInSpan({
                                 spanName: `SkillFetcher::${skillName}`,
-                                runName: `kodus-${skillName}-fetcher`,
+                                runName: `codus-${skillName}-fetcher`,
                                 model: byokConfig?.main?.model,
                                 attrs: {
                                     type: 'agent',
@@ -316,14 +316,14 @@ export class GenericSkillRunnerService {
                                 exec: () =>
                                     runMcpFetcherAgent({
                                         byokConfig,
-                                        agentId: `kodus-${skillName}-fetcher`,
+                                        agentId: `codus-${skillName}-fetcher`,
                                         systemPrompt: fetcherSystemPrompt,
                                         prompt,
                                         tools: toolRegistry,
                                         maxSteps:
                                             executionPolicy.fetcherMaxIterations,
                                         providerOptions: buildProviderOptions(
-                                            `kodus-${skillName}-fetcher`,
+                                            `codus-${skillName}-fetcher`,
                                             undefined,
                                             {
                                                 // Effort tier from the org's
@@ -349,7 +349,7 @@ export class GenericSkillRunnerService {
                                                   )
                                             : undefined,
                                         telemetry: {
-                                            functionId: `kodus-${skillName}-fetcher`,
+                                            functionId: `codus-${skillName}-fetcher`,
                                             organizationId:
                                                 organizationAndTeamData?.organizationId,
                                             teamId: organizationAndTeamData?.teamId,
@@ -523,7 +523,7 @@ export class GenericSkillRunnerService {
                     .toLowerCase();
 
                 return !(
-                    serverProvider === 'kodusmcp' && serverName === 'kodus mcp'
+                    serverProvider === 'codusmcp' && serverName === 'codus mcp'
                 );
             },
         );
@@ -596,7 +596,7 @@ export class GenericSkillRunnerService {
         const resolvedRequiredTools = requiredTools?.length
             ? requiredTools
             : [];
-        const hasRequiredTools = this.hasRequiredKodusTools(
+        const hasRequiredTools = this.hasRequiredCodusTools(
             mcpManagerServers,
             resolvedRequiredTools,
             fetcherPolicy,
@@ -612,8 +612,8 @@ export class GenericSkillRunnerService {
                     .toLowerCase();
 
                 if (
-                    serverProvider === 'kodusmcp' &&
-                    serverName === 'kodus mcp'
+                    serverProvider === 'codusmcp' &&
+                    serverName === 'codus mcp'
                 ) {
                     if (!resolvedRequiredTools.length) {
                         return true;
@@ -649,8 +649,8 @@ export class GenericSkillRunnerService {
                     .toLowerCase();
 
                 if (
-                    serverProvider === 'kodusmcp' &&
-                    serverName === 'kodus mcp'
+                    serverProvider === 'codusmcp' &&
+                    serverName === 'codus mcp'
                 ) {
                     if (!resolvedRequiredTools.length) {
                         return server;
@@ -857,7 +857,7 @@ export class GenericSkillRunnerService {
     private resolveServerProviderTypes(server: McpConnection): string[] {
         const aliases = this.getServerProviderAliases(server)
             .map((alias) => this.normalizeProviderToken(alias))
-            .filter((alias) => alias.length > 0 && alias !== 'kodusmcp');
+            .filter((alias) => alias.length > 0 && alias !== 'codusmcp');
 
         if (!aliases.length) {
             return [];
@@ -971,7 +971,7 @@ export class GenericSkillRunnerService {
         }
     }
 
-    private hasRequiredKodusTools(
+    private hasRequiredCodusTools(
         servers: McpConnection[] | undefined,
         requiredTools: string[],
         fetcherPolicy: Required<SkillFetcherPolicy>,
@@ -980,24 +980,24 @@ export class GenericSkillRunnerService {
             return true;
         }
 
-        const kodusTools = new Set<string>();
+        const codusTools = new Set<string>();
         for (const server of servers ?? []) {
-            if (server?.provider !== 'kodusmcp') {
+            if (server?.provider !== 'codusmcp') {
                 continue;
             }
             const tools = Array.isArray(server?.allowedTools)
                 ? server.allowedTools
                 : [];
             for (const tool of tools) {
-                kodusTools.add(tool);
+                codusTools.add(tool);
             }
         }
 
         if (fetcherPolicy.toolMode === 'all') {
-            return requiredTools.every((tool) => kodusTools.has(tool));
+            return requiredTools.every((tool) => codusTools.has(tool));
         }
 
-        return requiredTools.some((tool) => kodusTools.has(tool));
+        return requiredTools.some((tool) => codusTools.has(tool));
     }
 
     private recordSetupMetric(
@@ -1008,12 +1008,12 @@ export class GenericSkillRunnerService {
     ): void {
         const labels = { skill: skillName, stage, status };
         this.metricsCollector?.recordHistogram(
-            'kodus_skill_setup_duration_ms',
+            'codus_skill_setup_duration_ms',
             Date.now() - startedAt,
             labels,
         );
         this.metricsCollector?.recordCounter(
-            'kodus_skill_setup_total',
+            'codus_skill_setup_total',
             1,
             labels,
         );

@@ -84,7 +84,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
         mockConfirm.mockResolvedValue(false);
 
@@ -94,7 +94,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' was added to Kodus successfully.",
+            "Repository 'elchapita43/cli' was added to Codus successfully.",
         );
         expect(mockConfirm).toHaveBeenCalledWith({
             message: 'Configure this repository now?',
@@ -106,20 +106,20 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
-        await configRepoAddAction('kodustech/cli');
+        await configRepoAddAction('elchapita43/cli');
 
         expect(mockRepoConfigService.addRepository).toHaveBeenCalledWith(
-            'kodustech/cli',
+            'elchapita43/cli',
         );
 
         const output = logSpy.mock.calls
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' was added to Kodus successfully.",
+            "Repository 'elchapita43/cli' was added to Codus successfully.",
         );
     });
 
@@ -127,7 +127,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configRepoAction('.', { json: true });
@@ -139,7 +139,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
     });
 
@@ -147,20 +147,20 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
-        await configRemoteAction('kodustech/cli');
+        await configRemoteAction('elchapita43/cli');
 
         expect(mockRepoConfigService.addRepository).toHaveBeenCalledWith(
-            'kodustech/cli',
+            'elchapita43/cli',
         );
 
         const output = logSpy.mock.calls
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' was added to Kodus successfully.",
+            "Repository 'elchapita43/cli' was added to Codus successfully.",
         );
     });
 
@@ -168,7 +168,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'already-added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configRepoAction('.');
@@ -177,7 +177,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' is already added to Kodus.",
+            "Repository 'elchapita43/cli' is already added to Codus.",
         );
         expect(mockConfirm).not.toHaveBeenCalled();
     });
@@ -185,11 +185,11 @@ describe('config repo command', () => {
     it('starts setup after adding a repository when the user confirms', async () => {
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -202,7 +202,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -242,7 +242,7 @@ describe('config repo command', () => {
     it('skips the post-add prompt when prompt is disabled explicitly', async () => {
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configRepoAction('.', { prompt: false });
@@ -256,7 +256,7 @@ describe('config repo command', () => {
     it('skips the post-add prompt in non-interactive terminals', async () => {
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
         Object.defineProperty(process.stdin, 'isTTY', {
             configurable: true,
@@ -294,7 +294,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -339,7 +339,7 @@ describe('config repo command', () => {
         const output = logSpy.mock.calls
             .map((call) => call.join(' '))
             .join('\n');
-        expect(output).toContain('Repository settings: kodustech/cli');
+        expect(output).toContain('Repository settings: elchapita43/cli');
         expect(output).toContain('Automated review: enabled');
         expect(output).toContain('[repository overrides global]');
         expect(output).toContain('Auto approve: disabled');
@@ -359,7 +359,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -377,7 +377,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -393,7 +393,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -406,7 +406,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: true,
@@ -454,7 +454,7 @@ describe('config repo command', () => {
             'Choose the review behaviors you want for this repository.',
         );
         expect(output).toContain(
-            'Kody automatically reviews pull requests when they are opened or updated.',
+            'Cody automatically reviews pull requests when they are opened or updated.',
         );
         expect(output).toContain(
             'Automatically approves the pull request when the review finishes without issues.',
@@ -462,13 +462,13 @@ describe('config repo command', () => {
         expect(output).toContain(
             'Files and titles can use glob patterns. Branches accept branch names or expressions like release/*.',
         );
-        expect(output).toContain('Review repository settings: kodustech/cli');
+        expect(output).toContain('Review repository settings: elchapita43/cli');
         expect(output).toContain('+ Auto approve: disabled -> enabled');
         expect(output).toContain(
             '+ Minimum severity level: critical -> high',
         );
         expect(output).toContain(
-            'Repository settings updated for kodustech/cli',
+            'Repository settings updated for elchapita43/cli',
         );
     });
 
@@ -476,7 +476,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -489,7 +489,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: true,
@@ -523,7 +523,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             currentSettings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -556,7 +556,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -591,7 +591,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -621,7 +621,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             currentSettings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -645,7 +645,7 @@ describe('config repo command', () => {
     it('lets the user revisit patterns before applying setup', async () => {
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -658,7 +658,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -707,7 +707,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -720,7 +720,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -756,7 +756,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            'Repository settings updated for kodustech/cli',
+            'Repository settings updated for elchapita43/cli',
         );
     });
 
@@ -764,7 +764,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -777,7 +777,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: true,
@@ -798,7 +798,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: true,
@@ -814,7 +814,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -827,7 +827,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -856,7 +856,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            'Repository settings updated for kodustech/cli',
+            'Repository settings updated for elchapita43/cli',
         );
     });
 
@@ -864,7 +864,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -877,7 +877,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -898,7 +898,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -914,7 +914,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -927,7 +927,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -956,7 +956,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            'Repository settings updated for kodustech/cli',
+            'Repository settings updated for elchapita43/cli',
         );
     });
 
@@ -1000,11 +1000,11 @@ describe('config repo command', () => {
         expect(output).toContain('patterns.ignoreFiles');
     });
 
-    it('opens the Kodus app and prints repository navigation instructions', async () => {
+    it('opens the Codus app and prints repository navigation instructions', async () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -1025,9 +1025,9 @@ describe('config repo command', () => {
         const output = logSpy.mock.calls
             .map((call) => call.join(' '))
             .join('\n');
-        expect(output).toContain('Opening Kodus dashboard...');
+        expect(output).toContain('Opening Codus dashboard...');
         expect(output).toContain(
-            'Navigate to: kodustech/cli > Suggestion Control',
+            'Navigate to: elchapita43/cli > Suggestion Control',
         );
         expect(output).toContain('URL: https://app.kodus.io');
     });
@@ -1036,7 +1036,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -1059,7 +1059,7 @@ describe('config repo command', () => {
             .join('\n');
         expect(JSON.parse(output)).toEqual({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             appUrl: 'https://app.kodus.io',
             section: 'suggestion-control',
             sectionLabel: 'Suggestion Control',
@@ -1089,8 +1089,8 @@ describe('config repo command', () => {
     it('prints selected repositories when listing config repos', async () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.listRepositories.mockResolvedValue([
-            { id: 'repo-1', fullName: 'kodustech/cli' },
-            { id: 'repo-2', fullName: 'kodustech/website' },
+            { id: 'repo-1', fullName: 'elchapita43/cli' },
+            { id: 'repo-2', fullName: 'elchapita43/website' },
         ]);
 
         await configRepoListAction();
@@ -1099,15 +1099,15 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain('Configured repositories:');
-        expect(output).toContain('kodustech/cli');
-        expect(output).toContain('kodustech/website');
+        expect(output).toContain('elchapita43/cli');
+        expect(output).toContain('elchapita43/website');
     });
 
     it('prints selected repositories as JSON when requested', async () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.listRepositories.mockResolvedValue([
-            { id: 'repo-1', fullName: 'kodustech/cli' },
-            { id: 'repo-2', fullName: 'kodustech/website' },
+            { id: 'repo-1', fullName: 'elchapita43/cli' },
+            { id: 'repo-2', fullName: 'elchapita43/website' },
         ]);
 
         await configRepoListAction({ json: true });
@@ -1116,8 +1116,8 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(JSON.parse(output)).toEqual([
-            { id: 'repo-1', fullName: 'kodustech/cli' },
-            { id: 'repo-2', fullName: 'kodustech/website' },
+            { id: 'repo-1', fullName: 'elchapita43/cli' },
+            { id: 'repo-2', fullName: 'elchapita43/website' },
         ]);
     });
 
@@ -1128,29 +1128,29 @@ describe('config repo command', () => {
             ?.helpInformation();
 
         expect(help).toContain('-r, --remote [repository]');
-        expect(help).toContain('Add a repository to Kodus.');
-        expect(help).toContain('Shortcut for: kodus');
+        expect(help).toContain('Add a repository to Codus.');
+        expect(help).toContain('Shortcut for: codus');
         expect(help).toContain('config remote add [repository]');
         expect(help).toContain('remote [repository]');
         expect(help).not.toContain('repo [repository]');
         expect(remoteHelp).toContain(
-            'Inspect and update the current repository settings in Kodus.',
+            'Inspect and update the current repository settings in Codus.',
         );
         expect(remoteHelp).toContain('Team-key auth is');
         expect(remoteHelp).toContain(
             'required for repository config commands',
         );
         expect(remoteHelp).toContain('shortcut for');
-        expect(remoteHelp).toContain("'kodus config remote");
+        expect(remoteHelp).toContain("'codus config remote");
         expect(remoteHelp).toContain('add [options] [repository]');
-        expect(remoteHelp).toContain("Equivalent to 'kodus config -r");
+        expect(remoteHelp).toContain("Equivalent to 'codus config -r");
     });
 
     it('supports -r as a shortcut for remote config', async () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configCommand.parseAsync(['-r', '.'], { from: 'user' });
@@ -1161,7 +1161,7 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' was added to Kodus successfully.",
+            "Repository 'elchapita43/cli' was added to Codus successfully.",
         );
     });
 
@@ -1169,7 +1169,7 @@ describe('config repo command', () => {
         const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configCommand.parseAsync(['--remote'], { from: 'user' });
@@ -1180,14 +1180,14 @@ describe('config repo command', () => {
             .map((call) => call.join(' '))
             .join('\n');
         expect(output).toContain(
-            "Repository 'kodustech/cli' was added to Kodus successfully.",
+            "Repository 'elchapita43/cli' was added to Codus successfully.",
         );
     });
 
     it('supports --no-prompt for remote config shortcut', async () => {
         mockRepoConfigService.addRepository.mockResolvedValue({
             status: 'added',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
         });
 
         await configCommand.parseAsync(['--remote', '.', '--no-prompt'], {
@@ -1201,7 +1201,7 @@ describe('config repo command', () => {
     it('supports add-ignore-file alias for pattern additions', async () => {
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -1214,7 +1214,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,
@@ -1248,7 +1248,7 @@ describe('config repo command', () => {
     it('supports remove-base-branch alias for pattern removals', async () => {
         mockRepositorySettingsService.getRepositorySettings.mockResolvedValue({
             repositoryId: 'repo-1',
-            repositoryFullName: 'kodustech/cli',
+            repositoryFullName: 'elchapita43/cli',
             settings: {
                 reviewEnabled: true,
                 autoApproveEnabled: false,
@@ -1261,7 +1261,7 @@ describe('config repo command', () => {
         mockRepositorySettingsService.updateRepositorySettings.mockResolvedValue(
             {
                 repositoryId: 'repo-1',
-                repositoryFullName: 'kodustech/cli',
+                repositoryFullName: 'elchapita43/cli',
                 settings: {
                     reviewEnabled: true,
                     autoApproveEnabled: false,

@@ -3,7 +3,7 @@ import { ITeam } from '@libs/organization/domain/team/interfaces/team.interface'
 
 export const TEAM_CLI_KEY_CAPABILITIES = {
     CONFIG_REPO_MANAGE: 'config:repo:manage',
-    KODY_RULES_MANAGE: 'kodyRules:manage',
+    CODY_RULES_MANAGE: 'codyRules:manage',
 } as const;
 
 export type TeamCliKeyCapability =

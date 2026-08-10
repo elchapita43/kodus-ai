@@ -67,7 +67,7 @@ export class LocalSandboxService implements ISandboxProvider {
             unifiedDiff,
         } = params;
 
-        const tempDir = await mkdtemp(join(tmpdir(), 'kodus-sandbox-'));
+        const tempDir = await mkdtemp(join(tmpdir(), 'codus-sandbox-'));
 
         try {
             // No auth token → anonymous clone (works for public repos and
@@ -622,7 +622,7 @@ export class LocalSandboxService implements ISandboxProvider {
         repoDir: string,
         unifiedDiff: string,
     ): Promise<void> {
-        const patchPath = join(repoDir, '.kodus-cli.patch');
+        const patchPath = join(repoDir, '.codus-cli.patch');
         try {
             await writeFile(patchPath, unifiedDiff, 'utf-8');
         } catch (error) {
@@ -645,13 +645,13 @@ export class LocalSandboxService implements ISandboxProvider {
                     repoDir,
                     'config',
                     'user.email',
-                    'kodus-cli@kodus.local',
+                    'codus-cli@codus.local',
                 ],
                 { timeout: 5_000 },
             );
             await execFileAsync(
                 'git',
-                ['-C', repoDir, 'config', 'user.name', 'Kodus CLI'],
+                ['-C', repoDir, 'config', 'user.name', 'Codus CLI'],
                 { timeout: 5_000 },
             );
         } catch {

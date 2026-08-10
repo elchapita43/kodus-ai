@@ -1,6 +1,6 @@
 /**
  * @license
- * Kodus Tech. All rights reserved.
+ * Codus Tech. All rights reserved.
  *
  * Hardcoded environment loader:
  * Values are baked into the bundle at build time via environment.ts

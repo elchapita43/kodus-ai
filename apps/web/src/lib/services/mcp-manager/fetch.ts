@@ -329,7 +329,7 @@ export const connectMCPPluginWithToken = async ({
         provider: string;
         status: MCP_CONNECTION_STATUS;
         appName: string;
-    }>(`/mcp/integration/kodusmcp/${integrationId}/token`, {
+    }>(`/mcp/integration/codusmcp/${integrationId}/token`, {
         method: "POST",
         body: JSON.stringify({ authMethod, secret, fields }),
     });

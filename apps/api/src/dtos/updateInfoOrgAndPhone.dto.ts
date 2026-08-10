@@ -4,7 +4,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class UpdateInfoOrganizationAndPhoneDto {
     @IsString()
     @IsNotEmpty({ message: 'The name field is required.' })
-    @ApiProperty({ example: 'Kodus' })
+    @ApiProperty({ example: 'Codus' })
     public name: string;
 
     @IsString()

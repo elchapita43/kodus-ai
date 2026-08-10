@@ -22,7 +22,7 @@ describe('CliConfigController', () => {
 
     const teamData = {
         team: { uuid: 'team-1', name: 'Core Team' },
-        organization: { uuid: 'org-1', name: 'Kodus' },
+        organization: { uuid: 'org-1', name: 'Codus' },
         config: {
             capabilities: [TEAM_CLI_KEY_CAPABILITIES.CONFIG_REPO_MANAGE],
         },
@@ -32,9 +32,9 @@ describe('CliConfigController', () => {
         {
             id: 'repo-1',
             name: 'alpha',
-            organizationName: 'kodus',
-            full_name: 'kodus/alpha',
-            http_url: 'https://github.com/kodus/alpha',
+            organizationName: 'codus',
+            full_name: 'codus/alpha',
+            http_url: 'https://github.com/codus/alpha',
             default_branch: 'main',
             language: 'TypeScript',
             visibility: 'private',
@@ -44,9 +44,9 @@ describe('CliConfigController', () => {
         {
             id: 'repo-2',
             name: 'beta',
-            organizationName: 'kodus',
-            full_name: 'kodus/beta',
-            http_url: 'https://github.com/kodus/beta',
+            organizationName: 'codus',
+            full_name: 'codus/beta',
+            http_url: 'https://github.com/codus/beta',
             default_branch: 'main',
             language: 'TypeScript',
             visibility: 'private',
@@ -56,9 +56,9 @@ describe('CliConfigController', () => {
         {
             id: 'repo-3',
             name: 'gamma',
-            organizationName: 'kodus',
-            full_name: 'kodus/gamma',
-            http_url: 'https://github.com/kodus/gamma',
+            organizationName: 'codus',
+            full_name: 'codus/gamma',
+            http_url: 'https://github.com/codus/gamma',
             default_branch: 'main',
             language: 'TypeScript',
             visibility: 'private',
@@ -139,12 +139,12 @@ describe('CliConfigController', () => {
 
     it('lists available repositories using a team key', async () => {
         const result = await controller.getAvailableRepositories(
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 
         expect(teamCliKeyService.validateKey).toHaveBeenCalledWith(
-            'kodus_test_key',
+            'codus_test_key',
         );
         expect(codeManagementService.getRepositories).toHaveBeenCalledWith({
             organizationAndTeamData: {
@@ -158,11 +158,11 @@ describe('CliConfigController', () => {
     it('lists selected repositories using a bearer team key', async () => {
         const result = await controller.getSelectedRepositories(
             undefined,
-            'Bearer kodus_bearer_key',
+            'Bearer codus_bearer_key',
         );
 
         expect(teamCliKeyService.validateKey).toHaveBeenCalledWith(
-            'kodus_bearer_key',
+            'codus_bearer_key',
         );
         expect(
             integrationConfigService.findIntegrationConfigFormatted,
@@ -178,7 +178,7 @@ describe('CliConfigController', () => {
             {
                 repositoryIds: ['repo-2', 'repo-3'],
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 
@@ -244,7 +244,7 @@ describe('CliConfigController', () => {
         teamCliKeyService.validateKey.mockResolvedValue(null);
 
         await expect(
-            controller.getAvailableRepositories('kodus_bad_key', undefined),
+            controller.getAvailableRepositories('codus_bad_key', undefined),
         ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -261,7 +261,7 @@ describe('CliConfigController', () => {
                 {
                     repositoryIds: ['repo-2'],
                 },
-                'kodus_test_key',
+                'codus_test_key',
                 undefined,
             ),
         ).rejects.toThrow(ForbiddenException);
@@ -275,7 +275,7 @@ describe('CliConfigController', () => {
                 {
                     repositoryIds: ['repo-999'],
                 },
-                'kodus_test_key',
+                'codus_test_key',
                 undefined,
             ),
         ).rejects.toThrow(BadRequestException);
@@ -288,7 +288,7 @@ describe('CliConfigController', () => {
             {
                 repositoryIds: ['repo-1'],
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 
@@ -332,14 +332,14 @@ describe('CliConfigController', () => {
         codeManagementService.getTypeIntegration.mockResolvedValue(null);
 
         await expect(
-            controller.getAvailableRepositories('kodus_test_key', undefined),
+            controller.getAvailableRepositories('codus_test_key', undefined),
         ).rejects.toThrow(BadRequestException);
     });
 
     it('returns repository settings for a selected repository', async () => {
         const result = await controller.getRepositorySettings(
             'repo-1',
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 
@@ -377,7 +377,7 @@ describe('CliConfigController', () => {
                 baseBranchPatterns: ['main', 'release/*'],
                 ignoredTitlePatterns: ['draft*'],
             },
-            'kodus_test_key',
+            'codus_test_key',
             undefined,
         );
 

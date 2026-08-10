@@ -135,7 +135,7 @@ export class CliReviewRequestDto {
     @IsOptional()
     @IsString()
     @MaxLength(500, { message: 'Git remote URL too long' })
-    @ApiPropertyOptional({ example: 'https://github.com/kodus/kodus-ai.git' })
+    @ApiPropertyOptional({ example: 'https://github.com/codus/codus-ai.git' })
     gitRemote?: string; // git remote get-url origin
 
     @IsOptional()
@@ -217,7 +217,7 @@ export class CliBusinessValidationRequestDto {
     @IsString()
     @MaxLength(1000, { message: 'PR URL too long (max 1000 characters)' })
     @ApiPropertyOptional({
-        example: 'https://github.com/kodus-ai/kodus-ai/pull/123',
+        example: 'https://github.com/codus-ai/codus-ai/pull/123',
     })
     prUrl?: string;
 
@@ -239,14 +239,14 @@ export class CliBusinessValidationRequestDto {
     @MaxLength(255, {
         message: 'Repository name too long (max 255 characters)',
     })
-    @ApiPropertyOptional({ example: 'kodus-ai/kodus-ai' })
+    @ApiPropertyOptional({ example: 'codus-ai/codus-ai' })
     repository?: string;
 
     @IsOptional()
     @IsString()
     @MaxLength(1000, { message: 'Task URL too long (max 1000 characters)' })
     @ApiPropertyOptional({
-        example: 'https://linear.app/kodus/issue/KD-1234/validar-regra',
+        example: 'https://linear.app/codus/issue/KD-1234/validar-regra',
     })
     taskUrl?: string;
 

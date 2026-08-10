@@ -1,4 +1,4 @@
-# Plano - estabilizar o build e evoluir o monorepo do kodus-ai
+# Plano - estabilizar o build e evoluir o monorepo do codus-ai
 
 > Revisado em 15/07/2026 contra o estado atual do repositorio.
 >
@@ -40,7 +40,7 @@ GitHub Actions e, apos aprovacao do spike, Nx.
   `project.json`; packageizar apenas onde houver valor concreto.
 - **A Fase 0b de Docker/OOM vem antes do Nx.** O incidente de build nao deve
   esperar semanas de trabalho arquitetural.
-- **Nao criar um unico `@kodus/contracts` global.** Preferir contratos publicos
+- **Nao criar um unico `@codus/contracts` global.** Preferir contratos publicos
   por contexto para evitar substituir `core` por outro god-module.
 - **Community e Enterprise precisam de composition roots e artefatos distintos.**
   Gating runtime nao remove codigo EE de um bundle Community.
@@ -64,8 +64,8 @@ GitHub Actions e, apos aprovacao do spike, Nx.
 - `apps/` possui 9 aplicacoes/pastas principais.
 - `libs/` possui 28 dominios de primeiro nivel e nenhum `package.json`.
 - `pnpm-workspace.yaml` contem configuracoes do pnpm, mas nao contem `packages:`.
-- `pnpm list -r --depth -1` retorna apenas `kodus-orchestrator`.
-- `apps/web`, `apps/cli`, `apps/mcp-manager` e `packages/kodus-common` mantem
+- `pnpm list -r --depth -1` retorna apenas `codus-orchestrator`.
+- `apps/web`, `apps/cli`, `apps/mcp-manager` e `packages/codus-common` mantem
   lockfiles proprios. Nao absorver esses projetos acidentalmente no workspace
   raiz durante o spike Nx.
 - `nodeLinker: hoisted` esta habilitado para manter dependencias fantasmas do
@@ -115,7 +115,7 @@ Extrair contratos ajuda, mas nao basta. A maior alavanca inicial e retirar de
 - O workflow self-hosted executa o grupo default completo para `amd64` e
   `arm64`, com QEMU para a arquitetura nao nativa.
 - O Dockerfile executa installs em `deps` e `prod-deps`, compila
-  `packages/kodus-common` nas duas trilhas e executa seis builds Nest no estagio
+  `packages/codus-common` nas duas trilhas e executa seis builds Nest no estagio
   `build`.
 - O projeto declara pnpm `11.9.0`, enquanto Docker de producao/Railway instala
   `10.34.1` e o Docker de desenvolvimento instala `11.7.0`.
@@ -320,7 +320,7 @@ de automatizar a matriz.
 
 ### Otimizacoes a testar, uma por vez
 
-1. Copiar o `dist` ja gerado de `kodus-common` para `prod-deps`, evitando
+1. Copiar o `dist` ja gerado de `codus-common` para `prod-deps`, evitando
    recompilar o pacote pela segunda vez.
 2. Comparar `pnpm fetch` + install offline com o fluxo atual.
 3. Limitar paralelismo do BuildKit antes de reduzir paralelismo dos seis apps.
@@ -548,7 +548,7 @@ libs/ee/license
    produto; nao assumir "allow everything" sem tabela de decisao.
 5. Migrar consumidores para token, um modulo por vez.
 6. Migrar audit log e SSO.
-7. Criar extension points para code-review pipeline e Kody Rules.
+7. Criar extension points para code-review pipeline e Cody Rules.
 8. Relocar `cockpit` somente apos decisao de tier.
 9. Ativar constraint `edition:community` -> nao depende de
    `edition:enterprise` como erro.

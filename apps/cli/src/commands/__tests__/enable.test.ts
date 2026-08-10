@@ -24,7 +24,7 @@ import {
 let tmpDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-enable-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-enable-test-'));
     await fs.mkdir(path.join(tmpDir, '.git', 'hooks'), { recursive: true });
     vi.mocked(gitService.getGitRoot).mockResolvedValue(tmpDir);
     vi.spyOn(console, 'log').mockImplementation(() => {});

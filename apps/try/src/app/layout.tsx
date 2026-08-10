@@ -17,8 +17,8 @@ const overpassMono = Overpass_Mono({
 
 export const metadata: Metadata = {
     title: {
-        default: "Try Kodus — code review on any GitHub PR",
-        template: "%s · Kodus",
+        default: "Try Codus — code review on any GitHub PR",
+        template: "%s · Codus",
     },
     description:
         "Paste any public GitHub PR URL and get an instant AI code review. No signup required.",
@@ -26,15 +26,15 @@ export const metadata: Metadata = {
     robots: { index: true, follow: true },
     openGraph: {
         type: "website",
-        siteName: "Kodus",
-        title: "Try Kodus — code review on any GitHub PR",
+        siteName: "Codus",
+        title: "Try Codus — code review on any GitHub PR",
         description:
             "Paste any public GitHub PR URL and get an instant AI code review. No signup required.",
         url: "https://try.kodus.io",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Try Kodus — code review on any GitHub PR",
+        title: "Try Codus — code review on any GitHub PR",
         description:
             "Paste any public GitHub PR URL and get an instant AI code review. No signup required.",
     },

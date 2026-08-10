@@ -1,6 +1,6 @@
 import { prompt_codereview_cross_file_analysis } from '@/shared/utils/langchainCommon/prompts/codeReviewCrossFileAnalysis';
 import { prompt_codeReviewSafeguard_system } from '@/shared/utils/langchainCommon/prompts/codeReviewSafeguard';
-import { prompt_kodyrules_prlevel_analyzer } from '@/shared/utils/langchainCommon/prompts/kodyRulesPrLevel';
+import { prompt_codyrules_prlevel_analyzer } from '@/shared/utils/langchainCommon/prompts/codyRulesPrLevel';
 
 describe('memories injection in prompt generators and safeguards', () => {
     const memories = [
@@ -93,8 +93,8 @@ describe('memories injection in prompt generators and safeguards', () => {
         );
     });
 
-    it('injects memories in PR-level kody rules analyzer prompt', () => {
-        const result = prompt_kodyrules_prlevel_analyzer({
+    it('injects memories in PR-level cody rules analyzer prompt', () => {
+        const result = prompt_codyrules_prlevel_analyzer({
             pr_title: 'Test PR',
             pr_description: 'desc',
             stats: {
@@ -140,7 +140,7 @@ describe('memories injection in prompt generators and safeguards', () => {
             ],
         ]);
 
-        const result = prompt_kodyrules_prlevel_analyzer({
+        const result = prompt_codyrules_prlevel_analyzer({
             pr_title: 'Test PR',
             pr_description: 'desc',
             stats: {

@@ -5,12 +5,12 @@ import { UseCases } from './application/use-cases';
 import { IssuesRepository } from './infrastructure/adapters/repositories/issues.repository';
 import { ISSUES_REPOSITORY_TOKEN } from './domain/contracts/issues.repository';
 import { ISSUES_SERVICE_TOKEN } from './domain/contracts/issues.service.contract';
-import { KodyIssuesManagementService } from './infrastructure/adapters/service/kodyIssuesManagement.service';
+import { CodyIssuesManagementService } from './infrastructure/adapters/service/codyIssuesManagement.service';
 import {
-    KODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
-    KodyIssuesAnalysisService,
-} from '@libs/ee/codeBase/kodyIssuesAnalysis.service';
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+    CODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
+    CodyIssuesAnalysisService,
+} from '@libs/ee/codeBase/codyIssuesAnalysis.service';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import {
     IssuesModel,
     IssuesSchema,
@@ -60,19 +60,19 @@ import { PermissionsModule } from '@libs/identity/modules/permissions.module';
             useClass: IssuesService,
         },
         {
-            provide: KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
-            useClass: KodyIssuesManagementService,
+            provide: CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
+            useClass: CodyIssuesManagementService,
         },
         {
-            provide: KODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
-            useClass: KodyIssuesAnalysisService,
+            provide: CODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
+            useClass: CodyIssuesAnalysisService,
         },
     ],
     exports: [
         ISSUES_REPOSITORY_TOKEN,
         ISSUES_SERVICE_TOKEN,
-        KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
-        KODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
+        CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN,
+        CODY_ISSUES_ANALYSIS_SERVICE_TOKEN,
         ...UseCases,
     ],
 })

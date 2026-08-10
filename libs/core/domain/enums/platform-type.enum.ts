@@ -9,7 +9,7 @@ export enum PlatformType {
     DISCORD = 'DISCORD',
     AZURE_BOARDS = 'AZURE_BOARDS',
     AZURE_REPOS = 'AZURE_REPOS',
-    KODUS_WEB = 'KODUS_WEB',
+    CODUS_WEB = 'CODUS_WEB',
     BITBUCKET = 'BITBUCKET',
     FORGEJO = 'FORGEJO',
 }

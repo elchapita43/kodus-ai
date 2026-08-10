@@ -1,10 +1,10 @@
 ---
 title: Crear un webhook
-description: "Crea manualmente el webhook de Bitbucket cuando el registro automático no ocurrió, y marca solo los triggers de pull request que Kodus consume."
+description: "Crea manualmente el webhook de Bitbucket cuando el registro automático no ocurrió, y marca solo los triggers de pull request que Codus consume."
 icon: webhook
 ---
 
-Kodus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue estos pasos para configurarlo manualmente:
+Codus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue estos pasos para configurarlo manualmente:
 
 <Note>
   Las URLs de webhook deben llegar al servicio de Webhooks (puerto 3332). Usar el dominio de la API solo funciona si tu proxy inverso enruta las rutas `/.../webhook` al servicio de webhooks.
@@ -16,7 +16,7 @@ Kodus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue e
 4. Haz clic en "Add webhook"
 5. Configura tu webhook:
 
-   - **Title**: Kodus Code Review
+   - **Title**: Codus Code Review
    - **URL**: Ingresa la URL donde deseas recibir notificaciones, la URL que colocaste en `GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK` en el archivo `.env`
    - **Status**: Active
    - **SSL/TLS**: Marca Enable SSL verification
@@ -33,7 +33,7 @@ Kodus generalmente crea el webhook automáticamente. Si eso no ocurrió, sigue e
 ¡Y listo! Has configurado correctamente un webhook para realizar revisiones de código en tu repositorio de Bitbucket.
 
 <Note>
-  Kodus solo consume eventos de Pull Request — `created`, `updated`, `merged`, `declined` y
+  Codus solo consume eventos de Pull Request — `created`, `updated`, `merged`, `declined` y
   `comment created`. Los triggers de Repository, Issue y build status se descartan al llegar;
   dejarlos sin marcar reduce el tráfico del webhook.
 

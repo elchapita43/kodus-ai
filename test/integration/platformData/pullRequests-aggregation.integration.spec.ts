@@ -69,7 +69,7 @@ const shouldSkip = !MONGODB_URI;
             // Build connection string
             const mongoUri = MONGODB_URI?.includes('://')
                 ? MONGODB_URI
-                : `mongodb://${MONGODB_URI}:27017/kodus_test`;
+                : `mongodb://${MONGODB_URI}:27017/codus_test`;
 
             module = await Test.createTestingModule({
                 imports: [

@@ -8,7 +8,7 @@ import {
     IsNumber,
 } from 'class-validator';
 
-import { IRepositoryToIssues } from '@libs/issues/domain/interfaces/kodyIssuesManagement.interface';
+import { IRepositoryToIssues } from '@libs/issues/domain/interfaces/codyIssuesManagement.interface';
 import { LabelType } from '@libs/common/utils/codeManagement/labels';
 import { SeverityLevel } from '@libs/common/utils/enums/severityLevel.enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';

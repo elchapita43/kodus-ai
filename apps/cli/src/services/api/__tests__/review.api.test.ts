@@ -29,7 +29,7 @@ describe('RealReviewApi', () => {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'X-Kodus-Async': '1',
+                    'X-Codus-Async': '1',
                 },
                 body: JSON.stringify({
                     diff: 'diff --git a/file b/file',
@@ -48,7 +48,7 @@ describe('RealReviewApi', () => {
         });
 
         const api = new RealReviewApi(requestWithRetry);
-        await api.getPullRequestSuggestions('kodus_team_key', {
+        await api.getPullRequestSuggestions('codus_team_key', {
             prUrl: 'https://github.com/acme/repo/pull/1',
             severity: 'high',
         });
@@ -57,7 +57,7 @@ describe('RealReviewApi', () => {
             '/pull-requests/suggestions?prUrl=https%3A%2F%2Fgithub.com%2Facme%2Frepo%2Fpull%2F1&severity=high',
             {
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
             },
         );
@@ -69,8 +69,8 @@ describe('RealReviewApi', () => {
         });
 
         const api = new RealReviewApi(requestWithRetry);
-        await api.triggerBusinessValidation('kodus_team_key', {
-            repository: 'kodustech/cli',
+        await api.triggerBusinessValidation('codus_team_key', {
+            repository: 'elchapita43/cli',
             taskId: 'TASK-1',
         });
 
@@ -79,10 +79,10 @@ describe('RealReviewApi', () => {
             {
                 method: 'POST',
                 headers: {
-                    'X-Team-Key': 'kodus_team_key',
+                    'X-Team-Key': 'codus_team_key',
                 },
                 body: JSON.stringify({
-                    repository: 'kodustech/cli',
+                    repository: 'elchapita43/cli',
                     taskId: 'TASK-1',
                 }),
             },

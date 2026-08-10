@@ -63,7 +63,7 @@ if (!src?.prs?.length) {
 /**
  * GitHub repo string -> Azure repo path.
  * GitHub form: "<owner>/<repo>"      e.g. "Wellington01/sentry-greptile"
- * Azure form:  "<org>/<project>/<repo>" e.g. "kodus/ai-code-review-benchmark/sentry-greptile"
+ * Azure form:  "<org>/<project>/<repo>" e.g. "codus/ai-code-review-benchmark/sentry-greptile"
  *
  * The `<repo>` segment is preserved (import script keeps the same name).
  */

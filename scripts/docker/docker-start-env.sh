@@ -36,10 +36,10 @@ case "$ENVIRONMENT" in
     fi
     # Opt-in extras: webhooks, mcp, analytics, or `extras` (all three).
     # Default `pnpm run docker:start` brings up api + worker + web only; pass
-    # KODUS_DEV_EXTRAS=mcp (or comma-separated list, or `extras`) to add.
+    # CODUS_DEV_EXTRAS=mcp (or comma-separated list, or `extras`) to add.
     # Empty/unset = none added.
-    if [ -n "${KODUS_DEV_EXTRAS:-}" ]; then
-      IFS=',' read -ra _EXTRA_PROFILES <<< "$KODUS_DEV_EXTRAS"
+    if [ -n "${CODUS_DEV_EXTRAS:-}" ]; then
+      IFS=',' read -ra _EXTRA_PROFILES <<< "$CODUS_DEV_EXTRAS"
       for _p in "${_EXTRA_PROFILES[@]}"; do
         _p_trimmed=$(echo "$_p" | tr -d '[:space:]')
         if [ -n "$_p_trimmed" ]; then

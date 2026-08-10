@@ -4,7 +4,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { Logger, Module } from '@nestjs/common';
 
-import { LLMModule } from '@kodus/kodus-common/llm';
+import { LLMModule } from '@codus/codus-common/llm';
 
 import {
     AnalyticsWarehouseModule,

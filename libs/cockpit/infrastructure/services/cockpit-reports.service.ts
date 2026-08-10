@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import {
-    IKodyRulesService,
-    KODY_RULES_SERVICE_TOKEN,
-} from '@libs/kodyRules/domain/contracts/kodyRules.service.contract';
-import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+    ICodyRulesService,
+    CODY_RULES_SERVICE_TOKEN,
+} from '@libs/codyRules/domain/contracts/codyRules.service.contract';
+import { CodyRulesStatus } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 import {
     computePreviousPeriod,
@@ -12,7 +12,7 @@ import {
     lastNCompleteWeeks,
     lastNMonths,
 } from '../../application/date-range.util';
-import { computeRuleState } from '../../domain/helpers/kody-rules-health.helper';
+import { computeRuleState } from '../../domain/helpers/cody-rules-health.helper';
 import {
     CategoryQualityRow,
     FeedbackGroup,
@@ -30,7 +30,7 @@ import {
 import {
     CockpitRangeQuery,
     ImplementationRateByCategoryRow,
-    KodyRuleUsageRow,
+    CodyRuleUsageRow,
     NegativeFeedbackByCategoryRow,
     RepositoryHealthRow,
 } from '../../domain/types';
@@ -60,7 +60,7 @@ const MAX_ORG_RULES_ATTENTION = 8;
  */
 const REPO_BUILD_CONCURRENCY = 4;
 
-/** Title + severity for an active Kody Rule, keyed by rule id. */
+/** Title + severity for an active Cody Rule, keyed by rule id. */
 type RuleMeta = { title: string; severity: string | null };
 // lastNCompleteWeeks / lastNMonths live in date-range.util so they can be
 // unit-tested without importing this (dependency-heavy) service.
@@ -93,8 +93,8 @@ export class CockpitReportsService implements ICockpitReportsService {
         private readonly codeHealth: ICockpitCodeHealthService,
         @Inject(COCKPIT_DEVELOPER_PRODUCTIVITY_SERVICE_TOKEN)
         private readonly productivity: ICockpitDeveloperProductivityService,
-        @Inject(KODY_RULES_SERVICE_TOKEN)
-        private readonly kodyRules: IKodyRulesService,
+        @Inject(CODY_RULES_SERVICE_TOKEN)
+        private readonly codyRules: ICodyRulesService,
     ) {}
 
     /**
@@ -154,7 +154,7 @@ export class CockpitReportsService implements ICockpitReportsService {
             }),
             this.review.getImplementationRateByCategory(q),
             this.review.getNegativeFeedbackByCategory(q),
-            this.review.getKodyRulesUsage(q),
+            this.review.getCodyRulesUsage(q),
         ]);
 
         const critical = severity.find((r) => r.severity === 'critical');
@@ -276,7 +276,7 @@ export class CockpitReportsService implements ICockpitReportsService {
             // warehouse and times out the connection on large prod datasets.
             this.productivity.getLeadTimeHighlight(q),
             this.review.getRepositoriesHealth(q),
-            this.review.getKodyRulesUsage(q),
+            this.review.getCodyRulesUsage(q),
             this.getRuleTitles(organizationId),
         ]);
 
@@ -328,17 +328,17 @@ export class CockpitReportsService implements ICockpitReportsService {
         };
     }
 
-    /** Active Kody Rules for the org → `ruleId → {title, severity}`. */
+    /** Active Cody Rules for the org → `ruleId → {title, severity}`. */
     private async getRuleTitles(
         organizationId: string,
     ): Promise<Map<string, RuleMeta>> {
-        const doc = await this.kodyRules.findByOrganizationId(organizationId);
+        const doc = await this.codyRules.findByOrganizationId(organizationId);
         const map = new Map<string, RuleMeta>();
         for (const rule of doc?.rules ?? []) {
             if (
                 rule.uuid &&
                 rule.title &&
-                rule.status === KodyRulesStatus.ACTIVE
+                rule.status === CodyRulesStatus.ACTIVE
             ) {
                 map.set(rule.uuid, {
                     title: rule.title,
@@ -436,7 +436,7 @@ function toWeeklyPoints(
 
 function toFeedback(
     groups: {
-        group: 'kody_rules' | 'general';
+        group: 'cody_rules' | 'general';
         sent: number;
         implemented: number;
         rate: number;
@@ -444,7 +444,7 @@ function toFeedback(
         thumbsDown: number;
     }[],
 ): RuleGroupFeedback {
-    const pick = (name: 'kody_rules' | 'general'): FeedbackGroup => {
+    const pick = (name: 'cody_rules' | 'general'): FeedbackGroup => {
         const g = groups.find((r) => r.group === name);
         const thumbsUp = g?.thumbsUp ?? 0;
         const thumbsDown = g?.thumbsDown ?? 0;
@@ -458,18 +458,18 @@ function toFeedback(
         };
     };
 
-    const kodyRules = pick('kody_rules');
+    const codyRules = pick('cody_rules');
     const general = pick('general');
     const totalVotes =
-        kodyRules.thumbsUp +
-        kodyRules.thumbsDown +
+        codyRules.thumbsUp +
+        codyRules.thumbsDown +
         general.thumbsUp +
         general.thumbsDown;
 
     return {
         totalVotes,
         hasEnoughVotes: totalVotes >= MIN_FEEDBACK_VOTES,
-        kodyRules,
+        codyRules,
         general,
     };
 }
@@ -484,7 +484,7 @@ function mergeCategories(
         .filter(
             (c) =>
                 c.category &&
-                c.category.toLowerCase() !== 'kody_rules' &&
+                c.category.toLowerCase() !== 'cody_rules' &&
                 c.sent > 0,
         )
         .map((c) => {
@@ -507,7 +507,7 @@ function mergeCategories(
  * on. Sorted worst-health first, then by volume.
  */
 function buildRuleHealth(
-    usageRows: KodyRuleUsageRow[],
+    usageRows: CodyRuleUsageRow[],
     titles: Map<string, RuleMeta>,
 ): RuleHealthRow[] {
     const rows: RuleHealthRow[] = [];

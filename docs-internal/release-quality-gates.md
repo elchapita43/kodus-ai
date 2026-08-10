@@ -41,7 +41,7 @@ selfhosted-build-push.yml  (workflow_dispatch)
 | Aspect | Before | After |
 |---|---|---|
 | What gets pushed first | `:X.Y.Z` + `:latest` | `:X.Y.Z-rc.N` only |
-| When E2E runs | After tag push, async via `repository_dispatch` to kodus-installer | Inline in the release workflow, BEFORE promote |
+| When E2E runs | After tag push, async via `repository_dispatch` to codus-installer | Inline in the release workflow, BEFORE promote |
 | What does E2E cover | GitHub only, one droplet | 4 providers × license matrix, parallel droplets |
 | Customer impact when E2E fails | Customer already sees broken tag in GHCR | Customer never sees the RC tag |
 | Changelog timing | Right after build | Only after promote (validated) |
@@ -90,7 +90,7 @@ qa-build-push-and-pr-green.yml          prod-build-push-and-pr-green.yml
         │                                       │
         build :<sha> on ECR                     build :<tag> on ECR
         │                                       │
-        open GitOps PR on kodus-infra           open GitOps PR on kodus-infra
+        open GitOps PR on codus-infra           open GitOps PR on codus-infra
         │                                       │
         PR merge → ECS rolls out                PR merge → ECS rolls out
         │                                       │
@@ -112,7 +112,7 @@ export GH_TEST_TOKEN=... GH_TEST_REPO=... GH_TEST_PR_NUMBER=...
 ./provisioning/cloud/target.sh
 ```
 
-In CI, invoke `e2e-cloud.yml` (workflow_dispatch) after a cloud deploy. To gate cloud deploys behind it, wire `kodus-infra` to dispatch this workflow on PR-merge events.
+In CI, invoke `e2e-cloud.yml` (workflow_dispatch) after a cloud deploy. To gate cloud deploys behind it, wire `codus-infra` to dispatch this workflow on PR-merge events.
 
 ## Local development
 
@@ -122,12 +122,12 @@ In CI, invoke `e2e-cloud.yml` (workflow_dispatch) after a cloud deploy. To gate 
 cd tests/e2e
 npm install
 
-# Self-hosted (already running locally, e.g. via kodus-installer's compose)
+# Self-hosted (already running locally, e.g. via codus-installer's compose)
 export TARGET_BASE_URL=http://localhost:3001
 export TARGET_WEB_URL=http://localhost:3000
 export TARGET_TUNNEL_URL=https://your-tunnel.trycloudflare.com
-export SH_TENANT_EMAIL=test@kodus.test SH_TENANT_PASSWORD='your-pass'
-export GH_TEST_TOKEN=ghp_xxx GH_TEST_REPO=kodustech/kodus-qa-fixtures GH_TEST_PR_NUMBER=1
+export SH_TENANT_EMAIL=test@codus.test SH_TENANT_PASSWORD='your-pass'
+export GH_TEST_TOKEN=ghp_xxx GH_TEST_REPO=elchapita43/codus-qa-fixtures GH_TEST_PR_NUMBER=1
 npm run scenario -- --scenario code-review-basic --target self-hosted --provider github --license license-paid
 ```
 
@@ -136,7 +136,7 @@ npm run scenario -- --scenario code-review-basic --target self-hosted --provider
 ```bash
 cd tests/e2e
 export DIGITALOCEAN_TOKEN=dop_v1_xxx
-export KODUS_INSTALLER_PATH=$HOME/dev/kodus/kodus-installer
+export CODUS_INSTALLER_PATH=$HOME/dev/codus/codus-installer
 export IMAGE_TAG=selfhosted-1.42.0-rc.3
 export MATRIX_FILE=matrix/p0.yml
 export GH_TEST_TOKEN=... GH_TEST_REPO=... GH_TEST_PR_NUMBER=...
@@ -179,6 +179,6 @@ Common failure patterns:
 
 ## Migration notes for the team
 
-- `kodus-installer/.github/workflows/e2e-self-hosted.yml` continues to exist and can still be invoked manually as a single-cell smoke check. It is **no longer** automatically dispatched by the release workflow. We will delete it after a few clean releases on the new flow.
-- `tests/e2e/playwright/signup.mjs` and `ui-smoke.mjs` are copies of the ones in kodus-installer. Future updates should land in this repo; the installer copies will be deleted in a follow-up.
+- `codus-installer/.github/workflows/e2e-self-hosted.yml` continues to exist and can still be invoked manually as a single-cell smoke check. It is **no longer** automatically dispatched by the release workflow. We will delete it after a few clean releases on the new flow.
+- `tests/e2e/playwright/signup.mjs` and `ui-smoke.mjs` are copies of the ones in codus-installer. Future updates should land in this repo; the installer copies will be deleted in a follow-up.
 - The legacy `selfhosted-build-push.yml` is gone — replaced by the new RC-gated version with the same workflow file name. Any script or doc that referenced the old jobs may need updating.

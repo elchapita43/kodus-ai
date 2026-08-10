@@ -31,13 +31,13 @@ function IdeRulesSyncedEmail({
             preview={`Synced ${rulesCount} ${rulesCount === 1 ? 'rule' : 'rules'} from ${repoName}`}>
             <Heading style={baseHeading}>IDE rules synced</Heading>
             <Text style={baseText}>
-                Kody synced <strong>{rulesCount}</strong>{' '}
+                Cody synced <strong>{rulesCount}</strong>{' '}
                 {rulesCount === 1 ? 'rule' : 'rules'} from{' '}
-                <strong>{repoName}</strong> into your Kody Rules.
+                <strong>{repoName}</strong> into your Cody Rules.
             </Text>
             <Section style={{ margin: '24px 0' }}>
                 <Button href={rulesLink} style={baseButton}>
-                    View Kody Rules
+                    View Cody Rules
                 </Button>
             </Section>
             <Text style={mutedText}>
@@ -50,7 +50,7 @@ function IdeRulesSyncedEmail({
 IdeRulesSyncedEmail.PreviewProps = {
     repoName: 'acme/api',
     rulesCount: 12,
-    rulesLink: 'https://app.kodus.io/settings/code-review/global/kody-rules',
+    rulesLink: 'https://app.kodus.io/settings/code-review/global/cody-rules',
 } satisfies IdeRulesSyncedEmailProps;
 
 export default IdeRulesSyncedEmail;

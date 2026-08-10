@@ -14,7 +14,7 @@
   - fetches repositories with `GET /code-management/repositories/org`
   - persists selection with `POST /code-management/repositories`
   - recalculates code review repositories with `POST /parameters/update-code-review-parameter-repositories`
-- CLI auth already exists via `x-team-key` or `Authorization: Bearer kodus_*`.
+- CLI auth already exists via `x-team-key` or `Authorization: Bearer codus_*`.
 - The current code-management endpoints are JWT + `PolicyGuard` only, so the CLI cannot reuse them directly.
 - `CreateRepositoriesUseCase` and `UpdateCodeReviewParameterRepositoriesUseCase` still assume `request.user` for some data, which is fine for web but needs a CLI-safe path.
 
@@ -47,13 +47,13 @@ Why this is the best first slice:
 ## Proposed API
 
 - `GET /cli/config/repositories/available?teamId=<teamId>`
-  - Auth: `x-team-key` or `Bearer kodus_*`
+  - Auth: `x-team-key` or `Bearer codus_*`
   - Returns repositories available from the connected provider, including current `selected` state
 - `GET /cli/config/repositories/selected?teamId=<teamId>`
-  - Auth: `x-team-key` or `Bearer kodus_*`
+  - Auth: `x-team-key` or `Bearer codus_*`
   - Returns only currently selected repositories
 - `POST /cli/config/repositories`
-  - Auth: `x-team-key` or `Bearer kodus_*`
+  - Auth: `x-team-key` or `Bearer codus_*`
   - Body: `{ teamId: string, repositoryIds: string[] }`
   - Behavior:
     - fetch provider repositories
@@ -156,8 +156,8 @@ Expected: PASS.
 
 **Step 1: Add command surface**
 
-- `kodus config repositories list`
-- `kodus config repositories add <repo-id>`
+- `codus config repositories list`
+- `codus config repositories add <repo-id>`
 
 **Step 2: Wire it to the new API**
 

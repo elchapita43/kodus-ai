@@ -1,4 +1,4 @@
-import { BYOKConfig, BYOKProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, BYOKProvider } from '@codus/codus-common/llm';
 import { encrypt } from '@libs/common/utils/crypto';
 import { OrganizationParametersKey } from '@libs/core/domain/enums';
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';

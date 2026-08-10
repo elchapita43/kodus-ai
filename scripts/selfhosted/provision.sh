@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Provision a persistent self-hosted Kodus stack on a fresh cloud VM, for
+# Provision a persistent self-hosted Codus stack on a fresh cloud VM, for
 # manual testing / bug repro / demos. Stays alive until you run destroy.sh.
 #
 # Usage:
@@ -8,16 +8,16 @@
 #
 # Required env (or scripts/selfhosted/.env):
 #   DIGITALOCEAN_TOKEN     DO API token        (default provider)
-#   KODUS_INSTALLER_PATH   path to kodus-installer checkout
-#                           default: ../kodus-installer
+#   CODUS_INSTALLER_PATH   path to codus-installer checkout
+#                           default: ../codus-installer
 #
 # Optional env:
 #   TEST_VM_PROVIDER       digitalocean (default) | hetzner
 #   HCLOUD_TOKEN           Hetzner token (if TEST_VM_PROVIDER=hetzner)
 #   SH_LICENSE_KEY         License key to inject (paid features); if absent
-#                           the stack runs without API_KODUS_LICENSE_KEY set,
+#                           the stack runs without API_CODUS_LICENSE_KEY set,
 #                           which is the installer's default trial behavior.
-#   IMAGE_TAG              kodus-ai images to use; default: latest
+#   IMAGE_TAG              codus-ai images to use; default: latest
 #   GH_DEV_TOKEN           If set, configure GitHub integration after signup
 #                           so the dashboard is "ready to use".
 #   DO_REGION              default: nyc3
@@ -27,7 +27,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# _common.sh loads ~/.kodus-dev/config + scripts/selfhosted/.env in the
+# _common.sh loads ~/.codus-dev/config + scripts/selfhosted/.env in the
 # right priority order. Don't duplicate that here.
 # shellcheck disable=SC1091
 . "$SCRIPT_DIR/_common.sh"
@@ -65,7 +65,7 @@ fi
 # First-time UX: if the global config doesn't exist yet, run setup
 # interactively before doing anything else. This way the dev only thinks
 # about secrets ONCE — every subsequent command (destroy, deploy, ssh,
-# logs, status) reads from ~/.kodus-dev/config without needing env vars.
+# logs, status) reads from ~/.codus-dev/config without needing env vars.
 #
 # Any env vars already exported in the caller's shell are used as defaults
 # in the prompts — they just press Enter to save them. No retyping.
@@ -87,7 +87,7 @@ fi
 
 TEST_VM_PROVIDER="${TEST_VM_PROVIDER:-digitalocean}"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
-KODUS_INSTALLER_PATH="${KODUS_INSTALLER_PATH:-$REPO_ROOT/../kodus-installer}"
+CODUS_INSTALLER_PATH="${CODUS_INSTALLER_PATH:-$REPO_ROOT/../codus-installer}"
 
 # State for in-script use (and for cleanup on failure)
 SERVER_ID=""
@@ -182,7 +182,7 @@ provision_server() {
     # (2026-05-23) a single em-dash in a comment caused cloud-init to
     # silently reject the entire user_data, dropping write_files and
     # runcmd; the droplet booted bare and provision.sh exited with the
-    # uninformative "kodus-ready missing". Fail fast here with a
+    # uninformative "codus-ready missing". Fail fast here with a
     # specific error instead of paying $0.02 for a useless droplet
     # plus 2 minutes of cloud-init wait.
     if LC_ALL=C grep -q '[^[:print:][:space:]]' <<<"$user_data"; then
@@ -335,30 +335,30 @@ case "$TEST_VM_PROVIDER" in
     *) err "Unknown TEST_VM_PROVIDER=$TEST_VM_PROVIDER"; exit 1 ;;
 esac
 
-# The benchmark farm (BENCH_BASE_ONLY=1) builds the stack from kodus-ai source
-# on the droplet and never touches kodus-installer, so don't require it there.
-if [ "${BENCH_BASE_ONLY:-0}" != "1" ] && [ ! -d "$KODUS_INSTALLER_PATH" ]; then
-    err "KODUS_INSTALLER_PATH=$KODUS_INSTALLER_PATH does not exist."
-    err "Either clone https://github.com/kodustech/kodus-installer next to this repo,"
-    err "or set KODUS_INSTALLER_PATH to your local checkout."
+# The benchmark farm (BENCH_BASE_ONLY=1) builds the stack from codus-ai source
+# on the droplet and never touches codus-installer, so don't require it there.
+if [ "${BENCH_BASE_ONLY:-0}" != "1" ] && [ ! -d "$CODUS_INSTALLER_PATH" ]; then
+    err "CODUS_INSTALLER_PATH=$CODUS_INSTALLER_PATH does not exist."
+    err "Either clone https://github.com/elchapita43/codus-installer next to this repo,"
+    err "or set CODUS_INSTALLER_PATH to your local checkout."
     exit 1
 fi
 
-DEV_USER_EMAIL="dev-${NAME}-$(date +%s)@kodus.local"
+DEV_USER_EMAIL="dev-${NAME}-$(date +%s)@codus.local"
 DEV_USER_PASSWORD="$(openssl rand -base64 18 | tr -d '=+/' | head -c 24)Aa1!"
 START_EPOCH=$(date +%s)
 
 # ---------- ssh key ----------
 log "Generating SSH key at $LOCAL_SSH_KEY..."
 rm -f "$LOCAL_SSH_KEY" "${LOCAL_SSH_KEY}.pub"
-ssh-keygen -t ed25519 -N "" -C "kodus-selfhosted-$NAME" -f "$LOCAL_SSH_KEY" >/dev/null
+ssh-keygen -t ed25519 -N "" -C "codus-selfhosted-$NAME" -f "$LOCAL_SSH_KEY" >/dev/null
 PUBKEY="$(cat "${LOCAL_SSH_KEY}.pub")"
 
 log "Uploading SSH key to $TEST_VM_PROVIDER..."
-provision_ssh_key "kodus-selfhosted-$NAME" "$PUBKEY"
+provision_ssh_key "codus-selfhosted-$NAME" "$PUBKEY"
 
 # ---------- provision ----------
-log "Creating server kodus-selfhosted-$NAME..."
+log "Creating server codus-selfhosted-$NAME..."
 USER_DATA=$(cat <<'CLOUDINIT'
 #cloud-config
 package_update: true
@@ -391,11 +391,11 @@ runcmd:
   - systemctl enable --now docker
   - curl -fsSL -o /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
   - chmod +x /usr/local/bin/cloudflared
-  - touch /var/lib/cloud/instance/kodus-ready
+  - touch /var/lib/cloud/instance/codus-ready
 CLOUDINIT
 )
 
-provision_server "kodus-selfhosted-$NAME" "$USER_DATA"
+provision_server "codus-selfhosted-$NAME" "$USER_DATA"
 ok "Server $SERVER_ID at $SERVER_IP"
 
 log "Waiting for SSH..."
@@ -410,38 +410,38 @@ save_state "ssh-up"
 
 log "Waiting for cloud-init (~2 min)..."
 ssh_vm "cloud-init status --wait" >/dev/null
-ssh_vm "test -f /var/lib/cloud/instance/kodus-ready" || { err "cloud-init failed"; exit 1; }
+ssh_vm "test -f /var/lib/cloud/instance/codus-ready" || { err "cloud-init failed"; exit 1; }
 
 # ---------- base-only mode (benchmark farm) ----------
 # BENCH_BASE_ONLY=1 stops here: a bare droplet with Docker + git + rsync +
 # cloudflared (installed by cloud-init above) and nothing else. The benchmark
-# farm (scripts/benchmark/farm/) rsyncs the kodus-ai SOURCE for a given branch
+# farm (scripts/benchmark/farm/) rsyncs the codus-ai SOURCE for a given branch
 # and builds the compiled artifact ON the droplet via docker-compose.bench.yml,
-# instead of pulling kodus-installer's prebuilt GHCR images. Everything below
+# instead of pulling codus-installer's prebuilt GHCR images. Everything below
 # (installer transfer + install.sh + GHCR) is skipped.
 if [ "${BENCH_BASE_ONLY:-0}" = "1" ]; then
     save_state "base-ready"
     ok "Base droplet ready (BENCH_BASE_ONLY) — '${NAME}' at ${SERVER_IP}"
-    dim "  Docker + cloudflared installed; no Kodus stack yet."
+    dim "  Docker + cloudflared installed; no Codus stack yet."
     dim "  Build a branch onto it: scripts/benchmark/farm/bench-sync.sh ${NAME#bench-} <branch>"
     exit 0
 fi
 
 # ---------- transfer installer ----------
-log "Transferring kodus-installer from $KODUS_INSTALLER_PATH..."
-ssh_vm "mkdir -p /opt/kodus-installer"
+log "Transferring codus-installer from $CODUS_INSTALLER_PATH..."
+ssh_vm "mkdir -p /opt/codus-installer"
 rsync -az --delete \
     -e "ssh -i $LOCAL_SSH_KEY -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR" \
     --exclude='.git/' --exclude='node_modules/' --exclude='.env' \
     --exclude='tests/e2e/.env' --exclude='.env.e2e-backup.*' \
-    "$KODUS_INSTALLER_PATH/" "root@$SERVER_IP:/opt/kodus-installer/"
-ssh_vm "chmod +x /opt/kodus-installer/scripts/*.sh"
+    "$CODUS_INSTALLER_PATH/" "root@$SERVER_IP:/opt/codus-installer/"
+ssh_vm "chmod +x /opt/codus-installer/scripts/*.sh"
 ok "Installer transferred"
 
 # ---------- apply cached dev image override (if any) ----------
 # If the operator ran `pnpm run selfhosted:deploy --name <something>` at any
 # point on this Mac, it cached a docker-compose.override.yml at
-# ~/.kodus-dev/last-deploy.override.yml that pins every kodus-* service
+# ~/.codus-dev/last-deploy.override.yml that pins every codus-* service
 # to a specific dev-tag in their personal GHCR namespace. Apply it to
 # this droplet too, so a fresh sso-e2e (or any other future droplet
 # that delegates here) uses the SAME images as the matrix droplet
@@ -449,12 +449,12 @@ ok "Installer transferred"
 # may not exist OR may be stale relative to the local build.
 # Idempotent no-op when the cache file is missing (e.g. a totally
 # fresh dev machine that never ran deploy.sh).
-OVERRIDE_CACHE="${HOME}/.kodus-dev/last-deploy.override.yml"
+OVERRIDE_CACHE="${HOME}/.codus-dev/last-deploy.override.yml"
 if [ -f "$OVERRIDE_CACHE" ]; then
     log "Applying cached dev-image override from $OVERRIDE_CACHE"
     scp -i "$LOCAL_SSH_KEY" \
         -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \
-        "$OVERRIDE_CACHE" "root@$SERVER_IP:/opt/kodus-installer/docker-compose.override.yml"
+        "$OVERRIDE_CACHE" "root@$SERVER_IP:/opt/codus-installer/docker-compose.override.yml"
     # Droplet has to authenticate to GHCR before docker compose can
     # pull from the personal namespace (images are private by
     # default). Forward the dev machine's gh CLI token; revoke right
@@ -488,9 +488,9 @@ if cf_named_tunnel_available; then
     CF_OUT=$(cf_tunnel_provision "$NAME") || { err "named tunnel provision failed"; exit 1; }
     SERVER_TUNNEL_URL=$(echo "$CF_OUT" | grep '^CF_TUNNEL_URL=' | cut -d= -f2-)
     CF_TUNNEL_TOKEN=$(echo "$CF_OUT" | grep '^CF_TUNNEL_TOKEN=' | cut -d= -f2-)
-    ssh_vm "cat >/etc/systemd/system/kodus-tunnel.service <<UNIT
+    ssh_vm "cat >/etc/systemd/system/codus-tunnel.service <<UNIT
 [Unit]
-Description=cloudflared named tunnel for Kodus webhooks
+Description=cloudflared named tunnel for Codus webhooks
 After=network-online.target
 [Service]
 ExecStart=/usr/local/bin/cloudflared tunnel run --token ${CF_TUNNEL_TOKEN}
@@ -500,7 +500,7 @@ RestartSec=5
 WantedBy=multi-user.target
 UNIT
 systemctl daemon-reload
-systemctl enable --now kodus-tunnel.service"
+systemctl enable --now codus-tunnel.service"
     # Wait until the edge routes to the VM (404 from our ingress catchall
     # or 200 both mean the tunnel is up; 502/530 means not yet).
     for i in $(seq 1 30); do
@@ -512,9 +512,9 @@ systemctl enable --now kodus-tunnel.service"
 else
     warn "CLOUDFLARE_API_TOKEN not set — falling back to the EPHEMERAL quick tunnel (dies unannounced; webhooks break on restart)"
     log "Starting cloudflared quick tunnel for :3332..."
-    ssh_vm "cat >/etc/systemd/system/kodus-tunnel.service <<'UNIT'
+    ssh_vm "cat >/etc/systemd/system/codus-tunnel.service <<'UNIT'
 [Unit]
-Description=cloudflared quick tunnel for Kodus webhooks
+Description=cloudflared quick tunnel for Codus webhooks
 After=network-online.target
 [Service]
 ExecStart=/usr/local/bin/cloudflared tunnel --url http://localhost:3332 --no-autoupdate --logfile /var/log/cloudflared.log
@@ -523,7 +523,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 UNIT
 systemctl daemon-reload
-systemctl enable --now kodus-tunnel.service"
+systemctl enable --now codus-tunnel.service"
 
     for i in $(seq 1 30); do
         URL=$(ssh_vm "grep -oE 'https://[a-zA-Z0-9-]+\\.trycloudflare\\.com' /var/log/cloudflared.log 2>/dev/null | head -n1" || true)
@@ -536,11 +536,11 @@ fi
 
 # ---------- .env on VM ----------
 log "Writing .env..."
-ssh_vm "cd /opt/kodus-installer && cp .env.example .env && ./scripts/generate-secrets.sh" >/dev/null
+ssh_vm "cd /opt/codus-installer && cp .env.example .env && ./scripts/generate-secrets.sh" >/dev/null
 
 ssh_vm bash -s <<REMOTE
 set -e
-cd /opt/kodus-installer
+cd /opt/codus-installer
 env_set() {
     local k=\$1 v=\$2
     if grep -qE "^\${k}=" .env; then
@@ -552,16 +552,16 @@ env_set() {
 env_set IMAGE_TAG "$IMAGE_TAG"
 # "localhost" is the sentinel the web reads (helpers.ts): it makes the proxy
 # resolve the API via GLOBAL_API_CONTAINER_NAME (the actual container name,
-# now "kodus_api"). Hardcoding "kodus-api" here broke web->api DNS after the
-# kodus-api -> kodus_api container rename (EAI_AGAIN kodus-api).
+# now "codus_api"). Hardcoding "codus-api" here broke web->api DNS after the
+# codus-api -> codus_api container rename (EAI_AGAIN codus-api).
 env_set WEB_HOSTNAME_API "localhost"
 env_set WEB_PORT_API "3001"
 env_set NEXTAUTH_URL "http://$SERVER_IP:3000"
 # Per-provider webhook URLs. Note the mismatched prefixes match what
-# the Kodus API code actually reads — github/gitlab use API_*,
+# the Codus API code actually reads — github/gitlab use API_*,
 # bitbucket/azure use GLOBAL_*. Setting the wrong prefix silently
 # breaks webhook auto-registration (the env var resolves to undefined
-# and Kodus tries to POST to `?token=...` with no host/path).
+# and Codus tries to POST to `?token=...` with no host/path).
 env_set API_GITHUB_CODE_MANAGEMENT_WEBHOOK "$SERVER_TUNNEL_URL/github/webhook"
 env_set API_GITLAB_CODE_MANAGEMENT_WEBHOOK "$SERVER_TUNNEL_URL/gitlab/webhook"
 env_set GLOBAL_BITBUCKET_CODE_MANAGEMENT_WEBHOOK "$SERVER_TUNNEL_URL/bitbucket/webhook"
@@ -576,7 +576,7 @@ env_set WORKER_ROLE "code-review"
 # obviously won't actually send. Override RESEND_API_KEY before running
 # provision.sh if you want real notifications.
 env_set RESEND_API_KEY "${RESEND_API_KEY:-disabled-for-dev}"
-# LLM provider keys — required for Kodus to actually review PRs.
+# LLM provider keys — required for Codus to actually review PRs.
 # Without these, the dashboard shows a "No LLM provider configured" banner.
 if [ -n "${API_OPEN_AI_API_KEY:-}" ]; then
     env_set API_OPEN_AI_API_KEY "$API_OPEN_AI_API_KEY"
@@ -591,19 +591,19 @@ REMOTE
 
 if [ -n "${SH_LICENSE_KEY:-}" ]; then
     log "Injecting SH_LICENSE_KEY..."
-    # KODUS_LICENSE_KEY is the customer-facing var SelfHostedLicenseService
+    # CODUS_LICENSE_KEY is the customer-facing var SelfHostedLicenseService
     # reads (NOT API_-prefixed). Injecting the wrong name leaves the install
     # effectively unlicensed → enterprise features 403.
-    ssh_vm "cd /opt/kodus-installer && grep -qE '^KODUS_LICENSE_KEY=' .env \
-            && sed -i 's|^KODUS_LICENSE_KEY=.*|KODUS_LICENSE_KEY=$SH_LICENSE_KEY|' .env \
-            || echo 'KODUS_LICENSE_KEY=$SH_LICENSE_KEY' >> .env"
+    ssh_vm "cd /opt/codus-installer && grep -qE '^CODUS_LICENSE_KEY=' .env \
+            && sed -i 's|^CODUS_LICENSE_KEY=.*|CODUS_LICENSE_KEY=$SH_LICENSE_KEY|' .env \
+            || echo 'CODUS_LICENSE_KEY=$SH_LICENSE_KEY' >> .env"
 else
     dim "  No SH_LICENSE_KEY set — stack will boot in installer default mode (no paid features)."
 fi
 
 # ---------- boot ----------
 log "Booting stack (./scripts/install.sh)..."
-ssh_vm "cd /opt/kodus-installer && ./scripts/install.sh"
+ssh_vm "cd /opt/codus-installer && ./scripts/install.sh"
 
 log "Waiting for services to respond..."
 HEALTH_FAILED=()
@@ -619,7 +619,7 @@ for label_port in "web:3000" "api:3001" "webhooks:3332"; do
 done
 if [ ${#HEALTH_FAILED[@]} -gt 0 ]; then
     err "Health check failed for: ${HEALTH_FAILED[*]}"
-    ssh_vm "cd /opt/kodus-installer && docker compose logs api worker webhooks --tail 80 --no-color" || true
+    ssh_vm "cd /opt/codus-installer && docker compose logs api worker webhooks --tail 80 --no-color" || true
     exit 1
 fi
 
@@ -639,7 +639,7 @@ fi
 log "Waiting for review pipeline queue (RabbitMQ) to be ready..."
 QUEUE_READY=0
 for i in $(seq 1 60); do
-    line=$(ssh_vm "docker exec rabbitmq-prod rabbitmqctl list_queues -t 10 -p kodus-ai name consumers --no-table-headers 2>/dev/null | grep -E '^workflow.jobs.code_review.queue[[:space:]]'" 2>/dev/null || true)
+    line=$(ssh_vm "docker exec rabbitmq-prod rabbitmqctl list_queues -t 10 -p codus-ai name consumers --no-table-headers 2>/dev/null | grep -E '^workflow.jobs.code_review.queue[[:space:]]'" 2>/dev/null || true)
     consumers=$(printf '%s' "$line" | awk '{print $NF}')
     if [ -n "$consumers" ] && [ "$consumers" -ge 1 ] 2>/dev/null; then QUEUE_READY=1; break; fi
     sleep 3
@@ -651,34 +651,34 @@ if [ "$QUEUE_READY" = "1" ]; then
     ok "Review pipeline queue ready (consumer attached)"
 else
     err "Review queue 'workflow.jobs.code_review.queue' never got a consumer within ~3min — worker likely failed to start. Reviews would be silently dropped, so refusing to mark the stack ready."
-    ssh_vm "docker logs kodus-worker-prod --tail 80 --no-color" || true
+    ssh_vm "docker logs codus-worker-prod --tail 80 --no-color" || true
     exit 1
 fi
 
 # ---------- signup ----------
 log "Creating dev user $DEV_USER_EMAIL..."
 SIGNUP_PAYLOAD=$(jq -nc \
-    --arg name "Kodus Dev ($NAME)" \
+    --arg name "Codus Dev ($NAME)" \
     --arg email "$DEV_USER_EMAIL" \
     --arg pass "$DEV_USER_PASSWORD" \
     '{name:$name, email:$email, password:$pass}')
 SIGNUP_CODE=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
     -d "$SIGNUP_PAYLOAD" \
-    -o /tmp/kodus-signup-$$.json -w "%{http_code}" \
+    -o /tmp/codus-signup-$$.json -w "%{http_code}" \
     "http://$SERVER_IP:3001/auth/signUp" 2>&1 || echo "ERR")
 if [[ ! "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]]; then
     SIGNUP_CODE=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
         -d "$SIGNUP_PAYLOAD" \
-        -o /tmp/kodus-signup-$$.json -w "%{http_code}" \
+        -o /tmp/codus-signup-$$.json -w "%{http_code}" \
         "http://$SERVER_IP:3001/auth/signup" 2>&1 || echo "ERR")
 fi
-[[ "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]] || { err "Signup failed: HTTP $SIGNUP_CODE  body=$(cat /tmp/kodus-signup-$$.json 2>/dev/null | head -c 400)"; exit 1; }
-rm -f /tmp/kodus-signup-$$.json
+[[ "$SIGNUP_CODE" =~ ^2[0-9][0-9]$ ]] || { err "Signup failed: HTTP $SIGNUP_CODE  body=$(cat /tmp/codus-signup-$$.json 2>/dev/null | head -c 400)"; exit 1; }
+rm -f /tmp/codus-signup-$$.json
 ok "Dev user created"
 
 # ---------- smoke tenants (one per provider) ----------
 # Smoke tests need one tenant per provider so:
-#   * Each tenant only ever has a single integration → Kodus's
+#   * Each tenant only ever has a single integration → Codus's
 #     `getTypeIntegration` (filtered only by category) can't pick the wrong
 #     platform.
 #   * Webhook routing on Bitbucket — which has no disambiguator and picks
@@ -692,8 +692,8 @@ ok "Dev user created"
 log "Creating smoke tenants (1 per provider) for E2E isolation..."
 SMOKE_TENANT_PASSWORD="${DEV_USER_PASSWORD}"
 for provider in github gitlab bitbucket azure-devops; do
-    smoke_email="e2e-${provider}@kodus.local"
-    smoke_name="Kodus E2E ${provider}"
+    smoke_email="e2e-${provider}@codus.local"
+    smoke_name="Codus E2E ${provider}"
     payload=$(jq -nc \
         --arg name "$smoke_name" \
         --arg email "$smoke_email" \
@@ -701,21 +701,21 @@ for provider in github gitlab bitbucket azure-devops; do
         '{name:$name, email:$email, password:$pass}')
     code=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
         -d "$payload" \
-        -o /tmp/kodus-smoke-signup-$$.json -w "%{http_code}" \
+        -o /tmp/codus-smoke-signup-$$.json -w "%{http_code}" \
         "http://$SERVER_IP:3001/auth/signUp" 2>&1 || echo "ERR")
     if [[ ! "$code" =~ ^2[0-9][0-9]$ ]]; then
         code=$(curl -sS -X POST -H "Content-Type: application/json" --max-time 30 \
             -d "$payload" \
-            -o /tmp/kodus-smoke-signup-$$.json -w "%{http_code}" \
+            -o /tmp/codus-smoke-signup-$$.json -w "%{http_code}" \
             "http://$SERVER_IP:3001/auth/signup" 2>&1 || echo "ERR")
     fi
     # 409 (conflict) is fine — tenant already exists from a previous provision.
     case "$code" in
         2*) ok "  ${provider}: created" ;;
         409) ok "  ${provider}: already exists" ;;
-        *) warn "  ${provider}: signup HTTP $code (body=$(cat /tmp/kodus-smoke-signup-$$.json 2>/dev/null | head -c 200))" ;;
+        *) warn "  ${provider}: signup HTTP $code (body=$(cat /tmp/codus-smoke-signup-$$.json 2>/dev/null | head -c 200))" ;;
     esac
-    rm -f /tmp/kodus-smoke-signup-$$.json
+    rm -f /tmp/codus-smoke-signup-$$.json
 done
 
 # ---------- optional: configure GitHub integration ----------
@@ -771,7 +771,7 @@ $(echo -e "${GREEN}✅ Self-hosted stack online in ${MINS}m${SECS}s${NC}")
   $(echo -e "${BLUE}Dashboard:${NC}") http://$SERVER_IP:3000
   $(echo -e "${BLUE}API:${NC}")       http://$SERVER_IP:3001
   $(echo -e "${BLUE}Webhooks:${NC}")  $SERVER_TUNNEL_URL
-  $(echo -e "${BLUE}Image:${NC}")     ghcr.io/kodustech/kodus-ai-*:${IMAGE_TAG}
+  $(echo -e "${BLUE}Image:${NC}")     ghcr.io/elchapita43/codus-ai-*:${IMAGE_TAG}
 
   $(echo -e "${BLUE}Login:${NC}")     $DEV_USER_EMAIL
   $(echo -e "${BLUE}Password:${NC}")  $DEV_USER_PASSWORD

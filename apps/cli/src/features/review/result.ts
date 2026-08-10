@@ -13,7 +13,7 @@ export function shouldUseInteractiveReview(params: {
 }
 
 /**
- * Whether `kodus review` should hand the result off to the hunk TUI viewer
+ * Whether `codus review` should hand the result off to the hunk TUI viewer
  * instead of the legacy inquirer menu / flat formatter. We only auto-promote
  * when every signal points to "interactive human": real TTY, no agent envelope,
  * no file output, default terminal format, the review scope maps cleanly onto

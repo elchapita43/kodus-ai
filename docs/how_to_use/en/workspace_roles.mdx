@@ -1,26 +1,26 @@
 ---
 title: "Workspace Roles"
-description: "Learn about role-based access control (RBAC) in Kodus workspaces, including the different user roles and their permissions."
+description: "Learn about role-based access control (RBAC) in Codus workspaces, including the different user roles and their permissions."
 ---
 
 <Note>
 **Workspace Members vs. PR Licenses**: These are completely separate and don't affect each other.
 
-- **Workspace Members**: Admins who configure Kodus settings (unlimited)
-- **PR Licenses**: Developers from your Git organization who get Kody reviews (based on your plan)
+- **Workspace Members**: Admins who configure Codus settings (unlimited)
+- **PR Licenses**: Developers from your Git organization who get Cody reviews (based on your plan)
 </Note>
 
 ## Understanding PR Licenses
 
 PR licenses are automatically detected from your Git repositories based on developers who opened PRs in recent months. 
 
-**Why isn't a developer showing up?** If a developer isn't appearing in your PR license count, it means Kody isn't installed in a repository where that developer has opened PRs.
+**Why isn't a developer showing up?** If a developer isn't appearing in your PR license count, it means Cody isn't installed in a repository where that developer has opened PRs.
 
 **Example:** You can have 1 workspace admin managing settings, while 20 developers get automated reviews. All plans include unlimited PRs—your plan only determines which developers get review access.
 
 ## Overview
 
-Kodus workspaces supports **Role-Based Access Control (RBAC)**, allowing you to manage user permissions and access levels within your organization. Each workspace member can be assigned one of four distinct roles, each with specific permissions and capabilities.
+Codus workspaces supports **Role-Based Access Control (RBAC)**, allowing you to manage user permissions and access levels within your organization. Each workspace member can be assigned one of four distinct roles, each with specific permissions and capabilities.
 
 ## Available Roles
 
@@ -38,11 +38,11 @@ Each role provides different levels of access and capabilities within the worksp
 
 ### Repository Admin
 
-**Repository management** access. Sees all configurations, pull requests, issues, cockpit, and plugins across the whole organization (read-only), and can edit code review configurations and Kody Rules for the repositories assigned to them.
+**Repository management** access. Sees all configurations, pull requests, issues, cockpit, and plugins across the whole organization (read-only), and can edit code review configurations and Cody Rules for the repositories assigned to them.
 
 ### Contributor
 
-**Read-only access** to the whole organization. Contributors can view configurations, Kody Rules, pull requests, and issues across all repositories — no repository assignment needed — but cannot edit anything. Cockpit, token usage, billing, and user management stay admin-only.
+**Read-only access** to the whole organization. Contributors can view configurations, Cody Rules, pull requests, and issues across all repositories — no repository assignment needed — but cannot edit anything. Cockpit, token usage, billing, and user management stay admin-only.
 
 ## Role Permissions Matrix
 
@@ -130,7 +130,7 @@ Enable auto-join to allow users with matching email domains to join your workspa
 
   <Accordion title="A developer isn't showing up in PR licenses">
     **Solutions:**
-    - Verify Kody is installed in the repositories where this developer opens PRs
+    - Verify Cody is installed in the repositories where this developer opens PRs
     - Check if the developer has opened PRs in recent months
     - Remember: PR licenses come from Git activity, not workspace members
     - Ensure the repository webhook is properly configured

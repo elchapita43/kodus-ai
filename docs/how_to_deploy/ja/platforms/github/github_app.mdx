@@ -1,10 +1,10 @@
 ---
 title: GitHub Appの作成
-description: "Kody がリポジトリを読み、プルリクエストにコメントし、Webhook を受け取るための GitHub App を作成する手順。付与すべき権限も明記します。"
+description: "Cody がリポジトリを読み、プルリクエストにコメントし、Webhook を受け取るための GitHub App を作成する手順。付与すべき権限も明記します。"
 icon: github
 ---
 
-KodyをGitHub Appで実行する場合は、アプリを作成する必要があります。このアプリにより、Kodyはリポジトリとやり取りし、プルリクエストを管理し、Webhookを受信できるようになります。
+CodyをGitHub Appで実行する場合は、アプリを作成する必要があります。このアプリにより、Codyはリポジトリとやり取りし、プルリクエストを管理し、Webhookを受信できるようになります。
 
 <Note>プラットフォームユーザーが「GitHubでサインイン」できるようにしたい場合は、それは別のOAuthアプリのプロセスであり、GitHub Appの権限とは干渉しません。このガイドは機能的なインテグレーションに焦点を当てています。<a href="/how_to_deploy/ja/platforms/github/github_oauth">GitHub OAuthアプリ</a>を参照してください。</Note>
 
@@ -14,7 +14,7 @@ KodyをGitHub Appで実行する場合は、アプリを作成する必要があ
 
 - **WEB_DOMAIN**: フロントエンドのURL（例：`https://app.yourdomain.com`または`http://localhost:3000`）
 - **API_DOMAIN**: バックエンド/APIのURL（例：`https://api.yourdomain.com`、またはモノレポ/プロキシセットアップの場合は`http://localhost:3000`）
-- **WEBHOOK_DOMAIN**（オプション）: Webhook用のパブリックドメイン（例：`https://kodus-webhooks.yourdomain.com`）。APIドメインで`/.../webhook`をルーティングする場合は`API_DOMAIN`を使用できます。
+- **WEBHOOK_DOMAIN**（オプション）: Webhook用のパブリックドメイン（例：`https://codus-webhooks.yourdomain.com`）。APIドメインで`/.../webhook`をルーティングする場合は`API_DOMAIN`を使用できます。
 
 ## ステップ1：GitHub Appの作成
 
@@ -42,11 +42,11 @@ KodyをGitHub Appで実行する場合は、アプリを作成する必要があ
   ```
 
 - オプション**Redirect on update**を有効にする
-  これにより、アプリのインストール後にユーザーがKodusにリダイレクトされてセットアップを完了できるようになります。
+  これにより、アプリのインストール後にユーザーがCodusにリダイレクトされてセットアップを完了できるようになります。
 
 ## ステップ3：Webhookの設定
 
-WebhookはKodusにプルリクエストのイベントを通知します。
+WebhookはCodusにプルリクエストのイベントを通知します。
 
 <Note>
   WebhooksはWebhooksサービス（ポート3332）が処理します。ここでAPIドメインを使用する場合は、リバースプロキシが`/github/webhook`をWebhooksサービスにルーティングすることを確認してください。そうでない場合は専用のWebhooksドメインを使用してください。
@@ -63,7 +63,7 @@ WebhookはKodusにプルリクエストのイベントを通知します。
 
 <img src="https://kodus.io/wp-content/uploads/2026/01/gthubapp-env.gif" alt="GitHub App Webhook" />
 
-GitHubが生成した認証情報を取得し、Kodusの環境変数に追加する必要があります。
+GitHubが生成した認証情報を取得し、Codusの環境変数に追加する必要があります。
 
 ### App ID
 
@@ -116,4 +116,4 @@ API_GITHUB_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY----- ..."
 WEB_GITHUB_INSTALL_URL="https://github.com/apps/your-app/installations/new"
 ```
 
-GitHubで**Save Changes**をクリックし、Kodusアプリケーションを再起動して変更を適用してください。
+GitHubで**Save Changes**をクリックし、Codusアプリケーションを再起動して変更を適用してください。

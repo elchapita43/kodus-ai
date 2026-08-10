@@ -3,7 +3,7 @@ title: "Cómo validar issues de Linear contra pull requests"
 description: "Asegúrate de que tu pull request implementa lo que describe el issue de Linear usando validación de lógica de negocio con IA."
 ---
 
-Los issues de Linear a menudo contienen requisitos detallados, criterios de aceptación y definiciones de alcance. Kodus puede comparar tu PR con el issue de Linear para detectar brechas antes de fusionar.
+Los issues de Linear a menudo contienen requisitos detallados, criterios de aceptación y definiciones de alcance. Codus puede comparar tu PR con el issue de Linear para detectar brechas antes de fusionar.
 
 ## Cómo funciona
 
@@ -11,10 +11,10 @@ Los issues de Linear a menudo contienen requisitos detallados, criterios de acep
 2. Comenta en tu PR:
 
 ```
-@kody -v business-logic https://linear.app/your-team/issue/TEAM-123
+@cody -v business-logic https://linear.app/your-team/issue/TEAM-123
 ```
 
-3. Kody obtiene el contexto del issue de Linear, lee el diff del PR y produce un análisis de brechas
+3. Cody obtiene el contexto del issue de Linear, lee el diff del PR y produce un análisis de brechas
 
 ## Qué obtienes
 
@@ -25,7 +25,7 @@ Los issues de Linear a menudo contienen requisitos detallados, criterios de acep
 
 ## Validación automática
 
-Cuando `business_logic: true` está habilitado (por defecto), Kody recupera automáticamente el contexto de la tarea desde Linear durante cada revisión de PR si el plugin está conectado.
+Cuando `business_logic: true` está habilitado (por defecto), Cody recupera automáticamente el contexto de la tarea desde Linear durante cada revisión de PR si el plugin está conectado.
 
 ## Consejos
 
@@ -33,7 +33,7 @@ Cuando `business_logic: true` está habilitado (por defecto), Kody recupera auto
 - También puedes pegar los requisitos en línea si prefieres no vincular el issue:
 
 ```
-@kody -v business-logic Los pedidos superiores a $500 deben emitir créditos de cashback.
+@cody -v business-logic Los pedidos superiores a $500 deben emitir créditos de cashback.
 Los códigos de descuento no se pueden combinar con recompensas de fidelidad.
 ```
 

@@ -14,12 +14,12 @@ scenarios:
     - onboarding-webhook-registration
     - code-review-basic
     - command-review
-    - kody-rules-create-and-apply
-    # Repo-file rule sync (customer case): .kody/rules template imported
+    - cody-rules-create-and-apply
+    # Repo-file rule sync (customer case): .cody/rules template imported
     # verbatim + multi-glob path enforced on a file matching the 2nd glob.
     # github-only (needs mergePR).
-    - kody-rules-file-sync
-    - kody-rules-lifecycle
+    - cody-rules-file-sync
+    - cody-rules-lifecycle
     # Detection semantics (no review step, cheap): root AGENTS.md,
     # nested CLAUDE.md scoped to its subdir, lowercase claude.md.
     - rule-file-detection

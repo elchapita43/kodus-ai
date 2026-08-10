@@ -1,22 +1,22 @@
 ---
 title: "How to connect Jira to your code review tool"
-description: "Link Jira to Kodus so your AI code reviews automatically validate PRs against task requirements and acceptance criteria."
+description: "Link Jira to Codus so your AI code reviews automatically validate PRs against task requirements and acceptance criteria."
 ---
 
-Connecting Jira to Kodus enables two powerful features: automatic **business logic validation** against Jira tickets, and richer context for code review suggestions.
+Connecting Jira to Codus enables two powerful features: automatic **business logic validation** against Jira tickets, and richer context for code review suggestions.
 
 ## How to connect
 
 1. Go to **Settings** → **Plugins**
 2. Find **Jira** in the available plugins
 3. Click **Connect** and authorize access to your Jira workspace
-4. Select which projects Kodus can access
+4. Select which projects Codus can access
 
 ## What it enables
 
 ### Automatic business logic validation
 
-When a PR is linked to a Jira ticket, Kodus automatically:
+When a PR is linked to a Jira ticket, Codus automatically:
 - Fetches the ticket title, description, and acceptance criteria
 - Compares the PR diff against the requirements
 - Reports missing implementations, scope mismatches, and gaps
@@ -26,12 +26,12 @@ When a PR is linked to a Jira ticket, Kodus automatically:
 Paste any Jira URL in a PR comment:
 
 ```
-@kody -v business-logic https://your-org.atlassian.net/browse/PROJ-123
+@cody -v business-logic https://your-org.atlassian.net/browse/PROJ-123
 ```
 
 ### Richer code review context
 
-With Jira connected, Kody can use MCP functions in your rules to fetch task context, check issue status, and cross-reference requirements.
+With Jira connected, Cody can use MCP functions in your rules to fetch task context, check issue status, and cross-reference requirements.
 
 ## Requirements
 

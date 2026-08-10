@@ -14,12 +14,12 @@ Loads scenarios, instantiates providers with no env vars set, walks the matrix w
 
 ## `pnpm run e2e:smoke`
 
-Runs **one** scenario × provider against the droplet you already have alive from `pnpm run selfhosted:provision` (reads `.kodus-dev/selfhosted-vm-default.json` for the target URLs + tenant creds).
+Runs **one** scenario × provider against the droplet you already have alive from `pnpm run selfhosted:provision` (reads `.codus-dev/selfhosted-vm-default.json` for the target URLs + tenant creds).
 
 ```bash
 pnpm run e2e:smoke                                       # github × code-review-basic
 pnpm run e2e:smoke --provider gitlab                     # different provider
-pnpm run e2e:smoke --scenario kody-rules-create-and-apply
+pnpm run e2e:smoke --scenario cody-rules-create-and-apply
 pnpm run e2e:smoke --name junior                         # against a named instance
 ```
 
@@ -43,7 +43,7 @@ Same priority order as `scripts/selfhosted/`:
 
 1. Inline env (`GH_TEST_TOKEN=... pnpm run e2e:smoke`)
 2. `scripts/e2e/.env` (gitignored, per-repo override)
-3. `~/.kodus-dev/config` (managed by `pnpm run selfhosted:setup`, shared with selfhosted scripts)
+3. `~/.codus-dev/config` (managed by `pnpm run selfhosted:setup`, shared with selfhosted scripts)
 
 `op://Vault/Item/field` references resolve via 1Password CLI — same flow the selfhosted scripts use.
 

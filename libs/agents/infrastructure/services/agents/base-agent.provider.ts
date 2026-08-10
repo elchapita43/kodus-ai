@@ -2,7 +2,7 @@ import {
     LLMModelProvider,
     BYOKConfig,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { Injectable } from '@nestjs/common';
 
 import { OrganizationAndTeamData } from '@libs/core/infrastructure/config/types/general/organizationAndTeamData';

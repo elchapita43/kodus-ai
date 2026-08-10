@@ -3,7 +3,7 @@ import { FileChange } from '@libs/core/infrastructure/config/types/general/codeR
 import { CoverageTier, normalizeRepoPath } from '@libs/code-review/infrastructure/agents/engine/coverage-ledger';
 
 /**
- * Minimal shape of the AST call graph JSON produced by kodus-graph.
+ * Minimal shape of the AST call graph JSON produced by codus-graph.
  * Uses `unknown` at the array-element level so callers can pass any shape
  * (the pipeline context types node/edge as `any`); we narrow internally.
  */
@@ -46,7 +46,7 @@ const STATUS_MULT: Record<string, number> = {
 
 /**
  * Edge-kind weights when summing in-degree for the structural bonus.
- * Calibrated against real graph data on kodus-ai-cr: CALLS are the dominant
+ * Calibrated against real graph data on codus-ai-cr: CALLS are the dominant
  * cross-file signal (~70% of cross-file edges) and carry the highest
  * blast-radius. Type-hierarchy edges matter less in absolute numbers but
  * break contracts when the parent changes. Plain IMPORTS get the smallest

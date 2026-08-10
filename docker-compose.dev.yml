@@ -17,7 +17,7 @@ x-app-service-template: &app-service-defaults
         dockerfile: docker/Dockerfile.dev
         args:
             - API_CLOUD_MODE=${API_CLOUD_MODE:-false}
-    image: kodus-ai-dev:latest
+    image: codus-ai-dev:latest
     env_file:
         # .env.local (per-dev overrides, gitignored) is loaded LAST so it
         # wins over the generated .env — same cascade the app uses at
@@ -41,7 +41,7 @@ x-app-service-template: &app-service-defaults
         - logs_data:/usr/src/app/logs
         - yalc_store:/root/.yalc
     networks:
-        - kodus-backend-services
+        - codus-backend-services
         - shared-network
     logging: *default-logging
 
@@ -49,9 +49,9 @@ services:
     #----------------------------------------------------------------
     # Application Services
     #----------------------------------------------------------------
-    kodus-api:
+    codus-api:
         <<: *app-service-defaults
-        container_name: kodus_api
+        container_name: codus_api
         depends_on:
             rabbitmq:
                 condition: service_healthy
@@ -111,7 +111,7 @@ services:
 
     worker:
         <<: *app-service-defaults
-        container_name: kodus_worker
+        container_name: codus_worker
         depends_on:
             rabbitmq:
                 condition: service_healthy
@@ -127,7 +127,7 @@ services:
             - logs_data:/usr/src/app/logs
             - yalc_store:/root/.yalc
         ports:
-            # See kodus-api comment on host-side port parametrization for
+            # See codus-api comment on host-side port parametrization for
             # worktree coexistence.
             - '${API_WORKER_DEBUG_PORT:-9231}:9231'
             - '${API_WORKER_METRICS_PORT:-8001}:8001'
@@ -175,11 +175,11 @@ services:
     # (same pipeline, same bugs, same fixes — see issue #951).
     worker-analytics:
         <<: *app-service-defaults
-        container_name: kodus_analytics_worker
+        container_name: codus_analytics_worker
         # Opt-in. Default `pnpm run docker:start` leaves this off — the cockpit
         # ingestion cron isn't useful for most dev flows and costs ~700 MiB
         # idle (Nest DI + ts-node-dev watch). Bring it up explicitly via
-        # `KODUS_DEV_EXTRAS=analytics pnpm run docker:start` (or `=extras` for
+        # `CODUS_DEV_EXTRAS=analytics pnpm run docker:start` (or `=extras` for
         # all opt-in services).
         profiles:
             - analytics
@@ -195,7 +195,7 @@ services:
             - logs_data:/usr/src/app/logs
             - yalc_store:/root/.yalc
         ports:
-            # See kodus-api comment on host-side port parametrization for
+            # See codus-api comment on host-side port parametrization for
             # worktree coexistence. Container side is 8001 (same as the
             # code-review worker — they're the same image; only WORKER_ROLE
             # differs); host side is offset to 8011 so both workers can
@@ -246,7 +246,7 @@ services:
 
     webhooks:
         <<: *app-service-defaults
-        container_name: kodus_webhooks
+        container_name: codus_webhooks
         depends_on:
             rabbitmq:
                 condition: service_healthy
@@ -262,7 +262,7 @@ services:
             - logs_data:/usr/src/app/logs
             - yalc_store:/root/.yalc
         ports:
-            # See kodus-api comment on host-side port parametrization for
+            # See codus-api comment on host-side port parametrization for
             # worktree coexistence.
             - '${API_WEBHOOKS_PORT:-3332}:${API_WEBHOOKS_PORT:-3332}'
             - '${API_WEBHOOKS_DEBUG_PORT:-9232}:9232'
@@ -299,17 +299,17 @@ services:
 
     mcp-manager:
         <<: *app-service-defaults
-        image: kodus-ai-mcp-manager:latest
-        container_name: kodus-mcp-manager
+        image: codus-ai-mcp-manager:latest
+        container_name: codus-mcp-manager
         # Opt-in. Default `pnpm run docker:start` leaves this off — the web UI
         # degrades gracefully (MCP setup/plugins pages show empty state).
-        # Bring it up via `KODUS_DEV_EXTRAS=mcp pnpm run docker:start` (or
+        # Bring it up via `CODUS_DEV_EXTRAS=mcp pnpm run docker:start` (or
         # `=extras` for all opt-in services).
         profiles:
             - mcp
             - extras
         ports:
-            # See kodus-api comment on host-side port parametrization for
+            # See codus-api comment on host-side port parametrization for
             # worktree coexistence.
             - '${API_MCP_MANAGER_PORT:-3101}:${API_MCP_MANAGER_PORT:-3101}'
             - '${API_MCP_MANAGER_DEBUG_PORT:-9230}:9230'
@@ -354,7 +354,7 @@ services:
             - API_MCP_MANAGER_JWT_SECRET=${API_MCP_MANAGER_JWT_SECRET:-}
             - API_MCP_MANAGER_ENCRYPTION_SECRET=${API_MCP_MANAGER_ENCRYPTION_SECRET:-}
             - API_MCP_MANAGER_PG_DB_SCHEMA=${API_MCP_MANAGER_PG_DB_SCHEMA:-mcp-manager}
-            - API_MCP_MANAGER_MCP_PROVIDERS=${API_MCP_MANAGER_MCP_PROVIDERS:-kodusmcp,custom}
+            - API_MCP_MANAGER_MCP_PROVIDERS=${API_MCP_MANAGER_MCP_PROVIDERS:-codusmcp,custom}
             - API_MCP_MANAGER_REDIRECT_URI=${API_MCP_MANAGER_REDIRECT_URI:-http://localhost:3000/setup/mcp/oauth}
 
     #----------------------------------------------------------------
@@ -364,14 +364,14 @@ services:
         build:
             context: ./apps/web
             dockerfile: ../../docker/Dockerfile.web.dev
-        container_name: kodus_web
+        container_name: codus_web
         depends_on:
-            kodus-api:
+            codus-api:
                 condition: service_healthy
         ports:
             - '${WEB_PORT:-3000}:3000'
         env_file:
-            # See kodus-api: .env.local is the per-dev override layer.
+            # See codus-api: .env.local is the per-dev override layer.
             - path: ${ENV_FILE:-.env}
             - path: .env.local
               required: false
@@ -402,7 +402,7 @@ services:
             retries: 3
             start_period: 30s
         networks:
-            - kodus-backend-services
+            - codus-backend-services
             - shared-network
         environment:
             - CHOKIDAR_USEPOLLING=false
@@ -428,14 +428,14 @@ services:
         build:
             context: ./apps/try
             dockerfile: ../../docker/Dockerfile.try.dev
-        container_name: kodus_try
+        container_name: codus_try
         depends_on:
-            kodus-api:
+            codus-api:
                 condition: service_healthy
         ports:
             - '${TRY_PORT:-3002}:3002'
         env_file:
-            # See kodus-api: .env.local is the per-dev override layer.
+            # See codus-api: .env.local is the per-dev override layer.
             - path: ${ENV_FILE:-.env}
             - path: .env.local
               required: false
@@ -457,14 +457,14 @@ services:
             retries: 3
             start_period: 30s
         networks:
-            - kodus-backend-services
+            - codus-backend-services
             - shared-network
         environment:
             - CHOKIDAR_USEPOLLING=false
             - NODE_ENV=development
             - NEXT_TELEMETRY_DISABLED=1
             # Inside the compose network the API is reachable as
-            # `kodus-api`, but the browser running outside the network
+            # `codus-api`, but the browser running outside the network
             # hits the public host port instead. NEXT_PUBLIC_* is baked
             # into the client bundle at build time / read in the browser,
             # so the host-side URL is the correct choice.
@@ -497,7 +497,7 @@ services:
         volumes:
             - pyroscope-data:/var/lib/pyroscope
         networks:
-            - kodus-backend-services
+            - codus-backend-services
         restart: unless-stopped
         logging: *default-logging
 
@@ -523,7 +523,7 @@ services:
             - rabbitmq-data:/var/lib/rabbitmq
         restart: unless-stopped
         networks:
-            kodus-backend-services:
+            codus-backend-services:
                 aliases:
                     - rabbitmq-local
                     - rabbitmq
@@ -557,7 +557,7 @@ services:
             - pgdata:/var/lib/postgresql/data
             - ./docker/postgres/initdb.d:/docker-entrypoint-initdb.d
         networks:
-            - kodus-backend-services
+            - codus-backend-services
         restart: unless-stopped
         healthcheck:
             test:
@@ -583,7 +583,7 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: ${API_MG_DB_PASSWORD}
             MONGO_INITDB_DATABASE: ${API_MG_DB_DATABASE}
         networks:
-            - kodus-backend-services
+            - codus-backend-services
         restart: unless-stopped
         healthcheck:
             test:
@@ -612,9 +612,9 @@ volumes:
     rabbitmq-data:
 
 networks:
-    kodus-backend-services:
+    codus-backend-services:
         driver: bridge
-        name: kodus-backend-services
+        name: codus-backend-services
         external: true
     shared-network:
         external: true

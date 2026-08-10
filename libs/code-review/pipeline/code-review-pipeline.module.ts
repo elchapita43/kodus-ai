@@ -36,11 +36,11 @@ import { WorkflowCoreModule } from '@libs/core/workflow/modules/workflow-core.mo
 import { DistributedLockService } from '@libs/core/workflow/infrastructure/distributed-lock.service';
 import { DryRunCoreModule } from '@libs/dryRun/dry-run-core.module';
 import { FileReviewModule } from '@libs/ee/codeReview/fileReviewContextPreparation/fileReview.module';
-import { KodyFineTuningStage } from '@libs/ee/codeReview/stages/kody-fine-tuning.stage';
+import { CodyFineTuningStage } from '@libs/ee/codeReview/stages/cody-fine-tuning.stage';
 import { LicenseModule } from '@libs/ee/license/license.module';
 import { PermissionValidationModule } from '@libs/ee/shared/permission-validation.module';
-import { KodyFineTuningContextModule } from '@libs/kodyFineTuning/kodyFineTuningContext.module';
-import { KodyRulesModule } from '@libs/kodyRules/modules/kodyRules.module';
+import { CodyFineTuningContextModule } from '@libs/codyFineTuning/codyFineTuningContext.module';
+import { CodyRulesModule } from '@libs/codyRules/modules/codyRules.module';
 import { LearningsModule } from '@libs/learnings/modules/learnings.module';
 import { OrganizationModule } from '@libs/organization/modules/organization.module';
 import { FeatureGateModule } from '@libs/feature-gate';
@@ -79,7 +79,7 @@ import { BugAgentProvider } from '../infrastructure/agents/providers/bug-agent.p
 import { SecurityAgentProvider } from '../infrastructure/agents/providers/security-agent.provider';
 import { PerformanceAgentProvider } from '../infrastructure/agents/providers/performance-agent.provider';
 import { GeneralistAgentProvider } from '../infrastructure/agents/providers/generalist-agent.provider';
-import { KodyRulesAgentProvider } from '../infrastructure/agents/providers/kody-rules-agent.provider';
+import { CodyRulesAgentProvider } from '../infrastructure/agents/providers/cody-rules-agent.provider';
 // ReflectionAgentProvider removed — verify/discover was hurting recall
 import { ReviewOrchestratorService } from '../infrastructure/agents/review-orchestrator.service';
 
@@ -102,16 +102,16 @@ import { ReviewOrchestratorService } from '../infrastructure/agents/review-orche
         forwardRef(() => AgentsModule),
         forwardRef(() => AIEngineModule),
         forwardRef(() => PlatformModule),
-        forwardRef(() => KodyFineTuningContextModule),
+        forwardRef(() => CodyFineTuningContextModule),
         forwardRef(() => AutomationModule),
         forwardRef(() => GithubModule),
         forwardRef(() => ForgejoModule),
         forwardRef(() => PermissionValidationModule),
         forwardRef(() => LicenseModule),
-        // AgentReviewStage injects KodyRuleSummaryService (long-rule summary
-        // swap for the shard judge). forwardRef: the kodyRules module reaches
+        // AgentReviewStage injects CodyRuleSummaryService (long-rule summary
+        // swap for the shard judge). forwardRef: the codyRules module reaches
         // back into code-review via CODE_BASE_CONFIG_SERVICE_TOKEN.
-        forwardRef(() => KodyRulesModule),
+        forwardRef(() => CodyRulesModule),
         // AgentReviewStage injecta el repository de learnings (memoria por
         // proyecto) para inyectarlos al prompt de la review. forwardRef por
         // consistencia con el resto de imports con ciclos potenciales.
@@ -178,12 +178,12 @@ import { ReviewOrchestratorService } from '../infrastructure/agents/review-orche
         SecurityAgentProvider,
         PerformanceAgentProvider,
         GeneralistAgentProvider,
-        KodyRulesAgentProvider,
+        CodyRulesAgentProvider,
         // ReflectionAgentProvider removed
         ReviewOrchestratorService,
 
         // EE Stages
-        KodyFineTuningStage,
+        CodyFineTuningStage,
 
         // For GitHub Checks
         GithubChecksService,

@@ -1,4 +1,4 @@
-import { RuleFeedbackType } from '@libs/kodyRules/domain/entities/ruleLike.entity';
+import { RuleFeedbackType } from '@libs/codyRules/domain/entities/ruleLike.entity';
 import { IsEnum, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 

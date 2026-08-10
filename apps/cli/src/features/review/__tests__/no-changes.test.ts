@@ -10,8 +10,8 @@ describe('buildNoChangesMessages', () => {
                 commit: undefined,
             }),
         ).toEqual([
-            'Try `kodus review --staged` to review staged changes only.',
-            'Or pass files explicitly, for example: `kodus review src/file.ts`.',
+            'Try `codus review --staged` to review staged changes only.',
+            'Or pass files explicitly, for example: `codus review src/file.ts`.',
         ]);
     });
 
@@ -31,7 +31,7 @@ describe('buildNoChangesMessages', () => {
             buildNoChangesMessages(['src/a.ts', 'src/b.ts'], {}),
         ).toEqual([
             'None of the requested files have diff content in the selected scope.',
-            'Check the file paths or try running `kodus review` without explicit files.',
+            'Check the file paths or try running `codus review` without explicit files.',
         ]);
     });
 });

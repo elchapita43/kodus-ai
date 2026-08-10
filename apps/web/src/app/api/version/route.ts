@@ -13,7 +13,7 @@
 
 export const revalidate = 3600;
 
-const GITHUB_REPO = "kodustech/kodus-ai";
+const GITHUB_REPO = "elchapita43/codus-ai";
 const GH_RELEASES_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=20`;
 const SELFHOSTED_TAG_RE = /^selfhosted-(\d+)\.(\d+)\.(\d+)$/;
 // `current` is injected by the CI build as a bare semver `X.Y.Z`. We
@@ -53,7 +53,7 @@ export async function GET() {
         const res = await fetch(GH_RELEASES_URL, {
             headers: {
                 Accept: "application/vnd.github+json",
-                "User-Agent": "kodus-self-hosted-update-check",
+                "User-Agent": "codus-self-hosted-update-check",
             },
             next: { revalidate: 3600 },
         });

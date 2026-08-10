@@ -24,7 +24,7 @@ If you prefer to use the BYOK web interface, the issue suggests that your organi
 1. **Verify database migrations completed:**
    ```bash
    # Check if migrations ran successfully
-   docker logs kodus-orchestrator-prod | grep -i migration
+   docker logs codus-orchestrator-prod | grep -i migration
    ```
 
 2. **Check organization initialization:**
@@ -33,7 +33,7 @@ If you prefer to use the BYOK web interface, the issue suggests that your organi
 
 3. **Check API logs for errors:**
    ```bash
-   docker logs kodus-orchestrator-prod | grep -i "byok\|organization"
+   docker logs codus-orchestrator-prod | grep -i "byok\|organization"
    ```
 
 4. **Verify database state:**

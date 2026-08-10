@@ -74,8 +74,8 @@ describe('GenericSkillRunnerService', () => {
         mcpManagerService = {
             getConnections: jest.fn().mockResolvedValue([
                 {
-                    provider: 'kodusmcp',
-                    allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                    provider: 'codusmcp',
+                    allowedTools: ['CODUS_GET_PULL_REQUEST'],
                 },
             ]),
         } as any;
@@ -105,7 +105,7 @@ describe('GenericSkillRunnerService', () => {
     it('caches skill metadata by skill name for fetcher orchestration', async () => {
         skillLoaderService.loadSkillMetaFromFilesystem.mockReturnValue(
             withSkillMeta({
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             }),
         );
 
@@ -139,9 +139,9 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                name: 'Kodus MCP',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                name: 'Codus MCP',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
         ] as any);
 
@@ -168,9 +168,9 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                name: 'Kodus MCP',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                name: 'Codus MCP',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
                 provider: 'jira',
@@ -201,9 +201,9 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                name: 'Kodus MCP',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                name: 'Codus MCP',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
                 provider: 'custom',
@@ -236,12 +236,12 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                name: 'Kodus MCP',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                name: 'Codus MCP',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
-                provider: 'kodusmcp',
+                provider: 'codusmcp',
                 name: 'Atlassian Rovo',
                 allowedTools: ['getJiraIssue'],
             },
@@ -256,8 +256,8 @@ describe('GenericSkillRunnerService', () => {
         ).resolves.toBeDefined();
     });
 
-    it('accepts the Kodus built-in "Git Issues" MCP for task-management (regression)', async () => {
-        // Real-world NO_TASK_MCP: the connected MCP is Kodus\'s built-in task
+    it('accepts the Codus built-in "Git Issues" MCP for task-management (regression)', async () => {
+        // Real-world NO_TASK_MCP: the connected MCP is Codus\'s built-in task
         // tracker whose appName is "Git Issues" (→ `gitissues`). The example
         // "Github Issues" normalizes to `githubissues`, which does NOT match
         // `gitissues` (the "hub" breaks both === and includes). The fix adds
@@ -276,9 +276,9 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
+                provider: 'codusmcp',
                 name: 'Git Issues',
-                allowedTools: ['KODUS_LIST_ISSUES', 'KODUS_GET_ISSUE'],
+                allowedTools: ['CODUS_LIST_ISSUES', 'CODUS_GET_ISSUE'],
             },
         ] as any);
 
@@ -308,10 +308,10 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
+                provider: 'codusmcp',
                 name: 'Some Renamed Tracker',
                 category: 'task-management',
-                allowedTools: ['KODUS_LIST_ISSUES'],
+                allowedTools: ['CODUS_LIST_ISSUES'],
             },
         ] as any);
 
@@ -324,7 +324,7 @@ describe('GenericSkillRunnerService', () => {
         ).resolves.toBeDefined();
     });
 
-    it('filters external MCP providers by required MCP hints while keeping kodusmcp', async () => {
+    it('filters external MCP providers by required MCP hints while keeping codusmcp', async () => {
         skillLoaderService.loadSkillMetaFromFilesystem.mockReturnValue(
             withSkillMeta({
                 requiredMcps: [
@@ -338,9 +338,9 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                name: 'Kodus MCP',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                name: 'Codus MCP',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
                 provider: 'jira',
@@ -365,7 +365,7 @@ describe('GenericSkillRunnerService', () => {
         expect(createMCPAdapterMock).toHaveBeenCalledWith(
             expect.objectContaining({
                 servers: expect.arrayContaining([
-                    expect.objectContaining({ provider: 'kodusmcp' }),
+                    expect.objectContaining({ provider: 'codusmcp' }),
                     expect.objectContaining({ provider: 'jira' }),
                     expect.objectContaining({ provider: 'linear' }),
                 ]),
@@ -463,8 +463,8 @@ describe('GenericSkillRunnerService', () => {
 
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
         ] as any);
 
@@ -501,7 +501,7 @@ describe('GenericSkillRunnerService', () => {
 
         skillLoaderService.loadSkillMetaFromFilesystem.mockReturnValue(
             withSkillMeta({
-                allowedTools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+                allowedTools: ['CODUS_GET_PULL_REQUEST_DIFF'],
                 fetcherPolicy: {
                     allowWithoutTools: true,
                     toolMode: 'all',
@@ -519,7 +519,7 @@ describe('GenericSkillRunnerService', () => {
         // No MCP adapter → nothing connected, no tool registry built.
         expect(buildMcpAgentToolRegistryMock).not.toHaveBeenCalled();
         await runtime.toolCaller.callAgent?.(
-            'kodus-business-rules-validation-fetcher',
+            'codus-business-rules-validation-fetcher',
             'hello',
         );
         expect(runMcpFetcherAgentMock).toHaveBeenCalledTimes(1);
@@ -533,8 +533,8 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
                 provider: 'jira',
@@ -559,8 +559,8 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                allowedTools: ['KODUS_GET_PULL_REQUEST'],
+                provider: 'codusmcp',
+                allowedTools: ['CODUS_GET_PULL_REQUEST'],
             },
             {
                 provider: 'custom',
@@ -594,8 +594,8 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
-                allowedTools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+                provider: 'codusmcp',
+                allowedTools: ['CODUS_GET_PULL_REQUEST_DIFF'],
             },
         ] as any);
 
@@ -609,8 +609,8 @@ describe('GenericSkillRunnerService', () => {
             expect.objectContaining({
                 servers: expect.arrayContaining([
                     expect.objectContaining({
-                        provider: 'kodusmcp',
-                        allowedTools: ['KODUS_GET_PULL_REQUEST_DIFF'],
+                        provider: 'codusmcp',
+                        allowedTools: ['CODUS_GET_PULL_REQUEST_DIFF'],
                     }),
                 ]),
             }),
@@ -635,7 +635,7 @@ describe('GenericSkillRunnerService', () => {
         );
         mcpManagerService.getConnections.mockResolvedValue([
             {
-                provider: 'kodusmcp',
+                provider: 'codusmcp',
                 allowedTools: ['getCustomCapability'],
             },
         ] as any);
@@ -650,7 +650,7 @@ describe('GenericSkillRunnerService', () => {
             expect.objectContaining({
                 servers: expect.arrayContaining([
                     expect.objectContaining({
-                        provider: 'kodusmcp',
+                        provider: 'codusmcp',
                         allowedTools: ['getCustomCapability'],
                     }),
                 ]),
@@ -687,7 +687,7 @@ describe('GenericSkillRunnerService', () => {
         );
 
         expect(metricsCollector.recordHistogram).toHaveBeenCalledWith(
-            'kodus_skill_setup_duration_ms',
+            'codus_skill_setup_duration_ms',
             expect.any(Number),
             expect.objectContaining({
                 skill: 'business-rules-validation',
@@ -696,7 +696,7 @@ describe('GenericSkillRunnerService', () => {
             }),
         );
         expect(metricsCollector.recordCounter).toHaveBeenCalledWith(
-            'kodus_skill_setup_total',
+            'codus_skill_setup_total',
             1,
             expect.objectContaining({
                 skill: 'business-rules-validation',
@@ -747,14 +747,14 @@ describe('GenericSkillRunnerService', () => {
         expect(policy.onMcpConnectError).toBe('fail');
     });
 
-    it('resolveAllProviderTypes returns deduplicated providers excluding kodusmcp', async () => {
+    it('resolveAllProviderTypes returns deduplicated providers excluding codusmcp', async () => {
         skillLoaderService.loadSkillMetaFromFilesystem.mockReturnValue(
             withSkillMeta({
                 fetcherPolicy: { allowWithoutTools: true, toolMode: 'any' },
             }),
         );
         mcpManagerService.getConnections.mockResolvedValue([
-            { provider: 'kodusmcp', allowedTools: ['KODUS_GET_PULL_REQUEST'] },
+            { provider: 'codusmcp', allowedTools: ['CODUS_GET_PULL_REQUEST'] },
             { provider: 'Jira', allowedTools: ['getJiraIssue'] },
             { provider: 'atlassian', allowedTools: ['searchJira'] },
             { provider: 'linear', allowedTools: ['getIssue'] },
@@ -782,7 +782,7 @@ describe('GenericSkillRunnerService', () => {
             }),
         );
         mcpManagerService.getConnections.mockResolvedValue([
-            { provider: 'kodusmcp', allowedTools: ['KODUS_GET_PULL_REQUEST'] },
+            { provider: 'codusmcp', allowedTools: ['CODUS_GET_PULL_REQUEST'] },
             { provider: 'atlassian', allowedTools: ['searchJira'] },
         ] as any);
 
@@ -829,7 +829,7 @@ describe('GenericSkillRunnerService', () => {
         ).rejects.toBeInstanceOf(McpConnectionUnavailableError);
 
         expect(metricsCollector.recordHistogram).toHaveBeenCalledWith(
-            'kodus_skill_setup_duration_ms',
+            'codus_skill_setup_duration_ms',
             expect.any(Number),
             expect.objectContaining({
                 skill: 'business-rules-validation',
@@ -838,7 +838,7 @@ describe('GenericSkillRunnerService', () => {
             }),
         );
         expect(metricsCollector.recordCounter).toHaveBeenCalledWith(
-            'kodus_skill_setup_total',
+            'codus_skill_setup_total',
             1,
             expect.objectContaining({
                 skill: 'business-rules-validation',

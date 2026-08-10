@@ -3,7 +3,7 @@ import { AzureReposService } from './azureRepos.service';
 /**
  * Regression test for issue #1045 / Bug B — Azure DevOps' API uses
  * `description` for the PR body field while every other platform (and
- * Kodus' domain) uses `body`. Without normalization at the adapter
+ * Codus' domain) uses `body`. Without normalization at the adapter
  * boundary, consumers like CommentManagerService.generateSummaryPR
  * read `updatedPR?.body`, get `undefined`, and the CONCATENATE branch
  * silently drops the user's existing description (we replace instead

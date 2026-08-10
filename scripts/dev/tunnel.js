@@ -70,14 +70,14 @@ const updateEnvFile = (tunnelUrl) => {
 
 const startTunnel = async () => {
     try {
-        log(colors.blue, '🌐 Kodus AI - Tunnel Setup');
+        log(colors.blue, '🌐 Codus AI - Tunnel Setup');
         log(colors.blue, '==========================');
         
         log(colors.yellow, '🚀 Starting localtunnel...');
         
         const tunnel = await localtunnel({ 
             port: 3332,
-            subdomain: 'kodus-dev' // URL fixa: kodus-dev.loca.lt
+            subdomain: 'codus-dev' // URL fixa: codus-dev.loca.lt
         });
 
         log(colors.green, `✅ Tunnel created successfully!`);

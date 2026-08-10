@@ -1,10 +1,10 @@
 /**
- * REAL integration test for the cockpit "Kodus Review" analytics stack.
+ * REAL integration test for the cockpit "Codus Review" analytics stack.
  *
  * What runs for real here:
  *  - a throwaway Postgres 16 (docker) — no SQL is mocked;
  *  - the actual TypeORM migrations (init + phase 2 + phase 3), including
- *    the `brokenKodyRulesIds` JSONB backfill;
+ *    the `brokenCodyRulesIds` JSONB backfill;
  *  - the actual ingestion services (`PullRequestIngestionService`,
  *    `FeedbackIngestionService`) writing through their real SQL — only the
  *    Mongo cursor is faked (fixture docs streamed through the same
@@ -23,13 +23,13 @@ import { execSync } from 'child_process';
 import { DataSource } from 'typeorm';
 
 import { CockpitReviewAnalyticsService } from '@libs/cockpit/infrastructure/services/cockpit-review-analytics.service';
-import { GetKodyRulesHealthUseCase } from '@libs/cockpit/application/use-cases/get-kody-rules-health.use-case';
+import { GetCodyRulesHealthUseCase } from '@libs/cockpit/application/use-cases/get-cody-rules-health.use-case';
 import { FeedbackIngestionService } from '@libs/ee/analytics-warehouse/ingestion/feedback-ingestion.service';
 import { PullRequestIngestionService } from '@libs/ee/analytics-warehouse/ingestion/pull-request-ingestion.service';
 import { InitAnalyticsSchema2026042000000 } from '@libs/ee/analytics-warehouse/migrations/2026042000000-InitAnalyticsSchema';
 import { AddRuleIdsAndPrNumber2026060612000000 } from '@libs/ee/analytics-warehouse/migrations/2026060612000000-AddRuleIdsAndPrNumber';
 import { AddSuggestionFeedback2026060613000000 } from '@libs/ee/analytics-warehouse/migrations/2026060613000000-AddSuggestionFeedback';
-import { KodyRulesStatus } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
+import { CodyRulesStatus } from '@libs/codyRules/domain/interfaces/codyRules.interface';
 
 jest.setTimeout(240_000);
 
@@ -139,10 +139,10 @@ const prDoc = (
 const PR_DOCS = [
     prDoc('pr-1', 'org-1', 'org/api', 101, 'closed', '2026-05-20T10:00:00.000Z', [
         sugg('s1', 'security', 'critical', 'implemented', '2026-05-19T10:00:00.000Z', {
-            brokenKodyRulesIds: ['rule-sec'],
+            brokenCodyRulesIds: ['rule-sec'],
         }),
         sugg('s2', 'security', 'critical', 'not_implemented', '2026-05-19T10:00:00.000Z', {
-            brokenKodyRulesIds: ['rule-sec'],
+            brokenCodyRulesIds: ['rule-sec'],
         }),
         sugg('s3', 'code_style', 'low', 'not_implemented', '2026-05-19T10:00:00.000Z'),
         sugg('s4', 'performance', 'medium', 'partially_implemented', '2026-05-19T10:00:00.000Z'),
@@ -150,7 +150,7 @@ const PR_DOCS = [
     prDoc('pr-2', 'org-1', 'org/api', 102, 'closed', '2026-05-27T10:00:00.000Z', [
         sugg('s5', 'error_handling', 'high', 'implemented', '2026-05-26T10:00:00.000Z'),
         sugg('s6', 'code_style', 'low', 'not_implemented', '2026-05-26T10:00:00.000Z', {
-            brokenKodyRulesIds: ['rule-style'],
+            brokenCodyRulesIds: ['rule-style'],
         }),
         {
             ...sugg('s7', 'code_style', 'medium', null, '2026-05-26T10:00:00.000Z'),
@@ -299,16 +299,16 @@ const Q = {
             });
         });
 
-        it('ingestion populated pr_number and brokenKodyRulesIds', async () => {
+        it('ingestion populated pr_number and brokenCodyRulesIds', async () => {
             const prs = await ds.query(
                 `SELECT "_id", "pr_number" FROM analytics.pull_requests_opt ORDER BY "_id"`,
             );
             expect(prs.find((p: any) => p._id === 'pr-1').pr_number).toBe(101);
 
             const s1 = await ds.query(
-                `SELECT "brokenKodyRulesIds" FROM analytics.suggestions_mv WHERE suggestion_id = 's1'`,
+                `SELECT "brokenCodyRulesIds" FROM analytics.suggestions_mv WHERE suggestion_id = 's1'`,
             );
-            expect(s1[0].brokenKodyRulesIds).toEqual(['rule-sec']);
+            expect(s1[0].brokenCodyRulesIds).toEqual(['rule-sec']);
         });
 
         it('feedback ingestion advanced the watermark and is idempotent', async () => {
@@ -426,8 +426,8 @@ const Q = {
             });
         });
 
-        it('kody rules usage: triggers, impl and feedback per rule', async () => {
-            const rows = await service.getKodyRulesUsage(Q);
+        it('cody rules usage: triggers, impl and feedback per rule', async () => {
+            const rows = await service.getCodyRulesUsage(Q);
 
             expect(rows).toEqual([
                 {
@@ -452,18 +452,18 @@ const Q = {
         });
 
         it('rules health use case: merges Mongo metadata and computes states', async () => {
-            const kodyRulesService = {
+            const codyRulesService = {
                 findByOrganizationId: jest.fn().mockResolvedValue({
                     rules: [
-                        { uuid: 'rule-sec', title: 'Use parameterized queries', severity: 'high', repositoryId: 'global', status: KodyRulesStatus.ACTIVE },
-                        { uuid: 'rule-style', title: 'No inline styles', severity: 'low', repositoryId: 'global', status: KodyRulesStatus.ACTIVE },
-                        { uuid: 'rule-stale', title: 'Never triggered', severity: 'low', repositoryId: 'global', status: KodyRulesStatus.ACTIVE },
+                        { uuid: 'rule-sec', title: 'Use parameterized queries', severity: 'high', repositoryId: 'global', status: CodyRulesStatus.ACTIVE },
+                        { uuid: 'rule-style', title: 'No inline styles', severity: 'low', repositoryId: 'global', status: CodyRulesStatus.ACTIVE },
+                        { uuid: 'rule-stale', title: 'Never triggered', severity: 'low', repositoryId: 'global', status: CodyRulesStatus.ACTIVE },
                     ],
                 }),
             };
-            const useCase = new GetKodyRulesHealthUseCase(
+            const useCase = new GetCodyRulesHealthUseCase(
                 service,
-                kodyRulesService as never,
+                codyRulesService as never,
             );
 
             const rows = await useCase.execute(Q);

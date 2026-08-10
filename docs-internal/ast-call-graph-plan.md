@@ -38,7 +38,7 @@ Callee signatures (verify callsites match):
 
 ### Fase 1: Build quando o repo é integrado
 
-Quando o cliente conecta um repo ao Kodus (setup/onboarding):
+Quando o cliente conecta um repo ao Codus (setup/onboarding):
 
 1. Clonar o repo (branch default)
 2. Rodar `code-review-graph build` — gera `.code-review-graph/graph.db`

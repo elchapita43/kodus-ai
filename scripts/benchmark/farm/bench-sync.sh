@@ -88,7 +88,7 @@ fi
 
 # --- 3. build + (re)start the compiled stack ---
 # API_CLOUD_MODE=false: the droplet is a true self-contained self-hosted stack.
-# Cloud mode routes /api/proxy/billing to a separate kodus-service-billing micro-
+# Cloud mode routes /api/proxy/billing to a separate codus-service-billing micro-
 # service that the droplet doesn't run (the trial/migrate-to-free dance 500s). In
 # self-hosted with no license the permission gate is Community Edition = "allow
 # everything" (permissionValidation.validateSelfHostedPermissions), so reviews
@@ -135,13 +135,13 @@ fi
 
 # Reclaim disk: drop bench images from previous commits (kept only the current
 # tag). Old tagged images aren't dangling, so prune alone won't catch them.
-farm_ssh "$SLOT" "docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^kodus-ai-(bench-(api|worker|webhooks)|web-bench):' | grep -v ':${TAG}\$' | xargs -r docker rmi -f >/dev/null 2>&1 || true"
+farm_ssh "$SLOT" "docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '^codus-ai-(bench-(api|worker|webhooks)|web-bench):' | grep -v ':${TAG}\$' | xargs -r docker rmi -f >/dev/null 2>&1 || true"
 
 # --- 4. wait for API health ---
 log "Waiting for API /health..."
 HEALTHY=0
 for i in $(seq 1 60); do
-    if farm_ssh "$SLOT" "docker inspect -f '{{.State.Health.Status}}' kodus_api_bench 2>/dev/null | grep -q healthy"; then
+    if farm_ssh "$SLOT" "docker inspect -f '{{.State.Health.Status}}' codus_api_bench 2>/dev/null | grep -q healthy"; then
         HEALTHY=1; break
     fi
     sleep 10

@@ -1,4 +1,4 @@
-# Kodus changelog voice
+# Codus changelog voice
 
 This file is the style guide consumed by the LLM that drafts every public
 changelog entry. Update it when our product voice evolves; commit changes

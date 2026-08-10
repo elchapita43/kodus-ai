@@ -428,7 +428,7 @@ export class PullRequestsRepository implements IPullRequestsRepository {
                                 ],
                             },
                         },
-                        // Delivery failures (Kody tried to post but couldn't) —
+                        // Delivery failures (Cody tried to post but couldn't) —
                         // kept distinct from `filtered` (a config decision) so
                         // they aren't silently dropped from the totals.
                         failed: {
@@ -564,7 +564,7 @@ export class PullRequestsRepository implements IPullRequestsRepository {
     }
 
     // Keys of still-open PRs opened on/after `since` (ISO string). Used by the
-    // daily-digest to compute "awaiting review" = opened today but with no Kody
+    // daily-digest to compute "awaiting review" = opened today but with no Cody
     // execution yet. openedAt is stored as an ISO-8601 string, so a lexicographic
     // $gte against an ISO cutoff is a correct range compare.
     async findOpenPullRequestKeysOpenedSince(
@@ -854,10 +854,10 @@ export class PullRequestsRepository implements IPullRequestsRepository {
                     // Pre-filter to PRs that reference this rule BEFORE the
                     // files×suggestions unwind — otherwise every PR in the org
                     // is exploded just to surface the few carrying the rule.
-                    // Backed by {organizationId, files.suggestions.brokenKodyRulesIds}.
+                    // Backed by {organizationId, files.suggestions.brokenCodyRulesIds}.
                     $match: {
                         'organizationId': organizationId,
-                        'files.suggestions.brokenKodyRulesIds': ruleId,
+                        'files.suggestions.brokenCodyRulesIds': ruleId,
                     },
                 },
                 {
@@ -869,7 +869,7 @@ export class PullRequestsRepository implements IPullRequestsRepository {
                 {
                     $match: {
                         'files.suggestions.deliveryStatus': DeliveryStatus.SENT,
-                        'files.suggestions.brokenKodyRulesIds': ruleId,
+                        'files.suggestions.brokenCodyRulesIds': ruleId,
                     },
                 },
                 {
@@ -897,7 +897,7 @@ export class PullRequestsRepository implements IPullRequestsRepository {
                     // that reference the rule before unwinding.
                     $match: {
                         'organizationId': organizationId,
-                        'prLevelSuggestions.brokenKodyRulesIds': ruleId,
+                        'prLevelSuggestions.brokenCodyRulesIds': ruleId,
                     },
                 },
                 {
@@ -907,7 +907,7 @@ export class PullRequestsRepository implements IPullRequestsRepository {
                     $match: {
                         'prLevelSuggestions.deliveryStatus':
                             DeliveryStatus.SENT,
-                        'prLevelSuggestions.brokenKodyRulesIds': ruleId,
+                        'prLevelSuggestions.brokenCodyRulesIds': ruleId,
                     },
                 },
                 {

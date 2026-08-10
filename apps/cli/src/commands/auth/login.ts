@@ -110,7 +110,7 @@ export async function loginAction(options: LoginOptions): Promise<void> {
 }
 
 async function runBrowserLogin(spinner: ReturnType<typeof ora>): Promise<void> {
-    spinner.start(chalk.cyan('Opening Kodus in your browser...'));
+    spinner.start(chalk.cyan('Opening Codus in your browser...'));
 
     const user = await authService.loginViaBrowser({
         onOpenUrl: (url) => {
@@ -156,7 +156,7 @@ async function runLegacyLogin(
     cliInfo(
         chalk.yellow(
             '\n[deprecated] Email + password login is kept for CI scripts. ' +
-                'For interactive use, run `kodus auth login` (without flags) ' +
+                'For interactive use, run `codus auth login` (without flags) ' +
                 'to authenticate via the browser instead.',
         ),
     );

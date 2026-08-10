@@ -1,7 +1,7 @@
 /**
  * GitHub App installation tokens for the e2e harness.
  *
- * WHY: the bot PATs (`kodus-e2e-bot-*`) are abuse-flagged by GitHub down to
+ * WHY: the bot PATs (`codus-e2e-bot-*`) are abuse-flagged by GitHub down to
  * ~60 req/h (healthy accounts get 5000/h), which is the root cause of the
  * quota SKIPs on GitHub cells. A GitHub App's installation token carries its
  * OWN 5000/h budget (scales with repo count), is not subject to the
@@ -13,7 +13,7 @@
  *
  *   GH_APP_ID               — the App's numeric id
  *   GH_APP_PRIVATE_KEY      — PEM private key (literal \n sequences OK)
- *   GH_APP_INSTALLATION_ID  — installation id on the kodus-e2e org
+ *   GH_APP_INSTALLATION_ID  — installation id on the codus-e2e org
  *
  * KNOWN BEHAVIORAL DIFFERENCES (validate before flipping CI to App auth):
  *   - `GET /user` does not work with installation tokens, so
@@ -21,8 +21,8 @@
  *     (ensureLicenseSeat) and per-seat-license-toggle need the PAT path.
  *     The runner therefore prefers the App token ONLY for cloud cells.
  *   - PRs/comments created with the token are authored by `<app-slug>[bot]`,
- *     not a bot user account. Kodus's isKodyComment matches "kody"/"kodus"
- *     logins — an app slug containing those words would make Kody ignore
+ *     not a bot user account. Codus's isCodyComment matches "cody"/"codus"
+ *     logins — an app slug containing those words would make Cody ignore
  *     the harness's own comments. Name the App accordingly (e.g. `e2e-qa-ci`).
  *
  * Tokens live ~1h; we re-mint when less than REFRESH_MARGIN_MS of validity

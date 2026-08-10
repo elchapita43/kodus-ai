@@ -36,17 +36,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
   && apt-get install -y --no-install-recommends \
       ca-certificates python3 make g++ procps git ripgrep
 
-# Copy the bun binary from the official image and install kodus-graph globally.
-ARG KODUS_GRAPH_VERSION=0.3.0
+# Copy the bun binary from the official image and install codus-graph globally.
+ARG CODUS_GRAPH_VERSION=0.3.0
 COPY --from=bun-source /usr/local/bin/bun /usr/local/bin/bun
-RUN bun install -g @kodus/kodus-graph@${KODUS_GRAPH_VERSION}
+RUN bun install -g @codus/codus-graph@${CODUS_GRAPH_VERSION}
 
 RUN npm i -g yalc nodemon @ast-grep/cli
 
 COPY package.json pnpm-lock.yaml .npmrc ./
 COPY nest-cli.json tsconfig*.json ./
 
-COPY packages/kodus-common ./packages/kodus-common
+COPY packages/codus-common ./packages/codus-common
 
 # Build local packages first. Shared pnpm store mount survives across
 # rebuilds so dependency changes don't trigger a full re-download.
@@ -57,19 +57,19 @@ COPY packages/kodus-common ./packages/kodus-common
 # concurrent access (atomic writes), unlike yarn1's cache which needed
 # careful lock handling here historically.
 RUN --mount=type=cache,target=/pnpm-store,sharing=shared \
-    cd packages/kodus-common \
+    cd packages/codus-common \
   && pnpm install --store-dir /pnpm-store \
   && pnpm run prepack
 
 # Install dependencies and link local packages.
 # pnpm-workspace.yaml is copied HERE (not with the manifests above) so the
-# kodus-common sub-build doesn't see /usr/src/app as a workspace
+# codus-common sub-build doesn't see /usr/src/app as a workspace
 # root and install into it (`../..`). Only the root install below needs it —
 # it carries the `overrides` that must match the lockfile under --frozen-lockfile.
 COPY pnpm-workspace.yaml ./
 RUN --mount=type=cache,target=/pnpm-store,sharing=shared \
     pnpm install --frozen-lockfile --store-dir /pnpm-store
-RUN rm -rf node_modules/@kodus/kodus-common && cp -r packages/kodus-common node_modules/@kodus/kodus-common
+RUN rm -rf node_modules/@codus/codus-common && cp -r packages/codus-common node_modules/@codus/codus-common
 
 COPY --chmod=0755 docker/dev-entrypoint.sh /usr/local/bin/dev-entrypoint
 

@@ -55,7 +55,7 @@ function buildMongoUri(): string {
     const user = process.env.API_MG_DB_USERNAME;
     const pass = process.env.API_MG_DB_PASSWORD;
     const auth = user && pass ? `${user}:${encodeURIComponent(pass)}@` : '';
-    const db = process.env.API_MG_DB_DATABASE ?? 'kodus';
+    const db = process.env.API_MG_DB_DATABASE ?? 'codus';
     return `mongodb://${auth}${host}:${port}/${db}?authSource=admin`;
 }
 
@@ -176,7 +176,7 @@ async function main() {
     const uri = buildMongoUri();
     const client = new MongoClient(uri);
     await client.connect();
-    const db = client.db(process.env.API_MG_DB_DATABASE ?? 'kodus');
+    const db = client.db(process.env.API_MG_DB_DATABASE ?? 'codus');
     try {
         if (has('export')) {
             await exportFixture(db, dryRun);

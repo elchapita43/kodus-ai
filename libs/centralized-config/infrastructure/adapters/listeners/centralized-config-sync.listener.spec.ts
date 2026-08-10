@@ -28,10 +28,10 @@ describe('CentralizedConfigSyncListener', () => {
             fetchConfigFile: jest.fn(),
             synchronizeConfigs: jest.fn(),
             removeStaleConfigs: jest.fn(),
-            discoverKodyRulesFiles: jest.fn(),
-            fetchKodyRuleFile: jest.fn(),
-            synchronizeKodyRules: jest.fn(),
-            removeStaleKodyRules: jest.fn(),
+            discoverCodyRulesFiles: jest.fn(),
+            fetchCodyRuleFile: jest.fn(),
+            synchronizeCodyRules: jest.fn(),
+            removeStaleCodyRules: jest.fn(),
         };
 
     beforeEach(async () => {
@@ -70,7 +70,7 @@ describe('CentralizedConfigSyncListener', () => {
             } as any,
             {
                 id: 'centralized-config-repo',
-                name: 'kodus',
+                name: 'codus',
             },
             42,
             [],
@@ -119,7 +119,7 @@ describe('CentralizedConfigSyncListener', () => {
             } as any,
             {
                 id: 'centralized-config-repo',
-                name: 'kodus',
+                name: 'codus',
             },
             42,
             [],
@@ -154,7 +154,7 @@ describe('CentralizedConfigSyncListener', () => {
             } as any,
             {
                 id: 'centralized-config-repo',
-                name: 'kodus',
+                name: 'codus',
             },
             42,
             [],
@@ -187,7 +187,7 @@ describe('CentralizedConfigSyncListener', () => {
             } as any,
             {
                 id: 'centralized-config-repo',
-                name: 'kodus',
+                name: 'codus',
             },
             42,
             [],

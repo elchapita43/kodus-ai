@@ -1,6 +1,6 @@
 ---
 title: "Agentes de IA"
-description: "Integra el CLI de Kodus con agentes de programación de IA para bucles autónomos de revisión y corrección."
+description: "Integra el CLI de Codus con agentes de programación de IA para bucles autónomos de revisión y corrección."
 ---
 
 El CLI incluye un modo de salida mínimo y estructurado (`--prompt-only`) diseñado para que los agentes de programación de IA lo analicen y actúen sobre él. Combinado con una clave de equipo, permite bucles autónomos de revisión y corrección: el agente revisa, aplica correcciones, vuelve a revisar y confirma los cambios, todo sin intervención humana en el flujo crítico.
@@ -12,21 +12,21 @@ El CLI incluye un modo de salida mínimo y estructurado (`--prompt-only`) diseñ
 - **Codex** — skill nativo.
 - **Windsurf** — mediante salida `--prompt-only`.
 
-Para cualquier otro agente que pueda ejecutar comandos de shell y analizar texto estructurado, `kodus review --prompt-only` funciona de inmediato.
+Para cualquier otro agente que pueda ejecutar comandos de shell y analizar texto estructurado, `codus review --prompt-only` funciona de inmediato.
 
 ## Configuración más rápida
 
 Instala el CLI junto con todos los skills de agentes de una sola vez:
 
 ```bash
-curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
+curl -fsSL https://review-skill.com/install | bash -s -- --team-key codus_xxxxx
 ```
 
 Esto:
 
-1. Instala el binario `@kodus/cli` globalmente.
-2. Configura la clave de equipo en `~/.kodus/config.json`.
-3. Despliega los skills de Kodus en todos los agentes detectados (Claude Code, Cursor, Codex, Windsurf).
+1. Instala el binario `@codus/cli` globalmente.
+2. Configura la clave de equipo en `~/.codus/config.json`.
+3. Despliega los skills de Codus en todos los agentes detectados (Claude Code, Cursor, Codex, Windsurf).
 
 Sin inicios de sesión individuales. Sin indicaciones interactivas. Listo para bucles de agentes de inmediato.
 
@@ -35,7 +35,7 @@ Sin inicios de sesión individuales. Sin indicaciones interactivas. Listo para b
 <Steps>
   <Step title="El agente ejecuta la revisión">
     ```bash
-    kodus review --prompt-only
+    codus review --prompt-only
     ```
 
     El CLI devuelve problemas estructurados con rutas de archivos, números de línea, severidades y correcciones sugeridas, en un formato de texto compacto diseñado para que un LLM lo consuma.
@@ -45,13 +45,13 @@ Sin inicios de sesión individuales. Sin indicaciones interactivas. Listo para b
   </Step>
   <Step title="El agente vuelve a ejecutar la revisión">
     ```bash
-    kodus review --prompt-only --fail-on error
+    codus review --prompt-only --fail-on error
     ```
 
     Con `--fail-on error`, el bucle termina con código distinto de cero mientras haya problemas de nivel error o superior. El agente continúa en bucle; cuando la revisión sale limpia, el proceso termina con código 0 y el agente avanza.
   </Step>
   <Step title="El agente confirma y envía los cambios">
-    Una vez que la revisión está limpia, el agente confirma y envía los cambios. Opcionalmente, instala el hook pre-push (`kodus hook install`) como red de seguridad adicional para envíos manuales.
+    Una vez que la revisión está limpia, el agente confirma y envía los cambios. Opcionalmente, instala el hook pre-push (`codus hook install`) como red de seguridad adicional para envíos manuales.
   </Step>
 </Steps>
 
@@ -60,8 +60,8 @@ Sin inicios de sesión individuales. Sin indicaciones interactivas. Listo para b
 Las claves de equipo son muy recomendables para los agentes: sin registro individual, sin inicio de sesión interactivo, rotación sencilla, seguimiento por dispositivo.
 
 ```bash
-export KODUS_TEAM_KEY=kodus_xxxxx
-kodus review --prompt-only
+export CODUS_TEAM_KEY=codus_xxxxx
+codus review --prompt-only
 ```
 
 Genera una clave en <a href="https://app.kodus.io/organization/cli-keys" target="_blank">app.kodus.io/organization/cli-keys</a> y distribuye el comando de instalación que se muestra allí a tu equipo.
@@ -82,13 +82,13 @@ Genera una clave en <a href="https://app.kodus.io/organization/cli-keys" target=
 
 ```bash
 # En una sesión de Claude Code, el agente puede ejecutar:
-kodus review --prompt-only --fail-on error    # revisión general
-kodus pr business-validation --task-id KC-1441 --dry-run   # verificar contra la tarea
-kodus review --prompt-only --fix               # aplicar automáticamente los problemas corregibles
+codus review --prompt-only --fail-on error    # revisión general
+codus pr business-validation --task-id KC-1441 --dry-run   # verificar contra la tarea
+codus review --prompt-only --fix               # aplicar automáticamente los problemas corregibles
 git commit -am "fix: KC-1441 address review findings"
 ```
 
-Con el instalador de skills, el skill de Kodus de Claude Code sabe cuándo invocar cada uno de estos comandos, sin necesidad de ingeniería de prompts de tu parte.
+Con el instalador de skills, el skill de Codus de Claude Code sabe cuándo invocar cada uno de estos comandos, sin necesidad de ingeniería de prompts de tu parte.
 
 ## Relacionado
 

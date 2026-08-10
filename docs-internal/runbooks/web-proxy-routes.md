@@ -29,7 +29,7 @@ real upstream URL from runtime `process.env`, and forwards.
 
 ```
 ┌─────────┐     same-origin       ┌────────────┐     internal net    ┌─────────┐
-│ browser │ ─── /api/proxy/api ──▶│ Next server│ ─── kodus-api:3001 ▶│ backend │
+│ browser │ ─── /api/proxy/api ──▶│ Next server│ ─── codus-api:3001 ▶│ backend │
 └─────────┘                       └────────────┘                     └─────────┘
             (cookie, headers forward)        (adds Host, streams body)
 ```
@@ -38,7 +38,7 @@ Three proxies, one per upstream:
 
 | Route prefix           | Upstream service        | Env vars resolved                                          |
 |------------------------|-------------------------|------------------------------------------------------------|
-| `/api/proxy/api/*`     | Kodus backend API       | `WEB_HOSTNAME_API`, `WEB_PORT_API`, `GLOBAL_API_CONTAINER_NAME` |
+| `/api/proxy/api/*`     | Codus backend API       | `WEB_HOSTNAME_API`, `WEB_PORT_API`, `GLOBAL_API_CONTAINER_NAME` |
 | `/api/proxy/mcp/*`     | MCP Manager service     | `WEB_HOSTNAME_MCP_MANAGER`, `WEB_PORT_MCP_MANAGER`, `GLOBAL_MCP_MANAGER_CONTAINER_NAME` |
 | `/api/proxy/billing/*` | Billing service         | `WEB_HOSTNAME_BILLING`, `WEB_PORT_BILLING`, `GLOBAL_BILLING_CONTAINER_NAME` |
 
@@ -104,11 +104,11 @@ All three share `apps/web/src/app/api/proxy/_lib/create-proxy-handler.ts`.
 **Cause**: you shouldn't see this anymore, but if you do:
 
 1. Check if something new was added to `next.config.js`'s `env:` block — that inlines at build time.
-2. Check for module-scope literal strings like `"http://kodus_api:3001"` in client code.
+2. Check for module-scope literal strings like `"http://codus_api:3001"` in client code.
 3. Bundle inspection:
    ```bash
    cd apps/web/.next/static
-   grep -rhE "(kodus_api|mcp\.internal|\.internal:)" .
+   grep -rhE "(codus_api|mcp\.internal|\.internal:)" .
    ```
    Expected output: nothing.
 

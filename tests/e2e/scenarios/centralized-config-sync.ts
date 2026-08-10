@@ -26,7 +26,7 @@ import {
     ghWaitFileContains,
     ghWaitFileGone,
 } from "../lib/gh-contents.js";
-import type { KodusSession, RunContext, Scenario, TargetContext } from "../lib/types.js";
+import type { CodusSession, RunContext, Scenario, TargetContext } from "../lib/types.js";
 
 // ---------------------------------------------------------------------------
 // Centralized Config (config-as-code) — COMPREHENSIVE end-to-end.
@@ -36,11 +36,11 @@ import type { KodusSession, RunContext, Scenario, TargetContext } from "../lib/t
 // deterministic regardless of what a previous run left behind:
 //
 //   1. Lifecycle: status(off) → init(manual) → status(on) → re-init rejected.
-//   2. Scope hierarchy: global + repository + directory kodus-config.yml files
+//   2. Scope hierarchy: global + repository + directory codus-config.yml files
 //      (the repo-scope folder is the SOURCE REPO ITSELF — using a review
 //      fixture repo like tiny-url here would re-register its webhook and
 //      steal events from concurrently running matrix tenants).
-//   3. Rules + memories: .kody-rules/review/ + .kody-rules/memories/ at global
+//   3. Rules + memories: .cody-rules/review/ + .cody-rules/memories/ at global
 //      scope, plus a repo-scoped review rule.
 //   4. Update semantics: changed file values replace old ones (no duplicates).
 //   5. Stale removal: deleting files removes the corresponding config scope
@@ -49,10 +49,10 @@ import type { KodusSession, RunContext, Scenario, TargetContext } from "../lib/t
 //      manual sync call — propagates via the pull-request.closed listener
 //      (the production trigger path).
 //   7. PENDING mutation flow: while centralized is ON, creating a rule via
-//      the API must NOT land directly — Kodus opens a PR on the source repo
+//      the API must NOT land directly — Codus opens a PR on the source repo
 //      and only the merge makes it active; deletion mirrors it
 //      (create→PR→merge→active, delete→PR→merge→gone).
-//   8. init(syncOption=pr): Kodus opens the initialization PR with the
+//   8. init(syncOption=pr): Codus opens the initialization PR with the
 //      current settings; the scenario asserts it exists and closes it.
 //   9. disable → status(off).
 //
@@ -65,7 +65,7 @@ import type { KodusSession, RunContext, Scenario, TargetContext } from "../lib/t
 // PRs there). Skips cleanly when unset.
 //
 // Out of scope (deliberate): review-time effect of synced rules — that is
-// kody-rules-create-and-apply's job and needs a full LLM review round.
+// cody-rules-create-and-apply's job and needs a full LLM review round.
 // ---------------------------------------------------------------------------
 
 const PASSWORD = "E2eCentralized!2026x";
@@ -92,14 +92,14 @@ function configYml(sentinel: string): string {
 function ruleYml(title: string, marker: string): string {
     return [
         "# E2E centralized-config fixture rule (scope value must be the",
-        "# hyphenated enum form — see KodyRulesScope).",
+        "# hyphenated enum form — see CodyRulesScope).",
         `title: ${title}`,
         "severity: medium",
         "scope: pull-request",
         "path: '**/*'",
         "rule: |",
         `    E2E fixture rule. Body marker: ${marker}. Flag the literal string`,
-        "    __kodus_e2e_centralized_marker__ anywhere in the diff.",
+        "    __codus_e2e_centralized_marker__ anywhere in the diff.",
         "",
     ].join("\n");
 }
@@ -114,10 +114,10 @@ function memoryYml(title: string, marker: string): string {
     ].join("\n");
 }
 
-// Defensive walk of /kody-rules/find-by-organization-id: collect every object
+// Defensive walk of /cody-rules/find-by-organization-id: collect every object
 // carrying BOTH a title and a status, so assertions can distinguish "active"
 // from "soft-deleted but still serialized" without pinning the exact response
-// nesting (same approach as kody-rules.ts findRuleStatusById).
+// nesting (same approach as cody-rules.ts findRuleStatusById).
 function collectRuleEntries(
     node: unknown,
     out: Array<{
@@ -155,7 +155,7 @@ function collectRuleEntries(
 
 async function fetchCodeReviewConfig(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<unknown> {
     const resp = await http(
         `${target.apiBaseUrl}/parameters/find-by-key?key=code_review_config&teamId=${encodeURIComponent(session.teamId)}`,
@@ -169,10 +169,10 @@ async function fetchCodeReviewConfig(
 
 async function fetchRules(
     target: TargetContext,
-    session: KodusSession,
+    session: CodusSession,
 ): Promise<unknown> {
     const resp = await http(
-        `${target.apiBaseUrl}/kody-rules/find-by-organization-id`,
+        `${target.apiBaseUrl}/cody-rules/find-by-organization-id`,
         {
             headers: { Authorization: `Bearer ${session.accessToken}` },
             timeoutMs: 20_000,
@@ -238,21 +238,21 @@ export const centralizedConfigSync: Scenario = {
         const RRM1 = `rrule-marker-${uniq}-v1`; // repo rule is never updated — own namespace
 
         const FILES = {
-            global: "kodus-config.yml",
-            repo: `${repoFolder}/kodus-config.yml`,
-            dir: `${repoFolder}/src/kodus-config.yml`,
-            ruleGlobal: ".kody-rules/review/e2e-centralized-rule-global.yml",
-            memoryGlobal: ".kody-rules/memories/e2e-centralized-memory.yml",
-            ruleRepo: `${repoFolder}/.kody-rules/review/e2e-centralized-rule-repo.yml`,
+            global: "codus-config.yml",
+            repo: `${repoFolder}/codus-config.yml`,
+            dir: `${repoFolder}/src/codus-config.yml`,
+            ruleGlobal: ".cody-rules/review/e2e-centralized-rule-global.yml",
+            memoryGlobal: ".cody-rules/memories/e2e-centralized-memory.yml",
+            ruleRepo: `${repoFolder}/.cody-rules/review/e2e-centralized-rule-repo.yml`,
         } as const;
 
         // ------------------------------------------------------------------
         // Phase 0 — throwaway org + integration + source repo + team key.
         // ------------------------------------------------------------------
-        const email = `e2e-centralized-${Date.now()}@kodus.local`;
+        const email = `e2e-centralized-${Date.now()}@codus.local`;
         await signUp(ctx.target, { email, password: PASSWORD });
         const session = await login(ctx.target, { email, password: PASSWORD });
-        await ctx.kodus.registerIntegration(session);
+        await ctx.codus.registerIntegration(session);
         const sourceRepo = await selectRepoByFullName(
             ctx.target,
             session,
@@ -321,7 +321,7 @@ export const centralizedConfigSync: Scenario = {
             await ghPutFile(sourceRepoFullName!, FILES.memoryGlobal, memoryYml(MEMORY_TITLE, MEM1), `e2e ${uniq}: seed memory`);
             await ghPutFile(sourceRepoFullName!, FILES.ruleRepo, ruleYml(RULE_REPO_TITLE, RRM1), `e2e ${uniq}: seed repo rule`);
 
-            // Read-your-writes: don't ask Kodus to sync until GitHub serves
+            // Read-your-writes: don't ask Codus to sync until GitHub serves
             // the seeded content back — a lagging tree read would make the
             // sync legitimately import stale state and fail the assertions.
             await ghWaitFileContains(sourceRepoFullName!, FILES.global, G1);
@@ -439,7 +439,7 @@ export const centralizedConfigSync: Scenario = {
             // it up. Generous budget: webhook delivery + listener + sync.
             // --------------------------------------------------------------
             // A single GitHub webhook delivery can genuinely get lost — that
-            // is a transient infrastructure event, not a Kodus regression.
+            // is a transient infrastructure event, not a Codus regression.
             // One retry with a SECOND merged PR separates the two: a lost
             // delivery passes on the retry; a broken listener fails both.
             const mergeStart = Date.now();
@@ -481,13 +481,13 @@ export const centralizedConfigSync: Scenario = {
 
             // --------------------------------------------------------------
             // Phase 6 — PENDING flow: while centralized is ON, a rule
-            // mutation via the API must NOT land directly — Kodus opens a PR
+            // mutation via the API must NOT land directly — Codus opens a PR
             // on the source repo and parks the rule as pending; merging the
             // PR is what makes it active (and deletion mirrors it).
             // --------------------------------------------------------------
             const pendingTitle = `e2e-pending-rule-${uniq}`;
             const createResp = await httpRetryTransient(
-                `${ctx.target.apiBaseUrl}/kody-rules/create-or-update`,
+                `${ctx.target.apiBaseUrl}/cody-rules/create-or-update`,
                 {
                     method: "POST",
                     headers: { Authorization: `Bearer ${session.accessToken}` },
@@ -523,7 +523,7 @@ export const centralizedConfigSync: Scenario = {
             const mutationPr = await pollUntil<{ number: number }>(
                 async () => {
                     const open = await ghListOpenPRs(sourceRepoFullName!);
-                    return open.find((p) => /kody rule/i.test(p.title)) ?? null;
+                    return open.find((p) => /cody rule/i.test(p.title)) ?? null;
                 },
                 { intervalSec: 3, timeoutSec: 45 },
             );
@@ -560,7 +560,7 @@ export const centralizedConfigSync: Scenario = {
                 `Could not resolve uuid for "${pendingTitle}" after it became active`,
             );
             const delResp = await httpRetryTransient(
-                `${ctx.target.apiBaseUrl}/kody-rules/delete-rule-in-organization-by-id?ruleId=${encodeURIComponent(ruleUuid!)}&teamId=${encodeURIComponent(session.teamId)}`,
+                `${ctx.target.apiBaseUrl}/cody-rules/delete-rule-in-organization-by-id?ruleId=${encodeURIComponent(ruleUuid!)}&teamId=${encodeURIComponent(session.teamId)}`,
                 {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${session.accessToken}` },
@@ -574,7 +574,7 @@ export const centralizedConfigSync: Scenario = {
             const deletePr = await pollUntil<{ number: number }>(
                 async () => {
                     const open = await ghListOpenPRs(sourceRepoFullName!);
-                    return open.find((p) => /kody rule/i.test(p.title)) ?? null;
+                    return open.find((p) => /cody rule/i.test(p.title)) ?? null;
                 },
                 { intervalSec: 3, timeoutSec: 45 },
             );
@@ -599,7 +599,7 @@ export const centralizedConfigSync: Scenario = {
 
             // --------------------------------------------------------------
             // Phase 7 — init(syncOption=pr): disable, re-init in PR mode,
-            // assert Kodus opened the initialization PR, close it.
+            // assert Codus opened the initialization PR, close it.
             // --------------------------------------------------------------
             const disable1 = await disable(ctx.target, teamKey);
             ctx.assert(disable1.success, `disable (pre init-pr) failed: ${JSON.stringify(disable1)}`);

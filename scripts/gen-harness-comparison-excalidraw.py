@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Excalidraw: Kodus code-review harness vs competitors (positioning map + cards)."""
+"""Excalidraw: Codus code-review harness vs competitors (positioning map + cards)."""
 import json, os
 
 elements = []
@@ -77,14 +77,14 @@ def line(eid, x1, y1, x2, y2, color="#1e1e1e", sw=2, arrowhead="arrow"):
     })
 
 # ---------- colors ----------
-KOD = "#ff8787"   # Kodus (highlight red)
+KOD = "#ff8787"   # Codus (highlight red)
 ANT = "#ffd43b"
 GRE = "#69db7c"
 CUR = "#4dabf7"
 CUB = "#da77f2"
 COD = "#ffa94d"
 
-ftext("title", 380, -120, "Harness de code review — Kodus vs concorrentes", 30)
+ftext("title", 380, -120, "Harness de code review — Codus vs concorrentes", 30)
 ftext("sub", 380, -82,
       "eixo X: topologia do agente · eixo Y: poder de retrieval de contexto · fonte: blogs/docs (2025-26)",
       14, "#495057", w=900)
@@ -105,8 +105,8 @@ def P(fx, fy):  # fractional 0..1 -> absolute (y inverted)
     return (MX + fx * MW, MY + (1 - fy) * MH)
 
 # points: (fx=topology, fy=context power)
-px, py = P(0.12, 0.30); dot("p_kod", px, py, "Kodus  (hoje: generalist)", KOD, stroke="#e03131", r=18, sw=3, lbl_color="#e03131")
-px, py = P(0.55, 0.30); dot("p_kodd", px, py, "Kodus deep (trio, off)", "#ffffff", stroke="#e03131", r=13, sw=2, lbl_color="#e03131")
+px, py = P(0.12, 0.30); dot("p_kod", px, py, "Codus  (hoje: generalist)", KOD, stroke="#e03131", r=18, sw=3, lbl_color="#e03131")
+px, py = P(0.55, 0.30); dot("p_kodd", px, py, "Codus deep (trio, off)", "#ffffff", stroke="#e03131", r=13, sw=2, lbl_color="#e03131")
 line("kod_arrow", *P(0.12, 0.27), *P(0.55, 0.27), color="#e03131", sw=2)
 ftext("kod_arrow_l", MX + 0.20 * MW, MY + (1 - 0.20) * MH, "capacidade latente →", 12, "#e03131", w=200)
 
@@ -121,7 +121,7 @@ CY = MY + MH + 80
 ftext("cards_hdr", MX, CY - 34, "Detalhe por harness  (D=documentado · ?=não documentado)", 16, "#495057", w=700)
 
 cards = [
-    ("c_kod", KOD, "Kodus (atual)",
+    ("c_kod", KOD, "Codus (atual)",
      "Loop: 1 generalist agêntico\n"
      "Contexto: grep/readFile textual\n+ cross-file planner (E2B)\n"
      "Verify: AST + lint + LLM (conf 1-10)\n"
@@ -164,7 +164,7 @@ for i, (eid, color, title, body) in enumerate(cards):
     box(eid + "_b", cxp, cyp + 34, cw, ch - 34, body, "#ffffff",
         stroke="#ced4da", fs=11.5, align="left")
 
-# highlight Kodus card border
+# highlight Codus card border
 kh = next(e for e in elements if e["id"] == "c_kod_h")
 kh["strokeColor"] = "#e03131"; kh["strokeWidth"] = 3
 kb = next(e for e in elements if e["id"] == "c_kod_b")
@@ -181,7 +181,7 @@ box("take", MX, TY, MW, 150,
     "#fff9db", stroke="#f08c00", fs=13, align="left")
 
 out = {
-    "type": "excalidraw", "version": 2, "source": "kodus-harness-comparison",
+    "type": "excalidraw", "version": 2, "source": "codus-harness-comparison",
     "elements": elements,
     "appState": {"gridSize": None, "viewBackgroundColor": "#ffffff"},
     "files": {},

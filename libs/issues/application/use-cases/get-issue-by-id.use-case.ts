@@ -5,7 +5,7 @@ import {
     CODE_REVIEW_FEEDBACK_SERVICE_TOKEN,
     ICodeReviewFeedbackService,
 } from '@libs/code-review/domain/codeReviewFeedback/contracts/codeReviewFeedback.service.contract';
-import { KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/KodyIssuesManagement.contract';
+import { CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN } from '@libs/code-review/domain/contracts/CodyIssuesManagement.contract';
 import { IntegrationConfigKey } from '@libs/core/domain/enums/Integration-config-key.enum';
 import { PlatformType } from '@libs/core/domain/enums/platform-type.enum';
 import { IUseCase } from '@libs/core/domain/interfaces/use-case.interface';
@@ -24,8 +24,8 @@ import {
 } from '@libs/issues/domain/contracts/issues.service.contract';
 
 import { IssuesEntity } from '@libs/issues/domain/entities/issues.entity';
-import { IIssueDetails } from '@libs/issues/domain/interfaces/kodyIssuesManagement.interface';
-import { KodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/kodyIssuesManagement.service';
+import { IIssueDetails } from '@libs/issues/domain/interfaces/codyIssuesManagement.interface';
+import { CodyIssuesManagementService } from '@libs/issues/infrastructure/adapters/service/codyIssuesManagement.service';
 
 @Injectable()
 export class GetIssueByIdUseCase implements IUseCase {
@@ -36,8 +36,8 @@ export class GetIssueByIdUseCase implements IUseCase {
         @Inject(CODE_REVIEW_FEEDBACK_SERVICE_TOKEN)
         private readonly codeReviewFeedbackService: ICodeReviewFeedbackService,
 
-        @Inject(KODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
-        private readonly kodyIssuesManagementService: KodyIssuesManagementService,
+        @Inject(CODY_ISSUES_MANAGEMENT_SERVICE_TOKEN)
+        private readonly codyIssuesManagementService: CodyIssuesManagementService,
 
         @Inject(INTEGRATION_CONFIG_SERVICE_TOKEN)
         private readonly integrationConfigService: IIntegrationConfigService,
@@ -104,7 +104,7 @@ export class GetIssueByIdUseCase implements IUseCase {
         const prUrls = await this.selectAllPrNumbers(issue, dataToBuildUrls);
 
         const enrichedContributingSuggestions =
-            await this.kodyIssuesManagementService.enrichContributingSuggestions(
+            await this.codyIssuesManagementService.enrichContributingSuggestions(
                 issue.contributingSuggestions,
                 issue.organizationId,
             );
@@ -113,7 +113,7 @@ export class GetIssueByIdUseCase implements IUseCase {
             id: issue.uuid,
             title: issue.title,
             description: issue.description,
-            age: await this.kodyIssuesManagementService.ageCalculation(issue),
+            age: await this.codyIssuesManagementService.ageCalculation(issue),
             label: issue.label,
             severity: issue.severity,
             status: issue.status,

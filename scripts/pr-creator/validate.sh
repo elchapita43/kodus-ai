@@ -2,7 +2,7 @@
 
 # Script de validação do PR Creator
 
-echo "🔍 Validando Kodus PR Creator\n"
+echo "🔍 Validando Codus PR Creator\n"
 
 # 1. Check Node.js
 if ! command -v node &> /dev/null; then
@@ -65,17 +65,17 @@ else
 
     # Check .env required fields
     source .env
-    if [ -z "$KODUS_EMAIL" ] || [ "$KODUS_EMAIL" = "seu@email.com" ]; then
+    if [ -z "$CODUS_EMAIL" ] || [ "$CODUS_EMAIL" = "seu@email.com" ]; then
         echo ""
-        echo "⚠️  Configure KODUS_EMAIL no .env"
+        echo "⚠️  Configure CODUS_EMAIL no .env"
     else
-        echo "✅ KODUS_EMAIL configurado"
+        echo "✅ CODUS_EMAIL configurado"
     fi
 
-    if [ -z "$KODUS_PASSWORD" ] || [ "$KODUS_PASSWORD" = "sua-senha" ]; then
-        echo "⚠️  Configure KODUS_PASSWORD no .env"
+    if [ -z "$CODUS_PASSWORD" ] || [ "$CODUS_PASSWORD" = "sua-senha" ]; then
+        echo "⚠️  Configure CODUS_PASSWORD no .env"
     else
-        echo "✅ KODUS_PASSWORD configurado"
+        echo "✅ CODUS_PASSWORD configurado"
     fi
 fi
 
@@ -86,8 +86,8 @@ echo "1. Editar o .env:"
 echo "   nano .env"
 echo ""
 echo "2. Configurar:"
-echo "   - KODUS_EMAIL (obrigatório)"
-echo "   - KODUS_PASSWORD (obrigatório)"
+echo "   - CODUS_EMAIL (obrigatório)"
+echo "   - CODUS_PASSWORD (obrigatório)"
 echo "   - TOTAL_PRS (opcional, padrão: 10)"
 echo "   - TARGET_BRANCH (opcional, padrão: main)"
 echo ""

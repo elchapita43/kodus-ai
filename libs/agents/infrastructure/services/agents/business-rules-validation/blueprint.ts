@@ -389,7 +389,7 @@ export function createBusinessRulesBlueprint(
                 output: hasValidationResultSchema,
             },
             skill: SKILL_NAME,
-            agentName: `kodus-${SKILL_NAME}-analyzer`,
+            agentName: `codus-${SKILL_NAME}-analyzer`,
         },
     ];
 }

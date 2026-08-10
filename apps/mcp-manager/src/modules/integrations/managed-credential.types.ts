@@ -1,7 +1,7 @@
 import { MCPIntegrationAuthType } from './enums/integration.enum';
 
 /**
- * A per-org static-token credential for a managed (kodusmcp) integration when
+ * A per-org static-token credential for a managed (codusmcp) integration when
  * the user chose a bring-your-own-token auth method instead of OAuth (e.g.
  * Linear/Fireflies bearer token, or Jira `email`+`apiToken`+`cloudId`).
  *

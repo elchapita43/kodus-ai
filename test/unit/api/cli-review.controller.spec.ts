@@ -50,7 +50,7 @@ const TEAM_ID = 'team-uuid-2222';
 const USER_EMAIL = 'dev@kodus.io';
 const DEVICE_ID = 'device-uuid-4444';
 const DEVICE_TOKEN = 'raw-device-token-5555';
-const TEAM_KEY = 'kodus_test-team-key-1234';
+const TEAM_KEY = 'codus_test-team-key-1234';
 
 const JWT_PAYLOAD = {
     email: USER_EMAIL,
@@ -86,7 +86,7 @@ const MINIMAL_BODY: CliReviewRequestDto = {
 const SESSION_CAPTURE_BODY = {
     branch: 'feat/auth',
     sha: 'a1b2c3d4e5f6',
-    orgRepo: 'kodustech/cli',
+    orgRepo: 'elchapita43/cli',
     agent: 'claude-code',
     event: 'stop',
     signals: {
@@ -506,7 +506,7 @@ describe('CliReviewController', () => {
             expect(result).toEqual({ suggestions: [] });
         });
 
-        it('executes review when team key is sent via Bearer header with kodus_ prefix', async () => {
+        it('executes review when team key is sent via Bearer header with codus_ prefix', async () => {
             mockTeamCliKeyService.validateKey.mockResolvedValue(TEAM_KEY_DATA);
 
             await controller.review(
@@ -617,7 +617,7 @@ describe('CliReviewController', () => {
             expect(result).toEqual({ id: 'cap_abc123', accepted: true });
         });
 
-        it('submits capture with team key sent via Bearer kodus_ token', async () => {
+        it('submits capture with team key sent via Bearer codus_ token', async () => {
             mockTeamCliKeyService.validateKey.mockResolvedValue(TEAM_KEY_DATA);
 
             await controller.submitSessionCapture(
@@ -724,7 +724,7 @@ describe('CliReviewController', () => {
                 expect(result.organization.id).toBe(ORG_ID);
             });
 
-            it('returns valid=true when team key is sent via Bearer kodus_', async () => {
+            it('returns valid=true when team key is sent via Bearer codus_', async () => {
                 mockTeamCliKeyService.validateKey.mockResolvedValue(
                     TEAM_KEY_DATA,
                 );
@@ -745,7 +745,7 @@ describe('CliReviewController', () => {
                 mockTeamCliKeyService.validateKey.mockResolvedValue(null);
 
                 const result = await runValidate(
-                    'kodus_invalid',
+                    'codus_invalid',
                     undefined,
                     undefined,
                 );
@@ -939,7 +939,7 @@ describe('CliReviewController', () => {
                 const res = makeRes();
 
                 await controller.validateKey(
-                    'kodus_bad',
+                    'codus_bad',
                     undefined,
                     undefined,
                     undefined,
@@ -1026,7 +1026,7 @@ describe('CliReviewController', () => {
         });
 
         describe('Device tracking', () => {
-            it('sets x-kodus-device-token header when new device is registered', async () => {
+            it('sets x-codus-device-token header when new device is registered', async () => {
                 mockTeamCliKeyService.validateKey.mockResolvedValue(
                     TEAM_KEY_DATA,
                 );
@@ -1041,12 +1041,12 @@ describe('CliReviewController', () => {
                     undefined,
                     DEVICE_ID,
                     undefined,
-                    'Kodus-CLI/1.0',
+                    'Codus-CLI/1.0',
                     res,
                 );
 
                 expect(res.setHeader).toHaveBeenCalledWith(
-                    'x-kodus-device-token',
+                    'x-codus-device-token',
                     'new-raw-token',
                 );
                 expect(res.json).toHaveBeenCalledWith(
@@ -1069,14 +1069,14 @@ describe('CliReviewController', () => {
                     undefined,
                     DEVICE_ID,
                     DEVICE_TOKEN,
-                    'Kodus-CLI/1.0',
+                    'Codus-CLI/1.0',
                     res,
                 );
 
                 expect(res.setHeader).not.toHaveBeenCalled();
             });
 
-            it('skips device tracking when no x-kodus-device-id', async () => {
+            it('skips device tracking when no x-codus-device-id', async () => {
                 mockTeamCliKeyService.validateKey.mockResolvedValue(
                     TEAM_KEY_DATA,
                 );
@@ -1116,7 +1116,7 @@ describe('CliReviewController', () => {
                     undefined,
                     DEVICE_ID,
                     undefined,
-                    'Kodus-CLI/1.0',
+                    'Codus-CLI/1.0',
                     res,
                 );
 
@@ -1177,7 +1177,7 @@ describe('CliReviewController', () => {
             );
         });
 
-        it('sets x-kodus-device-token header for new device', async () => {
+        it('sets x-codus-device-token header for new device', async () => {
             mockTeamCliKeyService.validateKey.mockResolvedValue(TEAM_KEY_DATA);
             mockCliDeviceService.validateOrRegisterDevice.mockResolvedValue({
                 deviceToken: 'post-token',
@@ -1190,12 +1190,12 @@ describe('CliReviewController', () => {
                 undefined,
                 DEVICE_ID,
                 undefined,
-                'Kodus-CLI/1.0',
+                'Codus-CLI/1.0',
                 res,
             );
 
             expect(res.setHeader).toHaveBeenCalledWith(
-                'x-kodus-device-token',
+                'x-codus-device-token',
                 'post-token',
             );
         });
@@ -1223,7 +1223,7 @@ describe('CliReviewController', () => {
                 TEAM_ID,
                 DEVICE_ID,
                 undefined,
-                'Kodus-CLI/1.0',
+                'Codus-CLI/1.0',
                 undefined, // asyncHeader
                 res,
             );
@@ -1234,10 +1234,10 @@ describe('CliReviewController', () => {
                 deviceId: DEVICE_ID,
                 deviceToken: undefined,
                 organizationId: ORG_ID,
-                userAgent: 'Kodus-CLI/1.0',
+                userAgent: 'Codus-CLI/1.0',
             });
             expect(res.setHeader).toHaveBeenCalledWith(
-                'x-kodus-device-token',
+                'x-codus-device-token',
                 'new-raw-token',
             );
             expect(result).toEqual(
@@ -1256,7 +1256,7 @@ describe('CliReviewController', () => {
                 TEAM_ID,
                 DEVICE_ID,
                 DEVICE_TOKEN,
-                'Kodus-CLI/1.0',
+                'Codus-CLI/1.0',
                 undefined, // asyncHeader
                 res,
             );
@@ -1278,13 +1278,13 @@ describe('CliReviewController', () => {
                 TEAM_ID,
                 DEVICE_ID,
                 'wrong-token',
-                'Kodus-CLI/1.0',
+                'Codus-CLI/1.0',
                 undefined, // asyncHeader
                 res,
             );
 
             expect(res.setHeader).toHaveBeenCalledWith(
-                'x-kodus-device-token',
+                'x-codus-device-token',
                 'reissued-token',
             );
             expect(result).toEqual(
@@ -1292,7 +1292,7 @@ describe('CliReviewController', () => {
             );
         });
 
-        it('no x-kodus-device-id header skips device tracking', async () => {
+        it('no x-codus-device-id header skips device tracking', async () => {
             const result = await controller.review(
                 MINIMAL_BODY,
                 undefined,
@@ -1327,7 +1327,7 @@ describe('CliReviewController', () => {
                     TEAM_ID,
                     DEVICE_ID,
                     undefined,
-                    'Kodus-CLI/1.0',
+                    'Codus-CLI/1.0',
                 );
                 fail('Should have thrown');
             } catch (error) {
@@ -1352,7 +1352,7 @@ describe('CliReviewController', () => {
                 undefined,
                 DEVICE_ID,
                 undefined,
-                'Kodus-CLI/1.0',
+                'Codus-CLI/1.0',
                 undefined, // asyncHeader
                 res,
             );
@@ -1363,10 +1363,10 @@ describe('CliReviewController', () => {
                 deviceId: DEVICE_ID,
                 deviceToken: undefined,
                 organizationId: ORG_ID,
-                userAgent: 'Kodus-CLI/1.0',
+                userAgent: 'Codus-CLI/1.0',
             });
             expect(res.setHeader).toHaveBeenCalledWith(
-                'x-kodus-device-token',
+                'x-codus-device-token',
                 'team-key-device-token',
             );
             expect(result).toEqual(

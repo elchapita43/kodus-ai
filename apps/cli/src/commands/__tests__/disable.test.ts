@@ -24,7 +24,7 @@ import {
 let tmpDir: string;
 
 beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'kodus-disable-test-'));
+    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'codus-disable-test-'));
     await fs.mkdir(path.join(tmpDir, '.git', 'hooks'), { recursive: true });
     vi.mocked(gitService.getGitRoot).mockResolvedValue(tmpDir);
 
@@ -56,7 +56,7 @@ describe('disableAction', () => {
                                     {
                                         type: 'command',
                                         command:
-                                            'kodus decisions capture --agent claude-compatible --event user-prompt-submit',
+                                            'codus decisions capture --agent claude-compatible --event user-prompt-submit',
                                     },
                                 ],
                             },
@@ -68,7 +68,7 @@ describe('disableAction', () => {
                                     {
                                         type: 'command',
                                         command:
-                                            'kodus decisions capture --agent claude-compatible --event stop',
+                                            'codus decisions capture --agent claude-compatible --event stop',
                                     },
                                 ],
                             },

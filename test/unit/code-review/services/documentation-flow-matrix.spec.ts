@@ -2,7 +2,7 @@ import {
     BYOKProviderService,
     LLMProviderService,
     PromptRunnerService,
-} from '@kodus/kodus-common/llm';
+} from '@codus/codus-common/llm';
 import { DocumentationLLMPlannerService } from '@libs/code-review/infrastructure/adapters/services/documentation-llm-planner.service';
 import { DocumentationSearchExaService } from '@libs/code-review/infrastructure/adapters/services/documentation-search-exa.service';
 import { RepositoryPackageReference } from '@libs/code-review/pipeline/context/code-review-pipeline.context';

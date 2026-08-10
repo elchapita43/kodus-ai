@@ -8,7 +8,7 @@ import {
     ICodeReviewSettingsLogService,
 } from '../domain/contracts/codeReviewSettingsLog.service.contract';
 import { CodeReviewConfigLogParams } from '../infrastructure/adapters/services/codeReviewConfigLog.handler';
-import { KodyRuleLogParams } from '../infrastructure/adapters/services/kodyRulesLog.handler';
+import { CodyRuleLogParams } from '../infrastructure/adapters/services/codyRulesLog.handler';
 import {
     RepositoriesLogParams,
     RepositoryConfigRemovalParams,
@@ -45,14 +45,14 @@ export class AuditLogListener {
         }
     }
 
-    @OnEvent(AuditLogEvents.KODY_RULES)
-    async handleKodyRules(params: KodyRuleLogParams) {
+    @OnEvent(AuditLogEvents.CODY_RULES)
+    async handleCodyRules(params: CodyRuleLogParams) {
         try {
-            await this.codeReviewSettingsLogService.registerKodyRulesLog(
+            await this.codeReviewSettingsLogService.registerCodyRulesLog(
                 params,
             );
         } catch (error) {
-            this.logError('kody rules', error, params);
+            this.logError('cody rules', error, params);
         }
     }
 

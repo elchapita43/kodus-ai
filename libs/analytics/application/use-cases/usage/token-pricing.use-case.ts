@@ -547,7 +547,7 @@ export class TokenPricingUseCase {
 
         const normalized = model.trim();
         const lowered = normalized.toLowerCase();
-        // Provider separator may be ':' (Kodus internal BYOK format —
+        // Provider separator may be ':' (Codus internal BYOK format —
         // resolveModelName in observability.service.ts) or '/' (LiteLLM /
         // OpenRouter). Only normalize ':' when it precedes any '/', so
         // suffixes like OpenRouter's ':free' stay intact.

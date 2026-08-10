@@ -28,7 +28,7 @@ const APP_DIR = path.join(__dirname, "..", "..", "app", "(app)");
 // their own in `resourceRoutes`. Membership here is asserted against the
 // filesystem by direction B below — you cannot hide a real page in here.
 const ROUTELESS_RESOURCES = new Set<string>([
-    "KodyRules", // shown inside code-review / library pages
+    "CodyRules", // shown inside code-review / library pages
     "IssuesSettings", // shown inside the issues page
 ]);
 

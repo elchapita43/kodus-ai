@@ -8,7 +8,7 @@ import { logger } from '../lib/log.js';
 const log = logger('rule-file-detection');
 
 // Rule-FILE detection semantics (#1484/#1485), split from
-// kody-rules-file-sync on purpose: this one has NO review step — one merged
+// cody-rules-file-sync on purpose: this one has NO review step — one merged
 // PR plus API polling — so it stays cheap enough to run in every matrix
 // tier. It pins three detection behaviors that silently failed before the
 // hotfix:
@@ -104,27 +104,27 @@ export const ruleFileDetection: Scenario = {
             `Provider ${ctx.provider.name} does not implement mergePR — repo-file sync only fires on MERGED PRs`,
         );
 
-        const session = await ctx.kodus.login(ctx.tenant!);
-        await ctx.kodus.registerIntegration(session);
-        const repo = await ctx.kodus.registerRepo(session);
-        await ctx.kodus.finishOnboarding(session, repo);
+        const session = await ctx.codus.login(ctx.tenant!);
+        await ctx.codus.registerIntegration(session);
+        const repo = await ctx.codus.registerRepo(session);
+        await ctx.codus.finishOnboarding(session, repo);
         await ensureLicenseSeat(ctx.target, session, ctx.provider);
 
         const runTag = `${ctx.runId.slice(-6)}-${randomUUID().slice(0, 6)}`;
-        // @kody-sync in every file so the merged PR force-syncs them even
+        // @cody-sync in every file so the merged PR force-syncs them even
         // with the repo's auto-sync toggle off (scenario stays independent
         // of tenant configuration).
         const fixtureFiles = Object.fromEntries(
             Object.entries(FILES).map(([path, f]) => [
                 path,
-                `${f.content(runTag)}\n\n@kody-sync\n`,
+                `${f.content(runTag)}\n\n@cody-sync\n`,
             ]),
         );
 
         const pr = await ctx.provider.openPR({
             branch: `e2e/rule-file-detection-${runTag}`,
             title: `[e2e] rule-file detection ${runTag}`,
-            body: `Automated by Kodus E2E run ${ctx.runId}: merges AGENTS.md + nested CLAUDE.md + lowercase claude.md so the repo-file importer must detect all three.`,
+            body: `Automated by Codus E2E run ${ctx.runId}: merges AGENTS.md + nested CLAUDE.md + lowercase claude.md so the repo-file importer must detect all three.`,
             fixtureFiles,
         });
         await ctx.provider.mergePR!(pr);
@@ -137,7 +137,7 @@ export const ruleFileDetection: Scenario = {
             const bySource = await pollUntil<Map<string, FoundRule>>(
                 async () => {
                     const r = await http(
-                        `${ctx.target.apiBaseUrl}/kody-rules/find-by-organization-id`,
+                        `${ctx.target.apiBaseUrl}/cody-rules/find-by-organization-id`,
                         {
                             headers: {
                                 Authorization: `Bearer ${session.accessToken}`,
@@ -182,7 +182,7 @@ export const ruleFileDetection: Scenario = {
             // must appear in AT LEAST ONE of them.
             const agentsRules = await (async () => {
                 const r = await http(
-                    `${ctx.target.apiBaseUrl}/kody-rules/find-by-organization-id`,
+                    `${ctx.target.apiBaseUrl}/cody-rules/find-by-organization-id`,
                     {
                         headers: {
                             Authorization: `Bearer ${session.accessToken}`,
@@ -233,7 +233,7 @@ export const ruleFileDetection: Scenario = {
             for (const rule of imported) {
                 try {
                     await http(
-                        `${ctx.target.apiBaseUrl}/kody-rules/delete-rule-in-organization-by-id?ruleId=${encodeURIComponent(rule.uuid)}&teamId=${encodeURIComponent(session.teamId)}`,
+                        `${ctx.target.apiBaseUrl}/cody-rules/delete-rule-in-organization-by-id?ruleId=${encodeURIComponent(rule.uuid)}&teamId=${encodeURIComponent(session.teamId)}`,
                         {
                             method: 'DELETE',
                             headers: {

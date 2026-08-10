@@ -11,7 +11,7 @@ let tmpDir: string;
 
 beforeEach(async () => {
     tmpDir = await fs.mkdtemp(
-        path.join(os.tmpdir(), 'kodus-cursor-hooks-'),
+        path.join(os.tmpdir(), 'codus-cursor-hooks-'),
     );
 });
 
@@ -58,22 +58,22 @@ describe('installCursorSessionHooks', () => {
         >;
 
         expect(hooks['sessionStart'][0].command).toBe(
-            'kodus decisions hooks cursor sessionStart',
+            'codus decisions hooks cursor sessionStart',
         );
         expect(hooks['sessionEnd'][0].command).toBe(
-            'kodus decisions hooks cursor sessionEnd',
+            'codus decisions hooks cursor sessionEnd',
         );
         expect(hooks['stop'][0].command).toBe(
-            'kodus decisions hooks cursor stop',
+            'codus decisions hooks cursor stop',
         );
         expect(hooks['beforeSubmitPrompt'][0].command).toBe(
-            'kodus decisions hooks cursor beforeSubmitPrompt',
+            'codus decisions hooks cursor beforeSubmitPrompt',
         );
         expect(hooks['subagentStart'][0].command).toBe(
-            'kodus decisions hooks cursor subagentStart',
+            'codus decisions hooks cursor subagentStart',
         );
         expect(hooks['subagentStop'][0].command).toBe(
-            'kodus decisions hooks cursor subagentStop',
+            'codus decisions hooks cursor subagentStop',
         );
     });
 
@@ -114,13 +114,13 @@ describe('installCursorSessionHooks', () => {
         );
         expect(sessionStartCommands).toContain('echo custom-hook');
         expect(sessionStartCommands).toContain(
-            'kodus decisions hooks cursor sessionStart',
+            'codus decisions hooks cursor sessionStart',
         );
     });
 });
 
 describe('removeCursorSessionHooks', () => {
-    it('removes all kodus hooks', async () => {
+    it('removes all codus hooks', async () => {
         await installCursorSessionHooks(tmpDir);
         const result = await removeCursorSessionHooks(tmpDir);
 
@@ -129,7 +129,7 @@ describe('removeCursorSessionHooks', () => {
         const config = await readHooksConfig();
         const hooks = config.hooks as Record<string, unknown>;
 
-        // All hook events should be removed (they only contained kodus entries)
+        // All hook events should be removed (they only contained codus entries)
         expect(Object.keys(hooks)).toHaveLength(0);
     });
 
@@ -138,11 +138,11 @@ describe('removeCursorSessionHooks', () => {
         expect(result.removed).toBe(false);
     });
 
-    it('preserves non-kodus hooks', async () => {
-        // Install kodus hooks first
+    it('preserves non-codus hooks', async () => {
+        // Install codus hooks first
         await installCursorSessionHooks(tmpDir);
 
-        // Add a non-kodus hook alongside the kodus one
+        // Add a non-codus hook alongside the codus one
         const config = await readHooksConfig();
         const hooks = config.hooks as Record<
             string,
@@ -151,7 +151,7 @@ describe('removeCursorSessionHooks', () => {
         hooks['sessionStart'].push({ command: 'echo custom-hook' });
         await fs.writeFile(hooksPath(), JSON.stringify(config, null, 2));
 
-        // Remove kodus hooks
+        // Remove codus hooks
         const result = await removeCursorSessionHooks(tmpDir);
         expect(result.removed).toBe(true);
 
@@ -167,7 +167,7 @@ describe('removeCursorSessionHooks', () => {
             'echo custom-hook',
         );
 
-        // Other event keys (which only had kodus hooks) should be removed
+        // Other event keys (which only had codus hooks) should be removed
         expect(afterHooks['sessionEnd']).toBeUndefined();
     });
 });

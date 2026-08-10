@@ -2,7 +2,7 @@
 # bench-up.sh <slot>
 #
 # Create (or reuse) a bare droplet for a benchmark farm slot: Docker + git +
-# rsync + cloudflared, no Kodus stack yet. The stack is built onto it later by
+# rsync + cloudflared, no Codus stack yet. The stack is built onto it later by
 # bench-sync.sh from a branch's source (Option A -- build on droplet, no GHCR).
 #
 # This is a thin wrapper over scripts/selfhosted/provision.sh in BENCH_BASE_ONLY
@@ -11,7 +11,7 @@
 #
 # Env:
 #   BENCH_DO_SIZE   droplet size (default s-4vcpu-8gb -- build needs RAM/CPU)
-#   DIGITALOCEAN_TOKEN  via ~/.kodus-dev/config (loaded by _common.sh)
+#   DIGITALOCEAN_TOKEN  via ~/.codus-dev/config (loaded by _common.sh)
 #
 # Usage:
 #   scripts/benchmark/farm/bench-up.sh a

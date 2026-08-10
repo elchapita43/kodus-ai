@@ -92,7 +92,7 @@ export class PullRequestsModel extends CoreDocument {
             rankScore: number;
             priorityStatus: PriorityStatus;
             deliveryStatus: DeliveryStatus;
-            brokenKodyRulesIds?: string[];
+            brokenCodyRulesIds?: string[];
             implementationStatus: {
                 type: string;
                 default: 'not_implemented';
@@ -165,7 +165,7 @@ export class PullRequestsModel extends CoreDocument {
         oneSentenceSummary: string;
         label: LabelType;
         severity?: SeverityLevel;
-        brokenKodyRulesIds?: string[];
+        brokenCodyRulesIds?: string[];
         priorityStatus?: PriorityStatus;
         deliveryStatus: DeliveryStatus;
         comment?: {
@@ -232,14 +232,14 @@ PullRequestsSchema.index(
     { name: 'idx_org_files_suggestions_delivery' },
 );
 
-// "Find suggestions by rule" (kody-rules screen) filters PRs by a broken-rule
+// "Find suggestions by rule" (cody-rules screen) filters PRs by a broken-rule
 // id. Without this index the query scanned the whole org and unwound
 // files×suggestions to find the few PRs referencing the rule. Multikey on the
-// nested files→suggestions→brokenKodyRulesIds path. Em prod criar com
+// nested files→suggestions→brokenCodyRulesIds path. Em prod criar com
 // `{ background: true }` (autoIndex pode travar startup em coleções grandes).
 PullRequestsSchema.index(
-    { 'organizationId': 1, 'files.suggestions.brokenKodyRulesIds': 1 },
-    { name: 'idx_org_broken_kody_rules' },
+    { 'organizationId': 1, 'files.suggestions.brokenCodyRulesIds': 1 },
+    { name: 'idx_org_broken_cody_rules' },
 );
 
 // Token Usage repository filter: findNumbersByRepositoryId resolves a repo to

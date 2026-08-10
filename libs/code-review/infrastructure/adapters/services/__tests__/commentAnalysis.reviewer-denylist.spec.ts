@@ -1,7 +1,7 @@
 /**
  * Tests for the reviewer denylist filter inside
  * `CommentAnalysisService.processComments` (issue #1497): the client can
- * exclude specific git users so Kody never learns Kody Rules from their
+ * exclude specific git users so Cody never learns Cody Rules from their
  * past review comments. Denylist semantics — an empty/undefined set keeps
  * everyone, and a comment whose author can't be identified is always kept.
  *

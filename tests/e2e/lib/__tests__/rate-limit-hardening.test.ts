@@ -7,7 +7,7 @@ import {
 } from "../onboarding.js";
 import { isGithubRateLimit } from "../runner.js";
 import { GitHubProvider } from "../../providers/github.js";
-import type { KodusSession, Provider, TargetContext } from "../types.js";
+import type { CodusSession, Provider, TargetContext } from "../types.js";
 import { json, startMockServer } from "./mock-server.js";
 
 // Minimal Provider stand-in for onboarding-layer tests: registerIntegration
@@ -21,7 +21,7 @@ function fakeProvider(integrationType = "GITHUB"): Provider {
     } as unknown as Provider;
 }
 
-function sessionFor(orgId: string): KodusSession {
+function sessionFor(orgId: string): CodusSession {
     return {
         accessToken: "fake-jwt",
         organizationId: orgId,
@@ -180,7 +180,7 @@ test("registerIntegration: platform A → B → A on one cloud org re-registers 
 });
 
 test("invalidateRegisteredRepo: a deleted-and-recreated throwaway repo re-registers (webhook must be recreated)", async () => {
-    const REPO = "kodus-e2e/tiny-url-trial-e2e-abc123";
+    const REPO = "codus-e2e/tiny-url-trial-e2e-abc123";
     const server = await startMockServer([
         {
             method: "GET",
@@ -254,7 +254,7 @@ test("pollForReview: GitHub rate-limit envelope surfaces as an explicit rate-lim
     );
     const originalFetch = global.fetch;
     process.env.GH_TEST_TOKEN = "fake";
-    process.env.GH_TEST_REPO = "kodustech/qa-fixture";
+    process.env.GH_TEST_REPO = "elchapita43/qa-fixture";
     // The provider hardcodes api.github.com — redirect to the mock.
     global.fetch = async (input, init) => {
         const url = typeof input === "string" ? input : input.toString();

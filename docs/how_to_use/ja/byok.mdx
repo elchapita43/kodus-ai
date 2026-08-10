@@ -1,16 +1,16 @@
 ---
 title: "BYOK - Bring Your Own Key"
-description: "最大限の柔軟性とコスト管理のために独自のAPIキーを設定します。すべての Kodus プランでご利用いただけます。"
+description: "最大限の柔軟性とコスト管理のために独自のAPIキーを設定します。すべての Codus プランでご利用いただけます。"
 ---
 
-BYOK（Bring Your Own Key）は、**すべてのプランで Kodus が LLM を使用するデフォルトの方法**です — Community、Teams、Enterprise を問わず。自分のプロバイダーアカウントを接続し、任意のモデルを選択し、使用した分だけ支払い、プロバイダーのダッシュボードでコストを直接監視できます。Kodus はトークンに上乗せ料金を請求せず、APIキーを平文で見ることも決してありません。
+BYOK（Bring Your Own Key）は、**すべてのプランで Codus が LLM を使用するデフォルトの方法**です — Community、Teams、Enterprise を問わず。自分のプロバイダーアカウントを接続し、任意のモデルを選択し、使用した分だけ支払い、プロバイダーのダッシュボードでコストを直接監視できます。Codus はトークンに上乗せ料金を請求せず、APIキーを平文で見ることも決してありません。
 
 <Card
   title="プランとの対応関係"
   icon="scale-balanced"
   href="/how_to_use/ja/pricing#byok-はすべてのプランでデフォルト"
 >
-  BYOK は Community では無料、Teams では（トークン費用に加えてアクティブ開発者1人あたり月10ドル）で利用可能、Enterprise では2つのオプションのうちの1つです（もう1つは Kodus が管理する APIキー）。
+  BYOK は Community では無料、Teams では（トークン費用に加えてアクティブ開発者1人あたり月10ドル）で利用可能、Enterprise では2つのオプションのうちの1つです（もう1つは Codus が管理する APIキー）。
 </Card>
 
 ## はじめに
@@ -35,7 +35,7 @@ BYOK 画面には2つのパスがあります：キュレートされたカタ�
   </Step>
 
   <Step title="フォールバックを追加（推奨）">
-    メインモデルが設定されると、**フォールバックモデル**セクションが表示されます。メインプロバイダーがレート制限に達したりダウンしたりした場合、Kodus は自動的にフォールバックします。
+    メインモデルが設定されると、**フォールバックモデル**セクションが表示されます。メインプロバイダーがレート制限に達したりダウンしたりした場合、Codus は自動的にフォールバックします。
   </Step>
 </Steps>
 
@@ -125,7 +125,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
     | **Coding Plan** | `https://api.z.ai/api/coding/paas/v4` | [z.ai/subscribe](https://z.ai/subscribe) | 予測可能なチーム使用量、定額月額料金 |
 
     <Warning>
-      GLM Coding Plan のキーは `/api/coding/paas/v4` でのみ動作します。Lite および Pro ティアはしばしば **1 concurrent リクエスト** に制限されています — このプランを選択すると Kodus は `maxConcurrentRequests=1` を事前入力します。Max ティア（最大 30）の場合は Advanced settings で増やしてください。
+      GLM Coding Plan のキーは `/api/coding/paas/v4` でのみ動作します。Lite および Pro ティアはしばしば **1 concurrent リクエスト** に制限されています — このプランを選択すると Codus は `maxConcurrentRequests=1` を事前入力します。Max ティア（最大 30）の場合は Advanced settings で増やしてください。
     </Warning>
   </Tab>
 
@@ -136,7 +136,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
     | **Kimi Code Plan** | `https://api.kimi.com/coding/v1` | [kimi.com/code](https://www.kimi.com/code) | 専用コーディングエンドポイント付きサブスクリプション |
 
     <Info>
-      Kimi Code Plan は 30 concurrent リクエストの上限が文書化されています。このプランを選択すると Kodus は `maxConcurrentRequests=30` を事前入力します。
+      Kimi Code Plan は 30 concurrent リクエストの上限が文書化されています。このプランを選択すると Codus は `maxConcurrentRequests=30` を事前入力します。
     </Info>
   </Tab>
 </Tabs>
@@ -157,7 +157,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
   </Step>
 
   <Step title="モデル ID を選択または入力">
-    Kodus がプロバイダーからモデルをリスト化できる場合、ドロップダウンが表示されます。そうでない場合（例：セルフホスト、またはプラットフォームキーが未設定）、正確なモデル ID を手動で入力します。
+    Codus がプロバイダーからモデルをリスト化できる場合、ドロップダウンが表示されます。そうでない場合（例：セルフホスト、またはプラットフォームキーが未設定）、正確なモデル ID を手動で入力します。
   </Step>
 
   <Step title="認証情報を貼り付ける">
@@ -185,7 +185,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
 
     **APIキーの取得方法:**
     1. [OpenAI API Keys](https://platform.openai.com/api-keys) にアクセス
-    2. Kodus 用の新しいキーを作成
+    2. Codus 用の新しいキーを作成
     3. 請求情報を追加
   </Tab>
 
@@ -240,7 +240,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
 
     **設定方法：**
     1. 手動ウィザードでプロバイダーに **Google Vertex AI** を選びます。
-    2. **サービスアカウント JSON ファイルの中身**を Service Account JSON 欄に貼り付けます（base64 でも可）。Kodus は JSON から `project_id` を自動で抽出します。
+    2. **サービスアカウント JSON ファイルの中身**を Service Account JSON 欄に貼り付けます（base64 でも可）。Codus は JSON から `project_id` を自動で抽出します。
     3. **Region** — グローバルエンドポイントを使う場合は空のままにします（推奨）。データレジデンシー要件がある場合のみ、リージョン（例：`us-east5`）を固定します。
 
     サービスアカウントには、そのプロジェクトで Vertex AI の予測 API を呼び出す権限が必要です。
@@ -272,16 +272,16 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
     3. キーとモデル ID を提供します。
 
     <CardGroup cols={2}>
-      <Card title="Z.ai (GLM) ガイド" href="/knowledge_base/ja/how-to-use-z-ai-with-kodus" icon="bolt">
+      <Card title="Z.ai (GLM) ガイド" href="/knowledge_base/ja/how-to-use-z-ai-with-codus" icon="bolt">
         Coding Plan の詳細を含む完全な Z.ai セットアップ。
       </Card>
-      <Card title="Moonshot (Kimi) ガイド" href="/knowledge_base/ja/how-to-use-moonshot-with-kodus" icon="moon">
+      <Card title="Moonshot (Kimi) ガイド" href="/knowledge_base/ja/how-to-use-moonshot-with-codus" icon="moon">
         Kimi K2.6 + Kimi Code Plan のセットアップ。
       </Card>
-      <Card title="Fireworks AI" href="/knowledge_base/ja/how-to-use-fireworks-with-kodus" icon="fire">
+      <Card title="Fireworks AI" href="/knowledge_base/ja/how-to-use-fireworks-with-codus" icon="fire">
         Fireworks 固有のセットアップ。
       </Card>
-      <Card title="Together AI" href="/knowledge_base/ja/how-to-use-together-ai-with-kodus" icon="handshake">
+      <Card title="Together AI" href="/knowledge_base/ja/how-to-use-together-ai-with-codus" icon="handshake">
         Together AI のセットアップ。
       </Card>
     </CardGroup>
@@ -294,7 +294,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
     2. ベース URL、キー、モデル ID を入力します。
 
     <Note>
-      ベース URL はプロバイダーが示す形式のまま貼り付けてください — 末尾の `/v1` はあってもなくても構いません（例：`https://api.kimi.com/coding` または `https://api.kimi.com/coding/v1`）。Anthropic の 2 つの SDK 経路は `/v1` の位置の解釈が異なるため、Kodus が内部で正規化します。
+      ベース URL はプロバイダーが示す形式のまま貼り付けてください — 末尾の `/v1` はあってもなくても構いません（例：`https://api.kimi.com/coding` または `https://api.kimi.com/coding/v1`）。Anthropic の 2 つの SDK 経路は `/v1` の位置の解釈が異なるため、Codus が内部で正規化します。
     </Note>
   </Tab>
 </Tabs>
@@ -305,7 +305,7 @@ Z.ai と Moonshot はどちらも、ペイパートークンの Developer API �
 
 ### プリセットレベル
 
-Low / Medium / High を選択すると、Kodus はそのレベルを各プロバイダーのネイティブフォーマットに自動的に変換します：
+Low / Medium / High を選択すると、Codus はそのレベルを各プロバイダーのネイティブフォーマットに自動的に変換します：
 
 | プロバイダー | "medium" のマッピング |
 | --- | --- |
@@ -316,19 +316,19 @@ Low / Medium / High を選択すると、Kodus はそのレベルを各プロバ
 | **OpenAI-compatible** (Kimi K2.6 / GLM 5.1) | `thinking: { type: "enabled" }` — バイナリの on/off、レベルは無視 |
 
 <Note>
-  Kimi と GLM は現在、reasoning を単一の on/off フラグとして公開しています。Low、Medium、High のいずれを選んでも同じペイロード（thinking 有効）を生成します。それらの API がレベル粒度を追加した場合、Kodus はそれを転送するようになります。
+  Kimi と GLM は現在、reasoning を単一の on/off フラグとして公開しています。Low、Medium、High のいずれを選んでも同じペイロード（thinking 有効）を生成します。それらの API がレベル粒度を追加した場合、Codus はそれを転送するようになります。
 </Note>
 
 ### カスタム JSON オーバーライド
 
-Thinking トグルで **Custom** を選択すると JSON テキストエリアが表示されます。プロバイダーオプションを直接貼り付けてください — **Kodus がアクティブなプロバイダーの名前空間の下に自動でラップします**。Vercel AI SDK のルーティングルールを知る必要はありません。
+Thinking トグルで **Custom** を選択すると JSON テキストエリアが表示されます。プロバイダーオプションを直接貼り付けてください — **Codus がアクティブなプロバイダーの名前空間の下に自動でラップします**。Vercel AI SDK のルーティングルールを知る必要はありません。
 
 以下の場合に使用します：
 
 - Claude に特定の `budgetTokens` 値が必要な場合（プリセットの effort マッピングの代わり）
 - OpenAI 互換プロバイダーでモデルごとに thinking を有効/無効にしたい場合
 - reasoning 以外のフィールドが必要な場合 — **キャッシュ、サービスティア、safety settings、`user` タグなど**。オーバーライドは `providerOptions` にマージされるため、アダプターの任意のフィールドがそのまま通過します
-- Kodus がまだラップしていない新しいフィールドがプロバイダーに追加された場合
+- Codus がまだラップしていない新しいフィールドがプロバイダーに追加された場合
 
 #### 例（名前空間不要 — そのまま貼り付け）
 
@@ -379,7 +379,7 @@ Thinking トグルで **Custom** を選択すると JSON テキストエリア�
       "reasoningEffort": "high",
       "serviceTier": "flex",
       "store": false,
-      "user": "kodus-review"
+      "user": "codus-review"
     }
     ```
   </Tab>
@@ -420,7 +420,7 @@ Thinking トグルで **Custom** を選択すると JSON テキストエリア�
 
 #### 名前空間を手動で指定する（上級者向け）
 
-JSON にすでに既知の名前空間キー（`anthropic`、`google`、`openai`、`openrouter`、`openaiCompatible`）がトップレベルに含まれている場合、Kodus はそれをそのまま残します。複数のプロバイダー名前空間を混在させたい場合や、明示的に記述したい場合に便利です：
+JSON にすでに既知の名前空間キー（`anthropic`、`google`、`openai`、`openrouter`、`openaiCompatible`）がトップレベルに含まれている場合、Codus はそれをそのまま残します。複数のプロバイダー名前空間を混在させたい場合や、明示的に記述したい場合に便利です：
 
 ```json
 {
@@ -431,7 +431,7 @@ JSON にすでに既知の名前空間キー（`anthropic`、`google`、`openai`
 }
 ```
 
-内部的に、Kodus は以下の名前空間マッピングを使用しています：
+内部的に、Codus は以下の名前空間マッピングを使用しています：
 
 | BYOK プロバイダー | 名前空間キー |
 | --- | --- |
@@ -443,9 +443,9 @@ JSON にすでに既知の名前空間キー（`anthropic`、`google`、`openai`
 
 #### 注意点
 
-- **有効な JSON のみ。** カンマの欠落や末尾のカンマはパースを壊し、Kodus はオーバーライドを無視します。
+- **有効な JSON のみ。** カンマの欠落や末尾のカンマはパースを壊し、Codus はオーバーライドを無視します。
 - **優先順位:** JSON オーバーライドは effort プリセットの名前空間ブロックを**完全に置き換えます** — `anthropic.thinking` をオーバーライドしつつ `anthropic.outputConfig` を忘れると、そのフィールドは送信されません。OpenRouter routing（Pin providers / Allow fallbacks）は唯一の例外で、`openrouter` の下でオーバーライドとディープマージされます。
-- **未知のプロバイダー = ラップなし。** BYOK プロバイダーが上記の名前空間テーブルにない場合、Kodus は JSON をそのまま通過させます。稀なケース — Kodus が認識しないプロバイダーを設定した場合にのみ該当します。
+- **未知のプロバイダー = ラップなし。** BYOK プロバイダーが上記の名前空間テーブルにない場合、Codus は JSON をそのまま通過させます。稀なケース — Codus が認識しないプロバイダーを設定した場合にのみ該当します。
 
 ## OpenRouter プロバイダーの固定
 
@@ -472,7 +472,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
   上流名は OpenRouter のカタログと一致している必要があります。プロバイダータグを [openrouter.ai/docs/features/provider-routing](https://openrouter.ai/docs/features/provider-routing) で確認してください — 一般的な値には `moonshot`、`together`、`groq`、`fireworks`、`novita` が含まれます。
 </Warning>
 
-内部的に、Kodus は Vercel AI SDK 呼び出しに次のように出力します：
+内部的に、Codus は Vercel AI SDK 呼び出しに次のように出力します：
 
 ```json
 {
@@ -505,9 +505,9 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
 
 ## 同時実行数とレート制限
 
-`maxConcurrentRequests` フィールド（**Advanced settings** の下）は、Kodus がプロバイダーに並行して送信するインフライトリクエストの数を制限します。ほとんどの場合、デフォルトで問題ありません — ただし、厳密な同時実行上限があるサブスクリプションプランでは明示的に設定する必要があります。
+`maxConcurrentRequests` フィールド（**Advanced settings** の下）は、Codus がプロバイダーに並行して送信するインフライトリクエストの数を制限します。ほとんどの場合、デフォルトで問題ありません — ただし、厳密な同時実行上限があるサブスクリプションプランでは明示的に設定する必要があります。
 
-### Kodus が事前入力するデフォルト
+### Codus が事前入力するデフォルト
 
 | プロバイダー / プラン | 事前入力値 | 理由 |
 | --- | --- | --- |
@@ -516,7 +516,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
 | **Kimi Code Plan** | `30` | Moonshot のコーディングエンドポイントで文書化された上限。 |
 | **GLM Developer API** | _(空)_ | 制限はキーごとにスケール；適切なグローバルデフォルトはありません。 |
 | **Kimi Developer API** | _(空)_ | リチャージティアとスケール（Tier 1 ≈ 50、Tier 5 ≈ 1000）。 |
-| **Anthropic / OpenAI / Google / OpenRouter** | _(空)_ | プロバイダーは独自の TPM/RPM を適用；Kodus は制限しません。 |
+| **Anthropic / OpenAI / Google / OpenRouter** | _(空)_ | プロバイダーは独自の TPM/RPM を適用；Codus は制限しません。 |
 
 ### チューニングのタイミング
 
@@ -538,7 +538,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
 </Tip>
 
 <Note>
-  **フォールバックとの相互作用。** メインが 429 にヒットし、Kodus がフォールバックモデルにフェイルオーバーするとき、フォールバック自身の `maxConcurrentRequests` が適用されます。異なるプロバイダーに寛大なフォールバックを設定することは、メインがタイトなサブスクリプション上にある場合にバーストを吸収する良い方法です。
+  **フォールバックとの相互作用。** メインが 429 にヒットし、Codus がフォールバックモデルにフェイルオーバーするとき、フォールバック自身の `maxConcurrentRequests` が適用されます。異なるプロバイダーに寛大なフォールバックを設定することは、メインがタイトなサブスクリプション上にある場合にバーストを吸収する良い方法です。
 </Note>
 
 ## ベストプラクティス
@@ -547,7 +547,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
 
 <CardGroup cols={2}>
   <Card title="専用キー" icon="shield-check">
-    Kodus 用の別の APIキーを作成します。使用状況の監査とキーのローテーションが容易になります。
+    Codus 用の別の APIキーを作成します。使用状況の監査とキーのローテーションが容易になります。
   </Card>
   <Card title="定期的なローテーション" icon="arrows-rotate">
     定期的にキーをローテーションし、BYOK 設定で更新します。
@@ -556,7 +556,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
     異常なパターンがないか、プロバイダーのダッシュボードを確認します。
   </Card>
   <Card title="安全な保管" icon="lock">
-    キーをリポジトリにコミットしないでください。Kodus は保存時および転送時に暗号化して保存します。
+    キーをリポジトリにコミットしないでください。Codus は保存時および転送時に暗号化して保存します。
   </Card>
 </CardGroup>
 
@@ -591,7 +591,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
   </Accordion>
 
   <Accordion title="セルフホスト環境変数が表示されない">
-    - Kodus が `.env`（セルフホスト Fixed Mode）で設定されている場合、BYOK 画面はアクティブなプロバイダー/モデルを表示する青い情報バナーを表示します — セキュリティのためキーは決して表示されません。
+    - Codus が `.env`（セルフホスト Fixed Mode）で設定されている場合、BYOK 画面はアクティブなプロバイダー/モデルを表示する青い情報バナーを表示します — セキュリティのためキーは決して表示されません。
     - `.env` の上に BYOK 設定を保存すると、オーバーライド前に確認ダイアログが表示されます。
   </Accordion>
 
@@ -614,7 +614,7 @@ BYOK プロバイダーが **OpenRouter** の場合、Advanced settings パネ�
   </Accordion>
 
   <Accordion title="プライマリ/フォールバックシステムはどのように機能しますか？">
-    メインはデフォルトで各レビューを処理します。失敗した場合（レート制限、5xx、タイムアウト）、Kodus はフォールバックで一度再試行します。実際にレビューを処理したプロバイダーに対してのみ支払います。
+    メインはデフォルトで各レビューを処理します。失敗した場合（レート制限、5xx、タイムアウト）、Codus はフォールバックで一度再試行します。実際にレビューを処理したプロバイダーに対してのみ支払います。
   </Accordion>
 
   <Accordion title="メインとフォールバックに同じプロバイダーを使用すべきですか？">

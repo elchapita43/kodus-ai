@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-description: "Install the Kodus CLI, authenticate, and run your first review."
+description: "Install the Codus CLI, authenticate, and run your first review."
 ---
 
 This guide gets you from zero to a reviewed diff in under five minutes.
@@ -9,7 +9,7 @@ This guide gets you from zero to a reviewed diff in under five minutes.
   <Step title="Install">
     <Tabs>
       <Tab title="Skill Installer (Recommended)">
-        Installs the CLI and deploys Kodus skills to all detected AI agents (Claude Code, Cursor, Codex, Windsurf):
+        Installs the CLI and deploys Codus skills to all detected AI agents (Claude Code, Cursor, Codex, Windsurf):
 
         ```bash
         curl -fsSL https://review-skill.com/install | bash
@@ -17,17 +17,17 @@ This guide gets you from zero to a reviewed diff in under five minutes.
       </Tab>
       <Tab title="npm">
         ```bash
-        npm install -g @kodus/cli
+        npm install -g @codus/cli
         ```
       </Tab>
       <Tab title="npx (No Install)">
         ```bash
-        npx @kodus/cli review
+        npx @codus/cli review
         ```
       </Tab>
       <Tab title="curl">
         ```bash
-        curl -fsSL https://raw.githubusercontent.com/kodustech/cli/main/install.sh | bash
+        curl -fsSL https://raw.githubusercontent.com/elchapita43/cli/main/install.sh | bash
         ```
       </Tab>
     </Tabs>
@@ -37,35 +37,35 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     Verify the install:
 
     ```bash
-    kodus --version
-    kodus status
+    codus --version
+    codus status
     ```
   </Step>
 
   <Step title="Authenticate">
-    Pick the path that matches your situation. You can also skip auth and run `kodus review` directly — it works in trial mode with daily limits.
+    Pick the path that matches your situation. You can also skip auth and run `codus review` directly — it works in trial mode with daily limits.
 
     <Tabs>
       <Tab title="Solo developer">
         Sign in with a personal account:
 
         ```bash
-        kodus auth login
+        codus auth login
         ```
 
-        Tokens are stored in `~/.kodus/credentials.json` and auto-refreshed.
+        Tokens are stored in `~/.codus/credentials.json` and auto-refreshed.
       </Tab>
       <Tab title="Team (shared key)">
         Generate a team key at <a href="https://app.kodus.io/organization/cli-keys" target="_blank">app.kodus.io/organization/cli-keys</a> and apply it:
 
         ```bash
-        kodus auth team-key --key kodus_xxxxx
+        codus auth team-key --key codus_xxxxx
         ```
 
         Or distribute the bootstrap command to your team — it installs the CLI and configures the key in one shot:
 
         ```bash
-        curl -fsSL https://review-skill.com/install | bash -s -- --team-key kodus_xxxxx
+        curl -fsSL https://review-skill.com/install | bash -s -- --team-key codus_xxxxx
         ```
 
         <Warning>Save the key when it's shown — it won't be displayed again.</Warning>
@@ -74,7 +74,7 @@ This guide gets you from zero to a reviewed diff in under five minutes.
         For AI coding agents (Claude Code, Cursor, Codex), team keys are the recommended path — no individual login, no interactive prompts. Set the key once:
 
         ```bash
-        export KODUS_TEAM_KEY=kodus_xxxxx
+        export CODUS_TEAM_KEY=codus_xxxxx
         ```
 
         Add it to your shell profile so the agent picks it up on every run.
@@ -83,13 +83,13 @@ This guide gets you from zero to a reviewed diff in under five minutes.
         From a logged-in machine, generate a long-lived token:
 
         ```bash
-        kodus auth token
+        codus auth token
         ```
 
         In your pipeline, set:
 
         ```bash
-        export KODUS_TOKEN=<generated-token>
+        export CODUS_TOKEN=<generated-token>
         ```
 
         See [Self-Hosted Setup](self_hosted) for full CI examples.
@@ -97,10 +97,10 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     </Tabs>
 
     <Info>
-      **Self-hosting Kodus?** Point the CLI to your API before authenticating:
+      **Self-hosting Codus?** Point the CLI to your API before authenticating:
 
       ```bash
-      export KODUS_API_URL=https://kodus-api.yourcompany.com
+      export CODUS_API_URL=https://codus-api.yourcompany.com
       ```
 
       HTTPS is required except for `localhost`.
@@ -109,7 +109,7 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     Confirm the auth state:
 
     ```bash
-    kodus auth status
+    codus auth status
     ```
   </Step>
 
@@ -117,7 +117,7 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     Inside any git repository with uncommitted changes:
 
     ```bash
-    kodus review
+    codus review
     ```
 
     The CLI analyzes your working tree diff, prints a summary, and (in interactive mode) lets you browse file-by-file, preview suggested fixes, and apply them.
@@ -125,12 +125,12 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     Common variations:
 
     ```bash
-    kodus review --staged             # Only staged files
-    kodus review --branch main        # Compare current branch against main
-    kodus review --commit abc123      # Analyze a single commit
-    kodus review --fix                # Auto-apply every fixable issue
-    kodus review --prompt-only        # Compact output for AI agents
-    kodus review --fail-on error      # Exit non-zero on error-or-worse (CI-friendly)
+    codus review --staged             # Only staged files
+    codus review --branch main        # Compare current branch against main
+    codus review --commit abc123      # Analyze a single commit
+    codus review --fix                # Auto-apply every fixable issue
+    codus review --prompt-only        # Compact output for AI agents
+    codus review --fail-on error      # Exit non-zero on error-or-worse (CI-friendly)
     ```
 
     <Tip>
@@ -142,8 +142,8 @@ This guide gets you from zero to a reviewed diff in under five minutes.
     Depending on your goal:
 
     <CardGroup cols={2}>
-      <Card title="Automate on every push" icon="shield-check" href="commands#kodus-hook">
-        Install the pre-push hook with `kodus hook install`.
+      <Card title="Automate on every push" icon="shield-check" href="commands#codus-hook">
+        Install the pre-push hook with `codus hook install`.
       </Card>
       <Card title="Run reviews in CI" icon="infinity" href="self_hosted#ci-cd-integration">
         GitHub Actions, GitLab CI, and generic pipeline examples.
@@ -151,7 +151,7 @@ This guide gets you from zero to a reviewed diff in under five minutes.
       <Card title="Plug into an AI agent" icon="robot" href="ai_agents">
         Feed `--prompt-only` into Claude Code, Cursor, or Codex for autonomous fix loops.
       </Card>
-      <Card title="Configure the repo" icon="sliders" href="commands#kodus-config-repo">
+      <Card title="Configure the repo" icon="sliders" href="commands#codus-config-repo">
         Manage ignored files, base branches, and review settings from the CLI.
       </Card>
     </CardGroup>
@@ -164,12 +164,12 @@ These env vars configure the CLI across all commands.
 
 | Variable                     | Description                                                               |
 | ---------------------------- | ------------------------------------------------------------------------- |
-| `KODUS_API_URL`              | API endpoint (default: `https://api.kodus.io`)                            |
-| `KODUS_TEAM_KEY`             | Team key for shared access and AI agents                                  |
-| `KODUS_TOKEN`                | CI/CD token generated via `kodus auth token`                              |
-| `KODUS_VERBOSE`              | Set to `true` for verbose output                                          |
-| `KODUS_SKIP_HOOK`            | Set to `1` to skip the pre-push hook for a single `git push`              |
-| `KODUS_REQUEST_TIMEOUT_MIN`  | Per-request timeout in minutes (default: `60`)                            |
+| `CODUS_API_URL`              | API endpoint (default: `https://api.kodus.io`)                            |
+| `CODUS_TEAM_KEY`             | Team key for shared access and AI agents                                  |
+| `CODUS_TOKEN`                | CI/CD token generated via `codus auth token`                              |
+| `CODUS_VERBOSE`              | Set to `true` for verbose output                                          |
+| `CODUS_SKIP_HOOK`            | Set to `1` to skip the pre-push hook for a single `git push`              |
+| `CODUS_REQUEST_TIMEOUT_MIN`  | Per-request timeout in minutes (default: `60`)                            |
 | `CF_ACCESS_CLIENT_ID`        | Cloudflare Access client ID (APIs behind Zero Trust)                      |
 | `CF_ACCESS_CLIENT_SECRET`    | Cloudflare Access client secret                                           |
 

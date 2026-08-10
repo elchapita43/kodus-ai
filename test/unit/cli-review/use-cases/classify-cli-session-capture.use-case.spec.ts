@@ -1,4 +1,4 @@
-import { LLMModelProvider, PromptRunnerService } from '@kodus/kodus-common/llm';
+import { LLMModelProvider, PromptRunnerService } from '@codus/codus-common/llm';
 import { ClassifyCliSessionCaptureUseCase } from '@libs/cli-review/application/use-cases/classify-cli-session-capture.use-case';
 import { CliSessionCaptureRepository } from '@libs/cli-review/infrastructure/repositories/cli-session-capture.repository';
 

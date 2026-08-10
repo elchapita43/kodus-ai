@@ -9,7 +9,7 @@ export interface MentionTriggerOptions {
      * inserted as text). Return `false` to let Tiptap insert the literal `@`,
      * which is what we want when there are no mention suggestions to show
      * — otherwise the user cannot type things like `@file:owner/repo/path`
-     * inside a kody rule description.
+     * inside a cody rule description.
      */
     onTrigger: (pos: number) => boolean | void;
 }

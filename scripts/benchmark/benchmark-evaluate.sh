@@ -82,7 +82,7 @@ const benchmark = JSON.parse(fs.readFileSync('scripts/benchmark/prs-benchmark.js
 
 const mongoCmd = (query) => {
   return execSync(
-    \"docker exec mongodb mongosh -u kodusdev -p 123456 --authenticationDatabase admin kodus_db --quiet --eval '\" + query.replace(/'/g, \"'\\\\''\") + \"'\",
+    \"docker exec mongodb mongosh -u codusdev -p 123456 --authenticationDatabase admin codus_db --quiet --eval '\" + query.replace(/'/g, \"'\\\\''\") + \"'\",
     { encoding: 'utf8', timeout: 30000 }
   ).trim();
 };
@@ -160,7 +160,7 @@ for (const entry of manifest.prs) {
   if (!prData) {
     // Processed but no MongoDB record — unlikely but handle gracefully
     golden.push(bpr);
-    const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'kodus' };
+    const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'codus' };
     results.severity.push({ ...prInfo, issues: [] });
     prMetadata.push({
       repo: entry.repo,
@@ -200,7 +200,7 @@ for (const entry of manifest.prs) {
     }
   }
 
-  const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'kodus' };
+  const prInfo = { pr_title: bpr.title, head: entry.head, repo: entry.repo, tool: 'codus' };
   results.severity.push({ ...prInfo, issues: suggestions.severity });
   prMetadata.push({
     repo: entry.repo,

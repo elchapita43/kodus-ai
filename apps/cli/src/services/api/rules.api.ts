@@ -1,9 +1,9 @@
 import type {
-    KodyRuleMutationResult,
-    CreateKodyRuleRequest,
-    KodyRule,
-    UpdateKodyRuleRequest,
-    ViewKodyRulesRequest,
+    CodyRuleMutationResult,
+    CreateCodyRuleRequest,
+    CodyRule,
+    UpdateCodyRuleRequest,
+    ViewCodyRulesRequest,
 } from '../../types/rules.js';
 import { requestWithRetry } from './api-core.js';
 import type { IRulesApi } from './api.interface.js';
@@ -19,16 +19,16 @@ export class RealRulesApi implements IRulesApi {
     ) {}
 
     private buildAuthHeaders(accessToken: string): Record<string, string> {
-        return accessToken.startsWith('kodus_')
+        return accessToken.startsWith('codus_')
             ? { 'X-Team-Key': accessToken }
             : { Authorization: `Bearer ${accessToken}` };
     }
 
     async createRule(
         accessToken: string,
-        payload: CreateKodyRuleRequest,
-    ): Promise<KodyRuleMutationResult> {
-        return this.requester<KodyRuleMutationResult>('/cli/kody-rules', {
+        payload: CreateCodyRuleRequest,
+    ): Promise<CodyRuleMutationResult> {
+        return this.requester<CodyRuleMutationResult>('/cli/cody-rules', {
             method: 'POST',
             headers: this.buildAuthHeaders(accessToken),
             body: JSON.stringify(payload),
@@ -38,10 +38,10 @@ export class RealRulesApi implements IRulesApi {
     async updateRule(
         accessToken: string,
         ruleId: string,
-        payload: UpdateKodyRuleRequest,
-    ): Promise<KodyRuleMutationResult> {
-        return this.requester<KodyRuleMutationResult>(
-            `/cli/kody-rules/${encodeURIComponent(ruleId)}`,
+        payload: UpdateCodyRuleRequest,
+    ): Promise<CodyRuleMutationResult> {
+        return this.requester<CodyRuleMutationResult>(
+            `/cli/cody-rules/${encodeURIComponent(ruleId)}`,
             {
                 method: 'PATCH',
                 headers: this.buildAuthHeaders(accessToken),
@@ -52,8 +52,8 @@ export class RealRulesApi implements IRulesApi {
 
     async viewRules(
         accessToken: string,
-        query: ViewKodyRulesRequest = {},
-    ): Promise<KodyRule[]> {
+        query: ViewCodyRulesRequest = {},
+    ): Promise<CodyRule[]> {
         const params = new URLSearchParams();
         if (query.repositoryId) {
             params.set('repositoryId', query.repositoryId);
@@ -63,9 +63,9 @@ export class RealRulesApi implements IRulesApi {
         }
 
         const queryString = params.toString();
-        const endpoint = `/cli/kody-rules${queryString ? `?${queryString}` : ''}`;
+        const endpoint = `/cli/cody-rules${queryString ? `?${queryString}` : ''}`;
 
-        return this.requester<KodyRule[]>(endpoint, {
+        return this.requester<CodyRule[]>(endpoint, {
             headers: this.buildAuthHeaders(accessToken),
         });
     }

@@ -4,14 +4,14 @@
 
 This document captures research and synthesis to answer a practical question:
 
-> Does the way Kodus is building skills and pipelines align with how software teams actually use agents and skills in day-to-day development?
+> Does the way Codus is building skills and pipelines align with how software teams actually use agents and skills in day-to-day development?
 
 The focus is not theoretical agent design. The focus is:
 
 - what teams are trying to solve in practice
 - which kinds of skills appear useful in real workflows
 - where skills fit relative to MCPs, agents, commands, plugins, and pipelines
-- whether the current Kodus direction makes sense
+- whether the current Codus direction makes sense
 
 ## Research inputs
 
@@ -195,7 +195,7 @@ Why it works:
 - detailed context only when relevant
 - easier packaging of bigger expertise sets
 
-Implication for Kodus:
+Implication for Codus:
 
 - provider and domain guidance should move into explicit knowledge packs
 - not all context should live in code or giant prompts
@@ -204,7 +204,7 @@ Implication for Kodus:
 
 Observed in:
 
-- current Kodus direction
+- current Codus direction
 - Mastra's docs and skills split
 - practical agent systems that keep tools narrow
 
@@ -214,7 +214,7 @@ Why it works:
 - better debuggability
 - smaller chance of hallucinated orchestration
 
-Implication for Kodus:
+Implication for Codus:
 
 - current direction with deterministic capabilities before fallback is correct
 
@@ -232,7 +232,7 @@ Why it works:
 - best practices become shareable
 - onboarding is much easier
 
-Implication for Kodus:
+Implication for Codus:
 
 - the long-term unit of delivery should likely be a governed team-facing package, not scattered skill files
 
@@ -250,7 +250,7 @@ Why it works:
 - easier handoff between agents or humans
 - easier compliance and review
 
-Implication for Kodus:
+Implication for Codus:
 
 - outputs like task context, review findings, and decision traces should be treated as first-class artifacts
 
@@ -266,7 +266,7 @@ Why it works:
 - teams need to know what path the system took
 - platform builders need reproducible quality feedback
 
-Implication for Kodus:
+Implication for Codus:
 
 - execution traces should evolve into product-level observability and learning signals
 
@@ -379,7 +379,7 @@ Good fit for skills:
 - validation heuristics
 - output contracts
 
-This is the current Kodus `business-logic` pipeline.
+This is the current Codus `business-logic` pipeline.
 
 ### Use case 3: Framework-aware implementation
 
@@ -422,9 +422,9 @@ Good fit for pipelines:
 
 This is closer to Repo Hub's model than to isolated skills.
 
-## What seems broadly valid about the current Kodus direction
+## What seems broadly valid about the current Codus direction
 
-The current Kodus direction appears valid in several important ways:
+The current Codus direction appears valid in several important ways:
 
 ### Valid point 1: `business-logic` as first product
 
@@ -457,7 +457,7 @@ This is aligned with both cost and reliability concerns seen in real systems.
 
 This matters in practice because teams do not all use the same stack of issue trackers and code hosts.
 
-## What still looks incomplete in Kodus
+## What still looks incomplete in Codus
 
 ### Gap 1: weak explicit model of team packaging
 
@@ -485,7 +485,7 @@ There are traces, but the platform-level questions still need clearer answers:
 
 The local runtime vision exists conceptually, but not yet as a clear manifest and sync model.
 
-## Mental map: what Kodus should become
+## Mental map: what Codus should become
 
 ```mermaid
 flowchart TD
@@ -593,7 +593,7 @@ Examples:
 
 These improve business correctness.
 
-For Kodus, `business-logic` sits closest to:
+For Codus, `business-logic` sits closest to:
 
 - workflow skill
 - domain validation pipeline
@@ -611,9 +611,9 @@ The following patterns look weak or risky:
 
 ## Recommendation
 
-The current Kodus direction makes sense, but it should be framed more precisely.
+The current Codus direction makes sense, but it should be framed more precisely.
 
-Kodus should aim to become:
+Codus should aim to become:
 
 > a cloud-governed pipeline and capability platform for software development workflows, with local execution support, team bindings, structured knowledge packs, and learning from trace-level feedback
 

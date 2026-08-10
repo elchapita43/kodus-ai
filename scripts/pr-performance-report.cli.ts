@@ -274,7 +274,7 @@ async function getStageMetrics(
         'FetchChangedFilesStage',
         'LoadExternalContextStage',
         'InitialCommentStage',
-        'KodyFineTuningStage',
+        'CodyFineTuningStage',
         'PRLevelReviewStage',
         'FileAnalysisStage',
         'CreatePrLevelCommentsStage',
@@ -326,8 +326,8 @@ async function getLLMMetrics(
                 'LLMAnalysisService::selectReviewMode',
                 'LLMAnalysisService::filterSuggestionsSafeGuard',
                 'LLMAnalysisService::severityAnalysis',
-                'KodyRulesAnalysisService::kodyRulesAnalyzeCodeWithAI',
-                'KodyRulesPrLevelAnalysisService::prLevelKodyRulesAnalyzer',
+                'CodyRulesAnalysisService::codyRulesAnalyzeCodeWithAI',
+                'CodyRulesPrLevelAnalysisService::prLevelCodyRulesAnalyzer',
                 'CrossFileAnalysisService::crossFileAnalyzeCodeWithAI',
                 'CommentManagerService::generateSummaryPR',
                 'CommentManagerService::repeatedCodeReviewSuggestionClustering',
@@ -412,8 +412,8 @@ async function getModelMetrics(
                 'LLMAnalysisService::selectReviewMode',
                 'LLMAnalysisService::filterSuggestionsSafeGuard',
                 'LLMAnalysisService::severityAnalysis',
-                'KodyRulesAnalysisService::kodyRulesAnalyzeCodeWithAI',
-                'KodyRulesPrLevelAnalysisService::prLevelKodyRulesAnalyzer',
+                'CodyRulesAnalysisService::codyRulesAnalyzeCodeWithAI',
+                'CodyRulesPrLevelAnalysisService::prLevelCodyRulesAnalyzer',
                 'CrossFileAnalysisService::crossFileAnalyzeCodeWithAI',
                 'CommentManagerService::generateSummaryPR',
                 'CommentManagerService::repeatedCodeReviewSuggestionClustering',
@@ -1065,7 +1065,7 @@ Examples:
 
     try {
         const uri = buildMongoUri();
-        const dbName = process.env.API_MG_DB_DATABASE || 'kodus_db';
+        const dbName = process.env.API_MG_DB_DATABASE || 'codus_db';
 
         console.error(`Using env file: ${envPath}`);
         console.error(`Connecting to MongoDB (database: ${dbName})...`);

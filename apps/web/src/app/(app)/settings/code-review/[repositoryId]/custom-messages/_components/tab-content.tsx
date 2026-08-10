@@ -34,7 +34,7 @@ import { FormattedConfig, FormattedConfigLevel } from "../../../_types";
 import { CustomMessagesOptionsDropdown } from "./dropdown";
 import { dropdownItems, VARIABLE_REGEX } from "./options";
 
-// A faithful sample of Kody's default error comment (the `withErrors` template
+// A faithful sample of Cody's default error comment (the `withErrors` template
 // in the i18n dictionaries, with a representative reason). Shown in the Error
 // preview so teams see exactly what their note gets appended to.
 const DEFAULT_ERROR_COMMENT_SAMPLE = `## Code Review Could Not Complete ⚠️
@@ -43,16 +43,16 @@ The review failed before suggestions could be generated.
 
 **Reason:** The configured AI provider rejected the request (invalid or missing API key).
 
-After fixing the issue, comment \`@kody review\` on this PR to re-run the review.`;
+After fixing the issue, comment \`@cody review\` on this PR to re-run the review.`;
 
-// Kody always appends this guide footer to its review comments (success and
+// Cody always appends this guide footer to its review comments (success and
 // error alike), generated server-side by generateConfigReviewMarkdown. It is
 // NOT part of the custom message and can't be edited — shown here (static) only
 // so the preview matches what actually lands on the PR.
-const KODY_GUIDE_FOOTER_SAMPLE = `<details><summary>Kody Guide: Usage and Configuration</summary>
+const CODY_GUIDE_FOOTER_SAMPLE = `<details><summary>Cody Guide: Usage and Configuration</summary>
 
-- Interacting with Kody
-- Current Kody Configuration
+- Interacting with Cody
+- Current Cody Configuration
 </details>`;
 
 // The error note preserves the author's line breaks: single \n collapse in
@@ -61,7 +61,7 @@ const KODY_GUIDE_FOOTER_SAMPLE = `<details><summary>Kody Guide: Usage and Config
 const preserveLineBreaks = (md: string) => md.replace(/\n/g, "  \n");
 
 // Renders a message body with the same @variable substitution the live comment
-// uses, so the preview matches what Kody actually posts.
+// uses, so the preview matches what Cody actually posts.
 const MessagePreview = ({ content }: { content: string }) => (
     <Markdown
         options={{
@@ -162,7 +162,7 @@ export const TabContent = (props: {
         <div className="flex flex-1 flex-col gap-4">
             {isErrorMessage && (
                 <p className="text-text-tertiary text-sm">
-                    This message is appended below Kody's default error comment
+                    This message is appended below Cody's default error comment
                     when a review fails. Leave it empty to post only the default
                     comment.
                 </p>
@@ -221,13 +221,13 @@ export const TabContent = (props: {
                         <p className="text-text-tertiary text-xs">
                             {props.value.status.value ===
                                 PullRequestMessageStatus.EVERY_PUSH &&
-                                "Kody will send a message every time code is pushed to the PR"}
+                                "Cody will send a message every time code is pushed to the PR"}
                             {props.value.status.value ===
                                 PullRequestMessageStatus.ONLY_WHEN_OPENED &&
-                                "Kody will send a message only when the PR is opened"}
+                                "Cody will send a message only when the PR is opened"}
                             {props.value.status.value ===
                                 PullRequestMessageStatus.OFF &&
-                                "Kody won't send any messages"}
+                                "Cody won't send any messages"}
                             {props.value.status.value ===
                                 PullRequestMessageStatus.ACTIVE &&
                                 "Will be migrated to 'every_push'"}
@@ -369,7 +369,7 @@ export const TabContent = (props: {
                                 <div className="flex flex-col gap-4">
                                     <div className="flex flex-col gap-2">
                                         <span className="text-text-tertiary text-[11px] font-medium tracking-wide uppercase">
-                                            Kody's default error comment
+                                            Cody's default error comment
                                         </span>
                                         <Card color="lv2" className="p-4">
                                             <MessagePreview
@@ -410,7 +410,7 @@ export const TabContent = (props: {
 
                                     <Card color="lv2" className="p-4 opacity-70">
                                         <MessagePreview
-                                            content={KODY_GUIDE_FOOTER_SAMPLE}
+                                            content={CODY_GUIDE_FOOTER_SAMPLE}
                                         />
                                     </Card>
                                 </div>

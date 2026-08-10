@@ -1,5 +1,5 @@
 import type { ContextLayer, ContextPack } from '@libs/ai-engine/infrastructure/adapters/services/context/context-pack';
-import { BYOKConfig, LLMModelProvider } from '@kodus/kodus-common/llm';
+import { BYOKConfig, LLMModelProvider } from '@codus/codus-common/llm';
 import { IPullRequestMessages } from '@libs/code-review/domain/pullRequestMessages/interfaces/pullRequestMessages.interface';
 import { DeliveryStatus } from '@libs/platformData/domain/pullRequests/enums/deliveryStatus.enum';
 import { ImplementationStatus } from '@libs/platformData/domain/pullRequests/enums/implementationStatus.enum';
@@ -29,9 +29,9 @@ import {
     ReviewModeResponse,
     SuggestionType,
 } from '@libs/core/domain/enums/code-review.enum';
-import { IClusterizedSuggestion } from '@libs/kodyFineTuning/domain/interfaces/kodyFineTuning.interface';
-import { IKodyRule } from '@libs/kodyRules/domain/interfaces/kodyRules.interface';
-import { KodyKnowledgeApprovalConfig } from '@libs/common/utils/kody-rules/knowledge-approval';
+import { IClusterizedSuggestion } from '@libs/codyFineTuning/domain/interfaces/codyFineTuning.interface';
+import { ICodyRule } from '@libs/codyRules/domain/interfaces/codyRules.interface';
+import { CodyKnowledgeApprovalConfig } from '@libs/common/utils/cody-rules/knowledge-approval';
 import { OrganizationAndTeamData } from './organizationAndTeamData';
 import { ConfigLevel } from './pullRequestMessages.type';
 
@@ -87,7 +87,7 @@ export type AnalysisContext<TPullRequest = any> = {
     baseDir?: string;
     correlationId?: string;
     reviewModeResponse?: ReviewModeResponse;
-    kodyFineTuningConfig?: KodyFineTuningConfig;
+    codyFineTuningConfig?: CodyFineTuningConfig;
     fileChangeContext?: FileChangeContext;
     clusterizedSuggestions?: IClusterizedSuggestion[];
     validCrossFileSuggestions?: CodeSuggestion[];
@@ -115,7 +115,7 @@ export type AnalysisContext<TPullRequest = any> = {
     remoteCommands?: RemoteCommands;
     /** Parameters used to create the sandbox — kept for renewal if it expires */
     getFreshCloneParams?: () => Promise<CreateSandboxParams>;
-    /** Graph JSON from kodus-graph parse (nodes + edges) for content formatting */
+    /** Graph JSON from codus-graph parse (nodes + edges) for content formatting */
     callGraphJson?: { nodes: any[]; edges: any[] };
 };
 
@@ -157,7 +157,7 @@ export type CodeSuggestion = {
     priorityStatus?: PriorityStatus;
     deliveryStatus?: DeliveryStatus;
     implementationStatus?: ImplementationStatus;
-    brokenKodyRulesIds?: string[];
+    brokenCodyRulesIds?: string[];
     clusteringInformation?: {
         type?: ClusteringType;
         relatedSuggestionsIds?: string[];
@@ -284,7 +284,7 @@ export interface SuggestionControlConfig {
     limitationType?: LimitationType;
     maxSuggestions: number;
     severityLevelFilter?: SeverityLevel;
-    applyFiltersToKodyRules?: boolean; // Default: false - Applies ALL filters (severity + quantity) to Kody Rules
+    applyFiltersToCodyRules?: boolean; // Default: false - Applies ALL filters (severity + quantity) to Cody Rules
     severityLimits?: {
         low: number;
         medium: number;
@@ -305,7 +305,7 @@ export type CodeReviewConfig = {
     ignorePaths: string[];
     reviewMode?: 'fast' | 'normal' | 'deep';
     /** HEAVY mode — extra critic pass in the finder for more recall. Opt-in per
-     *  review (CLI `--heavy` / PR `@kody review --heavy`). Off by default. */
+     *  review (CLI `--heavy` / PR `@cody review --heavy`). Off by default. */
     heavy?: boolean;
     reviewOptions: ReviewOptions;
     ignoredTitleKeywords: string[];
@@ -316,20 +316,20 @@ export type CodeReviewConfig = {
     summary: SummaryConfig;
     languageResultPrompt: string;
     llmProvider?: LLMModelProvider;
-    kodyRules?: Partial<IKodyRule>[];
-    kodyMemoryRules?: Partial<IKodyRule>[];
+    codyRules?: Partial<ICodyRule>[];
+    codyMemoryRules?: Partial<ICodyRule>[];
     suggestionControl?: SuggestionControlConfig;
     pullRequestApprovalActive: boolean;
-    kodusConfigFileOverridesWebPreferences: boolean;
+    codusConfigFileOverridesWebPreferences: boolean;
     isRequestChangesActive?: boolean;
-    kodyRulesGeneratorEnabled?: boolean;
+    codyRulesGeneratorEnabled?: boolean;
     // Provider-native user ids whose review comments are EXCLUDED when learning
-    // Kody Rules from past reviews. Denylist: empty/absent = learn from everyone.
-    kodyLearningExcludedReviewers?: string[];
-    kodyKnowledgeApproval?: KodyKnowledgeApprovalConfig;
+    // Cody Rules from past reviews. Denylist: empty/absent = learn from everyone.
+    codyLearningExcludedReviewers?: string[];
+    codyKnowledgeApproval?: CodyKnowledgeApprovalConfig;
     reviewModeConfig?: ReviewModeConfig;
     ideRulesSyncEnabled?: boolean;
-    kodyFineTuningConfig?: KodyFineTuningConfig;
+    codyFineTuningConfig?: CodyFineTuningConfig;
     configLevel?: ConfigLevel;
     directoryId?: string;
     directoryPath?: string;
@@ -434,9 +434,9 @@ export type CodeReviewConfigWithRepositoryInfo = Omit<
     isSelected?: boolean;
 };
 
-// Omit every configuration that isn't present on the kodus configuration file.
-export type KodusConfigFile = DeepPartial<
-    Omit<CodeReviewConfig, 'llmProvider' | 'languageResultPrompt' | 'kodyRules'>
+// Omit every configuration that isn't present on the codus configuration file.
+export type CodusConfigFile = DeepPartial<
+    Omit<CodeReviewConfig, 'llmProvider' | 'languageResultPrompt' | 'codyRules'>
 > & {
     version: string;
     customMessages?: Pick<
@@ -448,7 +448,7 @@ export type KodusConfigFile = DeepPartial<
     >;
 };
 
-export type KodyFineTuningConfig = {
+export type CodyFineTuningConfig = {
     enabled: boolean;
 };
 

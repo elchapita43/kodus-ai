@@ -1,6 +1,6 @@
 import type { AgentThread } from './runtime/skill-runtime.types';
 import { createLogger } from '@libs/core/log/logger';
-import { PromptRunnerService } from '@kodus/kodus-common/llm';
+import { PromptRunnerService } from '@codus/codus-common/llm';
 
 import { PermissionValidationService } from '@libs/ee/shared/services/permissionValidation.service';
 import { ObservabilityService } from '@libs/core/log/observability.service';
@@ -413,12 +413,12 @@ export abstract class AbstractSkillProvider<
         };
 
         this.metricsCollector?.recordCounter(
-            'kodus_skill_capability_execution_total',
+            'codus_skill_capability_execution_total',
             1,
             labels,
         );
         this.metricsCollector?.recordHistogram(
-            'kodus_skill_capability_execution_duration_ms',
+            'codus_skill_capability_execution_duration_ms',
             trace.latencyMs,
             labels,
         );
@@ -436,12 +436,12 @@ export abstract class AbstractSkillProvider<
         };
 
         this.metricsCollector?.recordHistogram(
-            'kodus_skill_step_duration_ms',
+            'codus_skill_step_duration_ms',
             metric.durationMs,
             labels,
         );
         this.metricsCollector?.recordCounter(
-            'kodus_skill_step_total',
+            'codus_skill_step_total',
             1,
             labels,
         );

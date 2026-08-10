@@ -9,7 +9,7 @@ type LockablePlugin = {
 
 /**
  * Which connected plugins should render as "Locked" under the free plan's
- * cap. Default (system-managed) plugins like "Kodus MCP" are always on and
+ * cap. Default (system-managed) plugins like "Codus MCP" are always on and
  * never count against the cap — they never appear in /mcp/connections at
  * all, so without this exclusion they'd look locked whenever they fell
  * outside the runnable set computed from that list.

@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-const SESSIONS_HOOK_PREFIX = 'kodus decisions hooks';
+const SESSIONS_HOOK_PREFIX = 'codus decisions hooks';
 
 type JsonObject = Record<string, unknown>;
 

@@ -189,7 +189,7 @@ function extractDiffFromToolResult(payload: unknown): string {
     // typically the MCP envelope { content: [{ type:'text', text:'{...}' }] }.
     // Older callers passed the full { result: {...} }. Be robust to BOTH: try
     // the node itself first, then a nested `.result`. (The off-by-one here was
-    // exactly what made KODUS_GET_PULL_REQUEST_DIFF return an empty diff.)
+    // exactly what made CODUS_GET_PULL_REQUEST_DIFF return an empty diff.)
     const candidates = [root, asRecord(root.result)];
 
     for (const node of candidates) {

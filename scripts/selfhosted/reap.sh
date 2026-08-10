@@ -7,7 +7,7 @@
 #
 # What it does:
 #   1. Lists LIVE droplets from DigitalOcean.
-#   2. Filters to the `kodus-selfhosted-*` test prefix (prod like kodus-web-new
+#   2. Filters to the `codus-selfhosted-*` test prefix (prod like codus-web-new
 #      never matches, so it's never touched).
 #   3. Destroys any matching droplet older than TTL_HOURS (default 6).
 #      - If a state file exists -> delegates to destroy.sh (full cleanup:
@@ -17,10 +17,10 @@
 #   4. Sweeps orphaned state files whose droplet no longer exists at the provider.
 #
 # Usage:
-#   pnpm run selfhosted:reap                 # reap kodus-selfhosted-* older than 6h (prompts once)
+#   pnpm run selfhosted:reap                 # reap codus-selfhosted-* older than 6h (prompts once)
 #   pnpm run selfhosted:reap -y              # no prompt (for cron)
 #   pnpm run selfhosted:reap --ttl 3         # custom TTL in hours
-#   pnpm run selfhosted:reap --all           # ignore TTL: reap ALL kodus-selfhosted-*
+#   pnpm run selfhosted:reap --all           # ignore TTL: reap ALL codus-selfhosted-*
 #   pnpm run selfhosted:reap --dry-run       # show what would be reaped, change nothing
 #   pnpm run selfhosted:reap --keep default  # exempt one instance (repeatable)
 #
@@ -32,7 +32,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 . "$SCRIPT_DIR/_common.sh"
 
-PREFIX="kodus-selfhosted-"
+PREFIX="codus-selfhosted-"
 TTL_HOURS=6
 ASSUME_YES=0
 DRY_RUN=0

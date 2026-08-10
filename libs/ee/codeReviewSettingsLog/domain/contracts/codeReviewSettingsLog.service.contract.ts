@@ -1,6 +1,6 @@
 import { CodeReviewConfigLogParams } from '../../infrastructure/adapters/services/codeReviewConfigLog.handler';
 import { IntegrationLogParams } from '../../infrastructure/adapters/services/integrationLog.handler';
-import { KodyRuleLogParams } from '../../infrastructure/adapters/services/kodyRulesLog.handler';
+import { CodyRuleLogParams } from '../../infrastructure/adapters/services/codyRulesLog.handler';
 import { PullRequestMessagesLogParams } from '../../infrastructure/adapters/services/pullRequestMessageLog.handler';
 import {
     DirectoryConfigRemovalParams,
@@ -25,7 +25,7 @@ export interface ICodeReviewSettingsLogService extends ICodeReviewSettingsLogRep
     registerCodeReviewConfigLog(
         params: CodeReviewConfigLogParams,
     ): Promise<void>;
-    registerKodyRulesLog(params: KodyRuleLogParams): Promise<void>;
+    registerCodyRulesLog(params: CodyRuleLogParams): Promise<void>;
     registerRepositoriesLog(params: RepositoriesLogParams): Promise<void>;
     registerRepositoryConfigurationRemoval(
         params: RepositoryConfigRemovalParams,

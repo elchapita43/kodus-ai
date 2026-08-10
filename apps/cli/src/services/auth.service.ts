@@ -20,12 +20,12 @@ class AuthService {
     private refreshInFlight: Promise<string> | null = null;
 
     private getEnvAuthToken(): string | null {
-        const token = process.env.KODUS_TOKEN?.trim();
+        const token = process.env.CODUS_TOKEN?.trim();
         if (token) {
             return token;
         }
 
-        const teamKey = process.env.KODUS_TEAM_KEY?.trim();
+        const teamKey = process.env.CODUS_TEAM_KEY?.trim();
         if (teamKey) {
             return teamKey;
         }
@@ -157,7 +157,7 @@ class AuthService {
         }
 
         throw new AuthError(
-            'Not authenticated. Run: kodus auth login or kodus auth team-key --key <your-key>',
+            'Not authenticated. Run: codus auth login or codus auth team-key --key <your-key>',
         );
     }
 
@@ -207,7 +207,7 @@ class AuthService {
                     }
 
                     throw new AuthError(
-                        'Session expired. Run: kodus auth login',
+                        'Session expired. Run: codus auth login',
                     );
                 }
             })();

@@ -29,7 +29,7 @@ Total unique files: 25
 | NEXTAUTH_SECRET | apps/web/src/core/config/auth.ts | 101 | NextAuth fallback |
 | NODE_ENV | apps/web/src/core/config/auth.ts | 103 | Conditional check |
 | NODE_ENV | apps/web/src/lib/services/fetch.ts | 60 | Dev-only logging |
-| NODE_ENV | apps/web/src/lib/services/kodyRules/fetch.ts | 163 | Dev-only logging |
+| NODE_ENV | apps/web/src/lib/services/codyRules/fetch.ts | 163 | Dev-only logging |
 | GLOBAL_API_CONTAINER_NAME | apps/web/src/core/utils/helpers.ts | 14 | Server-side networking config |
 | GLOBAL_BILLING_CONTAINER_NAME | apps/web/src/features/ee/subscription/_services/billing/utils.ts | 14 | Server-side networking config |
 | GLOBAL_MCP_MANAGER_CONTAINER_NAME | apps/web/src/lib/services/mcp-manager/utils.ts | 42 | Server-side networking config |
