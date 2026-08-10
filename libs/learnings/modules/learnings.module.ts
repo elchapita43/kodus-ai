@@ -30,7 +30,8 @@ export const LEARNING_DERIVER_TOKEN = Symbol.for('LearningDeriver');
             // LLM local (HTTP OpenAI-compatible). El adapter de Honcho se
             // implementa en T11 sin tocar el resto del módulo.
             provide: LEARNING_DERIVER_TOKEN,
-            useFactory: (env: NodeJS.ProcessEnv): LearningDeriver => {
+            useFactory: (): LearningDeriver => {
+                const env = process.env;
                 if (env.HONCHO_API_KEY) {
                     throw new Error(
                         'Honcho deriver aún no implementado — usá el deriver local (sin HONCHO_API_KEY)',
@@ -38,7 +39,6 @@ export const LEARNING_DERIVER_TOKEN = Symbol.for('LearningDeriver');
                 }
                 return new HttpLearningDeriver(env);
             },
-            inject: [],
         },
         {
             provide: CreateLearningUseCase,
