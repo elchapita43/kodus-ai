@@ -18,11 +18,20 @@ import {
     UserWithLicense,
 } from './interfaces/license.interface';
 
-// Ed25519 public key used to verify self-hosted license JWTs.
-// This is the public half of the keypair held by Kodus for signing licenses.
-const LICENSE_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
+// Ed25519 public keys used to verify self-hosted license JWTs.
+// The FIRST key is Kodus's official signing key (KMS v2, in use since
+// 2026-03-06). Additional keys are instance-owned: self-hosted
+// deployments that operate their own fork may append their own public
+// key so licenses they sign for their own instance also verify. A JWT
+// signed by ANY listed key is accepted (same tier/seat semantics).
+const LICENSE_PUBLIC_KEYS: string[] = [
+    `-----BEGIN PUBLIC KEY-----
 MCowBQYDK2VwAyEAig1JYVU3PCPOY18JGKsMdcoPeDMrGRCRb5XPZeLniZc=
------END PUBLIC KEY-----`;
+-----END PUBLIC KEY-----`,
+    `-----BEGIN PUBLIC KEY-----
+MCowBQYDK2VwAyEAwqvzwElp76bi3de6UuHn3iuocUZbPzHpe51BA4gMP+g=
+-----END PUBLIC KEY-----`,
+];
 
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -413,20 +422,22 @@ export class SelfHostedLicenseService implements ILicenseService {
 
             const [headerB64, payloadB64, signatureB64] = parts;
 
-            // Verify signature using Ed25519
+            // Verify signature using Ed25519 (any listed public key)
             const signingInput = `${headerB64}.${payloadB64}`;
             const signature = Buffer.from(
                 this.base64UrlToBase64(signatureB64),
                 'base64',
             );
 
-            const publicKey = crypto.createPublicKey(LICENSE_PUBLIC_KEY);
-            const isValid = crypto.verify(
-                null, // Ed25519 doesn't use a separate hash algorithm
-                Buffer.from(signingInput),
-                publicKey,
-                signature,
-            );
+            const isValid = LICENSE_PUBLIC_KEYS.some((pem) => {
+                const publicKey = crypto.createPublicKey(pem);
+                return crypto.verify(
+                    null, // Ed25519 doesn't use a separate hash algorithm
+                    Buffer.from(signingInput),
+                    publicKey,
+                    signature,
+                );
+            });
 
             if (!isValid) {
                 this.logger.warn({
