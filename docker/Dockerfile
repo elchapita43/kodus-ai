@@ -191,9 +191,13 @@ USER 1000
 
 # Install codus-graph for the runtime user so self-hosted worker images can
 # find it through $HOME/.bun/bin after dropping root privileges.
-RUN bun install -g @codus/codus-graph@${CODUS_GRAPH_VERSION}
+# The package lives under the pre-rebrand public scope (@kodus) — @codus was
+# never published to npmjs (404 on fresh builds; cached layers masked this).
+# The binary inside the package is `kodus-graph`; the /usr/local/bin wrapper
+# keeps exposing `codus-graph` so lib code needs no change.
+RUN bun install -g @kodus/kodus-graph@${CODUS_GRAPH_VERSION}
 USER root
-RUN printf '%s\n' '#!/bin/sh' 'exec /home/node/.bun/bin/codus-graph "$@"' > /usr/local/bin/codus-graph \
+RUN printf '%s\n' '#!/bin/sh' 'exec /home/node/.bun/bin/kodus-graph "$@"' > /usr/local/bin/codus-graph \
   && chmod 0755 /usr/local/bin/codus-graph
 USER 1000
 
