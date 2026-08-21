@@ -23,7 +23,7 @@ allowBuilds:
   '@sentry/node-cpu-profiler': false
   '@swc/core': false
   '@vscode/ripgrep': false
-  bun: set this to true or false
+  bun: true
   esbuild: false
   protobufjs: false
   sharp: false
