@@ -55,6 +55,27 @@ export function buildProviderOptions(
         }
     }
 
+    // Self-hosted env-mode default: deployments driven purely by env vars
+    // have no BYOK provider, so per-org reasoning settings never apply.
+    // API_LLM_REASONING_EFFORT supplies a deployment-wide thinking level;
+    // emitted through the `openaiCompatible` namespace, which
+    // @ai-sdk/openai-compatible serializes as `reasoning_effort`
+    // (honored by OpenAI o-series/GPT-5 and OpenRouter models alike).
+    // Org/BYOK-level configuration always wins over this default.
+    if (!input?.byokProvider) {
+        const envEffort = process.env.API_LLM_REASONING_EFFORT
+            ?.trim()
+            .toLowerCase();
+        if (envEffort && ['low', 'medium', 'high', 'max'].includes(envEffort)) {
+            logger.log({
+                message: '[thinking] env reasoning effort applied',
+                context: 'buildProviderOptions',
+                metadata: { runName, effort: envEffort },
+            });
+            return { openaiCompatible: { reasoningEffort: envEffort } };
+        }
+    }
+
     const reasoning = buildReasoningProviderOptions(
         input?.byokProvider,
         input?.reasoningEffort,
